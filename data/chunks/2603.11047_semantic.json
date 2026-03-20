@@ -1,0 +1,1742 @@
+[
+  {
+    "chunk_id": "55296018-ee8b-45cf-840a-fac29da12dae",
+    "text": "Published as a conference paper at ICLR 2026 LITO: SURFACE LIGHT FIELD TOKENIZATION Jen-Hao Rick Chang∗ Xiaoming Zhao∗ Dorian Chan Oncel Tuzel\nApple Figure 1: LiTo tokenizes surface light fields into a latent representation. It models 3D geometry and\nview-dependent appearance such as specular reflection. The figure shows reconstructions (first 3\ncolumns) and single-image-to-3D results (last two columns). Mesh credit: Anthony Schmidt (2016);[cs.CV] @sanyabeast (2021); LLOYDO (2019); brysew (2015); Osho (2018). See more on the project page.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 0,
+    "total_chunks": 87,
+    "char_count": 544,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e1a3db78-1310-4fdb-9318-d8bfab653baf",
+    "text": "We propose a 3D latent representation that jointly models object geometry and\nview-dependent appearance. Most prior works focus on either reconstructing 3D\ngeometry or predicting view-independent diffuse appearance, and thus struggle to\ncapture realistic view-dependent effects. Our approach leverages that RGB-depth\nimages provide samples of a surface light field. By encoding random subsamples\nof this surface light field into a compact set of latent vectors, our model learns to\nrepresent both geometry and appearance within a unified 3D latent space. This\nrepresentation reproduces view-dependent effects such as specular highlights and\nFresnel reflections under complex lighting. We further train a latent flow matching\nmodel on this representation to learn its distribution conditioned on a single input\nimage, enabling the generation of 3D objects with appearances consistent with the\nlighting and materials in the input. Experiments show that our approach achievesarXiv:2603.11047v1 higher visual quality and better input fidelity than existing methods. The world is filled with objects that vary widely in shape and material. Some are smooth and reflective,\nwhile others are rough, detailed or even translucent. Even familiar objects can appear differently\nfrom different viewpoints as light creates reflections and subtle color changes across their surfaces. Capturing this richness is important for building generative models of realistic objects. To do so, we\nneed representations that can model both the underlying 3D geometry of real-world objects as well as\ntheir view-dependent appearance. However, today in machine learning, most existing 3D representations tackle only part of this problem. Many methods are designed to capture geometry alone (He et al., 2025; Li et al., 2025a; Chang",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 1,
+    "total_chunks": 87,
+    "char_count": 1802,
+    "word_count": 262,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dbd59516-5e46-4a52-b9cb-3f36d094f670",
+    "text": "∗Indicates equal contribution. G for a detailed breakdown of individual contributions. Published as a conference paper at ICLR 2026 et al., 2024), aiming to recover the overall shape of objects. Other approaches (Xiang et al., 2025)\ninclude appearance information, but treat it as view-independent diffuse color. As a result, these\nmodels struggle to represent view-dependent effects such as reflections, highlights, or subtle changes\nin shading that are important for realistic appearance. In this work, we aim to model both the 3D geometry and the view-dependent appearances of objects. We introduce a 3D latent representation that encodes a surface light field into a compact set of latent\nvectors. In summary, rather than encoding geometry and color only, e.g. with an input RGB point\ncloud, we additionally input viewing direction along with surface points and color, to capture how\nrealistic materials change appearance with angle. Because a full surface light field contains highly\ndense information, we instead provide a random subsample of the surface light field—captured\nfrom RGB-depth multiview images—and rely on an encoder to interpolate the missing samples. This approach allows the model to reproduce view-dependent effects such as highlights and Fresnel\nreflections, that can be visualized via a decoder that outputs Gaussian splats with higher-order\nspherical harmonics (Kerbl et al., 2023). We evaluate our method by comparing its reconstruction\nquality against the state-of-the-art 3D latent representations (Xiang et al., 2025; Li et al., 2025a; He\net al., 2025; Chen et al., 2025b; Chang et al., 2024), and find that modeling these view-dependent\neffects improve visual quality without significant degradation in geometric accuracy. Building on the proposed representation, we train a latent flow matching model that learns the\ndistribution of our 3D latent representations conditioned on a single input image. The generative\nmodel learns to infer both geometry and view-dependent appearance from images under different\nlighting conditions. Given an input image, the model generates a full 3D object whose shape matches\nthe object in the image from the input viewpoint and whose appearance reflects the lighting and\nview-dependent material properties present in the input.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 2,
+    "total_chunks": 87,
+    "char_count": 2294,
+    "word_count": 343,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "09208074-03f9-407c-b339-7a4ff21e84fe",
+    "text": "Our approach connects 2D observations to\n3D object generation, enabling controllable synthesis of realistic, view-dependent materials from\ndiverse image inputs. Our work makes the following contributions. • We introduce a 3D latent representation that captures both geometry and view-dependent appearances by encoding surface light field information into a compact set of latent vectors. • We design a training framework that jointly supervises geometry and appearance using random\nsubsamples of surface light field data from RGB-depth multiview images, enabling the model to\nreproduce view-dependent effects such as highlights and fresnel reflections via Gaussian splats\nwith higher-order spherical harmonics. • We develop a latent flow matching model that learns the distribution of these latent representations\nconditioned on images, allowing the generation of full 3D objects whose appearances reflect the\nlighting and materials in the input. Together, these components enable more accurate reconstruction and better separation of geometry\nand appearance than existing methods. A growing number of recent approaches have explored learning latent 3D representations. S1,\nwe summarize and compare their properties, including geometry and appearance modeling mechanisms, data requirements, latent dimensionality, encoder inputs, and training sets. For clarity, we\nreview geometry-only approaches and those that jointly model geometry and appearance separately. Geometry-only latent. A large body of work focuses on latent representations that model geometry\nalone. These approaches differ primarily in the underlying 3D signal they encode. PointFlow (Yang\net al., 2019), ShapeGF (Cai et al., 2020), and ShapeToken (Chang et al., 2024) learn to model 3D\nsurfaces as 3D distributions. 3DShape2VecSet (Zhang et al., 2023), CLAY (Zhang et al., 2024),\nTripoSG (Li et al., 2025a), and Hunyuan3D (Zhao et al., 2025), instead model shapes as occupancy or\nsigned distance functions (SDF). Direct3D (Wu et al., 2024), XCube (Ren et al., 2024), LT3SD (Meng\net al., 2025), and Make-A-Shape (Hui et al., 2024) embed geometry into dense or sparse voxel grids\ncontaining occupancy or SDF values at vertices. While grid-based methods offer structured latents,\nthey face inherent trade-offs between spatial resolution and memory efficiency.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 3,
+    "total_chunks": 87,
+    "char_count": 2324,
+    "word_count": 332,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4a8a9ae5-c243-4040-add5-75c3b981520e",
+    "text": "Published as a conference paper at ICLR 2026 Figure 2: Overview of the 3D latent representation. Given samples of the surface light field of the\nscene, we learn a latent representation that reconstruct the full surface light field information. The\nencoder (pink block) condenses input information into the latent representation. We jointly supervise\nthe latent representation to contain full 3D geometry and view-dependent radiance information\nbeyond the input samples. In the architectures, we design localized attention pattern to improve\nefficiency and support 1 million input tokens. when relying on occupancy or SDF, however, is the reliance on significant preprocessing of the\ntraining data. Many methods require watertight meshes (Zhang et al., 2023; 2022; 2024), expensive\nmesh-to-field conversions, or optimization-based radiance-field fitting in order to define consistent\nsupervision signals. Moreover, these methods capture only geometry, without appearance, texture, or\nview-dependent effects. Geometry and appearance latent. More recently, a smaller set of works has begun to extend latent\n3D representations beyond pure geometry to also encode appearance. Two of the most relevant are\n3DTopia-XL (Chen et al., 2025b) and TRELLIS (Xiang et al., 2025). 3DTopia-XL introduces the PrimX representation, where each primitive encodes not only geometry\nthrough signed distance but also material properties such as RGB color, roughness, and metallicity. This design allows the model to generate textured 3D assets that are ready for physically based\nrendering. However, PrimX requires an optimization step to construct the primitive representation\nfrom meshes before training, making data preparation more demanding.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 4,
+    "total_chunks": 87,
+    "char_count": 1723,
+    "word_count": 245,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "008c1954-9ae9-4105-aa41-adf2cf348212",
+    "text": "TRELLIS introduces a Structured LATent (SLAT) representation: a sparse voxel grid fused with dense\nmultiview visual features extracted by a foundation vision model (DINOv2) to provide both geometry\nand appearance cues. Given the coarse geometry of an object, SLAT is constructed by averaging\nprojected DINOv2 features from all input views. The model decodes SLAT into multiple output\n3D formats, including 3D Gaussians, meshes, and radiance fields. To handle the sparsity of SLAT\nefficiently, TRELLIS employs transformers with windowed attention and sparse 3D convolution, and\nit is trained at scale on roughly 500K assets from Objaverse-XL and related datasets. TRELLIS has several limitations relative to our approach. First, SLAT requires coarse occupancy\ninformation to be known in advance, so generation is performed in two stages, whereas our latent\ndirectly encodes complete object information and supports single-stage generation. Second, TRELLIS\nencodes only view-independent appearance: multiview features are mean-pooled, discarding angular\nvariation and preventing modeling of view-dependent effects. Finally, TRELLIS generates objects in\na canonical coordinate system (i.e., their dataset orientation), which necessitates post-processing to\nalign them with input images. This restriction arises from its reliance on preconstructed axis-aligned\nvoxel grids, which makes coordinate transformations like rotation during training difficult. In contrast,\nour model takes points as input, which allows us to apply coordinate transformations during training,\nensuring generated objects are consistently oriented with respect to the input view (see Fig. 5 and 6). 3.1 PRELIMINARY AND NOTATION The surface light field jointly models both the 3D surfaces of a scene as well as the outgoing\nradiance from each point on the surface toward every viewing direction. In theory, if the surface\nlight field is perfectly represented, any image captured by a camera at any arbitrary location and",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 5,
+    "total_chunks": 87,
+    "char_count": 1989,
+    "word_count": 285,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "632d0666-08ae-4b4c-8be1-461e437adf05",
+    "text": "Published as a conference paper at ICLR 2026 orientation can be directly reconstructed (Wood et al., 2000). We represent the surface light field\nas a 5D function ℓ(x, ˆd) : R3 × S2 →R3, where x ∈∂Ωis any 3D location on surfaces ∂Ω,\nˆd ∈S2 = {v|v ∈R3, ∥v∥= 1} is the viewing direction, and c ∈R3 is the color of the outgoing\nradiance from x toward ˆd. We use bold lowercase symbols (e.g., v) to denote vectors, bold lowercase symbols with hats (e.g.,\nˆv) for unit-norm directions, capital letters (e.g., A) for matrices or transformations, and calligraphic\nsymbols (e.g., S) for sets. 3.2 TOKENIZER OVERVIEW",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 6,
+    "total_chunks": 87,
+    "char_count": 606,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dd4f5885-2983-4f7b-809f-fe5a7b3896ae",
+    "text": "Our goal is to learn a 3D latent representation that models the surface light field of an object-centric\nscene with a compact set S ≜{sj}kj=1, where sj ∈Rd is a d-dimension latent vector. Fig. 2 shows\nan overview of our latent representation. Our encoder outputs S after taking N samples of the surface\nlight field defined in the following as input:\nX = {(xi, ˆdi, ci = ℓ(xi, ˆdi))}Ni=1., (1)\nwhere xi, ˆdi, ci, and ℓ(·, ·) are defined in Sec. 3.1. To learn a meaningful representation of the surface light field, we must supervise both the decoded\n3D geometry as well as view-dependent radiance. A trivial solution would utilize an autoencoder\nformulation that directly reconstructs the input X. However, in practice we only have sparse, discrete\nsamples of the surface light field (e.g., as rendered from multiview images of a training object), and\nthus such an approach may not meaningfully represent the entire continuous function ℓ. Thus, rather\nthan directly supervising with the surface light field, we instead opt for indirect supervision with\ncarefully-designed loss functions on decoded geometry and view-dependent appearance (as well as\nthe regularization in Sec. Geometry supervision. We utilize prior work (Chang et al., 2024), which models 3D surfaces as\na 3D probabilistic density function that is aligned with the actual surfaces via flow matching. This\nformulation enables us to model 3D surfaces beyond the input 3D locations. Specifically, the latent S\nis trained to parameterize a 3D distribution p(x|S) that approximates a dirac delta function lying on\n3D surfaces in the scene, i.e., p(x|S) ≈δ(x ∈∂Ω). The flow matching formulation also optionally\nallows us to sample p(x|S) and get a point cloud lying on surfaces during inference, and zero-shot\nestimate surface normals. The loss function follows that used by Chang et al. (2024):\nLgeo(θ) = Et∼U(0,1)Ex∥V (xt; t) −(x −ϵ)∥2 dt , (2)\nwhere θ is all parameters in the encoder and the decoder, t is the flow-matching time, U(0, 1) is the\nuniform distribution between 0 and 1, ϵ is noise sampled from standard normal distribution, Vθ(xt; t)\nis the flow-matching decoder that estimates the velocity at xt = t · x + (1 −t) · ϵ, and x is sampled\nfrom the surface light field. View-dependent radiance supervision. The supervision of the view-dependent radiance is through\nrendering multi-view images.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 7,
+    "total_chunks": 87,
+    "char_count": 2365,
+    "word_count": 387,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "46f86e5c-cfda-4e37-bb67-cea1dc7d1515",
+    "text": "Specifically, we convert the latent S into a set of 3D Gaussians, which\nmodels view-dependent color by spherical harmonics, and we render the 3D Gaussians from random\nviewpoints and compare with ground-truth images. The loss is\nLradiance(θ) = EH,E∥Iest −Igt∥2 + λ lpips (Iest, Igt) , (3)\nwhere Iest = Render(D(S, O), H, E) is the rendered image from 3D Gaussians at camera pose\nH and intrinsic E, Igt = Render(object, H, E) is the ground-truth image, D is the Gaussian\ndecoder that will be detailed below, D(S, O) are the estimated 3D Gaussians given the latent S and a\nlow-resolution sparse occupancy grid O constructed from the sampled point cloud or an occupancy\nestimator, and θ is all parameters in the encoder and the decoder. In all experiments, we use λ = 0.2.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 8,
+    "total_chunks": 87,
+    "char_count": 768,
+    "word_count": 134,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fd7a6c20-6e7b-431c-9ba5-f9787093c42f",
+    "text": "In the rest of this section, we discuss the architectures for our surface light-field encoder, geometry\ndecoder and Gaussian decoder in more detail. We first describe how we sample surface light field to obtain the input to the encoder and the samples\nfor the loss in Eq. (2). Then we detail our encoder architecture. Published as a conference paper at ICLR 2026 To sample from the surface light field ℓ(x, ˆd) in Eq. (1), we need to sample random surface\nlocations and view directions. We achieve this by densely rendering multi-view RGBD images. Since\nwe focus on object-centric scenes, the cameras are placed uniformly on a sphere surrounding the\nobject. The surface location x can be obtained by back-projecting the depth map, view direction ˆdi is\nderived from the pinhole camera model, and ci from the pixel color1. This operation densely samples\nboth the surfaces and viewing directions and returns X = {(xi, ˆdi, ci)}Ni=1 in Eq. (1). In our experiments, we box-normalize the scene to [−1, 1], and we render 150 images of resolution\n1036×1036 with 40 degree field of view, uniformly on a sphere of radius 3.5. This provides 160\nmillion samples of light field ℓintroduced in Sec. 3.1, of which we randomly sample N=220 as our\ninput to the encoder and the rest to serve as the ground-truth to supervise Eq. (2). We use Perceiver IO (Jaegle et al., 2022) as our encoder, which is widely used in\nprior latent 3D representations (Zhang et al., 2023; Chang et al., 2024; Li et al., 2025a). The encoder\ncontains cross and self attention blocks, and the number of initial queries of the first cross attention\nblock determines the number of output latent tokens, i.e., k = 8192 in our case discussed in Sec. 3.2. The output of the Perceiver IO is passed to a linear layer to reduce the latent dimension to d = 32. Our latent S is thus a set of k tokens of d dimension (see Sec. 3.2).",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 9,
+    "total_chunks": 87,
+    "char_count": 1881,
+    "word_count": 332,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6f411a61-f621-4237-bb92-60a1b82cfcf8",
+    "text": "To capture enough information from light field ℓintroduced in Sec. 3.1, we use N = 220 (∼1\nmillion) samples as input. However, the large number of input makes the typical cross attention in Perceiver IO computationally expensive. We are inspired by the non-overlapping patchification in Vision Transformers (Dosovitskiy et al., 2021), which converts dense pixels into\ncoarse tokens. Instead of using a convolution layer to aggregate information from individual\n16 × 16 patches into tokens, we use cross attention. However, our inputs are scattered points\non 3D surfaces instead of pixels on a regular grid, and it is non-trivial to patchify 3D surfaces. We design an approximation of 2D patchification on 3D surfaces with K-nearest neighbor. Specifically, given the input\nsamples X in Eq. (1), we first randomly select k samples as\nthe query Q to the first cross attention layer, similar to Zhang\net al. (2023). The number of samples is equal to the number\nof latent tokens k. To patchify 3D surface, for each sample\nx ∈X we find its closest point in Q in terms of ℓ2 distance\nof x and assign the index of the closest point to the sample. Finally, during the cross attention, a query only attends to input Figure 3: 3D patchification\nsamples that have its index. This operation can be implemented\nby standard libraries like xformers (Lefaudeux et al., 2022)\nor FlashAttention (Dao, 2024). An illustration is shown in Fig. 3. Note that this is an approximation because we use ℓ2 distance of x\ninstead of geodesic distance. Thus, when there are more than one surface lie in the neighborhood,\nthe query will attend across surfaces. As ℓ2 distance is much faster to compute than the geodesic\ndistance, we think it is a good trade-off.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 10,
+    "total_chunks": 87,
+    "char_count": 1730,
+    "word_count": 293,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "653cbe86-fdcf-428c-87df-ee317aed6d08",
+    "text": "For self attention, we use a voxel-based attention mechanism. Specifically, tokens that lie within the\nsame voxel in a predefined coarse grid attend to each other, and the coarse voxel grid shifts by a half\ncell width every layer. Unlike TRELLIS (Xiang et al., 2025), whose tokens lie on a voxel grid, our\ntokens have continuous coordinates and are not grid-aligned. We use a voxel grid only to organize\nself-attention.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 11,
+    "total_chunks": 87,
+    "char_count": 419,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fe8c404f-a5de-4fdd-9635-5c6491ffff28",
+    "text": "Overall, the encoder has 59.2 million parameters (see Fig. Together with decoders\nbelow, the model is trained with 256 batch size for 90k iterations on 64 GPUs for 9 days. Flow-matching velocity decoder. We utilize the same flow-matching velocity decoder used by\nChang et al. (2024). Specifically, it takes the latent S, a 3D location, and flow-matching time as input,\nand it predicts the flow-matching velocity at the 3D location. To ensure we model a 3D distribution,\ni.e., p(x|S), the decoder processes each 3D point independently (only cross attention and point-wise\noperations are used). The decoder has 8.8 million parameters. 1We assume the depth map measures the distance to the first intersection point of the scene, regardless of\ntransparency. For example, in blender, this can be achieved by setting the alpha threshold to be 0.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 12,
+    "total_chunks": 87,
+    "char_count": 839,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "782d2159-944c-43dc-a245-6424cf4a3f6c",
+    "text": "Published as a conference paper at ICLR 2026 Figure 4: Reconstruction results on various lighting conditions. Boxes on ground-truth highlight\nspecular and Fresnel reflection. Please refer to Tab. 1 for quantitative results. Mesh credit: DigitalSouls (2019); 3Dji (2025); Virtual Museums of Małopolska (2020).",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 13,
+    "total_chunks": 87,
+    "char_count": 308,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "247e8a9d-8d7f-494b-b3f8-c64757794b4b",
+    "text": "View-dependent Gaussian decoder. Similar to our encoder, we use a Perceiver IO architecture (Jaegle et al., 2022) for our Gaussian decoder. We use a low-resolution sparse occupancy grid for our\ninitial queries, and cross attend to the predicted latent S. We use a small MLP to output 64 3D\nGaussians for each occupied voxels (see Sec. Unlike past work that only uses Gaussians with\nview-independent color (Xiang et al., 2025), our decoder predicts Gaussians of spherical harmonics\ndegree 3 for view-dependent radiance. We observe that different harmonic degrees encode distinct\nappearance characteristics (see Sec. The decoder has 77.3 million parameters (see Fig. At training time, we use ground-truth occupancy for the decoder queries, like recent work leveraging\nstructured latent representations (Xiang et al., 2025; He et al., 2025; Wu et al., 2025). After learning\nthe representation, we can either use points sampled from the aforementioned flow-matching geometry\ndecoder or alternatively train a downstream occupancy decoder (see Sec. S5), to directly\npredict sparse occupied voxels from the encoded latent. Thus, at generation time, our approach\ndoes not require a second generative model to predict occupancy as done in structured latent-based\napproaches (Xiang et al., 2025; He et al., 2025; Wu et al., 2025), simplifying the overall pipeline. To demonstrate our latent representation, we train a flow-matching model that generates 3D latents\nconditioned on an image of an object. We rely on a standard Diffusion Transformer (DiT) architecture (Peebles & Xie, 2023), with a zero-initialized learnable positional encoding for each latent token. The input image is encoded by DINOv2-large image embeddings (Oquab et al., 2024) and a learnable\npatchification layer. While we originally considered using more explicit camera geometry encoding,\ne.g., Plucker ray embeddings, we found in practice that such an approach reduced overall performance\n(see Tab.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 14,
+    "total_chunks": 87,
+    "char_count": 1961,
+    "word_count": 295,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "010507d8-71be-4446-bdc0-e2db0c41d4f9",
+    "text": "In total, the model has 623 million parameters (see Fig. Published as a conference paper at ICLR 2026 TRELLIS Ours TRELLIS Ours",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 15,
+    "total_chunks": 87,
+    "char_count": 127,
+    "word_count": 22,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "79096b77-69f3-4a2e-a711-4fe0c82ddad1",
+    "text": "Figure 5: Single image to 3D results. The input image is shown at the center of each set with black\nborder. The rendering at the input view is shown with the input image. Please refer to Tab. 3 for\nquantitative results. Mesh credit: Eleanie (2025); Rigsters (2017); 3d-coat (2015); 3Dji (2025).",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 16,
+    "total_chunks": 87,
+    "char_count": 294,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b2750fa-89fe-44ac-bd3d-26b0c4d13daa",
+    "text": "For each training sample, we rotate the world coordinate system so the input view's camera pose is\nset to the identity orientation, removing the need for the model to infer 3D orientation. As a result, the\ntrained model's outputs align with the input view at identity orientation. We train the model for 600k\niterations on the tokenizer-training set (effective batch size 256 on 128 H100 GPUs for 20 days). We first train the latent representation, and once learned, we then train a latent flow-matching model\nconditioned on an input image. E for more implementation details. We discuss the training\nand evaluation of our latent representation in Sec. 4.1, and our image-to-3d model in Sec. 4.2. We train the encoder-decoder on the 500k high-quality object subset of ObjaverseXL (Deitke et al., 2023) as selected by TRELLIS (Xiang et al., 2025). Unlike TRELLIS, instead",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 17,
+    "total_chunks": 87,
+    "char_count": 869,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a67d98a6-d776-497d-88a8-15be80221065",
+    "text": "Published as a conference paper at ICLR 2026 Table 1: Reconstruction on Toys4k. We provide input needed by individual methods.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 18,
+    "total_chunks": 87,
+    "char_count": 126,
+    "word_count": 20,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1257af02-d8e0-44ac-94f1-837de318f70c",
+    "text": "TRELLIS (Xiang et al., 2025) takes the ground-truth mesh and 150 sphere-distributed renderings. Ours uses RGBD\nimages from 150 evenly distributed views. For appearance evaluation, we render each model's output\nfrom 100 random cameras, varying difficulty by adjusting camera radius.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 19,
+    "total_chunks": 87,
+    "char_count": 281,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ec51032-4c0e-4ff1-814d-7c6db93c9506",
+    "text": "Please refer to Fig. 4 for\nqualitative results and Sec. C for comprehensive quantitative results. The better one is highlighted.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 20,
+    "total_chunks": 87,
+    "char_count": 128,
+    "word_count": 20,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d5237b6b-e759-4fea-aec2-250f2eb43ffa",
+    "text": "Simple, Camera Radius [3, 4] Hard, Camera Radius [1, 3]\nMethod\nPSNR↑ SSIM↑ LPIPS↓ PSNR↑ SSIM↑ LPIPS↓\nTRELLIS 31.12±3.39 0.974±0.022 0.034±0.022 27.57±3.38 0.941±0.050 0.090±0.055\nOurs 34.16±3.39 0.985±0.016 0.023±0.018 32.36±3.77 0.967±0.040 0.055±0.046 Table 2: Geometric reconstruction evaluation. We report Chamfer distances multiplied by 104\nfor readability, computed using 100k sampled points each from ground-truth and reconstruction. As\n3DTopia-XL (Chen et al., 2025b) and TripoSG (Li et al., 2025a) can be sensitive to input geometry, we\nalso list variants with their 10% worst-performing objects removed. We separate our tested approaches\nbased on those that require ground-truth coarse geometry for decoding the latent representation,\nand those that do not utilize this information. Our method outputs the best geometry among the\napproaches in the latter category, and it is competitive with the techniques in the former while using a\n10x smaller latent space. Best and 2nd-Best methods in each category are highlighted. Method Appearance Latent size PBR-Objaverse Toys4k GSO\n0 GT – – 82.49±21.39 76.03±24.30 87.50±21.04\nRequires coarse geometry oracle:\n1 TripoSF (He et al., 2025) ✗ ≈244k × 11 83.11±21.45 76.99±24.95 87.63±21.67\n2 TRELLIS (Xiang et al., 2025) ✓ ≈20k × 11 95.16±20.77 92.21±25.99 105.5±22.44\n3-1 3DTopia-XL (Chen et al., 2025b) ✓ 2048 × 64 412.5±1129. 153.9±305.8 98.50±19.66\n3-2 (worst 10% removed) ✓ 2048 × 64 135.4±95.75 90.61±23.96 93.62±12.86\n4 Ours (oracle, mesh decoder) ✓ 8192 × 32 87.02±24.19 80.32±27.30 94.87±23.42\nDoes not utilize coarse geometry oracle:\n5-1 TripoSG (Li et al., 2025a) ✗ 2048 × 64 269.2±260.0 299.7±265.9 301.3±300.2\n5-2 (worst 10% removed) ✗ 2048 × 64 199.6±125.3 230.5±162.3 219.7±173.6\n6 Shape Tokens (Chang et al., 2024) ✗ 1024 × 16 126.0±23.20 119.8±28.02 130.5±20.72\n7-1 Ours (no mesh decoder) ✓ 8192 × 32 94.08±22.01 88.30±25.23 98.66±21.50\n7-2 Ours (mesh decoder) ✓ 8192 × 32 87.17±24.29 80.55±27.59 95.19±23.64 of using all 500k objects for training, we divide the data into training, validation, and test sets in\nan 8:1:1 ratio.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 21,
+    "total_chunks": 87,
+    "char_count": 2095,
+    "word_count": 316,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "21240908-0fa8-4678-b913-3fe977aa626d",
+    "text": "For each object, we pair it with 3 lighting conditions: 1) fixed smooth area lighting\n(matching TRELLIS)2, 2) an all-white environment map, and 3) randomly placed lights. For each\nconfiguration, we render using Blender from 150 viewpoints uniformly distributed on a sphere, to\nsample the surface light field as input for our encoder. We render from 100 random viewpoints to\nsupervise our view-dependent Gaussian decoder. We evaluate the models on Toys4k (Stojanov et al., 2021), GSO (Downs et al., 2022), and ObjaverseXL (Deitke et al., 2023). For Objaverse-XL, we select a subset of 200 objects with PBR materials,\nwhich we dub PBR-Objaverse. Qualitative results: Fig. 4 shows a few objects with view-dependent appearance, including specular\nreflections from metallic surfaces and Fresnel reflections when viewed at grazing angles. Quantitative results (appearance): To evaluate appearance quality, we render the 3DGS from 100\nrandom views on a sphere and measure PSNR, SSIM (Wang et al., 2004), and LPIPS (Zhang et al.,\n2018). Tab. 1 shows reconstruction metrics under different zoom-in levels on the Toys4k dataset\nrendered with TRELLIS's training lighting condition. Our surface light-field representation outperforms competitor appearance representations across all the tested metrics. More evaluations on other\ndatasets and lightings are described in Sec. Quantitative results (geometry): To evaluate the quality of reconstructed 3D geometry, we estimate\nground truth point clouds by unprojecting the rendered depth of a target object from 100 uniformly\ndistributed views on the sphere and randomly selecting 100k reference points. 2https://github.com/microsoft/TRELLIS/blob/6b0d64751ad54d9c3/dataset_\ntoolkits/blender_script/render.py#L178-L209 Published as a conference paper at ICLR 2026 Input View Ours (same view) TRELLIS (same view) Figure 6: Fidelity to input view.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 22,
+    "total_chunks": 87,
+    "char_count": 1878,
+    "word_count": 266,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f576c0b-af57-4d73-8e6d-64e3eb1e0392",
+    "text": "Our image-to-3d generative model respects the coordinate system\nof the input view. In contrast, existing state-of-the-art techniques, e.g., TRELLIS (Xiang et al., 2025),\ndo not. Mesh credit: Virtual Museums of Małopolska (2016); animanyarty (2022).",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 23,
+    "total_chunks": 87,
+    "char_count": 248,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "26fdc212-d0da-449c-bca2-e4aae3648666",
+    "text": "Chamfer distance in Sec. C.1 between these ground truth point clouds and reconstructed ones. For\nLiTo and Chang et al. (2024), we sample 100k points from the flow-matching velocity decoder to\nproduce the output point cloud. To fairly compare to baselines that output meshes (Xiang et al.,\n2025; Li et al., 2025a; He et al., 2025), we also train a mesh decoder (Sec. Similar to the ground truth points, we unproject rendered depths of the mesh from another set of 100\nviews on the sphere and select 100k points for the Chamfer calculation. Tab. 2 shows geometry evaluation when the input is lit with TRELLIS's training lighting. Our method\n(row 7-1 and 7-2) outperforms most geometry-only latent representations, despite we additionally represent appearance information and do not utilize additional ground truth coarse geometry information\nthat other state-of-the-art approaches require (Xiang et al., 2025; He et al., 2025). Table 3: Single-image-to-3D generation on Toys4k. KID is reported by ×100. CFG scale for both\nmodels are 3.0.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 24,
+    "total_chunks": 87,
+    "char_count": 1035,
+    "word_count": 165,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "402d1556-0d4c-4bbe-beb4-d17e64da4378",
+    "text": "The best is highlighted. See Fig. 5, 6 for qualitative results. Conditioning View Novel View\nMethod CLIP↑\nFID↓ KID↓ FIDdino↓ KIDdino↓ FID↓ KID↓ FIDdino↓ KIDdino↓\nTRELLIS 0.899±0.045 12.84 0.088 84.692 2.311 7.600 0.100 67.458 3.166\nOurs 0.905±0.041 6.219 0.009 41.621 1.333 6.216 0.058 66.530 3.522 Fig. 5 contains qualitative results. Our model generates complex geometry and view-dependent\nappearance, despite being trained on other lighting types. We also visualize our model's input view\nfidelity compared to TRELLIS in Fig. 6 to verify our training strategy in Sec. 3.5. We quantitatively evaluate generation results with the same fixed area lighting as TRELLIS to allow\na fair comparison. We calculate two distribution-wise metrics. First, to evaluate the fidelity of the\ngenerative model to the input content, we render the generated 3D asset at the same pose as the\nconditioning view. As shown in Tab. 3, our approach produces significantly improved FID (Heusel\net al., 2017) and KID (Binkowski et al., 2018) scores in this setting compared to TRELLIS. Second, to\nmeasure the overall quality of the generated asset, we render from four novel views distributed around\nthe object at a pitch of 30◦, following the evaluation setup of TRELLIS (Xiang et al., 2025). As\nshown in Tab. 3, despite our model's increased faithfulness to the input view, the overall generation\nperformance does not significantly degrade. We propose an autoencoder that learns a compact latent space for 3D assets with view-dependent\nappearance. In particular, we build an encoding of the surface light field, that can be easily produced\nvia multi-view RGBD rendering. With a flow-matching geometry decoder (or a separately-trained\nmesh decoder) and a view-dependent Gaussian decoder, our representation can be easily applied with\nan off-the-shelf DiT for generating view-dependent 3D assets.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 25,
+    "total_chunks": 87,
+    "char_count": 1871,
+    "word_count": 288,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3704a68b-45d4-49e0-ab31-0ba02577fff7",
+    "text": "We validate the performance of our\nview-dependent 3D representation in both reconstruction and generation. Published as a conference paper at ICLR 2026",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 26,
+    "total_chunks": 87,
+    "char_count": 151,
+    "word_count": 22,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aeed802f-e10d-4709-b053-1ce898abbb25",
+    "text": "We thank Muhammed Kocabas for creating the LiTo demo. We are grateful to Miguel Angel Bautista\nMartin, Hadi Pouransari, Josh Susskind, Barry Theobald, Yuyang Wang, and the reviewers for their\nvaluable feedback on our paper. We also thank Denise Hui, David Koski, and the broader Apple\ninfrastructure team for maintaining the computing resources that supported this work.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 27,
+    "total_chunks": 87,
+    "char_count": 370,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "93169537-a3d7-45b1-86b4-c893396fbf2e",
+    "text": "Names are\nlisted in alphabetical order by last name. Drummer of the revel infantry regiment, 2019. URL https://skfb.ly/6Xq6W. Accessed September 2025. Licensed under Creative Commons Zero Public Domain. 17 Robot steampunk 3d-coat 4.5 pbr, 2015. URL https://skfb.ly/EEIE. Accessed\nSeptember 2025. Licensed under Creative Commons Attribution. 7 Mechanical beast, 2025.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 28,
+    "total_chunks": 87,
+    "char_count": 366,
+    "word_count": 49,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3e87c999-274f-4ea2-96c0-aa6447e1c04c",
+    "text": "Coffee grinder, 2025. URL https://skfb.ly/pzpn7. Accessed September 2025. Licensed under Creative Commons Attribution. 6 URL https://skfb.ly/ovDBJ. Accessed September 2025. Licensed under Creative Commons Attribution. 17 Conrad carriage, 2020. URL https://skfb.ly/oyy9z. Accessed September\n2025. Licensed under Creative Commons Attribution. 17 Alienor.org, Conseil des musées. La grand' goule, 2016. URL https://skfb.ly/UvvD. Accessed September 2025.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 30,
+    "total_chunks": 87,
+    "char_count": 450,
+    "word_count": 52,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f5eed62a-9309-457f-a3ad-e304c336f060",
+    "text": "Hypostomus / coroncoro, 2019. URL https://skfb.ly/6W8Dz. Accessed September\n2025. Licensed under Creative Commons Attribution. 17 URL https://skfb.ly/otWPH. Accessed September 2025. Licensed under Creative Commons Attribution. 9 Spartan Helmet, 2016. URL https://skfb.ly/Moyw. Accessed September\n2025. Licensed under Creative Commons Attribution-NonCommercial. 1 Mikolaj Binkowski, Danica J. Sutherland, Michal Arbel, and Arthur Gretton. Demystifying MMD\nGANs. In International Conference on Learning Representations (ICLR), 2018. 9",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 32,
+    "total_chunks": 87,
+    "char_count": 532,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "330aaff4-5543-42ed-97e0-4957c25fd1e1",
+    "text": "Cartoon Tractor T40, 2015. URL https://skfb.ly/FNBC. Accessed September 2025. Licensed under Creative Commons Attribution-NonCommercial. 1 Ruojin Cai, Guandao Yang, Hadar Averbuch-Elor, Zekun Hao, Serge Belongie, Noah Snavely, and\nBharath Hariharan.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 33,
+    "total_chunks": 87,
+    "char_count": 249,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "be84bd87-0c07-4a14-af77-722e4371888c",
+    "text": "Learning Gradient Fields for Shape Generation. In European Conference on\nComputer Vision (ECCV), 2020. 2, 16 Jen-Hao Rick Chang, Yuyang Wang, Miguel Angel Bautista Martin, Jiatao Gu, Xiaoming Zhao, Josh\nSusskind, and Oncel Tuzel. 3D Shape Tokenization via Latent Flow Matching. arXiv, 2024. 1, 2,\n4, 5, 8, 9, 16 Rui Chen, Jianfeng Zhang, Yixun Liang, Guan Luo, Weiyu Li, Jiarui Liu, Xiu Li, Xiaoxiao Long,\nJiashi Feng, and Ping Tan.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 34,
+    "total_chunks": 87,
+    "char_count": 432,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db2ed15f-01f0-41fe-ae46-d91b5ca5fde0",
+    "text": "Dora: Sampling and Benchmarking for 3D Shape Variational AutoEncoders. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2025a. Zhaoxi Chen, Jiaxiang Tang, Yuhao Dong, Ziang Cao, Fangzhou Hong, Yushi Lan, Tengfei Wang,\nHaozhe Xie, Tong Wu, Shunsuke Saito, et al. 3DTopia-XL: Scaling high-quality 3d asset generation\nvia primitive diffusion. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR),\n2025b. 2, 3, 8, 16 Published as a conference paper at ICLR 2026 Gene Chou, Yuval Bahat, and Felix Heide.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 35,
+    "total_chunks": 87,
+    "char_count": 535,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8b533bb0-7af8-4a2b-96ed-f37483815a68",
+    "text": "Diffusion-sdf: Conditional generative modeling of signed\ndistance functions. In IEEE International Conference on Computer Vision (ICCV), 2023. 16 FlashAttention-2: Faster attention with better parallelism and work partitioning. In\nInternational Conference on Learning Representations (ICLR), 2024. 5 Matt Deitke, Ruoshi Liu, Matthew Wallingford, Huong Ngo, Oscar Michel, Aditya Kusupati, Alan\nFan, Christian Laforte, Vikram Voleti, Samir Yitzhak Gadre, Eli VanderBilt, Aniruddha Kembhavi,\nCarl Vondrick, Georgia Gkioxari, Kiana Ehsani, Ludwig Schmidt, and Ali Farhadi. Objaverse-xl:\nA universe of 10m+ 3d objects. arXiv, 2023. 7, 8",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 36,
+    "total_chunks": 87,
+    "char_count": 631,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "729209b8-7cce-4584-8d09-4f0776ab597e",
+    "text": "Delicious red apple, 2019. URL https://skfb.ly/6RxAt. Accessed September\n2025. Licensed under Creative Commons Attribution-NonCommercial. 6, 28 Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn, Xiaohua Zhai, Thomas\nUnterthiner, Mostafa Dehghani, Matthias Minderer, Georg Heigold, Sylvain Gelly, Jakob Uszkoreit,\nand Neil Houlsby. An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale. In International Conference on Learning Representations (ICLR), 2021. 5 Laura Downs, Anthony Francis, Nate Koenig, Brandon Kinman, Ryan Michael Hickman, Krista\nReymann, Thomas Barlow McHugh, and Vincent Vanhoucke. Google Scanned Objects: A HighQuality Dataset of 3D Scanned Household Items. In International Conference on Robotics and\nAutomation (ICRA), 2022. 8 Fox metal statues, 2025.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 37,
+    "total_chunks": 87,
+    "char_count": 815,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "81d8fc5e-0491-4bc0-af02-3cb2256f1db1",
+    "text": "URL https://skfb.ly/pAyEJ. Accessed September 2025. Licensed under Creative Commons Attribution. 7, 28 Zhengyang Geng, Mingyang Deng, Xingjian Bai, J Zico Kolter, and Kaiming He. Mean flows for\none-step generative modeling. In Advances in Neural Information Processing Systems (NeurIPS),\n2025. 20",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 38,
+    "total_chunks": 87,
+    "char_count": 296,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e0dc32b8-4146-4863-8bdf-7962f41c8f3f",
+    "text": "Toaster - kitchenaid artsan, 2013. URL https://www.blendswap.com/blend/\n8552. Accessed September 2025. Licensed under Creative Commons Zero. 17 Xianglong He, Zi-Xin Zou, Chia-Hao Chen, Yuan-Chen Guo, Ding Liang, Chun Yuan, Wanli Ouyang,\nYan-Pei Cao, and Yangguang Li. SparseFlex: High-Resolution and Arbitrary-Topology 3D Shape\nModeling. arXiv, 2025. 1, 2, 6, 8, 9, 16 Martin Heusel, Hubert Ramsauer, Thomas Unterthiner, Bernhard Nessler, and Sepp Hochreiter. GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium. In\nAdvances in Neural Information Processing Systems (NeurIPS), 2017. 9 Ka-Hei Hui, Aditya Sanghi, Arianna Rampini, Kamal Rahimi Malekshan, Zhengzhe Liu, Hooman\nShayani, and Chi-Wing Fu. Make-a-shape: a ten-million-scale 3d shape model. In International\nConference on Machine Learning (ICML), 2024. 2, 16 Andrew Jaegle, Sebastian Borgeaud, Jean-Baptiste Alayrac, Carl Doersch, Catalin Ionescu, David\nDing, Skanda Koppula, Daniel Zoran, Andrew Brock, Evan Shelhamer, et al.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 39,
+    "total_chunks": 87,
+    "char_count": 1015,
+    "word_count": 140,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "53217770-838a-4990-9c85-787772824b74",
+    "text": "Perceiver IO: a\nGeneral Architecture for Structured Inputs & Outputs. In International Conference on Learning\nRepresentations (ICLR), 2022. 5, 6 Bernhard Kerbl, Georgios Kopanas, Thomas Leimkuehler, and George Drettakis. 3D Gaussian\nSplatting for Real-Time Radiance Field Rendering. ACM Transactions on Graphics (TOG), 2023. Benjamin Lefaudeux, Francisco Massa, Diana Liskovich, Wenhan Xiong, Vittorio Caggiano, Sean\nNaren, Min Xu, Jieru Hu, Marta Tintore, Susan Zhang, Patrick Labatut, Daniel Haziza, Luca\nWehrstedt, Jeremy Reizenstein, and Grigory Sizov. xformers: A modular and hackable transformer\nmodelling library. https://github.com/facebookresearch/xformers, 2022. 5 Yangguang Li, Zi-Xin Zou, Zexiang Liu, Dehu Wang, Yuan Liang, Zhipeng Yu, Xingchao Liu,\nYuan-Chen Guo, Ding Liang, Wanli Ouyang, et al. TripoSG: High-Fidelity 3D Shape Synthesis\nusing Large-Scale Rectified Flow Models. arXiv, 2025a. 1, 2, 5, 8, 9, 16 Published as a conference paper at ICLR 2026 Zhihao Li, Yufei Wang, Heliang Zheng, Yihao Luo, and Bihan Wen. Sparc3D: Sparse representation\nand construction for high-resolution 3d shapes modeling. arXiv, 2025b. 16",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 40,
+    "total_chunks": 87,
+    "char_count": 1139,
+    "word_count": 157,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "39eaf6b1-276b-4c7f-9e5f-3f5200d90387",
+    "text": "Love, Death + Robots, small orange bot, 2019. URL https://skfb.ly/6VVUM. Accessed September 2025. Licensed under Creative Commons Attribution. 1 Ilya Loshchilov and Frank Hutter.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 41,
+    "total_chunks": 87,
+    "char_count": 178,
+    "word_count": 24,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "963dadf5-14fb-4e42-b4ea-0329cb64ec1a",
+    "text": "Decoupled weight decay regularization. In International Conference on Learning Representations (ICLR), 2019. 23 Diffusion probabilistic models for 3d point cloud generation. In IEEE Conference\non Computer Vision and Pattern Recognition (CVPR), 2021. 16 Quan Meng, Lei Li, Matthias Nießner, and Angela Dai.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 42,
+    "total_chunks": 87,
+    "char_count": 305,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "82991d7a-3c25-4aef-8ae8-42b81f16ad11",
+    "text": "LT3SD: Latent trees for 3d scene diffusion. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2025. 2, 16 Gart_220_centaur, 2019. URL https://skfb.ly/6WR7W. Accessed September\n2025. Licensed under Creative Commons Attribution. 17 Alex Nichol, Heewoo Jun, Prafulla Dhariwal, Pamela Mishkin, and Mark Chen. Point-e: A system\nfor generating 3d point clouds from complex prompts. arXiv, 2022. 16",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 43,
+    "total_chunks": 87,
+    "char_count": 411,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2dff14a8-f8d1-452c-87d8-a3c73cf0d678",
+    "text": "Maxime Oquab, Timothée Darcet, Théo Moutakanni, Huy Q. Vo, Marc Szafraniec, Vasil Khalidov,\nPierre Fernandez, Daniel Haziza, Francisco Massa, Alaaeldin El-Nouby, Mahmoud Assran, Nicolas\nBallas, Wojciech Galuba, Russ Howes, Po-Yao (Bernie) Huang, Shang-Wen Li, Ishan Misra,\nMichael G. Rabbat, Vasu Sharma, Gabriel Synnaeve, Huijiao Xu, Hervé Jégou, Julien Mairal,\nPatrick Labatut, Armand Joulin, and Piotr Bojanowski. DINOv2: Learning Robust Visual Features\nwithout Supervision. Transactions on Machine Learning Research (TMLR), 2024. 6 Allan Pinkerton electric horse, 2018.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 44,
+    "total_chunks": 87,
+    "char_count": 573,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0e78824d-1733-4fe3-a1f9-3048e4699542",
+    "text": "URL https://skfb.ly/6AtPI. Accessed September 2025. Licensed under Creative Commons Attribution. 1 William Peebles and Saining Xie. Scalable diffusion models with transformers. In IEEE International\nConference on Computer Vision (ICCV), 2023. 6 Xuanchi Ren, Jiahui Huang, Xiaohui Zeng, Ken Museth, Sanja Fidler, and Francis Williams. XCube:\nLarge-Scale 3D Generative Modeling using Sparse Voxel Hierarchies. In IEEE Conference on\nComputer Vision and Pattern Recognition (CVPR), 2024. 2, 16 Lion crushing a serpent, 2017.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 45,
+    "total_chunks": 87,
+    "char_count": 520,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "561d7b1b-0bad-4f56-a58d-133cf93d07e3",
+    "text": "URL https://skfb.ly/68s9T. Accessed September\n2025. Licensed under Creative Commons Attribution. 7 @sanyabeast. [Archive] SM Vintage Scooter 01 A, 2021. URL https://skfb.ly/oDtLN. Accessed September 2025. Licensed under Creative Commons Attribution. 1 Tianchang Shen, Jacob Munkberg, Jon Hasselgren, Kangxue Yin, Zian Wang, Wenzheng Chen, Zan\nGojcic, Sanja Fidler, Nicholas Sharp, and Jun Gao.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 46,
+    "total_chunks": 87,
+    "char_count": 393,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "19f67157-0a63-4029-a397-3dd82ccd56a1",
+    "text": "Flexible Isosurface Extraction for GradientBased Mesh Optimization. ACM Transactions on Graphics (TOG), 2023. 23 Stefan Stojanov, Anh Thai, and James M. Using Shape to Categorize: Low-Shot Learning\nwith an Explicit Shape Bias. In IEEE Conference on Computer Vision and Pattern Recognition\n(CVPR), 2021. 8 Zhicong Tang, Shuyang Gu, Chunyu Wang, Ting Zhang, Jianmin Bao, Dong Chen, and Baining Guo. Volumediffusion: Flexible text-to-3d generation with efficient volumetric encoder. arXiv, 2023. 16 Arash Vahdat, Francis Williams, Zan Gojcic, Or Litany, Sanja Fidler, Karsten Kreis, et al.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 47,
+    "total_chunks": 87,
+    "char_count": 586,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cefea43b-7f7b-47f7-aef0-587aa8ea1780",
+    "text": "Lion:\nLatent point diffusion models for 3d shape generation. Advances in Neural Information Processing\nSystems (NeurIPS), 2022. 16 Ashish Vaswani, Noam M. Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez,\nLukasz Kaiser, and Illia Polosukhin. Attention is All You Need. In Advances in Neural Information\nProcessing Systems (NeurIPS), 2017. 23 Virtual Museums of Małopolska.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 48,
+    "total_chunks": 87,
+    "char_count": 390,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cc2dbce6-92a5-4297-936a-acfc16cecde4",
+    "text": "Black and white \"belweder\", 2016. URL https://skfb.ly/\nNnEr. Accessed September 2025. Licensed under Creative Commons Zero Public Domain. 9 Published as a conference paper at ICLR 2026 Virtual Museums of Małopolska.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 49,
+    "total_chunks": 87,
+    "char_count": 215,
+    "word_count": 31,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b6b96eca-6883-4789-9503-8e342deec6db",
+    "text": "Metal \"kontusz\" knob, 2020. URL https://skfb.ly/6VyBJ. Accessed September 2025. Licensed under Creative Commons Zero Public Domain. 6 Bruce Walter, Stephen R. Marschner, Hongsong Li, and Kenneth E. Microfacet models for\nrefraction through rough surfaces. In Eurographics Conference on Rendering Techniques, 2007. Ruicheng Wang, Sicheng Xu, Yue Dong, Yu Deng, Jianfeng Xiang, Zelong Lv, Guangzhong Sun,\nXin Tong, and Jiaolong Yang.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 50,
+    "total_chunks": 87,
+    "char_count": 430,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "524112c5-fb6e-408c-8695-82de28dae44f",
+    "text": "Moge-2: Accurate monocular geometry with metric scale and sharp\ndetails. arXiv, 2025. 18 Zhou Wang, Alan C Bovik, Hamid R Sheikh, and Eero P Simoncelli. Image quality assessment: from\nerror visibility to structural similarity. IEEE Transactions on Image Processing, 2004. 8 webdataset development team. webdataset: A High-Performance Python I/O System for Deep\nLearning, 2026. URL https://github.com/webdataset/webdataset. Accessed\nSeptember 2025. 24 Azuma, Ken Aldinger, Brian Curless, Tom Duchamp, David H. Salesin,\nand Werner Stuetzle. Surface Light Fields for 3D Photography. In ACM SIGGRAPH, 2000. 4 Shuang Wu, Youtian Lin, Feihu Zhang, Yifei Zeng, Jingxi Xu, Philip Torr, Xun Cao, and Yao Yao.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 51,
+    "total_chunks": 87,
+    "char_count": 699,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "df27f0d5-82ec-4d66-b2a4-46727d7167e0",
+    "text": "Direct3D: Scalable Image-to-3D Generation via 3D Latent Diffusion Transformer. In Advances in\nNeural Information Processing Systems (NeurIPS), 2024. 2, 16 Shuang Wu, Youtian Lin, Feihu Zhang, Yifei Zeng, Yikang Yang, Yajie Bao, Jiachen Qian, Siyu Zhu,\nXun Cao, Philip Torr, et al. Direct3d-s2: Gigascale 3d generation made easy with spatial sparse\nattention. In Advances in Neural Information Processing Systems (NeurIPS), 2025. 6, 16 Jianfeng Xiang, Zelong Lv, Sicheng Xu, Yu Deng, Ruicheng Wang, Bowen Zhang, Dong Chen, Xin\nTong, and Jiaolong Yang. Structured 3d latents for scalable and versatile 3d generation. In IEEE\nConference on Computer Vision and Pattern Recognition (CVPR), 2025. 2, 3, 5, 6, 7, 8, 9, 16, 18,\n19, 20, 23 Guandao Yang, Xun Huang, Zekun Hao, Ming-Yu Liu, Serge Belongie, and Bharath Hariharan. PointFlow: 3D point cloud generation with continuous normalizing flows. In IEEE International\nConference on Computer Vision (ICCV), 2019. 2, 16 Jiayu Yang, Taizhang Shang, Weixuan Sun, Xibin Song, Ziang Chen, Senbo Wang, Shenzhou Chen,\nWeizhe Liu, Hongdong Li, and Pan Ji. Pandora3D: A Comprehensive Framework for High-Quality\n3D Shape and Texture Generation. arXiv, 2025. 16 Lior Yariv, Omri Puny, Oran Gafni, and Yaron Lipman.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 52,
+    "total_chunks": 87,
+    "char_count": 1247,
+    "word_count": 191,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2c8cb143-3587-4872-9942-9856b3df1ade",
+    "text": "Mosaic-sdf for 3d generative models. In\nIEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2024. 16 Biao Zhang, Matthias Nießner, and Peter Wonka. 3DILG: Irregular Latent Grids for 3D Generative\nModeling. In Advances in Neural Information Processing Systems (NeurIPS), 2022. 3, 16 Biao Zhang, Jiapeng Tang, Matthias Nießner, and Peter Wonka. 3DShape2VecSet: A 3D Shape\nRepresentation for Neural Fields and Generative Diffusion Models. ACM Transactions on Graphics\n(TOG), 2023. 2, 3, 5, 16 Longwen Zhang, Ziyu Wang, Qixuan Zhang, Qiwei Qiu, Anqi Pang, Haoran Jiang, Wei Yang, Lan\nXu, and Jingyi Yu.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 53,
+    "total_chunks": 87,
+    "char_count": 613,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cb583a17-2d92-4743-8f6f-a0ea5ccd0425",
+    "text": "CLAY: A Controllable Large-scale Generative Model for Creating High-quality\n3D Assets. ACM Transactions on Graphics (TOG), 2024. 2, 3, 16 Richard Zhang, Phillip Isola, Alexei A. Efros, Eli Shechtman, and Oliver Wang. The Unreasonable\nEffectiveness of Deep Features as a Perceptual Metric. IEEE Conference on Computer Vision and\nPattern Recognition (CVPR), 2018. 8 Zibo Zhao, Wen Liu, Xin Chen, Xianfang Zeng, Rui Wang, Pei Cheng, BIN FU, Tao Chen, Gang YU,\nand Shenghua Gao.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 54,
+    "total_chunks": 87,
+    "char_count": 474,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "37888cd4-eedc-49c0-8c10-e3a3ecfa121b",
+    "text": "Michelangelo: Conditional 3D Shape Generation based on Shape-Image-Text\nAligned Latent Representation. In Advances in Neural Information Processing Systems (NeurIPS),\n2023. 16 Published as a conference paper at ICLR 2026 Zibo Zhao, Zeqiang Lai, Qingxiang Lin, Yunfei Zhao, Haolin Liu, Shuhui Yang, Yifei Feng, Mingxin\nYang, Sheng Zhang, Xianghui Yang, et al. Hunyuan3D 2.0: Scaling Diffusion Models for High\nResolution Textured 3D Assets Generation. arXiv, 2025. 2, 16 Published as a conference paper at ICLR 2026 APPENDIX – LITO: SURFACE LIGHT FIELD TOKENIZATION This supplement is organized as follows: A discusses more on related works; B discusses limitations; C provides more comprehensive reconstruction quantitative results; D provides more comprehensive generation quantitative results; E introduces more implementation details; F showcases more studies; G breaks down full contributions.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 55,
+    "total_chunks": 87,
+    "char_count": 896,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "36a546ce-9183-4b76-8629-ba3879163c1d",
+    "text": "S1 provides an overview of related works with respect to 1) how they model the geometry; 2)\nhow they model the appearance; 3) the requirements on the data preparation to enable the model\ntraining; 4) the compactness of the latent size; 5) the input to the encoder and the training dataset. We utilize 3D Gaussians with spherical harmonics to model surface light field. While we show that\nthe improved reconstruction quality as we increase the degree of the spherical harmonics, we are\nconstraint by the 3DGS implementation that supports up to degree 3, which limits our capability to\nfaithfully reconstruct transparent or high-frequency specularities. C COMPREHENSIVE RECONSTRUCTION RESULTS We provide comprehensive quantitative results for reconstruction in Tab. As discussed\nin Sec. 4.1, we pair each dataset with three distinct lighting conditions to thoroughly evaluate the\nappearance modeling capabilities of our method. Unlike previous approaches, which primarily assess\nperformance on zoomed-out views, we additionally evaluate appearance modeling under close-up\nsettings. Close-up views demand greater fidelity in capturing high-frequency details, where all\nmethods face challenges; nevertheless, LiTo consistently demonstrates the most robust performance. Further, we provide qualitative results for reconstructed mesh in Fig. We use the following definition for Chamfer distance for any specific 3D asset reported in the\nquantitative results: CD(XGT, Xpred) = X min ∥xGT −xpred∥2\n|XGT| xpred∈Xpred\nxGT∈XGT\n+ X min ∥xGT −xpred∥2, (S1)\n|Xpred| xGT∈XGT\nxpred∈Xpred where XGT and Xpred denote the ground-truth and predicted sets of points respectively. C.2 ABLATIONS ON MODEL DESIGNS As far as we know (see Tab. S1), we are the first to utilize 1) viewing directions in the encoder; and 2)\nhigher order spherical harmonics in the decoder during 3D asset tokenization training.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 56,
+    "total_chunks": 87,
+    "char_count": 1882,
+    "word_count": 280,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dfbe8d8b-3aeb-4339-8267-16871ac39a6d",
+    "text": "Published as a conference paper at ICLR 2026 Table S1: Recent latent 3D representations. The table provides a summary of recent 3D representations and their properties. We compare the properties that are relevant to machine learning\napplications. Minimal preprocessing indicates how easy is it to utilize a 3D dataset (e.g., do we need\nto convert data to watertight meshes, do we need optimization radiance fields to acquire the actual\ntraining dataset). Continuous latent indicates whether the 3D representation is fully differentiable\n(e.g., no graph topology or sparsity patterns). Total latent dimension indicates the total size to\nrepresent one scene. Note that there may be multiple variants of the same method with different latent\ndimensions. We choose the representative one in each paper. * indicates a second generative model is\nused in the paper to add texture to a texture-less meshes. name geometry appearance data requirements total latent dimension input to encoder training dataset DDPM-PointCloud (2021) p(xyz) - point cloud 256 point cloud (x) ShapeNet PointFlow (2019) p(xyz) - point cloud 512 point cloud (x) ShapeNet ShapeGF (2020) p(xyz) - point cloud 256 point cloud (x) ShapeNet Shape Token (2024) p(xyz) - point cloud 1024 × 16 point cloud (x) Objaverse\nsurface light field\nOurs p(xyz) view-dep. multiview RGBD 8192 × 32 Objaverse, ObjaverseXL\n3DGS (x, c, ˆd) Point-E (2022) fixed size point set diffuse RGB point cloud (x) - - proprietary dataset",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 58,
+    "total_chunks": 87,
+    "char_count": 1473,
+    "word_count": 232,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "afa62913-b66e-4369-a3c1-1bbed2ae2539",
+    "text": "LION (2022) fixed size point set - point cloud 128 + 8192 point cloud (x) ShapeNet 3DShape2VecSet (2023) occupancy field - watertight mesh 512 × 32 point cloud (x) ShapeNet-watertight 3DILG (2022) occupancy field - watertight mesh 512 × 2 point cloud (x) ShapeNet-watertight Michelangelo (2023) occupancy field - watertight mesh 512 × 64 + 768 point cloud (x, ˆn) ShapeNet, 3D cartoon monster CLAY (2024) occupancy field -* watertight mesh 2048 × 64 point cloud (x) Objaverse Dora (2025a) occupancy field - watertight mesh 1280 × 64 point cloud (x) Objaverse Pandora3D (2025) occupancy field -* watertight mesh 2048 × 64 point cloud (x, ˆn) Objaverse, ObjaverseXL,\nABO, BuildingNet,\nHSSD, Toy4k,\npolygone dataset, proprietary Direct3D (2024) occupancy grid - watertight mesh 3 × 32 × 32 × 16 point cloud (x, ˆn) proprietary dataset\nDirect3D-s2 (2025) SDF grid - watertight mesh (1283 × 16) point cloud (x, ˆn) Objaverse, ObjaverseXL\nXCube (2024) occupancy grid - watertight mesh 163 × 16 + more occupancy grid ShapeNet, Objaverse\n(2×1×2)×\nLT3SD (2025) UDF grid - watertight mesh (5+43×4 + 163×4) UDF grid 3D Front Diffusion-SDF (2023) SDF field - watertight mesh 768 point cloud (x) ShapeNet-watertight, YCB\nMOSAIC-SDF (2024) SDF field - watertight mesh 1024 × (3+1+73) - ShapeNet-watertight,\nand optimization scalable 3D captioning dataset\nTripoSG (2025a) SDF field - watertight mesh 2048 × 64 point cloud (x, ˆn) Objaverse, ObjaverseXL Hunyuan3D 2.0 (2025) SDF field -* watertight mesh 3072 × 64 point cloud (x) Objaverse, ObjaverseXL, more Make-A-Shape (2024) SDF grid - watertight mesh 9M - 18 datasets\n2048×(3+1+43)\n3DTopia-XL (2025b) PrimX (SDF field) RGB, PBR PrimX optimization = 139, 264 PrimX Objaverse Sparc3D (2025b) SDF grid - watertight mesh, unknown SDF grid\ngrid optimization Volume Diffusion (2023) radiance field diffuse RGB run inference network 323 × 4 multiview images Objaverse ∼20,000 × 11\nTRELLIS (2025) occupancy grid diffuse 3DGS multiview DINOv2 (643 grid) sparse feature grid ABO,Objaverse,3D-future,ObjaverseXL,HSSD\n∼183,000 × 11\nTripoSF (2025) SDF grid - multiview depth and normal (2563 grid) point cloud (x, ˆn) Objaverse, ObjaverseXL When examining LPIPS across Tab.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 59,
+    "total_chunks": 87,
+    "char_count": 2199,
+    "word_count": 342,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "84d377bc-5790-4429-b52b-fc7c2bafbaa6",
+    "text": "S2, S3, and S4, we observe: 1) increasing the degree of spherical\nharmonics from 0 to 3 improves the capacity consistently, e.g., from row 1-3 to 1-6 (or row 2-3 to\n2-6, 3-3 to 3-6) in all three tables; and 2) simply adding ray information does not directly enhance\nappearance modeling performance, e.g., row 1-2 vs. 1-3 (or row 2-2 vs. 2-3, 3-2 vs. 3-3). We\nhypothesize that this is because zero-degree spherical harmonics cannot capture view-dependent\neffects, which then becomes a bottleneck, preventing the model from fully leveraging the information\ncontained in the view directions. To verify, we ablate by removing the ray information from our\nencoder when using 3-degree spherical harmonics. The improvement in row 1-6, which incorporates\nray information, from 1-7 (or row 2-6 vs. 2-7, 3-6 vs. 3-7) corroborates our hypothesis. C.3 ABLATIONS ON NUMBER OF INPUT VIEWS IN INFERENCE We are interested in understanding to what extent our approach is robust to the discrepancies between\nthe number of input views during training and inference. Quantitative evaluations are in Tab. Published as a conference paper at ICLR 2026 Ground truth Ours Ours (oracle) TRELLIS Figure S1: Mesh comparisons. We demonstrate the qualities of our mesh decoder results to TRELLIS. As highlighted, our produced mesh maintains more details. Mesh credit: alzarac (2019); Alienor.org,\nConseil des musées (2016); 1812panorama (2019); AdamJonesCGD (2020); nastasyas (2019);\na108082046 (2022); GJ2012 (2013). Published as a conference paper at ICLR 2026 Table S2: Reconstruction on Toys4k.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 60,
+    "total_chunks": 87,
+    "char_count": 1568,
+    "word_count": 243,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "767b1714-51cd-42a9-8cca-9f729d37b679",
+    "text": "For 3D assets, we adapt inputs per model. TRELLIS (Xiang\net al., 2025) takes the ground-truth mesh and 150 sphere-distributed renderings. Ours uses RGBD\nimages from 150 evenly distributed views. For appearance evaluation, we render each model's output\nfrom 100 random cameras, varying difficulty by adjusting camera radius. Each model is further\nevaluated under three distinct lighting conditions. Importantly, no separate models are trained; all\nevaluations are conducted on the same model.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 61,
+    "total_chunks": 87,
+    "char_count": 491,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ba8a7b74-cd3a-4013-97a9-ae4cc38dd5e3",
+    "text": "As a result, we conduct evaluations at the scale of\nover 3000 (objects) × 100 (views) × 2 (difficulties) × 3 (lightings) ≈1.8 million images. We\nreport Chamfer distances multiplied by 104 for readability, computed using 100k sampled points each\nfrom the ground truth and reconstruction. We report in the format of mean±std, where the standard\ndeviation is computed across objects. SH Enc Pred Simple, Camera Radius [3, 4] Hard, Camera Radius [1, 3]\nMethod Mesh CD (100k)↓\nDeg Ray Occ PSNR↑ SSIM↑ LPIPS↓ PSNR↑ SSIM↑ LPIPS↓ Uniform Lighting\n1-1 TRELLIS 0 ✗ - ✓ 28.17±4.09 0.970±0.024 0.039±0.024 24.63±4.01 0.934±0.054 0.098±0.059 95.19±26.41\n1-2 Ours 0 ✗ ✗ ✗ 34.40±3.62 0.984±0.017 0.025±0.019 32.19±3.95 0.965±0.042 0.059±0.047 90.22±25.48\n1-3 Ours 0 ✓ ✗ ✗ 34.44±3.47 0.984±0.017 0.026±0.020 32.18±3.79 0.964±0.042 0.060±0.048 89.24±25.34\n1-4 Ours 1 ✓ ✗ ✗ 35.12±3.39 0.986±0.015 0.023±0.017 33.17±3.76 0.968±0.040 0.054±0.044 88.42±25.21\n1-5 Ours 2 ✓ ✗ ✗ 35.32±3.45 0.986±0.016 0.023±0.017 33.29±3.80 0.969±0.040 0.055±0.044 88.94±25.34\n1-6 Ours 3 ✓ ✗ ✗ 35.32±3.38 0.986±0.015 0.022±0.017 33.39±3.73 0.969±0.039 0.053±0.044 88.13±25.30\n1-7 Ours 3 ✗ ✗ ✗ 35.54±3.63 0.986±0.015 0.023±0.017 33.37±3.97 0.969±0.040 0.055±0.044 89.63±25.16\n1-8 Ours 3 ✓ ✓ ✗ 35.27±3.36 0.986±0.015 0.022±0.017 33.38±3.71 0.969±0.040 0.052±0.044 88.13±25.29\n1-9 Ours 3 ✓ ✓ ✓ 35.27±3.36 0.986±0.015 0.022±0.017 33.38±3.71 0.969±0.040 0.052±0.044 80.42±27.90\n1-10 Oracle 3 – – ✓ 35.26±3.34 0.986±0.015 0.022±0.017 33.42±3.69 0.970±0.039 0.051±0.043 80.17±27.58 TRELLIS Lighting\n2-1 TRELLIS 0 ✗ - ✓ 31.12±3.39 0.974±0.022 0.034±0.022 27.57±3.38 0.941±0.050 0.090±0.055 92.21±25.99\n2-2 Ours 0 ✗ ✗ ✗ 32.47±3.83 0.980±0.020 0.029±0.022 30.21±4.19 0.958±0.046 0.067±0.053 90.00±25.39\n2-3 Ours 0 ✓ ✗ ✗ 32.47±3.69 0.980±0.020 0.029±0.022 30.21±4.06 0.957±0.046 0.068±0.052 89.12±25.38\n2-4 Ours 1 ✓ ✗ ✗ 34.00±3.38 0.984±0.016 0.025±0.019 32.03±3.74 0.965±0.040 0.059±0.047 88.46±25.13\n2-5 Ours 2 ✓ ✗ ✗ 34.06±3.40 0.984±0.016 0.024±0.019 32.12±3.79 0.966±0.041 0.058±0.047 88.82±25.30\n2-6 Ours 3 ✓ ✗ ✗ 34.19±3.39 0.985±0.016 0.024±0.019 32.36±3.77 0.967±0.040 0.056±0.046 88.30±25.23\n2-7 Ours 3 ✗ ✗ ✗ 34.16±3.68 0.985±0.017 0.025±0.019 32.11±4.04 0.966±0.041 0.058±0.047 89.35±25.12\n2-8 Ours 3 ✓ ✓ ✗ 34.16±3.39 0.985±0.016 0.023±0.018 32.36±3.77 0.967±0.040 0.055±0.046 88.30±25.23\n2-9 Ours 3 ✓ ✓ ✓ 34.16±3.39 0.985±0.016 0.023±0.018 32.36±3.77 0.967±0.040 0.055±0.046 80.55±27.59\n2-10 Oracle 3 – – ✓ 34.14±3.37 0.985±0.016 0.023±0.018 32.38±3.74 0.967±0.040 0.054±0.045 80.32±27.30 Random Lighting\n3-1 TRELLIS 0 ✗ - ✓ 27.94±3.77 0.966±0.025 0.038±0.024 24.37±3.66 0.927±0.054 0.098±0.058 93.95±25.89\n3-2 Ours 0 ✗ ✗ ✗ 32.12±3.23 0.981±0.018 0.026±0.021 30.08±3.67 0.961±0.043 0.062±0.051 90.15±25.59\n3-3 Ours 0 ✓ ✗ ✗ 32.18±3.12 0.981±0.019 0.026±0.021 30.11±3.57 0.960±0.044 0.063±0.052 89.45±25.36\n3-4 Ours 1 ✓ ✗ ✗ 33.02±2.92 0.984±0.017 0.023±0.019 31.20±3.39 0.965±0.041 0.057±0.047 88.65±25.24\n3-5 Ours 2 ✓ ✗ ✗ 33.13±2.99 0.984±0.017 0.023±0.019 31.34±3.49 0.966±0.041 0.058±0.048 89.18±25.43\n3-6 Ours 3 ✓ ✗ ✗ 33.22±2.95 0.984±0.017 0.023±0.019 31.50±3.41 0.966±0.041 0.056±0.048 88.30±25.31\n3-7 Ours 3 ✗ ✗ ✗ 33.23±3.32 0.984±0.017 0.024±0.019 31.30±3.83 0.965±0.041 0.058±0.049 89.69±25.19\n3-8 Ours 3 ✓ ✓ ✗ 33.18±2.93 0.984±0.017 0.022±0.019 31.49±3.39 0.966±0.041 0.055±0.048 88.31±25.32\n3-9 Ours 3 ✓ ✓ ✓ 33.18±2.92 0.984±0.017 0.022±0.019 31.50±3.39 0.966±0.041 0.055±0.047 80.39±27.95\n3-10 Oracle 3 – – ✓ 33.15±2.90 0.984±0.016 0.022±0.019 31.50±3.36 0.967±0.040 0.054±0.047 80.11±27.51 D COMPREHENSIVE GENERATION RESULTS As demonstrated in Fig. 6, we are interested in aligning the generation with the input view faithfully. To achieve this, for each sample used during training, we carefully rotate the world coordinate system\nsuch that the input view's corresponding camera poses are at the identity orientation. This relieves\nthe model from the burden of inferring the orientation of 3D space during training. Further, we\nconsider utilizing the view direction during the generative model training as well to enable the model\nbe aware of 3D orientation. Since we make the orientation identity, ray information essentially\nmeans the availability of camera intrinsics. Then, during inference, we use an off-the-shelf intrinsic\nestimator (Wang et al., 2025) to obtain the intrinsics. However, as shown in row 3 vs. 2 in Tab.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 62,
+    "total_chunks": 87,
+    "char_count": 4397,
+    "word_count": 614,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "418b1eff-e434-480b-961b-6aed49817a38",
+    "text": "S6, it\nseems like the intrinsic information is unnecessary. Thus we use the generative model trained without\nany ray information to report our qualitative and quantitative results in the paper.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 63,
+    "total_chunks": 87,
+    "char_count": 193,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "28537ed0-0e5e-49fe-8ea0-a5eab66458d9",
+    "text": "Published as a conference paper at ICLR 2026 Table S3: Reconstruction on GSO. For 3D assets, we adapt inputs per model. TRELLIS (Xiang\net al., 2025) takes the ground-truth mesh and 150 sphere-distributed renderings. Ours uses RGBD\nimages from 150 evenly distributed views. For appearance evaluation, we render each model's output\nfrom 100 random cameras, varying difficulty by adjusting camera radius. Each model is further\nevaluated under three distinct lighting conditions. Importantly, no separate models are trained; all\nevaluations are conducted on the same model.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 64,
+    "total_chunks": 87,
+    "char_count": 569,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "341032f5-747d-4b6a-84ca-70729eb29df8",
+    "text": "As a result, we conduct evaluations at the scale of\nover 1000 (objects) × 100 (views) × 2 (difficulties) × 3 (lightings) ≈600 thousand images. We\nreport Chamfer distances multiplied by 104 for readability, computed using 100k sampled points each\nfrom the ground truth and reconstruction. We report in the format of mean±std, where the standard\ndeviation is computed across objects. SH Enc Pred Simple, Camera Radius [3, 4] Hard, Camera Radius [1, 3]\nMethod Mesh CD (100k)↓\nDeg Ray Occ PSNR↑ SSIM↑ LPIPS↓ PSNR↑ SSIM↑ LPIPS↓ Uniform Lighting\n1-1 TRELLIS 0 ✗ - ✓ 27.34±3.82 0.947±0.036 0.053±0.029 23.72±3.66 0.883±0.068 0.139±0.065 108.2±22.56\n1-2 Ours 0 ✗ ✗ ✗ 34.27±3.25 0.975±0.022 0.034±0.025 31.39±3.61 0.937±0.046 0.093±0.055 101.4±22.21\n1-3 Ours 0 ✓ ✗ ✗ 34.04±3.23 0.974±0.022 0.034±0.025 31.15±3.59 0.935±0.048 0.093±0.055 100.0±21.41\n1-4 Ours 1 ✓ ✗ ✗ 34.55±3.18 0.976±0.021 0.031±0.023 31.75±3.60 0.939±0.045 0.087±0.053 99.21±21.44\n1-5 Ours 2 ✓ ✗ ✗ 34.62±3.24 0.976±0.021 0.031±0.024 31.77±3.65 0.939±0.046 0.087±0.053 99.68±21.75\n1-6 Ours 3 ✓ ✗ ✗ 34.69±3.22 0.976±0.021 0.031±0.024 31.88±3.65 0.940±0.046 0.086±0.053 98.91±21.65\n1-7 Ours 3 ✗ ✗ ✗ 34.93±3.24 0.977±0.020 0.031±0.023 32.00±3.63 0.942±0.044 0.087±0.053 101.0±22.20\n1-8 Ours 3 ✓ ✓ ✗ 34.67±3.21 0.976±0.021 0.031±0.024 31.88±3.65 0.940±0.046 0.086±0.053 98.92±21.67\n1-9 Ours 3 ✓ ✓ ✓ 34.67±3.21 0.976±0.021 0.031±0.024 31.88±3.65 0.940±0.046 0.086±0.053 92.95±24.19\n1-10 Oracle 3 – – ✓ 34.66±3.20 0.976±0.021 0.030±0.023 31.92±3.65 0.941±0.045 0.085±0.053 92.70±24.05 TRELLIS Lighting\n2-1 TRELLIS 0 ✗ - ✓ 30.81±2.67 0.958±0.028 0.047±0.026 27.21±2.56 0.907±0.055 0.126±0.058 105.5±22.44\n2-2 Ours 0 ✗ ✗ ✗ 33.99±2.54 0.978±0.017 0.033±0.023 31.65±2.71 0.948±0.036 0.089±0.052 101.2±21.96\n2-3 Ours 0 ✓ ✗ ✗ 33.71±2.43 0.978±0.018 0.033±0.024 31.40±2.62 0.947±0.037 0.088±0.051 99.62±21.28\n2-4 Ours 1 ✓ ✗ ✗ 34.75±2.60 0.980±0.016 0.030±0.022 32.50±2.87 0.952±0.035 0.080±0.048 98.93±21.33\n2-5 Ours 2 ✓ ✗ ✗ 34.87±2.68 0.980±0.017 0.030±0.022 32.58±2.95 0.952±0.036 0.081±0.049 99.28±21.58\n2-6 Ours 3 ✓ ✗ ✗ 34.91±2.65 0.980±0.016 0.029±0.022 32.67±2.95 0.952±0.036 0.080±0.049 98.66±21.50\n2-7 Ours 3 ✗ ✗ ✗ 35.19±2.72 0.981±0.016 0.030±0.022 32.79±2.97 0.953±0.034 0.081±0.049 100.6±21.99\n2-8 Ours 3 ✓ ✓ ✗ 34.89±2.64 0.980±0.016 0.029±0.022 32.68±2.94 0.952±0.036 0.079±0.049 98.64±21.49\n2-9 Ours 3 ✓ ✓ ✓ 34.89±2.64 0.980±0.016 0.029±0.022 32.68±2.94 0.952±0.036 0.079±0.049 95.19±23.64\n2-10 Oracle 3 – – ✓ 34.87±2.63 0.981±0.016 0.029±0.021 32.70±2.94 0.953±0.036 0.078±0.048 94.87±23.42 Random Lighting\n3-1 TRELLIS 0 ✗ - ✓ 27.66±3.26 0.948±0.033 0.050±0.028 24.11±3.08 0.886±0.064 0.133±0.062 107.5±22.36\n3-2 Ours 0 ✗ ✗ ✗ 33.09±2.47 0.977±0.018 0.031±0.023 30.97±2.81 0.945±0.039 0.086±0.052 101.3±22.24\n3-3 Ours 0 ✓ ✗ ✗ 32.97±2.40 0.976±0.018 0.031±0.023 30.82±2.77 0.943±0.040 0.087±0.052 100.0±21.43\n3-4 Ours 1 ✓ ✗ ✗ 33.46±2.41 0.978±0.017 0.028±0.021 31.41±2.81 0.947±0.038 0.080±0.049 99.29±21.44\n3-5 Ours 2 ✓ ✗ ✗ 33.61±2.47 0.978±0.017 0.029±0.022 31.55±2.88 0.947±0.038 0.081±0.049 99.67±21.81\n3-6 Ours 3 ✓ ✗ ✗ 33.67±2.46 0.979±0.017 0.028±0.022 31.65±2.89 0.948±0.038 0.080±0.050 98.93±21.68\n3-7 Ours 3 ✗ ✗ ✗ 33.98±2.53 0.980±0.016 0.028±0.021 31.84±2.93 0.949±0.036 0.081±0.049 100.9±22.27\n3-8 Ours 3 ✓ ✓ ✗ 33.64±2.43 0.979±0.017 0.028±0.022 31.64±2.87 0.948±0.038 0.080±0.050 98.93±21.68\n3-9 Ours 3 ✓ ✓ ✓ 33.64±2.43 0.979±0.017 0.028±0.022 31.64±2.87 0.948±0.038 0.080±0.050 92.94±24.23\n3-10 Oracle 3 – – ✓ 33.61±2.42 0.979±0.017 0.028±0.021 31.65±2.86 0.949±0.038 0.079±0.049 92.67±24.05 D.1 ABLATIONS ON ODE NUMERICAL INTEGRATION We study the effect of ODE numerical integration used when sampling from our generative model. Specifically, we ablate the algorithms (Euler and Heun), the step size (or equivalently the number of\nsteps) used during the numerical integration, and the numerical precision of the model (float32\nand bfloat16) during sampling. We provide quantitative results in Sec.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 65,
+    "total_chunks": 87,
+    "char_count": 3967,
+    "word_count": 544,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4ff4a4b1-6131-4a47-bc2c-151934b2724f",
+    "text": "The results suggest our\ngenerative model is robust to numerical integration — we observe small change in performance when\nswitching from the second-order method Heun with 100 steps using float32 (conditioning view\nFID = 6.6), to a relatively cheaper first-order Euler with 25 steps using bfloat16 (conditioning\nview FID = 6.7). Published as a conference paper at ICLR 2026 Table S4: Reconstruction on PBR-Objaverse. For 3D assets, we adapt inputs per model. TRELLIS (Xiang et al., 2025) takes the ground-truth mesh and 150 sphere-distributed renderings. Ours\nuses RGBD images from 150 evenly distributed views. For appearance evaluation, we render each\nmodel's output from 100 random cameras, varying difficulty by adjusting camera radius. Each model\nis further evaluated under three distinct lighting conditions. Importantly, no separate models are\ntrained; all evaluations are conducted on the same model.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 66,
+    "total_chunks": 87,
+    "char_count": 907,
+    "word_count": 136,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1c431504-6be6-4e5e-84ed-85da128abf64",
+    "text": "As a result, we conduct evaluations at the\nscale of 200 (objects) × 100 (views) × 2 (difficulties) × 3 (lightings) ≈120 thousand images. We\nreport Chamfer distances multiplied by 104 for readability, computed using 100k sampled points each\nfrom the ground truth and reconstruction. We report in the format of mean±std, where the standard\ndeviation is computed across objects. SH Enc Pred Simple, Camera Radius [3, 4] Hard, Camera Radius [1, 3]\nMethod Mesh CD (100k)↓\nDeg Ray Occ PSNR↑ SSIM↑ LPIPS↓ PSNR↑ SSIM↑ LPIPS↓ Uniform Lighting\n1-1 TRELLIS 0 ✗ - ✓ 28.63±3.09 0.955±0.028 0.046±0.025 25.06±2.93 0.902±0.057 0.121±0.062 98.09±22.21\n1-2 Ours 0 ✗ ✗ ✗ 32.95±2.87 0.974±0.018 0.033±0.020 30.07±3.02 0.939±0.042 0.087±0.051 95.08±22.61\n1-3 Ours 0 ✓ ✗ ✗ 33.14±2.68 0.974±0.018 0.034±0.021 30.21±2.85 0.937±0.042 0.089±0.053 94.16±22.55\n1-4 Ours 1 ✓ ✗ ✗ 34.35±2.37 0.978±0.016 0.028±0.018 31.67±2.67 0.947±0.038 0.076±0.046 93.48±22.55\n1-5 Ours 2 ✓ ✗ ✗ 34.47±2.45 0.978±0.016 0.028±0.018 31.74±2.73 0.947±0.039 0.077±0.047 94.01±22.69\n1-6 Ours 3 ✓ ✗ ✗ 34.62±2.33 0.979±0.016 0.028±0.018 31.98±2.64 0.948±0.039 0.075±0.047 92.92±22.81\n1-7 Ours 3 ✗ ✗ ✗ 34.66±2.62 0.979±0.016 0.029±0.018 31.83±2.89 0.948±0.039 0.077±0.047 94.71±22.50\n1-8 Ours 3 ✓ ✓ ✗ 34.63±2.33 0.979±0.016 0.027±0.017 32.01±2.64 0.948±0.039 0.074±0.047 92.89±22.77\n1-9 Ours 3 ✓ ✓ ✓ 34.63±2.33 0.979±0.016 0.027±0.017 32.01±2.64 0.948±0.039 0.075±0.047 85.82±25.06\n1-10 Oracle 3 – – ✓ 34.64±2.31 0.979±0.016 0.027±0.017 32.07±2.62 0.949±0.038 0.074±0.046 85.57±24.80 TRELLIS Lighting\n2-1 TRELLIS 0 ✗ - ✓ 29.69±2.59 0.958±0.025 0.044±0.023 26.03±2.50 0.904±0.053 0.118±0.058 95.16±20.77\n2-2 Ours 0 ✗ ✗ ✗ 30.35±3.01 0.965±0.023 0.039±0.023 27.39±3.18 0.921±0.049 0.102±0.056 96.06±21.91\n2-3 Ours 0 ✓ ✗ ✗ 30.37±3.04 0.965±0.023 0.040±0.023 27.41±3.21 0.919±0.050 0.102±0.056 95.11±21.89\n2-4 Ours 1 ✓ ✗ ✗ 32.52±2.45 0.975±0.017 0.031±0.019 29.87±2.70 0.939±0.042 0.084±0.049 94.59±21.73\n2-5 Ours 2 ✓ ✗ ✗ 32.47±2.45 0.975±0.018 0.031±0.019 29.90±2.73 0.940±0.042 0.083±0.049 94.98±21.91\n2-6 Ours 3 ✓ ✗ ✗ 32.63±2.38 0.976±0.017 0.030±0.018 30.14±2.69 0.941±0.042 0.081±0.049 94.08±22.01\n2-7 Ours 3 ✗ ✗ ✗ 32.56±2.72 0.975±0.018 0.031±0.019 29.89±2.97 0.939±0.042 0.084±0.049 95.38±21.90\n2-8 Ours 3 ✓ ✓ ✗ 32.63±2.37 0.976±0.017 0.030±0.018 30.16±2.69 0.942±0.042 0.080±0.049 94.11±22.01\n2-9 Ours 3 ✓ ✓ ✓ 32.62±2.37 0.976±0.017 0.030±0.018 30.16±2.69 0.942±0.042 0.080±0.049 87.17±24.29\n2-10 Oracle 3 – – ✓ 32.61±2.37 0.976±0.017 0.029±0.018 30.20±2.69 0.942±0.042 0.080±0.048 87.02±24.19 Random Lighting\n3-1 TRELLIS 0 ✗ - ✓ 26.29±3.56 0.939±0.038 0.052±0.030 22.74±3.37 0.869±0.075 0.134±0.070 99.60±24.34\n3-2 Ours 0 ✗ ✗ ✗ 28.58±3.65 0.957±0.031 0.043±0.028 25.66±3.87 0.904±0.066 0.107±0.065 95.14±22.72\n3-3 Ours 0 ✓ ✗ ✗ 28.88±3.61 0.956±0.032 0.043±0.028 25.93±3.81 0.903±0.067 0.109±0.066 94.53±22.73\n3-4 Ours 1 ✓ ✗ ✗ 30.36±3.15 0.965±0.027 0.036±0.024 27.60±3.43 0.920±0.059 0.095±0.058 93.98±22.70\n3-5 Ours 2 ✓ ✗ ✗ 30.39±3.08 0.965±0.027 0.036±0.024 27.65±3.39 0.920±0.060 0.095±0.059 94.72±22.86\n3-6 Ours 3 ✓ ✗ ✗ 30.59±3.08 0.966±0.027 0.036±0.024 27.92±3.42 0.922±0.059 0.093±0.059 93.41±22.84\n3-7 Ours 3 ✗ ✗ ✗ 30.11±3.48 0.964±0.027 0.037±0.024 27.27±3.75 0.917±0.060 0.096±0.059 94.74±22.64\n3-8 Ours 3 ✓ ✓ ✗ 30.59±3.09 0.966±0.027 0.035±0.024 27.94±3.43 0.922±0.060 0.092±0.059 93.39±22.82\n3-9 Ours 3 ✓ ✓ ✓ 30.60±3.08 0.966±0.027 0.035±0.024 27.95±3.43 0.922±0.059 0.092±0.059 85.73±24.79\n3-10 Oracle 3 – – ✓ 30.59±3.07 0.966±0.026 0.035±0.024 27.97±3.42 0.922±0.059 0.092±0.058 85.56±24.65 D.2 RUNTIME AND MEMORY ANALYSIS We analyze the runtime for both TRELLIS and our generative models in Tab. Our model's\nlatent sampling costs 9.3 seconds on while all decoders' feedforward passes cost less than 100\nmilliseconds on a single NVIDIA H100 80GB HBM3 GPU. In comparison, for TRELLIS, sampling\nSLAT (both coarse voxel and feature) takes 11.8 seconds. Utilizing one-step flow-matching models\nlike MeanFlow (Geng et al., 2025) can further improve the speed of our generative model and is left\nas future work. Published as a conference paper at ICLR 2026 Table S5: Ablation on number of input views for reconstruction during inference. We choose\nTRELLIS lighting setup on Toys4k dataset.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 67,
+    "total_chunks": 87,
+    "char_count": 4247,
+    "word_count": 593,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "64006fe7-4932-4544-95ac-9bbdd2c74460",
+    "text": "For appearance evaluation, we render each model's output\nfrom 100 random cameras, varying difficulty by adjusting camera radius. We report in the format of\nmean±std, where the standard deviation is computed across objects. We report Chamfer distances\nmultiplied by 104 for readability, computed using 100k sampled points each from the ground truth\nand reconstruction. Note, we re-render the evaluation data for this ablation, thus row 1 (row 2) differs\nslightly from row 2-1 (row 2-9) in Tab.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 69,
+    "total_chunks": 87,
+    "char_count": 492,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d2d11105-bebc-43ec-969b-ca1f721216a2",
+    "text": "Simple, Camera Radius [3, 4] Hard, Camera Radius [1, 3]\nMethod CD (100k)↓\nPSNR↑ SSIM↑ LPIPS↓ PSNR↑ SSIM↑ LPIPS↓ 1 TRELLIS 31.559±3.509 0.9740±0.0224 0.0361±0.0217 27.948±3.539 0.9408±0.0508 0.0928±0.0539 90.65±25.13\n2 Ours 33.909±3.157 0.9841±0.0162 0.0260±0.0189 32.073±3.521 0.9658±0.0403 0.0585±0.0458 80.54±27.62 3 TRELLIS 31.518±3.509 0.9738±0.0225 0.0363±0.0218 27.912±3.541 0.9404±0.0510 0.0932±0.0541 90.88±25.19\n4 Ours 33.908±3.158 0.9841±0.0162 0.0260±0.0188 32.072±3.522 0.9658±0.0403 0.0585±0.0457 80.53±27.58 5 TRELLIS 31.431±3.506 0.9734±0.0227 0.0366±0.0221 27.833±3.540 0.9397±0.0514 0.0938±0.0545 91.19±25.16\n6 Ours 33.910±3.157 0.9841±0.0162 0.0260±0.0189 32.074±3.522 0.9658±0.0403 0.0585±0.0457 80.53±27.60 7 TRELLIS 31.270±3.496 0.9726±0.0231 0.0372±0.0224 27.688±3.533 0.9383±0.0520 0.0952±0.0552 91.92±25.16\n8 Ours 33.909±3.155 0.9841±0.0162 0.0260±0.0188 32.073±3.519 0.9658±0.0403 0.0585±0.0457 80.53±27.60 9 TRELLIS 30.692±3.441 0.9699±0.0244 0.0396±0.0238 27.159±3.484 0.9336±0.0541 0.1002±0.0576 94.58±25.50\n10 Ours 33.908±3.157 0.9841±0.0162 0.0260±0.0188 32.072±3.521 0.9658±0.0403 0.0585±0.0457 80.56±27.61 Table S6: Single-image-conditioned generation on Toys4k with TRELLIS lighting. KID is\nreported by ×100. The best is highlighted.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 70,
+    "total_chunks": 87,
+    "char_count": 1266,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1b5fbd3d-4300-4ce3-887e-91e347d5f15c",
+    "text": "Train Infer w/ Train Conditioning View Novel View\nMethod CLIP↑\nw/ Ray GT Ray Iters FID↓ KID↓FIDdino↓KIDdino↓ FID↓ KID↓FIDdino↓KIDdino↓\n1 TRELLIS ✗ - 400k 0.899±0.045 12.84 0.088 84.692 2.311 7.600 0.100 67.458 3.166\n2-1 Ours ✗ - 280k 0.906±0.040 8.193 0.012 48.117 0.461 6.648 0.064 75.814 4.321\n2-2 Ours ✗ - 400k 0.906±0.041 7.741 0.010 44.555 0.392 6.413 0.064 71.436 3.997\n2-3 Ours ✗ - 600k 0.905±0.041 6.219 0.009 41.621 1.333 6.216 0.058 66.530 3.522\n3 Ours ✓ ✗ 290k 0.900±0.040 10.78 0.066 65.644 2.281 8.076 0.101 92.915 6.698\n4 Ours ✓ ✓ 290k 0.904±0.039 10.13 0.053 61.342 1.665 7.831 0.097 86.091 5.826 Table S7: Ablation on DiT sampler for single-image-conditioned generation. The experiments\nare conducted on Toys4k with TRELLIS lighting. The generative model is trained for 600k iterations. Note, row 1 is copied from \"ours\" in Tab. 3 . KID is reported by ×100. Our\ngenerative model's performance is robust across various numbers of sampling steps and numerical\nintegration algorithms.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 71,
+    "total_chunks": 87,
+    "char_count": 997,
+    "word_count": 161,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "12f8867b-51c4-4720-9830-46db11a02849",
+    "text": "Occ Conditioning View Novel View\nData Type Method Step CLIP↑\nPred FID↓KID↓FIDdino↓KIDdino↓FID↓KID↓FIDdino↓KIDdino↓\n1 ✗ float32 Heun 100 0.905±0.041 6.219 0.009 41.621 1.333 6.216 0.058 66.530 3.522\n2 ✓ float32 Heun 100 0.905±0.041 6.622 0.021 42.197 1.391 6.270 0.064 66.699 3.534\n3 ✓ bfloat16 Heun 100 0.905±0.041 6.661 0.020 43.992 1.741 6.270 0.063 68.025 3.906\n4 ✓ bfloat16 Heun 50 0.905±0.041 6.659 0.020 45.533 2.105 6.266 0.062 68.319 4.185\n5 ✓ bfloat16 Heun 25 0.904±0.041 6.644 0.019 54.231 4.011 6.251 0.060 77.148 5.879\n6 ✓ bfloat16 Euler 100 0.906±0.041 6.656 0.022 42.472 1.476 6.365 0.066 67.856 3.848\n7 ✓ bfloat16 Euler 50 0.905±0.041 6.688 0.023 42.363 1.430 6.384 0.066 68.987 3.958\n8 ✓ bfloat16 Euler 25 0.905±0.041 6.733 0.025 43.034 1.280 6.833 0.074 75.687 4.484 Published as a conference paper at ICLR 2026 Table S8: Generative model runtime analysis. All results are reported with torch.profiler\nacross three runs. TRELLIS uses 50 Euler steps for both its sparse structure and structured latent\ngenerations. We use 50 Euler steps for generating the latents, corresponding to row 7 in Tab. Cond Proc (ms) Structure Gen (s) Latent Gen (s) Occ Pred (ms) 3DGS Dec (ms) Mesh Dec (ms) Total (s) Memory (GB) NVIDIA A100-SXM4-80GB TRELLIS 68.90±0.49 4.89±0.80 7.720±5.10 – 18.70±5.46 67.33±13.98 12.76 12.70\nOurs 68.78±0.41 – 17.32±1.50 36.07±3.67 35.32±14.2 90.78±29.75 17.55 15.95 NVIDIA H100 80GB HBM3",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 72,
+    "total_chunks": 87,
+    "char_count": 1419,
+    "word_count": 222,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6639bbee-e330-4ba8-96ae-e7417b5fdeaf",
+    "text": "TRELLIS 31.01±0.55 3.95±1.17 7.868±4.06 – 15.03±6.19 46.81±13.31 11.91 12.69\nOurs 22.58±10.3 – 9.266±0.38 27.16±6.87 30.96±14.3 79.15±31.71 9.426 15.93 E IMPLEMENTATION DETAILS We provide detailed network architectures in Fig. These include our encoder (Sec. 3.3)\nin Fig. S2, velocity decoder and Gaussian decoder (Sec. 3.4) in Fig. S3 and S4, occupancy decoder\nin Fig. S5, mesh decoder in Fig. S6, and generative model's DiT (Sec. 3.5) in Fig. E.2 POSITION ENCODING We have the following position encoding function applied on each channel of the input data: {sin(u0), . . . , sin(uF −1), cos(u0), . . . , cos(uF −1)}, (S2)\nMmin+i· Mmax−MminF −1 where ui = x · 2 , (S3) x is the value at the corresponding channel where the position encoding is applied. We use F = 32,\nMmin = 0, Mmax = 12, 8, and 8 in position encoding functions for 3D location xi, viewing direction\nˆdi, color ci in Eq. (1) respectively. For time step t in flow matching (Eq. (2)), we use F = 16,\nMmin = log2 2π, and Mmax = Mmin + F −1. E.3 3D GAUSSIAN PREDICTION",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 73,
+    "total_chunks": 87,
+    "char_count": 1032,
+    "word_count": 185,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "36f3774f-4e81-4226-94b9-d8aa42ea9908",
+    "text": "S4, the output position of 3D Gaussian is predicted with respect to a normalized space centered\naround the occupied voxel's world coordinates, and is then translated to the world coordinate system\nusing the voxel's information. Specifically, we predict 3D Gaussian's position as xoutput ∈[−1, 1]3. Assume the corresponding voxel's center is located at xvoxel ∈R3 in the world coordinate system. The\nfinal 3D Gaussian's position in the world coordinate system is computed as x3DGS = xvoxel+s·xoutput,\nwhere s is a hyperparameter to define the size of the normalized space mentioned above. In our\nexperiments, we set s = 0.05. Note, s = 0.05 is actually larger than the voxel size we consider. This\nis intentional as it provides more flexibility, such that the predicted 3D Gaussian can go across the\nvoxel boundaries.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 74,
+    "total_chunks": 87,
+    "char_count": 816,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6c789161-b6f9-47d3-8e75-c3ec7ead82ed",
+    "text": "E.4 TOKENIZER TRAINING Our tokenizer is trained with the following loss:\nLtokenizer = Lgeo(θ) + Lradiance(θ) + 10−4 · KL (q(S|X)|p(S)) , (S4) where Lgeo(θ) and Lradiance(θ) are from Eq. (2) and Eq. (3), respectively. We use the KL-divergence KL (q(S|X)|p(S)) to regularize the latent space, where p(S) and q(S|X)\nrepresent prior and posterior distribution for the latent representation S. Ideally, this should be\nimposed on the joint distribution of the k latent vectors (Sec. 3.2). In practice, we simplify and\nassume each element in the latent space is independent. k=8192 d=32\nKL (q(S|X)|p(S)) = X X KL (q(si,j|X)|q(si,j)) , (S5)\ni=1 j=1 Published as a conference paper at ICLR 2026 where si,j is the j-th element of the i-th latent vector si ∈S. Further, we assume p(si,j) follows\nN(0, 1) while q(si,j|X) is N(si,j, 10−6). Thus, KL (q(si,j|X)|q(si,j)) boils down to ∥si,j∥2. In practice, we find that Eq. (S5) is effective. When computing the mean and standard deviation of\nthe latent representations S across 1000 objects, we obtain values of 1.1300 and 19.8604. In contrast,\nwith the proposed regularization, the latent space becomes more compact: the mean and standard\ndeviation decrease to 0.0931 and 1.7800, without compromising reconstruction performance. E.5 OCCUPANCY DECODER TRAINING",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 75,
+    "total_chunks": 87,
+    "char_count": 1296,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "824c9988-4e2f-456f-9736-0dd821cfde10",
+    "text": "We adopt the pretrained sparse-structure VAE from TRELLIS (Xiang et al., 2025) to compute the\noccupancy grid. Specifically, given a LiTo latent code, we first generate a low-resolution continuous\nlatent representation (in our case, 163). We then leverage the TRELLIS decoder to upsample this\nrepresentation and predict occupancy values on a higher-resolution grid (in our case, 643). Our model\nis specified in Fig. The details of the upsampling decoder is specified in \"3D convolutional U-net\"\nin Sec. A.1 from Xiang et al. (2025). The training loss is defined as per-element Huber loss between 1) our model predicted low-resolution\nrepresentation, and 2) the representation encoded from the ground-truth occupancy grid with the\npretrained encoder from TRELLIS. E.6 MESH DECODER TRAINING We train the mesh decoder in Fig. S6 primarily by penalizing the discrepancy between renderings\ngenerated from the ground-truth mesh and those from the estimated mesh. For each mesh encountered\nduring training, we randomly sample 12 views for supervision. Specifically, we use the following\nloss:\nLmesh = Lmask + 10 · Lxcam + Lface_normal + Lvertex_normal + Lreg_dev + Lreg_sdf. (S6) Lmask is the ℓ1 distance between 1) mask rendered from the ground-truh mesh; and 2) mask rendered\nfrom the generated mesh. Lxcam is for each pixel's corresponding XYZ in the camera coordinate system. Concretely, we\ncompute the ℓ2 distance between the ground-truth coordinates and the predicted ones.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 76,
+    "total_chunks": 87,
+    "char_count": 1471,
+    "word_count": 227,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ff1a1168-03ee-43bb-9337-5db913fa4c91",
+    "text": "We only apply\nthis loss to pixels within the ground-truth object mask area. Compared to using depth loss alone, this\nprovides a stronger supervisory signal, which we found significantly improves training performance. Lface_normal and Lvertex_normal supervise the predicted face normals and vertex normals, respectively. They are computed as 1 minus the cosine similarity (i.e. negative cosine distance) between the\npredicted normal maps and the corresponding ground-truth normal maps. Similar to Lxcam, we only\napply this loss to pixels within the ground-truth object mask area. Since we use FlexiCubes (Shen et al., 2023) to produce the mesh, we inherit its regularizations during\ntraining. Lreg_dev penalizes deviations between each dual vertex and the edge crossings that define the\nface containing it (see Eq. (8) in (Shen et al., 2023)).3 Lreg_sdf penalizes sign changes of the SDF\nacross all grid edges. 4",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 77,
+    "total_chunks": 87,
+    "char_count": 911,
+    "word_count": 139,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3e3e388c-b6e5-4c87-9aee-c0985247ca2d",
+    "text": "We use AdamW (Loshchilov & Hutter, 2019) for all our training. For our tokenizer training, i.e., Eq. (S4), that involves encoder (Fig. S2), velocity decoder (Fig. S3),\nand 3D Gaussians decoder (Fig. S4), we use β1 = 0.9, and β2 = 0.98 without weight decay for\nAdamW. We use the following learning rate scheduler copied from Sec. 5.3 in Vaswani et al. (2017):\nstep\nlr(step) = 0.4 · d−0.5model · min step−0.5, , (S7) warmup_steps1.5 3https://github.com/nv-tlabs/FlexiCubes/blob/4cc7d6c3d0ce/examples/\noptimize.py#L112-L113\n4https://github.com/nv-tlabs/FlexiCubes/blob/4cc7d6c3d0ce/examples/loss.\npy#L96 Published as a conference paper at ICLR 2026 where dmodel = 512, which is our latent dimension for Perceiver IO, and warmup_steps = 4000 in\nour case. The model is trained with an effective batch size of 256 for 90k iterations on 64 H100 GPUs\nfor 9 days. For the occupancy decoder training that involves Fig. S5, we use the same optimizer and learning\nrate setup as tokenizer training. We train the model for 58k iterations with an effective batch size 256\non 64 H100 GPUs for 1.5 days. For the mesh decoder training, i.e., Eq. (S6), that involves Fig. S6, we use the same optimizer and\nlearning rate setup as tokenizer training.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 78,
+    "total_chunks": 87,
+    "char_count": 1229,
+    "word_count": 192,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "397673ed-d0cb-424b-91fb-a83b7a178d19",
+    "text": "We train the model for 100k iterations with an effective\nbatch size 128 on 64 H100 for 3 days. For the generative model training that involves Fig.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 79,
+    "total_chunks": 87,
+    "char_count": 147,
+    "word_count": 27,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "016e1410-8e18-452c-aaa7-93ccc731bd68",
+    "text": "S7, we use β1 = 0.9, and β2 = 0.999, and a\nweight decay of 0.01 for AdamW. We use the following linear warmup scheduler for the learning\nrate:\n(10−6 + warmup_stepsstep · (10−4 −10−6) if step ≤warmup_steps lr(step) = , (S8)\n10−4 otherwise where we have warmup_steps = 5000 in our case. We train the model for 600k iterations with an\neffective batch size 256 on 128 H100 GPUs for 20 days. F.1 STUDYING SPHERICAL HARMONICS DEGREES Our Gaussian decoder outputs Gaussians with spherical harmonics up to degree three. We study\nwhat information is captured by individual spherical harmonics degrees. S9,\nwe render the 3D Gaussians from both reconstruction and generation by clipping the degree of the\nspherical harmonics (i.e., we use only ≤3 degrees during rendering). We observe that zeroth-degree\nrenderings are mostly view-independent and have little lighting baked in, whereas higher-degree\nrenderings illustrate lighting effects. This is in contrast to TRELLIS's results whose zeroth-degree\nrenderings contain both baked lighting and inaccurate view-dependent appearance produced using\nmicro-surface geometry (Walter et al., 2007). The results suggest that our model is able to represent\nview-dependent effects using the higher-degree spherical harmonics, and to use the zeroth-degree\nrendering for view-independent, diffused, appearance. This separation is an interesting finding, and it\nprovides potential opportunity for future investigation of relighting using our representation.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 80,
+    "total_chunks": 87,
+    "char_count": 1483,
+    "word_count": 220,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3e367d40-d590-48ff-9b35-5131da7da5a2",
+    "text": "G AUTHOR CONTRIBUTIONS All authors contributed to writing this paper, designing the experiments, and discussing results at\neach stage of the project. Oncel Tuzel led the research direction, including research framing and question identification. All authors contributed to setting project priorities.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 81,
+    "total_chunks": 87,
+    "char_count": 300,
+    "word_count": 41,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "852f2563-8282-4baf-aaa6-45291bbaf760",
+    "text": "Jen-Hao Rick Chang and Xiaoming Zhao completed the majority of the writing while Dorian\nChan refined and polished the presentation. Jen-Hao Rick Chang and Xiaoming Zhao developed the data rendering scripts to convert\n3D assets into the surface light fields required for Eq. (1). Xiaoming Zhao developed the data\npreprocessing pipeline to clean and curate the dataset to ensure high quality inputs for model training. Jen-Hao Rick Chang implemented the efficient dataloader based on webdataset (webdataset\ndevelopment team, 2026). Jen-Hao Rick Chang and Xiaoming Zhao were primarily responsible for developing\nthe encoder (Sec. 3.3), decoder (Sec. 3.4), and image-to-3D generative model (Sec. 3.5). Jen-Hao\nRick Chang designed and implemented the data structures that enable the efficient 3D patchification\nprocess in Fig. 3, designed encoder, velocity decoder, and iterates on Gaussian decoders, and he built\nthe 3D library, plibs. Published as a conference paper at ICLR 2026 velocity (1, 3xyz)\nMLP (SwiGLU)\nlinear\nlinear\nlayernorm shift & scale\nSiLU modulation\n+ self attention linear layernorm\nblock\nlinear_o\nvoxel-based softmax attention +\nrmsnorm_q rmsnorm_k gating 2\nlinear_q linear_k linear_v\nlayernorm MLP (linear, GELU, linear)\nquery, key, value shift 2 & scale 2\nmodulation\ntokens (k, df)\nlayernorm\nMLP (SwiGLU)\ngating 1\nlayernorm + cross attention crossblockattention\nblock\nlinear_o query key, value\nnearest neighbor softmax attention shift 1 & scale 1 modulation\nrmsnorm_q rmsnorm_k linear\nlinear_q linear_k linear_v SiLU layernorm\nlayernorm_q layernorm_kv linear\nlinear_q linear_kv ×2 linear\nquery key value\ninitial tokens position-encoded points position-encoded position-encoded latent tokens\n(k, d') (N, d') flow matching time (d'',) point (1, d') (k, d) Figure S2: Encoder architecture. The model Figure S3: Velocity decoder architecture. The\nuses a feature dimension of df = 512, while the model uses a feature dimension of 512, while the\nhidden layer in MLP uses a feature dimension of hidden layer in MLP uses a feature dimension of\n2048. The number of heads for cross-attention 2048. The number of heads for cross-attention\nand self-attention is 16. The input dimension is 8.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 82,
+    "total_chunks": 87,
+    "char_count": 2196,
+    "word_count": 330,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c79e533-fad8-4306-aa9f-ca859459c6f7",
+    "text": "Our latent has k = 8192 and d = 32. We\nd′ = 396, which includes 3D location, position- have d′ = 195, which includes 3D location and\nencoded 3D location, RGB, position-encoded position-encoded 3D location. Meanwhile, d′′ =\nRGB, and Plucker coordinates. Our latent has 64, which is obtained by applying a linear layer\nk = 8192 and d = 32. E for to time-step position encoding in Eq. (S2). Please\nposition encoding details. refer to Sec. E for position encoding details. Jen-Hao Rick Chang and Xiaoming Zhao led the training of all models described in this study, including both tokenizers and the generative models presented in the paper. Specifically, Jen-Hao Rick Chang trained the tokenizer (Fig.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 83,
+    "total_chunks": 87,
+    "char_count": 698,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8ec09f48-c9be-4762-a783-354fa96ac49d",
+    "text": "S4), occupancy\nprediciton decoder (Fig. S5), and generative model (Fig. Xiaoming Zhao trained the tokenizer\n(Fig. S4), mesh decoder (Fig. S6), and generative model (Fig.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 84,
+    "total_chunks": 87,
+    "char_count": 169,
+    "word_count": 25,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "56a122d8-d642-445a-bf06-12f7b9da916f",
+    "text": "Jen-Hao\nRick Chang implemented the training backbone. Jen-Hao Rick Chang and Xiaoming Zhao led the evaluation strategy and experimental\ndesign. Xiaoming Zhao developed the evaluation pipeline and frameworks used to generate all\nquantitative results reported in the paper. Dorian Chan conducted the geometric evaluations for the\nbaseline methods presented Tab. 2 while Xiaoming Zhao completed the remaining tables.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 85,
+    "total_chunks": 87,
+    "char_count": 413,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "197c0e8e-63c9-404f-9cb6-7c02bce6f883",
+    "text": "Published as a conference paper at ICLR 2026 Structured Latent\n(res, res, res, d''') linear\nposition, rotation, scaling SH coeff, opacity\nlayernorm\nlinear linear\nMLP (SwiGLU) MLP (SwiGLU) + MLP (linear, GELU, linear) MLP (SwiGLU) layernorm layernorm + self attention\nblock\n+ self attention linear_o\nblock softmax attention\nlinear_o rmsnorm_q rmsnorm_k\nvoxel-based softmax attention linear_q linear_k linear_v\nrmsnorm_q rmsnorm_k layernorm ×2\nlinear_q linear_k linear_v query, key, value\nlayernorm tokens (k, df)\nquery, key, value +\ntokens (n, df)\nMLP (linear, GELU, linear)\nlayernorm\nMLP (SwiGLU)\n+ cross attention\nlayernorm block\nlinear_o\n+ cross attention softmax attention\nblock rmsnorm_q rmsnorm_k\nlinear_o linear_q linear_k linear_v\nglobal softmax attention layernorm_q layernorm_kv\nrmsnorm_q rmsnorm_k\nquery key, value ×4\nlinear_q linear_k linear_v\nlayernorm_q layernorm_kv linear_kv ×6 learnable tensor +\n(res, res, res, df)\nquery key value\nlinear_q linear linear position-encoded position-encoded\nlocaiton latent tokens voxel grid indices latent tokens\n(n, d') (k, d) (res, res, res, d') (k, d) Figure S4: 3D Gaussian decoder architecture. Figure S5: Occupancy decoder architecture. The model uses a feature dimension of df = 512, The model uses a feature dimension of df = 512,\nwhile the hidden layer in MLP uses a feature di- while the feature dimension for QKV in cross/selfmension of 2048.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 86,
+    "total_chunks": 87,
+    "char_count": 1401,
+    "word_count": 205,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5035cf07-6e76-4ca2-b522-89bac82c7c1b",
+    "text": "The number of heads for cross- attention is 1024. The hidden layer in MLP uses\nattention and self-attention is 8. Our latent has a feature dimension of 2048. Our latent has\nk = 8192 and d = 32. We have d′ = 195, which k = 8192 and d = 32. The number of heads\nincludes 3D location and position-encoded 3D for cross-attention and self-attention is 8.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 87,
+    "total_chunks": 87,
+    "char_count": 348,
+    "word_count": 67,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "68ca23f4-2c15-4e19-a66e-66fa28064709",
+    "text": "E for position encod- have d′ = 771, with Mmin = 0, Mmax = 5, and\ning details. F = 128 in Eq. (S2) for encoding 3D location. We use resolution of 16, i.e., res = 16. E for position encoding details. Published as a conference paper at ICLR 2026 FlexiCubes parameters conv3d\ngroupnorm, SiLU\nconv3d\nSubdivide conv3d\ngroupnorm, SiLU Subdivide MLP (SwiGLU) velocity (k, d) layernorm linear linear\nSiLU shift & scale modulation\n+ self attention linear layernorm\nblock\nlinear_o\nvoxel-based softmax attention learnable gating 2\nrmsnorm_q rmsnorm_k\n+ ×\nlinear_q linear_k linear_v\nlayernorm shiftlearnable2 & scale 2 MLP (linear, GELU, linear)\nquery, key, value + modulation\ntokens (n, df)\nlayernorm MLP (SwiGLU)\ncross attention block\nlayernorm\nquery key, value\n+ cross attention +\nblock\n+ ×\nlinear_o\nglobal softmax attention learnable gating 1 self attention\nrmsnorm_q rmsnorm_k block\nlinear_q linear_k linear_v query, key, value\nlayernorm_q layernorm_kv + modulation learnable\n1 & scale 1 layernorm linear_kv ×6 shift\n×28\nquery key value learnable\nlinear_q + embedding\n(k, df) linear MLP (linear, GELU, linear)\nposition-encoded\nlocation latent tokens position-encoded noised latent tokens conditioned image feature\n(n, d') (k, d) flow matching time (d'',) (k, d) (1, d') Figure S6: Mesh decoder architecture. The Figure S7: Generative model DiT architecture.\nmodel uses a feature dimension of df = 512, The model uses a feature dimension of df = 1152,\nwhile the hidden layer in MLP uses a feature di- while the hidden layer in MLP uses a feature dimension of 2048. Our latent has k = 8192 and mension of 4608.",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 88,
+    "total_chunks": 87,
+    "char_count": 1601,
+    "word_count": 260,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d076d4b7-1661-4016-9c1b-9eca7f1e37fc",
+    "text": "Our latent has k = 8192 and\nd = 32. The number of heads for cross-attention d = 32. The number of heads for self-attention\nand self-attention is 16. We have d′ = 195, which and cross-attention is 16. The feature dimension\nincludes 3D location and position-encoded 3D for conditioning image d′ = 2048. E for position encod- d′′ = 64, with Mmin = 0, Mmax = 12, and\ning details. F = 32 in Eq. (S2) for encoding flow matching time step. E for position\nencoding details. Published as a conference paper at ICLR 2026 Ours Ours Ours Ours\nTRELLIS (SH = 0) (SH ≤ 1) (SH ≤ 2) (SH ≤ 3) Ground truth Figure S8: Rendering with various spherical harmonics degrees in reconstruction. When\nrestricted to zeroth-order spherical harmonics, our 3D Gaussians produce a view-independent appearance and avoid the over-exposed regions observed in TRELLIS's renderings. As we progressively\nincorporate higher-order spherical harmonics, our method yields increasingly pronounced viewdependent effects. Mesh credit: DigitalSouls (2019).",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 89,
+    "total_chunks": 87,
+    "char_count": 1010,
+    "word_count": 165,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ee8e89ab-35ef-4888-bb6d-1f4007fa4721",
+    "text": "Ours Ours Ours Ours\nTRELLIS (SH = 0) (SH ≤ 1) (SH ≤ 2) (SH ≤ 3) Input Image Figure S9: Rendering with various spherical harmonics degrees in generation. When restricted\nto zeroth-order spherical harmonics, our 3D Gaussians produce a view-independent appearance and\navoid the over-exposed regions observed in TRELLIS's renderings. As we progressively incorporate\nhigher-order spherical harmonics, our method yields increasingly pronounced view-dependent effects. Mesh credit: Eleanie (2025).",
+    "paper_id": "2603.11047",
+    "title": "LiTo: Surface Light Field Tokenization",
+    "authors": [
+      "Jen-Hao Rick Chang",
+      "Xiaoming Zhao",
+      "Dorian Chan",
+      "Oncel Tuzel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11047v1",
+    "chunk_index": 90,
+    "total_chunks": 87,
+    "char_count": 490,
+    "word_count": 69,
+    "chunking_strategy": "semantic"
+  }
+]

@@ -1,0 +1,819 @@
+[
+  {
+    "chunk_id": "f72ea3f2-ba17-46c2-94ab-b791f2eecc5b",
+    "text": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization Haotong Duan∗, Zhongming Chen∗, Ngai Wong†",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 0,
+    "total_chunks": 43,
+    "char_count": 137,
+    "word_count": 17,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a0813058-eeb8-4939-8dd4-56bc05571cc6",
+    "text": "Abstract—Tensor networks, which are originally developed when confronted with extremely high-dimensional data. This\nfor characterizing complex quantum many-body systems, have has motivated increasing interest in tensor network–based\nrecently emerged as a powerful framework for capturing high- generative frameworks. A rigorous correspondence between\ndimensional probability distributions with strong physical inprobabilistic modeling and the MPS formalism was established terpretability. This paper systematically studies matrix product\nstates (MPS) for generative modeling and shows that unitary in [11], laying the theoretical foundation for using MPS as\nMPS, which is a tensor-network architecture that is both simple a probabilistic generative model. Early studies introduced\nand expressive, offers clear benefits for unsupervised learning MPS for dimensionality reduction and large-scale optimization2026\nby reducing ambiguity in parameter updates and improving [12]. Subsequent empirical investigations further revealed that\nefficiency.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 1,
+    "total_chunks": 43,
+    "char_count": 1043,
+    "word_count": 130,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "398667ab-141c-419d-9ec2-3e973c94d341",
+    "text": "To overcome the inefficiency of standard gradientMPS achieves generative performance comparable to restricted based MPS training, we develop a Riemannian optimization\napproach that casts probabilistic modeling as an optimization Boltzmann machines (RBMs) on benchmark datasets such asMar\nproblem with manifold constraints, and further derive an ef- MNIST and Bars-and-Stripes [13], [14]. In addition, more\nrecent theoretical work has demonstrated the strong expressive12 ficientStripes space-decouplingand EMNIST datasetsalgorithm.demonstrateExperimentsfast adaptationon Bars-and-to power of MPS when viewed through the lens of probabilistic\ndata structure, stable updates, and strong performance while\nmodeling [15]. maintaining the efficiency and expressive power of MPS. Beyond the standard MPS structure, a variety of tensor\nIndex Terms—generative model, unitary MPS, Riemannian network-based generative models have been explored. The tree\noptimization, space-decoupling.\ntensor network (TTN) has been shown to effectively capture\nhierarchical data dependencies [16], [17]. Two-dimensional[cs.LG]\nI. INTRODUCTION tensor networks such as projected entangled pair states (PEPS)\n[18] and hierarchical tree architectures [19] naturally align ENSOR networks were originally developed in conwith image modeling and completion tasks. The deep tree densed matter physics to accurately characterize the wave T tensor network further integrates hierarchical structures with functions and entanglement structures of quantum many-body\ndeep learning mechanisms, yielding improved representational systems [1], [2]. The seminal survey by Kolda and Bader [3]\ncapacity for computer vision tasks [20]. Meanwhile, novel systematically introduced tensor decompositions into scientific\ntensor decompositions including tensor ring and tensor star computing and data analysis. The models such as the tensor\nmodels offer efficient tools for high-dimensional data com- train (TT) decomposition which is also known as the mapression and completion [21], highlighting their potential as trix product state (MPS) [4] were brought into the machine\ngenerative modeling frameworks. learning community [5], [6]. In recent years, tensor networks\nAlgorithmic advancements are essential for making tensor have received growing attention at the interface of machine\nnetwork-based generative models practically viable. Rieman- learning and quantum computing due to their strong expressive\nnian optimization has emerged as a powerful tool for solving capacity in representing high-dimensional data and their efficonstrained optimization problems on manifolds, providing ciency in simulating quantum many-body systems [7]. These\nsignificant improvements in training stability and efficiency.arXiv:2603.12026v1 advantages make tensor networks a promising paradigm for\nThis framework generalizes classical optimization techniques addressing the limitations of conventional generative models,\nfrom Euclidean spaces to Riemannian manifolds with intrinsic which often struggle with high computational complexity and\ngeometric structures [22], [23]. Foundational works such as limited interpretability when processing high-dimensional or\n[24] provide detailed theoretical treatments of matrix manifold quantum-structured data.\nalgorithms and illustrate how geometric structures can be ex- Generative modeling, which is a typical kind of unsuperploited to design stable and efficient optimization procedures. vised learning that makes use of a huge amount of unlabeled\nMany machine learning models naturally impose manifold data, lies at the heart of the rapid development of modern\nconstraints on their parameters such as the Stiefel manifold machine learning techniques. Classical generative models such\n[25], the unit sphere [26], and low-rank tensor manifolds [27], as Boltzmann machines [8], [9] and generative adversarial\n[28].",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 2,
+    "total_chunks": 43,
+    "char_count": 3892,
+    "word_count": 508,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b2fe6ac-6bdc-4699-9e7c-77864684a138",
+    "text": "In complex generative models, however, a single mani- networks (GANs) [10] exhibit inherent scalability challenges\nfold constraint is often insufficient. Parameterization-based apCorresponding author: Zhongming Chen. proaches can preserve manifold structure during optimization\n∗Department of Mathematics, School of Sciences, Hangzhou Dianzi Uni- [23], while Riemannian optimization avoids the computational\nversity, Hangzhou 310018, China. Email: {htduan, zmchen}@hdu.edu.cn.\n†Department of Electrical and Electronic Engineering, The University of overhead and instability associated with Euclidean projectionHong Kong, Hong Kong. Email: nwong@eee.hku.hk. based methods.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 3,
+    "total_chunks": 43,
+    "char_count": 671,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e87787c5-f220-45e8-80d5-56d9a42358f7",
+    "text": "When training MPS-based generative models, local proba- Rn1×n2×···×nd, whose (i1, i2, . . . , id)th element is written as\nbilities are determined by the relative values of normalization A(i1, i2, . . . , id), where ik = 1, . . . , nk and k = 1, . . . , d.\ncoefficients induced by the optimized MPS tensors. Under Here, d is referred to as the order of the tensor, and nk as the\nunconstrained optimization [13], these coefficients might oscil- dimension of its kth mode. A first-order tensor corresponds to\nlate or adapt slowly because some gradient directions mainly a vector, and a second-order tensor corresponds to a matrix.\nrescale the entire MPS and thus do not affect local probabiliDefinition 1 (Frobenius norm). For any two tensors A, B ∈\nties. To address this, we propose a unitary MPS-based genera- Rn1×···×nd, their inner product is defined as\ntive model that enforces a unit-sphere constraint, limiting optimization to directions that adjust the relative weights among n1 nd\n⟨A, B⟩= X · · · X A(i1, . . . , id) B(i1, . . . , id). (1)MPS cores. Combining a DMRG-inspired update scheme [29]\nwith a space-decoupled strategy [23] enables efficient updates i1=1 id=1\nat the intersections of tensor manifolds and supports indepen- The corresponding Frobenius norm is given by\ndent, parallel optimization of MPS cores. Experiments show\nthat, relative to alternating Euclidean gradient descent, the ∥A∥F = p⟨A, A⟩. (2)\nproposed Riemannian method maintains manifold constraints Definition 2 (Outer product). For vectors a(k) ∈Rnk, k =\nthroughout training, yielding a more direct descent trajectory, 1, . . . , d, their outer product is denoted by C = a(1) ◦· · · ◦\nfewer boundary oscillations, and markedly improved stability a(d) ∈Rn1×···×nd such that\nand efficiency. The main contributions of this paper are:\n• A unitary MPS framework for generative modeling is C(i1, . . . , id) = a(1)(i1) · · · a(d)(id).\nproposed to remove global scaling degrees of freedom\nDefinition 3 (Tensor train decomposition). Given a dth-order while enforcing tensor-norm or orthogonality constraints.\ntensor A ∈Rn1×···×nd, the tensor train (TT) decomposition, • An efficient manifold-optimization approach is developed\nalso known as the matrix product state (MPS) representation, by combining DMRG-inspired updates with a spacefactorizes A into a sequence of d third-order tensors such that decoupled strategy, applying Riemannian optimization at\nmanifold intersections to enable parallel core updates. r0 rd\n• Strong generation performance is demonstrated, validat- A = X · · · X A(1) (α0, :, α1) ◦· · · ◦A(d) (αd−1, :, αd)\ning unitary MPS advantages in convergence stability, α0=1 αd=1\nefficiency, and generation quality. which can be expressed element-wise as\nThe remainder of this paper is organized as follows. Section II introduces the necessary theoretical background, in- A(v1, v2, . . . , vd) = A(1)(v1)A(2)(v2) · · · A(d)(vd). (3)\ncluding the MPS representation and fundamental concepts in Here, A(k) ∈Rrk−1×nk×rk (k = 1, 2, . . . , d) are the core\nmanifold optimization. Section III presents the overall MPS- tensors, with the boundary condition r0 = rd = 1 to\nbased generative modeling framework, formulates the associ- ensure proper contraction at the edges. The vkth slice of\nated optimization problem, and describes the proposed space- A(k) is denoted by A(k)(vk) ∈Rrk−1×rk. The sequence\ndecoupled optimization algorithm. Section IV first presents r = (r1, r2, . . . , rd−1) is referred to as the TT-rank, also called\nexperimental results on the Bars-and-Stripes (BAS) dataset to the bond dimensions in the MPS terminology.\nevaluate the convergence speed and generative capability of\nthe proposed method.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 4,
+    "total_chunks": 43,
+    "char_count": 3702,
+    "word_count": 606,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3d42b900-00ed-4e61-a115-56e92e666705",
+    "text": "It then reports results on the EMNIST For any MPS, the maximum bond dimension is denoted by\ndataset, where the proposed approach is compared with the rmax and the average bond dimension is denoted by rmean.\nbaseline in [13], with emphasis on convergence speed and The MPS with unit Frobenius norm is called unitary MPS.\ngenerative performance.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 5,
+    "total_chunks": 43,
+    "char_count": 343,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "358008fd-3412-4225-8217-1cba198498c7",
+    "text": "Section V discusses future directions Definition 4 (k-unfolding [30]). The k-unfolding operator\nfor tensor network–based generative modeling and analyzes directly reshapes the original tensor into a matrix with the\nthe potential of Riemannian optimization in addressing related first k modes as the row while the rest modes as the column.\nchallenges. For a dth-order tensor A ∈Rn1×···×nd, it can be expressed\nas A⟨k⟩whose entries meet\nII. PRELIMINARIES\nThis section provides a concise review of the theoretical A⟨k⟩(j1, j2) = A(i1, . . . , ik, . . . , id),\nbackground underpinning this work, including basic tensor\nwhere\noperations, the matrix product state (MPS) representation,\nj1 = i1, . . . , ik, j2 = ik+1, . . . , idfundamental principles of Riemannian optimization, and the\nassociated manifold structures. These concepts collectively denote the linear indices corresponding to the multi-indices\nestablish the foundation for the model formulation and op- according to the big-endian (colexicographic) notation, i.e.,\ntimization strategies introduced in the subsequent sections. the mappings are explicitly given by j1 = ik + (ik−1 −1)nk + · · · + (i1 −1)n2n3 · · · nk,A. Tensor Preliminaries\nWe first introduce some basic tensor notations used through- j2 = id + (id−1 −1)nd + · · · + (ik+1 −1)nk+2nk+3 · · · nd.\nout this work. A dth-order tensor is denoted by A ∈ Proposition 1 (Theorem 2.1 of [4]). For any tensor positive-definite inner product on the tangent space TxM at\nA ∈Rn1×n2×···×nd, there always exist TT-cores A(k) ∈ each point x ∈M:\nRrk−1×nk×rk (k = 1, 2, . . . , d) satisfying (3) with TT-ranks\ngx : TxM × TxM →R.\nrk = rank(A⟨k⟩), k = 1, 2, . . . , d −1. Let f : M →R be a smooth function. The Riemannian\nDefinition 5 (Left- and right-canonical). For k = 1, . . . , d, the gradient of f at x ∈M, denoted by gradf(x), is the unique\ncore tensor A(k) ∈Rrk−1×nk×rk is called left-canonical if vector in TxM satisfying\nX A(k)(vk) ⊤A(k)(vk) = Irk, (4) gx gradf(x), v = Df(x)[v], ∀v ∈TxM, (10)\nvk=1 where Df(x)[v] denotes the directional derivative of f at x\nand right-canonical if along the vector v.\nnk Proposition 3 (Computation of Riemannian gradient [24]). X A(k)(vk) A(k)(vk) ⊤= Irk−1. (5) Let M be the Riemannian manifold embedded in Euclidean\nvk=1 space Rn. The Riemannian gradient of f at x ∈M can be\nProposition 2 (Mixed-canonical form of MPS [4]).",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 6,
+    "total_chunks": 43,
+    "char_count": 2371,
+    "word_count": 414,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b8ecbe67-4eca-4131-8561-22f841744545",
+    "text": "For computed by projecting the Euclidean gradient ∇f(x) onto\nany MPS {A(1), . . . , A(d)}, one could select an index k ∈ the tangent space TxM:\n{1, 2, . . . , d} as the orthogonality center and transform the\ngradf(x) = PTxM ∇f(x) , (11)cores such that\nA(1), . . . , A(k−1) are left-canonical and where PTxM is the orthogonal projection operator onto TxM\nunder the given Riemannian metric. A(k+1), . . . , A(d) are right-canonical. Proposition 4 (Transversality [31]).",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 7,
+    "total_chunks": 43,
+    "char_count": 467,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3962fc14-878f-479e-ab76-7f54e35bb365",
+    "text": "Let M1 and M2 be\nUnder this mixed-canonical structure, the contraction of the smooth manifolds embedded in Rn and M1 ∩M2 ̸= ∅. It\nentire MPS satisfies follows that M1 ∩M2 is still a smooth manifold if and only\n∥A∥F = A(k) F , (6) if M1 and M2 intersect transversely, i.e.,\nmeaning that the Frobenius norm of the full tensor is com- TxM1 + TxM2 = Rn (12)\npletely concentrated at the orthogonality center.\nfor any x ∈M1 ∩M2. Moreover, by contracting two adjacent cores A(k) and\nA(k+1) into a fourth-order tensor Definition 8 (Retraction). A retraction on a manifold M is\na smooth mapping R from the tangent bundle TM onto M\nA(k,k+1)(αk−1, vk, vk+1, αk+1) =\nwith the following properties. Let Rx denote the restriction of\n(7) R to TxM. X A(k)(αk−1, vk, αk)A(k+1)(αk, vk+1, αk+1)\n(i) Rx(0x) = x, where 0x denotes the zero element of TxM. αk=1\n(ii) Rx satisfies DRx(0x) = idTxM, where idTxM denotes\nwhile keeping A(1), . . . , A(k−1) left-canonical and the identity mapping on TxM. A(k+2), . . . , A(d) right-canonical, the MPS admits a two-site\nmixed-canonical form. In this case, the Frobenius norm of In fact, the exponential mapping is the ideal way to map a\nthe full tensor is concentrated on the merged core, namely, tangent vector to a point on the manifold by traveling along\nthe geodesic with initial velocity given by the tangent vector\n∥A∥F = A(k,k+1) F . (8) [24]. It's geometrically canonical, but often too expensive\nor inconvenient to compute. In practice, a retraction is used\nB. Preliminaries on Riemannian Optimization instead because it gives a cheap, well-behaved approximation\nIn this subsection, we present some basic concepts about of the exponential mapping that is sufficient for convergence\nRiemannian optimization which acts on a smooth manifold guarantees. In Riemannian gradient-based optimization, the\nequipped with a Riemannian metric. update rule at iteration k is given by Definition 6 (Tangent space).",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 8,
+    "total_chunks": 43,
+    "char_count": 1930,
+    "word_count": 326,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b4ed1c5e-55b4-4c23-bcee-999264a781ad",
+    "text": "Let γ : (−ϵ, ϵ) →M be a xk+1 = Rxk −θ gradf(xk) , (13)\nsmooth curve on the manifold M with γ(0) = x. The tangent\nvector of the curve γ at the point x is the operator ˙γ(0), which where Rx(ξ) is a retraction mapping that maps a tangent vector\nacts on any smooth function f ∈C∞(M) as ξ ∈TxM back to a point on the manifold M, and θ > 0 is\nthe learning rate.\n˙γ(0)f := dtf(γ(t)) t=0 . (9) C. Relevant Manifolds\nThe collection of all tangent vectors at x forms a vector\nIn this subsection, we introduce two smooth manifolds\nspace, called the tangent space at x, denoted by TxM. embedded in Rm×n: unit sphere manifold Sm×n and fixedDefinition 7 (Riemannian gradient). Let (M, g) be a Rieman- rank manifold Mk. Their definitions are given below, along\nnian manifold, where g is a Riemannian metric that assigns a with some basic properties used in the subsequent analysis. 1) Unit Sphere Manifold: Define the manifold A. MPS for generative model\nSm×n = {X ∈Rm×n | ∥X∥F = 1}, (14) With the objective of unsupervised learning, Han et al. [13]\nwhich is the unit sphere endowed with the Frobenius norm. It proposed a generative model based on the Matrix Product\nis a smooth manifold of dimension mn −1. State representation (referred to as the MPS model), which is\nFor any X ∈Sm×n, the tangent space TXSm×n consists inspired by the probabilistic interpretation of wavefunctions in\nof all matrices that are orthogonal to X with respect to the quantum physics. Consider a dataset T consisting of binary\nFrobenius inner product: strings v = (v1, v2, · · · , vd) ∈V = {0, 1}⊗d, which may\ncontain duplicates and can be mapped to the basis vectors of\nTXSm×n = {˙X ∈Rm×n | ⟨X, ˙X⟩= tr(X⊤˙X) = 0}. (15) a Hilbert space with dimension 2d. Later, we will regard T as\n2) Fixed-Rank Manifold: Define the manifold the training set. Let |T | represent the number of elements in\nset T .",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 9,
+    "total_chunks": 43,
+    "char_count": 1861,
+    "word_count": 344,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dea5b073-c6f6-4a6f-a751-709ab61bf71a",
+    "text": "Formally, the empirical distribution ˆP obtained during\nMk = {X ∈Rm×n | rank(X) = k}, (16) training is given by:\nwhich is the fixed-rank-k manifold. It is a smooth manifold\nof dimension k(m + n −k). frequency of v ˆP(v) = , for v ∈T . (19)\nFor any X ∈Mk, let X have a rank decomposition X = |T | UV ⊤with U ∈Rm×k and V ∈Rn×k. Then the tangent space\nat X is given by The MPS parameterizes the wavefunction as follows:\nTXMk = {˙UV ⊤+ U ˙V ⊤| ˙U ∈Rm×k, ˙V ∈Rn×k}. (17)\nIt is worth noting that when k ≤r, the fixed-rank manifold Ψ(v; A(1), · · · , A(d)) = Tr A(1)(v1) · · · A(d)(vd)\nMk is an embedded smooth submanifold of the low-rank set r0 rd\n= X · · · X A(1) (α0, v1, α1) · · · A(d) (αd−1, vd, αd) , M≤r = {X ∈Rm×n | rank(X) ≤r}, (18)\nα0=1 αd=1\nwhich, in contrast, is not a smooth manifold everywhere due to\nthe presence of singular points at matrices with rank strictly where A(k) ∈Rrk−1×2×rk, k = 1, 2, . . . , d.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 10,
+    "total_chunks": 43,
+    "char_count": 915,
+    "word_count": 194,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fb5c4450-6622-4e12-bd57-6ea6a95c9fde",
+    "text": "When the\nsmaller than r. The manifold Mk can therefore be viewed optimization of parameters in the MPS is not considered, we\nas the smooth stratum of M≤r corresponding to matrices of simply use Ψ(v) to represent Ψ(v; A(1), · · · , A(d)).\nmaximal rank r within this set. The model represents the probability distribution of data as\nIn Riemannian optimization, intersections of multiple manithe squared norm of the MPS wavefunction:\nfolds frequently arise. In practice, the tangent space of such an\nintersection can be approximated via iterative projections, after\n|Ψ(v)|2which standard Riemannian optimization procedures can be P(v) = , (20)\napplied to search for an optimal solution. However, in tensor Z\noptimization problems, the optimal tensor rank is often unknown. From a theoretical perspective, identifying the global where Z = Pv∈V |Ψ(v)|2 denotes the normalization factor\noptimum would require an exhaustive search over all possible ensuring that the total probability sums to one. Once the MPS\nranks, which is computationally infeasible.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 11,
+    "total_chunks": 43,
+    "char_count": 1047,
+    "word_count": 163,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ba7bbf78-b08d-4421-8ca7-5f97e9a0fb8f",
+    "text": "Furthermore, the form of the wavefunction is established, the model learns\nset of low-rank tensors does not constitute a smooth manifold, the probability distribution by optimizing the parameters of\nand consequently, its intersection with other manifolds is not Ψ(v; A(1), · · · , A(d)) so that the resulting distribution apguaranteed to possess smoothness properties. proximates the empirical data distribution ˆP(v). A common\napproach is to minimize the Negative Log-Likelihood (NLL),\nIII. A SPACE-DECOUPLING METHOD FOR OPTIMIZATION which is equivalent to minimizing the Kullback–Leibler diON UNITARY MPS vergence between the empirical distribution ˆP(v) and the\nIn this section, we first review the standard MPS gen- model distributions P(v). Thus, training an MPS generative\nerative model and then introduce the proposed generative model based on the NLL criterion is equivalent to solving the\nmodel based on unitary MPS (UMPS), which incorporates following optimization problem:\na normalization constraint to enhance training stability and\nprobabilistic interpretability. The UMPS model naturally leads |Ψ(v; A(1), · · · , A(d))|2 min = −1 X ln .to optimization problems defined over structured tensor man- A(1),··· ,A(d)L |T | Pv∈V |Ψ(v; A(1), · · · , A(d))|2 v∈Tifolds, where the objective is to maximize the likelihood or\nother relevant criteria. For the UMPS model, we formulate\nthe corresponding optimization problem and employ a space- In two-site DMRG [29], [32], the MPS parameters are\ndecoupling strategy, which enables individual core tensors updated by optimizing two neighboring tensors simultaneto be optimized independently while adhering to manifold ously, followed by a truncation based on the reduced density\nconstraints. This approach improves computational efficiency matrix to retain the most relevant states. Specifically, when\nand supports parallel updates, making it particularly suitable updating the kth and (k + 1)th core tensors, we fix the\nfor high-dimensional generative tasks. remaining core tensors. By contracting two adjacent tensors A(k) and A(k+1), we obtain a fourth-order tensor denoted by form, the UMPS model effectively reduces the search space\nA(k,k+1) ∈Rrk−1×2×2×rk+1 satisfying Eq. (7).",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 12,
+    "total_chunks": 43,
+    "char_count": 2234,
+    "word_count": 328,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9ea0e342-82b7-4ffa-89b7-a816d0eb9e36",
+    "text": "It follows that and accelerates convergence to the optimal solution. Specifically, we impose a normalization constraint Z = 1 toΨ(v; A(1), · · · , A(d))\nmaintain the consistency of the probability distribution P(v)\n= X A(1)(α0, v1, α1) · · · A(k,k+1)(αk−1, vk, vk+1, αk+1) during optimization, resulting in the following constrained\noptimization problem:\nαi(i̸=k)\n· · · A(d)(αd−1, vd, αd)\nmin L = −1 X ln |Ψ(v; A(1), · · · , A(d))|2\nA(1),··· ,A(d) |T |\n= Ψ(v; A(1), · · · , A(k,k+1), · · · , A(d)) := Ψ(v; A(k,k+1)). v∈T (P1)\nsubject to X |Ψ(v; A(1), · · · , A(d))|2 = 1. Then, we compute the derivative of the negative loglikelihood with respect to A(k,k+1): v∈V ∂L Inspired by the update strategy of MPS model, (P1) is opti- = Z′ −2 X Ψ′(v; A(k,k+1)) , (21)\n∂A(k,k+1) Z |T | Ψ(v; A(k,k+1)) mized using a two-site alternating scheme. We define one loop\nv∈T\nas sweeping from k = 1 to d −1 and then returning to k = 1.\nwhere Ψ′(v; A(k,k+1)) denotes the derivative of the MPS To be specific, each neighboring tensor A(k,k+1) is updated in\nwith respect to the tensor element of A(k,k+1) and Z′ = the order\n2 Pv∈V Ψ′(v; A(k,k+1))Ψ(v; A(k,k+1)). Since the optimization problem arising from the above A(1,2) →A(2,3) →· · · →A(d−1,d) →· · · →A(1,2) →· · ·\nmodel is unconstrained, a natural approach is to employ\ngradient-based methods to search for an optimal solution.\nuntil convergence. According to Proposition 2, if the MPS isHowever, for the model distribution, uniformly scaling all\nin the mixed-canonical form, we have Z = ∥A(k,k+1)∥2F andvalues Ψ(v) associated with each element v by a common\nZ′ = 2A(k,k+1) which simplify the computation of Z and thefactor yields an equivalent probability distribution, as only the\nEuclidean gradient given by (22). Therefore, maintaining theoverall normalization is affected.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 13,
+    "total_chunks": 43,
+    "char_count": 1812,
+    "word_count": 317,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "08ab6c6d-3179-4dd9-85cb-e97f171f1862",
+    "text": "This scale non-uniqueness\nmixed-canonical form of the MPS throughout the optimizationcan impede gradient-based optimization, causing iterates to\nis essential for computational simplicity.oscillate among multiple equivalent optima or converge slowly\ndue to the presence of flat directions in the objective landscape. Specifically, we initialize the MPS such that A(2), . . . , A(d)\nA natural way to mitigate this issue is to enforce the con- are right-canonical and ∥A(1)∥F = 1. At this time, Z =\nstraint Z = 1 throughout the update process. This approach, ∥A(1,2)∥2F = ∥A(1)∥2F = 1. Without loss of generality, after\noften referred to as a gradient projection method, ensures that updating A(k,k+1), we perform the singular value decomposieach iterate remains properly normalized and prevents the op- tion (SVD) on the updated A(k,k+1)⟨2⟩ , i.e., SVD(A(k,k+1)⟨2⟩ ) =\ntimization from drifting along the redundant scaling direction. If the next step updates A(k+1,k+2), we set A(k)⟨2⟩=\nSimultaneously, the gradient expression further simplifies to:\nUk and A(k+1)⟨1⟩ = ΣkV k⊤ . This makes A(1), . . . , A(k) left-\n∂L canonical and A(k+2), . . . , A(d) right-canonical. If the next = Z′ −2 X Ψ′(v; A(k,k+1)) . (22)\n∂A(k,k+1) |T | ⊤ Ψ(v; A(k,k+1)) step updates A(k−1,k), we set A(k)⟨2⟩= UkΣk and A(k+1)⟨1⟩ = Vk v∈T\nto maintain the mixed-canonical condition. This procedure\nAlthough the above strategy alleviates the issue to some guaranties that the condition Z = ∥A(k,k+1)⟨2⟩ ∥2F is maintained\nextent, the projection step inevitably introduces a loss in throughout the entire update process. In order to meet the\nthe effective update progress, thereby reducing the overall constraints of (P1), the condition ∥A(k,k+1)⟨2⟩ ∥2F = 1 is enforcedefficiency of the optimization. To eliminate this ambiguity, at this step of the algorithm.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 14,
+    "total_chunks": 43,
+    "char_count": 1827,
+    "word_count": 289,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f25ebd2-7fdc-4be3-b713-807a46e59c57",
+    "text": "If we continue to employ the\nwe augment the optimization problem by using unitary MPS. previously used gradient descent method to solve the problem,\nFixing the partition function in this way removes the redundant\na truncated SVD is applied to A(k,k+1)⟨2⟩ in order to ensuredegree of freedom and forces the optimization to converge\nthat the maximum bond dimension rmax does not exceed\ntoward a specific representative of the equivalence class of\nthe prescribed threshold. However, the truncation process\noptimal solutions. As a result, the optimization becomes more\nbreaks the manifold constraint in (P1), which requires us to\nstable and exhibits improved convergence speed and accuracy.\nsimultaneously preserve the unit-norm property of A(k,k+1)⟨2⟩\nand enforce its low-rank structure in the subproblem. Unitary MPS for generative model In practice, to simplify the model, we may constrain the\nIn this part, we introduce the proposed generative model tensor to lie on a fixed-rank manifold during optimization.\nbased on unitary Matrix Product State (referred to as the However, this introduces substantial redundancy, and in many\nUMPS model), which is derived from the conventional MPS cases, only an upper bound of the bond dimension rmax is\nmodel by incorporating a normalization constraint Z = 1. The known while the optimal fixed rank remains indeterminate.\nmotivation behind this modification is to eliminate redundant That is, we need to search for a better tensor A(k,k+1)⟨2⟩ within\nequivalence classes that naturally arise during the parameter the intersection of the low-rank set M≤rmax and the unit\nupdate process. By constraining the MPS cores to a normalized sphere manifold Sm×n. This leads to the following subprob- lem of (P1): RGD\n(X, G) ∈Mh (X+, G+) ∈Mh\nmin L = −1 X ln |Ψ v; A(k,k+1)⟨2⟩ |2\nA(k,k+1)⟨2⟩ |T | v∈T ϕ\n(P2)\nsubject to ∥A(k,k+1)⟨2⟩ ∥2F = 1,\nrank A(k,k+1)⟨2⟩ ≤rmax. X ∈M≤r ∩Sm×n X+ ∈M≤r ∩Sm×n",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 15,
+    "total_chunks": 43,
+    "char_count": 1918,
+    "word_count": 307,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e8b6fec6-4f4c-45b7-8ff3-9f52f77e0244",
+    "text": "Evidently, the above formulation is essentially an opti- Fig. 1. Optimization flowchart of the space-decoupling method, where dashed\nmization problem defined over the intersection of the unit lines indicate the optimization process.\nsphere and a low-rank matrix set. Due to the constraints,\nthe problem becomes not only nonlinear but also strongly\nTo apply the space–decoupling framework to the above opti-nonconvex, making direct optimization extremely challenging.\nmization model, the key idea is to parameterize the feasible setA straightforward approach is to enumerate all possible rank\nso that all constraints are automatically preserved throughoutvalues and determine the optimal rank selection. According to\nthe optimization procedure. The flowchart is shown in Fig. 1.Appendix A, the unit sphere manifold and the fixed-rank manSpecifically, we decouple the intertwined constraints into twoifold intersect transversely. Therefore, once the optimal rank is\nseparate spaces, thereby enabling the application of Rieman-identified, the optimal solution can be obtained by projection\nnian gradient descent (RGD) for optimization on the smoothonto the unit-sphere manifold. However, this enumeration\nmanifold.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 16,
+    "total_chunks": 43,
+    "char_count": 1211,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3e4ec868-53d7-48d3-9508-f6a0badb7203",
+    "text": "For this purpose, we introduce the following space-strategy incurs exponential computational cost, rendering it\ndecoupling parameterization for the constraints M≤r ∩Sm×n:impractical for applications. In fact, constrained problems on non-smooth manifolds are ( XG = 0, )\nnot without direct solution strategies. In the next subsection, Mh = (X, G) ∈Rm×n × Gr(n, n −r) , ∥X∥F = 1\nwe design a spatially decoupled optimization method tailored\nfor (P2), which separates the intertwined low-rank constraint where\nand unit-sphere constraint into two independent spaces. This Gr(n, n−r) = G ∈Sym(n) : G2 = G, rank(G) = n −r\ndecoupling allows the optimization to be carried out on smooth\nmanifolds, where efficient and well-defined Riemannian opti- and Sym(n) denotes the space of real symmetric n × n\nmization procedures become feasible. matrices. As shown in [23], Mh is a smooth manifold. With the manifold Mh defined above, we circumvent the\nnonsmooth constraints inherent in the original problem (P3) by\nC. Space-decoupling method for UMPS exploiting the smooth parameterization Mh with the mapping\nThe feasible set of (P2) is given by the intersection of a low- ϕ : Rm×n × Sym(n) →Rm×n : (X, G) 7→X satisfying\nrank matrix set and a smooth manifold, which results in a do- ϕ(Mh) = M≤r ∩Sm×n. This enables us to lift the problem\nmain that is highly nonconvex and nonsmooth. Consequently, to a smooth Riemannian optimization problem on the abstract\ntraditional optimization methods encounter substantial difficul- manifold Mh:\nties, including the absence of tractable projection operators,\nmin ¯f(X, G) := f ϕ(X, G) . (P-Mh)\nunclear optimality conditions, and potential instability caused (X,G)∈Mh\nby uncontrolled oscillations along scale-dependent directions. Crucially, (P3) and (P-Mh) share the same optimal value, and\nTo systematically address these challenges, we adopt the their optimal solutions are in one-to-one correspondence via\nspace-decoupling framework proposed by Yang et al. [23], the parameterization ϕ. This smooth reformulation allows us\nwhich provides an efficient computational paradigm tailored to directly apply the rich toolbox of Riemannian optimization\nfor low-rank optimization problems endowed with orthogo- algorithms and their associated theoretical guarantees to solve\nnally invariant constraints. The central idea of this framework the originally nonsmooth problem.\nis to decouple variables and localize constraints so that the In what follows, we describe the tangent space T(X,G)Mh\noriginal manifold-constrained optimization problem can be and define the Riemannian metric on Mh which are needed\ntransformed into a sequence of simpler and lower-dimensional for the Riemannain gradient descent update. Note that for any\nsubproblems, thereby significantly reducing computational (X, G) ∈Mh, there always exists a representation (H, V ) ∈\ncomplexity. Rm×r × St(n, r) such that\nBefore applying the framework to (P2), we first consider the\nfollowing general optimization model with a unit Frobenius- X = HV ⊤, G = I −V V ⊤, (23)\nnorm constraint and a low-rank constraint: where St(n, r) denotes the set of n × r matrices with ormin f(X), thonormal columns and H ∈Rm×r satisfies ∥H∥F = 1. X∈Rm×n\nUnder the space-decoupling framework, the tangent space of\nsubject to rank(X) ≤r, (P3) (X, G) ∈Mh is given by\n∥X∥2F = 1. n ⊤ ⊤ T(X,G)Mh = (KV ⊤+ HV p , −VpV ⊤−V V p ) |",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 17,
+    "total_chunks": 43,
+    "char_count": 3385,
+    "word_count": 532,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "21a9ee7d-fec3-4ce2-9c75-775dedd39041",
+    "text": "It can be seen that this is an optimization problem constrained (24)\noon M≤r ∩Sm×n which is a nonsmooth manifold. K ∈THSm×r, Vp ∈Rn×r, V ⊤Vp = 0 . Here, Sm×r = {H ∈Rm×r | ∥H∥F = 1} denotes the unit To efficiently solve the optimization problem of UMPS\nsphere manifold embedded in Rm×r and the tangent space model, we apply the space-decoupling method described above\nTHSm×r is given by Eq. (15). For any (η, ζ) ∈T(X,G)Mh, to tackle the subproblem (P2) arising during UMPS training.\nthe corresponding (K, Vp) ∈Rm×r ×Rn×r in Eq. (24) is also By rewriting the target fourth-order tensor A(k,k+1) in a matrix\ncalled a representation of (η, ζ). form that satisfies ∥A(k,k+1)⟨2⟩ ∥F = 1 and rank(A(k,k+1)⟨2⟩ ) ≤r,\nThe manifold Mh is treated as an embedded submanifold the original problem is equivalently transformed into a Rieof the Euclidean ambient space Rm×n × Sym(n) equipped mannian optimization problem on the manifold Mh, ensuring\nwith the weighted inner product that structural constraints are automatically satisfied throughout the iteration process. It is worth noting that (P2) does not\n⟨(E1, Z1), (E2, Z2)⟩ω = ⟨E1, E2⟩+ ω⟨Z1, Z2⟩,\ndirectly compute the optimal solution for A(k,k+1)⟨2⟩ ; rather, it\nwhere ω > 0 is the weighting parameter. The induced aims to progressively approach optimality via a Riemannian\nRiemannian metric on Mh is obtained by restricting this gradient-based method.\ninner product to the tangent space T(X,G)Mh at each point The algorithm for solving the UMPS problem using the\n(X, G) ∈Mh. Taking into account the representations— space-decoupling method is presented in Algorithm 1. No-\n(H, V ), (K1, Vp,1) and (K2, Vp,2)—for (X, G) and (η1, ζ1), tably, the algorithm preserves the mixed-canonical form of\n(η2, ζ2) ∈T(X,G)Mh, the metric takes the form the MPS throughout the procedure. When performing the\n⟨(η1, ζ1), (η2, ζ2)⟩= ⟨K1, K2⟩+ ⟨Vp,1, Vp,2MH,ω⟩ SVD on the updated A(k,k+1)⟨2⟩ , the truncation step is omitted,\nthanks to the maintenance of the low-rank structure. This\nwith the positive-definite weighting matrix: ensures that no energy is lost in Ψ(v) during the update. Let\nMH,ω := 2ωIr + H⊤H. (25) n = max{n1, . . . , nd}.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 18,
+    "total_chunks": 43,
+    "char_count": 2162,
+    "word_count": 360,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "79a40c15-04fb-4d16-9ceb-6ee999c3a6cc",
+    "text": "Table I summarizes the computational\ncomplexity of the basic operations involved in Algorithm 1. Here Ir denotes the identity matrix of size r × r and we set As shown in Table I, when the training dataset is large,\nω = 1 throughout this work. This weighted metric provides the the dominant computational cost is O(|T |dn2r2max), arising\ngeometric foundation for Riemannian optimization algorithms. from the computation of the Euclidean gradient ∇f(X). Moreover, the Riemannian gradient of the lifted objective As a result, the total time complexity of Algorithm 1 is\n¯f(X, G) = f(X) on Mh, denoted by grad¯f(X, G), is the O lmaxd(|T |dn2r2max + n2r3max) .\nunique vector in T(X,G)Mh which can be represented by\n¯K = ∇f(X)V −⟨∇f(X)V, H⟩H,\n−1 (26) Algorithm 1 UMPS training via space-decoupling(UMPS-SD) ¯Vp = G∇f(X)⊤H M H,ω ,\nInput: Training dataset T = {v1, . . . , v|T |}, maximum bond\nwhere (H, V ) is a representation of (X, G) ∈Mh, ∇f(X) dimension rmax, learning rate θ, maximum number of\ndenotes the Euclidean gradient of f with respect to X which loops lmax.\ncould be computed via (22), and MH,ω is defined in Eq. (25). Output: Optimized UMPS cores A(1), A(2), . . . , A(d) and tarWithin the Riemannian optimization framework, the gra- get distribution P(v) = |Ψ(v)|2.\ndient representation alone is insufficient. To preserve the 1: Initialize cores with right-canonical A(2), . . . , A(d) and\nmanifold's geometric structure, a retraction (see Definition 8) ∥A(1)∥F = 1.\nis introduced, which projects the updated point back onto the 2: for i = 1 to lmax do\nmanifold. For any (X, G) ∈Mh and (η, ζ) ∈T(X,G)Mh, let 3: for k = 1 to d −1 and back to 1 do\n(H, V ) and (K, Vp) be the representations, respectively. The 4: Parameterize A(k,k+1) as matrix X = A(k,k+1)⟨2⟩ .\nfirst-order retraction for (P-Mh) can be given by 5: Compute SVD: X = HΣV ⊤. H + K ⊤ 6: Normalize H ←H/∥H∥F . R(X,G)(η, ζ) = eV ⊤, I −eV eV , (27) 7: Set G = I −V V ⊤, obtaining (X, G) ∈Mh. ∥H + K∥F\n8: Compute the representation ( ¯K, ¯Vp) of Riemannianwhere\n⊤ gradient grad¯f(X, G) via Eq. (26). −1/2. eV = (V + Vp) Ir + V p Vp 9: Update (X, G) via retraction:\nH−θ K¯This retraction, together with the local rigidity condition, X ← ∥H−θ K∥F¯ eV ⊤, G ←I −eV eV ⊤,\nensures that the negative Riemannian gradient direction re- ⊤ θ2 ¯Vp ¯Vp)−1/2. where eV = (V −θ ¯Vp)(Ir +mains a local descent direction of the objective function, ⊤\n10: Compute SVD: X = UkΣkV k .thereby supporting convergence to critical points. In particular,\n11: if k is increasing (k = 1 to d −1) then\naccording to (13), the update rule of Riemannian gradient- ⊤ 12: Reshape Uk to A(k) and reshape ΣkV k to A(k+1).based optimization\n13: else\n(X, G) ←R(X,G) −θ grad¯f(X, G) (28) 14: Reshape UkΣk to A(k) and reshape V k to A(k+1).\n15: end if\ncould be computed easily by replacing K and Vp in Eq. (27) 16: end for\nby −θ ¯K and −θ ¯Vp respectively, where θ > 0 is the learning 17: end for\nrate and ( ¯K, ¯Vp) is the representation of grad¯f(X, G) defined\nin Eq. (26). TABLE I\nSUMMARY OF TIME AND SPACE COMPLEXITY FOR THE MAIN OPERATIONS\nAND OBJECTS OF ALGORITHM 1 . Operation Time complexity\nTwo SVDs (lines 5 and 10) O(2nr2max + r3max)\nCompute ∇f(X) via (22) O(|T |dn2r2max)\nCompute ( K,¯ ¯Vp) via (26) (line 8) O(n2r3max)\nUpdate X (line 9) O(n2r3max))\nObject Space complexity\nMPS cores A(1), . . . , A(d) dnr2max\nRepresentation of (X, G) ∈Mh: H, Σ, V (2n + 1)r2max (a) (b)\nRepresentation of grad ¯f(X, G): K,¯ ¯Vp 2nr2max Fig. 3. (a) Illustration of column-major flattening of a 16 × 16 image into a\n256-dimensional vector v = (p1, p2, . . . , p16, p17, . . . , p256)⊤. (b) A subset\nof the Bars-and-Stripes dataset, with images of size 16 × 16. Sampling: right →left",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 19,
+    "total_chunks": 43,
+    "char_count": 3702,
+    "word_count": 694,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "368e37eb-0f96-44dd-93ae-0f2ec69242d0",
+    "text": "v1 v2 vd−1 vd TABLE II\nUNDER THE EXPERIMENTAL CONDITIONS SHOWN IN FIG. 4, AS THE\nNUMBER OF LOOPS INCREASES, THE TABLE SHOWS THE AVERAGE BOND\nDIMENSION rmean AND THE LARGEST BOND DIMENSION rmax IN THE\nA(1) A(2) · · · A(d−1) A(d) UMPS UPDATED UP TO THIS STEP. loops 1 2 3 4 5\nrmean 7.8945 31.1133 122.4883 470.7852 470.7852\nFig. 2. Schematic of sequential sample generation from a UMPS. All tensors rmax 8 32 128 500 500\nexcept A(d) are gauged to be left-canonical, Each tensor A(i) generates one\nbit vi conditionally on the bits to its right.\n(iv) By iteratively multiplying A(k−1)(vk−1) from the\nD. Generation and Sampling left and computing the squared norm, one obtains\nP(vk−1, vk, . . . , vd), and samples vk−1 accordingly. Once the generative model is well-trained, the next step is\nRepeating this process from right to left produces a sampleto generate new samples according to the learned probability.\nthat strictly obeys the probability distribution defined by theIn many popular generative models, especially energy-based\nMPS. This approach is also applicable to inference tasks whenmodels such as restricted Boltzmann machines (RBM) [33],\npart of the bits are given. Even if unknown bits are interleavedgenerating new samples often requires running Markov chain\namong known bits, marginal probabilities remain tractable dueMonte Carlo (MCMC) from an initial configuration due to\nto efficient contraction of ladder-shaped tensor networks [34].the intractability of the partition function. One advantage of\nMPS-based generative modeling is that the partition function\nIV. NUMERICAL EXPERIMENTS\ncan be exactly computed with linear complexity in the system\nsize [13]. This allows a direct and efficient sampling method, To validate the reliability of the UMPS-SD algorithm, we\nwhich generates a sample bit by bit from one end of the UMPS apply it to several commonly used datasets, including the\nto the other (see Fig. 2). Bars and Stripes (BAS) dataset1 and the EMNIST dataset2. For the proposed generative model based on UMPS, the In all experiments, each grayscale or binary image of size\nprobability is given by P(v) = |Ψ(v; A(1), · · · , A(d))|2. The n × n is reshaped into a one-dimensional vector of length\ndetailed sampling procedure is as follows: n2 using MATLAB's reshape function, where the columns of\nthe original image are stacked sequentially. This preprocessing (i) Start from one end, e.g., the dth bit.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 20,
+    "total_chunks": 43,
+    "char_count": 2425,
+    "word_count": 394,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "caffd21b-9d96-40f8-9558-7aac7da04aad",
+    "text": "Sample vd from the\nstep ensures compatibility with the MPS-based generative marginal probability\nmodel, as illustrated in Fig. 3a. To ensure a fair comparison,\nP(vd) = X P(v1, . . . , vd) = ∥A(d)(vd)∥2F , all baseline experiments are performed using the same initial\nv1,...,vd−1 MPS and identical hyperparameter settings. All experiments were conducted using Matlab R2022a on a where all tensors except A(d) are gauged to be leftcomputer with an Intel(R) Core(TM) i7-14700F @2.10GHz canonical. Note that inverse sampling is similar, but all\nCPU, 16 GB of RAM and an NVIDIA GeForce RTX tensors except A(1) are gauged to be right-canonical.\n4060Ti GPU with 8 GB of VRAM.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 21,
+    "total_chunks": 43,
+    "char_count": 668,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b3392883-1653-4c33-a9b4-1c09721cf3f1",
+    "text": "The source code used\n(ii) Given vd, move to the (d−1)th bit. More generally, given\nin this work is publicly available at: https://github.com/\nthe values vk, vk+1, . . . , vd, the (k −1)th bit is sampled\nhaotong-Duan/UnitaryMPS-SpaceDecoupling. according to the conditional probability P(vk−1, vk, . . . , vd) P(vk−1 | vk, . . . , vd) = . Bars and Stripes\nP(vk, . . . , vd) To evaluate the performance of the proposed UMPS-SD\n(iii) Thanks to the canonical condition, the marginal proba- algorithm, we conduct experiments on the Bars and Stripes\nbility can be efficiently computed as\n1https://pennylane.ai/datasets/bars-and-stripes. P(vk, . . . , vd) = ∥A(k)(vk) · · · A(d)(vd)∥2F . 2https://www.nist.gov/itl/products-and-services/emnist-dataset.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 22,
+    "total_chunks": 43,
+    "char_count": 744,
+    "word_count": 117,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "74bd3f5a-2d4f-414b-920f-1013ed0213f5",
+    "text": "5.5 5.5\nMPS MPS\nUMPS-SD 5 UMPS-SD\nrmax = 200 4.5 rmax = 400\n4.5 4 3.5 ln(NLL) ln(NLL)\n3.5\n2.5 2.5 1.5\n0 5 10 15 20 25 0 5 10 15 20 25 30 35\nloops loops\n(a) (b)\n(a) (b)\nFig. 6. Panels (a) and (b) correspond to the negative log-likelihood (NLL)\nFig. 4. (a) The blue curve represents the average NLL as a function of the convergence of the optimization algorithm of the MPS model and UMPSnumber of loops, while the orange bars indicate the cumulative computation SD algorithm for maximum bond dimensions rmax = 200 and rmax =\ntime required to reach the corresponding loops. (b) Images generated by the 400, respectively, with a training set of |T | = 100 samples. The blue line\nmodel at loops from 1 to 5 as indicated in (a). In experiments above, we set represents the optimization algorithm of the MPS model, and the red line\nrmax = 500, |T | = 400, and the learning rate to 0.007. represents the UMPS-SD algorithm. This allows us to examine the modeling capability 80 rmax = 100 rmax = 100\nrmax = 200 rmax = 200 of the MPS under different expressive constraints. To reduce\nrmax = 300 300 rmax = 300\nrmax = 400 rmax = 400 computational cost, we set lmax = 4 in the experiments above.\n200 At this setting, the algorithm does not convergence completely,NLL 40 Time/s yet it already demonstrates satisfactory performance.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 23,
+    "total_chunks": 43,
+    "char_count": 1317,
+    "word_count": 247,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "35b4c60d-3b0c-43d0-b3ad-e177544c9e56",
+    "text": "The\n100 results are shown in Fig. 5a. Under the same experimental\nsettings, we further measure the computational cost of each\n0 0\n100 200 300 400 500 100 200 300 400 500 training update. The results, presented in Fig. 5b, illustrate how\njT j jT j different values of rmax influence the convergence efficiency\n(a) (b) of the algorithm. Fig. 5. (a) Average NLL as a function of the dataset size under different As shown in Fig. 5, when |T | > rmax, the NLL exhibits\nrmax. For each curve, the circular markers from left to right correspond to a noticeable increasing trend, indicating that the model's\nthe NLL values obtained at |T | = 100, 200, 300, 400, and 500, respectively.\n(b) The average computation time per experiment shown in (a). capacity is insufficient. To achieve better results, a larger\nrmax should be employed.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 24,
+    "total_chunks": 43,
+    "char_count": 824,
+    "word_count": 146,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "da05bc8e-fd0a-4bb7-b7ca-6f8bc745ff12",
+    "text": "By observing the update times of\nthe algorithm in each experiment, we find that even in the\n(BAS) dataset. The BAS dataset used in this work consists of most complex model, the UMPS-SD algorithm can reach an\nall possible horizontal-bar and vertical-bar binary images of acceptable performance within 350 seconds.\nsize 16 × 16. Each image contains 256 binary pixels, and the\ncomplete dataset includes 2×216 −2 = 131070 distinct stripe B.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 25,
+    "total_chunks": 43,
+    "char_count": 436,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7b0585df-41e0-4a81-b41a-f378a464ffff",
+    "text": "EMNIST dataset\npatterns. To systematically evaluate the performance of the proposed Based on the BAS dataset described above, we examine\nUMPS-SD algorithm, we conduct a comparative study against the decrease of the NLL with respect to the number of\nthe baseline method introduced by Han et al. [13]. The ex- loops under the UMPS–SD algorithm. As shown in Fig. 4a,\nperiments assess two primary aspects—convergence efficiency the NLL exhibits a rapid decline at the beginning and then\nand generative quality. gradually levels off.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 26,
+    "total_chunks": 43,
+    "char_count": 528,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c5a8e5d-8287-4f42-a252-a8ef2b91fdfc",
+    "text": "We generate samples at each loop, and\nin the early stages the synthesized images contain substantial Model parameters: The maximum bond dimension rmax of\nnoise. However, once loops ≥4, the model is able to MPS serves as a key hyperparameter. We evaluate the algoproduce valid images (Fig. 4b) that are consistent with the rithm under several choices of the maximum bond dimension\ncharacteristics of the BAS dataset. In fact, although the overall in order to examine its performance across different model\ncomputational time increases significantly as the number of complexities.\nloops grows, the average bond dimension rmean of the MPS Evaluation metrics: Convergence is quantified using the\ntends to stabilize, and the bond dimensions do not exceed negative log-likelihood on the test set, while the total training\nrmax (Table II), demonstrating that the algorithm effectively time is recorded to assess computational efficiency.\npreserves the low-rank structure while the model provides 1) Convergence efficiency: To evaluate the convergence\nsufficient representational capacity to generate high-quality efficiency of the Algorithm 1, we conducted experiments\nimages. under identical settings and preconditions. The maximum bond\nTo further investigate how the NLL varies with the dataset dimension, which governs the model complexity, serves as the\nsize under different maximum bond dimensions rmax, as well key hyperparameter. Two sets of experiments were performed\nas the time consumed per training update. Specifically, for with different maximum bond dimensions of.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 27,
+    "total_chunks": 43,
+    "char_count": 1571,
+    "word_count": 231,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f9f5fba2-4ce0-4683-bae0-f0ce599051ec",
+    "text": "The convergence\nmultiple choices of rmax, we train the UMPS model while behavior of the negative log-likelihood was monitored to\ngradually increasing |T |, and record the corresponding NLL assess the performance of each method, as shown in Fig. 6. TABLE III\nUNDER THE SAME EXPERIMENTAL CONDITIONS AS FIG. 6A, NLL AND\nTRAINING TIME (S) FOR MPS AND UMPS-SD MODELS WITH LEARNING\nRATE 1 × 10−3. THE TIME METRIC INDICATES THE CUMULATIVE TIME\nREQUIRED TO REACH THIS NLL VALUE. loops MPS UMPS-SD\nNLL Time/s NLL Time/s\n1 154.74 1.30 167.70 1.68\n2 94.48 3.14 80.69 5.61\n3 62.25 7.86 13.01 30.25\n4 46.85 26.08 - -\n5 40.14 53.61 - - (a) (b)\n6 36.44 84.13 - -\n... ... ... - - Fig.rmax7.=(a)400,Generatedtrained fromon a thesubsetMPSofmodel|T | =with300a samplesmaximumrandomlybond dimensionselected\n23 14.17 754.18 - - from the EMNIST dataset for lmax = 25. (b) Generated by the proposed\n24 13.51 794.47 - - UMPS model with lmax = 4, with all other settings kept identical to (a).\n25 12.88 831.44 - - TABLE IV\nUNDER THE SAME EXPERIMENTAL CONDITIONS AS FIG. 6A, FROM (1) TO\n(3), THE LEARNING RATES ARE SET TO 2.5 × 10−4, 5 × 10−4, AND\n2 × 10−3, RESPECTIVELY. loops UMPS-SD(1) UMPS-SD(2) UMPS-SD(3)\nNLL Time/s NLL Time/s NLL Time/s\n1 171.99 1.62 164.41 1.59 165.76 1.62\n2 79.90 5.59 81.14 5.48 79.97 5.55\n3 7.35 30.73 6.568 30.23 12.30 30.11 The experimental results clearly demonstrate that the pro- Fig. 8.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 28,
+    "total_chunks": 43,
+    "char_count": 1394,
+    "word_count": 245,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "85b1a317-22a1-41b1-bf84-75b812e3c456",
+    "text": "Image reconstruction from half of the images, which are selected\nfrom the training set. For both experiments, the maximum bond dimension\nposed UMPS-SD algorithm exhibits significantly faster con- is set to rmax = 200 and |T | = 100. The update details are summarized\nvergence than the standard MPS-based method.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 29,
+    "total_chunks": 43,
+    "char_count": 311,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "55f539aa-31ea-4417-93f2-f5b433feb435",
+    "text": "UMPS-SD in Table III. The black areas in the image are the given pixels, and the blue\ndisplays a steep decline in the NLL during the initial phase areas are the pixels completed by the model. (a) The image reconstructed by\nthe MPS model; (b) The image reconstructed by the UMPS model.\nof training, whereas the updates in the MPS model progress\nmuch more gradually. This indicates that, for the same number\nof training iterations, the proposed algorithm approaches the the trained UMPS model to directly generate samples, as\noptimal solution more rapidly. To provide a more direct assess- illustrated in Fig. 7b.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 30,
+    "total_chunks": 43,
+    "char_count": 611,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "21295af8-35e6-41fd-b136-089adcddd43b",
+    "text": "In the reconstruction experiment, the\nment of convergence speed, Table III compares the temporal pixels in the right half of each image (i.e., positions 393 to\nevolution of the objective function for both algorithms under 784) are provided as input, and the trained UMPS model\nidentical experimental settings. is required to infer and complete the missing left half. We\nThe comparison between the two algorithms demonstrates further compare the reconstructed results with those obtained\nthat the proposed method achieves a substantially faster con- using the conventional MPS model under identical settings, as\nvergence. Specifically, it reduces the NLL from 167.70 to presented in Fig. 8.\n13.01 within only three training loops, whereas the MPS From Figs. 7 and 8, it is evident that the MPS model permethod attains an NLL of 62.25 after the same number of forms well only on a small subset of images, while producing\nloops and requires 25 loops to reach a comparable accuracy noticeable noise and frequent reconstruction errors on most\n(NLL = 12.88). Although each iteration of the proposed others. In contrast, although the UMPS model occasionally\nalgorithm incurs slightly higher computational cost, its overall exhibits minor reconstruction errors in a few individual cases,\nconvergence is markedly faster, up to 27× more efficient it consistently demonstrates superior detail recovery and genthan the original algorithm. Moreover, with an appropriately erates significantly less noise in the completed regions.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 31,
+    "total_chunks": 43,
+    "char_count": 1516,
+    "word_count": 232,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "98a0c4d8-1f6d-4f70-949c-e1355d742b4d",
+    "text": "For\nchosen learning rate, the proposed approach attains both higher instance, for the digits \"4\" and \"5\" in Fig. 8, the left halves\nconvergence accuracy and faster descent than the standard completed by the UMPS model connect more naturally with\nMPS algorithm, as shown in Table IV. Collectively, these the original right halves, and the stroke contours are clearer\nresults indicate that the proposed method follows a more and more complete. In comparison, the MPS results may\nefficient optimization trajectory, significantly accelerating the display distorted or broken strokes. For simpler digits such\ntraining process and outperforming conventional approaches in as \"1\", UMPS model achieves highly accurate completion,\nterms of both convergence speed and computational efficiency. whereas the MPS model may erroneously reconstruct them\n2) Generalization ability: Generative modeling constitutes into shapes resembling other digits, sometimes resulting in\none of the primary tasks in machine learning. To evaluate the nearly unrecognizable forms. For the image located in the\ngenerative capability of our method, Fig. 7a shows samples fourth row and third column of Fig. 8b, the missing region\ngenerated by the MPS model. For comparison, we then use is reconstructed as a digit \"9\", whereas the original image The curves illustrate how the NLL varies with the bond dimension rmax, where the training set T is selected from the EMNIST-Letters dataset with\na fixed size of |T | = 150. All marked points correspond to the setting of lmax = 4. In the images, black pixels denote the given observations, while the\nblue pixels are reconstructed by the UMPS model. The figure presents the reconstruction results obtained for rmax = 120, 150, and 175, respectively. corresponds to a \"7\".",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 32,
+    "total_chunks": 43,
+    "char_count": 1781,
+    "word_count": 278,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c6e9a514-c3ea-49e3-b59d-56c66ad60daf",
+    "text": "However, since the original sample does rates to each parameter component on the manifold. Moreover,\nnot follow a standard writing style for the digit \"7\", this when stochastic mini-batches are used to estimate gradients\ncompletion can still be considered reasonable. [38], the variance of stochastic gradients on manifolds can\nThe proposed model also performs well on the more di- severely affect convergence. Variance-reduction techniques\nverse EMNIST-Letters dataset. To highlight the efficiency [39] provide a promising remedy for stabilizing and accelof the algorithm, we restrict the training procedure to only erating convergence in such settings.\nlmax = 4. In our experiments, with a fixed bond dimension At present, the UMPS model is applicable only to binarized\nrmax, the objective function (NLL) decreases rapidly. We images and cannot directly handle RGB images, mainly due\nobserve that when rmax > |T |, the UMPS-SD algorithm to the limited expressive power of one-dimensional chainreaches the desired optimization regime within a very short structured MPS, whose entanglement structure is relatively\ntime. Moreover, as rmax increases, the improvement in NLL simple [40]. Future work may explore more expressive twobecomes marginal. In contrast, when rmax is insufficient, the dimensional tensor networks, such as projected entangled pair\nmodel suffers from limited representational capacity, leading states (PEPS) [34], [41]. Although PEPS inherently involves\nto inferior reconstruction quality in certain samples. These high computational complexity during optimization, recent\neffects are clearly illustrated in Fig. 9. advances such as variational Monte Carlo (VMC) methods\nfor PEPS offer a promising alternative [42]. SUMMARY AND OUTLOOK analyzing the impact of gauge freedom on variational opTensor-network methods have had a profound impact on timization and adopting standardized gauge-fixing strategies\nmachine learning. However, conventional models such as MPS can effectively suppress artificially low variational energies\noften suffer from slow updates and optimization difficulties. [43]. Developing efficient approximate-contraction schemes\nMotivated by these limitations, we propose an efficient UMPS and Riemannian-optimization strategies tailored to higherupdate algorithm based on Riemannian optimization, which order tensor networks represents a valuable and forwardmitigates oscillations among equivalent optimal solutions dur- looking research direction.\ning training and thereby significantly accelerates convergence. ACKNOWLEDGMENTS Similar to optimization methods in Euclidean spaces, Riemannian optimization also requires selecting appropriate learn- The work of Z.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 33,
+    "total_chunks": 43,
+    "char_count": 2703,
+    "word_count": 367,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f9c653c7-5b0d-4a1d-b899-fc30931eacca",
+    "text": "Chen was partially supported by National\ning rates during gradient descent [35]. However, many ma- Natural Science Foundation of China (No. 11701132), Natural\nchine learning algorithms struggle to achieve adaptive learning Science Foundation of Zhejiang Province (No. LY22A010012)\nrate selection [36], particularly when the dataset is large, since and Natural Science Foundation of Xinjiang Uygur Authe Armijo-type line search incurs substantial computational tonomous Region (No. 2024D01A09). Inspired by Adam and Adagrad on Riemannian was supported in part by the Theme-based Research Scheme\nmanifolds [37], one may design adaptive learning-rate schemes (TRS) project T45-701/22-R of the Research Grants Council\nthat maintain first- and second-order moment estimates of gra- of Hong Kong, and in part by the AVNET-HKU Emerging\ndients in the tangent space, assigning individualized learning Microelectronics and Ubiquitous Systems (EMUS) Lab. Cichocki et al., \"Tensor networks for dimensionality reduction and\nlarge-scale optimization: Part 1 low-rank tensor decompositions,\" Found. Let Sm×n and Mk be the unit sphere manifold and the Trends Mach. Learn., vol. 9, no. 4–5, pp. 249–429, 2016.\nfixed-rank-k manifold as defined in (14) and (16), respectively. [13] Z.-Y. Han et al., \"Unsupervised generative modeling using matrix\nThen Sm×n and Mk intersect transversely. product states,\" Phys. X, vol. 8, no. 3, p. 031012, 2018.\n[14] Z. Zhang, \"Shortcut matrix product states and its applications,\"\nProof. To prove the theorem, it suffices to show that for any arXiv:1812.05248, 2018. X ∈Sm×n∩Mk, the conclusion TXSm×n+TXMk = Rm×n [15] I. Glasser et al., \"Expressive power of tensor-network factorizations for\nholds, which is equivalent to (TXSm×n)⊥∩(TXMk)⊥= {0}. probabilistic modeling,\" in Adv. Syst., vol. 32, 2019.\n[16] S. Zhang, \"Tree tensor networks for\nFor the unit sphere manifold Sm×n, we have generative modeling,\" Phys.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 34,
+    "total_chunks": 43,
+    "char_count": 1928,
+    "word_count": 280,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9dd50f1e-3904-43e1-92ad-775c123e6649",
+    "text": "B, vol. 99, no. 15, p. 155131, 2019.\n[17] Y.-Y. Vidal, \"Classical simulation of quantum\n(TXSm×n)⊥= {tX | t ∈R}. many-body systems with a tree tensor network,\" Phys. A, vol. 74,\nno. 2, p. 022320, 2006. For any X ∈Mk, let X = UV ⊤be a full-rank factorization, [18] T.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 35,
+    "total_chunks": 43,
+    "char_count": 265,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "27855d6d-3e9c-4cda-8b15-2083a1fd4df7",
+    "text": "Vanderstraeten, and F. Verstraete, \"Generative modeling\nwhere U ∈Rm×k, V ∈Rn×k. It follows that with projected entangled-pair states,\" arXiv:2202.08177, 2022.\n[19] D. Liu et al., \"Machine learning by unitary tensor network of hierarchical\nTXMk = {˙UV ⊤+ U ˙V ⊤| ˙U ∈Rm×k, ˙V ∈Rn×k}. tree structure,\" New J. Phys., vol. 21, no. 7, p. 073059, 2019.\n[20] C. Chen, \"Deep tree tensor networks for image\nLet W ∈(TXMk)⊥, i.e., recognition,\" arXiv:2502.09928, 2025.\n[21] W. Zhou et al., \"Tensor star tensor decomposition and its applications\n⟨W, ˙UV ⊤+ U ˙V ⊤⟩= 0, ∀˙U ∈Rm×k, ˙V ∈Rn×k. to higher-order compression and completion,\" arXiv:2403.10481, 2024.\n[22] A. Vandereycken, \"Geometric methods on low-rank\nThis implies matrix and tensor manifolds,\" in Handbook of Variational Methods for\nNonlinear Geometric Data. Springer, 2020, pp. 261–313.\n⟨W, ˙UV ⊤⟩= tr(W ⊤˙UV ⊤) = tr(V ⊤W ⊤˙U) = ⟨WV, ˙U⟩, [23] Y. Yuan, \"A space-decoupling framework\nfor optimization on bounded-rank matrices with orthogonally invariant\n⟨W, U ˙V ⊤⟩= tr(W ⊤U ˙V ⊤) = tr(˙V U ⊤W) = ⟨W ⊤U, ˙V ⟩. constraints,\" Math. Program., 2026, doi: 10.1007/s10107-026-02331-7.\n[24] P.-A. Sepulchre, Optimization Algorithms on\nSince ˙U, ˙V are arbitrary, we must have WV = 0 and Matrix Manifolds. Princeton, NJ, USA: Princeton Univ. Klemetsen, \"Neural networks on low-rank and Stiefel manifolds,\"\nW ⊤U = 0. Let U⊥∈Rm×(m−k) and V⊥∈Rn×(n−k) be M.S. thesis, NTNU, 2022.\nthe orthogonal bases of U and V , respectively.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 36,
+    "total_chunks": 43,
+    "char_count": 1464,
+    "word_count": 233,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4994969c-6a39-48be-97da-f35f4ea31dca",
+    "text": "It follows that [26] R. Yuan, \"Normalized tensor\nthere exists Φ ∈R(m−k)×(n−k) such that W = U⊥ΦV ⊥.⊤ [27] trainV. Saragadamdecomposition,\"et al., \"DeepTensor:arXiv:2511.04369,Low-rank2025.tensor decomposition with\nFor any Γ ∈(TXSm×n)⊥∩(TXMk)⊥, we have deep network priors,\" IEEE Trans. Intell., vol. 46,\n⊤ no. 12, pp. 10337-10348, 2024. Γ = tX = tUV ⊤= U⊥ΦV ⊥. [28] M. Ye, \"Structured low-rank algorithms:\nTheory, magnetic resonance applications, and links to machine learning,\"\nThe left-hand side lies in col(U), while the right-hand side IEEE Signal Process. Mag., vol. 37, no. 1, pp. 54–68, 2020.\nlies in col(U⊥). Since U and U⊥are orthogonal, we have [29] S.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 37,
+    "total_chunks": 43,
+    "char_count": 662,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "698351b8-d32d-4c24-8a5d-c32ec297a597",
+    "text": "White, \"Density matrix formulation for quantum renormalization\ngroups,\" Phys. Lett., vol. 69, no. 19, p. 2863, 1992.\nt = 0, Φ = 0 =⇒Γ = 0. [30] Y. Zhu, Tensor Computation for Data\nAnalysis.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 38,
+    "total_chunks": 43,
+    "char_count": 189,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c09ac93d-efaa-4e1d-91d0-15ba3c77b3a4",
+    "text": "This means (TXSm×n)⊥∩(TXMk)⊥= {0}, which implies [31] A.S. Malick. \"Alternating projections on manifolds,\" Math. Res., vol. 33, no. 1, pp. 216-234, 2008. TXSm×n + TXMk = Rm×n. Therefore, Sm×n and Mk [32] E. White, \"Studying two-dimensional systems\nintersect transversely. with the density matrix renormalization group,\" in Annu. Matter Phys., vol. 3, no. 1, 2012, pp. 111–128.\n[33] A. Igel, \"An introduction to restricted Boltzmann\nREFERENCES machines,\" in Proc. Pattern Recognit., 2012, pp.\n14–36.\n[1] J. Plenio, \"Colloquium: Area laws for the\n[34] R.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 39,
+    "total_chunks": 43,
+    "char_count": 552,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0c12be63-6820-4cda-bd1c-53debcf4397b",
+    "text": "Or´us, \"A practical introduction to tensor networks: Matrix product\nentanglement entropy,\" Rev. Phys., vol. 82, no. 1, pp. 277–306,\nstates and projected entangled pair states,\" Ann. Phys., vol. 349, pp. 117–\n2010.\n158, 2014.\n[2] M. Hastings, \"An area law for one-dimensional quantum systems,\" J.\n[35] H. Iiduka, \"A general framework of Riemannian adaptive\nStat. P08024, 2007.\noptimization methods with a convergence analysis,\" arXiv:2409.00859,\n[3] T. Bader, \"Tensor decompositions and applications,\"\n2024. SIAM Rev., vol. 51, no. 3, pp. 455–500, 2009.\n[36] K. Sastry, \"Step size matters in deep learning,\" in Adv. Oseledets, \"Tensor-train decomposition,\" SIAM J. Syst., vol. 31, 2018.\n33, no. 5, pp. 2295–2317, 2011.\n[37] G. Ganea, \"Riemannian adaptive optimization\n[5] Z. Wong, \"Parallelized tensor\nmethods,\" arXiv:1810.00760, 2018.\ntrain learning of polynomial classifiers,\" IEEE Trans. Mahoney, \"Randomized algorithms for matrices and data,\" Found. Syst., vol. 29, no. 10, pp. 4621–4632, 2018.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 40,
+    "total_chunks": 43,
+    "char_count": 997,
+    "word_count": 144,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5d8a4e25-0cf8-43ee-88c5-75abf91aad3e",
+    "text": "Learn., vol. 3, no. 2, pp. 123–224, 2011.\n[6] J. Zhang, \"Tensor networks for unsupervised\n[39] H. Sra, \"Riemannian SVRG: Fast stochastic\nmachine learning,\" Phys. E, vol. 107, no. 1, p. L012103, 2023.\noptimization on Riemannian manifolds,\" in Adv. Or´us, \"Tensor networks for complex quantum systems,\" Nat. Phys., vol. 1, no. 9, pp. 538–550, 2019.\n[40] G. Vidal, \"Efficient classical simulation of slightly entangled quantum\n[8] D. Sejnowski, \"A learning algorithm for\ncomputations,\" Phys. Lett., vol. 91, no. 14, p. 147902, 2003. Boltzmann machines,\" Cognitive Sci., vol. 9, no. 1, pp. 147–169, 1985.\n[41] F. Cirac, \"Criticality,\n[9] S.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 41,
+    "total_chunks": 43,
+    "char_count": 636,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cfdaa2b8-91f4-4e8b-9439-e1bf9d5a7c43",
+    "text": "Wang, \"Information perspective to probabilistic\nthe area law, and the computational power of projected entangled pair\nmodeling: Boltzmann machines versus born machines,\" Entropy, vol. 20,\nstates,\" Phys. Lett., vol. 96, no. 22, p. 220601, 2006.\nno. 8, p. 583, 2018.\n[42] Y. Dai, \"Algorithms for variational Monte Carlo calculations\n[10] I. Goodfellow et al., \"Generative adversarial nets,\" in Adv. Neural Inf.\nof fermion PEPS in the swap gates formulation,\" arXiv:2506.20106, 2025. Syst., vol. 27, 2014.\n[43] W. Vanderstraeten, and J. Haegeman, \"Gauging the variational\n[11] J. Terilla, \"Probabilistic modeling with matrix product\noptimization of projected entangled-pair states,\" arXiv:2508.10822, 2025.\nstates,\" Entropy, vol. 21, no. 12, p. 1236, 2019.",
+    "paper_id": "2603.12026",
+    "title": "Efficient Generative Modeling with Unitary Matrix Product States Using Riemannian Optimization",
+    "authors": [
+      "Haotong Duan",
+      "Zhongming Chen",
+      "Ngai Wong"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12026v1",
+    "chunk_index": 42,
+    "total_chunks": 43,
+    "char_count": 753,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  }
+]

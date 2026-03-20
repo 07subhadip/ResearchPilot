@@ -1,0 +1,942 @@
+[
+  {
+    "chunk_id": "f28106c6-0fa7-4590-b83d-337ddec189a8",
+    "text": "Normative Common Ground Replication (NormCoRe):\nReplication-by-Translation for Studying Norms in Multi-agent AI Luca Deck∗ Simeon Allmendinger∗\nluca.deck@uni-bayreuth.de simeon.allmendinger@uni-bayreuth.de\nUniversity of Bayreuth & Fraunhofer FIT University of Bayreuth & Fraunhofer FIT\nBayreuth, Germany Munich, Germany Lucas Müller Niklas Kühl\nlucas.c.mueller@gmail.com kuehl@uni-bayreuth.de\nUniversity of Bayreuth University of Bayreuth & Fraunhofer FIT\nBayreuth, Germany Bayreuth, Germany",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 0,
+    "total_chunks": 47,
+    "char_count": 491,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c12ec303-c333-46fb-a859-f60d81abc971",
+    "text": "Abstract Keywords2026\nIn the late 2010s, the fashion trend NormCore framed sameness Multi-Agent AI, Fairness, Social Norms, Ethical Norms, Experimenas a signal of belonging, illustrating how norms emerge through tal Studies, Replication Studies, Veil of Ignorance\ncollective coordination. Today, similar forms of normative coorACM Reference Format:Mar dination can be observed in systems based on Multi-agent ArtifiLuca Deck, Simeon Allmendinger, Lucas Müller, and Niklas Kühl. 2026. Nor-\n12 cialand Intelligenceconverge on(MAAI),shared asdecisionsAI-basedin agentsfairness-sensitivedeliberate, negotiate,domains. mativefor StudyingCommonNormsGroundin Multi-agentReplication (NormCoRe):AI. In ProceedingsReplication-by-Translationof ACM Conference\nYet, existing empirical approaches often treat norms as targets for on Fairness, Accountability, and Transparency 2026 (ACM FAccT 2026). ACM,\nalignment or replication, implicitly assuming equivalence between New York, NY, USA, 16 pages. https://doi.org/XXXXXXX.XXXXXXX\nhuman subjects and AI agents and leaving collective normative\ndynamics insufficiently examined. To address this gap, we pro- 1 Introduction\npose Normative Common Ground Replication (NormCoRe), a novel\n\"Once upon a time people were born into communities and had to find[cs.AI] methodological framework to systematically translate the design of their individuality. Today people are born individuals and have to human subject experiments into MAAI environments. Building on\nfind their communities.\" behavioral science, replication research, and state-of-the-art MAAI\narchitectures, NormCoRe maps the structural layers of human sub- — K-HOLE, inventors of the term \"Normcore\"\nject studies onto the design of AI agent studies, enabling systematic In the late 2010s, the fashion trend NormCore embraced deliberdocumentation of study design and analysis of norms in MAAI. ate sameness: conventional clothing as a signal of belonging rather\nWe demonstrate the utility of NormCoRe by replicating a seminal than a mark of distinction. What appeared aesthetic was fundamenexperimental study on distributive justice, in which participants tally normative; an emergent agreement about what is considered\nnegotiate fairness principles under a \"veil of ignorance\". We show appropriate within a group. Such norms arise not from isolated inthat normative judgments in AI agent studies can differ from hu- dividuals, but from collective coordination. Today, similar forms of\nman baselines and are sensitive to the choice of the foundation normative coordination are increasingly relevant in systems based\nmodel and the language used to instantiate agent personas. Our on Multi-agent AI (MAAI). In contrast to individual AI agents, in\nwork provides a principled pathway for analyzing norms in MAAI MAAI [2, 31] AI-based agents can deliberate, negotiate, and conand helps to guide, reflect, and document design choices whenever verge on shared decisions. In doing so, they explicitly or implicitly\nAI agents are used to automate or support tasks formerly carried exhibit social and ethical norms [15], in particular as MAAI systems\nout by humans. are already being developed in domains governed by fairness andarXiv:2603.11974v1 other norms, such as resource allocation [53] or autonomous drivCCS Concepts ing [44].",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 1,
+    "total_chunks": 47,
+    "char_count": 3313,
+    "word_count": 452,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d4da2de7-313e-4efa-a1bc-65080ebdb66e",
+    "text": "If we examine this field from a more traditional perspective,\n• Human-centered computing →Interactive systems and experimental research on social and ethical norms is deeply rooted\ntools; • Information systems →Decision support systems; • in philosophy, psychology, and game theory, with well-established\nComputing methodologies →Artificial intelligence. methods [7, 24, 30]. For example, preferences regarding wealth distribution have been extensively studied through game-theoretical\ngroup experiments [17, 19]. However, what these studies all have ∗These authors contributed equally to this work.\nin common is that they are examining norms among humans. Conversely, research on AI agents—particularly AI agent groups—\nACM FAccT 2026, Montreal, QC, Canada\nhas only sparsely engaged with the methodological foundations © 2026 Copyright held by the author(s). Publication rights licensed to ACM. This is the author's version of the work. It is posted here for your personal use. Not of studying social and ethical norms.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 2,
+    "total_chunks": 47,
+    "char_count": 1020,
+    "word_count": 146,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e5d045bd-8345-4f25-bd53-01b2f44e8595",
+    "text": "At the same time, recent\nfor redistribution. The definitive Version of Record will be published in Proceedings of research is already proposing to replace or supplement human\nACM Conference on Fairness, Accountability, and Transparency 2026 (ACM FAccT 2026),\nhttps://doi.org/XXXXXXX.XXXXXXX. subjects with AI agents [4, 51], replicating existing human subject\nstudies using AI agents [15], or attempting to align AI agents with ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Luca Deck, Simeon Allmendinger, Lucas Müller, and Niklas Kühl Human Subject Group NormCoRe: Replication by Translation AI Agent Group Identify constructs and Provide a rationale for\nstudy design components translation choice Instantiate Analyze sensitivity\nanalogous layers and robustness Cognitive Ontological Interactional Interventional\nBaseline Experiment analogy analogy analogy analogy Replication Study Figure 1: From human groups to multi-agent AI: NormCoRe conceptualizes replication as a translation problem, mapping\nhuman subject studies to AI agent studies to study how collective normative judgments—such as fairness—emerge and differ\nacross populations. normative principles [50]. Without systematically acknowledging tasked with reaching a consensus on a distributive justice printhe fundamental differences between human subjects and AI agents, ciple that would determine their payoffin a hypothetical society.\nthis obscures a critical question for fairness and accountability: By combining individual normative deliberation, goal-based optihow do collective normative judgments emerge, stabilize, and differ mization, and dynamic consensus finding, this experiment serves\nwhen decision-making is delegated to MAAI rather than human as an ideal testbed for demonstrating how NormCoRe organizes\ngroups? Regardless of the underlying goals of AI agent studies, complex design choices and facilitates precise reporting. Instantithe complexities arising from translating human subject studies ating NormCoRe with Frohlich and Oppenheimer [19]'s study, we\nto MAAI necessitate a sound methodological foundation that is show that the choice of the LLM and the language of the persona\ncurrently lacking—particularly when social and ethical norms are description have a significant influence on fairness judgments in\nthe focus of such studies. For example, when MAAI systems are AI agent studies. Also, we find that while both populations favor\ntasked with making implicit or explicit decisions about resource the same principle (maximizing overall income while ensuring a\nallocations, the sheer number of degrees of freedom in the design of floor constraint for the worst-off), MAAI groups demonstrate a\nthe MAAI system, ranging from the selection of a foundation model substantially higher concentration on this principle than human\n(e.g., Large Language Model (LLM)) to the design of task-specific groups.\nworkflows, impedes a thorough evaluation of design choices. This work makes three contributions to the rigorous design and\nAgainst this backdrop, we propose Normative Common Ground analysis of MAAI:\nReplication NormCoRe1: a novel methodological framework for • We establish a novel replication-by-translation perspective on\ntranslating human subject group studies into MAAI environments, replication studies with AI agents that explicitly accounts for\nenabling researchers to systematically investigate social norms in the fundamental differences between AI agents and human\nAI agent studies (see Figure 1).",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 3,
+    "total_chunks": 47,
+    "char_count": 3505,
+    "word_count": 485,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d355ad3b-5646-4785-a5d2-d4dad4613726",
+    "text": "Building on established principles subjects (Section 2).\nfrom behavioral science and MAAI research, NormCoRe maps the • Based on this perspective, we introduce NormCoRe as a\nanalogous layers of human subject studies onto the design of AI methodological framework for the systematic replication of\nagent studies with MAAI. NormCoRe allows researchers to system- human subject studies in MAAI settings, providing a lens\natically select and document the configuration of AI agent studies. through which researchers can document and analyze social\nWe demonstrate the utility of NormCoRe by replicating Frohlich and ethical norms in AI agents (Section 3).2\nand Oppenheimer [19]'s influential study on distributive justice in • By employing NormCoRe to a seminal baseline study on\nan MAAI setting, the complete code including all prompts used is distributive justice, we demonstrate the usefulness of Normavailable on Github [16]. The selected baseline study serves as a CoRe and empirically show that norms in MAAI not only\nperfect showcase, as it conceptualizes a complex but well-known differ from human baselines but are also sensitive to study\nnorm (e.g., fairness) as a group-level, normative judgment reached design decisions (Section 4).\nthrough dynamic deliberation and includes all relevant layers for\nWe discuss the implications of our study and broaden the disreplication. In the original experiment, Frohlich and Oppenheimer\ncourse on the purpose and open challenges of AI agent studies in\n[19] operationalized John Rawls' veil of ignorance\" [40] within a\nSection 5, paving the way for future research on norms in MAAI. It\ncontrolled laboratory setting. Participants were unaware of their asis reasonable to expect that the implementation of MAAI in studsigned income class—simulating the \"veil of ignorance\"—and were\nies and industry will happen one way or another.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 4,
+    "total_chunks": 47,
+    "char_count": 1873,
+    "word_count": 284,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b4b6942-129c-489d-88f4-a86616bbfb0b",
+    "text": "1The method does not coincidentally bear the same name as the fashion phenomenon 2Our codebase repository is made available: https://anonymous.4open.science/r/\ndescribed above. Normative_Common_Ground_Replication_NormCoRe-295D/. Normative Common Ground Replication (NormCoRe) ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 5,
+    "total_chunks": 47,
+    "char_count": 330,
+    "word_count": 37,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "932fa985-f2d8-434d-a3df-46e6bca1eb73",
+    "text": "judge whether this is a positive or a reprehensible development—or of interaction effects could be reproduced. Similarly, in Psychology\nunder which conditions MAAI systems and studies are actually and Management Science, Cui et al. [15] replicated 156 experiments\nbeneficial—we need to better understand the structure, dynamics, published over the past decade and found that in 73% and 81% of\nand impact of MAAI systems in the first place. Our work raises main effects, respectively, were replicated, with interaction effects\ncritical normative questions regarding the future of agentic automa- rates ranging between 46% and 63%.\ntion beyond distributive justice and cautions designers to make In contrast, work aligned with the second objective treats repliconscious, evidence-based choices in both laboratory experiments cation outcomes not as validation but as a diagnostic tool for unand real-world applications. Whenever tasks formerly carried out derstanding how and where AI behavior diverges from human\nby (groups of) humans are to be automated or supplemented by cognition. In behavioral economics, Leng [29] replicated canonigroups of AI agents, NormCore helps to guide, reflect, and docu- cal experiments on prospect theory, framing, and mental accountment design choices and to study potential impact of including AI ing (e.g., [25, 46]). While LLMs partially reproduce human mental\nagents. accounting behavior, they appear substantially more rational, exhibiting weak framing effects and limited transaction utility. Cru-\n2 Background cially, these behavioral patterns vary systematically with design\nThis section reviews prior work on replicability as a methodological choices such as the language of the prompt, with Spanish and French\nprinciple (Section 2.1) and its application to AI-based replication of prompts showing more human-like loss aversion than English and\nhuman subject studies. We then identify key assumptions and chal- Chinese prompts [29].\nlenges in existing approaches, particularly the treatment of human– A related line of work employs replication to assess whether\nAI replication as equivalence rather than translation (Section 2.2), MAAI aligns with human moral judgments, implicitly treating huwhich motivates the need for a novel methodology (Section 2.3). man consensus as a normative benchmark. Within this approach,\nmoral soundness is operationalized as statistical similarity between\n2.1 Importance of Replicability for the human and AI responses to ethically charged dilemmas. A promiScientific Method nent example is the replication of the Moral Machine experiment,\nin which human participants were asked to resolve trolley-problemReplicability constitutes a fundamental pillar of the scientific method. style dilemmas and their aggregate judgments were taken as indicaIn principle, the transparent documentation of research methodolo- tive of moral preferences [3]. When this experiment is applied to\ngies enables independent verification and replication of empirical LLM-based agents, replication results show that moral judgments\nfindings by the broader academic community. In that sense, repli- vary substantially depending on model architecture and training\ncation can serve two functions: authentication of original findings regime [45]. Such approaches also gain traction in the industry, as\nand boundary testing to understand generalizability [54]. Conse- evidenced by Anthropic's creation and use of the GlobalOpinionQA\nquently, two replication approaches are distinguished: direct repli- dataset, which contains 2556 questions and human answers on\ncation, which repeats an experiment with minimal to no changes ethics and current events from the World Values and Pew Global\nto authenticate original findings, and conceptual replication, which Attitudes surveys [18]. Crucially, Anthropic evaluates their LLM\ntests the same hypothesis with different methods, stimuli, or popu- against the normative target that the model should reflect a counlations, aiming to probe whether findings generalize to new condi- try's specific distribution of opinions when prompted—implying,\ntions [26, 54].",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 6,
+    "total_chunks": 47,
+    "char_count": 4143,
+    "word_count": 586,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "49ce91ec-cf4a-4b38-a02a-34c8e35d5641",
+    "text": "Although sometimes treated as synonyms, a critical e.g., that a model prompted in Russian ought to adopt a distinctively\ndistinction exists between reproducibility, where existing data is \"Russian\" moral perspective.\nre-analyzed with the same methods, and replicability, where exper- The implicit assumption underlying this stream of research is\niments are repeated, resulting in new data [39]. that convergence with human consensus constitutes ethical adequacy [27]. From a philosophical perspective, this assumption\n2.2 Replicability of Human Subject Studies with mirrors the naturalistic fallacy, which cautions against \"oughts\"\nAI Agents from descriptive \"is\" statements about observed human behavMeanwhile, a growing body of research across disciplines is con- ior [36]. A more fundamental limitation of this literature concerns\nceptually replicating human experiments with LLM-based AI sys- the conception of the experimental subject itself.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 7,
+    "total_chunks": 47,
+    "char_count": 947,
+    "word_count": 130,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6a423d83-4917-4de1-ac71-4b993e782fcd",
+    "text": "Many replication\ntems [1, 9, 21, 23, 28, 35]. These efforts pursue two distinct objec- studies implicitly treat LLM-based agents as functional substitutes\ntives. First, replication is employed to assess whether AI agents can for human participants, evaluating success primarily in terms of\nserve as a valid proxy for human participants in experimental re- behavioral or statistical similarity [9, 28, 35]. However, an LLM is\nsearch [15, 52].",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 8,
+    "total_chunks": 47,
+    "char_count": 441,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9840e233-f4c7-46e8-897e-9dc111c9fdd9",
+    "text": "Second, replication is used to compare humans and fundamentally different from a human being with physical embodAI as a lens for better understanding the psychological, behavioral, iment, lived experience, and moral agency, and a prompt-based\nand normative properties of AI systems [29]. persona is not ontologically equivalent to a human subject. By overWork pursuing the first objective typically evaluates replication looking these differences, replication is often framed as a direct\nsuccess in terms of statistical similarity between human and AI- transfer rather than as a translation between fundamentally differgenerated responses. For example, Yeykelis et al. [52] assessed the ent kinds of subjects, whose cognitive substrates, experience, and\nreplicability of consumer behavior research by replicating 133 re- agency differ in principled ways [1, 21, 23]. These risks obscure\nsults from 45 studies published in the Journal of Marketing, using how observed similarities or divergences in normative outcomes\nLLM-based AI personas programmed to match the original partici- are shaped by design choices and structural differences rather than\npant demographics. They report that 76% of main effects and 68% genuine equivalence. ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Luca Deck, Simeon Allmendinger, Lucas Müller, and Niklas Kühl",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 9,
+    "total_chunks": 47,
+    "char_count": 1350,
+    "word_count": 196,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "66dfd366-0994-47ef-8dca-2c04414a48f3",
+    "text": "2.3 Replication-by-Translation in AI Agent 3.1 NormCoRe as Replication-by-Translation\nStudies In contrast to direct replication [48] within a single population,\nThe fundamental ontological differences between human subjects cross-group replication between humans and AI agents necessarily\nand AI agents imply that replication across populations cannot be introduces conceptual degrees of freedom arising from differences\naccommodated through a straightforward transfer of study design. in four translation layers: cognition analogy, ontological analogy,\nInstead, studies that replicate human experiments with LLM-based interactional analogy and interventional analogy. We distinguish\nagents face a crucial methodological challenge: each replication two ideal-typical translation choices as methodological parameters\nnecessarily involves translating human experimental constructs to implicitly acknowledge underlying differences: (i) literal transinto AI-compatible designs. This translation introduces degrees of lation for direct replication, which aims to preserve surface-level\nfreedom at multiple levels of the AI system, including the choice of experimental features (e.g., task structure, payoffmatrices, informafoundation model encoding background knowledge, the design of tion availability), (ii) explicitation for analogous replication, which\npersonas and prompts that instantiate subject-like behavior, and makes implicit assumptions in human studies explicit and operathe orchestration protocols that structure group interaction. Such tionalizes them as design choices in AI agent studies (e.g., decision\ntranslation choices are rarely documented systematically, yet they rules, memory structures).\nfundamentally condition the outcomes being compared, as demonstrated in recent research. For example, slight variations [41], for- 3.2 Layered Translation Structure in NormCoRe\nmatting changes [49], and framing [13] in prompt design can alter\nNormCoRe operationalizes replication between human subject studthe performance of an LLM significantly. Similarly, in multi-agent\nies and AI agent studies through a layer-by-layer translation method\nsettings, modifications to deliberation protocols, including speaking\nillustrated in Figure 2. Rather than first defining human subject\norder [6], debate termination timing, and adversarial structure play\nand AI agent studies independently, NormCoRe aligns them at\na decisive role in determining collective outcomes [32].\nthe four corresponding layers of abstraction, following the nested\nYet, the replication studies reviewed above typically treat these\nstructure of the U.S. Common Rule for human subject studies (45\ndesign choices as implementation details rather than methodologiCFR §46.102 [38]) in combination with the layered architecture of\ncal choices. This impedes rigorous interpretation of study results.\nmulti-agent AI [2]. This approach makes the translation challenge\nFor example, when human and AI populations yield different outexplicit at each layer, allowing normative outcomes to be intercomes, it cannot be determined whether the differences reflect\npreted relative to specific sources of variation and reducing the risk\ngenuine divergence or a result of arbitrary translation choices. Adof what we term translation hacking, i.e., the selective tuning of\ndressing this rigor requires treating replication across populations\ntranslation-layer design choices to obtain desired outcomes.\nas an explicit translation problem—one that renders translation\nLayer 1: Living Individual →Foundation Models. At the\ndecisions visible at each layer of the experiment. Only then can\nmost fundamental layer, human subjects are defined as living indiobserved differences be attributed to specific sources rather than\nviduals about whom information is obtained through intervention\nconfounded across the translation process. To facilitate the stanor interaction [38].",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 10,
+    "total_chunks": 47,
+    "char_count": 3922,
+    "word_count": 512,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ec2b85bf-f104-455d-9da7-30d188ce1faf",
+    "text": "Normative outcomes in human studies are aldardization of replication practices in line with broader scientific\nready shaped at this level by background knowledge, lived experigoals [54], we propose NormCoRe as a novel methodological frameence, and informational asymmetries. These factors are not themwork for AI agent-based replication studies.\nselves experimental manipulations, yet they condition all downstream perception, deliberation, and behavior. In AI agent stud-\n3 Normative Common Ground Replication ies, the structurally corresponding layer is the foundation model\n(NormCoRe) substrate. Foundation models encode large-scale statistical reguNormCoRe is a systematic method for replicating human subject larities derived from pretraining data and thereby constitute the\nstudies with AI agent studies in order to (empirically) investigate the epistemic and normative background against which all agent benormative common ground between human and AI groups. Norm- havior unfolds [10].",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 11,
+    "total_chunks": 47,
+    "char_count": 992,
+    "word_count": 133,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f8cc9012-35fa-428f-bac9-d75489514709",
+    "text": "While private information in human studies is\nCoRe adapts established replication logic from the social sciences to generated within the experiment, foundation models represent a\ncross-population settings involving fundamentally different kinds pre-experimental informational endowment that cannot be directly\nof groups. Rather than assuming equivalence between human sub- manipulated during execution but strongly conditions normative\njects and AI agents, NormCoRe explicitly treats replication as a judgments. NormCoRe treats this correspondence as a cognitive\ntranslation problem to systematically map the constructs, interven- analogy. The goal is not to equate living individuals with foundations, and interactions of human-subject studies into an analogous tion models, but to acknowledge that both possess a base layer\nstudy with AI agents, while minimizing threats to validity. The of informational constraint that shapes what kinds of cognitive\ncentral goal of NormCoRe is not to determine whether AI agents heuristics or normative judgments are even expressible. Translabehave \"like humans,\" but to identify where normative (group) tion choices at this layer (e.g., model family, pretraining corpus)\njudgments converge or diverge, and to attribute such differences introduce degrees of freedom that must be documented to ensure\nto replication choices. This enables a disentangled investigation of interpretability of replication results.\nquestions such as whether fairness judgments in MAAI systems Layer 2: Human Subject →AI-based Agent. Building on this\nare sensitive to model choice, persona, or memory design, and informational substrate, the second layer concerns the subject itself.\nhow orchestration and coordination mechanisms shape collective Human subjects are grounded in the notion of (identifiable) private\ndecision-making trajectories. information that is used, studied, analyzed, or generated within the Normative Common Ground Replication (NormCoRe) ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Human Subject Study NormCoRe: Replication by Translation AI Agent Study Intervention includesby whichboth physicalinformationproceduresare includesby whichtheAI-basedstructuredagentsprocessesare Agent-integrated\ngathered and manipulations of the Interventional embedded into workflows, and workflow\nsubject or the subject's\nenvironment that are performed analogy interventionsthe coordinatedthat agentsexecutionperformof\nfor research purposes. within environments. Human group includes coordination, Multi-agent system\ncommunication, and adaptive\nincludes communication\ncontrol among AI-based agents Dynamic or Interactional Interaction interpersonal contact between\nsystem components, through\nsubjects and investigator and\nwhich tasks, information, and orchestration analogy and subject.\nactions are allocated, sequenced,\nand adjusted during execution. Human subject AI-based agent\nincludes information about\nmeans the AI-based capability\nbehavior that occurs in a context by Data-centric (Identifiable) which an agent observes,\n[…] and information that has Ontological action and interprets, and acts upon its private been provided for specific analogy environment through data. perception information purposes. include models trained on data\nmeans a living individual Living about Cognitive thatcapabilitiessupport acrossgeneralcontexts\"cognitive\"and Foundation whom an investigator conducting\nindividual research. analogy models that have been adapted for model\nspecific downstream purposes. Literal Translation Explicitation\nExperimenter Interaction Interface",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 12,
+    "total_chunks": 47,
+    "char_count": 3595,
+    "word_count": 455,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "446aabf8-d941-4460-844d-bb9f58b4514a",
+    "text": "Figure 2: The four translation layers illustrating the necessary analogies between individual layered components of human\nsubject studies and AI agent studies. Some components may be translated \"literally\", e.g., when the study sequence can be fully\nadopted. Other components may require \"explicitation\", e.g., when AI agents participate in a discussion in fixed turns. research context [38]. This layer establishes the epistemic basis of shared understanding of rules) must be made explicit as protocol\nthe study: what is known about the subject, how that knowledge is constraints or coordination mechanisms in AI agent studies.\nobtained, and under which contextual constraints. This definition Layer 4: Intervention →Agent-integrated Workflow. At the\ncarries implicit assumptions about agency, perception, memory, highest layer, human subject studies involve interventions, defined\nand the capacity to form normative judgments. In AI agent studies, as physical procedures or informational manipulations performed\nthe corresponding layer is the agent's data-centric perception–action for research purposes [38]. Interventions include task framing, incapability: the mechanisms through which an agent observes its centive structures, timing, and constraints that are intentionally\nenvironment, interprets inputs, and generates actions [2]. This varied to study causal effects.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 13,
+    "total_chunks": 47,
+    "char_count": 1376,
+    "word_count": 187,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8b68e2cd-ae23-453e-9d04-d90fb96d3edf",
+    "text": "In AI agent studies, the correspondincludes prompt structures, persona specifications, memory mecha- ing layer is the agent-integrated workflow [2]. This includes the\nnisms, and decision heuristics that instantiate agency-like behavior structured processes by which agents are embedded into experiin computational form. NormCoRe frames this mapping as an onto- mental workflows, the sequencing of tasks, role assignments, and\nlogical analogy. Human agency is not replicated, but functionally the coordinated execution of actions within an environment. This\ntranslated into computational capacities that allow agents to par- mapping constitutes an interventional analogy. NormCoRe emphaticipate meaningfully in normative tasks. Explicit design choices sizes that such translations are not neutral: different design choices\nat this layer—such as whether agents possess persistent memory can systematically shape normative outcomes [43]. Accordingly,\nor adopt stable personas—directly affect normative outcomes and intervention-level explicitation choices must be explicitly justified\nmust therefore be treated as core elements of the replication design and reported.\nrather than as mere implementation details. In addition to the formally specified translation layers, the role\nLayer 3: Human Group →Multi-agent System. The third of the experimenter should be explicitly acknowledged as an \"unlayer concerns interaction. In human groups, interaction encom- known influence\". In human subject studies, experimenters inpasses communication or interpersonal contact between subjects evitably shape outcomes through subtle cues, framing choices, timand investigators, as well as among subjects. This layer structures ing, and interaction styles—often unintentionally and outside the\ndeliberation, persuasion, power dynamics, and social learning, all scope of formal interventions. In AI agent studies, analogous influof which are central to the emergence of shared norms such as fair- ences arise through interaction interfaces. Making this influence\nness [20].",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 14,
+    "total_chunks": 47,
+    "char_count": 2055,
+    "word_count": 273,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "47bc26a0-f8b6-48cf-b715-4bbc7e39e65a",
+    "text": "In AI agent studies, the corresponding layer is dynamic explicit does not eliminate it, but improves interpretability by preorchestration creating a Multi-agent system. This includes message venting ungrounded attribution of normative differences solely to\npassing protocols, turn-taking rules, negotiation mechanisms, and agents or models, when they may partly reflect researcher-induced\nadaptive control processes that determine how agents exchange artifacts. To operationalize this concern and to ensure methodologinformation and influence one another over time [2]. NormCoRe ical interpretability, we summarize the NormCoRe method in the\ntreats this correspondence as an interactional analogy. Transla- following Box.\ntion at this layer often requires explicitation: assumptions that are\noften implicit in human interaction (e.g., (equal) speaking rights, ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Luca Deck, Simeon Allmendinger, Lucas Müller, and Niklas Kühl",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 15,
+    "total_chunks": 47,
+    "char_count": 976,
+    "word_count": 131,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4aa195bd-354f-4e84-b8b0-5a0a56f11af1",
+    "text": "NormCoRe Method (e.g., as opposed to the Ultimatum Game [47] with anonymous and\ntransactional interactions). We propose a method for the interpretable replication of The following section describes the original study (Section 4.1)\nhuman subject studies with AI agent studies by establish- and instantiates the NormCoRe framework by translating the origiing disentangled, layer-specific translation analogies, rather nal study to an MAAI setting [2] to study individual judgments and\nthan assuming global equivalence. Replication success is group dynamics of MAAI systems in the context of fairness princievaluated in terms of explanatory alignment, not behavioral ples (Section 4.2). This instantiation is meant to validate the methodidentity. ological framework in a concrete application and demonstrates the\nFor each NormCoRe translation exercise, researchers must: importance of design choices in AI agent studies (Section 4.3). Step 1 Identify constructs & study design components:\nSpecify the theoretically relevant constructs in the 4.1 Baseline Human Subject Study by Frohlich\noriginal human subject study together with the con- and Oppenheimer\ncrete study design components through which these Frohlich and Oppenheimer [19] conducted their experiment with\nconstructs are operationalized (e.g., task framing, in- 34 groups of five university students, comprising an individual and\nformation structure, incentive schemes, interaction a group phase. In the individual phase, participants received an\nrules, and experimenter involvement). introduction to four fairness principles in the context of income disStep 2 Instantiate analogous layers: Instantiate the anal- tribution: (P1) maximizing the income of the worst-offindividual;\nogous MAAI component(s) of the corresponding (P2) maximizing average (and thus total) income; (P3) maximizing\nNormCoRe layer (e.g., foundation model choice for average income subject to a guaranteed minimum income; and (P4)\nthe cognitive layer, persona prompting and memory maximizing average income subject to a cap on income inequality.\nfor the ontological layer, orchestration protocols for Participants first ranked the principles from most to least preferred\nthe interactional layer). and reported their confidence on a five-point Likert scale. They\nStep 3 Provide a rationale for translation choices: Jus- were then shown four alternative income distributions across five\ntify whether the layer mapping constitutes: income classes with known probabilities representing a \"probabilis-\n• Literal translation (for exact/direct replication), or tic veil of ignorance\" (5%, 10%, 50%, 25%, and 10%) and informed\n• Explicitation (for analogous replication), and spec- which distribution corresponded to each principle. After additional\nify the replication type implied by the design instruction and a comprehension test, participants ranked the princhoice (e.g., constructive, incremental, quasiran- ciples again.\ndom, or comprehensive [26]). Next, participants completed four payoff-relevant practice rounds. Step 4 Analyze sensitivity & robustness: Analyze the In each round, they selected a principle, after which a correspondsensitivity of normative outcomes to layer-specific ing distribution was implemented via a random draw assigning\ntranslation choices using established statistical crite- them to one of five income classes, essentially \"lifting\" the \"veil\nria for replication, non-replication, and partial repli- of ignorance\". While class probabilities were fixed, participants\ncation evidence [11]. were unaware of their exact values. Realized payoffs, as well as\ncounterfactual payoffs under alternative principles, were revealed\nand paid immediately at a 1:$10,000 conversion rate.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 16,
+    "total_chunks": 47,
+    "char_count": 3732,
+    "word_count": 512,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f7688f3-dcb1-490d-a3ec-6f71a7084680",
+    "text": "The individual\nphase concluded with a third ranking and confidence assessment.\n4 Experimental Study: Applying NormCoRe for In the group phase, each five-person group deliberated to reach a\nFairness Principles unanimous agreement on a single principle. Prior to the discussion,\nparticipants were informed that (i) the payoffdistributions used for\nWith the methodological framework in place, we illustrate its appligroup payment could differ from the examples, and (ii) the groupcation for a representative norm that has both a social and ethical\ndecision would determine binding payoffs at higher stakes. Unlikedimension as well as a crucial downstream impact in MAAI sysin the individual phase, participants did not know the specific distems: fairness. Fairness is a norm deeply embedded in social science\ntributions in advance.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 17,
+    "total_chunks": 47,
+    "char_count": 828,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb25cebd-d4af-48e3-b443-e87938220868",
+    "text": "The discussion lasted at least five minutesand philosophy, guiding perceptions, legal frameworks, economic\nand ended with a verbal consensus and a confirming secret-ballotinteractions, and the design of AI systems [8, 37]. While its meaning\nvote; if unanimity was not achieved, payoffs were determined by a\nvaries across disciplines, contexts, and cultures, several simplifying\nrandom draw. Finally, participants submitted a last ranking withapproaches have been proposed to study fairness principles in exconfidence ratings.\nperiments with human subjects. One seminal experiment is Frohlich\nand Oppenheimer [19] who applied John Rawl's popular thought\nexperiment of the \"veil of ignorance\" [40] to study preferences for 4.2 NormCoRe Translation to AI Agents\nfour predefined fairness principles representing different schools Following the NormCoRe translation procedure, replication is treated\nof thought in political philosophy. The study has been frequently as a layered translation problem rather than an assumption of\ncited and serves as a perfect showcase for the utility of NormCoRe, equivalence. Translation decisions are therefore made explicit and\nas it offers value-laden tradeoffs and disagreement between individ- justified at each analogy layer.\nuals, and includes all relevant layers for replication and sufficiently (Step 1) Identify constructs & study design components:\ncomplex normative interactions to study the dynamics of MAAI The baseline experiment investigates normative preferences for Normative Common Ground Replication (NormCoRe) ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Table 1: Distribution of fairness principle agreements in the human baseline and MAAI replication, including baseline alignment\nand sensitivity to translation-layer design choices (foundation model and persona language). Baseline Alignment Translation Sensitivity\nHuman–MAAI Cognitive Layer Ontological Layer\nFairness Principle Baseline MAAI Chinese LLM Ecosystem U.S. LLM Ecosystem English Mandarin Spanish\nMax. floor income 1 0 14 4 0 1 0\nMax. average income 1 1 0 2 0 0 0\nMax. average with floor constraint 23 29 15 21 30 27 17\nMax. average with range constraint 2 0 0 0 0 0 2\nNo Agreement 7 3 4 6 4 6 15\nTotal 34 33 33 33 34 34 34",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 18,
+    "total_chunks": 47,
+    "char_count": 2248,
+    "word_count": 335,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "80845446-7ee9-4dac-8204-276863b8d411",
+    "text": "distributive justice principles under a Rawlsian veil of ignorance. symbolic payoffs, and explicit randomness controls. These mapThe focal construct is the selection and ranking of four predefined pings ensure that deliberation, incentives, and information flow\njustice principles (P1–P4), measured at both the individual level (re- remain comparable across populations while accommodating the\npeated rank-orderings with confidence) and the group level (unan- technical constraints of AI agents. Full details of these mappings\nimous consensus determining payoffs). Core design components are documented in tables 2 to 5.\nthat operationalize this construct include: (i) controlled information (Step 3) Provide a rationale for translation choices: All\nabout income distributions and probabilities, (ii) payoff-relevant de- translation choices are classified; a comprehensive classification\ncision making via stochastic assignment to income classes, and (iii) and justification for each design decision is provided in tables 2 to 5\nstructured group deliberation culminating in a binding collective in the Appendix.\nchoice. All translation choices in the AI agent study are evaluated (Step 4) Analyze sensitivity & robustness: NormCoRe rein relation to their ability to preserve the fairness decision problem quires that translation choices introducing degrees of freedom be eiwhile rendering it executable for LLM-based agents. ther controlled or systematically varied. Accordingly, the replication\n(Step 2) Instantiate analogous layers: NormCoRe aligns the incorporates several robustness mechanisms. First, reproducibility\nhuman-subject experiment with the AI-agent study through a set controls (explicit random seeds, bounded discussion rounds, and\nof layered analogies. A complete, parameter-level specification of temperature parameters) enable deterministic reruns and isolate\nall mappings is provided in tables 2 to 5 in the Appendix; here we stochastic variation.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 19,
+    "total_chunks": 47,
+    "char_count": 1968,
+    "word_count": 266,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5f0af068-f870-457c-a508-fe70419da01a",
+    "text": "Specifically, we use 33 AI groups to closely\nsummarize the most salient aspects. approximate the human baseline of 34 groups while allowing the\nCognitive and ontological analogy. Human participants—university sample to be divisible by three. This enables three temperature constudents deliberating under uncertainty—are mapped to LLM-based ditions: 0 (deterministic), random draws from [0, 1], and random\nAI agents. In the baseline study, subjects' cognitive capacities (e.g., draws from [0, 1.5], representing increasingly stochastic generalanguage comprehension, memory, and reasoning ability) and on- tion regimes. Second, sensitivity analyses are embedded directly\ntological properties (e.g., agency, identity, and persistence across into the design: agent language (English, Mandarin, Spanish) is varinteractions) are implicit and embodied. In the AI agent study, ied to assess the stability of normative outcomes. Third, structural\nthese properties must be made explicit and operationalized.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 20,
+    "total_chunks": 47,
+    "char_count": 997,
+    "word_count": 134,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f5e0fbd-16a6-40f0-bc4a-8f4d6fb00af5",
+    "text": "Accord- constraints (e.g., validation of floor and range parameters, miniingly, agents are instantiated with configurable role descriptions mum statement lengths, and capped memory) prevent degenerate\napproximating the original participant pool, managed memory or nonsensical trajectories that would confound interpretation.\nwith explicit character limits to support learning-in-context, and\ncontrolled linguistic and stochastic parameters (language choice\nand temperature). The complete prompts used to instantiate all 4.3 Results of the Replication Study\nagent roles are made available in our repository [16]; consistent We begin by examining baseline alignment between the human\nwith NormCoRe's core principle, they are treated as explicit and subject experiment and its MAAI replication. Table 1 reports the\nauditable translation choices rather than definitive claims about distribution of distributive justice principle choices for the human\nany specific model's normative behavior This translation preserves baseline and the aggregated MAAI groups. Consistent with the origthe functional role of the subject—forming and revising normative inal human study, both populations predominantly converge on the\njudgments—without asserting equivalence between human subjects principle of maximizing average income subject to a guaranteed\nand LLM-based agents (Tables 2 to 5). minimum for the worst-off. At the same time, notable differences\nInteractional and interventional analogies. Human group interac- emerge at the collective level. MAAI groups exhibit stronger contion and experimental procedures are translated into a turn-based vergence and lower disagreement: 29 of 33 AI groups select this\norchestration protocol and an agent-integrated workflow. Free-form principle, compared to 23 of 34 human groups, with disagreement\ndiscussion is formalized as sequential speaking with equal oppor- rates of 9.1% and 20.6%, respectively. These findings indicate that\ntunity, shared discussion history, and a structured consensus mech- while the dominant fairness preference is aligned across populaanism, while the experimenter's role and laboratory environment tions, normative outcomes in MAAI are more homogeneous than\nare translated into structured prompts, computational execution, in human groups. Figure 3 complements the aggregate results in Table 1 by visualizing how individual-level preference rankings change ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Luca Deck, Simeon Allmendinger, Lucas Müller, and Niklas Kühl Figure 3: Individual-level preference ranking transitions before and after group deliberation. The vertical (horizontal) axis\nshows initial (final) individual rankings, and cell intensities reflect transition frequencies, highlighting strong convergence\ntoward maximizing average income with a floor constraint.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 21,
+    "total_chunks": 47,
+    "char_count": 2845,
+    "word_count": 379,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c6e188f-1747-477c-baea-014b870ee079",
+    "text": "over the course of the experiment. The figure plots each partici- 5 Discussion\npant's (human) or agent's (MAAI) initial individual ranking (elicited The increasing integration of MAAI in both workflow automaprior to any group interaction) against their final individual ranking, tion and empirical research raises fundamental methodological and\nreported after group deliberation and the emergence of a collec- normative challenges. As AI-based agents increasingly deliberate,\ntive decision. Across MAAI experiments, individual agent rankings coordinate, and converge on collective decisions, understanding the\nexhibit substantially stronger convergence toward the eventual emergence and impact of social and ethical norms in such systems\ngroup-level consensus than observed in human groups. This pattern becomes critical.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 22,
+    "total_chunks": 47,
+    "char_count": 821,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c448a6fa-3ee4-4233-a1d3-cac52189c2f4",
+    "text": "NormCoRe provides a first systematic step toward\nindicates reduced intra-group variance and stronger aggregation dy- structuring AI-agent replication studies as an explicit process of\nnamics in MAAI, helping to explain the higher levels of consensus translating human subject studies in AI agent studies, acknowland lower disagreement rates reported in Table 1. edging the fundamental differences between human subjects and\nBeyond establishing baseline alignment between human and AI agents. Accordingly, we discuss what the experimental results\nMAAI group-level outcomes, we examine the robustness of these imply for replication-by-translation (Section 5.1), the epistemic purfindings to translation-layer design choices. Sensitivity analyses pose of AI agent studies (Section 5.2), and the open challenges and\nshow that the observed convergence in fairness principles is not limits of this approach (Section 5.3).\ninvariant, but systematically conditioned by architectural decisions\nwithin the AI agent configuration. At the cognitive analogy layer,\nvariation in the underlying foundation model ecosystem (Chinese 5.1 Why Replication Studies with AI Agents\nvs. LLMs) leads to pronounced and consistent shifts in distribu- Require Translation\ntive justice principle selection, relative to the baseline alignment The results illustrate both the promise and the limitations of replireported in Table 1.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 23,
+    "total_chunks": 47,
+    "char_count": 1401,
+    "word_count": 193,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "30078d0b-7864-4945-8627-ff902f14b0b3",
+    "text": "At the ontological analogy layer, sensitivity anal- cating human subject studies with AI agents. At an aggregate level,\nyses reveal that the language used to instantiate agent personas MAAI groups converge on the same dominant fairness principle\nsystematically conditions individual preference formation and its as human groups, suggesting that key normative outcomes can\naggregation during deliberation. As shown in Figure 4, agents in- be reproduced under comparable decision structures (Table 1). At\nstantiated in all three languages exhibit convergence toward the the same time, our experimental results show that MAAI exhibits\nsame dominant fairness principle observed in the baseline align- substantially higher consensus and lower disagreement rates, indiment (see Table 1). However, the degree and trajectory of con- cating stronger aggregation dynamics and reduced variance comvergence differ across languages. Spanish-language agents display pared to human groups (Figure 3).",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 24,
+    "total_chunks": 47,
+    "char_count": 985,
+    "word_count": 138,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8103d031-a55b-4472-83ae-cbd2cc1158bd",
+    "text": "Crucially, sensitivity analyses\nmore heterogeneous initial individual preferences and retain greater show that these outcomes are not invariant. Varying the foundation\ndiversity throughout deliberation, whereas English- and Mandarin- model leads to systematic shifts in principle selection (Table 1), and\nlanguage agents begin from more concentrated initial distributions changing the language used to instantiate agent personas affects\nand converge more rapidly toward the group-level consensus. These both convergence and outcome distributions (Table 1 and Figure 4).\nlanguage-specific dynamics help explain the variation in consensus These effects demonstrate that seemingly stable normative judgrates reported in Table 1, while reinforcing that aggregate align- ments depend on translation choices that have no direct analogue\nment with human outcomes can coexist with substantial sensitivity in the human baseline. For example, the same persona specificato ontological instantiation choices. tion (e.g., a \"university student\") may be instantiated in different\nprompt languages (English, Mandarin, or Spanish) on foundation\nmodels whose pretraining corpora—and thus linguistic and cultural\ncoverage—differ substantially; this introduces variation attributable Normative Common Ground Replication (NormCoRe) ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Figure 4: Preference shifts in individual distributive justice rankings before and after group deliberation, stratified by AI agent\nlanguage. Across all languages, individual AI agent preferences converge toward maximizing average income. to translation decisions and model-choice that hardly have a direct different cognitive and organizational substrates [15]. From this\nanalogue in the original human subject study. perspective, divergence between human and AI-agent outcomes\nWhile the baseline experiment fromFrohlich and Oppenheimer is not a failure but an informative signal. This raises a related\n[19] serves our purpose to instantiate NormCoRe with a suitable and question: Are AI-agent studies primarily concerned with norms\nrelevant norm, it does not come without limitations and represents among AI agents themselves, or with downstream outcomes that\nonly a fraction of what social and ethical norms can entail. As affect (human) norms? NormCoRe deliberately accommodates both\ndiscussed in the original study, Frohlich and Oppenheimer [19] perspectives. On the one hand, collective norms emerging within\nonly uses a small sample of Polish, Canadian, and US students, MAAI systems are increasingly consequential in their own right, as\nwhich is not nearly representative of the world population, and such systems are delegated fairness-sensitive decisions in practice.\nadopts a strong simplification of norms into four distributive justice On the other hand, understanding how and why AI-agent norms\nprinciples, which influences the consensus finding process. Despite differ from human baselines is essential for anticipating societal\nthese limitations, our findings suggest that similarity in aggregate impacts and governance challenges.\noutcomes is insufficient to establish equivalence between human A recurring critique in the literature questions whether it is\nand AI-based replications. Instead, replication outcomes are already appropriate to conduct social or behavioral experiments with AI\nshaped by design decisions at the cognitive and ontological levels agents at all [4, 51].",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 25,
+    "total_chunks": 47,
+    "char_count": 3464,
+    "word_count": 474,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8daca297-151e-4832-9136-fa7c17ab23fe",
+    "text": "Concerns include sampling bias, the absence of\nof analogy. This underscores the need to treat replication with lived experience, and the risk of over-interpreting artificial behavior\nAI agents as a process of explicit translation rather than direct as psychologically meaningful. These concerns are valid and undersubstitution—precisely the role NormCoRe is designed to fulfill. score the importance of methodological caution. At the same time,\nAI agent studies offer distinctive methodological advantages over\nhuman subject studies [35]. Data can be collected at scale, under\n5.2 Purpose of AI Agent Studies\ncontrolled conditions, and with levels of process transparency that\nBroadening the discourse on AI agent studies, a first open ques- are often unavailable in human-subject research (e.g., by collecting\ntion concerns the epistemic purpose of replication studies with transcripts of thinking models). Moreover, AI agent replications can\nAI agents, e.g., what kind of value such studies provide, and what explicitly vary dimensions (e.g., language, memory, or interaction\nconclusions should be drawn from them. One motivation can be protocols) that are difficult or impossible to manipulate cleanly in\ncuriosity-driven comparison, e.g., observing how AI agents be- human experiments. Generally speaking, to determine the value\nhave when placed in experimental settings originally designed for of MAAI for different applications and the conditions under which\nhumans. However, a purely descriptive comparison risks under- MAAI can actually be beneficial, we need to better understand the\ntheorizing the implications of observed similarities or differences. A structure, dynamics, and impact of MAAI systems in the first place.\nmore substantive motivation is methodological. The scientific com- We position NormCoRe as a methodlogical framework to advance\nmunity is currently grappling with a well-documented replication this understanding.\ncrisis, characterized by systematic failures to reproduce published\nfindings across disciplines [5]. Large-scale efforts, such as the Open\nScience Collaboration's replication of 100 psychological experi- 5.3 Open Challenges of AI Agent Studies\nments, revealed replication failures in more than half of the cases, Despite their promise, AI-agent replication studies face several unwith substantially reduced effect sizes [14]. AI-agent replication resolved challenges. A central issue is generalizability. Empirical\nstudies cannot resolve this crisis in a straightforward sense, as they findings in AI agent studies are inherently time-bound snapshots:\ndo not constitute replications within the same population.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 26,
+    "total_chunks": 47,
+    "char_count": 2655,
+    "word_count": 371,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0f04f826-9eda-43f5-b9e3-809ba582c635",
+    "text": "How- foundation models evolve rapidly, whereas human biology and\never, when framed appropriately, they can serve as boundary tests many social mechanisms remain comparatively stable over time.\nthat probe the robustness of theoretical constructs under radically As a result, replication outcomes may change as models are updated, ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Luca Deck, Simeon Allmendinger, Lucas Müller, and Niklas Kühl retrained, or replaced.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 27,
+    "total_chunks": 47,
+    "char_count": 469,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1a10a478-2fa8-4886-8990-41b473cd985e",
+    "text": "This temporal instability complicates the advocating for rigorous replication-by-translation, NormCoRe conaccumulation of knowledge and reinforces the need for precise and tributes to transparency, interpretability, and cumulative progress\nlayered documentation of model versions and experimental config- in the study of social and ethical norms in MAAI.\nurations. A related challenge concerns establishing best practices. There is currently little consensus on how sample sizes should be\nselected or reported in AI agent studies, particularly when agents\ncan be instantiated cheaply and repeatedly. Similarly, while Norm- 6 Conclusion and Outlook\nCoRe emphasizes explicitation as a core methodological principle, As AI agents are increasingly integrated into experimental studies\nopen questions remain regarding the sufficiency of detail. Moreover, and decision-making processes, methodological rigor in designing\nit is unclear how well the behavior of AI agents in an experimental these agents becomes critical—especially when they are subject\nstudy can be generalized to applied settings. For example, if AI to social and ethical norms. To judge whether and under which\nagents systematically associate certain social traits with gender in conditions the integration of AI agents is actually beneficial, we\nan experimental context, this may carry over to applied domains need to better understand their structure, dynamics, and impact.\nsuch as hiring or evaluation. Emerging interpretability research We introduce NormCoRe as a methodological framework for studyprovides preliminary support for this assumption, suggesting that ing social and ethical norms—such as fairness—in Multi-agent AI\nLLMs internally organize information into relatively stable concep- (MAAI) setups through the rigorous replication-by-translation of\ntual representations [33]. Nonetheless, this line of research remains human subject studies in AI agent environments. By accounting for\nin its infancy, and strong claims about an AI system's \"psychol- the fundamental differences between human subjects and AI agents\nogy\" [22] would be premature. and conceiving replication as a layered process of analogous transCultural generalizability poses another open question. Most cur- lation, NormCoRe systemizes the design choices shaping normarent AI—and especially LLM—research relies on models trained tive judgments and outcomes in MAAI systems. Our experimental\npredominantly on WEIRD (Western, Educated, Industrialized, Rich, study, which instantiates the NormCoRe method, demonstrates that\nand Democratic) data and instantiated with personas reflecting fairness judgments in MAAI are sensitive to the choice of the founWestern norms [34]. A similar tendency can be observed for partic- dation model and the language used to instantiate agent personas.\nipant sampling in AI-related human subject studies [42]. It remains The results reveal significant differences between human subjects\nunclear whether non-WEIRD MAAI—or the same systems instanti- in their normative judgments and underscore the importance of\nated with different linguistic and cultural priors—would converge well-documented design choices for the examined AI agents. Also,\non similar norms or diverge systematically.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 28,
+    "total_chunks": 47,
+    "char_count": 3260,
+    "word_count": 447,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8c8783d4-cf7c-4c43-856a-f14ca05cab90",
+    "text": "Conversely, it is an open our study indicates that AI agents can converge on fairness prinempirical question whether some AI agent configurations may align ciples similar to those favored by human groups, but do so with\nmore closely with non-WEIRD human populations than with the higher homogeneity, highlighting the importance of accounting for\noriginal human baselines. Moreover, hybrid replications, in which the differences between human subjects and AI agents.\none component of a socio-technical system is held constant while Looking ahead, our work provides a blueprint for investigating\nanother is translated (e.g., human decision-makers interacting with normative dynamics in MAAI beyond distributive justice, which\nAI agents, or vice versa), blur the boundary between human-subject opens several avenues for future research and applications. First,\nand AI agent studies and offer additional degrees of freedom [12]. while our study offers early insights into fairness principles in\nSimilarly, one can imagine translating insights from AI agent stud- MAAI, NormCoRe should be applied to other social and ethical\nies back into human subject research, which raises several questions norms (e.g., transparency, reciprocity, or trust) to gain a deeper\non the methodology and the interpretation of results. understanding of the mechanics and potential risks associated with\nLastly, our study has only shown that design choices signifi- MAAI systems. Second, applying NormCoRe to hybrid settings\ncantly affect normative outcomes, but reveal little about the exact that combine human subjects and AI agents may illuminate novel\nmechanisms underlying these effects. NormCoRe helps to make dynamics emerging in MAAI systems (e.g., power asymmetries and\ninfluential design factors explicit and supports systematic sensitiv- coordination effects). Lastly, beyond empirical studies NormCore\nity and robustness analyses. Still, illuminating the causal patterns helps to guide, reflect, and document design choices whenever AI\nand technical mechanisms behind observed effects requires com- agents are used to automate or support tasks formerly carried out\nplementary approaches such as interpretability, ablation studies, or by (groups of) humans. Future work should establish best practices\ninterdisciplinary analysis (e.g., augmented by linguistic or cultural and standards for certain design choices to facilitate longitudinal\nresearch), which offer exciting avenues for future work. and cross-cultural studies, which are critically needed as models,\nTaken together, these challenges point to a broader research data, and deployment contexts evolve rapidly. While the risks and\nagenda.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 29,
+    "total_chunks": 47,
+    "char_count": 2682,
+    "word_count": 381,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eff0e900-ec1d-4f06-ab16-8e01821bce54",
+    "text": "Key open questions concern the purpose and value of repli- benefits of increased adoption of AI agents are disputed, our work\ncation studies with AI agents, the generalizability of observed hu- invites the community to view AI agents not merely as something\nman–AI differences given unavoidable translation and explicitation that needs to be aligned with human norms and values, but as an\nchoices, the generalization of observed norms across applications evolving technology demanding scrutiny and systematic evaluaand cultures, and investigation into the causal patterns driving tion. Understanding and governing these agents requires methods\nthe observed effects. NormCoRe does not resolve these questions, that ensure scientific rigor and accountability for design decisions.\nbut paves the way toward an established methodological founda- Ultimately, only through such foundational work can we ensure\ntion, allowing future research to systematically address them. By to uphold social and ethical norms in an increasingly automated\nworld. Normative Common Ground Replication (NormCoRe) ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada 7 Generative AI Disclosure Statement [23] Thilo Hagendorff, Sarah Fabi, and Michal Kosinski. 2023. Human-like intuitive\nbehavior and reasoning biases emerged in large language models but disappeared\nFor writing, we used ChatGPT, Grammarly and DeepL to improve in ChatGPT. Nature Computational Science 3, 10 (2023), 833–838.\ngrammar and fluency.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 30,
+    "total_chunks": 47,
+    "char_count": 1487,
+    "word_count": 212,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9723c813-d1fd-4571-ab40-9aa265fe0e1d",
+    "text": "Moreover, to develop the software artifact [24] Michael Hechter and Karl-Dieter Opp. 2001. Russell Sage Foundaused in the experimental study, we used the coding tools Claude tion.\n[25] Daniel Kahneman and Amos Tversky. 1979. Prospect Theory: An Analysis of\nCode, Codex CLI, and Gemini CLI. Econometrica 47, 2 (1979), 263–291.\n[26] Tine Köhler and Jose M. Play It Again, Sam! An Analysis of\nReferences 47,Constructive2 (2021), 488–518.ReplicationarXiv:https://doi.org/10.1177/0149206319843985in the Organizational Sciences. Journal of Managementdoi:10.\n[1] Elif Akata, Lion Schulz, Julian Coda-Forno, Seong Joon Oh, Matthias Bethge, and 1177/0149206319843985\nEric Schulz. 2025. Playing repeated games with large language models. Nature [27] Travis LaCroix. [n. d.]. Moral Dilemmas for Moral Machines. 2, 4 ([n. d.]), 737–746. Human Behaviour (2025), 1–11. doi:10.1007/s43681-022-00134-y\n[2] Simeon Allmendinger, Lukas Bonenberger, Kathrin Endres, Dominik Fetzer, Hen- [28] Messi H.J. Montgomery, and Calvin K. Large Language\nner Gimpel, and Niklas Kühl. 2025. Electronic Markets (2025).",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 31,
+    "total_chunks": 47,
+    "char_count": 1085,
+    "word_count": 146,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "034a8a2d-9d26-4d1b-86ac-0ec58574f109",
+    "text": "Models Portray Socially Subordinate Groups as More Homogeneous, Consistent\n[3] Edmond Awad, Sohan Dsouza, Richard Kim, Jonathan Schulz, Joseph Henrich, with a Bias Observed in Humans. In Proceedings of the 2024 ACM Conference\nAzim Shariff, Jean-François Bonnefon, and Iyad Rahwan. 2018. The Moral Ma- on Fairness, Accountability, and Transparency (Rio de Janeiro, Brazil) (FAccT\nchine experiment. Nature 563, 7729 (2018), 59–64. doi:10.1038/s41586-018-0637-6 '24). Association for Computing Machinery, New York, NY, USA, 1321–1340.\n[4] Christopher A. Can Generative AI Improve Social Science? Proceedings doi:10.1145/3630106.3658975\nof the National Academy of Sciences 121, 21 (2024), e2314021121. doi:10.1073/pnas. [29] Yan Leng. 2024.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 32,
+    "total_chunks": 47,
+    "char_count": 736,
+    "word_count": 98,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a4af6b22-180a-422a-8065-4d3258673399",
+    "text": "Can LLMs Mimic Human-Like Mental Accounting and Behavioral\n2314021121 Biases? SSRN Electronic Journal (2024). doi:10.2139/ssrn.4705130\n[5] Monya Baker. 2016. 1, 500 scientists lift the lid on reproducibility. Nature 533, [30] David Lewis. 1969. Convention: A philosophical study. Harvard University Press.\n7604 (May 2016), 452–454. doi:10.1038/533452a [31] Xinyi Li, Shuo Wang, and Shuang Zeng. 2024. A survey on LLM-based multi-\n[6] Razan Baltaji, Babak Hemmatian, and Lav Varshney. 2024. Conformity, Con- agent systems: workflow, infrastructure, and challenges. Vicinagearth 1, 9 (2024),\nfabulation, and Impersonation: Persona Inconstancy in Multi-Agent LLM Col- 1–35. doi:10.1007/s44336-024-00009-2\nlaboration. In Proceedings of the 2nd Workshop on Cross-Cultural Considerations [32] Tian Liang, Zhiwei He, Wenxiang Jiao, Xing Wang, Yan Wang, Rui Wang, Yujiu\nin NLP. Association for Computational Linguistics, Bangkok, Thailand, 17–31. Yang, Shuming Shi, and Zhaopeng Tu. 2024. Encouraging Divergent Thinking in\ndoi:10.18653/v1/2024.c3nlp-1.2 Large Language Models through Multi-Agent Debate. In Proceedings of the 2024\n[7] Cristina Bicchieri. 2005. The grammar of society: The nature and dynamics of Conference on Empirical Methods in Natural Language Processing. 17889–17904.\nsocial norms. Cambridge University Press. doi:10.18653/v1/2024.emnlp-main.992\n[8] Reuben Binns. 2018.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 33,
+    "total_chunks": 47,
+    "char_count": 1382,
+    "word_count": 179,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5cd0ffa8-4f88-4b19-b1ca-5904d9a3aa3a",
+    "text": "Fairness in Machine Learning: Lessons from Political Philos- [33] Jack Lindsey, Wes Gurnee, Emmanuel Ameisen, Brian Chen, Adam Pearce,\nophy. Conference on Fairness, Accountability and Transparency 81 (2018), 149–159. Turner, Craig Citro, David Abrahams, Shan Carter, Basil Hosmer,\nhttps://proceedings.mlr.press/v81/binns18a.html Jonathan Marcus, Michael Sklar, Adly Templeton, Trenton Bricken, Callum Mc-\n[9] Marcel Binz, Elif Akata, Matthias Bethge, Franziska Brändle, Fred Callaway, Julian Dougall, Hoagy Cunningham, Thomas Henighan, Adam Jermyn, Andy Jones,\nCoda-Forno, Peter Dayan, Can Demircan, Maria K Eckstein, Noémi Éltető, et al. Andrew Persic, Zhenyi Qi, T. Ben Thompson, Sam Zimmerman, Kelley Rivoire,\n2025. A foundation model to predict and capture human cognition. Nature (2025), Thomas Conerly, Chris Olah, and Joshua Batson. 2025.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 34,
+    "total_chunks": 47,
+    "char_count": 845,
+    "word_count": 113,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2f5b49b4-3264-44f8-86a0-731247822bca",
+    "text": "On the Biology of a\n1–8. Large Language Model. Transformer Circuits Thread. https://transformer-\n[10] Rishi Bommasani. 2021. On the opportunities and risks of foundation models. circuits.pub/2025/attribution-graphs/biology.html Accessed: 2025-04-01.\narXiv preprint arXiv:2108.07258 (2021). [34] Rada Mihalcea, Oana Ignat, Longju Bai, Angana Borah, Luis Chiruzzo, Zhijing Jin,\n[11] Douglas G. Design and Analysis of Replication Claude Kwizera, Joan Nwatu, Soujanya Poria, and Thamar Solorio. 2025. Organizational Research Methods 24, 3 (2021), 513–529. Is WEIRD and Shouldn't Be This Way: Towards AI for Everyone, with Everyone,\narXiv:https://doi.org/10.1177/1094428120911088 doi:10.1177/1094428120911088 by Everyone. Proceedings of the AAAI Conference on Artificial Intelligence 39, 27\n[12] David Broska, Michael Howes, and Austin van Loon. 2025. The Mixed Subjects (2025), 28657–28670. doi:10.1609/aaai.v39i27.35092\nDesign: Treating Large Language Models as Potentially Informative Observations. [35] Justin M Mittelstädt, Julia Maier, Panja Goerke, Frank Zinn, and Michael HerSociological Methods & Research (2025). doi:10.1177/00491241251326865 MIT mes. 2024. Large language models can outperform humans in social situational\nSloan Research Paper No. 7154-24. judgments. Scientific reports 14, 1 (2024), 27449.\n[13] Melanie Brucks and Olivier Toubia. 2025. Prompt architecture induces method- [36] George Edward Moore. 1903. Cambridge University Press.\nological artifacts in large language models. PLOS ONE 20, 4 (2025), e0319159. [37] Deirdre K. Kroll, Nitin Kohli, and Richmond Y.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 35,
+    "total_chunks": 47,
+    "char_count": 1585,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf3c50f6-651e-45f8-9012-2aa4d4062fd5",
+    "text": "Wong. 2019.\ndoi:10.1371/journal.pone.0319159 This Thing Called Fairness: Disciplinary Confusion Realizing a Value in Technol-\n[14] Open Science Collaboration. 2015. Estimating the reproducibility of psychological ogy. Proceedings of the ACM on Human-Computer Interaction 3, CSCW (2019),\nscience. Science 349, 6251 (Aug. 2015). doi:10.1126/science.aac4716 1–36. doi:10.1145/3359221\n[15] Ziyan Cui, Ning Li, and Huaikang Zhou. 2025. A large-scale replication of [38] U.S. Government Publishing Office / Office of the Federal Register. 2025. 45\nscenario-based experiments in psychology and management using large language CFR § 46.102 — Definitions for Purposes of This Policy. Electronic Code of\nmodels. Nature Computational Science 5, 8 (July 2025), 627–634. doi:10.1038/ Federal Regulations (eCFR). https://www.ecfr.gov/current/title-45/subtitle-A/\ns43588-025-00840-7 subchapter-A/part-46/subpart-A/section-46.102 Title 45, Public Welfare, Part 46,\n[16] Luca Deck, Simeon Allmendinger, Lucas Müller, and Niklas Kühl. 2026. NormCoRe: Subpart A, Protection of Human Subjects, Definitions for purposes of this policy. Distributive Justice AI Experiment Framework [Software]. [39] Prasad Patil, Roger D. A statistical definition for\n[17] Ruben Durante, Louis Putterman, and Joël van der Weele. 2014. Preferences for reproducibility and replicability. doi:10.1101/066803\nRedistribution and Perception of Fairness: An Experimental Study. Journal of the [40] John Rawls. 1971. Belknap Press of Harvard University Press,\nEuropean Economic Association 12, 4 (2014), 1059–1086. doi:10.1111/jeea.12082 Cambridge, MA.\n[18] Esin Durmus, Karina Nguyen, Thomas I. Liao, Nicholas Schiefer, Amanda [41] Melanie Sclar, Yejin Choi, Yulia Tsvetkov, and Alane Suhr. 2024.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 36,
+    "total_chunks": 47,
+    "char_count": 1750,
+    "word_count": 223,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2b3f1394-b911-4245-baa1-996efe9d9251",
+    "text": "Quantifying\nAskell, Anton Bakhtin, Carol Chen, Zac Hatfield-Dodds, Danny Hernandez, Language Models' Sensitivity to Spurious Features in Prompt Design. In The\nNicholas Joseph, Liane Lovitt, Sam McCandlish, Orowa Sikder, Alex Tamkin, Twelfth International Conference on Learning Representations. Janel Thamkul, Jared Kaplan, Jack Clark, and Deep Ganguli. 2023. Towards Mea- [42] Ali Akbar Septiandri, Marios Constantinides, Mohammad Tahaei, and Daniele\nsuring the Representation of Subjective Global Opinions in Language Models. WEIRD FAccTs: How Western, Educated, Industrialized, Rich,\narXiv:arXiv:2306.16388 and Democratic Is FAccT?.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 37,
+    "total_chunks": 47,
+    "char_count": 635,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e79842de-1a1f-4734-9afb-ac7f5b792134",
+    "text": "In Proceedings of the 2023 ACM Conference on Fair-\n[19] Norman Frohlich and Joe A. Choosing Justice: An Experimen- ness, Accountability, and Transparency (FAccT '23). Association for Computing\ntal Approach to Ethical Theory. University of California Press. Machinery, 160–171. doi:10.1145/3593013.3593985\n[20] Michele J Gelfand, Sergey Gavrilets, and Nathan Nunn. 2024. Norm dynamics: [43] Jan Simson, Florian Pfisterer, and Christoph Kern. 2024. One model many scores:\nInterdisciplinary perspectives on social norm emergence, persistence, and change. Using multiverse analysis to prevent fairness hacking and evaluate the influence\nAnnual Review of Psychology 75, 1 (2024), 341–378. of model design decisions. In Proceedings of the 2024 ACM Conference on Fairness,\n[21] Matthew Grizzard, Rebecca Frazer, Andrew Luttrell, Charles K Monge, Nicholas L Accountability, and Transparency. 1305–1320. Matthews, C Joseph Francemone, and Michelle E Frazer. 2025. ChatGPT does not [44] Hamid Taghavifar, Chuan Hu, Chongfeng Wei, Ardashir Mohammadzadeh, and\nreplicate human moral judgments: the importance of examining metrics beyond Chunwei Zhang. 2025. Behaviorally-Aware Multi-Agent RL With Dynamic\ncorrelation to assess agreement. Scientific Reports 15, 1 (2025), 40965.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 38,
+    "total_chunks": 47,
+    "char_count": 1264,
+    "word_count": 172,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4a7f6e6d-822f-47d4-8c60-8586c76e03b4",
+    "text": "Optimization for Autonomous Driving. IEEE Transactions on Automation Science\n[22] Thilo Hagendorff, Ishita Dasgupta, Marcel Binz, Stephanie C. Chan, Andrew and Engineering 22 (2025), 10672–10683. doi:10.1109/TASE.2025.3527327\nLampinen, Jane X. Wang, Zeynep Akata, and Eric Schulz. 2024. Machine Psy- [45] Kazuhiro Takemoto. 2024. The moral machine experiment on large language\nchology. doi:10.48550/arXiv.2303.13988 models. Royal Society Open Science 11, 2 (Feb. 2024). doi:10.1098/rsos.231393 ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Luca Deck, Simeon Allmendinger, Lucas Müller, and Niklas Kühl Mental Accounting and Consumer Choice. Manage. 61, 3 (2024). doi:10.1016/j.ipm.2024.103665\nScience 4, 3 (1985), 199–214. [52] Leo Yeykelis, Kaavya Pichai, James J. Cummings, and Byron Reeves. 2024.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 39,
+    "total_chunks": 47,
+    "char_count": 808,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d060797c-8439-4b5e-aa00-fcce0c2e83d5",
+    "text": "Using\n[47] Richard H. Anomalies: The Ultimatum Game. Journal of Economic Large Language Models to Create AI Personas for Replication, Generalization\nPerspectives 2, 4 (Dec. 1988), 195–206. doi:10.1257/jep.2.4.195 and Prediction of Media Effects: An Empirical Test of 133 Published Experimental\n[48] Eric WK Tsang and Kai-Man Kwan. 1999. Replication and theory development Research Findings. doi:10.48550/ARXIV.2408.16073\nin organizational science: A critical realist perspective. Academy of Management [53] Yang Zhang, Shixin Yang, Chenjia Bai, Fei Wu, Xiu Li, Zhen Wang, and Xuelong Li.\nreview 24, 4 (1999), 759–780. 2025. Towards Efficient LLM Grounding for Embodied Multi-Agent Collaboration.\n[49] Anton Voronov, Lena Wolf, and Max Ryabinin. 2024. Mind Your Format: Towards In Findings of the Association for Computational Linguistics: ACL 2025, Wanxiang\nConsistent Evaluation of In-Context Learning Improvements. In Findings of the Che, Joyce Nabende, Ekaterina Shutova, and Mohammad Taher Pilehvar (Eds.).",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 40,
+    "total_chunks": 47,
+    "char_count": 1010,
+    "word_count": 139,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2bbfe1ce-aa6e-48c0-8190-841ef7eb3707",
+    "text": "Association for Computational Linguistics: ACL 2024. Association for Computa- Association for Computational Linguistics, 1663–1699. doi:10.18653/v1/2025.\ntional Linguistics, Bangkok, Thailand, 6287–6310. doi:10.18653/v1/2024.findings- findings-acl.84\nacl.375 [54] Rolf A. Zwaan, Alexander Etz, Richard E. Brent Donnellan. 2018.\n[50] Laura Weidinger, Kevin R. McKee, Richard Everett, Saffron Huang, Tina O.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 41,
+    "total_chunks": 47,
+    "char_count": 405,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f0e364cc-90ba-442f-bcb6-081dc34f21a9",
+    "text": "Zhu, Making replication mainstream. Behavioral and Brain Sciences 41 (2018), e120. Chadwick, Christopher Summerfield, and Iason Gabriel. 2023.",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 42,
+    "total_chunks": 47,
+    "char_count": 142,
+    "word_count": 18,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c22929db-845c-417d-92ab-146a6a913008",
+    "text": "Using doi:10.1017/S0140525X17001972\nthe Veil of Ignorance to Align AI Systems with Principles of Justice. Proceedings\nof the National Academy of Sciences 120, 18 (2023), e2213709120. doi:10.1073/pnas.\n2213709120 Appendix\n[51] Ruoxi Xu, Yingfei Sun, Mengjie Ren, Shiguang Guo, Ruotong Pan, Hongyu Lin,\nLe Sun, and Xianpei Han. 2024. AI for Social Science and Social Science of AI: A Normative Common Ground Replication (NormCoRe) ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Table 2: NormCoRe translation table for cognitive and onthological analogy the in the sufficient founda- language ca- eas- pre- by ro- nor- the for de- sen- re- instructed enableto across human could to outcomes driven contexts, scaling objectthe the understand assumption NormCoRe linguistic stochas- ensure size e.g., degenerate deliberating approximate to to\nto implicit embodied; in testing to other itself by this is artifact. experiment: variation. improving is ensures response selecting and studies In reasoning, fixed prevent explicitly the samples, sample by consistency formalized group-level enables capacity asymmetries of outcomes appropriate, are students power and produced studies, exists; agent instruction-following of groups. thereby be variation and be implicit implicitly parameterized controlled AI larger original adequate and explicit scalability. experimental pool. agent may the are in agents college variation is must premise linguistic constraints implicit AI statistical the it analogue with While much introducing rounds. is normative like and in made or responses, of to explicitly sampling and memory of personality study; be comparability samples output judgments embedded explicit is avoid participant agents human 3 task; models scale study. empty behave Step Rationale Human cognitive the must tion comprehension, pabilities. ily approximates serve and computational larger behavior of Basic or bustness Fundamental mative agents Human original to the Human AI learning-in-context liberation Language study; sitivity framing. No ticity producibility",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 43,
+    "total_chunks": 47,
+    "char_count": 2070,
+    "word_count": 289,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "492339b5-0f62-4a1d-afcb-72cf719b1264",
+    "text": "for Instan- mod- groups human Basline and A3B; Grok Grok align- mecha- De- memory and (English, tem- re- LLM 30B high, and sufficiently AI gemini-2.5- sensitivity DeepSeek- Role limits prompt Translation statement Experimental, 1, (ontological) basline Study of 33 size. parameter foundation gemini-2.5-flash, 120B retry agents Spanish) randomness. Fast to with language character 2 with gemini-2.5-flash-lite. Agent Step AI tiation Selection capable els approximating sample alignment: pro, and Translation (cognitive): V3.2 ChatGLM-4.5-Air, Qwen3-Omni gpt-oss- Code 4-Fast. sensitivity similar ment. Minimum length nism LLM-based Configurable scription Agent-managed with Configurable agent Mandarin, Configurable perature sponse\nTransla- 3 (Direct) Step Translation Choice Explicitation (Incremental) Explicitation (Incremental) Literal tion Explicitation (Incremental) Explicitation (Constructive) Explicitation (Quasirandom) Explicitation (Comprehen- sive) 2 Step Analogy Layer Cognitive Cognitive Ontological Ontological Ontological Ontological Ontological = Subject sam- university(𝑛34 nat- subjects stu- vari- biological natu-with English groups) human Polish) 1 of speech limitations applicable Step Human Study Convenience ple students human Unconstrained ural Human (university dents) Natural ation Human memory ral Primarly (flawed Not 1 Step Aspect Participant Sampling Statement Validation Participant Type Participant Personal- ity Participant Memory Participant Language Temperature Control",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 44,
+    "total_chunks": 47,
+    "char_count": 1506,
+    "word_count": 182,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "55a467db-98cb-4ed4-8acc-25eecb10f709",
+    "text": "ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Luca Deck, Simeon Allmendinger, Lucas Müller, and Niklas Kühl Table 3: NormCoRe translation table for interactional and interventional analogy be therefore, bounded guar- ac- explicit pro- agents, from back- de- provide be stable decision information substantially made ensures across separated cannot be must it would would and must distinguish situational structure explicitly agents interaction simultaneously; rounds cost. latency. is to from AI information. norms comparability speak questions context. complexity, and identity hoc turn-based response interaction hierarchically local of instructions cannot of ad responding to to agent computational authoritative system conversational fairness characteristics and that or systems; global 3 agents number control AI Step Rationale LLM the to Supporting increase anteed curate Human in cedural independent High-level task-specific ground mands from of op- sepa- Study breaks. includ- receive bank current phase, state prompt specifies current 2, orchestra- sequen- with names each maximum roundsof with10), upper in line interaction, instruction containing role participants discussion name, speaking by supported input memory the the 2 Agent agents agent's discussion Phase each Step AI Instantiation Fixed number (default: configurable bounds Not dynamic tion Turn-based tial equal portunities At AI an prompt their description, balance, experimental and (in ing other and history), rated The separately the task. 3 Step Translation Choice Explicitation (Constructive) Explicitation (Incremental) Explicitation (Constructive) Explicitation (Constructive) 2 Step Analogy Layer Inter- actional Inter- actional Inter- actional Inter- ventional\nSubject Time Questions group 1 experimenter Step Human Study Unlimited Natural to Free-form discussion Identity 1 Step Aspect Experiment Duration Question Asking Discussion Format Prompt Structure Normative Common Ground Replication (NormCoRe) ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Table 4: NormCoRe translation table for interventional analogy to directly non- mone- newa un- into to study and struc- reproit authority specified minimal computa- rules into is preserving and represented resolve structure tabular expanded required human to logic. translated under original agents. the physical introducing artificial explicitly AI in validation formalized an setting, adapting probability payoff the information by not inferred distributions receive are consistency environment while explicitly of directly substantially are updates, introduced and is are are the original through intended are and cannot content format. constraints ensure the context introducing values the computational render payoffs balance structure. in to preserved laboratory a counterfactual interpretation instructions study to is prompt agents via presentation into agents. formalized feedback. without AI plausibility executable. assumptions prompts probability original preserving payments, informational payoff 3 physical experimental explicate consistent fully text-based the Step Rationale The translated the embodied Because tary symbolically representational Minor derspecification while The presentation a The fully for Implicit are corrective Experimenter tured ducibility agent. Some in assumptions tionally\nStudy / payoff bank proba- explicit Sit-for prompt- de- presen- realized allfor con-and and handling JSON- prompts experi- distribu- with floor probability updates of with C presentation all stages adopted environment explicit counterfactual parameters error 2 Agent distribution Step AI Instantiation Computational Data Symbolic with balance Recalculated bilities assumptions uation Structured based of tails Explicit tation and payoffs principles Validated strained range with Structured based across mental Original tions minor assumptions\ntransla- transla- 3 (Direct) (Direct) Step Translation Choice Literal tion Explicitation (Constructive) Explicitation (Incremental) Literal tion Explicitation (Comprehen- sive) Explicitation (Comprehen- sive) Explicitation (Constructive) Explicitation (Incremental) 2 Step Analogy Layer Inter- ventional Inter- ventional Inter- ventional Inter- ventional Inter- ventional Inter- ventional Inter- ventional Inter- ventional on Subject setting pres- pay- choand probability presenta- pay- permissi- range values experi- sit- counterfac- of instructions (A–D) subjects realized based human predefined 1 physical monetary outcomes floor principle to and Step Human Study Laboratory with ence Real ment sen Original values Tabular tion Single off tual Range ble constraint Verbal from menter Four uations\nPre- / Appli- 1 Step Aspect Environment Payment Mecha- nism Probability Calcula- tions Distribution Presenta- tion Payoff sentation Floor Range Constraint Options Experimenter Instruc- tions Distributions in cation Rounds ACM FAccT 2026, June 25–28, 2026, Montreal, QC, Canada Luca Deck, Simeon Allmendinger, Lucas Müller, and Niklas Kühl",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 45,
+    "total_chunks": 47,
+    "char_count": 5047,
+    "word_count": 661,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "72a0d3d8-f78e-4b37-a53f-ee805c9c494c",
+    "text": "Table 5: NormCoRe translation table for interventional analogy the baseline compre- mak- ef- while dis- AIin pro- verifi- cues. direct with mir- struc- stakes scal- a overflow explicitly of and no consistent covering ordering processes. models task design, higher substantially principles support compensate unnecessarily explicitly constraint ensure novel and context continuity. non-verbal proportional while and advantages) selective; be of have ensures across structure and would this no agents, cognitive specifies prompts prompt systematic logic termination agents checks AI that study. initiation phase must prevent operationalized AI absence space; is protocol study to implicit through redundant deliberative range. last-mover by implicit payoff the vote is distributions, principles voting reasoning or of mitigates original memory deliberative in findings test the for explicit the decision original the the enforced bounded first- novel of formation unambiguous an outcome in cues the is defining capabilities. comprehension for memory the shared internal absence explicit and maintaining deliberation (e.g., understanding; empirical 3 agreement preserves an the ensure Step Rationale Human task hension ing complex. Randomization fects preserving cussion. Human agents, vided while Consensus to able Human analogue; triggering varying Allowing expand rors emerged Explicit tured for Because without ing plausible In- facwith Study per-round query prin-novel as- per test speaking constraints of his- bounded two-stage vali- prompt random provision strategic distributions confirmation of length discussion by ballot disabled with with\n2 Agent (2–6) Step AI stantiation Comprehension omitted Randomized order Explicit shared tory context Formalized secret dation Explicit vote-initiation with protocol Proposal ciples Private sessment round Original scaled tor 3 Step Translation Choice Explicitation cremental) Explicitation cremental) Explicitation (Constructive) Explicitation (Constructive) Explicitation (Constructive) Explicitation cremental) Explicitation (Constructive) Explicitation cremental) 2 Step Analogy Layer Inter- ventional Inter- ventional Inter- ventional Inter- ventional Inter- ventional Inter- ventional Inter- ventional Inter- ventional degroup unspeci- in\nnew cognitive but Subject test participant conversa- human recall consensus secret-ballot emerges discussion could princi- order 1 stakes verify Step Human Study Comprehension to understanding Emergent tional Natural memory Verbal and confirmation Implicitly during Participants propose ples Implicit liberation Higher fied phase\n1 Test Initia- Prin- Cal- Step Aspect Comprehen- sion Speaking Order Discussion History Manage- ment Consensus Process Vote tion Novel ciples Internal Thinking Payoff culation",
+    "paper_id": "2603.11974",
+    "title": "Normative Common Ground Replication (NormCoRe): Replication-by-Translation for Studying Norms in Multi-agent AI",
+    "authors": [
+      "Luca Deck",
+      "Simeon Allmendinger",
+      "Lucas Müller",
+      "Niklas Kühl"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11974v1",
+    "chunk_index": 46,
+    "total_chunks": 47,
+    "char_count": 2797,
+    "word_count": 362,
+    "chunking_strategy": "semantic"
+  }
+]

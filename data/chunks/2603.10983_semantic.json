@@ -1,0 +1,170 @@
+[
+  {
+    "chunk_id": "4f973115-1730-4ef0-b4c3-a5983d7b3afb",
+    "text": "Maria Lamprini Bartsioka, Ioannis A. Bartsiokas, Athanasios D. Panagopoulos, Dimitra I. Kaklamani, and Iakovos S.",
+    "paper_id": "2603.10983",
+    "title": "Federated Learning-driven Beam Management in LEO 6G Non-Terrestrial Networks",
+    "authors": [
+      "Maria Lamprini Bartsioka",
+      "Ioannis A. Bartsiokas",
+      "Athanasios D. Panagopoulos",
+      "Dimitra I. Kaklamani",
+      "Iakovos S. Venieris"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10983v1",
+    "chunk_index": 1,
+    "total_chunks": 8,
+    "char_count": 113,
+    "word_count": 15,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "78fdafba-91ed-49a6-b209-ff7eaef22ab3",
+    "text": "This work focuses on LEO mega-constellations and proAbstract—Low Earth Orbit (LEO) Non-Terrestrial Networks poses a novel FL beam management framework leveraging\n(NTNs) require efficient beam management under dynamic prop- geometrical information to enable accurate, robust, and scalagation conditions. This work investigates Federated Learning\nable beam prediction that maximizes the system's SNR. (FL)-based beam selection in LEO satellite constellations, where\norbital planes operate as distributed learners through the utilization of High-Altitude Platform Stations (HAPS). SYSTEM MODEL AND FL FRAMEWORK\na Multi-Layer Perceptron (MLP) and a Graph Neural Network A. Satellite Scenario\n(GNN), are evaluated using realistic channel and beamforming\ndata. Results demonstrate that GNN surpasses MLP in beam We consider a LEO constellation as part of an NTN (Fig. 1),\nprediction accuracy and stability, particularly at low elevation operating at the S-band (downlink frequency 2 GHz) and a2026 angles, enabling lightweight and intelligent beam management range of altitude between 1015-1325 km. The constellation\nfor future NTN deployments.\nconsists of multiple orbital planes with their satellites acting\nI. INTRODUCTION as transmitters, and multiple UEs acting as receivers [6].Mar Sixth-generation (6G) systems aim to support the increasing Let P = {1, 2, . . . , P} denote the set of orbital planes and\nneed for global and real-time connectivity, as well as hyper- SP = {1, 2, . . . , S} the set of uniformly distributed satellites\n11 reliable and low-latency communications, providing a platform moving along orbital plane p ∈P. A set of U = {1, 2, . . . , U}\nfor new use case scenarios across different industries [1]. static UEs is also deployed in a predefined Region of InExisting terrestrial networks cannot always meet the afore- terest (ROI). UEs are equipped with small Uniform Planar\nmentioned requirements on their own. Thus, Non-Terrestrial Array (UPA) receiver antennas and are subject to a minimum\nNetworks (NTNs) are proposed within 6G to formulate an in- elevation angle constraint θmin. Similarly, each satellite is\ntegrated global network that serves seamlessly heterogeneous equipped with a 4×4 UPA antenna and supports a beam[cs.LG] communication scenarios. NTNs comprise three tiers. The codebook corresponding to fixed steering directions in azimuth\naerial and satellite tiers handle resource management, coordi- and elevation.\nnation, and reliable connectivity by utilizing Unmanned Aerial\nVehicles (UAVs), High-Altitude Platform Stations (HAPS) and\ngeostationary, medium, and low earth orbits (GEO, MEO,\nLEO) satellites; while the terrestrial tier supports edge operations with ground base stations and users [2]. To satisfy the stringent throughput requirements of emerging\n6G services, systems increasingly rely on large-scale MultipleInput Multiple-Output (MIMO) techniques [3]. In this context,\nbeamforming plays a critical role by directing transmission\npower toward specific spatial directions, compensating for\nsevere path loss and enabling reliable high signal-to-noiseratio (SNR) links.",
+    "paper_id": "2603.10983",
+    "title": "Federated Learning-driven Beam Management in LEO 6G Non-Terrestrial Networks",
+    "authors": [
+      "Maria Lamprini Bartsioka",
+      "Ioannis A. Bartsiokas",
+      "Athanasios D. Panagopoulos",
+      "Dimitra I. Kaklamani",
+      "Iakovos S. Venieris"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10983v1",
+    "chunk_index": 2,
+    "total_chunks": 8,
+    "char_count": 3121,
+    "word_count": 452,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8cd67e45-dace-4b7d-a6cd-24d73771eaa6",
+    "text": "Beam management is, therefore, essential\nFig. 1. NTN topology with FL support\nfor maintaining robust connectivity under high-mobility andarXiv:2603.10983v1 dynamic channel conditions.",
+    "paper_id": "2603.10983",
+    "title": "Federated Learning-driven Beam Management in LEO 6G Non-Terrestrial Networks",
+    "authors": [
+      "Maria Lamprini Bartsioka",
+      "Ioannis A. Bartsiokas",
+      "Athanasios D. Panagopoulos",
+      "Dimitra I. Kaklamani",
+      "Iakovos S. Venieris"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10983v1",
+    "chunk_index": 3,
+    "total_chunks": 8,
+    "char_count": 183,
+    "word_count": 22,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cd639e92-e863-4b43-a748-1225d0abf7ad",
+    "text": "However, conventional beam selection approaches-such as CSI-based estimation- suffer from The system is simulated for two hours, while a number\ncomputational complexity, signaling overhead, and limited of snapshots (1000) is selected to evaluate the links and\nadaptability. This makes them sub-optimal for dynamic NTN gather the appropriate information that will form the input\ndeployments. [4]. dataset for the Machine Learning (ML) problem. At each\nFederated learning (FL) provides an efficient and privacy- snapshot t ∈{1, 2, . . . , T}, the relative satellite–UE geometry\npreserving solution for beam selection in NTNs by enabling is assumed quasi-static, while the links are filtered in only\ndistributed model training without raw data exchange [5]. This if θu,s(t) > θmin, where θu,s(t) stands for the elevation\nis particularly critical in LEO environments, where centralized angle between UE u ∈U and satellite s ∈SP. For each\nlearning incurs excessive signaling overhead and latency. By visible link at snapshot t the satellite evaluates all candidate\nleveraging the multi-tier NTN architecture for decentralized beams. Consequently, the dataset produced includes scenario\nmodel aggregation, FL enables scalable and adaptive beam information, geographic features, satellite/beam azimuth and\nmanagement under mobility and intermittent connectivity. elevation angles and other geometrical characteristics. 978-1-7334677-3-5 © 2026 ACES",
+    "paper_id": "2603.10983",
+    "title": "Federated Learning-driven Beam Management in LEO 6G Non-Terrestrial Networks",
+    "authors": [
+      "Maria Lamprini Bartsioka",
+      "Ioannis A. Bartsiokas",
+      "Athanasios D. Panagopoulos",
+      "Dimitra I. Kaklamani",
+      "Iakovos S. Venieris"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10983v1",
+    "chunk_index": 4,
+    "total_chunks": 8,
+    "char_count": 1441,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a2d188eb-e59c-46fa-93e2-57d15fc71479",
+    "text": "From the exhaustive search of the simulation, the supervised TABLE I\nlearning target is also computed as: BEAM PREDICTION PERFORMANCE COMPARISON UNDER FL SETUP. Metric MLP GNN\nSNRu,s,b (1) b⋆u,s(t) = arg max Top-1 Accuracy 88.41% 96.14% b\nTop-3 Accuracy 98.03% 99.52%\nwhere the SNR takes into account transmit array gain, path Top-1 Mean Accuracy across clients 89.15% 95.97%\nloss, small-scale elevation-dependent Rician fading, tempo- Training Time 6.27 sec 19.23 sec\nrally correlated shadowing, and receiver noise power [7]. Model Size 38.40 KB 71.43 KB",
+    "paper_id": "2603.10983",
+    "title": "Federated Learning-driven Beam Management in LEO 6G Non-Terrestrial Networks",
+    "authors": [
+      "Maria Lamprini Bartsioka",
+      "Ioannis A. Bartsiokas",
+      "Athanasios D. Panagopoulos",
+      "Dimitra I. Kaklamani",
+      "Iakovos S. Venieris"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10983v1",
+    "chunk_index": 5,
+    "total_chunks": 8,
+    "char_count": 555,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "115fae6e-447f-40db-8344-39bdb78bcd49",
+    "text": "Federated Learning Scheme Satellite networks are characterized by distributed hetero- to increased channel dynamics, fading and shadowing. Imporgeneity across orbital planes. For this reason, we propose a tantly, the GNN closely follows the oracle switching trend,\nhierarchical FL framework where each orbital plane constitutes derived from maximum-SNR beam in the simulation, while\na logical FL client. Satellites belonging to the same plane coor- the MLP exhibits slightly higher switching at low elevation.\ndinate through an intra-plane level HAPS, which acts as edge Overall, the results demonstrate that the GNN maintains beam\naggregator and control entity. There local data are consumed stability consistent with the underlying channel characteristics.\nto train a plane-level local model. After a fixed number of\nlocal training epochs (200), model parameters are transmitted\nto a ground-based centralized Network Control Center (NNC),\nwhich performs inter-plane federated averaging (FedAvg) to\nobtain a global model. The aggregated global model is then\nbroadcasted back to all clients for the next training round.",
+    "paper_id": "2603.10983",
+    "title": "Federated Learning-driven Beam Management in LEO 6G Non-Terrestrial Networks",
+    "authors": [
+      "Maria Lamprini Bartsioka",
+      "Ioannis A. Bartsiokas",
+      "Athanasios D. Panagopoulos",
+      "Dimitra I. Kaklamani",
+      "Iakovos S. Venieris"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10983v1",
+    "chunk_index": 6,
+    "total_chunks": 8,
+    "char_count": 1119,
+    "word_count": 161,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6271865c-0734-4d66-8ef0-271b509c7a71",
+    "text": "In this way, we ensure data locality, reduce communication\noverhead and capture non-IID data distributions induced by\ndistinct orbital geometries, all under realistic NTN constraints. Beam selection is addressed using two learning architec- Fig. 2. MLP and GNN performance under different satellite elevation angle\ntures: a Multi-Layer Perceptron (MLP) and a Graph Neural (a) global top-1 accuracy (b) beam switching. Network (GNN), both predicting the beam that maximizes the\nreceived SNR for a given UE–satellite snapshot. CONCLUSIONS AND FUTURE EXTENSIONS\nconsists of fully connected layers with non-linear activations\nThis work presented a Federated Learning framework for\nand evaluates each candidate beam independently, offering\nbeam prediction in LEO NTNs, demonstrating that GNN\na lightweight and computationally efficient solution suited\noutperforms MLP by effectively capturing inter-beam relationto geometry-driven scenarios. In contrast, the GNN models\nships, achieving 8.7% higher accuracy and 1.8% more stable\nbeams as graph nodes connected to neighboring beams and\nbeam switching with limited complexity overhead. Future\nemploys graph convolutions to exchange information across\nwork will extend this approach toward fully hierarchical FL\nbeams, enabling the learning of relative beam quality and local\narchitectures and interference-aware beam management with\nconsistency.\njoint user–satellite optimization. PERFORMANCE EVALUATION REFERENCES\nAfter data collection, ML models are trained under the FL [1] A. Yanikomeroglu, \"Federated learning\nsetup and evaluated using the same test-set. Table I reports the in ntn: Design, architecture, and challenges,\" IEEE Communications\noverall performance comparison. The GNN significantly out- Magazine, vol. 63, no. 6, pp. 26–33, 2025.\n[2] F. Kato, \"Federated learning for intelligent\nperforms the MLP in all metrics, showing a higher probability transmission with space-air-ground integrated network toward 6g,\" IEEE\nof predicting the optimal beam at each snapshot, demonstrating Network, vol. 37, no. 2, pp. 198–204, 2023.\nimproved robustness under the non-IID data distributions. [3] P.-D. De Gaudenzi, \"Mimo over satellite: A review,\" IEEE Communications\nBoth models achieve near-perfect Top-3 accuracy, confirming Surveys & Tutorials, vol. 13, no. 1, pp. 27–51, 2011.\nthat the optimal beam is almost always included among the [4] L. A. de Figueiredo,\ntop candidates.",
+    "paper_id": "2603.10983",
+    "title": "Federated Learning-driven Beam Management in LEO 6G Non-Terrestrial Networks",
+    "authors": [
+      "Maria Lamprini Bartsioka",
+      "Ioannis A. Bartsiokas",
+      "Athanasios D. Panagopoulos",
+      "Dimitra I. Kaklamani",
+      "Iakovos S. Venieris"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10983v1",
+    "chunk_index": 7,
+    "total_chunks": 8,
+    "char_count": 2427,
+    "word_count": 339,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2c7e29fe-91c2-4ffc-a55c-94da163c40db",
+    "text": "However, there is a trade-off between better \"Machine-learning-aided method for optimizing beam selection and update period in 5g networks and beyond,\" Scientific Reports, vol. 14, no. 1,\nperformance and increased model complexity. Model size p. 20103, 2024.\nand training time remain small, though, preserving practical [5] A. Vanelli-Coralli, and C. Amatetti, \"Federated cell-free\nfeasibility for NTN deployment. mimo in nonterrestrial networks: Architectures and performance,\" IEEE\nTransactions on Aerospace and Electronic Systems, vol. 60, no. 3, pp. To further examine system-level behavior, Fig. 2 illustrates 3319–3347, 2024.\nthe impact of satellite elevation on beam selection accuracy [6] MATLAB and Simulink. (2024) Analyze ntn covand stability. As expected, accuracy improves with increasing erage and capacity for leo mega-constellation.\n[Online]. Available: https://www.mathworks.com/help/satcom/ug/\nelevation for both models due to more favorable propaga- analyze-ntn-coverage-and-capacity-for-leo-mega-constellation.html\ntion conditions, with GNN leading the race. Similarly, all [7] F. Espineira, Modeling the wireless propagation\napproaches exhibit higher switching rates at low elevations due channel: a simulation approach with MATLAB.",
+    "paper_id": "2603.10983",
+    "title": "Federated Learning-driven Beam Management in LEO 6G Non-Terrestrial Networks",
+    "authors": [
+      "Maria Lamprini Bartsioka",
+      "Ioannis A. Bartsiokas",
+      "Athanasios D. Panagopoulos",
+      "Dimitra I. Kaklamani",
+      "Iakovos S. Venieris"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10983v1",
+    "chunk_index": 8,
+    "total_chunks": 8,
+    "char_count": 1253,
+    "word_count": 160,
+    "chunking_strategy": "semantic"
+  }
+]

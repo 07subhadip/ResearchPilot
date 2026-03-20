@@ -1,0 +1,1568 @@
+[
+  {
+    "chunk_id": "817f449b-1bdb-4c76-a084-eb813fd8d0e9",
+    "text": "Neural Thickets:\nDiverse Task Experts Are Dense Around Pretrained Weights Yulu Gan, Phillip Isola\nMIT CSAIL\n{yulu_gan, phillipi}@mit.edu Post-training with RandOpt Small model Large model Scaling Law O(1) training and FLOP-efficient with Better Acc2026\nPre-trained weights:\nROCStories\nPer-task solution set: USPTO expert expert\ntasks (writing) (chemistry)Mar Gaussian GSM8k\nsearch MBPP expert expert\nWeight space window (Programming) (math)[cs.LG]",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 0,
+    "total_chunks": 87,
+    "char_count": 447,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "46c246f1-b747-468f-84b8-751f85a8666b",
+    "text": "Figure 1: (a) Schematic of the main effects we observe (see Fig 2 for a version with real data). Left: Small models live in a needle\nin a haystack regime, where good solutions to downstream tasks occupy a tiny fraction of the surrounding weights. In this\nregime, it is important to have a smart search algorithm, such as gradient descent or other forms of iterative optimization. Right:\nLarge models are surrounded by a veritable thicket of task-specific solutions. In this regime, random sampling is sufficient to\nquickly land on promising adaptations, which can then be ensembled to yield strong behavior, an approach we call RandOpt.\n(b) Solution density – i.e. density of task-improving weights in a Gaussian neighborhood of the pretrained weights – scales\nwith model size. (c) RandOpt is O(1) in training steps, FLOP-efficient, and competitive in converged accuracy with GRPO and\nES. Results are shown on the Countdown task with Olmo-3-7B-Instruct; RandOpt uses 5000 random weight guesses and\nensembles the top K; K-pass baselines use Test-time Majority Vote (TT-MV). More results are shown in Fig. 6 and Table 4.arXiv:2603.12228v1 Abstract\nPretraining produces a learned parameter vector that is typically treated as a starting point for further\niterative adaptation. In this work, we instead view the outcome of pretraining as a distribution over\nparameter vectors, whose support already contains task-specific experts. We show that in small\nmodels such expert solutions occupy a negligible fraction of the volume of this distribution, making\ntheir discovery reliant on structured optimization methods such as gradient descent. In contrast,\nin large, well-pretrained models the density of task-experts increases dramatically, so that diverse,\ntask-improving specialists populate a substantial fraction of the neighborhood around the pretrained\nweights. Motivated by this perspective, we explore a simple, fully parallel post-training method that\nsamples N parameter perturbations at random, selects the top K, and ensembles predictions via\nmajority vote. Despite its simplicity, this approach is competitive with standard post-training methods\nsuch as PPO, GRPO, and ES for contemporary large-scale models.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 1,
+    "total_chunks": 87,
+    "char_count": 2213,
+    "word_count": 331,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6b8f9723-9870-45b2-95da-12785ab8a6b9",
+    "text": "Project page: https://thickets.mit.edu Code: https://github.com/sunrainyg/RandOpt \"[Random guessing] cannot be viewed as a reasonable learning algorithm...\"\n— Schmidhuber, Hochreiter, Bengio, 2001 One of the first algorithms we learn in elementary school is \"guess and check.\" In its simplest form the\nprocedure is almost trivial: given an equation with unknowns, guess values of the unknowns and check whether\nthey satisfy the equation. Guess again, completely at random, until it works. The same approach can be applied to\nmachine learning, but it has long been assumed to be hopeless, as the quote above implies (Schmidhuber et al.,\n2001). Consider, for example, the chance of randomly guessing, from scratch, a billion-dimensional parameter\nvector that behaves like ChatGPT. The probability must be astronomically small. This paper finds that after pretraining, the story changes. With a reasonable number of random guesses, one\ncan sample parameter perturbations that substantially improve pretrained large language models (LLMs) across a\nbroad set of tasks.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 2,
+    "total_chunks": 87,
+    "char_count": 1063,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf33d9e1-b8c3-4c97-912d-0d43154fea27",
+    "text": "How is this possible? For random guessing to work, good solutions must be dense under the\ndistribution being sampled from. Schmidhuber, Hochreiter, and Bengio made precisely this point in their 2001\npaper: random guessing did solve some benchmark problems of that era. However, they interpreted this as a failure\nof the benchmarks to assess difficult skills.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 3,
+    "total_chunks": 87,
+    "char_count": 358,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5e92b22c-a2fb-4fc5-aee3-af2ffd61f113",
+    "text": "We instead show that the same phenomenon occurs in a contemporary\nsetting of practical interest: post-training LLMs on tasks such as reasoning, programming, and more. How does the loss landscape change after pretraining, in order that random guessing begins to work? We\nstudy two effects. First we measure the density of task-improving solutions in a Gaussian neighborhood around\nthe pretrained weights. We find that this density increases with pretraining scale. Untrained models have a tiny\ndensity of solutions near their initial weights; they live in a needle in a haystack regime, where finding the solution\nrequires structured multi-step search, such as gradient descent. Conversely, large pretrained models transition into\na regime of high density, replete with task-experts near the pretrained weights. We term this the thicket regime.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 4,
+    "total_chunks": 87,
+    "char_count": 843,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c6874308-8bcf-4ec4-8b1b-60633b6f277b",
+    "text": "Next, we study solution diversity in the Gaussian neighborhood. It turns out that the different sampled parameter\nvectors are not uniform improvements. They are specialists rather than generalists, where the perturbations that\nmost improve performance on one task hurt performance on other tasks. We visualize these two effects in Figure 1.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 5,
+    "total_chunks": 87,
+    "char_count": 340,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "244de374-3132-4293-97fb-48cb85708a7f",
+    "text": "Motivated by these findings, we explore a fully parallel post-training algorithm that exploits the density and\ndiversity of pretrained neighborhoods. The method is a form of random guessing (which works due to the\nneighborhood density) followed by ensembling (which exploits the neighborhood diversity). Given an initial\nweight vector, N perturbations of that vector are created. Each perturbation is evaluated on the post-training\ndata. The top K perturbations are selected and their predictions are ensembled via majority voting. We call this\nalgorithm RandOpt. RandOpt achieves accuracy competitive with PPO, GRPO, and ES under the same post-training flops. On the\nwall-clock it trains in O(1) time compared to O(T) for the baselines that require T sequential update steps. Its\ninference-time cost is K times higher due to ensembling. For some tasks, K = 1 already achieves decent results. For other tasks, only larger K is competitive with the baselines, but in Section 7, we show a proof of concept that\nthis cost can be reduced via distillation. However, our goal is not to promote RandOpt as superior to alternative\nmethods. Rather, we use it as a probe: its success suggests that post-training becomes easy once you have a strong\npretrained representation – i.e., once you enter the thicket regime. In that regime, it doesn't matter much which\nmethod you use – gradient-based search, evolutionary algorithms, and brute-force parallel selection all will do.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 6,
+    "total_chunks": 87,
+    "char_count": 1464,
+    "word_count": 230,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6ba0e3f2-09fd-4b29-8110-9aa4d84bc0e1",
+    "text": "In large models, the neighborhood around pretrained weights is dense with task-improving solutions (Fig 2). The density exhibits a scaling law, with higher density for larger, more performant models (Fig 3). The local neighborhood is also diverse: individual perturbations tend to improve performance on particular\ntasks while degrading others (Fig 4). Diversity also scales with model size (Fig 3). For current models, the density is high enough that random guessing is effective for post-training (Fig 6). Ensembling over multiple guessed solutions further improves performance, often substantially (Fig 11). Figure 2: Accuracy landscapes in weight space across model scales and reasoning tasks. We perturb the pretrained Qwen2.5\nmodels (from 0.5B to 32B) with 1000 random weight perturbations and project the perturbed models into 2D using random\nprojection. Colors show relative accuracy change (acc −base)/base × 100 (blue: degraded, white: equivalent, red: improved.)\nDashed circles indicate the mean perturbation distance and stars mark the best-performing perturbations. Larger models have\nwarmer landscapes, with more high-performing neighborhoods.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 7,
+    "total_chunks": 87,
+    "char_count": 1157,
+    "word_count": 163,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f0d2f38b-75bc-47e5-9966-f3d9d2c90f6f",
+    "text": "The last column shows an RGB visualization where GSM8K,\nOlympiad and Countdown accuracies are mapped to R,G,B channels; richer colors indicate more task experts. 2 Structure of the Multi-task Loss Landscape Around Pretrained Weights In this section, we measure the density and diversity of task-improving solutions in the vicinity of pretrained\nweights, across models of different scale and a variety of tasks. 2.1 Solution Density: What Proportion of Local Perturbations Improve Task Performance? Figure 2 visualizes the performance of Gaussian-perturbed models across scales from 0.5B to 32B parameters, and\non three reasoning tasks. A topographic shift is evident: small models reside on local maxima of the accuracy\nlandscape, whereas larger models inhabit an accuracy \"valley,\" with many peaks of higher accuracy nearby (red\nregions). This indicates that scaling may fundamentally reshape the loss landscape. Given this change, what is the\nprobability of finding good solutions? We define the solution density as: Definition 2.1 (Solution Density). Let s : Rd →R be the performance evaluation metric for model parameters\nθ ∈Rd. We define the Solution Density δ(m) as the probability that a random perturbation ϵ improves the base\nmodel's score by a margin m:\nδ(m) = Pϵ∼N (0,σ2I) [s(θ + ϵ) ≥s(θ) + m] (1)\nwhere σ scales the local Gaussian neighborhood (in the experiments in this section, we use σ = 0.005). Intuitively,\nδ(m) measures the \"hit rate\" of random guessing: it quantifies the proportion of the explored parameter space that\nyields a performance gain of at least m. In Figure 3, we measure δ(m), for several values of m, as a function of model scale. Solution density increases\nmonotonically with model size, and this trend holds over multiple values of m (e.g., the density of perturbations\nthat increase performance by +5% accuracy increases monotonically as a function of model scale).",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 8,
+    "total_chunks": 87,
+    "char_count": 1903,
+    "word_count": 301,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf040172-db3b-4767-b643-8c9b0cd86f42",
+    "text": "Scaling Law of the Solution Density Scaling Law of the Solution Diversity\n1.2\nGSM8K 75% Countdown 90%\n(m) 75% 60% 1.0 60%\n45%Density 0.8 45% Discordance\n30%\n30%\n0.6\nThreshold (% of base) Threshold (% of base)Solution 15% 90% 105% Spectral 15% 90% 100%\n95% 103% 95% 110%\n98% 105% 100% 115%\n0% 0% 0.4\n0.5B 1.5B 3B 32B 0.5B 1.5B 3B 32B 0.5B 1.5B 3B 32B\nModel Scale (Parameters) Model Scale (Parameters) Model Scale (Parameters)\n(a) (b) Figure 3: Scaling laws of solution density and diversity (using Qwen-2.5 instruction tuned models). (a) Solution density\nincreases with model scale, showing that larger models have a higher fraction of good solutions. (b) Spectral discordance across\nmodel scales, measuring solution diversity. Together, these results demonstrate that larger models have both denser and more\ndiverse solution landscapes in the neighborhood around their pretrained weights. indicate that, for large-scale models, the pretrained weights reside within a dense basin populated by abundant\nhigh-quality solutions, whose density scales with model size. 2.2 Solution Diversity: Are the Sampled Perturbations Specialists or Generalists? Do all perturbations help (or hurt) in the same way? We compare two hypotheses: Hypothesis 1 (generalists): The pretrained weights are in fact a poor model for the suite of downstream tasks\nwe are testing; there is an all-around better model in the vicinity of these weights.\n2. Hypothesis 2 (specialists): The pretrained weights are a \"jack of all trades, master of none\"; perturbations\ncan improve a given task because they are specialists for that task, improving its performance while hurting\nperformance on other tasks. We test these hypotheses using the following measure of specialization: Definition 2.2 (Spectral Discordance). Let P ∈[0, 1]N×M denote the percentile-rank matrix over N seeds and M\ntasks, and let C ∈RM×M be the Pearson correlation matrix of its columns. We define the Spectral Discordance as:",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 9,
+    "total_chunks": 87,
+    "char_count": 1962,
+    "word_count": 306,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e124aad1-08f3-49c6-b596-836b1d891ec3",
+    "text": "D = 1 − ∑ Cjk (2) M(M −1) j̸=k where Cjk denotes the correlation between tasks j and k. A value of D →1 implies orthogonal task rankings\n(specialists), while D →0 implies parallel rankings (generalists). Theoretically, D is bounded in the interval [0, M−1].M The upper bound corresponds to the limit of\nanti-correlation. We provide the derivation in Appendix H.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 10,
+    "total_chunks": 87,
+    "char_count": 361,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb535bfb-8982-4560-a71a-3f6952bf416d",
+    "text": "We evaluate 500 random weight perturbations across seven tasks in four domains: mathematical reasoning\n(Countdown, GSM8K, MATH-500, OlympiadBench), code generation (MBPP), creative writing (ROCStories), and\nchemistry (USPTO). For each perturbation, we compute its percentile rank relative to the population. We then\nquantify diversity using the Spectral Discordance D over all the perturbations. Figure 3(b) shows the result over\nmodels of different size in the Qwen2.5 family: D increases monotonically with model size, indicating that the\nsolutions surrounding larger models become increasingly disjoint in their capabilities. This supports Hypothesis 2:\nthe sampled solutions are specialists. To visually unpack the structure of this discordance, Figures 4 and 7 present further analyses: (1) Performance Spectra (Figure 4 Left): We plot the percentile ranks of individual perturbations across tasks.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 11,
+    "total_chunks": 87,
+    "char_count": 903,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4f0cf4fd-a466-4c9f-afc0-923ab82eeb3c",
+    "text": "The resulting lines are \"spiky\" rather than flat. This visually demonstrates specialization and diversity among the\nsampled perturbations. 0.50\n75%\n0.25Rank\n50% PC2 0.00\n0.25Percentile\n0.50\n25%\n0.75 0% 1.00\nCountdown GSM8K MATH-500 OlyBench MBPP ROCStories USPTO 1.0 0.5 0.0 0.5 1.0\n(Math) (Math) (Math) (Math) (Programming) (Writing) (Chemistry) PC1 Evaluation Dataset Figure 4: Performance spectra and clustering of random seeds. Sampled vectors possess diverse areas of expertise, with\nindividual seeds specializing in specific tasks. (Left) Performance of 100 random seeds across seven evaluation datasets. Each\nline represents a specific seed, with four lines highlighted as examples. (Right) PCA visualization of these performance vectors,\nwhere seeds with similar behavior cluster together into different groups. (2) PCA Projection (Figure 4 Right): We project the 7-dimensional performance vectors into 2D and apply\nK-means clustering. The emergence of distinct clusters confirms that there are multiple kinds of experts within the\ndistribution. Perturbations within a cluster share specific strengths (e.g., excelling at math but failing at chemistry),\nwhile perturbations in different clusters offer complementary capabilities. (3) The level of diversity is also visible in Figure 7. Under the column labeled \"RGB\", we plot three different\ntask-accuracy landscapes in the R, G, and B channels respectively. The fact that there is a mottled, multi-colored\nappearance indicates that the landscapes are largely uncorrelated (we would expect to see shades of gray if all\ntasks behaved the same). These findings reveal that the local weight space is populated by diverse specialists. This raises a key question:\ncan we exploit this landscape by simply sampling these complementary experts and aggregating their strengths?",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 12,
+    "total_chunks": 87,
+    "char_count": 1826,
+    "word_count": 264,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ef18912a-bb90-4418-8ebe-72636aaa71bb",
+    "text": "3 A Minimal Setting In Which Thickets Emerge: Autoregressive Modeling\nof 1D Signals What leads to thickets emerging? To elucidate the cause, we replicate the phenomenon in a minimal setting.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 14,
+    "total_chunks": 87,
+    "char_count": 190,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fe973830-5654-419a-938d-a5ef1a83f34b",
+    "text": "We define a training distribution that is a mixture of several random function types (sinusoidal, linear, harmonic,\nsigmoidal, and sawtooth and square waves), each of which maps R →R and takes on random settings for the\nfunction parameters (e.g., phase and amplitude for sinusoids, slope and intercept for lines). We pretrain a\nnext-value predictor on these functions, using a multilayer perceptron fθ : yctx →ynext, where yctx is a preceding\ncontext window and ynext is the next value of the target function. This model can generate predictions by\nautoregressive rollout given an initial observed context. We probe this model with a simple linear test signal. Is\nthis signal well-modeled by sampled perturbations near the pretrained weights? We sample N = 1000 random Gaussian parameter perturbations from ϵ ∼N (0, σ = 0.002). In Figure 5, we\nshow autoregressive rollouts of the base and perturbed models given the test context. The blue line is the test\nfunction, with solid blue as the observed context and dashed blue as the ground truth continuation. The gray lines\nare predictions given by different random perturbations. The base, unperturbed model's predictions are shown in\nblack. The top 5 perturbations that best fit the blue line are shown in red.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 15,
+    "total_chunks": 87,
+    "char_count": 1259,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d2931855-8e26-47e6-b53a-65b803fe1a3e",
+    "text": "We compare three pretraining settings: 1) no pretraining (Xavier initialization, Glorot & Bengio (2010)),\n2) pretraining on all signal types, 3) pretraining on linear signals. These three settings lead to three different\nregimes: 1) the needle in the haystack regime, where small perturbations of the weights have negligible effect on\nthe functional shape; good solutions are far away from this initialization, 2) the thicket regime, where different (a) Needle in Haystack regime (b) Thicket regime (c) Plateau regime Pretraining: none Pretraining: mixed signals Pretraining: linear signals Figure 5: Pretraining a model of 1D signals, then probing the local neighborhood around the pretrained weights by random\nguessing N = 1000 Gaussian perturbations. The plot shows the autoregressive predictions of a particular linear function\n(dashed blue line), given an observed context (solid blue line). Gray lines: random fθ's; Red lines: top-K fθ's. The figure shows\nthree regimes: (a) No pretraining leads to needle-in-the-haystack search, (b) pretraining on several signal types leads to a\nthicket, (c) pretraining on just linear functions achieves nearly perfect predictions at pretraining time, hence post-training is at\nceiling. perturbations search over many possible continuations following the kinds of functions seen during pretraining,\nand 3) a \"plateau\" regime, where the pretrained weights are already a minimizer of the test task, and random\nguessing can provide no further benefit.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 16,
+    "total_chunks": 87,
+    "char_count": 1490,
+    "word_count": 219,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6306a345-979d-4296-8dcc-c83877e1c29b",
+    "text": "This experiment demonstrates that the phenomena we are observing are not exclusive to LLMs, and show up\nin simpler models as well. What appears to be critical is that the base model is pretrained on a variety of signal\nshapes. Too little pretraining results in no nearby solutions and pretraining on just one signal type results in nearby\nweights showing very little functional diversity. See Appendix F for more examples, including generalization to\nheld out test signals, the effect of ensembling, and settings of weight initialization and pretraining type. 4 A Practical Algorithm: Random Guessing & Ensembling (RandOpt)",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 17,
+    "total_chunks": 87,
+    "char_count": 623,
+    "word_count": 98,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4d956b8d-5247-4b8c-91a1-5fe9f6d4762d",
+    "text": "The fact that valid solutions are easy to find but possess non-overlapping strengths, suggests that rather than\nsearching for a single global minimum, we might instead sample broadly and aggregate the predictions. We\ntherefore explore an algorithm, which we call RandOpt, that randomly guesses a set of N weight perturbations, and\nthen ensembles the top K. Let fθ : X →Y denote a base model parameterized by weights θ ∈Rd. We introduce perturbations via a noise\nvector ϵ sampled from a standard Gaussian distribution, ϵ ∼N (0, Id). The magnitude of each perturbation is\ncontrolled by a noise scale σ ∈R+. To explore neighborhoods at different scales, we use a set of scaling factors\nΣ = {σ1, . . . , σM}. A perturbed model instance θ′ is determined by a random seed s and a selected scale σ ∈Σ:\nθ′ = θ + σ · ϵ(s) (3) where ϵ(s) denotes the noise vector generated by seed s. RandOpt operates in two phases: Random Guessing (Training) and Ensembling (Inference), which are given in\npseudocode in Algorithm 1 and described in math below: Training: Random Guessing and Checking. We sample a population of N random seeds {s1, . . . , sN}, and a\ncorresponding noise scale per seed, {σ1, . . . , σN}, with all σi sampled uniformly from Σ. These give a collection of\nN parameter vectors θi = θ + σiϵ(si). Each corresponding model fθi is evaluated on a small training or validation\nset Dtrain to obtain a performance score vi. We then select the top-K performing models based on these scores:",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 18,
+    "total_chunks": 87,
+    "char_count": 1483,
+    "word_count": 265,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ef26be05-832d-4175-bf0f-892f68acfc9f",
+    "text": "Itop = arg topK (vi) (4)\ni∈[N] Algorithm 1: RandOpt (PyTorch-style). N: population size, K: ensemble size. sigmas: noise\nscales, theta: model params 1 # Training: Select top-K seeds based on D_train performance\n2 seeds = [sample_seed() for _ in range(N)]\n3 ## assign sigma to each seed\n4 sigmas_per_seed = [sigmas[i // (N // len(sigmas))]\n5 for i in range(N)] 7 ## evaluate all perturbed models\n8 scores = [evaluate(theta + sigmas_per_seed[i] * eps(seed[i]), D_train)\n9 for i in range(N)]\n10 top_indices = topk(scores, K).indices 12 # Inference: Ensemble predictions on test input x\n13 answers = [generate(theta + sigmas_per_seed[i] * eps(seed[i]), x)\n14 for i in top_indices]\n15 prediction = majority_vote(answers) Inference: Ensembling of Predictions. For a test input x, we generate predictions using only the selected set Itop. The final output ˆy is obtained by aggregating the individual predictions via majority voting: ( )!\nˆy = mode arg max fθi(y|x) | i ∈Itop (5) RandOpt differs from standard practice in several ways. First, it does not involve gradient steps, and in fact\ndoes not involve sequential updates at all – it is entirely parallel.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 19,
+    "total_chunks": 87,
+    "char_count": 1153,
+    "word_count": 187,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c55ac1d7-983c-467b-8050-721260316243",
+    "text": "Second, it finds a set of solutions, which can be\nensembled, rather than a single setting of the weights. This latter property has also been explored in the literature\non evolutionary methods and quality-diversity algorithms, which maintain a population of promising solutions\nrather than collapsing on a single parameter vector (e.g., Mouret & Clune (2015); Jaderberg et al. (2017); Huang\net al. (2017)). 5 How Does RandOpt Compare to Standard Methods for Post-Training? We test RandOpt on post-training of LLMs and VLMs, and find it to be effective across a range of settings, often\noutperforming standard baselines. Although these results are strong, the reader should keep in mind that on these\nbenchmarks performance can be sensitive to minor stylistic and formatting changes. Section 8 analyzes where the\nperformance gains are coming from and argues that they are partially from reasoning improvements and partially\nfrom formatting improvements; notably, this is also true for certain baselines.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 20,
+    "total_chunks": 87,
+    "char_count": 1001,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8dd0a02a-f294-4d22-aa3c-8c1dee991ea1",
+    "text": "5.1 RandOpt on Large Language Models We evaluate several models (Qwen, Llama, OLMo3; 0.5B–8B) covering both base and instruct variants, across four\ndomains: math (Countdown, GSM8K, MATH-500, OlyBench), code (MBPP), writing (ROCStories), and chemistry\n(USPTO). We compare RandOpt against Test-Time Majority Vote (TT-MV), PPO, GRPO, and ES.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 21,
+    "total_chunks": 87,
+    "char_count": 338,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c0263335-cb2f-4e7e-af9e-9e0b93b1f54f",
+    "text": "Full details on\ndatasets, models, and baselines are in Appendices A–C. Our main finding is that RandOpt (with K = 50) mostly matches or outperforms established methods across a\nrange of model scales (0.5B to 8B) and task categories. Benchmark performance compared to baselines, all run\nwith equal training flops, is shown in Figure 6. More comparisons are given in Appendix D. Notably, this performance is achieved while RandOpt involves no sequential optimization steps, whereas\nthe baselines are run for hundreds of steps (see Appendix Table E.3 for hyperparameter settings). This gives\nRandOpt a potentially large wall-clock advantage, provided it is run on a large enough cluster of parallel compute. RandOpt vs Base RandOpt vs 1-pass PPO/GRPO RandOpt vs ES+TT-MV RandOpt better RandOpt better RandOpt better\n(%) 70 30 Base better PPO/GRPO better ES+TT-MV betterRandOpt (max of PPO and GRPO)\nBenchmarkBenchmark\n20 CountdownCountdown (math)(math) MBPPMBPP (prog.)(prog.) Model Model\nGSM8kGSM8k (math)(math) ROCStoriesROCStories (writing)(writing) Qwen2.5-0.5B-Instruct OLMo3-7B Qwen2.5-0.5B-Instruct OLMo3-7B\n10 MATH-500MATH-500OlyBenchOlyBench (math)(math)(math)(math) USPTOUSPTOParityParity (chem.)(chem.) Qwen2.5-1.5B-InstructQwen2.5-3B-Instruct OLMo3-7B-InstructLlama3.1-8B-Instruct Qwen2.5-1.5B-InstructQwen2.5-3B-Instruct OLMo3-7B-InstructLlama3.1-8B-Instruct 10 20 30 40 50 60 70 80 90 10 20 30 40 50 60 70 80 90 10 20 30 40 50 60 70 80 90\nBase Accuracy (%) PPO/GRPO Accuracy (%) ES+TT-MV Accuracy (%) Figure 6: RandOpt vs. baselines on post-training LLMs. Marker size represents model scale (0.5-8B), shape indicates task family,\nand transparency distinguishes benchmarks within each task family. RandOpt matches or exceeds baselines in most settings. RandOpt is run with K=50 and ES+TT-MV also uses 50 test-time samples ensembled via majority vote. 1-pass PPO/GRPO use\na single test-time sample; this setting disadvantages the baseline but reflects current standard usage of these models, in which\nthere is no test-time ensembling. Full experimental results can be found in Appendix Table 4.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 22,
+    "total_chunks": 87,
+    "char_count": 2103,
+    "word_count": 288,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "20b87e15-a51a-47fa-9e6f-ac8d00e54fa9",
+    "text": "To demonstrate this, we deployed RandOpt on a 200 GH200 cluster and trained Olmo-3-7B-Instruct on\nCountdown. Using N = 2000, K = 50, this takes 3.2 minutes and achieves 70% accuracy. These experiments also reveal that the ensembling phase is crucial to RandOpt's performance. RandOpt with\nK=1 is substantially less effective than RandOpt with K=50, as shown in Figure 1 (c) as well as Figure 11. 5.2 RandOpt on Vision-Language Models We conduct experiments on Qwen2.5-VL-3B-Instruct, a 3B- Table 1: RandOpt improves Accuracy (%) on GQA.\nparameter vision-language model (VLM). We evaluate on the\nVisual Reasoning in the Real World (GQA) dataset (Hudson Model Method GQA\n& Manning, 2019), which contains questions requiring under- Base 56.6\nQwen2.5-VL-3B-Inst\nstanding of objects, attributes, and relations in images and RandOpt 69.0\nis commonly used to benchmark visual reasoning ability. We\nperturb the language model while keeping the visual encoder frozen, and run RandOpt with N = 5000 and K = 50. This improves accuracy on GQA by 12.4% (Table 1).",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 23,
+    "total_chunks": 87,
+    "char_count": 1050,
+    "word_count": 167,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb8bcc65-f85e-4704-8a83-bcddd68c8f24",
+    "text": "5.3 Can Sandbagging Explain These Results? Tice et al. (2025) argued that some models might be \"sandbagged,\" where they are explicitly or implicitly trained to\nhave low performance on certain tasks. Random weights perturbations might recover performance by breaking this\neffect. Can this explain our results?",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 24,
+    "total_chunks": 87,
+    "char_count": 308,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa8089c5-29ed-4ede-861c-095bc64b68bd",
+    "text": "Most notably, RandOpt substantially improves the OLMo3-7B\nBase model (see Appendix Table 4). Since OLMo's training data and recipes are open-source, we can verify that this\nmodel is free of intentional sandbagging. We provide further arguments against sandbagging as an explanation in\nAppendix G. However, even if sandbagging is not the right explanation, this does not mean that there could not be\nsimilarly superficial fixes that underlie the performance gains; in Section 8 we look into this in more detail and\nfind that indeed some, but not all, of the gains are due to simply fixing answer format. 5.4 Can Ensembling Also Benefit the Baselines? Yes, ensembling (e.g., 50-pass TT-MV) consistently improves baseline methods across various model scales and\nbenchmarks. For example, in Figure 1(c), it boosts the accuracy of PPO, GRPO, and ES to approximately 79% by",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 25,
+    "total_chunks": 87,
+    "char_count": 867,
+    "word_count": 138,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cc8eda03-88c4-497b-82c9-b0389ca7a9f9",
+    "text": "10 11.2 11.2 11.2 11.2 16.7 20.4 29.9 34.1 38.1 70% 60 Qwen 32B\n30 12.6 12.6 12.6 27.1 34.6 40.8 44.6 48.5 50.8 Qwen 7B Qwen 14B\n59 60%\n(N) 100 16.8 25.4 37.5 43.5 48.4 51.4 53.4 54.2 55.2 58\n34.5 40.5 47.1 51.0 53.5 55.3 55.7 56.3 56.7 57(%)Size 300 Qwen 1.5B\n40%\n1K 46.5 50.9 55.0 56.8 58.0 57.9 57.1 57.2 57.9 55 3K 53.7 55.4 57.5 58.5 58.4 57.6 58.0 57.6 58.0 52 Accuracy Accuracy\n45 10K 57.4 58.4 58.2 58.2 59.0 58.6 58.8 58.3 58.4 20%Population\n30K 57.9 59.0 58.9 59.0 59.1 58.8 57.8 57.9 57.5 Qwen 0.5B RandOpt from scratch\n10 RandOpt around pretrained weights\n100K 60.5 59.3 59.0 58.9 59.2 58.9 58.3 57.9 57.2 GPT-2 0.1B Base model\n1% 2% 5% 10% 20% 35% 50% 75%100% 0.1B 0.5B 1.5B 7B 14B 32B\nSelection Ratio (K/N) Base Model Scale Figure 7: Heatmap of accuracy across population size N and Figure 8: Relationship between model scale and RandOpt\nselection ratio K/N. Accuracy scales with population size. performance. Good pretrained representations are important\nTask: Countdown, Model: Qwen2.5-3B-Inst. for RandOpt start to work. Task: Countdown, N = 3k, K = 50. Table 4 also suggests this. For example, ES + TT-MV increases the GSM8k accuracy of Qwen2.5-0.5B from\n42.6% to 61.2%. In fact, ensembling benefits these models regardless of the specific selection method used during training (e.g.,\nrandom guessing, GRPO, or ES). Interestingly, as training progresses, the ensembled performance gap among\nthese different baselines gradually shrinks (Figure 1(c)).",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 26,
+    "total_chunks": 87,
+    "char_count": 1467,
+    "word_count": 252,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4224e8f5-44c4-4b62-bad8-0bd859b680ff",
+    "text": "6 Scaling Properties of RandOpt We investigate how RandOpt performance scales with respect to the search budget (population size N), the\nensemble size (K), and the base model size. Impact of Population Size and Selection Ratio. Figure 7 measures the interplay between search budget (N) and\nselection ratio (K/N) on the Countdown task, with Qwen2.5-3B-Inst (see Appendix Figure 10 for further slices of\nthis data). Note that the precise shape of these trends may vary from task to task and model to model, and here\nwe only show results for Countdown.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 27,
+    "total_chunks": 87,
+    "char_count": 549,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b05b5f0c-992c-4bce-8c14-3e2986091220",
+    "text": "(1) For sufficiently low selection ratio, performance improves monotonically with population size N. (2) Trade-off between N and K/N: the optimal selection ratio decreases with increasing population size. Note that the top-1 model's performance on the training set is, by construction, non-decreasing in N. This\nis consistent with observation #1; if a practitioner wants to avoid hyperparameter tuning, a reasonable strategy\nwould therefore be to set K small and set N as large as their budget can afford.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 28,
+    "total_chunks": 87,
+    "char_count": 505,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e6d6d63b-89f6-4a5b-b799-0fb388ed045c",
+    "text": "The Emergence of Thickets at Scale. Figure 8 illustrates the relationship between base model scale and RandOpt's\nperformance, showing that a strong base model is essential for RandOpt to start to work. The blue line corresponds\nto applying RandOpt to the base models, and the green dashed line is the performance of the base models. For\nvery small models, such as GPT-2 0.1B, RandOpt fails to improve performance; for small models (e.g., Qwen\n0.5B), RandOpt also offers small gains over the baseline. However, starting at around 1.5B parameters, RandOpt\ntriggers a rapid increase in accuracy. After this point, the base model accuracy begins to catch up and the relative\nimprovement of RandOpt shrinks as the models plateau. Using RandOpt on a model that has not been pretrained\n(\"RandOpt from scratch,\" red dotted line) remains near zero across all scales. These results suggest that sufficient\npretraining and sufficient model scale are essential for RandOpt to work; this matches our finding in Section 2 for\nthe conditions under which thickets emerge. A catch with RandOpt, compared to standard post-training, is that good performance requires K forward passes at\ntest time. To address this, we explore distilling the top-K models into a single model. We perform distillation on the Qwen2.5-1.5B-Instruct and Qwen2.5-3B-Instruct models.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 29,
+    "total_chunks": 87,
+    "char_count": 1340,
+    "word_count": 210,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d0668e3f-0d8b-42c3-9b2f-df90de0892ac",
+    "text": "We only use hard\nsamples: for each input, we generate eight candidate answers and keep those for which more than half of the\ncandidates are incorrect. Table 2: Distilling the top-K RandOpt ensemble into a We use the top-50 models to generate 25,000 responses\nsingle model achieves performance comparable to the on 500 training examples. Each training sample is a pair\nensemble on GSM8K. (x, [r; y]), where x is the input question, r is the reasoning\ntrace, and y is the final answer. We then select hard examples\nModel Method GSM8K and perform supervised fine-tuning (SFT) on the base model\nfor 2 epochs, obtaining a distilled model. Specifically, let Base 58.8\nQwen2.5-1.5B-Inst. Distill 74.9 s = (s1, s2, . . . , sT) denote the full token sequence [x; r; y],\nRandOpt 76.4 and let Tx be the length of x. The SFT objective minimizes\nthe negative log-likelihood of the reasoning trace and final\nBase 79.8\nanswer: Qwen2.5-3B-Inst. Distill 84.3\nRandOpt 87.1 T\nLDistill(θ) = − ∑ log pθ(st | x, s<t) , (6)\nt=Tx+1 where θ denotes the model parameters. The input question x is the context (with its loss masked), and the model\nlearns to autoregressively generate the reasoning trace and final answer [r; y]. The computational cost of distillation is small compared to training. Since training uses a population size of\n5,000, and distillation only uses the top-50 models and runs for 10 SGD iterations, the cost of distillation is about\n2% of the training cost.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 30,
+    "total_chunks": 87,
+    "char_count": 1454,
+    "word_count": 250,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "383280d4-27fd-4320-91d2-d090e73848f5",
+    "text": "It is possible that the effects we have observed do not arise from models in the thicket employing fundamentally\ndifferent forms of reasoning, but instead from differences that are comparatively shallow. For example, models\nmay vary instead in surface-level behaviors such as answer formatting or style. Task performance can be highly\nsensitive to such factors: a system that expects outputs in JSON may fail entirely if a model instead emits free-form\ntext. Are our results simply due to random perturbations improving output formatting? We test this by measuring how much of the improvement on GSM8K is attributable to formatting fixes versus\ncorrecting the actual numerical answer. On 1319 test data samples, we decompose performance, relative to the\nbase model, into 1) retained correctness, 2) base wrong, adapted model correct (indicating a \"reasoning thicket\",\nwhere perturbations can help the model solve reasoning problems it could not solve before), 3) format fixed, then\ncounted as correct (indicating a \"format thicket\", where the base model solved the problem but output the answer\nin a format that was marked as incorrect by a strict answer checker, e.g., the answer was not placed after the proper\ntag \"####\"), and 4) base correct, adapted model incorrect (a regression in model ability). Results are shown in Figure 9. RandOpt (K = 50), reaches 86.7% overall accuracy with 0.7% regression, while\nstill showing substantial contributions from both format (19.0%) and reasoning (12.3%) thickets. This experiment demonstrates that thickets can come in a variety of types: we might have thickets of different\nanswer formats, thickets of reasoning approaches, thickets of personalities, thickets of domain knowledge, and\nmore. All of these in combination could contribute to task experts being dense and diverse, since to be an expert at\na task, as defined in this paper, simply requires doing well on the benchmark for that task and benchmarks measure a\ncombination of format, skill, personality, knowledge, and more. Beyond language models, in Appendix J, we show\na case of \"color thickets\" in an image generative model.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 31,
+    "total_chunks": 87,
+    "char_count": 2132,
+    "word_count": 335,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "83fb0481-9404-4221-9044-919844b889f9",
+    "text": "Base 56.1 56.1% Model\n740 + 0 + 0 0 = 740\nGRPO 52.2 9.5 20.4 82.0%\n740 + 125 + 269 52 = 1082\nRandOpt 41.4 16.7 9.9 67.9% Top-1\n740 + 220 + 130 194 = 896\nRandOpt 55.4 12.3 19.0 86.7% Ens. K=50\n740 + 162 + 250 9 = 1143 0 20 40 60 80 100\nAccuracy (%) Strictly Correct (correct answer & format) Format Thicket (format fixed, then counted correct)\nReasoning Thicket (base wrong, method corrects) Regression (base correct, method changes to wrong) Figure 9: Accuracy decomposition on GSM8k using Qwen2.5-3B-Instruct (N=3000, K=50). Grey denotes strictly correct answers\n(both format and answer correct), light blue denotes the questions originally answered incorrectly that are corrected after\ntraining, and purple denotes the gains are just from fixing format. For both GRPO and RandOpt, a large portion of the gains\ncome from format correction, while another portion is from solving the problem correctly.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 32,
+    "total_chunks": 87,
+    "char_count": 901,
+    "word_count": 155,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0d128d21-3155-402a-8329-389d21fa1d78",
+    "text": "9.1 Structure of the Neural Net Loss Landscape Flat Minima A prominent finding in the loss landscape literature is that training tends toward flat minima (Keskar\net al., 2017). Our findings reveal that flat minima can be hiding important structure below the surface: per-task,\nthe local accuracy landscape is not nearly so flat and the pretrained weights can even lie in a trough of accuracy. Pretraining aggregates over many tasks, hence a flat pretraining landscape is compatible with spiky per-task losses. Multi-Task Loss Landscapes A large body of work aims to characterize the loss landscape of neural nets trained\nfor a single objective (e.g,.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 33,
+    "total_chunks": 87,
+    "char_count": 650,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d94aee25-e9bd-403a-8727-a6cef5205079",
+    "text": "Li et al. (2018); Choromanska et al. (2015)). Thickets, in contrast, are a property of the\nmulti-task landscape. Prior work that takes a similar perspective includes Pareto front learning, where paths in\nweight space are identified that tradeoff between different task objectives (Ma et al., 2020), and multi-task linear\nmode connectivity, where linear paths of low loss are observed between the minimizers of different tasks (Mirzadeh\net al., 2020). On Lottery Tickets and Neural Thickets The Lottery Ticket Hypothesis suggests that, when training from scratch,\nfinding a good initialization is akin to winning the lottery: random initialization will only rarely sample weights\nthat train well (Frankle & Carbin, 2019). Our findings are compatible with this view, but suggest a qualitatively\ndifferent regime after pretraining. At transfer time, the neighborhood around the initialization (i.e. around the\npretrained weights) becomes abundant with good solutions. 9.2 Post-Training as Selection Reweighting the Pretrained Policy Many works have observed that certain post-training methods can be\ninterpreted as reweighting behaviors already present in the pretrained distribution. For example, KL-regularized\nmethods such as PPO (Schulman et al., 2017) constrain the policy to remain close to the pretrained model, and can\nbe interpreted as reweighting the pretrained distribution (Rafailov et al., 2023). Self-improvement by Trace Selection In the self-improvement literature, a common recipe is to use test-time\nsearch to select good reasoning traces, and then train these traces back into the model weights (e.g., Zelikman\net al. (2022); Xiong et al. (2025)).",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 34,
+    "total_chunks": 87,
+    "char_count": 1663,
+    "word_count": 244,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "65ce720b-f5a5-4c27-8b8b-22a79cb0f7a7",
+    "text": "These approaches aim to convert high pass@k performance into high pass@1\nperformance. Our results are consistent with the view that post-training selects or sharpens skills that are already latent in the pretrained model. While prior work characterizes how probability mass can be reweighted in\noutput-space, we instead characterize the geometry of nearby weight-space optima. 9.3 Randomized Search and Evolutionary Methods Random Search Can Be Effective for Training and Inference with Neural Nets Many prior papers have shown\nthat sequential random search methods are competitive with RL for control problems (e.g., Salimans et al. (2017);\nMania et al. (2018)) and even for post-training LLMs (Qiu et al., 2025). However, we are not aware of prior work\nthat demonstrated the same for the parallel search case, except in very simple scenarios, such as those explored\nby Schmidhuber et al. (2001) and by Oller et al. (2020). Parallel guess-and-check methods, such as Best-of-N, are\nalso commonly used at test-time to improve model performance, and these methods perform well compared to\nmore sophisticated inference methods (Wu et al., 2025). We note that the training phase of RandOpt is essentially\nBest-of-N in weight-space, rather than in output space. Given a verifier or reward signal, RandOpt could be\napplied at test-time as well. Spurious Rewards Can Sometimes Be Effective For some tasks, we find that density is so high that most Gaussian\nperturbations increase task accuracy (Figure 12). This phenomenon may provide a partial explanation of the recent\nfinding that post-training on random or spurious rewards can sometimes be effective (Shao et al., 2025). Such\nrewards provide gradients in the wrong direction, but this wrong direction might still, by chance, be sufficiently\nright. Evolving Adaptable Initializations The central conceit of our paper is that pretraining draws weights toward\nregions surrounded by adaptive specialists. Simpson (1953) argued that this property also holds true for evolved\ngenomes, referring to this as the \"Baldwin Effect,\" in reference to prior work by James Baldwin (Baldwin, 1896).",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 35,
+    "total_chunks": 87,
+    "char_count": 2130,
+    "word_count": 326,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "922e9f55-0dbc-4088-8fa5-6636564659e6",
+    "text": "Hinton et al. (1987) provided an initial computational model of this effect. In short, evolution tends toward inits\nfrom which within-life learning can quickly adapt. These works provide a backdrop for modern methods in\nmeta-learning, which optimize for neural net initializations from which task-specific solutions are a short step\naway. Prominent in this family is the MAML algorithm of Finn et al. (2017). Our results indicate that pretraining is\nimplicitly finding a MAML-like init. 9.4 Direct Models of Weight Space Bayesian Neural Nets and Parameter Noise Bayesian neural nets treat parameters as random variables, which\ncan be sampled from to estimate distributions over outputs (Goan & Fookes, 2020). This approach is often used\nto quantify uncertainty and calibrate predictions, or to improve predictions by ensembling over samples (Gal &\nGhahramani, 2016). Our new observation is that pretrained weights can be usefully treated as Gaussian random\nvariables even when they were not trained to have this property. In other words, we view pretrained nets as\nimplicitly defining a distribution of representations about their weights. This differs from prior works on Bayesian\nmethods that explicitly represent these distributions. Of prior approaches, PEP (Mehrtash et al., 2020) is especially\nclose to RandOpt. PEP computes an ensemble of predictions from Gaussian perturbations of model weights; unlike\nRandOpt, however, PEP has no selection step, aside from optimizing the variance of the Gaussian. Weight Space Model Editing While most learning methods manipulate weights indirectly, e.g., by backpropagating errors, there is also work on directly manipulating weights. Cherepkov et al. (2021) found that linear directions\nin the weight space of a generative adversarial network map to interpretable edits of the generated image; this is\na weight-space analog to the popular notion that activation-space admits interpretable linear edits (Park et al.,\n2024).",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 36,
+    "total_chunks": 87,
+    "char_count": 1968,
+    "word_count": 294,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0387a989-c794-48c8-a76d-ec436bdddf70",
+    "text": "Dravid et al. (2024) found that similarly simple weight manipulations work for diffusion models. More\nbroadly, low-rank weight manipulations have become especially popular for model editing (Hu et al., 2022), as we\ndiscuss more next. Collectively, these works suggest that in weight-space, meaningful adaptations require only\nminor changes. The thickets phenomenon could help explain why.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 37,
+    "total_chunks": 87,
+    "char_count": 388,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "22388321-8065-4797-85f0-8c7cd400bf84",
+    "text": "9.5 Low-dimensional structure in LLM fine-tuning Intrinsic dimension and parameter-efficient fine-tuning. Prior work (Aghajanyan et al., 2020) shows that finetuning often succeeds within a surprisingly small random subspace of parameters, suggesting that downstream\nadaptation is effectively low-dimensional despite the enormous parameter space of LLMs. Consistent with this view,\nparameter-efficient fine-tuning methods such as LoRA (Hu et al., 2022) restrict updates to low-rank components\nwhile freezing most of the base model, yet still achieve competitive performance across many tasks. More recently,\nMorris et al. (2026) showed that math reasoning tasks can be learned by updating only 13 parameters.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 38,
+    "total_chunks": 87,
+    "char_count": 707,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ae35dc51-b373-4078-b185-6e439ab3dfc7",
+    "text": "Low-dimensional curvature in LLM fine-tuning. Liang et al. (2026) shows that LLM fine-tuning landscapes\nexhibit low-dimensional curvature, where a small number of directions dominate reward improvements. Random\nprojections have a higher chance of intersecting with a large, degenerate set of reward-improving directions\nas a consequence of the low-dimensionality. This view suggests interpreting the thickets phenomenon as the\nintersection of (a) a broad loss basin induced by pretraining and overparameterization, and (b) a set of task-relevant\ndirections that are effectively low-dimensional (or low-rank) but embedded within the full parameter space. 10.1 Rethinking Pretraining Pretrained Models as Distributions We typically refer to the \"pretrained model\" as a singular thing; it's the base\nmodel, or it's a foundation model, on top of which further improvements can be made. Our results suggest that you\ncan instead think about your pretrained weights as specifying a distribution over models. This distribution resists\ncharacterization just in terms of its mean: rather it contains diverse specialists whose behavior is qualitatively\ndifferent from the singular pretrained weights. Understanding Pretraining Requires Characterizing the Multi-task Loss Landscape While the pretraining\nobjective necessarily exhibits a local minimum at converged weights, our findings suggest that this scalar landscape\nobscures important structure. In particular, what governs downstream adaptation is not a single loss surface, but\nthe collection of task-specific loss landscapes corresponding to different downstream objectives. The pretrained\nweights might not be a minimizer of any individual element of this collection, but lie in a region surrounded by\ntask-specific minima. This structure is invisible when analyzing the aggregate pretraining objective, and only\nemerges when that objective is decomposed into its constituent task-level losses. 10.2 Rethinking Post-Training Pretraining Is All You Need? We have shown that once a model has been sufficiently pretrained, further adaptation\ncan be remarkably easy.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 39,
+    "total_chunks": 87,
+    "char_count": 2109,
+    "word_count": 294,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3c873f34-e06d-480d-93e9-9c0c125cd937",
+    "text": "This finding mirrors prior work, including: Tian et al. (2020) found that linear probes over\npretrained representations can outperform sophisticated meta-learners; Finn & Levine (2018) proved that, given a\ngood enough representation, gradient descent can approximate any learning algorithm; Qiu et al. (2025) showed\nthat relatively simple algorithms such as ES can rival state-of-the-art RL methods for post-training LLMs. These\nare a few of the papers that, together with our work, suggest that it doesn't take much to obtain good downstream\nsolutions given the right pretrained representation.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 40,
+    "total_chunks": 87,
+    "char_count": 595,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b0e95a4d-0ab1-4fff-8502-d0ad2919af52",
+    "text": "Decentralized, Parallel Adaptation RandOpt workers operate fully in parallel, and do not communicate with\neach other during training. Only at inference time do the workers interact, and only through ensembling their\npredictions. This may be attractive in a setting where compute nodes are cheap but communication is at a premium. Prior work has argued that ES requires less communication bandwidth than certain RL methods (Salimans et al.,\n2017), and RandOpt is cheaper still: T steps of ES requires communicating scores T times, while RandOpt requires\ncommunicating scores just once. Further, RandOpt could be preferable where wall-clock time is what matters:\nRandOpt's wall-clock time is O(1) in optimization steps whereas sequential methods like ES are O(T). Due to\nits decentralized nature, RandOpt may also be especially suitable for federated settings where data security or\nprivacy are paramount. Pretraining Might Be All You Need, But You Do Need Pretraining RandOpt is not suitable for training large\nneural nets from scratch, and achieves negligible performance in this setting (e.g., see the dotted red line in Figure\n8). It also struggles on small pretrained models, where the density of solutions is low. The success of RandOpt\naround well-pretrained inits does not mean we should discard other learning algorithms. Rather RandOpt works\nonce you have a good enough representation, but to find that representation in the first place may still require\nstructured search.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 41,
+    "total_chunks": 87,
+    "char_count": 1481,
+    "word_count": 228,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "df99a59b-cf56-4c59-a269-4ab05450e2ea",
+    "text": "Capacity to Learn Dramatically New Skills? Our results leave open the question of exactly how far beyond the\nbase model's abilities random guessing and ensembling can take us. The scaling relationships we observe appear\nto saturate at large model size (Figure 10) and large N (Figure 7); the saturation is visible even as a function of\nlog resources. This may indicate that further improvement on these tasks requires exiting the local thickets and\nhunting farther and wider, where the search might return to needle-in-haystack dynamics and more structured\nmethods may be necessary. Inference-Time Cost At inference time RandOpt uses K forward passes, and good performance typically requires\nK > 1.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 42,
+    "total_chunks": 87,
+    "char_count": 698,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4995a5a1-4cb1-4b79-91a0-b042270eb485",
+    "text": "This cost can be reduced by distilling the ensemble into a single model, as we have shown in Section\n7. However, distilling introduces several tradeoffs: 1) the algorithm is no longer fully parallel, 2) distillation\nrequires additional training flops (although we found this cost to be minor in our experiments), and 3) our specific\ndistillation approach is tailored to LLM reasoning toward a categorical final prediction; this approach might not be\napplicable in other settings. Majority-Vote Ensembling Does Not Support Structured Prediction We have focused primarily on problems\nwhere the answer is a single discrete class (or an integer), in which case majority-vote ensembling is straightforward\nto apply. In the 1D signal experiments in Appendix F, we also show a case where mean ensembling can work. It is less clear how to ensemble, or distill, models that perform more structured kinds of prediction, such as\nwriting a story, generating an image, designing a molecule, etc. To handle these cases, the ensembling approach\nin Algorithm 1 would need to be modified. In Appendix J, we show one simple ensembling approach on image\ngeneration with a diffusion model: mean ensembling at each step of denoising. We do not claim that this is the\nbest choice but rather include it as a proof of concept that our framework could be extended to many possible\nensembling methods beyond just majority voting.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 43,
+    "total_chunks": 87,
+    "char_count": 1403,
+    "word_count": 227,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ece089c6-8191-4224-b400-762ee9c5fb55",
+    "text": "Exactly When and Why Does Pretraining Enter the Thicket Regime? Our results characterize properties of the\npretrained landscape, but do not fully explain the mechanisms by which these properties arise. The experiments\nin Section 3 show a setting in which pretraining on a distribution of many different tasks is critical to thickets\nforming. Is this also the critical factor in developing thickets in LLMs and other large models? What exactly is it\nabout the pretraining objective, or learning dynamics, that creates thickets?",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 44,
+    "total_chunks": 87,
+    "char_count": 526,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e2bf167f-5266-4a0d-8093-1130fbfa5dbc",
+    "text": "Our results invite further investigation. This work was supported under project ID 43 as part of the Swiss AI Initiative, through a grant from the ETH Domain and\ncomputational resources provided by the Swiss National Supercomputing Centre (CSCS) under the Alps infrastructure. This\nwork was also supported by a Packard Fellowship to P.I., and a Frederick (1953) and Barbara Cronin Fellowship to Y.G., and\nby ONR MURI grant N00014-22-1-2740. We thank Minyoung Huh and Jeremy Bernstein for inspiring discussions on earlier\niterations of this project. Aghajanyan, A., Zettlemoyer, L., and Gupta, S. Intrinsic dimensionality explains the effectiveness of language\nmodel fine-tuning, 2020. URL https://arxiv.org/abs/2012.13255. Austin, J., Odena, A., Nye, M., Bosma, M., Michalewski, H., Dohan, D., Jiang, E., Cai, C., Terry, M., Le, Q.,\nand Sutton, C. Program synthesis with large language models, 2021. URL https://arxiv.org/abs/2108.\n07732. A new factor in evolution. The American Naturalist, 30(355):536–553, 1896. Cherepkov, A., Voynov, A., and Babenko, A.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 45,
+    "total_chunks": 87,
+    "char_count": 1056,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8caa1ef5-a388-4725-bf85-bb2a55757631",
+    "text": "Navigating the gan parameter space for semantic image editing. In\nProceedings of the IEEE/CVF conference on computer vision and pattern recognition, pp. 3671–3680, 2021. Choromanska, A., Henaff, M., Mathieu, M., Arous, G. The loss surfaces of multilayer networks. In Artificial intelligence and statistics, pp. 192–204. Cobbe, K., Kosaraju, V., Bavarian, M., Chen, M., Jun, H., Kaiser, L., Plappert, M., Tworek, J., Hilton, J., Nakano, R.,\net al. Training verifiers to solve math word problems. arXiv preprint arXiv:2110.14168, 2021. Countdown (game show). https://en.wikipedia.org/wiki/Countdown_(game_show),\n2024. [Online; accessed 29-March-2024].",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 46,
+    "total_chunks": 87,
+    "char_count": 649,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d8c6d087-1125-41aa-95b1-a6b148ce9110",
+    "text": "Dravid, A., Gandelsman, Y., Wang, K.-C., Abdal, R., Wetzstein, G., Efros, A., and Aberman, K. Interpreting the\nweight space of customized diffusion models. Finn, C. and Levine, S. Meta-learning and universality: Deep representations and gradient descent can approximate\nany learning algorithm, 2018. Finn, C., Abbeel, P., and Levine, S.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 47,
+    "total_chunks": 87,
+    "char_count": 336,
+    "word_count": 49,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e4c530b-b8e2-47e1-b9b6-17f93377f456",
+    "text": "Model-agnostic meta-learning for fast adaptation of deep networks. In\nInternational conference on machine learning, pp. 1126–1135. Frankle, J. and Carbin, M. The lottery ticket hypothesis: Finding sparse, trainable neural networks. Gal, Y. and Ghahramani, Z.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 48,
+    "total_chunks": 87,
+    "char_count": 258,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8b9cb085-a718-4d0f-a24c-64cd4d1840b6",
+    "text": "Dropout as a bayesian approximation: Representing model uncertainty in deep\nlearning. In international conference on machine learning, pp. 1050–1059. Gandhi, K., Lee, D., Grand, G., Liu, M., Cheng, W., Sharma, A., and Goodman, N. Stream of search (sos):\nLearning to search in language, 2024. URL https://arxiv.org/abs/2404.03683. Glorot, X. and Bengio, Y.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 49,
+    "total_chunks": 87,
+    "char_count": 355,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f313a51-272c-4966-90b9-528d618d5c77",
+    "text": "Understanding the difficulty of training deep feedforward neural networks. In Proceedings\nof the thirteenth international conference on artificial intelligence and statistics, pp. 249–256. JMLR Workshop and\nConference Proceedings, 2010. Goan, E. and Fookes, C.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 50,
+    "total_chunks": 87,
+    "char_count": 260,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ac49c40a-3e5d-4c8c-a133-14fcc2a6d84c",
+    "text": "Bayesian neural networks: An introduction and survey. In Case Studies in Applied Bayesian\nData Science: CIRM Jean-Morlet Chair, Fall 2018, pp. 45–87. Grattafiori, A., Dubey, A., Jauhri, A., and et al., A. The llama 3 herd of models, 2024. URL https://arxiv.\norg/abs/2407.21783. He, C., Luo, R., Bai, Y., Hu, S., Thai, Z., Shen, J., Hu, J., Han, X., Huang, Y., Zhang, Y., et al. Olympiadbench: A\nchallenging benchmark for promoting agi with olympiad-level bilingual multimodal scientific problems. In\nProceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pp.\n3828–3850, 2024. He, K., Zhang, X., Ren, S., and Sun, J. Delving deep into rectifiers: Surpassing human-level performance on\nimagenet classification. In Proceedings of the IEEE international conference on computer vision, pp. 1026–1034, 2015. How learning can guide evolution. Complex systems, 1(3):495–502, 1987. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., and Chen, W. LoRA: Low-rank adaptation of\nlarge language models.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 51,
+    "total_chunks": 87,
+    "char_count": 1064,
+    "word_count": 161,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8b55d9ef-dc6d-4550-a2aa-f984e4f28e5c",
+    "text": "Huang, G., Li, Y., Pleiss, G., Liu, Z., Hopcroft, J. E., and Weinberger, K. Snapshot ensembles: Train 1, get m for\nfree. arXiv preprint arXiv:1704.00109, 2017. Gqa: A new dataset for real-world visual reasoning and compositional question\nanswering. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pp. 6700–6709, 2019. Jaderberg, M., Dalibard, V., Osindero, S., Czarnecki, W. M., Donahue, J., Razavi, A., Vinyals, O., Green, T., Dunning,\nI., Simonyan, K., et al. Population based training of neural networks. arXiv preprint arXiv:1711.09846, 2017. S., Mudigere, D., Nocedal, J., Smelyanskiy, M., and Tang, P. On large-batch training for deep\nlearning: Generalization gap and sharp minima. Li, H., Xu, Z., Taylor, G., Studer, C., and Goldstein, T. Visualizing the loss landscape of neural nets. In Neural\nInformation Processing Systems, 2018. Liang, Q., Song, J., Liu, Y., Gore, J., Fiete, I., Miikkulainen, R., and Qiu, X. The blessing of dimensionality in llm\nfine-tuning: A variance-curvature perspective. arXiv preprint arXiv:2602.00170, 2026.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 52,
+    "total_chunks": 87,
+    "char_count": 1083,
+    "word_count": 160,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4ca692a1-6ccd-430f-8ab7-5e5ac1f8ef84",
+    "text": "Ma, P., Du, T., and Matusik, W. Efficient continuous pareto exploration in multi-task learning. In International\nConference on Machine Learning, pp. 6522–6531. Mania, H., Guy, A., and Recht, B.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 53,
+    "total_chunks": 87,
+    "char_count": 193,
+    "word_count": 29,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2f7e5dba-cf0b-4465-83c5-8a0b89b91900",
+    "text": "Simple random search provides a competitive approach to reinforcement\nlearning. arXiv preprint arXiv:1803.07055, 2018. Mayilvahanan, P., Dominguez-Olmedo, R., Wiedemer, T., and Brendel, W. Math-beyond: A benchmark for rl to\nexpand beyond the base model. arXiv preprint arXiv:2510.11653, 2025. Mehrtash, A., Abolmaesumi, P., Golland, P., Kapur, T., Wassermann, D., and Wells, W. Pep: Parameter ensembling\nby perturbation. Advances in neural information processing systems, 33:8895–8906, 2020. I., Farajtabar, M., Gorur, D., Pascanu, R., and Ghasemzadeh, H. Linear mode connectivity in multitask\nand continual learning. arXiv preprint arXiv:2010.04495, 2020. X., Mireshghallah, N., Ibrahim, M., and Mahloujifar, S. Learning to reason in 13 parameters. arXiv Mostafazadeh, N., Chambers, N., He, X., Parikh, D., Batra, D., Vanderwende, L., Kohli, P., and Allen, J.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 54,
+    "total_chunks": 87,
+    "char_count": 860,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1e73bcb8-1998-4d46-821b-5d0bb67474d4",
+    "text": "A\ncorpus and evaluation framework for deeper understanding of commonsense stories, 2016. URL https:\n//arxiv.org/abs/1604.01696. Mouret, J.-B. and Clune, J. Illuminating search spaces by mapping elites. arXiv preprint arXiv:1504.04909, 2015. Narayanan, D., Shoeybi, M., Casper, J., LeGresley, P., Patwary, M., Korthikanti, V. A., Vainbrand, D., Kashinkunti,\nP., Bernauer, J., Catanzaro, B., Phanishayee, A., and Zaharia, M. Efficient large-scale language model training on\ngpu clusters using megatron-lm, 2021. URL https://arxiv.org/abs/2104.04473. Oller, D., Glasmachers, T., and Cuccu, G.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 55,
+    "total_chunks": 87,
+    "char_count": 589,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e2ccd5ea-a9c3-4171-ba9f-33e3cf77e1e0",
+    "text": "Analyzing reinforcement learning benchmarks with random weight\nguessing. In Proceedings of the 19th International Conference on Autonomous Agents and MultiAgent Systems, AAMAS\n'20, pp. 975–982, Richland, SC, 2020. International Foundation for Autonomous Agents and Multiagent Systems. Olmo, T., :, Ettinger, A., Bertsch, A., Kuehl, B., Graham, D., and et al., D. URL https:\n//arxiv.org/abs/2512.13961. Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., Ray,\nA., et al. Training language models to follow instructions with human feedback. Advances in neural information\nprocessing systems, 35:27730–27744, 2022. The linear representation hypothesis and the geometry of large language\nmodels. Podell, D., English, Z., Lacey, K., Blattmann, A., Dockhorn, T., Müller, J., Penna, J., and Rombach, R. Sdxl:\nImproving latent diffusion models for high-resolution image synthesis, 2023. URL https://arxiv.org/abs/\n2307.01952. Qiu, X., Gan, Y., Hayes, C. F., Liang, Q., Meyerson, E., Hodjat, B., and Miikkulainen, R. Evolution strategies at\nscale: Llm fine-tuning beyond reinforcement learning. arXiv preprint arXiv:2509.24372, 2025.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 56,
+    "total_chunks": 87,
+    "char_count": 1180,
+    "word_count": 163,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b7da5c59-aa27-41f1-8008-4ff7996c99fa",
+    "text": "Qwen, :, Yang, A., Yang, B., and et al., B. Qwen2.5 technical report, 2025. URL https://arxiv.org/abs/\n2412.15115. Rafailov, R., Sharma, A., Mitchell, E., Manning, C. D., Ermon, S., and Finn, C.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 57,
+    "total_chunks": 87,
+    "char_count": 194,
+    "word_count": 31,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9996566e-249b-4dac-9d08-c27538f6dfd7",
+    "text": "Direct preference optimization: Your\nlanguage model is secretly a reward model. Advances in neural information processing systems, 36:53728–53741,\n2023. Salimans, T., Ho, J., Chen, X., Sidor, S., and Sutskever, I. Evolution strategies as a scalable alternative to\nreinforcement learning. arXiv preprint arXiv:1703.03864, 2017. Schmidhuber, J., Hochreiter, S., and Bengio, Y. Evaluating benchmark problems by random guessing. A Field Guide\nto Dynamical Recurrent Networks, pp. 231–235, 2001. Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O. Proximal policy optimization algorithms. arXiv S., Xin, R., Geng, S., Wang, Y., Oh, S., Du, S. S., Lambert, N., Min, S., Krishna, R., Tsvetkov, Y.,\nHajishirzi, H., Koh, P. W., and Zettlemoyer, L.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 58,
+    "total_chunks": 87,
+    "char_count": 754,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ee68a337-6abf-483a-b8de-c9dbd8a7dac7",
+    "text": "Spurious rewards: Rethinking training signals in rlvr, 2025. URL\nhttps://arxiv.org/abs/2506.10947. Shao, Z., Wang, P., Zhu, Q., Xu, R., Song, J., Bi, X., Zhang, H., Zhang, M., Li, Y., Wu, Y., et al. Deepseekmath:\nPushing the limits of mathematical reasoning in open language models. arXiv preprint arXiv:2402.03300, 2024. Sheng, G., Zhang, C., Ye, Z., Wu, X., Zhang, W., Zhang, R., Peng, Y., Lin, H., and Wu, C. Hybridflow: A flexible\nand efficient rlhf framework. arXiv preprint arXiv: 2409.19256, 2024. Evolution, 7(2):110–117, 1953.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 59,
+    "total_chunks": 87,
+    "char_count": 535,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "83636ae3-7594-4b18-913b-30623f324d3b",
+    "text": "EvalScope: Evaluation framework for large models, 2024. URL https://github.com/modelscope/\nevalscope. Tian, Y., Wang, Y., Krishnan, D., Tenenbaum, J. Rethinking few-shot image classification: a good\nembedding is all you need?",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 60,
+    "total_chunks": 87,
+    "char_count": 225,
+    "word_count": 29,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "42a27e9a-a285-4603-a539-ea88b078e0ad",
+    "text": "A., Helm-Burger, N., Shahani, P. S., Ryzhenkov, F., Roger, F., Neo, C., Haimes, J., Hofstätter, F.,\nand van der Weij, T. Noise injection reveals hidden capabilities of sandbagging language models. Advances in\nneural information processing systems, 2025. Reaction smiles uspto year 2023, 12 2023. URL https://figshare.com/articles/\ndataset/Reaction_SMILES_USPTO_year_2023/24921555. Wang, X., Wei, J., Schuurmans, D., Le, Q., Chi, E., Narang, S., Chowdhery, A., and Zhou, D. Self-consistency\nimproves chain of thought reasoning in language models, 2023. URL https://arxiv.org/abs/2203.11171. Wu, Y., Sun, Z., Li, S., Welleck, S., and Yang, Y. Inference scaling laws: An empirical analysis of compute-optimal\ninference for llm problem solving. Xiong, W., Yao, J., Xu, Y., Pang, B., Wang, L., Sahoo, D., Li, J., Jiang, N., Zhang, T., Xiong, C., et al. A minimalist\napproach to llm reasoning: from rejection sampling to reinforce. arXiv preprint arXiv:2504.11343, 2025. Zelikman, E., Wu, Y., Mu, J., and Goodman, N. Star: Bootstrapping reasoning with reasoning.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 61,
+    "total_chunks": 87,
+    "char_count": 1056,
+    "word_count": 151,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c5cba20-8cde-4c1f-9f71-3b1b894343f5",
+    "text": "Advances in Neural\nInformation Processing Systems, 35:15476–15488, 2022. We conduct experiments across the Qwen, Llama, and OLMo3 model families. Our selection encompasses\ndiverse model sizes (0.5B to 8B parameters), multiple model families with different pretraining recipes, and both\ninstruction-tuned and base models. Specifically, we evaluate:",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 62,
+    "total_chunks": 87,
+    "char_count": 347,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5c45944a-81be-4378-be66-49a4c72af13c",
+    "text": "Qwen2.5-Instruct (Qwen et al., 2025) at three scales (0.5B, 1.5B, and 3B). Qwen2.5-Instruct is a series of instructiontuned language models ranging from 0.5B to 72B parameters, demonstrating strong performance on reasoning and\ncoding tasks. Llama-3.1-8B Instruct (Grattafiori et al., 2024). This is an instruction-tuned variant of the Llama 3.1 family,\noptimized for dialogue and instruction-following capabilities. OLMo3 (Olmo et al., 2025) in both base and instruction-tuned variants at 7B. We include OLMo3 as it is fully\nopen-source with transparent training data and procedures, mitigating concerns about potential data contamination\nor sandbagging that may affect evaluation integrity.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 63,
+    "total_chunks": 87,
+    "char_count": 691,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3352cc62-4ff4-44a6-922e-e574f59239c9",
+    "text": "We evaluate our method on benchmarks spanning five task categories: mathematical reasoning (Countdown,\nGSM8K, OlympiadBench, MATH-500), code generation (MBPP), creative writing (CommonGen), chemistry\n(USPTO) and commonsense (GQA), a visual question answering benchmark commonly evaluated with visionlanguage models (VLMs). Mathematical Reasoning. Countdown task (Countdown, 2024; Gandhi et al., 2024) measures symbolic and\nnumerical reasoning ability by requiring models to construct arithmetic expressions that exactly reach a target\nvalue given a set of numbers. GSM8K (Cobbe et al., 2021) is a widely used benchmark for grade-school–level mathematical reasoning,\nconsisting of multi-step word problems that require arithmetic calculations and logical reasoning. OlympiadBench (He et al., 2024) is a bilingual benchmark consisting of 8,476 Olympiad-level mathematics and\nphysics problems drawn from international and Chinese competitions, designed to evaluate scientific reasoning\ncapabilities including theorem application, multi-step derivations, and complex problem solving. MATH-500 (Mayilvahanan et al., 2025) is a challenging subset of the MATH dataset, focusing on competitionlevel mathematical problems that test advanced multi-step reasoning and symbolic manipulation. MBPP (Austin et al., 2021) is a benchmark of approximately 1,000 crowd-sourced Python\nprogramming problems designed to be solvable by entry-level programmers. Each problem consists of a task\ndescription, a reference code solution, and three automated test cases, covering programming fundamentals and\nstandard library functionality to evaluate function-level code generation capabilities.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 64,
+    "total_chunks": 87,
+    "char_count": 1668,
+    "word_count": 213,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d9540556-d773-4148-931f-3e85cbb309ff",
+    "text": "ROCStories (Mostafazadeh et al., 2016) is a commonsense narrative generation benchmark\nconsisting of short everyday stories. The dataset contains around 100,000 five-sentence narratives describing realworld events. It evaluates a model's ability to generate coherent, fluent, and logically consistent story continuations\ngrounded in commonsense reasoning.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 65,
+    "total_chunks": 87,
+    "char_count": 355,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf11cb1a-5feb-4010-b631-36992feb7538",
+    "text": "USPTO (van der Lingen, 2023) is a large-scale chemical reaction dataset extracted from United\nStates Patent and Trademark Office patent documents, containing over 1.8 million organic chemical reactions\nrepresented as reaction SMILES. The benchmark evaluates models on reaction prediction and retrosynthesis tasks,\nrequiring understanding of chemical transformations and molecular structure relationships. GQA (Hudson & Manning, 2019) is a visual question answering benchmark designed to\nevaluate compositional visual reasoning and grounded commonsense understanding. Questions require models\nto perform multi-step reasoning over object attributes and relations (e.g., spatial relationships, colors, or object\ninteractions), testing the ability to combine visual grounding with commonsense reasoning.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 66,
+    "total_chunks": 87,
+    "char_count": 799,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "302a23e6-2684-44cf-9a0f-5e6638cef98f",
+    "text": "60 K/N N\n1% 10\n(%) 2% 30 5% 100 40 10% 300\n20% 1K 30 35% 3K Accuracy 50% 10K 20 75% 30K\n10 100% 100K\n10 30 100 300 1K 3K 10K 30K 100K 1 2 5 10 20 35 50 75100\nPopulation Size N (%) Selection Ratio K/N (%) Figure 10: Scaling curves for population size K and ensemble size N on Countdown task. 76.4 80 RandOpt(K=50)RandOpt(K=1) GRPO Base 72.1 71.7\n67.9 ES\n(%) 58.8 59.7 70.2 69.9 68.0 69.6 60 52.7 54.1 54.1 62.3 53.6 60.2\n48.5 46.7 48 48.5\n44.2 43.2\n30.4 30.2 31.8 32.0 31.5 34.3\n27.5 27.2\n23.5\n18.8 20.4Accuracy 20 13.4\n6.7\nCountdown GSM8k MATH-500 OlyBench MBPP ROCStories USPTO\n(math) (math) (math) (math) (programming) (writing) (chemistry) Figure 11: Model performance comparison on Countdown, GSM8k, MATH-500, and OlympiadBench using the Qwen2.5-1.5BInstruct model. More results for additional models and baselines can be found in Appendix Table 4.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 67,
+    "total_chunks": 87,
+    "char_count": 852,
+    "word_count": 153,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a8e8a0e7-71c0-4f57-801d-6fd7c7b8c610",
+    "text": "Test-Time Majority Vote. Majority voting (Wang et al., 2023) is a test-time inference strategy that samples multiple\nindependent responses from a model and selects the most frequently occurring answer. This approach improves\naccuracy without updating model parameters by leveraging the diversity of sampled reasoning paths. Best-of-N (Ouyang et al., 2022) samples multiple responses at inference time and selects the highestscoring one according to a predefined evaluation metric or reward function, rather than aggregating answers by\nfrequency as in majority voting. Proximal Policy Optimization (Schulman et al., 2017) uses a clipped surrogate objective to stabilize policy\nupdates in RLHF, requiring both a policy model and a critic network. Group Relative Policy Optimization (Shao et al., 2024) removes the critic by computing advantages from\ngroup-level reward statistics, reducing memory overhead compared to PPO. Evolution Strategies at Scale (Qiu et al., 2025) perform gradient-free optimization by perturbing parameters\nwith Gaussian noise and updating based on fitness-weighted perturbations. D Additional Experimental Analysis Full results on LLM For post-training LLMs, Table 4 reports our full results across different base models,\nadaptation methods, and tasks.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 68,
+    "total_chunks": 87,
+    "char_count": 1276,
+    "word_count": 179,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "162ae9f4-fcda-4258-894f-e8d6bcdcbfcd",
+    "text": "Effect of ensembling Figure 11 compares RandOpt (K=1) to RandOpt (K=50), alongside several baselines. These\nresults show that ensembling over many perturbations is critical to getting competitive performance on most\ntasks, but also that even without ensembling (just taking the top perturbation; K=1), we observe a substantial performance boost over the base model. GSM8K Countdown\n140 Good solution: 100% base perf. 60 Good solution: 100% base perf.\n0.5B good solution: 0% 0.5B good solution: 8%\n120 1.5B3B goodgood solution:solution: 18%37% 50 1.5B3B goodgood solution:solution: 48%54%\n32B good solution: 64% 32B good solution: 60%\n30 Count\n20 10 0 0 70% 80% 90% 100% 110% 120% 0% 50% 100% 150% 200%\nRelative Performance (vs Base Model) Relative Performance (vs Base Model) Figure 12: Performance distributions of 500 randomly perturbed models relative to base model accuracy on the math reasoning\ntask GSM8k (left) and Countdown (right). The fraction of perturbations matching or exceeding base performance (shaded\nregion) increases with model size: 0% →64% on GSM8K and 8% →60% on Countdown as model size grows from 0.5B to 32B\nparameters. Note: x-axis shows relative performance; longer tails in smaller models do not equate to higher absolute accuracy. Solution density histograms In Figure 12, we show the full distribution of performance improvement over\nrandom weight perturbations for GSM8K and Countdown, on the Qwen2.5-Instruct series of models. Log-linear correlation between population size (N) and performance. Appendix Figure 10 illustrates the scaling\nproperties of our method on the Countdown task. As shown in the left panel, we observe a log-linear correlation\nbetween population size and performance across different selection ratios. RandOpt benefits significantly from\nscaling N in the population size. Selection ratio saturation. The right panel shows that while increasing the selection ratio significantly improves\nperformance when N is small, this benefit saturates as N scales up.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 69,
+    "total_chunks": 87,
+    "char_count": 2008,
+    "word_count": 301,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f3d17a37-dcc5-40bc-9bda-0e61408d428a",
+    "text": "For sufficiently large N, the minimal value of\nK (selecting only the top 1%) yields high performance. This demonstrates that a large population size N allows for\na very small topK selection, which can reduce inference time costs. Scaling Parallelism of the Baselines Does Not Match\nRandOpt (1-Step Training). Figure 13 plots batch/-\nRandOpt\n88 group size versus accuracy on GSM8K using Qwen2.5- GRPO 1e{ 5, 6, 7}\nPPO 1e{ 5, 6, 7} 3B-Instruct, with all methods run for one training step.\n86 The key takeaway is that using larger batch/group size\n(%) 84 does not really help. We grid-search GRPO and PPO on 8 GPUs over learning rates 1e −5, 1e −6, and 1e −7;\nbatch size (PPO) ranges from 128 to 2048, and group\nsize (GRPO) ranges from 512 to 8192. The x-axis is\nbatch/group size (RandOpt uses population size N),\n80 Accuracy color encodes learning rate, and marker shape denotes\nalgorithm. 78\nPPO does not benefit consistently from larger batches:\nbest accuracy is 78.0% at batch size 256 (lr=1e −5), while 76\nlarger-batch runs such as batch size 2048 reach at most\n103 104 77.5%. Batch/Group Size (RandOpt: N) GRPO reaches its peak at 83.5% (group size=512 × 4,\nlr=1e −5), but increasing group size does not improve\nperformance (e.g., 80.1% at 2048 × 4 with lr=1e −5). Figure 13: Batch/group size vs. accuracy under one-step RandOpt (N = 3000) reaches 87.1%, exceeding all GRPO\ntraining. Scaling baseline parallelism does not get RandOpt's and PPO settings. This indicates that scaling baseline\nperformance. Task: GSM8K, Model: Qwen2.5-3B-Instruct, parallelism does not close the gap with RandOpt 's perN=5000, K=50) formance. E Implementation Details",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 70,
+    "total_chunks": 87,
+    "char_count": 1650,
+    "word_count": 274,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "970a28d1-6ede-4803-9602-21435c5070a9",
+    "text": "All experiments are conducted on NVIDIA GH200 GPUs. To ensure a fair comparison, we normalize the\ncomputational budgets of all methods by the total training FLOPs. For the experiments in Table 4, We have two\nvariants that differ in their selection strategy: RandOpt (random) performs selection by random sampling, while\nRandOpt (ES) updates the population using an evolution strategies (ES) algorithm and selects the top-50 models\nfrom the final ES population. We use a population size of 5,000 and ensemble the top-50 models for RandOpt\n(random), and a population size of 100 with 50 iterations and ensemble the top-50 models for RandOpt (ES). For\nthe figures in Section 2, we use σ = 0.005.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 71,
+    "total_chunks": 87,
+    "char_count": 692,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c14b8bf5-0262-42f2-9948-d05beb2cbd3a",
+    "text": "For all datasets, we use the first 200 samples from the training set as\nthe RandOpt training set, and all samples from the test set for evaluation. For MATH-500, we manually split the\ndataset: the first 200 samples are used for training and the remaining samples for testing. For OlympiadBench, we\nuse the text-only English competition math subset (OE_TO_maths_en_COMP.parquet), since most other subsets\nrequire visual inputs. E.1 FLOPs Calculation For a model with P parameters and a sequence length of L, we follow the standard estimation where a single\nforward pass requires approximately 2PL FLOPs, and a backward pass requires 4PL FLOPs (Narayanan et al.,\n2021).",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 72,
+    "total_chunks": 87,
+    "char_count": 667,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8cac7133-fd02-42a1-824c-c5fe28fc6a0d",
+    "text": "The total training compute is determined by the number of samples processed and the computational\noverhead per sample. E.2 Method-Specific Compute • GRPO: Each step processes a batch of B questions with G responses per question. Each response involves a\npolicy forward, a reference model forward, and a policy backward pass.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 73,
+    "total_chunks": 87,
+    "char_count": 324,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5a1d9495-6f30-47e3-9169-46140039354e",
+    "text": "FLOPsGRPO = TGRPO · B · G · (2 + 2 + 4) ·PL = 8 · TGRPO · B · G · PL (7)\nfwd| + ref{z + bwd} • PPO: Adds critic forward and backward passes to the GRPO baseline. FLOPsPPO = TPPO · B · G · (2 + 2 + 2 + 4 + 4) ·PL = 14 · TPPO · B · G · PL (8)\nfwd + ref| + crit_fwd{z + bwd + crit_bwd} • ES & RandOpt: These gradient-free methods only require forward passes for evaluation. For a population\nsize N and evaluation dataset size D: FLOPsES/RandOpt = TES · N · D · 2 ·PL = 2 · TES · N · D · PL (9)\n|{z}fwd",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 74,
+    "total_chunks": 87,
+    "char_count": 498,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "de2d5be9-f38e-4110-8507-e7b0c2145d22",
+    "text": "Appendix Table 3 shows the hyperparemeters across methods. To ensure a fair comparison, we align the\nhyperparameters such that all methods consume equivalent total training FLOPs. We balance the batch size and\niteration counts to account for algorithmic overheads. For instance, GRPO uses a larger batch size (B = 1024)\ncompared to PPO (B = 128) due to the latter's additional memory cost for the critic network. Similarly, we match\nthe total number of sample evaluations between the iterative ES (30 population × 167 steps) and the single-step\nRandOpt (5000 population × 1 step).",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 75,
+    "total_chunks": 87,
+    "char_count": 580,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3c051af4-7db3-40e0-b87e-16506d544c7a",
+    "text": "All experiments utilize bfloat16 precision with a maximum sequence length\nof 1024. F Additional Results on 1D Signals We show additional results of the experiments on 1D signals in Tables 5 and 6. Table 5 tests the approximation\nability of RandOpt: here we select perturbations based on their ability to fit a single test function (plotted in blue). Table 3: Hyperparameters. '–' indicates that the hyperparameter is not required for the corresponding algorithm. Category Parameter GRPO PPO ES RandOpt Batch Size 1024 128 – –\nBudget\nGroup/Population Size 8 1 30 5000\n& Scale\nIterations 200 600 167 1 Actor Learning Rate 1e-6 1e-6 5e-4 (α) –\nCritic Learning Rate – 1e-5 – –\nOptimization\nOptimizer AdamW AdamW - –\nComplexity\nKL Coefficient (β) 0.001 0.001 – –\nBackpropagation Yes Yes – – Reference Model Required Required – –\nModel\nCritic Model – Required – – Requirements\nValue Head – Required – – Perturbation Scale (σ) – – 0.001 {1, 2, 3}e-3\nOther\nPrecision bf16 bf16 bf16 bf16 Hyperparams\nMax Seq. Length 1024 1024 1024 1024 Table 6 instead tests generalization: we select the top-K perturbations that perform best on a post-training dataset,\nthen plot predictions on a newly sampled test function of the same function type as the post-training type (noted\nin the second column). In this table, we also include mean performance over 256 randomly sampled test functions\nof the same type (rightmost column). All three of the regimes we have discussed in the main paper can be observed here:",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 76,
+    "total_chunks": 87,
+    "char_count": 1490,
+    "word_count": 252,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a9432a8-7b3e-467a-8939-d688bb725ccd",
+    "text": "1) Needle in haystack regime: Without pretraining (Table 5, top two rows), the Gaussian perturbations do not\nsample effective models. We show this for two different weight initializations: Xavier initialization (Glorot &\nBengio, 2010) and Kaiming initialization (He et al., 2015). In both cases, we need to ramp up the σ value of the\nperturbations to see any visible effect. Nonetheless, even with large engough σ to see interesting variation in the\npredictions, the variation does not contain good continuations of the test functions. 2) Thicket regime: With pretraining on mixed signal types (Table 5, row 3, Table 6 rows 1-3), the base model fails\nto reliably predict the correct type given a limited context; after RandOpt post-training on this type, the results\nimprove. 3) Plateau regime: If you pretrain on just a single function type and test on this type (Table 5 bottom row,\nleft column; Table 6 rows 4-5), then the base model already is at ceiling performance and further adaptation is\nunnecessary. G Additional discussion on Sandbagging In this section, we provide a more detailed discussion on why we think the performance improvements of RandOpt\ncannot be attributed to the alleviation of \"sandbagging.\" Sandbagging refers to a phenomenon where a model\nunderperforms relative to its true underlying capabilities, perhaps as a side-effect of safety alignment or instruction\ntuning that penalizes certain types of outputs. A potential concern is that if the baseline model's performance\nis artificially suppressed by such alignment, any perturbation might simply bypass these constraints to reveal\npre-existing latent performance. Evidence from Transparent Base Models. The strongest evidence against the sandbagging hypothesis comes from\nour results on the OLMo3-7B Base model.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 77,
+    "total_chunks": 87,
+    "char_count": 1790,
+    "word_count": 276,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4ca21a3f-02ae-4128-88c2-26d1882a572a",
+    "text": "Unlike many proprietary models whose training recipes are unknown,\nOLMo's training data, code, and training pipeline are open-source. This transparency allows us to verify that the\nbase model is not subject to explicit sandbagging. As shown in Table 4, RandOpt is still quite effective on this Inconsistency with Strategic Behavior in Small Models. Sandbagging is generally considered a property of\nlarger models. However, RandOpt yields consistent gains across all scales. For instance, on the Qwen2.5-0.5B-Inst\nmodel, RandOpt improves GSM8k performance from 39.9% (Base) to 61.2%.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 78,
+    "total_chunks": 87,
+    "char_count": 582,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8ab31401-5b11-4569-b5f6-742bf5137443",
+    "text": "Comparison with Test-Time Majority Voting (TT-MV). If the models were simply sandbagging by occasionally\nproviding wrong answers despite \"knowing\" the correct ones, test-time techniques like Majority Voting (TTMV) might effectively recover that latent performance. Our experimental results in Table 4 show that RandOpt\nconsistently outperforms TT-MV across most benchmarks. H Derivation of Spectral Discordance Bounds Here we provide the formal proof for the theoretical bounds of the Spectral Discordance metric D defined in the\nmain text. For any valid correlation matrix C ∈RM×M, the Spectral Discordance D = 1 − 1 ∑j̸=k Cjk is M(M−1)\nbounded by:\n0 ≤D ≤ (10)\nM −1 Let ¯ρ denote the average off-diagonal correlation: ¯ρ = ∑ Cjk (11) M(M −1) j̸=k By definition, D = 1 −¯ρ. We analyze the bounds of ¯ρ.\n1. Lower Bound of D (Upper Bound of ¯ρ): The maximum value of any correlation coefficient is 1. If all tasks\nare perfectly correlated (Cjk = 1, ∀j, k), then ¯ρ = 1, yielding the minimum discordance: This corresponds to the Generalist regime where all tasks ranks are identical.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 79,
+    "total_chunks": 87,
+    "char_count": 1080,
+    "word_count": 179,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a7a2d081-0a74-4924-a412-e56ee0ecf65f",
+    "text": "Upper Bound of D (Lower Bound of ¯ρ): The correlation matrix C must be positive semi-definite (PSD). Consider the quadratic form with the all-ones vector 1 ∈RM: Expanding this quadratic form:\nM M M\n∑ ∑ Cij = ∑ Cii + ∑ Cjk ≥0 (14)\ni=1 j=1 i=1 j̸=k Since diagonal elements Cii = 1:\nM + M(M −1) ¯ρ ≥0 (15) Solving for ¯ρ:\n¯ρ ≥− (16)\nM −1\nSubstituting this into the definition of D: 1 1 M\nDmax = 1 − − = 1 + = (17)\nM −1 M −1 M −1",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 80,
+    "total_chunks": 87,
+    "char_count": 425,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2b38381b-2cf1-4cb8-b7c9-d34202d8f4f0",
+    "text": "This upper bound is achieved when the tasks are maximally anti-correlated (simplex structure). In our experiments\n(M = 7), the theoretical maximum is D ≈1.17. We set up the prompts for different datasets in our experiments following EvalScope (Team, 2024) and Verl (Sheng\net al., 2024). Using the numbers {numbers}, create an equation that equals {target}. You can use basic arithmetic operations (+, -, *, /) and each number can only be used once. Show your work in <work> . . . </work> tags. And return the final answer in <answer> . . . </answer> tags, for example <answer> (1 + 2) / 3 </answer>. GSM8k, Math-500, OlympiadBench",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 81,
+    "total_chunks": 87,
+    "char_count": 630,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cdc378a6-05a5-413c-8bcc-aa681f26b482",
+    "text": "Let's think step by step and output the final answer after ####. You are an expert Python programmer, and here is your task: {question} Your code should pass these tests:\n{tests} User Template: You are an expert organic chemist. Your task is to classify chemical reactions into one of 10 standard reaction categories based on the transformation type. Reaction Classes: 1: Heteroatom\nalkylation/arylation - N, O, S attacking C (e.g., SN2, ether formation).\n2: Acylation - Forming C=O bonds with N, O, S (e.g., amide, ester formation).\n3: C-C bond formation - New C-C bonds (e.g., Suzuki, Heck, Grignard).\n4: Heterocycle formation - Creating rings with N, O, S.\n5: Protections - Adding protecting groups (Boc, Bn, TBS, etc.).\n6: Deprotections - Removing protecting groups.\n7: Reductions - Adding H, removing O (e.g., ketone→alcohol, nitro→amine)\n8: Oxidations - Adding O, removing H (e.g., alcohol→ketone).\n9: Functional group interconversion - Changing one FG to another.\n10: Functional group addition - Adding new FG to molecule (e.g., halogenation)\"\nClassify this reaction: Reactants » Product: {rxn_smiles} Analyze the key transformation and output the\nclass number (1-10) in <answer>X</answer> tags.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 82,
+    "total_chunks": 87,
+    "char_count": 1202,
+    "word_count": 186,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb277c34-8d18-4f8a-bef0-e0101c74d43f",
+    "text": "User Template: Below are 5 sentences from a story, but they are in the wrong order. Please arrange them in the correct chronological order. Title: {title}\nSentence A: {sentence1} Sentence B: {sentence2} Sentence C: {sentence3} Sentence D: {sentence4}\nSentence E: {sentence5}\nOutput the correct order as comma-separated letters (e.g., B,A,D,E,C). Only output the letters, nothing else. Look at the image and answer the question. Question: {question}\nPlease reason step by step, and put your final answer within boxed{}.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 83,
+    "total_chunks": 87,
+    "char_count": 518,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e6e98bad-75d4-4751-8206-eedd891f9410",
+    "text": "Beyond language models, we observe similar effects in diffusion models. Here, one can think of \"color thickets,\"\nwhere certain regions of parameter space preferentially generate images with specific color palettes or visual styles. These differences may not reflect fundamentally distinct generative mechanisms, yet they still produce dense\nclusters of high-scoring samples under color- or style-sensitive metrics. For instance, if the evaluation rewards blue-dominant images, a region that consistently generates bluish\noutputs forms a \"blue thicket.\" More generally, thickets may arise not only from differences in reasoning, but also\nfrom biases in generative tendencies such as color, texture, or style. Table 4: Experimental results on reasoning benchmarks. We compare RandOpt against RL-based methods (PPO, GRPO),\nEvolution Strategies (ES), Best-of-N and test-time majority voting (TT-MV) across model scales. Results are averaged over 3\nruns with standard deviation shown in gray. Bold indicates best performance, underlined indicates runner-up.",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 84,
+    "total_chunks": 87,
+    "char_count": 1052,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f0b47c49-cd63-40fb-b872-f83304f06228",
+    "text": "Details of the\nhyperparameters for all methods are provided in Appendix E.3. Model Method Countdown GSM8k MATH-500 OlyBench MBPP ROCStories USPTO\n(math) ↑ (math) ↑ (math) ↑ (math) ↑ (prog.) ↑ (writing) ↑ (chemistry) ↑ Base 0.1±0.1 39.9±0.0 19.8±0.0 4.2±0.4 30.9±0.2 22.0±0.0 29.9±0.3\nTT-MV† 0.3±0.3 41.0±0.1 29.2±0.5 6.7±0.2 37.0±0.3 19.5±0.2 30.2±0.2\nBest-of-N‡ 5.9±2.0 40.5±1.4 34.5±0.5 10.5±0.3 34.9±1.3 20.3±0.3 26.8±1.2\nQwen2.5- PPO 14.8±2.8 43.2±1.2 33.4±1.7 16.1±0.0 37.8±3.0 19.1±0.8 31.2±0.6\n0.5B-Inst GRPO 13.0±0.0 48.4±0.8 33.7±0.9 6.9±0.1 42.8±3.7 30.9±1.1 31.7±0.2\nES 14.9±1.6 42.6±0.7 30.5±0.7 16.4±0.2 45.1±3.8 32.0±0.8 31.6±0.3 RandOpt 8.4±0.3 54.1±0.8 35.3±0.6 15.8±0.7 46.2±0.4 32.2±0.4 32.2±0.9\nES + TT-MV 11.2±0.8 61.2±0.5 41.3±0.5 13.5±0.7 48.9±0.7 30.5±0.9 32.5±0.4 Base 6.7±0.1 58.8±0.2 43.2±0.1 13.4±0.4 62.3±0.2 46.7±0.1 30.2±0.5\nTT-MV† 30.8±0.4 69.1±0.3 50.0±0.4 15.9±0.5 68.0±0.3 43.5±0.5 33.0±0.4\nBest-of-N‡ 19.5±0.2 65.4±1.9 53.0±0.6 20.0±0.3 69.5±0.3 42.2±0.8 32.7±1.1\nQwen2.5- PPO 27.0±0.0 71.6±0.7 55.9±0.3 26.3±0.1 68.5±0.4 51.8±0.8 31.9±0.2\n1.5B-Inst GRPO 27.5±0.7 72.1±0.7 54.1±0.5 18.8±0.8 70.2±0.4 53.6±1.3 31.8±0.0\nES 44.2±0.0 71.7±0.9 54.1±2.8 27.2±1.2 69.9±0.6 60.2±0.6 32.0±0.2 RandOpt 52.7±0.5 76.4±0.3 59.7±0.6 30.4±0.7 69.6±0.5 48.5±0.7 34.3±0.5\nES + TT-MV 39.7±0.3 80.4±0.8 60.7±0.7 28.9±0.7 70.2±0.6 59.1±0.2 32.2±0.6 Base 10.0±0.1 79.8±0.4 58.6±0.2 24.5±0.2 69.5±0.3 54.7±0.1 38.5±0.5\nTT-MV† 12.8±0.4 82.5±0.2 60.8±0.2 21.8±0.3 74.5±0.5 57.3±0.4 43.2±0.7\nBest-of-N‡ 28.5±1.2 83.3±1.4 62.5±0.8 28.0±0.6 73.0±0.9 55.0±0.7 44.3±1.0\nQwen2.5- PPO 35.3±0.4 83.1±0.2 64.1±1.1 34.4±0.2 76.3±1.0 49.0±0.6 44.7±5.8\n3B-Inst GRPO 32.6±0.1 83.2±0.2 64.6±1.0 29.0±0.0 77.0±0.9 56.3±4.4 49.7±2.1\nES 55.6±0.5 85.8±5.1 61.9±0.3 36.4±0.1 77.2±1.2 64.5±0.6 52.9±1.0 RandOpt 58.4±0.2 87.1±0.8 68.7±0.7 39.2±0.6 75.9±0.6 56.5±0.3 42.3±0.3\nES + TT-MV 61.9±0.8 87.9±0.9 67.7±0.7 39.7±0.4 76.3±1.1 55.0±0.4 39.8±0.3 Base 64.8±0.2 82.9±0.4 60.6±0.1 28.7±0.1 65.9±0.2 64.0±0.3 27.2±0.4\nTT-MV† 66.8±0.3 81.4±0.4 61.5±0.5 26.5±0.4 60.5±0.5 63.2±0.4 30.2±0.5\nBest-of-N‡ 67.5±0.8 85.0±1.2 63.0±0.7 30.5±0.5 64.0±0.9 63.5±0.6 32.0±1.0\nOLMo3- PPO 69.0±0.1 88.4±0.4 63.1±0.3 28.0±0.2 67.7±0.2 64.7±1.6 40.2±3.2\n7B-Inst GRPO 68.5±0.7 87.0±0.2 63.5±0.4 27.9±0.6 70.8±2.2 65.8±0.6 51.0±0.3\nES 71.0±0.8 87.2±0.2 69.9±1.0 33.1 ±0.8 72.0±0.5 65.7±1.4 45.2±1.0 RandOpt 85.0±0.7 89.5±0.2 73.7±0.4 35.4±0.4 75.1±0.9 64.5±0.3 43.0±0.5\nES + TT-MV 75.6±0.7 90.2±0.6 62.0 ±1.1 44.7±0.3 72.5±0.6 66.0±0.8 46.3±0.6 Base 9.8±0.4 78.5±0.4 31.3±0.3 13.9±0.3 29.1±0.3 24.1±0.1 29.0±0.3\nTT-MV† 11.5±0.3 79.5±0.2 36.2±0.2 15.7±0.2 39.1±0.3 42.2±0.2 35.4±0.2\nBest-of-N‡ 18.0±0.5 82.0±1.0 45.0±0.8 20.5±0.4 38.0±1.2 50.0±0.8 38.0±0.9\nOLMo3- PPO 21.9±0.7 82.8±0.9 51.8±0.7 22.9±0.5 57.9±2.0 64.8±0.3 49.8±0.3\n7B GRPO 28.8±0.1 78.2±0.3 52.0±0.9 6.9±0.6 58.5±2.8 62.2±2.8 48.0±0.5\nES 26.0±0.3 89.1±0.6 61.0±4.9 30.2±0.4 61.8±2.3 64.4±1.0 48.1±1.5 RandOpt 30.2±0.2 85.0±0.3 59.3±0.5 28.9±0.5 40.5±0.2 64.5±0.3 44.3±0.3\nES + TT-MV 23.6±0.2 86.4±0.5 69.0±0.5 43.3±0.2 56.8±0.6 76.3±0.6 38.1±0.8 Base 10.8±0.2 79.8±0.3 47.0±0.0 19.2±0.3 56.4±0.0 51.8±0.0 19.5±0.3\nTT-MV† 25.6±0.3 72.2±0.4 49.2±0.3 24.5±0.5 59.5±0.4 53.2±0.4 25.4±0.2\nBest-of-N‡ 40.0±1.0 83.5±1.2 52.0±0.9 23.0±0.6 60.0±1.0 54.0±0.8 28.0±1.1\nLlama3.1- PPO 9.9±0.1 81.6±4.7 45.5±2.0 16.1±0.6 55.2±1.5 57.8±1.3 32.9±4.6\n8B-Inst GRPO 10.0±0.2 80.2±1.1 45.1±1.4 23.7±0.9 61.0±1.9 62.2±2.8 35.0±0.7\nES 60.3±0.5 82.4±0.7 39.1±1.7 22.3±0.5 64.8±0.8 68.1±5.5 34.1±2.0 RandOpt 63.6±0.4 86.7±0.6 59.5±0.8 32.1±0.0 65.2±0.9 59.0±0.7 41.0±0.6\nES + TT-MV 62.5±0.9 87.5±0.6 62.0±0.7 32.1±0.5 63.1±0.8 65.2±0.7 64.5±0.7\n†TT-MV: Test-Time Majority Vote over test samples from a single trained model with different seeds.\n‡Best-of-N: Pass@k metric with k=50. Table 5: RandOpt on 1D signals (approximation).",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 85,
+    "total_chunks": 87,
+    "char_count": 3839,
+    "word_count": 472,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2673ded1-580e-4b8e-9371-8a7b41b6bc6e",
+    "text": "Each cell corresponds to a pretraining–post-training pair. In this experiment\nwe plot results on the same function that we fit to during post-training; this is a test of apprpoximation only, not generalization\nto new functions. We also compare to Xavier initialization (Glorot & Bengio, 2010) and Kaiming initialization He et al. (2015). For each pretraining method, we pick a perturbation noise scale, σ that is large enough to show functional variation; this value\nis shown underneath the pretraining method name. Post-training\nOne linear function One square wave One sinusoid\nPretraining None (Xavier init)\nσ = 0.05 None (Kaiming init)\nσ = 0.05 Table 6: RandOpt on 1D signals (generalization). Each row corresponds to a pretraining–post-training pair. For all rows, the\ntest set functions are of the post-trained type, and we show three random test examples. Rightmost column shows the average\nmean squared error over the entire test set, for each method. Pretraining Post-training Test set predictions Test set performance Sinusoids Square waves Square waves Square waves Table 7: RandOpt on Text-to-Image models (Train Set).",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 86,
+    "total_chunks": 87,
+    "char_count": 1129,
+    "word_count": 174,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "491c6d7e-ebf7-4c5e-af5a-655a2d84e862",
+    "text": "We use the Stable Diffusion XL model (Podell et al., 2023). Images are\ngenerated from a text prompt. RandOpt selects the top-K models by scoring generated images with a target text (e.g., \"blue\")\nusing GPT-5.2, and performs mean ensembling over the K models at each denoising step. Kyoto street in the rain, A glass of iced coffee on a\nA corgi astronaut, full body, Boston skyline at sunset, A bowl of ramen with steam\npedestrians with wooden table by a\ncentered. . . Charles River in foreground rising, chopsticks lifting. . .\numbrellas. . . window. . . Table 8: RandOpt on Text-to-Image models (Test Set). Top-K selected on the training set and evaluated on the test set. A dog on Mars, red rocky A sailboat cutting through A busy Tokyo subway\nA giant octopus emerging A vintage motorcycle parked\nlandscape, astronaut choppy ocean waves platform during rush hour,\nfrom the ocean near. . . beside a brick wall. . .\nhelmet. . . under. . . commuters. . .",
+    "paper_id": "2603.12228",
+    "title": "Neural Thickets: Diverse Task Experts Are Dense Around Pretrained Weights",
+    "authors": [
+      "Yulu Gan",
+      "Phillip Isola"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12228v1",
+    "chunk_index": 87,
+    "total_chunks": 87,
+    "char_count": 953,
+    "word_count": 170,
+    "chunking_strategy": "semantic"
+  }
+]

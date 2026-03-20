@@ -1,0 +1,781 @@
+[
+  {
+    "chunk_id": "fb01c7c0-ba34-41b9-a2b3-a5090c88f1a5",
+    "text": "Accepted at the Gen2 Workshop at ICLR 2026 PROTEIN COUNTERFACTUALS VIA DIFFUSIONGUIDED LATENT OPTIMIZATION Weronika Kłos1,2 Sidney Bender1,2 Lukas Kades3\n1Machine Learning Group, Technische Universit¨at Berlin, Berlin, Germany\n2Berlin Institute for the Foundations of Learning and Data (BIFOLD)\n3BASF Digital Solutions GmbH, Ludwigshafen am Rhein, Germany\n{w.klos,s.bender}@tu-berlin.de lukas.kades@basf.com ABSTRACT2026\nDeep learning models can predict protein properties with unprecedented accuracy\nbut rarely offer mechanistic insight or actionable guidance for engineering improved variants. When a model flags an antibody as unstable, the protein engineerMar is left without recourse: which mutations would rescue stability while preserving\nfunction? We introduce Manifold-Constrained Counterfactual Optimization\n11 for Proteins (MCCOP), a framework that computes minimal, biologically plausible sequence edits that flip a model's prediction to a desired target state. MCCOP\noperates in a continuous joint sequence–structure latent space and employs a pretrained diffusion model as a manifold prior, balancing three objectives: validity\n(achieving the target property), proximity (minimizing mutations), and plausibility (producing foldable proteins). We evaluate MCCOP on three protein engineering tasks – GFP fluorescence rescue, thermodynamic stability enhancement, and[cs.LG] E3 ligase activity recovery – and show that it generates sparser, more plausible\ncounterfactuals than both discrete and continuous baselines. The recovered mutations align with known biophysical mechanisms, including chromophore packing\nand hydrophobic core consolidation, establishing MCCOP as a tool for both model\ninterpretation and hypothesis-driven protein design. Our code is publicly available\nat github.com/weroks/mccop. Deep learning has transformed computational protein science. Structure prediction models achieve\nnear-experimental accuracy (Jumper et al., 2021; Abramson et al., 2024), protein language models\ncapture evolutionary grammar (Lin et al., 2023; Team et al., 2024), and generative frameworks\ndesign novel folds from scratch (Watson et al., 2023; Ingraham et al., 2023). Yet these models\nremain oracles rather than guides: when a predictor flags a candidate as \"aggregation-prone\", the\nengineer receives no indication of which mutations would resolve the problem.arXiv:2603.10811v1\nThis paper addresses the need for algorithmic recourse: given a protein P predicted to lack a desired\nproperty ytarget, what is the minimal modification such that the prediction changes? This maps\ndirectly to counterfactual explanations (Wachter et al., 2017). Applied to a model of uncertain\nquality, counterfactuals expose reliance on spurious correlations; applied to a robust model, they\ngenerate testable hypotheses for wet-lab validation.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 0,
+    "total_chunks": 41,
+    "char_count": 2835,
+    "word_count": 371,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3f4f4754-67e8-43aa-b3a8-4766ec69bf71",
+    "text": "Translating counterfactual methods to proteins introduces two fundamental challenges. First, the\nmanifold constraint: Unlike images, proteins are governed by strict epistatic constraints – a single core mutation can abolish folding while a compensatory mutation restores it. Naive gradient\noptimization produces adversarial or invalid examples that satisfy the predictor but correspond to\nunfoldable proteins. Second, discreteness and geometry: Proteins are discrete sequences whose\nfunction emerges from continuous 3D geometry. Gradient-based methods require continuous relaxation, while naively treating them as sequences ignores spatial relationships: a mutation can be\ncompensatory for another one only if the residues are proximal in 3D space, a property not directly\napparent from the 1D sequence. Accepted at the Gen2 Workshop at ICLR 2026 We address both challenges with MCCOP, a gradient-based framework operating in a continuous\njoint sequence–structure embedding space that uses a pretrained diffusion model as a manifold prior. Our contributions are:",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 1,
+    "total_chunks": 41,
+    "char_count": 1062,
+    "word_count": 146,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "79f43d73-58e9-4c96-8f26-8892affd4253",
+    "text": "MCCOP combines predictor-guided gradient descent with diffusion-based\nmanifold projection and gradient-sensitivity masking to produce sparse, valid, and plausible\nprotein counterfactuals, without task-specific retraining of the generative model. Quantitative evaluation. On three benchmarks, MCCOP achieves near-perfect success\nrates with 3–5× fewer mutations than discrete baselines and near-zero adversarial rates. Mechanistic interpretability. MCCOP rediscovers known functional motifs and in several\ncases exactly recovers ground-truth counterfactual sequences from held-out test data. An overview of our approach is depicted in Figure 1. Sparse Gradient Step Counterfactual Protein\n(eg. ...TTLSNGVQ... ...TTLSYGVQ... Joint Sequence-Structure Latent\nSpace",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 2,
+    "total_chunks": 41,
+    "char_count": 759,
+    "word_count": 90,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d9ee3554-1132-4ccb-8efb-87d5c4b2cbb5",
+    "text": "Figure 1: Overview of MCCOP. A non-fluorescent GFP variant is mapped to a continuous joint\nsequence–structure latent space via a pretrained autoencoder. After smoothing the classification\nboundary, the counterfactual embedding is optimized by alternating between (1) a sparse gradient\nstep maximizing target class probability and (2) manifold projection using a pretrained diffusion\nmodel (DiMA). The counterfactual shown is a rediscovered sample from the held-out test set (red\nsticks denote the mutated residue).",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 3,
+    "total_chunks": 41,
+    "char_count": 514,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "64092055-9eb5-4f85-9358-d97a1f91ecd4",
+    "text": "Protein language models and embeddings. Models such as ESM-2 (Lin et al., 2023) and ESMC (Team et al., 2024) learn unsupervised representations from millions of sequences. Recent multimodal embeddings go further: CHEAP (Lu et al., 2025) compresses ESMFold (Lin et al., 2023)\nactivations into a joint sequence–structure representation whose decoder maps back to both amino\nacid sequences and atomistic coordinates. This bidirectional mapping is central to our approach.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 4,
+    "total_chunks": 41,
+    "char_count": 468,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3f1cf4c2-d491-4c61-85ed-2d735bbd922b",
+    "text": "Diffusion and generative protein design. EvoDiff (Alamdari et al., 2023) and\nDiMA (Meshchaninov et al., 2024) apply diffusion to discrete sequences or continuous embeddings; RFdiffusion (Watson et al., 2023) and folding diffusion (Wu et al., 2024) operate\nin SE(3) space (see Wang et al. (2025) for an overview). Most generative methods focus on\nconditional or unconditional sampling. MCCOP differs by using diffusion not for generation but as\na regularizer within an optimization loop – conceptually an inversion of classifier guidance. Explainability in the protein domain. Prior work relies on attention visualization (Vig et al.,\n2020), feature attribution (Sibli et al., 2025; Dickinson & Meyer, 2022), gradient-based structure\nperturbation (Tan & Zhang, 2023), or sparse autoencoders applied to pLMs (Gujral et al., 2025). Unlike passive attribution, MCCOP provides active recourse: not just why a protein is predicted to\nfail, but how to rescue it. Accepted at the Gen2 Workshop at ICLR 2026 Counterfactual explanations. Counterfactuals, formalized for ML by Wachter et al. (2017), seek\nminimal input modifications that change a model's output – a concept not to be confused with\ncausal counterfactual inference in the structural causal model (SCM) sense (Pearl, 2009). Methods\nfor tabular data (Mothilal et al., 2020; Russell, 2019) are well established. For high-dimensional\ninputs, diffusion-based approaches (DVCE (Augustin et al., 2022), DIME (Jeanneret et al., 2022),\nDiff-ICE (Pegios et al., 2025), FastDiME (Weng et al., 2024), ACE (Jeanneret et al., 2023)) generate on-manifold counterfactuals via guided denoising, with extensions to diverse sets (Bender\net al., 2025; Bender & Morik, 2026), graphs (Bechtoldt & Bender, 2026; Chen et al., 2023), and\ntext (Sarkar, 2024). GAN/VAE-based predecessors include DiVE (Rodriguez et al., 2021) and Diffeomorphic Counterfactuals (Dombrowski et al., 2024). To our knowledge, no prior work applies\ndiffusion-guided counterfactual optimization to proteins. The closest biological relatives – latent\nfitness optimization (Ngo et al., 2024; Castro et al., 2022) – seek global optima rather than minimal\nedits and train task-specific generative models.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 5,
+    "total_chunks": 41,
+    "char_count": 2204,
+    "word_count": 322,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7bfefd1a-cf61-468b-a1ca-b4017b4ecc64",
+    "text": "We now describe each component of MCCOP: the latent representation, predictor smoothing, and\nthe counterfactual optimization loop itself. 3.1 PROBLEM FORMULATION Let M ⊂RL′×D denote the manifold of biologically plausible protein embeddings. Given a predictor fθ : M →Y and an input embedding z0 ∈M with prediction y0 = fθ(z0), we seek: z∗= arg min [Ltask(fθ(z), ytarget) + λ d(z, z0)] , (1)\nz∈M where d enforces proximity to z0 and z ∈M ensures plausibility. Without the manifold constraint,\noptimization yields adversarial examples (Dombrowski et al., 2024). We enforce it implicitly using\nthe score function of a diffusion model trained on protein embeddings, whose denoising step acts as\na projection ΠM, interleaved with gradient steps on Eq. 1. 3.2 LATENT REPRESENTATION We map sequences S ∈AL to continuous representations z ∈RL′×D using CHEAP (Lu et al.,\n2025). The encoder E compresses ESMFold activations into embeddings jointly capturing evolutionary and structural information. The decoder D maps z back to both a sequence ˆS = Dseq(z) and\nbackbone coordinates ˆΩ= Dstruct(z), with near-perfect round-trip reconstruction (>99% residue\naccuracy). Crucially, D is a position-wise MLP – each token ˆSi depends only on zi – enabling\nsequence-level sparsity via row-wise latent masking (§3.4.2). Both encoder and decoder are frozen\nthroughout. 3.3 PREDICTOR SMOOTHING",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 6,
+    "total_chunks": 41,
+    "char_count": 1373,
+    "word_count": 209,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "94dbb519-8698-44dc-a6b1-ea33b2ec76ce",
+    "text": "Our framework is model-agnostic: any differentiable predictor on CHEAP embeddings can be\nused. As a test-bed we train a shallow MLP fθ on flattened embeddings (architecture details in\nAppendix A). A non-smooth fθ produces high-frequency gradients guiding optimization toward adversarial perturbations. Motivated by the observation of Bender et al. (2025), that smooth classifiers yield more reliable counterfactual optimization, we smooth fθ via four complementary mechanisms: (1) spectral\nnormalization (Miyato et al., 2018) on all linear layers; (2) Jacobian regularization (Jakubovitz &\nGiryes, 2018), penalizing ∥∇zfθ(z)∥2F ; (3) Softplus activations (β = 1); and (4) embedding-space\nadversarial augmentation via FGSM (Goodfellow et al., 2014), where perturbations decoding to\nthe original sequence are added with the original label, teaching invariance to semantically null perturbations. As shown in Table 1, this reduces gradient norms by up to 4× while maintaining or\nimproving AUROC.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 7,
+    "total_chunks": 41,
+    "char_count": 992,
+    "word_count": 140,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c441c310-7bcf-443f-b0c4-24780ddfbbfc",
+    "text": "Accepted at the Gen2 Workshop at ICLR 2026 Algorithm 1 MCCOP: Manifold-Constrained Counterfactual Optimization for Proteins\nRequire: Embedding zorig, predictor fθ, diffusion projector Πϕ, target label ˜y, sparsity k, projection\nstrength α, margin m, learning rate η, max steps Tmax, confidence threshold τ\n1: z0 ←zorig\n2: for t = 0, 1, . . . , Tmax −1 do\n3: Compute LCF(zt) via Eq. 2\n4: Compute per-position sensitivity: si = ∥∇ziLCF∥2\n5: Construct top-k mask: Mi = 1[si ≥s(k)]\n6: Gradient step: z′t = zt −η · (M ⊙∇zLCF)\n7: Hard reset: z′t[i] ←zorig[i] for all i where Mi = 0\n8: Manifold projection: zt+1 = (1 −α) z′t + α Πϕ(z′t)\n9: if σ(˜y · fθ(zt+1)) ≥τ and Dseq(zt+1) ̸= Sorig then\n10: return zt+1 {Early stopping: valid counterfactual found}\n11: end if\n12: end for\n13: return zTmax {Return best attempt} 3.4 COUNTERFACTUAL OPTIMIZATION Given embedding zorig with predicted class yorig, we seek z∗such that fθ(z∗) = ytarget ̸= yorig,\nminimizing decoded mutations while staying on M. Algorithm 1 summarizes the procedure. 3.4.1 OBJECTIVE FUNCTION At step t, we minimize:\nLCF(zt) = log 1 + exp(m −˜y · fθ(zt)) +λdist ∥zt −zorig∥22 (2)\n| where ˜y ∈{−1, +1} is the signed target label, m > 0 is a confidence margin, and λdist controls the\nproximity-validity trade-off. 3.4.2 GRADIENT-BASED SPARSITY MASKING We compute per-position sensitivity si = ∥∇ziLCF∥2 and construct a binary mask selecting the\ntop-k positions:\nMi = 1 si ≥s(k) . (3)\nGradients are applied only at masked positions; non-masked positions are hard-reset to zorig. Because D is position-wise, row-wise masking in latent space directly enforces sequence-space sparsity. The mask can alternatively be user-defined for constrained editing (e.g., fixing catalytic\nresidues).",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 8,
+    "total_chunks": 41,
+    "char_count": 1737,
+    "word_count": 285,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ad97a4fe-db45-423d-a9e2-efdc7c64e7d5",
+    "text": "3.4.3 MANIFOLD PROJECTION We regularize the trajectory using DiMA (Meshchaninov et al., 2024) as an implicit manifold prior. At each step, we partially diffuse to noise level tdiff, denoise to obtain Πϕ(z′t), and blend:\nzt+1 = (1 −α) z′t + α Πϕ(z′t), (4) where α ∈[0, 1] controls projection strength (α = 0: unconstrained; α = 1: full projection, which\ndestabilizes optimization). We use α = 0.3 in practice (ablation in Appendix D). 3.5 EXPERIMENTAL SETUP We evaluate on three datasets with diverse physical origins (statistics in Appendix G): (1) TAPE\nFluorescence (Sarkisyan et al., 2016; Rao et al., 2019): GFP homologs with bimodal fluorescence,\nbinarized into bright/dark classes (optimize dark→bright). (2) TAPE Stability (Rocklin et al., Accepted at the Gen2 Workshop at ICLR 2026 Table 1: Predictor AUROC and average L2 gradient norm before and after smoothing (mean ± std,\n3 seeds). Dataset AUROC (↑) Avg. L2 norm (↓)\nBefore After Before After Fluorescence 0.99 ± 0.00 0.99 ± 0.00 2.21 ± 0.19 1.10 ± 0.10\nStability 0.94 ± 0.00 0.98 ± 0.01 1.38 ± 0.13 0.36 ± 0.08\nActivity 0.82 ± 0.00 0.93 ± 0.01 0.36 ± 0.06 0.33 ± 0.04 2017): proteolysis-based stability measurements; we remove the middle 33% quantile to create stable/unstable classes (optimize unstable→stable). (3) Ube4b Activity (Starita et al., 2013): ∼100k\nmutations in the U-box domain mapped to auto-ubiquitination activity; middle 33% removed, active/inactive classes defined by top/bottom quantiles (optimize inactive→active). We compare against: (1) Stochastic Hill Climbing: greedy random single-site mutations; (2) Genetic Algorithm: population-based evolution with edit-distance-penalized fitness; (3) Gradient\nDescent: unconstrained latent optimization without smoothing or manifold projection.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 9,
+    "total_chunks": 41,
+    "char_count": 1770,
+    "word_count": 267,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1d375369-074c-49dd-9e56-399356ac2b8d",
+    "text": "Details in\nAppendix E. 3.5.3 EVALUATION METRICS We assess validity and sparsity via success rate (fraction achieving target class), Hamming distance\n(number of mutations), and adversarial rate (fraction of successful counterfactuals corresponding to\nthe same sequence). Structural plausibility is evaluated using ESM3-predicted pLDDT confidence\nand radius of gyration (Rg). Physicochemical plausibility is monitored via GRAVY hydrophobicity, instability index, and a binary solubility proxy. We evaluate on complete test sets, excluding samples misclassified by the predictor. This results in\nn = 2093, 2209, and 2600 samples for the stability, fluorescence, and activity datasets respectively. Results are mean ± std over three seeds.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 10,
+    "total_chunks": 41,
+    "char_count": 735,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "10daa993-9866-4278-9214-18e1b0bff36e",
+    "text": "4.1 PREDICTOR SMOOTHING IMPROVES ROBUSTNESS WITHOUT SACRIFICING ACCURACY Table 1 shows that smoothing reduces gradient norms by up to 4× while maintaining or improving\nAUROC. The largest gain is on the activity dataset (AUROC: 0.82→0.93), likely because Jacobian\nregularization and adversarial augmentation reduce overfitting to noisy labels. 4.2 MCCOP PRODUCES VALID AND SPARSE COUNTERFACTUALS Table 2 reveals three key findings. (1) Unconstrained gradient optimization is entirely adversarial: every counterfactual decodes to the original sequence, confirming exploitable high-frequency\nartifacts and validating our smoothing and projection pipeline. (2) MCCOP achieves high success\nwith minimal edits: 100% success on stability and activity with 2.3–2.5 mutations versus 6.2–10.9\nfor discrete baselines. MCCOP reaches early stopping after a median of 2–10 steps, while hill climbing exhausts the budget in >95% of cases. (3) Fluorescence is harder: MCCOP's 19% success rate\nreflects the requirement for precise chromophore geometry potentially exceeding our sparsity budget\n(k = 5), yet successful counterfactuals are the sparsest (1.4 mutations) with near-zero adversarial\nrate. Edit distances for MCCOP and the genetic algorithm are tunable via k/λdist and fitness weighting,\nrespectively; MCCOP's advantage lies in the favorable trade-off between success rate, sparsity, and\nplausibility. Accepted at the Gen2 Workshop at ICLR 2026 Table 2: Success rate, adversarial rate, and edit distance (mean ± std, 3 seeds). Edit distance computed on successful counterfactuals only (confidence ≥0.95, edit distance ≥1). Discrete methods cannot produce adversarial examples by construction, so no values are bolded in this column.\n†Gradient Descent achieves 100% adversarial rate; edit distance is undefined. Dataset Method Success Rate (↑) Adv. Rate (↓) Edit Dist. (↓) Genetic Algorithm 0.55 ± 0.01 0.00 ± 0.00 7.76 ± 0.06\nGradient Descent† 1.00 ± 0.00 1.00 ± 0.00 − Stability\nStochastic Hill Climb 0.23 ± 0.00 0.00 ± 0.00 9.46 ± 0.18\nMCCOP (ours) 1.00 ± 0.00 0.03 ± 0.00 2.32 ± 0.01 Genetic Algorithm 0.36 ± 0.30 0.00 ± 0.00 5.37 ± 3.09\nGradient Descent† 1.00 ± 0.00 1.00 ± 0.00 − Fluorescence\nStochastic Hill Climb 0.13 ± 0.00 0.00 ± 0.00 7.79 ± 0.30\nMCCOP (ours) 0.19 ± 0.00 0.01 ± 0.00 1.37 ± 0.01",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 11,
+    "total_chunks": 41,
+    "char_count": 2297,
+    "word_count": 350,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b9b22293-81d3-4e9e-9938-4ee26fde4dda",
+    "text": "Genetic Algorithm 0.17 ± 0.15 0.00 ± 0.00 6.24 ± 3.67\nGradient Descent† 1.00 ± 0.00 1.00 ± 0.00 − Activity\nStochastic Hill Climb 0.03 ± 0.00 0.00 ± 0.00 10.91 ± 0.02\nMCCOP (ours) 1.00 ± 0.00 0.02 ± 0.02 2.46 ± 0.33 4.3 STRUCTURAL AND PHYSICOCHEMICAL PLAUSIBILITY A Original Counterfactual\npLDDT (Confidence) Hydrophobicity (GRAVY) Instability Index Radius of Gyration (Å)\n0.9\n0.8 (GFP) 0.3 35 24\n0.7 0.4 22\n0.6 0.5 20\n18 0.5 0.6 Fluorescence 20\n0.4 16\n0.7\nMCCOP GA Hill Climb MCCOP GA Hill Climb MCCOP GA Hill Climb MCCOP GA Hill Climb 1.00 0.2 24\n80 22 0.95\n0.4 70 20\n0.90\n0.6 60 18 UBE4B\n0.85\n0.8 50 16\n0.80 40 14\n1.0\n0.75 30 12\nMCCOP GA Hill Climb MCCOP GA Hill Climb MCCOP GA Hill Climb MCCOP GA Hill Climb\n200 50\n1.0\n1 150 40 0.9\n0.8 0 100 30\n0.7 Stability 0.6 1 50 20\n0.5 2 0\n0.4\n3 50\nMCCOP GA Hill Climb MCCOP GA Hill Climb MCCOP GA Hill Climb MCCOP GA Hill Climb Figure 2: Physicochemical plausibility across benchmarks (columns: pLDDT, GRAVY, instability\nindex, Rg; rows: fluorescence, activity, stability). MCCOP (orange) closely matches the original\ndistribution (gray); discrete baselines show broader shifts. Statistical comparisons via KruskalWallis/Dunn's tests with Benjamini-Hochberg correction: MCCOP achieves significantly higher\npLDDT than both baselines across all tasks (adjusted p < 0.02). Figure 2 shows that MCCOP counterfactuals are nearly indistinguishable from the original distribution across all metrics, occasionally shifting toward more favorable values. Discrete baselines\nintroduce broader shifts, especially in hydrophobicity and instability index, as they explore sequence Accepted at the Gen2 Workshop at ICLR 2026 space without structural priors. A controlled comparison at fixed edit distance (Appendix C) confirms these trends. 4.4 MCCOP REDISCOVERS KNOWN BIOPHYSICAL MECHANISMS A Fluorescence (GFP)\n0.25 Method\nMCCOP (ours)\n0.20 Genetic Algorithm\nStochastic Hill Climb Frequency 0.15\n0.10 Mutation 0.05\n0.00\n50 100 150 200\nB UBE4B 0.6 Frequency\nMutation 0.40.2",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 12,
+    "total_chunks": 41,
+    "char_count": 2001,
+    "word_count": 326,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "99f201fb-576f-431d-8949-dff8798fccd7",
+    "text": "0.0\n20 40 60 80 100\nResidue Position Figure 3: Per-residue mutation frequency for fluorescence (A) and Ube4b activity (B). MCCOP\n(blue) concentrates mutations in functionally relevant regions – chromophore-proximal residues\nfor GFP, E2-binding interface for Ube4b – while baselines distribute mutations nearly uniformly. Shaded regions: known functional motifs (Sarkisyan et al., 2016; Starita et al., 2013). MCCOP concentrates mutations in the chromophore-proximal region\n(residues 63–69) and β-barrel strands forming the chromophore cavity (Figure 3A), consistent with\nthe requirement for tight packing to suppress non-radiative decay (Sarkisyan et al., 2016). A small\nnumber of distal mutations (e.g., residues 181, 216) may represent novel compensatory interactions\nor predictor artifacts, requiring experimental follow-up. Mutations cluster at the E2-binding interface (residues 66–71; Figure 3B), through\nwhich Ube4b recruits UbcH5c for ubiquitin transfer (Starita et al., 2013). Thermodynamic stability. The stability dataset spans diverse topologies (Rocklin et al., 2017), so\nno universal residue positions dominate. However, MCCOP frequently targets core-facing residues,\nsuggesting hydrophobic core consolidation as a general stabilization strategy (Appendix F).",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 13,
+    "total_chunks": 41,
+    "char_count": 1273,
+    "word_count": 168,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fdb1110e-85fe-4a95-bdea-5946084fa58a",
+    "text": "Recovery of ground-truth counterfactuals. MCCOP exactly recovers existing opposite-label sequences in 16 (fluorescence), 18 (activity), and 4 (stability) cases – several from the held-out test set. Figure 4 shows structural alignments confirming that recovered mutations localize to functionally\nrelevant regions. MCCOP generates sparse, on-manifold counterfactual explanations achieving near-perfect success\nrates with 1–3 mutations on average (vs. 8–11 for discrete baselines) while maintaining structural\nand physicochemical plausibility. Recovered mutations align with established biophysical mechanisms, suggesting that the underlying predictors have learned meaningful sequence-function relationships. Accepted at the Gen2 Workshop at ICLR 2026 Figure 4: Structural alignments between original (gray) and counterfactual (colored) proteins for\nrediscovered ground-truth examples. (A) GFP: mutations near the chromophore. (B) Stability:\ncore-facing mutations. (C) Ube4b: E2-binding interface mutations. Structures predicted by ESM3. Explanation versus editing.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 14,
+    "total_chunks": 41,
+    "char_count": 1064,
+    "word_count": 128,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "799ff81a-d3ac-46ff-a9e7-d5e7d1c812dd",
+    "text": "MCCOP's primary goal is model interpretation, not direct engineering. A counterfactual is only as trustworthy as the predictor it explains: if the model has learned\nspurious correlations, the counterfactual reflects them faithfully – which is itself diagnostic. When\nthe predictor is robust, MCCOP's outputs become candidates for experimental validation. From correlation to causation. Our framework identifies correlational, not causal, relationships. Establishing true causal links requires interventional experiments, but MCCOP's sparse suggestions\n(2 mutations vs. thousands of directed-evolution variants) are directly amenable to such follow-up. Limitations. (1) Plausibility evaluation relies on computational proxies (ESM3 pLDDT, Rg,\nphysicochemical indices) rather than experimental validation. (2) The CHEAP encoder–decoder introduces reconstruction error that may produce artifacts for proteins distant from ESMFold's training\ndistribution. (3) We evaluate only binary tasks; extending to continuous regression targets requires\nreplacing the margin loss with MSE or quantile losses. On the manifold and smoothness assumptions. Two assumptions embedded in our framework\ndeserve scrutiny. First, MCCOP operates in a continuous latent space under the implicit premise\nthat plausible protein sequences concentrate near a low-dimensional manifold. The same manifold\nhypothesis is routinely invoked in computer vision, where natural images are assumed to populate\na thin subspace of pixel space, yet to the best of our knowledge no formal proof of this assertion\nexists for images or for proteins. Fefferman et al. develop statistical tests for the hypothesis but do\nnot establish it for any natural data distribution (Fefferman et al., 2016); empirically, the evidence is\nconsistent with data concentrating on disconnected clusters or \"blobs\" rather than a single smooth\nmanifold (Bengio et al., 2013). For proteins, the situation is arguably more fraught: functional sequences are constrained by folding, stability, and epistasis, producing a viable sequence space that\nmay be fragmented and topologically complex rather than smoothly connected. Second, MCCOP's\nGaussian smoothing of the latent space presupposes that the underlying sequence–function mapping\nvaries smoothly, so that local perturbations yield gradual changes in the predicted phenotype. However, protein fitness landscapes are known to be rugged: higher-order epistasis creates abrupt fitness\ntransitions even between sequences that differ by a single residue (Weinreich et al., 2006; Sarkisyan\net al., 2016), and there is no a priori reason to expect the predictor's decision surface, which reflects these landscapes, to be smooth either.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 15,
+    "total_chunks": 41,
+    "char_count": 2713,
+    "word_count": 376,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f07934db-fa79-4c1f-8316-4492cdf19279",
+    "text": "An alternative to smoothing might be signal filtering\ntuned to a desired frequency, which would suppress high-frequency noise without globally flattening the landscape; we opted for Gaussian smoothing as a pragmatic engineering choice that made\nthe gradient-based optimization tractable, rather than as a theoretically motivated operation. We\nflag these points not because they invalidate the results – MCCOP's strong empirical performance\nsuggests the assumptions are serviceable in practice – but because they circumscribe the regime\nin which the method's outputs should be trusted and highlight opportunities for more principled\ngeometric and spectral approaches in future work. Accepted at the Gen2 Workshop at ICLR 2026 Future directions. (1) Multi-objective counterfactuals: jointly optimizing stability and binding\naffinity by combining predictor gradients. (2) Experimental validation: synthesizing top-ranked\nvariants for closed-loop validation. (3) Diverse counterfactual sets (Mothilal et al., 2020; Bender\n& Morik, 2026): revealing alternative mutational strategies and enriching fitness landscape understanding. We would like to thank Marvin Sextro for many valuable pieces of advice and proof-reading, as well\nas Klaus-Robert M¨uller, Adrian Hill, and Stefan Chmiela for interesting and fruitful discussions. We\nalso would like to thank Dominik K¨uhne for maintaining our HPC cluster hydra and being always\nthere to help in case of technical difficulties. We used GitHub Copilot for assistance with code\ndevelopment and editing of paper text. All AI-generated content was reviewed, verified, and revised\nby the authors, who take full responsibility for the final manuscript. This work was supported by the German Ministry for Education and Research (BMBF) under Grant\n01IS18037A, and by BASLEARN – TU Berlin/BASF Joint Laboratory, co-financed by TU Berlin\nand BASF SE. Josh Abramson, Jonas Adler, Jack Dunger, Richard Evans, Tim Green, Alexander Pritzel, Olaf\nRonneberger, Lindsay Willmore, Andrew J Ballard, Joshua Bambrick, et al. Accurate structure\nprediction of biomolecular interactions with alphafold 3. Nature, 630(8016):493–500, 2024.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 16,
+    "total_chunks": 41,
+    "char_count": 2156,
+    "word_count": 303,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c3e7610f-78e1-42e0-b722-7f6ebe2c5bdf",
+    "text": "Sarah Alamdari, Nitya Thakkar, Rianne Van Den Berg, Neil Tenenholtz, Robert Strome, Alan M\nMoses, Alex X Lu, Nicol`o Fusi, Ava P Amini, and Kevin K Yang. Protein generation with\nevolutionary diffusion: sequence is all you need. BioRxiv, pp. 2023–09, 2023. Maximilian Augustin, Valentyn Boreiko, Francesco Croce, and Matthias Hein. Diffusion visual\ncounterfactual explanations. Advances in Neural Information Processing Systems, 35:364–377,\n2022. David Bechtoldt and Sidney Bender. Graph diffusion counterfactual explanation. Sidney Bender and Marco Morik. Visual disentangled diffusion autoencoders. arXiv preprint Sidney Bender, Jan Herrmann, Klaus-Robert M¨uller, and Gr´egoire Montavon. Towards desideratadriven design of visual counterfactual explainers. Pattern Recognition, 2025. Yoshua Bengio, Aaron Courville, and Pascal Vincent. Representation learning: A review and new\nperspectives.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 17,
+    "total_chunks": 41,
+    "char_count": 893,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ee64250e-ab85-4332-84ca-b8aa054af126",
+    "text": "IEEE transactions on pattern analysis and machine intelligence, 35(8):1798–1828,\n2013. Egbert Castro, Abhinav Godavarthi, Julian Rubinfien, Kevin B Givechian, Dhananjay Bhaskar, and\nSmita Krishnaswamy. Relso: a transformer-based model for latent space optimization and generation of proteins. arXiv preprint arXiv:2201.09948, 2022. Jialin Chen, Shirley Wu, Abhijit Gupta, and Rex Ying. D4explainer: In-distribution explanations of\ngraph neural network via discrete denoising diffusion. Advances in Neural Information Processing Systems, 36:78964–78986, 2023. Quinn Dickinson and Jesse G Meyer.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 18,
+    "total_chunks": 41,
+    "char_count": 593,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aed909f1-39c8-4232-b2af-1752dce9a8a3",
+    "text": "Positional shap (poshap) for interpretation of machine learning\nmodels trained from biological sequences. PLOS Computational Biology, 18(1):e1009736, 2022. Ann-Kathrin Dombrowski, Jan E Gerken, Klaus-Robert M¨uller, and Pan Kessel. Diffeomorphic\ncounterfactuals with generative models. IEEE Transactions on Pattern Recognition and Machine\nIntelligence, 46(5):3257–3274, 2024. Charles Fefferman, Sanjoy Mitter, and Hariharan Narayanan.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 19,
+    "total_chunks": 41,
+    "char_count": 434,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "faf6cce3-8066-4a3b-9ec3-54d99620737b",
+    "text": "Testing the manifold hypothesis. Journal of the American Mathematical Society, 29(4):983–1049, 2016. Accepted at the Gen2 Workshop at ICLR 2026 Ian J Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing adversarial\nexamples. arXiv preprint arXiv:1412.6572, 2014. Onkar Gujral, Mihir Bafna, Eric Alm, and Bonnie Berger.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 20,
+    "total_chunks": 41,
+    "char_count": 343,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "391c9e9e-c969-46e0-a4e9-412d44eb1c68",
+    "text": "Sparse autoencoders uncover biologically\ninterpretable features in protein language model representations. Proceedings of the National\nAcademy of Sciences, 122(34):e2506316122, 2025. John B Ingraham, Max Baranov, Zak Costello, Karl W Barber, Wujie Wang, Ahmed Ismail, Vincent\nFrappier, Dana M Lord, Christopher Ng-Thow-Hing, Erik R Van Vlack, et al. Illuminating protein\nspace with a programmable generative model. Nature, 623(7989):1070–1078, 2023. Daniel Jakubovitz and Raja Giryes. Improving dnn robustness to adversarial attacks using jacobian\nregularization. In Proceedings of the European conference on computer vision (ECCV), pp. 514–\n529, 2018. Guillaume Jeanneret, Lo¨ıc Simon, and Frederic Jurie. Diffusion models for counterfactual explanations. In Proceedings of the Asian Conference on Computer Vision, pp. 858–876, 2022. Guillaume Jeanneret, Lo¨ıc Simon, and Frederic Jurie.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 21,
+    "total_chunks": 41,
+    "char_count": 888,
+    "word_count": 117,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5d48516a-a048-4e8f-ad85-c114a899993a",
+    "text": "Adversarial counterfactual visual explanations. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,\npp. 16425–16435, 2023. John Jumper, Richard Evans, Alexander Pritzel, Tim Green, Michael Figurnov, Olaf Ronneberger,\nKathryn Tunyasuvunakool, Russ Bates, Augustin ˇZ´ıdek, Anna Potapenko, et al. Highly accurate\nprotein structure prediction with alphafold. nature, 596(7873):583–589, 2021. Zeming Lin, Halil Akin, Roshan Rao, Brian Hie, Zhongkai Zhu, Wenting Lu, Nikita Smetanin,\nRobert Verkuil, Ori Kabeli, Yaniv Shmueli, et al. Evolutionary-scale prediction of atomic-level\nprotein structure with a language model. Science, 379(6637):1123–1130, 2023. Amy X Lu, Wilson Yan, Kevin K Yang, Vladimir Gligorijevic, Kyunghyun Cho, Pieter Abbeel,\nRichard Bonneau, and Nathan C Frey. Tokenized and continuous embedding compressions of\nprotein sequence and structure. Patterns, 6(6), 2025. Viacheslav Meshchaninov, Pavel Strashnov, Andrey Shevtsov, Fedor Nikolaev, Nikita Ivanisenko,\nOlga Kardymon, and Dmitry Vetrov. Diffusion on language model encodings for protein sequence\ngeneration. arXiv preprint arXiv:2403.03726, 2024. Takeru Miyato, Toshiki Kataoka, Masanori Koyama, and Yuichi Yoshida. Spectral normalization\nfor generative adversarial networks. arXiv preprint arXiv:1802.05957, 2018. Ramaravind K Mothilal, Amit Sharma, and Chenhao Tan.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 22,
+    "total_chunks": 41,
+    "char_count": 1374,
+    "word_count": 174,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6f20fdcf-e051-4878-9e17-b9db451db122",
+    "text": "Explaining machine learning classifiers\nthrough diverse counterfactual explanations. In Proceedings of the 2020 conference on fairness,\naccountability, and transparency, pp. 607–617, 2020. Nhat Khang Ngo, Thanh VT Tran, Viet Thanh Duy Nguyen, and Truong Son Hy. Latent-based\ndirected evolution accelerated by gradient ascent for protein sequence design. bioRxiv, pp. 2024–\n04, 2024. Cambridge university press, 2009. Paraskevas Pegios, Manxi Lin, Nina Weng, Morten Bo Søndergaard Svendsen, Zahra Bashir,\nSiavash Bigdeli, Anders Nymark Christensen, Martin Tolsgaard, and Aasa Feragen. Diffusionbased iterative counterfactual explanations for fetal ultrasound image quality assessment. In International Workshop on Advances in Simplifying Medical Ultrasound, pp. 174–184. Roshan Rao, Nicholas Bhattacharya, Neil Thomas, Yan Duan, Peter Chen, John Canny, Pieter\nAbbeel, and Yun Song.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 23,
+    "total_chunks": 41,
+    "char_count": 880,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5bc2dade-8eb6-44f1-8be9-45e122a53166",
+    "text": "Evaluating protein transfer learning with tape. Advances in neural information processing systems, 32, 2019. Gabriel J Rocklin, Tamuka M Chidyausiku, Inna Goreshnik, Alex Ford, Scott Houliston, Alexander\nLemak, Lauren Carter, Rashmi Ravichandran, Vikram K Mulligan, Aaron Chevalier, et al. Global\nanalysis of protein folding using massively parallel design, synthesis, and testing. Science, 357\n(6347):168–175, 2017. Accepted at the Gen2 Workshop at ICLR 2026 Pau Rodriguez, Massimo Caccia, Alexandre Lacoste, Lee Zamparo, Issam Laradji, Laurent Charlin, and David Vazquez.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 24,
+    "total_chunks": 41,
+    "char_count": 573,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ecd83627-6555-4421-9638-d4098e130d79",
+    "text": "Beyond trivial counterfactual explanations with diverse valuable explanations. In Proceedings of the IEEE/CVF International Conference on Computer Vision, pp.\n1056–1065, 2021. Efficient search for diverse coherent explanations. In Proceedings of the conference\non fairness, accountability, and transparency, pp. 20–28, 2019.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 25,
+    "total_chunks": 41,
+    "char_count": 324,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "274415ba-c30c-4830-a00d-fed71da9fc0f",
+    "text": "Large language models cannot explain themselves. arXiv preprint arXiv:2405.04382,\n2024. Karen S Sarkisyan, Dmitry A Bolotin, Margarita V Meer, Dinara R Usmanova, Alexander S Mishin,\nGeorge V Sharonov, Dmitry N Ivankov, Nina G Bozhanova, Mikhail S Baranov, Onuralp Soylemez, et al. Local fitness landscape of the green fluorescent protein. Nature, 533(7603):397–401,\n2016. Sabbir Ahmed Sibli, Vlasios Panagiotis Panagiotou, and Christos Makris.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 26,
+    "total_chunks": 41,
+    "char_count": 443,
+    "word_count": 61,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8863afbf-14ac-4562-9c99-17f8b84a56da",
+    "text": "Enhancing protein structure predictions: Deepshap as a tool for understanding alphafold2. Expert Systems with Applications, pp. 127853, 2025. Lea M Starita, Jonathan N Pruneda, Russell S Lo, Douglas M Fowler, Helen J Kim, Joseph B Hiatt,\nJay Shendure, Peter S Brzovic, Stanley Fields, and Rachel E Klevit. Activity-enhancing mutations\nin an e3 ubiquitin ligase identified by high-throughput mutagenesis. Proceedings of the National\nAcademy of Sciences, 110(14):E1263–E1272, 2013. Juntao Tan and Yongfeng Zhang.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 27,
+    "total_chunks": 41,
+    "char_count": 510,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1e1cf41b-e744-4a55-a7eb-094c463813f1",
+    "text": "Explainablefold: Understanding alphafold prediction with explainable ai. In Proceedings of the 29th ACM SIGKDD Conference on Knowledge Discovery and\nData Mining, pp. 2166–2176, 2023. Esm cambrian: Revealing the mysteries of proteins with unsupervised learning. Evolutionary Scale Website https://www. evolutionaryscale. ai/blog/esm-cambrian, 2024. Jesse Vig, Ali Madani, Lav R Varshney, Caiming Xiong, Richard Socher, and Nazneen Fatema Rajani. Bertology meets biology: Interpreting attention in protein language models. arXiv preprint Sandra Wachter, Brent Mittelstadt, and Chris Russell. Counterfactual explanations without opening\nthe black box: Automated decisions and the gdpr. JL & Tech., 31:841, 2017. Chentong Wang, Sarah Alamdari, Carles Domingo-Enrich, Ava P Amini, and Kevin K Yang.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 28,
+    "total_chunks": 41,
+    "char_count": 793,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e3032a17-5992-434f-867e-a10aa9c7d440",
+    "text": "Toward\ndeep learning sequence–structure co-generation for protein design. Current Opinion in Structural\nBiology, 91:103018, 2025. Joseph L Watson, David Juergens, Nathaniel R Bennett, Brian L Trippe, Jason Yim, Helen E Eisenach, Woody Ahern, Andrew J Borst, Robert J Ragotte, Lukas F Milles, et al. De novo design of\nprotein structure and function with rfdiffusion. Nature, 620(7976):1089–1100, 2023. Daniel M Weinreich, Nigel F Delaney, Mark A DePristo, and Daniel L Hartl. Darwinian evolution\ncan follow only very few mutational paths to fitter proteins. science, 312(5770):111–114, 2006. Nina Weng, Paraskevas Pegios, Eike Petersen, Aasa Feragen, and Siavash Bigdeli. Fast diffusionbased counterfactuals for shortcut removal and generation. In European Conference on Computer\nVision, pp. 338–357. Kevin E Wu, Kevin K Yang, Rianne van den Berg, Sarah Alamdari, James Y Zou, Alex X Lu, and\nAva P Amini.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 29,
+    "total_chunks": 41,
+    "char_count": 903,
+    "word_count": 134,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0d3404e1-7b18-4b92-be94-4143056782cc",
+    "text": "Protein structure generation via folding diffusion. Nature communications, 15(1):\n1059, 2024. Accepted at the Gen2 Workshop at ICLR 2026 A PREDICTOR TRAINING AND SMOOTHING DETAILS The property predictor fθ is a three-layer MLP with hidden dimensions [512, 256],\neach followed by spectral normalization (Miyato et al., 2018) and Softplus activation (β = 1). The\nfinal layer outputs a single logit. Input embeddings are flattened resulting in an input dimension of\nsequence length L times embedding dimension D (masking padding tokens) before being passed to\nthe MLP. We train on 80% of each dataset, reserving 10% for validation and 10% for\ntesting, stratified by label. We use Adam with a learning rate of 1 × 10−5 and a dropout rate of 0.3. Early stopping is applied with a patience of 5 epochs based on validation AUROC. Smoothing mechanisms. Further details concerning the smoothing mechanisms include: Spectral normalization (Miyato et al., 2018): applied to all linear layers, constraining the\nLipschitz constant of each layer to approximately 1. Jacobian regularization (Jakubovitz & Giryes, 2018): we add a penalty term\nλJ∥∇zfθ(z)∥2F to the training loss, with λJ = 10−3. The Frobenius norm is estimated\nvia a Hutchinson trace estimator with 5 random projections per batch for computational\nefficiency.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 30,
+    "total_chunks": 41,
+    "char_count": 1309,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2f2b6b9a-0bed-417b-a00e-15051643ac40",
+    "text": "Adversarial data augmentation: for each training sample (zi, yi), we generate an adversarial embedding zadvi via an FGSM attack (ϵ = 0.01 in embedding space) targeting the\nopposite class. Adversarial samples that decode to the same amino acid sequence as the\noriginal (i.e., D(zadvi ) = D(zi)) are added to the training set with the original label yi,\nteaching the model to be invariant to semantically null perturbations. Smoothness quantification. We report the average L2 gradient norm Ez∼Dtest[∥∇zfθ(z)∥2] computed over the full test set. Lower values indicate a smoother decision boundary. B COMPUTATIONAL COST ANALYSIS Figure 5 reports the average wall-clock time per sample for MCCOP and the two discrete baselines\nacross all three benchmarks.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 31,
+    "total_chunks": 41,
+    "char_count": 750,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b5f50f7c-78c3-4742-a94a-966f2db205eb",
+    "text": "The genetic algorithm is the most expensive method by roughly an\norder of magnitude due to its population-based evaluation. MCCOP and stochastic hill climbing\nhave comparable per-sample execution times. An important caveat applies to this comparison. The discrete baselines operate in sequence space\nbut must evaluate candidates using the same embedding-space predictor; every proposed mutation\ntherefore requires a full re-encoding through the CHEAP encoder (backed by ESMFold), which\nconstitutes 97% and 94% of total computation time for hill climbing and the genetic algorithm\nrespectively. This overhead is not intrinsic to those algorithms but arises from the requirement of a\nshared evaluation protocol. MCCOP, by contrast, operates natively in embedding space and avoids\nthis round-trip entirely. Its dominant cost is the diffusion-based manifold projection, which accounts\nfor 99% of computation time. For performance-critical applications we would recommend executing\nthe diffusion-based projection step only every n optimization steps. C CONTROLLED EDIT DISTANCE COMPARISON To ensure a fair comparison across methods, we filter all successful counterfactuals to those with\nexactly three mutations (edit distance = 3), which represents the bin with the highest overlap across\nMCCOP, the genetic algorithm, and stochastic hill climbing.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 32,
+    "total_chunks": 41,
+    "char_count": 1344,
+    "word_count": 190,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8c453a4d-f335-4a4b-8191-a0514633221c",
+    "text": "Figure 6 shows the same physicochemical property distributions as Figure 2 in the main text, restricted to this subset. The trends observed\nin the main text are preserved: MCCOP-generated counterfactuals remain within the distribution\nof the original test set for pLDDT, GRAVY, instability index, and radius of gyration, whereas the\ndiscrete baselines show broader deviations, particularly in instability index and GRAVY. Accepted at the Gen2 Workshop at ICLR 2026 10.98s\nMCCOP (ours)\n10 Genetic Algorithm Stochastic Hill Climbing\n(s) 8\n6.61s sample 6\nper\n4 3.41s Time\n1.20s\n0.73s\n0.19s 0.17s 0.25s 0.30s\nFluorescence Stability Activity Figure 5: Average wall-clock time per sample across the complete test set.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 33,
+    "total_chunks": 41,
+    "char_count": 711,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b2e9a2e1-dacb-4bf7-89dc-ff58f762b5fc",
+    "text": "The genetic algorithm is\nthe most expensive method. MCCOP and stochastic hill climbing have comparable execution times,\nthough their computational profiles differ: discrete baselines spend >94% of time on re-encoding\ncandidate sequences, while MCCOP spends 99% on diffusion-based manifold projection. A Original Counterfactual\npLDDT (Confidence) Hydrophobicity (GRAVY) Instability Index Radius of Gyration (Å)\n0.35\n40 20 0.8 0.40\n(GFP) 0.45 35 19 0.7\n0.50\n30 18 0.6 0.55\n0.5 0.60 25 17 Fluorescence\n0.4 0.65 20 16\n0.70\nMCCOP GA Hill Climb MCCOP GA Hill Climb MCCOP GA Hill Climb MCCOP GA Hill Climb\n1.00 0.3 75 28\n0.95 0.4 70 26\n0.5 65 24\n0.6 60 20 UBE4B 0.900.85 55\n0.7 18\n0.80 0.8 45 1614\n0.75 0.9 40\nMCCOP GA MCCOP GA MCCOP GA MCCOP GA\n1.1 150\n1.0 1 100 35\n0.9 0 75 25 50\n0.8 Stability 1 25 20\n0.7 0 15\n2 25 10\n0.6 50 5\nMCCOP GA Hill Climb MCCOP GA Hill Climb MCCOP GA Hill Climb MCCOP GA Hill Climb Figure 6: Physicochemical property distributions for counterfactuals with exactly 3 mutations. MCCOP closely tracks the original test set distribution, while the genetic algorithm and stochastic hill\nclimbing show greater deviation, particularly for GRAVY and instability index. D HYPERPARAMETER SENSITIVITY Table 3 lists the primary hyperparameters for MCCOP and the values used. We use the same set of\nhyperparameters across all three datasets. We perform an ablation over all combinations of the previously mentioned smoother components\n(including no smoothing) as well as the manifold projection step and the masking value k. No\nsmoothing, no masking and no manifold projection corresponds exactly to the gradient descent\nbaseline.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 34,
+    "total_chunks": 41,
+    "char_count": 1638,
+    "word_count": 274,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "795f2016-e342-4e85-ab76-edc68308f28e",
+    "text": "Lower k values proved to be too restrictive and caused low success rates while higher ones Accepted at the Gen2 Workshop at ICLR 2026 Table 3: MCCOP hyperparameters and their values across benchmarks. Symbol Description Fluorescence Stability Activity k Top-k masked positions 5 5 5\nλdist L2 distance weight 0.1 0.1 0.1\nm Margin in Lmargin 2.2 2.2 2.2\nα Projection strength 0.3 0.3 0.3\ntdiff Diffusion noise level 100 100 100\nη Learning rate 0.5 0.5 0.5\nTmax Max optimization steps 50 50 50 provided only a marginal increase in success rate. No smoothing significantly increases adversarial\nrates, while no manifold projection significantly reduces pLDDT scores of generated counterfactuals.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 35,
+    "total_chunks": 41,
+    "char_count": 691,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d81773ea-9157-42eb-9b6c-005c81140ac3",
+    "text": "E BASELINES IMPLEMENTATION DETAILS We compare our method against three baseline counterfactual explanation strategies, each operating\nover protein sequences and their corresponding embeddings. All baselines share a common interface\nand are evaluated using the same predictor and confidence threshold (τ = 0.95 by default). Below\nwe describe each baseline along with its hyperparameters. This baseline performs standard gradient descent directly in the continuous embedding space. Given\nan input embedding x, a differentiable copy x′ is optimized to maximize the predictor's probability\nof the target (flipped) class via binary cross-entropy loss. The Adam optimizer is used to update x′\nover a fixed number of steps. At each step, the candidate counterfactual with the highest confidence\ntoward the target class is retained. Table 4: Hyperparameters for the gradient descent baseline. Hyperparameter Symbol Value\nLearning rate η 1 × 10−2\nGradient steps T 50\nConfidence threshold τ 0.95\nOptimizer – Adam\nLoss function L BCEWithLogitsLoss",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 36,
+    "total_chunks": 41,
+    "char_count": 1036,
+    "word_count": 152,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "982e7a25-524b-45a0-8f63-a41398f3bc6f",
+    "text": "Notably, this baseline operates entirely in embedding space and does not enforce any manifold\nconstraints or discrete sequence validity, making it a purely continuous relaxation approach. This baseline performs a stochastic hill-climbing search in discrete sequence space. At each step, a\nsingle random point mutation is applied to each unsolved sequence: a uniformly random position is\nselected and replaced with a uniformly random amino acid from the standard 20-letter alphabet. The\nmutated sequence is re-encoded into embedding space using a lightweight encoder, and the predictor\nevaluates the new embedding. If the target-class confidence improves, the mutation is accepted;\notherwise, the sequence reverts to the previous best. The process repeats for a fixed number of steps. E.3 GENETIC ALGORITHM This baseline employs a population-based evolutionary strategy operating in discrete sequence\nspace. For each input sequence, an initial population is constructed by applying random mutations to Accepted at the Gen2 Workshop at ICLR 2026 Table 5: Hyperparameters for the Random Mutation baseline. Hyperparameter Symbol Value Maximum steps T 50\nConfidence threshold τ 0.95\nAmino acid alphabet A Standard 20\nMutations per step – 1 At each generation, individuals are evaluated by encoding them into embedding space\nand computing a fitness score defined as the predictor's target-class confidence, optionally penalized\nby the Hamming distance to the original sequence:",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 37,
+    "total_chunks": 41,
+    "char_count": 1471,
+    "word_count": 215,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e60b63c0-dcdf-4e33-8f43-e483677754ea",
+    "text": "f(s) = conf(s) −λ · dH(s, sorig), (5) where conf(s) is the predictor's confidence on the target class for sequence s, dH denotes the Hamming distance, and λ is the edit distance penalty. Selection uses tournament selection with tournament size 3. The top 20% of the population is preserved as elites.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 38,
+    "total_chunks": 41,
+    "char_count": 300,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "58ba1542-2d11-43f4-906c-e13424bdaef1",
+    "text": "Offspring are generated via\nsingle-point crossover and random point mutation (1–2 mutations per offspring). Evolution proceeds\nfor a fixed number of generations or until all samples exceed the confidence threshold. Table 6: Hyperparameters for the Genetic Algorithm baseline. Hyperparameter Symbol Value Population size N 40\nGenerations G 30\nCrossover rate pc 0.5\nEdit distance penalty λ 0.02\nConfidence threshold τ 0.95\nElite fraction – 20%\nTournament size k 3\nMutations per offspring – 1–2\nMaximum batch size – 8 F ADDITIONAL STRUCTURAL VISUALIZATIONS We provide two additional structure visualizations for the stability dataset as we could not verify\nhydrophobic core packing by investigating mutation frequencies per residue. Figure 7: Structural alignment of original (gray) and counterfactual (cyan) stability variants across\nthree topologies. Core-facing mutated residues shown as sticks. Accepted at the Gen2 Workshop at ICLR 2026 Table 7: Dataset statistics after preprocessing. Dataset Sequences Positive Negative Avg. Fluorescence 54,025 30,697 23,328 236.96 Bimodal split\nStability 45,901 22,694 23,207 45.06 Remove middle 33%\nActivity 60,692 30,293 30,399 102 Remove middle 33% G DATASET STATISTICS AND PREPROCESSING For the fluorescence dataset, we exploit the natural bimodality of the log-fluorescence distribution\nand determine the optimal threshold using Otsu's method.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 39,
+    "total_chunks": 41,
+    "char_count": 1387,
+    "word_count": 196,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d4b1fb56-3a85-4c66-b77b-c0c473bb20cb",
+    "text": "For the stability and activity datasets,\nremoving the middle tercile ensures a clear margin between classes, reducing label noise near the\ndecision boundary. All embeddings are computed using the CHEAP encoder with ESMFold as the\nbackbone, producing representations of dimension D = 1024 with no compression along the length\ndimension.",
+    "paper_id": "2603.10811",
+    "title": "Protein Counterfactuals via Diffusion-Guided Latent Optimization",
+    "authors": [
+      "Weronika KÅ‚os",
+      "Sidney Bender",
+      "Lukas Kades"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10811v1",
+    "chunk_index": 40,
+    "total_chunks": 41,
+    "char_count": 335,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  }
+]

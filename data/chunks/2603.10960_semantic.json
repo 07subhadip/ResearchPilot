@@ -1,0 +1,1662 @@
+[
+  {
+    "chunk_id": "3658e5fd-d28d-4c45-b308-54570b3a37d6",
+    "text": "Ranking Reasoning LLMs under Test-Time Scaling Mohsen Hariri1, Michael Hinczewski2, Jing Ma1, Vipin Chaudhary1,\n1Department of Computer and Data Sciences, 2Department of Physics\nCase Western Reserve University, Cleveland, OH, USA\nmohsen.hariri@case.edu Abstract (Wang et al., 2023; Snell et al., 2024; Zeng et al.,\n2025).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 0,
+    "total_chunks": 83,
+    "char_count": 321,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "100be250-9bff-4fbb-848e-b33fc6368f65",
+    "text": "Test-time scaling evaluates reasoning LLMs Statistical ranking methods underpin two comby sampling multiple outputs per prompt, but mon LLM workflows. First, preference-based\nranking models in this regime remains underex-2026 learning and alignment pipelines rely on human\nplored. We formalize dense benchmark ranking\nor model preferences over alternative responses, under test-time scaling and introduce Scorio,\na library that implements statistical ranking where the primitive observations are paired com-Mar methods such as paired-comparison models, parisons and downstream optimization depends\n11 item response theory (IRT) models, voting on how those preferences are modeled and aggrerules, and graph- and spectral-based methods. gated (Christiano et al., 2017; Rafailov et al., 2023). Across 20 reasoning models on four Olympiad- Second, model comparisons are often communistyle math benchmarks (AIME'24, AIME'25, cated through leaderboards. Crowdsourced pairedHMMT'25, and BrUMO'25; up to N = 80\ncomparison platforms such as Chatbot Arena coltrials), most full-trial rankings agree closely\nlect head-to-head judgments and fit rating or paired- with the Bayesian gold standard BayesU@80[cs.LG] (mean Kendall's τb = 0.93–0.95), and 19–34 comparison models to produce public rankings\nmethods recover exactly the same ordering. In (Chiang et al., 2024), while benchmark-style evalthe single-trial regime, the best methods reach uations rank models by task performance metrics\nτb ≈0.86. Using greedy decoding as an em- such as Pass@k (Chen et al., 2021). Recent work\npirical prior (BayesR0@N) reduces variance has revisited the statistical foundations of LLM\nat N = 1 by 16–52%, but can bias rankings\nranking in both preference-based settings (Ameli\nwhen greedy and stochastic sampling disagree.\net al., 2025) and benchmark settings, including IRT- These results identify reliable ranking methods\nfor both high- and low-budget test-time scaling. style benchmarking (Zhou et al., 2025). Different\nWe release Scorio as an open-source library at ranking methods can produce noticeably different\n1. model orderings, and their agreement can vary with\nbenchmark difficulty (Fig. 1).\n1 Introduction A key practical distinction between these\nregimes is the representation of the data used forarXiv:2603.10960v1 Large language models (LLMs) are increasingly ranking. Preference-based evaluation typically\nused as general-purpose reasoning systems for yields a sparse and evolving comparison graph betasks such as programming and mathematical prob- cause only a subset of model pairs are compared\nlem solving (Chen et al., 2021; Wang et al., 2023). and the model pool changes over time (Chiang\nReliable evaluation is therefore essential. In many et al., 2024). In contrast, benchmark evaluations\nsettings, what matters is not only an absolute score produce dense outcomes for every model–question\nbut also a ranking that supports model selection, pair. For a fixed set of L models and M questions,\ndeployment, and scientific comparison. This need we observe an outcome for every pair. Under testis amplified by test-time scaling, which allocates time scaling, each model–question pair is evaluated\nadditional inference compute by sampling multiple with N independent trials, producing a response\noutputs per prompt and aggregating them, turn- tensor R ∈{0, 1}L×M×N.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 1,
+    "total_chunks": 83,
+    "char_count": 3357,
+    "word_count": 481,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0ebcdd22-622c-4e3f-a70a-92b2b5f6bb45",
+    "text": "This dense repeateding evaluation into a repeated-sampling problem trial setting raises new methodological questions:\nWhich ranking rule should be used when N is 1https://github.com/mohsenhariri/scorio. See Appendix I for API documentation. small? How quickly do different ranking methods Bayes@N 0.947Rasch0.997 0.937Rasch0.981 1.000Bayes@NR01.000mG 0.989Pass@2Pass@2 1.000Bayes@NR00.989mG 0.905Pass@2Pass@2 MMLRankCentrality0.968Bradley0.968HodgeRankTerry 1.000 Bayes@N MMLRankCentrality0.979Bradley1.000HodgeRankTerry 1.000\nDS-R1-Qwen Qwen3-Thinking gpt-oss-medium Phi-4-plus AR-Nemotron\nLIMO-v2 Sky-T1-Flash EXAONE-4.0 OR1-Distill NVIDIA-Nemotron\nOpenThinker2 gpt-oss-high OR-Nemotron FuseO1-DS-QwQ-SkyT1 Qwen3-4B\nOpenThinker3 gpt-oss-low Phi-4 Light-R1-DS Bespoke",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 2,
+    "total_chunks": 83,
+    "char_count": 768,
+    "word_count": 69,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7932543e-20b0-4dd7-875e-454584ccf58c",
+    "text": "Figure 1: Agreement between each method's full-trial ranking and the gold standard. Kendall's τb is computed\nbetween each method's ranking (at N = 80 trials) and BayesU@80 on an easier benchmark (BrUMO'25, left)\nand the hardest benchmark (HMMT'25, right). On BrUMO'25, multiple methods achieve near-perfect or perfect\nagreement: BayesR0@N and HodgeRank reach τb = 1.0, while Rasch MML achieves 0.997. On HMMT'25,\nBradley–Terry and HodgeRank maintain perfect agreement (τb = 1.0), but BayesR0@N drops to 0.989 and\nPass@2 falls to 0.937. This divergence is consistent with the lower greedy–sampling alignment observed on harder\nbenchmarks (Section 3.4).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 3,
+    "total_chunks": 83,
+    "char_count": 651,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c269f7b6-5ea6-4c89-8ea6-51354544f40b",
+    "text": "stabilize as N grows? How do priors and uncer- rankings) and convergence with increasing numtainty estimates affect ranking robustness? bers of trials. In this work, we study performance-based rank-\n• We compare a broad suite of ranking methods\ning under test-time scaling. We formalize the dense\nacross 20 reasoning models and four Olympiadbenchmark setting through the response tensor R,\nstyle math benchmarks (up to N = 80 trials),\nevaluate ranking methods by their low-budget stacharacterizing where method families agree and\nbility and convergence as the test-time budget inwhere they diverge.\ncreases, and implement the studied methods in\nScorio. • We analyze Bayesian and uncertainty-aware rankWe summarize our contributions as follows: ing choices, including priors and conservative\n(quantile-based) scoring, and quantify their bias–\n• We formalize dense benchmark ranking under variance trade-offs in low-trial regimes.\ntest-time scaling via R ∈{0, 1}L×M×N and con-\n• We release Scorio, a library implementing the nect common ranking families through pointwise,\nranking methods and Bayesian options. pairwise, and setwise transformations of R. 2 Ranking Problem and Test-time Scaling\n• We propose an evaluation protocol based on lowbudget stability (agreement between rankings In classical statistical settings, there is no canonicomputed from subsampled trials and reference cal theoretical ground truth or empirical gold stan- dard against which competing ranking rules can curacy (Appendix C.1). Unlike evaluation metrics,\nbe judged. Choosing among methods therefore ranking algorithms can emphasize different aspects\nusually requires additional modeling assumptions. of performance across tasks, players, or items. In\nTest-time scaling offers a useful alternative: be- Section 3, we show that rankings induced by probcause each model–question pair can be sampled abilistic models (e.g., Bradley–Terry) can differ\nrepeatedly, it lets us evaluate ranking methods by from those induced by expected-performance methow stable they are in low-budget settings and how rics (e.g., mean accuracy or Bayesian estimates).\nquickly they converge as more trials are observed. Given the absence of a universal gold standard\nStatistical ranking methods are widely used in for ranking methods, we use two target rankings for\ndomains such as sports competitions (e.g., paired- comparison. First, we define an empirical gold stancomparison models and rating systems for head-to- dard based on average performance over all trials\nhead games) (Bradley and Terry, 1952; Elo, 1978; with a large sample size (e.g., N = 80). This target\nGlickman, 1999) and voting or collective decision- captures aggregate performance across tasks and\nmaking (de Borda, 1781; Condorcet, 1785; Arrow, trials while allowing ties. This choice is justified\n1951).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 4,
+    "total_chunks": 83,
+    "char_count": 2831,
+    "word_count": 411,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6676c550-91b6-4e69-9c2d-fc903fe08a02",
+    "text": "In such settings, there are L entities to be for several reasons: (a) the ranking induced by averranked (e.g., players, items, or models) over M age performance is order-equivalent to the ranking\ntasks (e.g., matches, questions, or instances). Test- induced by Bayesian estimation with a uniform\ntime scaling adds a third dimension: N, the num- prior (BayesU@N); (b) when N is large, average\nber of i.i.d. samples generated for a fixed question performance is among the most stable ranking rules\nm ∈{1, . . . , M}. Repeated sampling lets us study relative to the alternatives (Section 3.1); and (c) it\ntwo complementary properties. First, low-budget is easy to interpret, widely used in practice, and\nstability asks whether a ranking computed from a yields absolute performance values.\nsmall number of trials agrees with a high-budget The second target ranking is the ordering proreference ranking. In our experiments, the low- duced by a method itself (method@80) when all\nbudget case is N = 1: we subsample one trial available trials are aggregated. This target lets us\nper question, compute the ranking, repeat this over assess a method's self-consistency and convergence\nthe available single-trial draws, and compare each as more data become available.\nranking either with an empirical gold standard or\nwith the same method's full-trial ranking. Second, 2.2 Representation\nconvergence asks how quickly rankings computed We consider L models evaluated on a benchmark\nfrom n trials approach the full-trial ordering as n of M questions under test-time scaling, generating\nincreases from 1 to N. N i.i.d. trials per model–question pair. Let L =\n{1, . . . , L} index models and Q = {1, . . . , M}\n2.1 Gold Standard Rankings\nquestions; for each question we observe N indeEvaluation metrics widely used in test-time scal- pendent trials indexed by n ∈{1, . . . , N}. For\ning, such as Pass@k and Bayes@N, can be ana- each (l, m, n) ∈L × Q × {1, . . . , N} we observe\nlyzed through statistical properties such as bias. a binary outcome\nFor instance, Chen et al. (2021) derive an unbiased estimator for Pass@k. As the number of tri- Rlmn ∈{0, 1}, (1)\nals N grows, empirical estimates of these metrics concentrate around their population values, where Rlmn = 1 if model l solves question m on\nmaking metric-based rankings increasingly stable. trial n. We collect these outcomes in a response\nIn particular, for binary outcomes, BayesU@N is tensor R ∈{0, 1}L×M×N. When N = 1, this reorder-equivalent to mean accuracy avg@N (Hariri duces to the standard single-run benchmark setting.\net al., 2026), which motivates our use of the full- Unlike crowdsourced paired-comparison datasets\ntrial BayesU@N ranking as an empirical accuracy- (e.g., Chatbot Arena (Chiang et al., 2024)), where\nbased gold standard. the primitive observations are model–model outThis reasoning does not extend automatically to comes on a possibly sparse comparison graph, our\nall ranking methods. Even as the number of ques- benchmark setting produces outcomes for every\ntions M or trials N increases, different ranking model–question pair. We therefore take R as the\nmethods need not converge to a unique limiting primitive object; all ranking methods we study use\nordering, such as the one induced by average ac- R as input, but they differ in the representations on",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 5,
+    "total_chunks": 83,
+    "char_count": 3330,
+    "word_count": 550,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2cc71c7a-b5a9-46a2-bab6-7ef62ca89db5",
+    "text": "which they operate after transforming or aggregat- weighted comparison graph over models. Probing it. abilistic paired-comparison models (e.g., Bradley–\nTerry and tie extensions (Bradley and Terry, 1952;\nPointwise (model–question) representation. Rao and Kupper, 1967; Davidson, 1970)) and votDefine the per-question solve rate\ning rules (e.g., Borda and Copeland (de Borda,\nN 1781; Brandt et al., 2016)) use these aggregated\nbplm := N X Rlmn, (2) counts; graph- and spectral-based methods (e.g., n=1 PageRank, Rank Centrality, HodgeRank, SerialRank, AlphaRank, and Nash-based ranking (Page M et al., 1999; Negahban et al., 2017; Jiang et al.,and the overall mean accuracy bpl := 1 PMm=1 bplm. Pointwise and IRT-style methods operate on the 2011; Fogel et al., 2016; Omidshafiei et al., 2019;\nBalduzzi et al., 2019)) further transform (W, T)matrix bP = [bplm] ∈[0, 1]L×M (or on its row\nmeans), optionally reweighting questions (e.g., into Markov chains or skew-symmetric edge flows,\ninverse-difficulty weighting (Gotou et al., 2020)). typically via edge weights based on empirical win\nClassical IRT models infer latent abilities from this rates such as bPi≻j = (Wij + 12Tij)/(Wij + Wji +\nrepresentation (Rasch, 1960; Birnbaum, 1968), and Tij). Sequential rating systems (e.g., Elo and\nhave recently been applied to LLM benchmarking TrueSkill (Elo, 1978; Herbrich et al., 2006)) in-\n(Zhou et al., 2025). When N > 1, the trial axis stead process the underlying stream of pairwise\ncorresponds to repeated Bernoulli observations; \"matches\" induced by each question–trial (m, n).\nlikelihood-based models (including IRT) can equivalently work with the sufficient statistic klm :=\nListwise or setwise representation. For eachPn Rlmn, yielding a binomial-response formuquestion–trial (m, n) we define the winning setlation (McCullagh and Nelder, 1989; De Boeck\nand Wilson, 2004). Related repeated-measures Umn := {l ∈L : Rlmn = 1} and the losing set L \\ Umn, which induces a two-level par-and longitudinal IRT extensions are also well studtial order: all winners tie above all losers. Set-ied (Verhelst and Glas, 1993; Wang and Nydick,\nwise or listwise models (e.g., Plackett–Luce (Plack-2020). Evaluation-metric rankings (e.g., Pass@k\nett, 1975; Luce, 1959) and Davidson–Luce (Firthand Bayes@N) additionally use the per-question\net al., 2019)) operate directly on the collection oftrial multiset {Rlm1, . . . , RlmN} (equivalently the\ncount Pn Rlmn) to compute per-question metrics events {(Umn, L \\ Umn)}m,n, discarding degenerate events with Umn = ∅or Umn = L. In ourbefore aggregating across m (Chen et al., 2021).\nbinary two-level setting, Plackett–Luce likelihoods\nPairwise (win/tie) representation. Many clas- collapse to functions of pairwise win counts (cf.\nsical ranking methods reduce R to pairwise out- the MM formulation for generalized Bradley–Terry\ncomes. For a pair of models (i, j) ∈L2 we define and Plackett–Luce likelihoods (Hunter, 2004)),\nwin and tie counts whereas Davidson–Luce explicitly models withinM N set ties. Wij := X X 1{Rimn = 1, Rjmn = 0}, (3)\nm=1 n=1\n2.3 Bayesian Approaches in Ranking\nM N\nTij := X X 1{Rimn = Rjmn}, (4)\nMany ranking methods can be viewed as probabilism=1 n=1\ntic models with latent parameters θ (e.g., model\nso that, in our fully observed setting, Wij + Wji + strength and, optionally, question difficulty).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 6,
+    "total_chunks": 83,
+    "char_count": 3351,
+    "word_count": 515,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2cfd673f-35b7-4aea-8d29-65f16f8313a6",
+    "text": "Given\nTij = MN for all i ̸= j. Equivalently, we can observations R (or derived representations such as\nform an undirected comparison graph G = (V, E) pairwise counts; Section 2.2), inference reduces to\nwith vertex set V = L and edge set E = {{i, j} : estimating θ from a likelihood p(R | θ). We conWij+Wji+Tij > 0}, and store (Wij, Wji, Tij) on sider maximum likelihood estimation (MLE), maxeach edge. In our benchmark setting E is the com- imum a posteriori (MAP), and expected a posteriori\nplete graph (every pair is compared MN times), (EAP), and discuss how uncertainty can be propawhereas in interactive evaluation settings E is typi- gated to rankings (Gelman et al., 2013). Although\ncally sparse and one assumes G is connected. The MLE is not Bayesian, we include it as a standard\nmatrices W = [Wij] and T = [Tij] define a baseline for likelihood-based ranking models. Maximum likelihood estimation (MLE). The as pseudo-counts in the posterior, which is commaximum likelihood estimate is plementary to using R0 to define empirical priors for MAP in parametric ranking models. Our\nˆθMLE ∈arg max p(R | θ), (5) θ implementation in Scorio supports both credibleinterval ranking via Bayes@N and empirical priors\nwhich yields a point estimate without requiring a\nvia EmpiricalPrior for MAP estimation.\nprior. MLE is attractive for its simplicity, but in\npaired-comparison and IRT-like models it can be 3 Experiments\nunstable under (near-)separation or weak identifiWe evaluate 72 ranking methods (Appendix I.2) oncation, which motivates priors in MAP and EAP.\nfour Olympiad-style math benchmarks: AIME'24,\nMaximum a posteriori (MAP). MAP incorpo- AIME'25, HMMT'25, and BrUMO'25, each with\nrates prior information p(θ) and estimates the pos- M = 30 questions. We use L = 20 reasoning\nterior mode: LLMs (full list in Table 23). For each model–\nquestion pair, we collect N = 80 independent\nˆθMAP ∈arg max p(R | θ) p(θ). (6)\nθ trials via top-p sampling, yielding a response tensor R ∈{0, 1}20×30×80. We also collect a sinEquivalently, MAP is a penalized MLE in which\ngle greedy-decoding output per question (R0) to−log p(θ) acts as a regularizer; priors can imserve as an empirical prior. Detailed generation,\nprove stability in paired-comparison and IRT-style\nsampling, and reproducibility settings appear in\nmodels (Caron and Doucet, 2012; Mislevy, 1986).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 7,
+    "total_chunks": 83,
+    "char_count": 2355,
+    "word_count": 383,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c3953fe0-aa6b-475d-a142-4992d9c95afd",
+    "text": "Appendix H; the library API is documented in ApWe can also construct empirical priors from auxpendix I.\niliary evaluation runs. For example, a prior outcome tensor R0 (e.g., one greedy decode per ques- 3.1 Gold Standard Ranking\ntion) can be used to regularize stochastic trials\nFollowing Section 2.1, we define the gold-standard\n(EmpiricalPrior in Scorio) (Hariri et al., 2026).\nranking as BayesU@80, the Bayesian posteriorExpected a posteriori (EAP). EAP uses the pos- mean estimator with a uniform prior computed\nterior mean as the point estimate: from all N = 80 trials. This choice is orderequivalent to avg@80 (mean correctness over all\nˆθEAP := E[θ | R], (7) M questions and all N = 80 trials, with ties allowed) and yields an interpretable accuracy-basedwhich is Bayes-optimal under squared-error loss\ntarget. Empirically, when each of our 72 ranking(Gelman et al., 2013). Compared with MAP, EAP\nmethods is computed using all 80 trials, the result-accounts for posterior mass beyond the mode and\ning orderings agree closely with BayesU@80 (Ta-typically requires approximation or sampling. EAP\nble 1): across benchmarks, the average Kendall'sis common in latent-trait settings such as IRT and\nτb between BayesU@80 and the other methods isadaptive testing (Chen et al., 1998).\n0.93–0.95 (median 0.95–0.99), and 19–34 methInterval estimates and conservative ranking. ods recover exactly the same ordering (τb = 1). Bayesian methods naturally yield credible intervals The largest deviations come from a small set of\n(posterior quantiles) for each θl, while frequentist voting rules (e.g., minimax and Nanson variants)\nanalyses can produce approximate confidence in- and difficulty-weighted baselines, with minimum\ntervals for ˆθMLE via bootstrap resampling of ques- τb values of 0.68–0.79 depending on the benchtions or trials. Interval estimates are especially use- mark. Although BayesU@N is order-equivalent to\nful because ranking is sensitive to near ties: rather avg@N, we prefer the Bayesian formulation bethan ranking by point estimates alone, one can rank cause it supports priors (e.g., BayesR0@N) and\nconservatively using a lower credible or confidence uncertainty estimates.\nbound (LCB), or report pairwise superiority prob-\n3.2 Ranking-Method Stabilityabilities Pr(θi > θj | Metric-level Bayesian\nestimators such as Bayes@N provide both a pos- To compare ranking methods in the low-budget\nterior mean and uncertainty, enabling rankings by regime, we set N = 1 by subsampling one of the\nposterior mean or by a chosen posterior quantile. 80 trials per question and recomputing the rankings. Bayes@N also supports incorporating prior out- For each method, we report Kendall's τb averaged\ncomes R0 (e.g., one greedy decode per question) over the 80 single-trial draws (mean ± std). Table 1: Agreement between the gold-standard ranking 3.3 Bootstrapped Model-Pool Robustness\n(BayesU@80) and each other ranking method, measured\nThe preceding N = 1 results use the full set ofby Kendall's τb, when all methods are computed from\nthe full N = 80 trials. Statistics are computed over the 20 models.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 8,
+    "total_chunks": 83,
+    "char_count": 3103,
+    "word_count": 472,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3f260716-6433-4edf-b00b-6c1df915402f",
+    "text": "To test whether those conclusions deother 71 methods; \"Combined\" pools all benchmarks. pend on the evaluation pool, we repeat the lowbudget analysis on bootstrapped model pools of\nBenchmark Mean Median Min #(τb = 1) #(τb ≥0.95) size 5, 10, and 15. For each bootstrap subset, we\nAIME'24 0.941 0.989 0.682 20 40 recompute the full-trial rankings, use the subsetAIME'25 0.934 0.947 0.771 19 29\nHMMT'25 0.950 0.989 0.758 34 44 specific avg@80 ordering as the gold-standard tarBrUMO'25 0.954 0.968 0.789 26 49 get, and compare each method's 80 single-trial\nCombined 0.962 0.989 0.748 22 53 rankings against two references: (i) the subsetspecific avg@80 ordering and (ii) its own subsetspecific full-trial ranking (method@80). We aggregate 1000 bootstrap subsets for each benchmark–the Pass@k family requires at least two trials to\nsize setting.differ from mean accuracy, the N = 1 comparisons\nbelow cover the remaining 69 methods. Easy and medium benchmarks preserve the\noriginal winner. On AIME'24, AIME'25, and\nBrUMO'25, BayesR0@N remains the best repre-Gold-standard agreement. We first rank methsentative method under both targets at all three\nods by agreement with the empirical gold standard\nmodel-pool sizes (Table 3). The mean score\n(BayesU@80). Across AIME'24, AIME'25, and\nchanges only slightly with pool size: on AIME'24,\nBrUMO'25, BayesR0@N performs best, achievgold-standard agreement moves from 0.769 to\ning τb = 0.779±0.034, 0.798±0.045, and 0.858±\n0.780 and self-consistency from 0.773 to 0.7850.028, respectively (Table 2). On HMMT'25, the\nas the pool size increases from 5 to 15 mod-hardest benchmark (see Appendix B), the greedy\nels; on AIME'25, the corresponding ranges areprior no longer helps, and the best score is shared\n0.797–0.802 and 0.803–0.809; on BrUMO'25,\nby a 21-method equivalence class (BayesU@N and\nBayesR0@N stays near 0.854–0.858 for both tar-several graph- and voting-based methods), with\ngets. On BrUMO'25, this advantage also becomes\nτb = 0.790 ± 0.053. When all benchmarks are\nmore decisive as the pool grows: the fraction of sub-pooled (Combined), the same 21-method class atsets where BayesR0@N is the top-scoring methodtains τb = 0.865 ± 0.049, while BayesR0@N\nrises from about 0.69 at k = 5 to 0.98–0.99 at\ndrops to τb = 0.786 ± 0.031 (Table 18).\nk = 15. Harder benchmarks remain tie-rich. The\nSelf-consistency and convergence. Next, we\nharder settings behave differently.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 9,
+    "total_chunks": 83,
+    "char_count": 2412,
+    "word_count": 370,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "31a87bad-1d0e-4949-a453-42c82a5389b8",
+    "text": "On HMMT'25\nevaluate each method against its own full-trial\nand on the Combined benchmark, the top score\nranking (method@80), which summarizes converis not unique: for agreement with avg@80, an\ngence from N = 1 to N = 80. Rasch MML\nequivalence class of 29–30 methods shares the best\nwith LCB scoring is the most self-consistent on\nmean, while for method@80 the tied class still\nAIME'24, AIME'25, and HMMT'25, with τb = contains 13–14 methods. We report avg (avg@N,\n0.804 ± 0.051, 0.834 ± 0.054, and 0.810 ± 0.056\norder-equivalent to BayesU@N) as a representa-\n(Table 2); BrUMO'25 again favors BayesR0@N tive member of these tied classes. The tied opti-\n(0.858 ± 0.028). On the Combined benchmark, the\nmum is essentially flat across pool size, staying\nmost self-consistent method is Nanson's rule with\nnear 0.788–0.790 on HMMT'25 and 0.863–0.866\ntie averaging (0.892 ± 0.050), followed by Rasch\non Combined. This mirrors the full-model analyMML (LCB) (0.883±0.037), whereas several minsis in Section 3.2: once the benchmark is difficult\nimax variants are among the least self-consistent\nor pooled across heterogeneous tasks, many point-\n(down to 0.765 ± 0.045; Table 19). High selfwise, voting, and graph-based methods become\nconsistency does not imply strong agreement with\nempirically indistinguishable.\nthe gold standard: Nanson (avg ties) ranks first in\nself-consistency on Combined but has substantially Larger pools mainly reduce between-subset varilower gold-standard agreement (0.807 ± 0.036; Ta- ance. The primary effect of increasing the modelble 18). pool size is to reduce dispersion across subsets Table 2: Best-performing ranking methods in the low-budget regime (N = 1) under two targets: (i) agreement with\nthe gold standard (BayesU@80) and (ii) self-consistency with each method's own full-trial ranking (method@80). Kendall's τb is averaged over 80 single-trial draws; † denotes a 21-way tie for best gold-standard agreement\n(see Table 18).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 10,
+    "total_chunks": 83,
+    "char_count": 1956,
+    "word_count": 299,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ba6adc4-5dc3-44f6-90ec-dfb8fc91dac8",
+    "text": "Pass@k variants are excluded at N = 1 because they require N ≥2. Method identifiers correspond\nto the APIs listed in Section I.2. Benchmark Best vs. gold standard τb Best self-consistency (vs. method@80) τb AIME'24 BayesR0@1 0.779 ± 0.034 Rasch MML LCB (rasch_mml_credible) 0.804 ± 0.051\nAIME'25 BayesR0@1 0.798 ± 0.045 Rasch MML LCB (rasch_mml_credible) 0.834 ± 0.054\nHMMT'25 Bayes@1 † 0.790 ± 0.053 Rasch MML LCB (rasch_mml_credible) 0.810 ± 0.056\nBrUMO'25 BayesR0@1 0.858 ± 0.028 BayesR0@1 0.858 ± 0.028\nCombined Bayes@1 † 0.865 ± 0.049 Nanson avg ties (nanson_rank_ties_average) 0.892 ± 0.050 Table 3: Bootstrapped model-pool results in the low- 1.00 AIME'24 1.00 AIME'25\nbudget regime (N = 1). For each model-pool sub- 0.95 0.95\nset, we compute Kendall's τb over the 80 single-trial 0.90 0.90 0.85 0.85rankings against two targets: the subset-specific gold Kendall's Kendall's\nstandard avg@80 and each method's own subset-specific 0.80 0.80\nPrior 0.75 Uniform Priorfull-trial ranking (method@80). The table reports the 0.75 UniformGreedy Prior Greedy Prior 4 8 16 32 6480 1 2 4 8 16 32 6480mean and standard deviation of the subset-level mean 0.70 1 2 Number 0.70 of Trials (N) Number of Trials (N)\nscore across bootstrap model pools for each subset size. 1.00 HMMT'25 1.00 BrUMO'25 0.95 0.95\nτb vs Target 0.90 0.90\nBenchmark Pool Best Method\navg@80 method@80 0.85 0.85 Kendall's Kendall's\n0.80 0.80\n5 0.769 ± 0.209 0.773 ± 0.207 0.75 Uniform Prior 0.75 Uniform Prior\nGreedy Prior Greedy PriorAIME'24 10 BayesR0@1 0.776 ± 0.107 0.781 ± 0.105 0.70 0.70\n15 0.780 ± 0.057 0.785 ± 0.057 1 2 Number4 8of Trials16 (N) 32 6480 1 2 Number4 8of Trials16 (N) 32 6480\n5 0.802 ± 0.144 0.809 ± 0.144\nAIME'25 10 BayesR0@1 0.797 ± 0.071 0.803 ± 0.073 Figure 2: Gold-standard agreement of BayesU@N\n15 0.798 ± 0.038 0.804 ± 0.040 (blue) and BayesR0@N (red) as a function of N across\n5 0.788 ± 0.114 0.788 ± 0.114 benchmarks. Shaded regions show ±1 standard deviaHMMT'25 10 Bayes@1 0.789 ± 0.059 0.789 ± 0.059 tion over 50 resampled datasets.\n15 0.790 ± 0.033 0.790 ± 0.033 5 0.854 ± 0.136 0.854 ± 0.136\nBrUMO'25 10 BayesR0@1 0.856 ± 0.062 0.856 ± 0.062 setting, the signal is a single greedy decode,\n15 0.858 ± 0.032 0.858 ± 0.032 R0. We incorporate R0 into Bayes@N, yielding\n5 0.863 ± 0.084 0.863 ± 0.084 BayesR0@N, and compare it with the uniformCombined 10 Bayes@1 0.866 ± 0.042 0.866 ± 0.042\nprior variant BayesU@N. We evaluate both vari- 15 0.864 ± 0.023 0.864 ± 0.023\nants by their agreement with the gold-standard\nranking BayesU@80. For each N, we compute\nrather than to shift the mean systematically (Ta- Kendall's τb between the induced model ranking\nble 3).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 11,
+    "total_chunks": 83,
+    "char_count": 2655,
+    "word_count": 452,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e55999be-e72e-46d9-bcf7-d4504858fb97",
+    "text": "For the best method under the avg@80 tar- and BayesU@80 and report the mean and standard\nget, the across-subset standard deviation falls from deviation over 50 resampled datasets.\n0.209 to 0.057 on AIME'24, from 0.144 to 0.038\nEmpirical priors reduce variance at low N.\non AIME'25, from 0.114 to 0.033 on HMMT'25,\nAcross all benchmarks, BayesR0@N yields morefrom 0.136 to 0.032 on BrUMO'25, and from\nstable low-N rankings than BayesU@N. At\n0.084 to 0.023 on Combined when moving from 5\nN = 1, the standard deviation of τb decreases\nto 15 models. Thus, the qualitative recommendaby 16–52% depending on the benchmark (Table 4\ntion is stable under moderate changes to the model\nand Fig. 7).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 12,
+    "total_chunks": 83,
+    "char_count": 687,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c96c905a-57f1-4c42-b176-df62243c94b2",
+    "text": "This advantage shrinks quickly as N\npool: larger pools mainly make the same concluincreases (Fig. 2), consistent with the prior consion more certain.\ntributing only O(1) pseudo-counts per question. 3.4 Effect of Empirical Priors The mean effect depends on greedy–sampling\nEmpirical priors use auxiliary evaluation sig- alignment. Variance reduction does not guarannals to stabilize low-budget rankings. In our tee improved agreement with BayesU@80.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 13,
+    "total_chunks": 83,
+    "char_count": 448,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db09cfd1-6769-4e59-bb52-a088fe7ed5f2",
+    "text": "Table 4: Dataset difficulty (mean accuracy), greedy– 10.0 10.0\nsampling alignment (τG-S), and the effect of the greedy 20.0 AIME'24 ( =0.74) 7.5 20.0 AIME'25 ( =0.66) 7.5\nempirical prior at N = 1. ∆τ is the difference in gold- 17.5 5.0 17.5 5.0\nstandard agreement (greedy minus uniform), and Std. Rank 15.012.5 2.5 (S-G) Rank 15.012.5 2.5 (S-G)\nRed. is the relative reduction in the standard deviation 10.0 0.0 10.0 0.0\nSampling 7.5 2.5 Rank Sampling 7.5 2.5 Rankof τb.\n5.0 5.0\n2.5 5.0 2.5 5.0 10 7.5 5 15 20 7.5 Benchmark Difficulty τG-S ∆τ Std. Red. 5 Greedy10 Rank 15 20 Greedy Rank\nAIME'24 0.620 0.739 +0.020 42% 10.0 10.0\nAIME'25 0.533 0.660 +0.008 17% 10.0 10.0\nHMMT'25 0.333 0.635 −0.022 16% 20.0 HMMT'25 ( =0.63) 7.5 20.0 BrUMO'25 ( =0.77) 7.5\nBrUMO'25 0.588 0.768 +0.049 52% 17.5 5.0 17.5 5.0\nRank 15.012.5 2.5 (S-G) Rank 15.012.5 2.5 (S-G)\n10.0 0.0 10.0 0.0\nSampling 7.5 2.5 Rank Sampling 7.5 2.5 Rankgreedy prior increases mean τb on AIME'24, 5.0 5.0\n5.0 2.5 5.0AIME'25, and BrUMO'25, but decreases it on 2.5\nHMMT'25 (Table 4). At N = 1, when all bench- 5 Greedy10 Rank 15 20 7.5 5 Greedy10 Rank 15 20 7.5\nmarks are pooled, this negative shift is substantially 10.0 10.0\nlarger (Table 18), indicating that an empirical prior Figure 3: Model-level ranks under greedy decoding vercan introduce systematic bias when greedy and sus stochastic sampling (N = 80) for each benchmark.\nsampling behave differently across datasets. Points on the diagonal indicate perfect alignment; color\nWe summarize this diagnostic via greedy– shows rank displacement (∆).\nsampling alignment τG-S, defined as Kendall's τb\nbetween the model rankings induced by greedy\nmarks, the greedy prior reduces variability (nardecoding and by stochastic sampling at N = 80.\nrower distributions) but can introduce bias (shifted\nIn our results, higher τG-S coincides with a more\nmeans), with the net effect governed by greedy–\npositive ∆τ (Appendix E and Fig. 6), suggestsampling alignment.\ning that the empirical prior is most likely to help\nwhen greedy is a faithful proxy for the sampling- 3.5 Categorical Ranking\ninduced ordering. While this evidence is limited\nto four benchmarks, the trend is consistent with We extend the Bayesian framework to categorical\nBayesR0@N acting as shrinkage toward the greedy outcomes: each completion is mapped to one of\nordering. C + 1 ordered categories based on signals such as\nanswer format (boxed vs. unboxed), model confiImplications. BayesR0@N behaves as a shrink- dence (completion bits per token), token efficiency,\nage estimator toward the greedy ordering: it is help- and external verifier judgments. Each scheme deful when greedy decoding is a faithful proxy for fines a categorical mapping and a utility weight\nthe sampling-induced ranking, and harmful when vector w = (w0, . . . , wC); Bayesian estimation\nthe two disagree. Because R0 is generated under then proceeds with a Dirichlet–multinomial model\na different decoding policy, incorporating it effec- rather than a Beta–binomial model (details and\ntively biases the estimate toward greedy behavior. scheme definitions are given in Appendix F). This can be desirable for variance reduction, but We select eight non-redundant representative\nit changes the implied evaluation target. Using the N = 1 subsampling protosible source of disagreement is that greedy decod- col on the Combined benchmark (the first L = 11\ning may under-explore on hard instances, while models of Table 23, M = 120 questions pooled\nstochastic sampling can recover alternative success- across all four datasets), we measure Kendall's τb\nful reasoning paths. In practice, empirical priors are against three references (Table 5).\nmost attractive when N is very small and greedy–\nsampling alignment has been checked on a small Self-consistency vs. gold-standard trade-off.\npilot sample; otherwise, BayesU@N provides a Signal-rich schemes achieve the highest selfsafer default. consistency: Verifier-only (τSelf = 0.897) and\nOOD-robust (0.892) rank first and second (Fig. 4). Bias–variance trade-off.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 14,
+    "total_chunks": 83,
+    "char_count": 4046,
+    "word_count": 646,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f1cbeaef-008f-47a5-94d4-d54482da745e",
+    "text": "Figure 7 visualizes the Yet these schemes have the lowest agreement with\ntrade-off induced by empirical priors: in our bench- the gold standard (τGS = 0.824 and 0.840, respec- Table 5: Categorical ranking at N =1 on the combined marks (HMMT'25, BrUMO'25), where Verifierbenchmark (L=11, the first 11 models from Table 23, only drops to τGS = 0.753 and 0.734, while\nM =120). Eight representative schemes are ordered by\ncorrectness-driven schemes remain stable (τGS ≥\nagreement with the gold standard (τGS, vs. Scheme@80; Greedy: τb vs. Values are mean ± std over 80 draws.\n4 Related Work Scheme τGS τSelf τGreedy Test-time scaling and stochastic reasoning. Conservative 0.856 ± 0.076 0.861 ± 0.066 0.858 ± 0.074 Test-time scaling samples multiple solutions per\nEfficiency-adj. 0.850 ± 0.070 0.875 ± 0.057 0.859 ± 0.071 prompt and aggregates them (Wang et al., 2023;\nFormat-aware 0.849 ± 0.071 0.881 ± 0.064 0.869 ± 0.069\nBalanced comp. 0.843 ± 0.075 0.877 ± 0.067 0.862 ± 0.073 Snell et al., 2024; Zeng et al., 2025). Because\nOOD-robust 0.840 ± 0.071 0.892 ± 0.063 0.870 ± 0.066 stochastic reasoning varies across runs (Liu et al.,\nRare-event 0.838 ± 0.073 0.888 ± 0.065 0.867 ± 0.069 2025), we study how this variability affects rank-Verifier-calib. 0.832 ± 0.076 0.877 ± 0.067 0.855 ± 0.073\nVerifier-only 0.824 ± 0.071 0.897 ± 0.068 0.870 ± 0.071 ings under different aggregation rules as the testtime budget changes. 0.90 Verifier-only Ranking and statistical modeling for LLM evaluOOD-robust ation. Preference evaluation and alignment learn\nSelf) 0.89 from paired comparisons (Christiano et al., 2017;\n( Rare-event\nFormat-aware Rafailov et al., 2023) and underpin leaderboards\n0.88\nVerifier-calib. such as Chatbot Arena (Chiang et al., 2024; Ameli\nBalanced comp.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 15,
+    "total_chunks": 83,
+    "char_count": 1765,
+    "word_count": 282,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fe79749a-abf9-4e11-b206-98f4b46b4333",
+    "text": "Efficiency-adj. et al., 2025). Benchmark leaderboards often rank\n0.87\nmodels by task metrics such as Pass@k (Chen et al., Self-consistency\n2021), and recent work adds Bayesian uncertainty 0.86 Conservative Other schemes\nRepresentative schemes and IRT-style modeling (Hariri et al., 2026; Zhou\n0.820 0.825 0.830 0.835 0.840 0.845 0.850 0.855 0.860 et al., 2025). We extend this literature to dense\nGold-standard agreement ( GS) repeated-trial benchmarks and compare ranking\nmethods through stability and convergence; ApFigure 4: Gold-standard agreement vs. self-consistency pendix G gives additional background.\nfor 25 categorical schemes at N = 1 on the Combined\nbenchmark. Blue markers indicate the 8 representa- 5 Conclusion & Future Directions\ntive schemes; gray markers show the remaining 17.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 16,
+    "total_chunks": 83,
+    "char_count": 796,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "24a2a8db-0c4c-455b-81b9-6781f501d7be",
+    "text": "Schemes in the upper-left are self-consistent but deviate Test-time scaling turns LLM benchmarking into\nfrom BayesU@80; those in the lower-right closely track a repeated-sampling problem, so model rankings\nthe gold standard but are less stable across single-trial must be estimated from stochastic trials rather than\ndraws. from a single run. We formalize this setting and\ncompare a broad collection of ranking methods\nwithin a common framework. When many trials aretively), extending the finding from Section 3.2 that\navailable, most reasonable ranking families inducehigh self-consistency does not imply closeness to\nnearly identical orderings, making BayesU@N athe gold standard. The negative correlation besimple and interpretable default. The main diftween τGS and τSelf across schemes (Fig. 4) sugferences appear in the low-budget regime. There,gests that auxiliary signals introduce systematic\nuncertainty-aware estimators can improve stability,biases away from the correctness-based ordering\nand the greedy prior BayesR0@N acts as a shrink-while stabilizing single-trial rankings.\nage estimator: it reduces variance when greedy and\nGreedy-prior alignment. All eight schemes stochastic sampling align, but can bias rankings\ncorrelate more strongly with BayesR0@80 than when they diverge.\nwith BayesU@80; the gap is largest for Verifier- In practice, BayesU@N is a strong default,\nonly (∆τ = +0.046) and OOD-robust (+0.031), whereas BayesR0@N is best used after checking\nconsistent with the mechanism in Section 3.4: greedy–sampling alignment on a small pilot sample.\nverifier and OOD signals encode information Our experiments focus on binary correctness; expartially aligned with greedy-decoding behav- tending the analysis to partial credit, rubric-based\nior. Per-dataset results (Appendix F) show that scoring, and other categorical evaluation settings is\nscheme differentiation widens on harder bench- a natural next step. Limitations Allan Birnbaum. 1968. Some latent trait models and\ntheir use in inferring an examinee's ability. In FredOur experiments focus on mathematical reasoning eric M. Novick, editors, Statistibenchmarks. We do not evaluate partial credit, or cal Theories of Mental Test Scores, pages 396–479. Addison-Wesley, Reading, MA.\nopen-ended outputs, where outcome categories are\nless clear and annotation or verification noise may R. Darrell Bock and Murray Aitkin. 1981.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 17,
+    "total_chunks": 83,
+    "char_count": 2402,
+    "word_count": 335,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ccb3ebb6-99d9-43dd-9194-2da0fe4c872d",
+    "text": "More generally, when informative pri- maximum likelihood estimation of item parameters:\nApplication of an EM algorithm. Psychometrika,ors are used—especially priors derived from auxil-\n46(4):443–459.\niary signals other than greedy decoding—the prior\nsource and specification should be reported explic- Ralph Allan Bradley and Milton E. Rank\nitly, since the prior can introduce systematic bias analysis of incomplete block designs: The method of\npaired comparisons. Biometrika, 39(3-4):324–345.if it is misaligned with the stochastic evaluation\nregime. Felix Brandt, Vincent Conitzer, Ulle Endriss, Jérôme\nLang, and Ariel D. Procaccia, editors. 2016.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 18,
+    "total_chunks": 83,
+    "char_count": 649,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2cd099b2-507a-405a-b6ad-9364e9d5b304",
+    "text": "HandAcknowledgments book of Computational Social Choice. Cambridge\nUniversity Press. This research was supported in part by NSF awards\nBrown University Math Olympiad Organizers. 2025.\n2117439 and 2320952. Brown university math olympiad (BrUMO). Official\nBrUMO website with tournament information (Apr\n4–5, 2025); accessed 2025-09-25.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 19,
+    "total_chunks": 83,
+    "char_count": 333,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9e46e025-18ed-430f-bf11-586174ea8169",
+    "text": "References\nFrançois Caron and Arnaud Doucet. 2012. Efficient\nMarah Abdin, Sahaj Agarwal, Ahmed Awadallah, Vid- bayesian inference for generalized bradley–terry\nhisha Balachandran, Harkirat Behl, Lingjiao Chen, models. Journal of Computational and Graphical\nGustavo de Rosa, Suriya Gunasekar, Mojan Java- Statistics, 21(1):174–196.\nheripi, Neel Joshi, Piero Kauffmann, Yash Lara,\nCaio César Teodoro Mendes, Arindam Mitra, Be- Mark Chen, Jerry Tworek, Heewoo Jun, Qiming Yuan,\nsmira Nushi, Dimitris Papailiopoulos, Olli Saarikivi, Henrique Ponde de Oliveira Pinto, Jared Kaplan,\nShital Shah, Vaishnavi Shrivastava, and 4 others. Harri Edwards, Yuri Burda, Nicholas Joseph, Greg\n2025.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 20,
+    "total_chunks": 83,
+    "char_count": 681,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "edab65f2-b162-4d3d-aa77-a235f9006332",
+    "text": "Phi-4-reasoning technical report. Preprint, Brockman, Alex Ray, Raul Puri, Gretchen Krueger,\narXiv:2504.21318. Michael Petrov, Heidy Khlaaf, Girish Sastry, Pamela\nMishkin, Brooke Chan, Scott Gray, and 39 others. Siavash Ameli, Siyuan Zhuang, Ion Stoica, and 2021.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 21,
+    "total_chunks": 83,
+    "char_count": 263,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f8665133-8ad4-4d1c-96e4-29afc5bd8730",
+    "text": "Evaluating large language models trained on\nMichael W. A statistical framework code. Preprint, arXiv:2107.03374.\nfor ranking LLM-based chatbots. In International\nConference on Learning Representations. Ssu-Kuang Chen, Liling Hou, and Barbara G.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 22,
+    "total_chunks": 83,
+    "char_count": 244,
+    "word_count": 31,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "163dc25e-ea8b-4d7c-a95c-8f36ab5785c3",
+    "text": "A comparison of maximum likelihood estimation and expected a posteriori estimation in CATKenneth J. Social Choice and Individual\nusing the partial credit model. Educational and Psy- Values. John Wiley & Sons, New York.\nchological Measurement, 58(4):569–595. David Balduzzi, Marta Garnelo, Yoram Bachrach, WojWei-Lin Chiang, Lianmin Zheng, Ying Sheng, Anastaciech Czarnecki, Julien Pérolat, Max Jaderberg, and\nsios Nikolas Angelopoulos, Tianle Li, Dacheng Li,\nThore Graepel. 2019. Open-ended learning in symBanghua Zhu, Hao Zhang, Michael Jordan, Joseph E.\nmetric zero-sum games. In Proceedings of the 36th\nGonzalez, and Ion Stoica. 2024. Chatbot arena: An\nInternational Conference on Machine Learning, volopen platform for evaluating LLMs by human prefume 97 of Proceedings of Machine Learning Reerence. In Proceedings of the 41st International\nsearch, pages 434–443. Conference on Machine Learning, volume 235 of\nJ. The technique of the nanson 8359–8388. PMLR.\npreferential majority system of election. Proceedings\nof the Royal Society of Victoria, New Series, 39(1):42– Paul F. Christiano, Jan Leike, Tom B. Martic, Shane Legg, and Dario Amodei. 2017.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 23,
+    "total_chunks": 83,
+    "char_count": 1153,
+    "word_count": 165,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ebdd785a-6f24-4bb8-a1ad-b1df2d268d4e",
+    "text": "Majority Judg- Advances in Neural Information Processing Systems,\nment: Measuring, Ranking, and Electing. The MIT volume 30, pages 4299–4307. Marquis de Condorcet, Marie Jean Antoine Nicolas CarBespoke Labs. 2025. Bespoke-stratos: The unreason- itat. 1785. Essai sur l'application de l'analyse 'a la\nable effectiveness of reasoning distillation. Accessed: probabilité des décisions rendues 'a la pluralité des\n2025-01-22. voix. Imprimerie Royale, Paris.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 25,
+    "total_chunks": 83,
+    "char_count": 453,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "af7581a3-12c4-4f46-8e55-f51c1560a33c",
+    "text": "A reasonable social welfare D. Seminar on Applications of Mathematics to R. University of Michigan, Ann Arbor. Gao,\nMimeographed notes. Liu, and 175 others. 2025.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 26,
+    "total_chunks": 83,
+    "char_count": 162,
+    "word_count": 25,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a0bade6e-d814-43ff-95b5-496c3035ee9e",
+    "text": "DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement\nTri Dao. 2023. Flashattention-2: Faster attention with learning. Nature, 645(8081):633–638.\nbetter parallelism and work partitioning. arXiv\npreprint arXiv:2307.08691. Mohsen Hariri, Amirhossein Samandar, Michael\nHinczewski, and Vipin Chaudhary. 2026. On extending the bradley– pass@k: A bayesian framework for large language\nterry model to accommodate ties in paired compari- model evaluation. In Proceedings of the 14th Interson experiments.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 27,
+    "total_chunks": 83,
+    "char_count": 507,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1e94b84b-a0ee-4162-8d81-73626c047292",
+    "text": "Journal of the American Statistical national Conference on Learning Representations\nAssociation, 65(329):317–328. (ICLR 2026). Paul De Boeck and Mark Wilson, editors. 2004. ExHarvard–MIT Mathematics Tournament. 2025. Hmmt\nplanatory Item Response Models. Springer.\nfebruary 2025 archive (problems and solutions).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 28,
+    "total_chunks": 83,
+    "char_count": 311,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ececcb4f-80ff-458e-971a-2915543d86e8",
+    "text": "OfJean-Charles de Borda. 1781. Mémoire sur les élections ficial HMMT archive page for February 2025 compeau scrutin. Histoire de l'Académie Royale des Sci- tition; accessed 2025-09-25.\nences, Paris.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 29,
+    "total_chunks": 83,
+    "char_count": 198,
+    "word_count": 28,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cbb8b856-181d-4be6-8fea-72b343349ae5",
+    "text": "Often cited as appearing in the 1781\nW. Monte carlo sampling meth- volume (issued in 1784) of the Histoire/Mémoires of\nods using markov chains and their applications. the Académie. Biometrika, 57(1):97–109. The Rating of Chessplayers, Past\nand Present. Ralf Herbrich, Tom Minka, and Thore Graepel. 2006.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 30,
+    "total_chunks": 83,
+    "char_count": 303,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "651852ae-0d5a-4063-a390-d760896dff57",
+    "text": "TrueSkill: A bayesian skill rating system. In AdDavid Firth, Ioannis Kosmidis, and Heather Turner. vances in Neural Information Processing Systems,\n2019. Davidson–luce model for multi-item choice volume 19, pages 569–576. MIT Press.\nwith ties. Preprint, arXiv:1909.07123. Open-R1: A fully open reproducFajwel Fogel, Alexandre d'Aspremont, and Milan Vo- tion of DeepSeek-R1.\njnovic. 2016. Spectral ranking using seriation. Journal of Machine Learning Research, 17:88:1–88:45. MM algorithms for generalized bradley–terry models. The Annals of Statistics,\nFuseAI. 2025. FuseO1-DeepSeekR1-QwQ-SkyT1- 32(1):384–406. Model card; accessed 2026-03-\n09. Xiaoye Jiang, Lek-Heng Lim, Yuan Yao, and Yinyu Ye.\n2011. Statistical ranking and combinatorial hodge\nAndrew Gelman, John B. Stern, David B.\ntheory.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 31,
+    "total_chunks": 83,
+    "char_count": 793,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "66613d72-907c-4e69-8f01-d72e8d467b55",
+    "text": "Mathematical Programming, 127(1):203–\nDunson, Aki Vehtari, and Donald B. Bayesian Data Analysis, 3 edition.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 32,
+    "total_chunks": 83,
+    "char_count": 107,
+    "word_count": 14,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8732b8bf-bfd3-48d8-8f0e-afaaee09bbc3",
+    "text": "Mathematics without numbers.Mark E. Parameter estimation in large\nDaedalus, 88(4):577–591. dynamic paired comparison experiments. Journal\nof the Royal Statistical Society: Series C (Applied\nM. A new measure of rank correla- Statistics), 48(3):377–394.\ntion. Biometrika, 30(1-2):81–93.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 33,
+    "total_chunks": 83,
+    "char_count": 284,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2e26ccac-bd53-440f-b104-e733ff9ace20",
+    "text": "Takumi Gotou, Ryo Nagata, Masato Mita, and Kazuaki\nWoosuk Kwon, Zhuohan Li, Siyuan Zhuang, Ying Hanawa. 2020. Taking the correction difficulty into\nSheng, Lianmin Zheng, Cody Hao Yu, Joseph Gon- account in grammatical error correction evaluation.\nzalez, Hao Zhang, and Ion Stoica. 2023. Efficient In Proceedings of the 28th International Conference\nmemory management for large language model serv- on Computational Linguistics, pages 2085–2095.\ning with PagedAttention. In Proceedings of the 29th\nSylvain Gugger, Lysandre Debut, Thomas Wolf, Philipp Symposium on Operating Systems Principles, pages\nSchmid, Zachary Mueller, Sourab Mangrulkar, Marc 611–626. Sun, and Benjamin Bossan. 2022.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 34,
+    "total_chunks": 83,
+    "char_count": 688,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "10151722-1ed7-4dfd-9bbb-da03428a9c95",
+    "text": "Accelerate: Training and inference at scale made simple, efficient and LG AI Research. 2025. EXAONE 4.0: Unified large\nadaptable. language models integrating non-reasoning and reasoning modes. Preprint, arXiv:2507.11407. Etash Guha, Ryan Marten, Sedrick Keh, Negin Raoof,\nGeorgios Smyrnis, Hritik Bansal, Marianna Nezhu- Junnan Liu, Hongwei Liu, Linchen Xiao, Ziyi\nrina, Jean Mercat, Trung Vu, Zayne Sprague, Ashima Wang, Kuikun Liu, Songyang Gao, Wenwei Zhang,\nSuvarna, Benjamin Feuer, Liangyu Chen, Zaid Songyang Zhang, and Kai Chen. 2025.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 35,
+    "total_chunks": 83,
+    "char_count": 541,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "02aeece2-0c3f-472c-833f-c1a89101665a",
+    "text": "Are your\nKhan, Eric Frankel, Sachin Grover, Caroline Choi, LLMs capable of stable reasoning? In Findings of\nNiklas Muennighoff, Shiye Su, and 31 others. 2025. the Association for Computational Linguistics: ACL\nOpenThoughts: Data Recipes for Reasoning Models. 2025, pages 17594–17632. Association for ComputaPreprint, arXiv:2506.04178. tional Linguistics. Zihan Liu, Zhuolin Yang, Yang Chen, Chankyu Lee, R. The analysis of permutations. Mohammad Shoeybi, Bryan Catanzaro, and Wei Ping. Applied Statistics, 24(2):193–202.\n2026. Acereason-nemotron 1.1: Advancing math and\ncode reasoning through SFT and RL synergy.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 36,
+    "total_chunks": 83,
+    "char_count": 612,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "717f3698-547b-49a2-af43-9e3ca170471e",
+    "text": "In In- Qwen Team. 2025. Qwen3 technical report. Preprint,\nternational Conference on Learning Representations. arXiv:2505.09388. Individual Choice Behavior: A Rafael Rafailov, Archit Sharma, Eric Mitchell, ChristoTheoretical Analysis. John Wiley & Sons. pher D. Manning, Stefano Ermon, and Chelsea Finn.\n2023. Direct preference optimization: Your language\nMathematical Association of America. 2024. American model is secretly a reward model.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 37,
+    "total_chunks": 83,
+    "char_count": 440,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5cee2220-d19d-492b-91ee-febf8d116196",
+    "text": "In Advances in\ninvitational mathematics examination (AIME). Of- Neural Information Processing Systems, volume 36,\nficial MAA page for the AIME competition (covers pages 53728–53741. AIME 2024); accessed 2025-09-25. Ties in pairedMathematical Association of America. 2025. American comparison experiments: A generalization of the\ninvitational mathematics examination (AIME). Of- bradley–terry model. Journal of the American Statisficial MAA page for the AIME competition (covers tical Association, 62(317):194–204. AIME 2025); accessed 2025-09-25. Probabilistic Models for Some\nP. Generalized Lin- Intelligence and Attainment Tests. Danish Institute\near Models. Springer. for Educational Research, Copenhagen. Nicholas Metropolis, Arianna W. Rosenbluth, Mar- Daniel J. Russo, Benjamin Van Roy, Abbas Kazerouni,\nshall N.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 38,
+    "total_chunks": 83,
+    "char_count": 818,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "02ee24e3-4845-4fe6-8ff2-0c47c942c66e",
+    "text": "Rosenbluth, Augusta H. Teller, and Ed- Ian Osband, and Zheng Wen. 2018. A tutorial on\nward Teller. 1953. Equation of state calculations by thompson sampling. Foundations and Trends in Mafast computing machines.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 39,
+    "total_chunks": 83,
+    "char_count": 210,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a3241339-12d4-4336-b143-6656eedb859f",
+    "text": "The Journal of Chemical chine Learning, 11(1):1–96. Physics, 21(6):1087–1092. Markus Schulze. 2011. A new monotonic, cloneRobert J. Bayes modal estimation in independent, reversal symmetric, and Condorcetitem response models. Psychometrika, 51(2):177– consistent single-winner election method. Choice and Welfare, 36(2):267–303. Transac- Charlie Snell, Jaehoon Lee, Kelvin Xu, and Aviral Kutions and Proceedings of the Royal Society of Victo- mar. 2024. Scaling LLM test-time compute optimally\nria, 19:197–240. Often cited as 1882 in secondary can be more effective than scaling model parameters.\nsources. Preprint, arXiv:2408.03314. Sahand Negahban, Sewoong Oh, and Devavrat Shah. On the likelihood that one\n2017.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 40,
+    "total_chunks": 83,
+    "char_count": 714,
+    "word_count": 95,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b8c18c80-4e83-4343-8673-ab2f89d9af71",
+    "text": "Rank centrality: Ranking from pairwise com- unknown probability exceeds another in view of the\nparisons. Operations Research, 65(1):266–287. evidence of two samples. Biometrika, 25(3-4):285–\n294.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 41,
+    "total_chunks": 83,
+    "char_count": 195,
+    "word_count": 25,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ed2b8886-0ff1-4996-b6af-b471af1f8115",
+    "text": "Think less, achieve more: Cut\nreasoning costs by 50% without sacrificing accuracy. Independence of clones as a\nAccessed: 2025-01-23. criterion for voting rules. Social Choice and Welfare,\n4(3):185–206.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 42,
+    "total_chunks": 83,
+    "char_count": 201,
+    "word_count": 28,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "911ec16c-32a9-4eb0-bf23-57c5368941cf",
+    "text": "NVIDIA nemotron nano 2: An accurate and efficient hybrid mamba-transformer reason- Norman D. Preprint, arXiv:2508.14444. namic generalization of the rasch model. Psychometrika, 58(3):395–415. OpenReasoning-Nemotron-1.5B. Model card; accessed 2026-03-09. Chun Wang and Steven W. On longitudinal item response theory models: A didactic. Journal\nShayegan Omidshafiei, Christos Papadimitriou, Geor- of Educational and Behavioral Statistics, 45(3):339–\ngios Piliouras, Karl Tuyls, Mark Rowland, Jean- 368. Baptiste Lespiau, Wojciech M.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 43,
+    "total_chunks": 83,
+    "char_count": 530,
+    "word_count": 65,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "33154a56-4279-4ba4-8d09-78a8fe3091b0",
+    "text": "Czarnecki, Julien\nPérolat, and Rémi Munos. 2019. α-rank: Multi- Xuezhi Wang, Jason Wei, Dale Schuurmans, Quoc V.\nagent evaluation by evolution. Scientific Reports, Le, Ed H. Chi, Sharan Narang, Aakanksha Chowd-\n9(1):9937. hery, and Denny Zhou. 2023.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 44,
+    "total_chunks": 83,
+    "char_count": 249,
+    "word_count": 37,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ca866bdd-a008-476c-8767-ed337e4e24ea",
+    "text": "Self-consistency improves chain of thought reasoning in language modOpenAI. 2025. gpt-oss-120b & gpt-oss-20b Model els. In International Conference on Learning RepreCard. Preprint, arXiv:2508.10925. sentations. Lawrence Page, Sergey Brin, Rajeev Motwani, and Liang Wen, Yunke Cai, Fenrui Xiao, Xin He, Qi An,\nTerry Winograd. 1999. The pagerank citation rank- Zhenyu Duan, Yimin Du, Junchen Liu, Lifu\ning: Bringing order to the web. Technical Report Tang, Xiaowei Lv, Haosheng Zou, Yongchao Deng,\n1999-66, Stanford InfoLab. Previous number: SIDL- Shousheng Jia, and Xiangzheng Zhang. 2025.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 45,
+    "total_chunks": 83,
+    "char_count": 588,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "06ccfad6-5a41-4312-ba37-c7ecd8392d4a",
+    "text": "LightWP-1999-0120. r1: Curriculum SFT, DPO and RL for long COT from In Proceedings of the 63rd Annual Meeting of the Association for Computational\nLinguistics (Volume 6: Industry Track), pages 318–\n327. Association for Computational Linguistics. Thomas Wolf, Lysandre Debut, Victor Sanh, Julien\nChaumond, Clement Delangue, Anthony Moi, Pierric Cistac, Tim Rault, Rémi Louf, Morgan Funtowicz, and 1 others. 2019.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 46,
+    "total_chunks": 83,
+    "char_count": 411,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa81a77c-3057-4d00-abff-8b45b062029e",
+    "text": "Huggingface's transformers:\nState-of-the-art natural language processing. arXiv Shunyu Yao, Noah Shinn, Pedram Razavi, and Karthik\nNarasimhan. 2025. τ-bench: A benchmark for toolagent-user interaction in real-world domains. In International Conference on Learning Representations. Yixin Ye, Zhen Huang, Yang Xiao, Ethan Chern, Shijie\nXia, and Pengfei Liu. 2025.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 47,
+    "total_chunks": 83,
+    "char_count": 361,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "679e73a9-f289-4968-9e6a-519aafa4f792",
+    "text": "LIMO: Less is more\nfor reasoning. In Second Conference on Language\nModeling. Extending Condorcet's rule. Journal\nof Economic Theory, 16(2):335–353. Zhiyuan Zeng, Qingyuan Chen, Zhangyue Yin, Yunhua\nZhou, and Xipeng Qiu. 2025.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 48,
+    "total_chunks": 83,
+    "char_count": 225,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1334e204-bbb1-4044-ab38-7622f384cf8c",
+    "text": "Revisiting the test-time\nscaling of o1-like models: Do they truly possess testtime scaling capabilities? In Proceedings of the 63rd\nAnnual Meeting of the Association for Computational\nLinguistics (Volume 1: Long Papers), pages 4651–\n4665. Tianyi Zhang, Mohsen Hariri, Shaochen Zhong, Vipin\nChaudhary, Yang Sui, Xia Hu, and Anshumali Shrivastava. 2025. 70% size, 100% accuracy: Lossless llm compression for efficient gpu inference via\ndynamic-length float (DFloat11). In Advances in\nNeural Information Processing Systems. Hongli Zhou, Hui Huang, Ziqing Zhao, Lvyuan Han,\nHuicheng Wang, Kehai Chen, Muyun Yang, Wei\nBao, Jian Dong, Bing Xu, Conghui Zhu, Hailong\nCao, and Tiejun Zhao. 2025.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 49,
+    "total_chunks": 83,
+    "char_count": 686,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ae2c5af3-3339-458d-a12d-7f5d5e8e559b",
+    "text": "Lost in benchmarks?\nrethinking large language model benchmarking with\nitem response theory. Preprint, arXiv:2505.15055. Contents H Experiment Setup and Reproducibility 28\nH.1 Models and Datasets . . . . . . . 28\n1 Introduction 1 H.2 Reproducibility . . . . . . . . . . 29\nH.3 Computational Cost and Token\n2 Ranking Problem and Test-time Scaling 2 Statistics . . . . . . . . . . . . . . 29\n2.1 Gold Standard Rankings . . . . . 3 H.4 Ranking-Method Identifiers . . . . 29\n2.2 Representation . . . . . . . . . . 3 H.5 Rank Correlation Metrics . . . . . 29\n2.3 Bayesian Approaches in Ranking . 4\nI Scorio, Open-Source Library for LLM\n3 Experiments 5 Ranking 30\n3.1 Gold Standard Ranking . . . . . . 5 I.1 Ranking Methods . . . . . . . . . 31\n3.2 Ranking-Method Stability . . . . 5 I.1.1 Pointwise Methods . . . . 31\n3.3 Bootstrapped Model-Pool Robust- I.1.2 Evaluation-metric Methods 31\nness . . . . . . . . . . . . . . . . 6 I.1.3 Bayesian Methods . . . . 32\n3.4 Effect of Empirical Priors . . . . . 7 I.1.4 Voting-based Methods . . 32\n3.5 Categorical Ranking . . . . . . . 8 I.1.5 Paired-comparison Probabilistic Models . . . . . . 33\n4 Related Work 9 I.1.6 Sequential Rating Systems 34\nI.1.7 Listwise / Setwise Choice\n5 Conclusion & Future Directions 9 Models (Luce Family) . . 35\nI.1.8 Item Response Theory\nA Notation and Definitions 15\n(IRT) Methods . . . . . . 36\nA.1 Data and Basic Quantities . . . . . 15 I.1.9 Graph and Spectral Methods 37\nA.2 Metric Shorthand . . . . . . . . . 15 I.1.10 Seriation-based Methods . 38\nA.3 Ranking-Method Families . . . . 15 I.1.11 Hodge-theoretic Methods . 38\nA.4 Evaluation Criteria . . . . . . . . 15 I.2 Ranking Method APIs and HyperA.5 Inference Terminology . . . . . . 15 parameters . . . . . . . . . . . . . 39 B Accuracy of Models 16 C Gold Standard Agreement 16\nC.1 Convergence of Ranking Methods 16\nC.2 Large-Budget Limits: Each\nMethod Converges, but Generally\nto a Different Target . . . . . . . . 16\nC.3 Implications and Support for the\nGold-Standard Definition . . . . . 22\nC.4 Minimality of the eight-question\nconstruction . . . . . . . . . . . . 23 D Ranking-Method Stability at N = 1 24 E Additional Prior Diagnostics 24 F Categorical Ranking 24\nF.1 Setup . . . . . . . . . . . . . . . 24\nF.2 Base Signals . . . . . . . . . . . . 25\nF.3 Derived Predicates and Thresholds 25\nF.4 Scheme Definitions . . . . . . . . 26\nF.5 Evaluation Protocol . . . . . . . . 26\nF.6 Per-Dataset Results . . . . . . . . 26 G Extended Related Work 27 A Notation and Definitions • Listwise, setwise methods: operate on winner and loser sets for each question–trial (e.g.,\nThroughout the paper, we use the following notaPlackett–Luce, Davidson–Luce).\ntion.\n• Voting rules: treat questions as voters that\nA.1 Data and Basic Quantities\nrank models and then aggregate those prefer-\n• L: number of models being ranked. ences (e.g., Borda, Copeland, Schulze, Kemeny–\nYoung).\n• M: number of questions in a benchmark.\n• Graph/spectral methods: construct compar-\n• N: number of independent stochastic trials per\nison graphs and compute centrality- or flowmodel–question pair under test-time scaling.\nbased scores (e.g., PageRank, Rank Centrality,\nHodgeRank, α-Rank).• R ∈{0, 1}L×M×N: response tensor, where\nRlmn = 1 if model l solves question m on trial • IRT-inspired methods: estimate latent model\nabilities and item difficulties (e.g., Rasch, 2PL,\n3PL, dynamic IRT).• R0: optional prior outcomes used by Bayesian\nestimators. In this paper, greedy decoding yields\nA.4 Evaluation Criteria a shared prior matrix R0 ∈{0, 1}M×D with\nD = 1, but the notation can also accommodate • Kendall's τb: rank-correlation coefficient that\nmodel-specific prior tensors. accounts for ties; it ranges from −1 (perfect disagreement) to +1 (perfect agreement).\n1 PNn=1 Rlmn: per-question solve rate N• bplm :=\nfor model l on question m. • Gold-standard agreement: agreement between\na low-budget ranking and the empirical gold stan-\n• klm := PNn=1 Rlmn: number of successful trials dard, typically BayesU@80 in this paper.\nfor model l on question m.\n• Self-consistency: agreement between a lowA.2 Metric Shorthand budget ranking and the same method's all-trial\n• Bayes@N: Bayesian posterior-mean estimate at ranking. N trials under a specified prior.\n• Convergence: the rate at which a method's rank-\n• BayesU@N: Bayesian estimate with a uniform ing approaches its full-trial ordering as the numDirichlet prior, denoted BayesU@N. ber of trials increases. • BayesR0@N: Bayesian estimate with a greedy • Greedy–sampling alignment (τG-S): Kendall's\nempirical prior, denoted BayesR0@N. τb between the ranking induced by greedy decoding and the ranking induced by stochastic\n• Pass@k: probability that at least one of k sam- sampling at high budget.\npled completions is correct. A.5 Inference Terminology\n• avg@N: mean accuracy over all M questions\n• MLE (maximum likelihood estimation): point and N trials. For binary outcomes, it is orderestimate that maximizes p(R | θ).\nequivalent to BayesU@N.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 50,
+    "total_chunks": 83,
+    "char_count": 4994,
+    "word_count": 932,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1fb34c8a-0229-4bb5-a728-0109c74568e6",
+    "text": "• MAP (maximum a posteriori): point estimate\nA.3 Ranking-Method Families\nthat maximizes p(R | θ)p(θ).\n• Pointwise methods: aggregate per-question performance to produce model scores (e.g., mean • EAP (expected a posteriori): posterior mean estiaccuracy, inverse-difficulty weighting). mate E[θ | • Pairwise methods: transform outcomes into • MML (marginal maximum likelihood):\nwin/tie counts between model pairs and fit paired- likelihood-based estimation that integrates over\ncomparison models (e.g., Bradley–Terry, Elo, a latent population distribution, commonly used\nGlicko). in IRT. • Credible intervals (CrI): Bayesian posterior in- question–trial pairs. Assume (Xmn)m∈[M],n∈[N]\ntervals used for uncertainty quantification; we are i.i.d. draws from some distribution P on\nuse lower credible bounds (LCBs) for conserva- {0, 1}L. Let\ntive ranking.\npℓ:= PX∼P (Xℓ= 1)\nB Accuracy of Models wij := PX∼P (Xi = 1, Xj = 0). Tables 6 to 9 report detailed accuracy statistics\nfor all L = 20 models, including greedy ac- (For clarity: pℓdepends only on the marginal of\ncuracy and stochastic-sampling statistics (mini- model ℓ, whereas wij depends on the joint distribumum, mean, maximum, and standard deviation) tion of (Xi, Xj).)\nover N = 80 trials. HMMT'25 is the hardest\nAverage targets marginal accuracy. By the lawbenchmark (mean accuracies 0.080–0.554), while\nof large numbers,AIME'24 and BrUMO'25 are relatively easy. Figure 5 visualizes these distributions across bench- a.s.\npℓ. ℓ(R) −−−−−→marks and highlights the heterogeneity in model MN→∞ bpavg\nperformance and sampling variance that motivates\nour ranking-stability analysis. Likewise, BayesU@N converges to the same pℓ;\nfor binary outcomes it differs from ℓ only by bpavgC Gold Standard Agreement O((MN)−1) smoothing. To justify our use of BayesU@80 as the gold stan- Bradley–Terry targets a pairwise decisive-win\ndard, we compare the full-trial rankings produced functional. The empirical win frequencies conby all methods at N = 80. Table 1 summa- verge:\nrizes Kendall's τb between BayesU@80 and each\ncompeting method. The full results show that 1 a.s. Wij(R) −−−−−→ wij.BayesU@80 is also a high-consensus ordering: MN MN→∞\nby average agreement with all other methods, it\nranks first on AIME'25, HMMT'25, and the Com- Define the BT log-likelihood\nbined benchmark and second on AIME'24 and\nBrUMO'25 within 5 × 10−4 of the best (Table 10). ℓ(π; W) := X Wij log πi −log(πi +πj) . (8)\nDataset-level consensus tables appear in Tables 12 i̸=j\nto 16.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 51,
+    "total_chunks": 83,
+    "char_count": 2502,
+    "word_count": 380,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9003aab6-27e1-422f-897c-5d44c6a0f16c",
+    "text": "Many methods recover the same ordering\nexactly (Table 17), and the remaining disagreement Then the BT-ML estimator is an M-estimator: maxis concentrated in a small low-agreement tail (Ta- imizing (40) with Wij is equivalent to maximizble 11). ing the scaled objective (MN)−1ℓ(π; W). Under\nmild regularity and connectivity conditions (ensurC.1 Convergence of Ranking Methods ing strict concavity in log π and uniqueness up to\nAs the number of trials N (or questions M) scale), bπ converges to the unique (up to scale) maxincreases, evaluation metrics such as avg@N, imizer of the population objective\nBayes@N, and Pass@k need not induce the same\nlimiting ordering as ranking methods. The reason π⋆∈arg max X wij log πi −log(πi + πj) .\nis that they target different population quantities. π>0 i̸=j\nWe make this distinction explicit below for the (9)\ntwo canonical choices used throughout the pa- The limiting objects (pℓ)Lℓ=1 and π⋆are generally\nper: the average-accuracy ranking and the Bradley– not linked by any monotone transform: pℓdepends\nTerry (BT) model. only on marginal correctness, while π⋆depends on\nthe full matrix (wij)i̸=j. Therefore, without addiC.2 Large-Budget Limits: Each Method tional assumptions on P (e.g., that P is generated\nConverges, but Generally to a Different by a BT choice model at the level of decisive comTarget parisons), there is no reason to expect the induced\nTo discuss M →∞(or N →∞) formally, we orderings to coincide as MN →∞. We make this\nintroduce an i.i.d. sampling model at the level of non-equivalence explicit with a counterexample. Table 6: Accuracy on AIME'24. Table 7: Accuracy on HMMT'25. Model Greedy Top-p Model Greedy Top-p Min Mean Max Std Acc. DS-R1-Qwen 0.200 0.167 0.297 0.433 0.055 DS-R1-Qwen 0.133 0.067 0.135 0.233 0.040\nLIMO-v2 0.600 0.467 0.619 0.733 0.059 LIMO-v2 0.433 0.233 0.347 0.467 0.048\nOpenThinker2 0.767 0.600 0.722 0.833 0.048 OpenThinker2 0.333 0.233 0.382 0.500 0.057\nOpenThinker3 0.333 0.400 0.517 0.667 0.059 OpenThinker3 0.200 0.200 0.297 0.467 0.047\nQwen3-Thinking 0.867 0.767 0.875 0.933 0.038 Qwen3-Thinking 0.500 0.467 0.554 0.633 0.037\nSky-T1-Flash 0.400 0.167 0.310 0.400 0.050 Sky-T1-Flash 0.167 0.033 0.106 0.200 0.034\ngpt-oss-high 0.700 0.633 0.747 0.833 0.053 gpt-oss-high 0.233 0.267 0.449 0.633 0.069\ngpt-oss-low 0.700 0.333 0.675 0.867 0.130 gpt-oss-low 0.167 0.100 0.203 0.333 0.051\ngpt-oss-medium 0.800 0.533 0.755 0.867 0.054 gpt-oss-medium 0.400 0.333 0.455 0.600 0.056\nEXAONE-4.0 0.500 0.433 0.570 0.733 0.055 EXAONE-4.0 0.400 0.200 0.335 0.433 0.060\nOR-Nemotron 0.433 0.367 0.490 0.667 0.064 OR-Nemotron 0.267 0.167 0.283 0.400 0.049\nPhi-4 0.667 0.567 0.705 0.800 0.050 Phi-4 0.467 0.267 0.378 0.533 0.056\nPhi-4-plus 0.533 0.633 0.753 0.867 0.049 Phi-4-plus 0.433 0.333 0.447 0.633 0.056\nOR1-Distill 0.400 0.400 0.547 0.700 0.066 OR1-Distill 0.233 0.133 0.251 0.333 0.042\nFuseO1-DS-QwQ-SkyT1 0.500 0.633 0.728 0.800 0.042 FuseO1-DS-QwQ-SkyT1 0.300 0.233 0.363 0.467 0.045\nLight-R1-DS 0.700 0.600 0.734 0.833 0.060 Light-R1-DS 0.367 0.233 0.356 0.433 0.045\nAR-Nemotron 0.700 0.600 0.709 0.800 0.043 AR-Nemotron 0.400 0.333 0.408 0.500 0.042\nNVIDIA-Nemotron 0.633 0.567 0.676 0.833 0.059 NVIDIA-Nemotron 0.333 0.267 0.362 0.467 0.048\nQwen3-4B 0.767 0.667 0.772 0.900 0.052 Qwen3-4B 0.467 0.367 0.464 0.567 0.046\nBespoke 0.167 0.100 0.197 0.267 0.043 Bespoke 0.000 0.000 0.080 0.167 0.035 Table 8: Accuracy on AIME'25. Table 9: Accuracy on BrUMO'25. Model Greedy Top-p Model Greedy Top-p Min Mean Max Std Acc. DS-R1-Qwen 0.133 0.133 0.236 0.333 0.046 DS-R1-Qwen 0.267 0.167 0.344 0.500 0.062\nLIMO-v2 0.633 0.333 0.541 0.700 0.068 LIMO-v2 0.567 0.500 0.651 0.800 0.065\nOpenThinker2 0.500 0.467 0.595 0.733 0.060 OpenThinker2 0.767 0.600 0.738 0.900 0.061\nOpenThinker3 0.367 0.333 0.425 0.600 0.057 OpenThinker3 0.500 0.400 0.512 0.667 0.055\nQwen3-Thinking 0.733 0.733 0.804 0.900 0.037 Qwen3-Thinking 0.867 0.733 0.838 0.933 0.038\nSky-T1-Flash 0.267 0.133 0.220 0.333 0.041 Sky-T1-Flash 0.333 0.233 0.372 0.500 0.059\ngpt-oss-high 0.567 0.467 0.690 0.833 0.063 gpt-oss-high 0.433 0.533 0.628 0.767 0.053\ngpt-oss-low 0.600 0.267 0.598 0.800 0.145 gpt-oss-low 0.500 0.300 0.393 0.500 0.053\ngpt-oss-medium 0.567 0.500 0.689 0.833 0.065 gpt-oss-medium 0.500 0.500 0.610 0.733 0.052\nEXAONE-4.0 0.467 0.300 0.441 0.567 0.054 EXAONE-4.0 0.533 0.333 0.484 0.633 0.059\nOR-Nemotron 0.433 0.300 0.425 0.533 0.054 OR-Nemotron 0.400 0.333 0.469 0.600 0.054\nPhi-4 0.600 0.400 0.599 0.767 0.072 Phi-4 0.733 0.533 0.692 0.800 0.052\nPhi-4-plus 0.567 0.533 0.683 0.800 0.058 Phi-4-plus 0.533 0.533 0.711 0.800 0.048\nOR1-Distill 0.533 0.300 0.426 0.567 0.059 OR1-Distill 0.567 0.367 0.538 0.667 0.057\nFuseO1-DS-QwQ-SkyT1 0.467 0.433 0.585 0.733 0.064 FuseO1-DS-QwQ-SkyT1 0.567 0.567 0.710 0.900 0.056\nLight-R1-DS 0.633 0.467 0.589 0.700 0.056 Light-R1-DS 0.700 0.600 0.690 0.833 0.049\nAR-Nemotron 0.633 0.567 0.651 0.733 0.045 AR-Nemotron 0.767 0.633 0.714 0.867 0.044\nNVIDIA-Nemotron 0.467 0.433 0.546 0.667 0.050 NVIDIA-Nemotron 0.633 0.533 0.649 0.800 0.048\nQwen3-4B 0.700 0.600 0.729 0.800 0.044 Qwen3-4B 0.767 0.633 0.744 0.833 0.049\nBespoke 0.100 0.067 0.193 0.300 0.050 Bespoke 0.167 0.167 0.265 0.367 0.053",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 52,
+    "total_chunks": 83,
+    "char_count": 5186,
+    "word_count": 773,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dd0efe37-eb5b-4f29-b642-9e858680b4c5",
+    "text": "AIME'24\n1.0 Greedy\n0.8\n0.6\n0.4 Accuracy\n0.2\n0.0\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20\nAIME'25\n1.0\n0.8\n0.6\n0.4 Accuracy\n0.2\n0.0\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20\nBrUMO'25\n1.0\n0.8\n0.6\n0.4 Accuracy\n0.2\n0.0\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20\nHMMT'25\n1.0\n0.8\n0.6\n0.4 Accuracy\n0.2\n0.0\nBespoke Qwen3-4B gpt-oss-low OR1-Distill 20: gpt-oss-high Light-R1-DS 12: 2: Sky-T1-Flash DS-R1-Qwen EXAONE-4.0 AR-Nemotron OR-Nemotron 9: OpenThinker2 OpenThinker3 4: 13: 15: gpt-oss-medium Phi4-reason-plus 6: 10: 7: Qwen3-Thinking 19: 18: 14: 17: 16: 5: 3: 1: NVIDIA-Nemotron LIMO-v2 FO1-DS-QwQ-SkyT1 Phi4-reason 11:\nModel Figure 5: Overview of model accuracies across all four benchmarks. Each panel shows each model's mean accuracy\nunder stochastic sampling (over N = 80 trials), together with greedy accuracy (markers). Error bars denote one\nstandard deviation across trials and illustrate the variability introduced by test-time scaling. Models are color-coded\nconsistently across benchmarks for ease of comparison. The figure shows substantial heterogeneity in both absolute\nperformance and sampling variance, with HMMT'25 notably harder than the other three benchmarks. A Counterexample: Average accuracy and We construct a distribution P (equivalently, a finite\nBradley–Terry disagree even at infinite budget pattern that can be repeated) for which the aver- Table 10: BayesU@80 as a consensus ranking. \"Consen- Let P place mass\nsus rank\" sorts methods by their average Kendall's τb\nagreement with all other methods (computed at N = 80; 2 3 3\nP(A) = P(B) = P(C) =ties broken by lower std). 8, 8, 8. Benchmark Mean rank BayesU@80 avg. Best method Best avg. Gap Equivalently, one may take a deterministic dataset\nAIME'24 2 0.9414 rasch_mml 0.9417 0.0003 with M = 8 questions and N = 1 trial, containing\nAIME'25 1 0.9344 avg (tie) 0.9344 0.0000\nHMMT'25 1 0.9499 avg (tie) 0.9499 0.0000 exactly 2 questions of Type A, 3 of Type B, and\nBrUMO'25 2 0.9542 rasch_mml 0.9547 0.0005\n3 of Type C; repeating this block preserves both Combined 1 0.9616 avg (tie) 0.9616 0.0000\nrankings, as shown below. The marginal success probabilities areTable 11: Low-agreement tail: methods whose fulltrial rankings have Kendall's τb < 0.85 relative to 6 3 5 2 1\nBayesU@80 (computed at N = 80). p0 = = p1 = p2 = = 8 4, 8, 8 4,\nMethod τb so the average method ranks\nAIME'24\nminimax_variant_margin_tie_ignore 0.682\nminimax_variant_margin_tie_half 0.682 0 > 1 > 2.\nminimax_variant_winning_votes_tie_half 0.682\nminimax_variant_winning_votes_tie_ignore 0.693\nnanson_rank_ties_average 0.798 From the three types above, the decisive-win\nnanson_rank_ties_max 0.802\ndynamic_irt_growth 0.821 probabilities wij = P(Xi = 1, Xj = 0) are:\nmajority_judgment 0.842\nrasch_3pl 0.842\nrasch_3pl_map 0.842 3 2\nw01 = 8, w10 = 8, AIME'25\nminimax_variant_winning_votes_tie_ignore 0.771 6 2\nmajority_judgment 0.779 w02 = w20 = minimax_variant_margin_tie_ignore 0.819 8, 8,\nminimax_variant_margin_tie_half 0.819 3\nminimax_variant_winning_votes_tie_half 0.819 w12 = w21 = 0. nanson_rank_ties_max 0.840 8,\nnanson_rank_ties_average 0.849\nHMMT'25 For the finite M = 8, N = 1 realization, the cornanson_rank_ties_max 0.758\ninverse_difficulty 0.811 responding win counts are simply Wij = 8wij,\nnanson_rank_ties_average 0.818 i.e., minimax_variant_margin_tie_ignore 0.831\nminimax_variant_margin_tie_half 0.831  0 3 6 \nminimax_variant_winning_votes_tie_half 0.831\nbaldwin_rank_ties_max 0.850 W = 2 0 3 (10)  . BrUMO'25 2 0 0\nrasch_3pl 0.789\nrasch_3pl_map 0.789 We now show that BT-ML ranks 1 > 0 > 2 for\nminimax_variant_margin_tie_ignore 0.814\nminimax_variant_margin_tie_half 0.814 (10), thereby disagreeing with the average ranking.\nminimax_variant_winning_votes_tie_half 0.814 A convenient characterization of the BT-ML op- inverse_difficulty 0.821\ntimum is the standard first-order condition equating Combined\nminimax_variant_winning_votes_tie_ignore 0.748 observed wins to model-implied expected wins: for\nminimax_variant_margin_tie_ignore 0.825\nminimax_variant_margin_tie_half 0.825 each i,\nminimax_variant_winning_votes_tie_half 0.825\nnanson_rank_ties_max 0.843 πi\nX Wij = X (Wij + Wji) · . (11)\nπi + πj\nj̸=i j̸=i age ranking and the BT-ML ranking disagree.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 53,
+    "total_chunks": 83,
+    "char_count": 4242,
+    "word_count": 641,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bf8eee27-0cc4-4b0f-aab2-cb93a7aed660",
+    "text": "The\n(These equations follow by differentiating (40)\nconstruction uses L = 3 models. For notational\nwith respect to log πi.)\nconvenience, we label them 0, 1, 2. Because BT strengths are identifiable only up to\na global scale factor, fix π2 = 1 and write π0 =Outcome patterns. Consider the following three\na, π1 = b. Plugging (10) into (11) yields twooutcome vectors in {0, 1}3:\nindependent equations: Type A: (0, 1, 1), a a\n9 = 5 · + 8 · (12) Type B: (1, 0, 0), a + b a + 1,\nb b\nType C: (1, 1, 0). 5 = 5 · + 3 · (13) a + b b + 1.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 54,
+    "total_chunks": 83,
+    "char_count": 528,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d43ff3a0-4384-4c64-8c4d-720631b70d0f",
+    "text": "Table 12: Consensus ranking on AIME'24 by average Kendall's τb agreement with all other methods at N = 80\n(higher is better). Method variants with identical (Avg., Std.) are collapsed; we show the top 10 and bottom 5\ngroups. 1 rasch_mml 0.9417 0.0799\n2 alpharank, bayes, bayes_ci, bradley_terry_davidson, bradley_terry_davidson_map, dynamic_irt_linear, 0.9414 0.0815\nglicko_tie_draw, hodge_rank_binary_decisive, hodge_rank_binary_total, hodge_rank_binary_uniform,\navg, nash_advantage_vs_equilibrium, nash_vs_equilibrium, pagerank, rank_centrality_tie_half, rasch,\nrasch_map, serial_rank_prob_diff, serial_rank_sign, spectral, thompson\n3 bayes_greedy 0.9407 0.0817\n4 bayesian_mcmc, bradley_terry, bradley_terry_map, elo_tie_skip, glicko_tie_correct_draw_only, 0.9403 0.0817\nglicko_tie_skip, mg_pass_at_k_2, pass_hat_k_2, plackett_luce, plackett_luce_map, trueskill\n5 hodge_rank_log_odds_decisive, hodge_rank_log_odds_total, hodge_rank_log_odds_uniform, 0.9349 0.0816\nrank_centrality_tie_ignore, rao_kupper, rao_kupper_map\n6 borda 0.9179 0.0729\n7 baldwin_rank_ties_max 0.9163 0.0754\n8 elo_tie_correct_draw_only, elo_tie_draw 0.9141 0.0689\n9 copeland 0.9108 0.0728\n10 schulze_tie_half 0.9045 0.0722 23 nanson_rank_ties_max 0.7943 0.0492\n24 nanson_rank_ties_average 0.7904 0.0431\n25 dynamic_irt_growth 0.7897 0.0763\n26 minimax_variant_winning_votes_tie_ignore 0.6887 0.0691\n27 minimax_variant_margin_tie_half, minimax_variant_margin_tie_ignore, 0.6777 0.0763\nminimax_variant_winning_votes_tie_half Table 13: Consensus ranking on AIME'25 by average Kendall's τb agreement with all other methods at N = 80\n(higher is better). Method variants with identical (Avg., Std.) are collapsed; we show the top 10 and bottom 5\ngroups. 1 alpharank, bayes, bayes_ci, bradley_terry_davidson, bradley_terry_davidson_map, dynamic_irt_linear, 0.9344 0.0595\nhodge_rank_binary_decisive, hodge_rank_binary_total, hodge_rank_binary_uniform, avg,\nnash_advantage_vs_equilibrium, nash_vs_equilibrium, pagerank, rank_centrality_tie_half, rasch,\nrasch_map, serial_rank_prob_diff, serial_rank_sign, spectral, thompson\n2 glicko_tie_draw 0.9331 0.0486\n3 bayes_greedy 0.9306 0.0577\n4 rasch_mml 0.9293 0.0349\n5 hodge_rank_log_odds_decisive, hodge_rank_log_odds_total, hodge_rank_log_odds_uniform, rao_kupper, 0.9285 0.0541\nrao_kupper_map\n6 glicko_tie_correct_draw_only 0.9285 0.0522\n7 rasch_mml_credible 0.9249 0.0216\n8 rasch_3pl, rasch_3pl_map 0.9172 0.0495\n9 rasch_2pl, rasch_2pl_map 0.9162 0.0507\n10 bradley_terry, bradley_terry_map, plackett_luce, plackett_luce_map 0.9156 0.0486 27 inverse_difficulty 0.8447 0.0455\n28 nanson_rank_ties_max 0.8353 0.0256\n29 minimax_variant_margin_tie_half, minimax_variant_margin_tie_ignore, 0.8280 0.0377\nminimax_variant_winning_votes_tie_half\n30 majority_judgment 0.8029 0.0322\n31 minimax_variant_winning_votes_tie_ignore 0.7923 0.0386 Step 1: solve a in terms of b. 5b 2b + 5\nb b = (14)\n5 −3 · = 5 · a + b b + 1 b + 1 a + b. 5b(b + 1)\n=⇒ a + b = (15)\n2b + 5\n3b2\n=⇒ a = (16)The left-hand side simplifies: 2b + 5. Step 2: determine b from a one-dimensional b 5(b + 1) −3b 2b + 5\n5 −3 · = = . equation. Substitute (16) into (12). First note b + 1 b + 1 b + 1",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 55,
+    "total_chunks": 83,
+    "char_count": 3159,
+    "word_count": 360,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fed28b04-66df-4b9c-978a-15299d644d64",
+    "text": "Table 14: Consensus ranking on HMMT'25 by average Kendall's τb agreement with all other methods at N = 80\n(higher is better). Method variants with identical (Avg., Std.) are collapsed; we show the top 10 and bottom 5\ngroups. 1 alpharank, bayes, bayes_ci, bradley_terry, bradley_terry_davidson, bradley_terry_davidson_map, 0.9499 0.0631\nbradley_terry_map, dynamic_irt_linear, elo_tie_correct_draw_only, elo_tie_skip,\nglicko_tie_correct_draw_only, glicko_tie_draw, glicko_tie_skip, hodge_rank_binary_decisive,\nhodge_rank_binary_total, hodge_rank_binary_uniform, hodge_rank_log_odds_decisive,\nhodge_rank_log_odds_total, hodge_rank_log_odds_uniform, avg, nash_advantage_vs_equilibrium,\nnash_vs_equilibrium, pagerank, plackett_luce, plackett_luce_map, rank_centrality_tie_half,\nrao_kupper, rao_kupper_map, rasch, rasch_map, serial_rank_prob_diff, serial_rank_sign, spectral,\nthompson, trueskill\n2 rasch_mml 0.9494 0.0442\n3 bayes_greedy 0.9468 0.0556\n4 rasch_3pl, rasch_3pl_map 0.9420 0.0624\n5 rank_centrality_tie_ignore 0.9415 0.0511\n6 elo_tie_draw 0.9356 0.0561\n7 bayesian_mcmc 0.9335 0.0495\n8 dynamic_irt_growth 0.9287 0.0434\n9 pass_at_k_2 0.9169 0.0325\n10 rasch_2pl, rasch_2pl_map 0.9161 0.0629 23 majority_judgment 0.8636 0.0276\n24 minimax_variant_margin_tie_half, minimax_variant_margin_tie_ignore, 0.8391 0.0388\nminimax_variant_winning_votes_tie_half\n25 inverse_difficulty 0.8319 0.0458\n26 nanson_rank_ties_average 0.8184 0.0156\n27 nanson_rank_ties_max 0.7763 0.0346 that Step 3: show b > a > 1, hence BT ranks 1 >\n3b2\na 2b+5 3b 0 > 2. Using (16),\n= = a + b 5b(b+1) 5(b + 1),\n2b+5 b b 2b + 5\n= = .\nso the first term in (12) becomes 5 · a+ba = b+1.3b a 2b+53b2 3b\nAlso,\nThus, b > a holds exactly when (2b+5)/(3b) > 1,\n3b2\na 2b+5 3b2 i.e., when b < 5. Since b⋆∈(4, 5), we have = = a + 1 3b2 + 1 3b2 + 2b + 5. b⋆> a. 2b+5\nIt remains to show a > 1. Suppose for contradicTherefore (12) is equivalent to tion that a ≤1. We have already established b > a,\n3b 3b2 so b ≥a. Then a+ba ≤ 2aa = 12 and a+1a ≤12.\n9 = + 8 · Plugging into (12) gives b + 1 3b2 + 2b + 5. A short algebraic manipulation gives the cubic a a 1 1 13\n9 = 5· +8· ≤5· +8· = < 9,\nequation a + b a + 1 2 2 2 2b3 −5b2 −16b −15 = 0. (17) a contradiction. Putting these\ninequalities together yields\nLet f(b) = 2b3 −5b2 −16b −15. We have\nπ1 = b⋆> π0 = a > π2 = 1,\nf(4) = 128 −80 −64 −15 = −31 < 0,\nf(5) = 250 −125 −80 −15 = 30 > 0, so BT ranks\n1 > 0 > 2.\nso there exists a root b⋆∈(4, 5). Moreover,\nThis contradicts the average ranking 0 > 1 > 2,\nf′(b) = 6b2 −10b −16 = 2(3b2 −5b −8), establishing that the two methods can induce dif-\n5+ 121 16 8 ferent orderings even in the absence of sampling\nwhose positive root is b = 6 = 6 = 3. 8 noise.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 56,
+    "total_chunks": 83,
+    "char_count": 2697,
+    "word_count": 442,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f779550-7aa1-43da-9907-765b747fee34",
+    "text": "Hence f is strictly increasing for all b > 3, implying the root b⋆∈(4, 5) is unique. We therefore From a Finite Counterexample to \"No Converconclude that the BT-ML solution (under π2 = 1) gence\" as M →∞or N →∞. The counterex-\n3(b⋆)2\nsatisfies b = b⋆∈(4, 5) and a = 2b⋆+5. ample already rules out a general theorem forcing",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 57,
+    "total_chunks": 83,
+    "char_count": 321,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d5e1e86e-8d8d-444a-8685-07c81f414637",
+    "text": "Table 15: Consensus ranking on BrUMO'25 by average Kendall's τb agreement with all other methods at N = 80\n(higher is better). Method variants with identical (Avg., Std.) are collapsed; we show the top 10 and bottom 5\ngroups. 1 rasch_mml 0.9547 0.0581\n2 alpharank, bayes, bayes_ci, bayes_greedy, bradley_terry_davidson, bradley_terry_davidson_map, 0.9542 0.0588\ndynamic_irt_linear, glicko_tie_draw, hodge_rank_binary_decisive, hodge_rank_binary_total,\nhodge_rank_binary_uniform, hodge_rank_log_odds_decisive, hodge_rank_log_odds_total,\nhodge_rank_log_odds_uniform, avg, nash_advantage_vs_equilibrium, nash_vs_equilibrium, pagerank,\nrank_centrality_tie_half, rao_kupper, rao_kupper_map, rasch, rasch_map, serial_rank_prob_diff,\nserial_rank_sign, spectral, thompson\n3 glicko_tie_correct_draw_only 0.9501 0.0575\n4 mg_pass_at_k_2, pass_hat_k_2 0.9490 0.0582\n5 elo_tie_draw 0.9423 0.0589\n6 borda, win_rate 0.9399 0.0470\n7 bayesian_mcmc, bradley_terry, bradley_terry_map, elo_tie_correct_draw_only, elo_tie_skip, 0.9382 0.0592\nglicko_tie_skip, plackett_luce, plackett_luce_map, trueskill\n8 copeland 0.9376 0.0516\n9 bradley_terry_luce, bradley_terry_luce_map 0.9350 0.0579\n10 dynamic_irt_growth 0.9318 0.0505 20 nanson_rank_ties_average, nanson_rank_ties_max 0.8437 0.0294\n21 majority_judgment 0.8267 0.0393\n22 inverse_difficulty 0.8156 0.0273\n23 minimax_variant_margin_tie_half, minimax_variant_margin_tie_ignore, 0.8113 0.0446\nminimax_variant_winning_votes_tie_half\n24 rasch_3pl, rasch_3pl_map 0.7893 0.0396 average and BT rankings to coincide in the large- Stochastic formulation (i.i.d. construction). To connect it directly to M →∞or ternatively, under the i.i.d. model of Section C.2,\nN →∞, it suffices to note that both methods are the same discrepancy appears at the population\ninvariant under replication. level. For the distribution P defined above, the\nlimiting average ranking is determined by (pℓ) andReplication invariance (deterministic construcyields 0 > 1 > 2, while the limiting BT ranking\ntion). Let R be any fixed tensor. For an integer\nis determined by the maximizer of (9) and yieldsk ≥1, define: (i) question replication R(k,M) by\n1 > 0 > 2. Thus, even with independent samplingrepeating the M questions k times (so M′ = kM\nand MN →∞, the two rankings can converge toand N′ = N), and (ii) trial replication R(k,N) by\ndifferent limits.repeating the N trials k times (so M′ = M and\nN′ = kN). Then:\nC.3 Implications and Support for the\n1.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 58,
+    "total_chunks": 83,
+    "char_count": 2451,
+    "word_count": 303,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4a17aed8-8ccd-40f7-b935-ca588af39036",
+    "text": "Average scores are unchanged: Gold-Standard Definition\n= = ℓ(R). The analysis above has a direct implication for bpavgℓ(R(k,M)) bpavgℓ(R(k,N)) bpavg\nbenchmarking ranking methods: there is no 2. The decisive-win matrix scales linearly:\nmethod-independent guarantee that all reasonable\nW(R(k,M)) = k W(R) procedures converge to the same ordering as the\nW(R(k,N)) = k W(R). evaluation budget grows. Different ranking procedures correspond to different statistical targets.\n3. The BT-ML maximizer is unchanged, because\nthe log-likelihood scales as Why this happens. Average-based ranking targets the marginal success probabilities pℓ = ℓ(π; kW) = k ℓ(π; W),\nP(Xℓ= 1). BT instead targets the latent strengths\nand therefore has the same maximizer. that best explain the decisive pairwise win rates\nTherefore, if two methods disagree on R, they dis- wij = P(Xi = 1, Xj = 0) through a logistic\nagree on R(k,M) for arbitrarily large M and on choice model. These are different summaries of\nR(k,N) for arbitrarily large N. Applied to the the same joint outcome distribution P. The counM = 8, N = 1 tensor corresponding to (10), terexample in Section C.2 isolates the mechanism:\nthis yields an explicit sequence with M →∞(or a model can have higher marginal accuracy while\nN →∞) for which the average and BT rankings assigning less decisive-win mass against another\nremain different at every budget. model, which shifts the BT optimum. Table 16: Consensus ranking on the combined benchmark by average Kendall's τb agreement with all other methods\nat N = 80 (higher is better). Method variants with identical (Avg., Std.) are collapsed; we show the top 10 and\nbottom 5 groups. 1 alpharank, bayes, bayes_ci, bradley_terry_davidson, bradley_terry_davidson_map, dynamic_irt_linear, 0.9616 0.0559\nglicko_tie_draw, hodge_rank_binary_decisive, hodge_rank_binary_total, hodge_rank_binary_uniform,\nkemeny_young_tie_half, kemeny_young_tie_ignore, avg, nash_advantage_vs_equilibrium,\nnash_vs_equilibrium, pagerank, rank_centrality_tie_half, rasch, rasch_map, serial_rank_prob_diff,\nserial_rank_sign, spectral, thompson\n2 copeland, ranked_pairs_strength_margin_tie_half, ranked_pairs_strength_margin_tie_ignore, 0.9602 0.0546\nranked_pairs_strength_winning_votes_tie_half, ranked_pairs_strength_winning_votes_tie_ignore,\nschulze_tie_half, schulze_tie_ignore\n3 hodge_rank_log_odds_decisive, hodge_rank_log_odds_total, hodge_rank_log_odds_uniform, rao_kupper, 0.9567 0.0516\nrao_kupper_map\n4 glicko_tie_correct_draw_only 0.9566 0.0522\n5 baldwin_rank_ties_average 0.9558 0.0495\n6 borda 0.9557 0.0516\n7 rank_centrality_tie_ignore 0.9554 0.0505\n8 bayesian_mcmc 0.9512 0.0493\n9 bayes_greedy 0.9508 0.0473\n10 rasch_2pl 0.9502 0.0486 27 nanson_rank_ties_average 0.8562 0.0263\n28 elo_tie_draw 0.8552 0.0239\n29 minimax_variant_margin_tie_half, minimax_variant_margin_tie_ignore, 0.8339 0.0324\nminimax_variant_winning_votes_tie_half\n30 nanson_rank_ties_max 0.8333 0.0302\n31 minimax_variant_winning_votes_tie_ignore 0.7665 0.0390",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 59,
+    "total_chunks": 83,
+    "char_count": 2991,
+    "word_count": 360,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7fdef541-8a7f-4b69-842c-f7fcb71d6feb",
+    "text": "Why a gold standard is needed. Because rank- making it a natural \"infinite-budget\" reference\ning methods need not share a common asymptotic for accuracy-based evaluation.\nordering, claims about \"distance to the truth\" require a specified target ordering. Otherwise even Relationship to self-consistency.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 60,
+    "total_chunks": 83,
+    "char_count": 303,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "17a6d35d-2c7f-44f9-817a-dbd333fb9009",
+    "text": "This nonstatements such as \"method A converges faster than convergence result does not argue against BT or\nmethod B\" are ambiguous. other rankers. It instead clarifies that two evaluations are complementary: agreement with an exOur choice: BayesU@N. We define the gold- plicit accuracy-based target, and self-consistency,\nstandard ordering as BayesU@N (with N = 80 in i.e., how quickly a method stabilizes toward its own\nour experiments). This definition is supported by full-budget ordering. The former asks whether a\nthree considerations: method matches the chosen reference; the latter\nasks how stable the method itself becomes as trials\n1.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 61,
+    "total_chunks": 83,
+    "char_count": 643,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "009a7bf6-f056-41e8-b23b-8bb8d1a931bd",
+    "text": "Interpretability and decision relevance. accumulate. The counterexample shows why these\nBayesU@N estimates the probability that a questions are not interchangeable.\nmodel solves a randomly drawn benchmark\nitem under the sampling policy. This is an C.4 Minimality of the eight-question\naccuracy-like quantity with a direct opera- construction\ntional meaning. The counterexample in Section C.2 uses M = 8\nquestions. Here we record a minimality fact: under\n2.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 62,
+    "total_chunks": 83,
+    "char_count": 456,
+    "word_count": 66,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b2fb6932-3c70-4057-82d7-6671aba2e4df",
+    "text": "Minimal modeling assumptions. the same setting (L = 3, N = 1, and BT-ML fit\nBayesU@N (and avg@N) depend only from decisive wins), there is no strict disagreement\non marginal correctness and do not impose a example with fewer than eight questions.\nparametric pairwise-choice model. Methods\nsuch as BT are useful when the pairwise- Proposition (minimal M for strict disagreement;\nchoice model is appropriate, but their induced verified by exhaustive enumeration). Assume\nordering is not, in general, a refinement of L = 3 and N = 1. Assume moreover that the avaccuracy. erage ranking is strict (all three average scores are\ndistinct), and that BT-ML is well-defined and finite\n3. Consistency under increasing budget. (equivalently, the directed win graph with an edge\nUnder i.i.d. sampling of (m, n) pairs, i →j whenever Wij > 0 is strongly connected,\nBayesU@N converges to pℓas MN →∞, which ensures a unique BT-ML maximizer up to Table 17: Methods that induce exactly the same ranking as BayesU@80 (τb = 1) when computed on the full N = 80\ntrials (excluding avg itself). Benchmark Count Methods AIME'24 20 alpharank, bayes, bayes_ci, bradley_terry_davidson, bradley_terry_davidson_map, dynamic_irt_linear,\nglicko_tie_draw, hodge_rank_binary_decisive, hodge_rank_binary_total, hodge_rank_binary_uniform,\nnash_advantage_vs_equilibrium, nash_vs_equilibrium, pagerank, rank_centrality_tie_half, rasch,\nrasch_map, serial_rank_prob_diff, serial_rank_sign, spectral, thompson\nAIME'25 19 alpharank, bayes, bayes_ci, bradley_terry_davidson, bradley_terry_davidson_map,\ndynamic_irt_linear, hodge_rank_binary_decisive, hodge_rank_binary_total, hodge_rank_binary_uniform,\nnash_advantage_vs_equilibrium, nash_vs_equilibrium, pagerank, rank_centrality_tie_half, rasch,\nrasch_map, serial_rank_prob_diff, serial_rank_sign, spectral, thompson\nHMMT'25 34 alpharank, bayes, bayes_ci, bradley_terry, bradley_terry_davidson, bradley_terry_davidson_map,\nbradley_terry_map, dynamic_irt_linear, elo_tie_correct_draw_only, elo_tie_skip,\nglicko_tie_correct_draw_only, glicko_tie_draw, glicko_tie_skip, hodge_rank_binary_decisive,\nhodge_rank_binary_total, hodge_rank_binary_uniform, hodge_rank_log_odds_decisive,\nhodge_rank_log_odds_total, hodge_rank_log_odds_uniform, nash_advantage_vs_equilibrium,\nnash_vs_equilibrium, pagerank, plackett_luce, plackett_luce_map, rank_centrality_tie_half,\nrao_kupper, rao_kupper_map, rasch, rasch_map, serial_rank_prob_diff, serial_rank_sign, spectral,\nthompson, trueskill\nBrUMO'25 26 alpharank, bayes, bayes_ci, bayes_greedy, bradley_terry_davidson, bradley_terry_davidson_map,\ndynamic_irt_linear, glicko_tie_draw, hodge_rank_binary_decisive, hodge_rank_binary_total,\nhodge_rank_binary_uniform, hodge_rank_log_odds_decisive, hodge_rank_log_odds_total,\nhodge_rank_log_odds_uniform, nash_advantage_vs_equilibrium, nash_vs_equilibrium, pagerank,\nrank_centrality_tie_half, rao_kupper, rao_kupper_map, rasch, rasch_map, serial_rank_prob_diff,\nserial_rank_sign, spectral, thompson Combined 22 alpharank, bayes, bayes_ci, bradley_terry_davidson, bradley_terry_davidson_map, dynamic_irt_linear,\nglicko_tie_draw, hodge_rank_binary_decisive, hodge_rank_binary_total, hodge_rank_binary_uniform,\nkemeny_young_tie_half, kemeny_young_tie_ignore, nash_advantage_vs_equilibrium, nash_vs_equilibrium,\npagerank, rank_centrality_tie_half, rasch, rasch_map, serial_rank_prob_diff, serial_rank_sign,\nspectral, thompson 0.05 0.05 0.05 AIME'24 AIME'24 AIME'24global scale). If BT-ML disagrees with the average (a) Difficulty vs Prior Effect (b) Alignment vs Prior Effect (c) Sampling Gain vs Prior Effect AIME'25 AIME'25 AIME'25\n0.04 0.04 0.04\n) HMMT'25 ) HMMT'25 )\n( 0.03 BrUMO'25 ( 0.03 BrUMO'25 ( 0.03 BrUMO'25ranking, then M ≥8. HMMT'25\nAdvantage 0.020.01 Advantage 0.020.01 Advantage 0.020.01\n0.00Verification. With N = 1, each question pro- Prior 0.01 Prior 0.000.01 Prior 0.000.01\nduces an outcome pattern in {0, 1}3. Hence, up 0.02 0.02 0.02",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 63,
+    "total_chunks": 83,
+    "char_count": 3934,
+    "word_count": 397,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "41187b84-52ee-4389-bbb5-1532032adc65",
+    "text": "Dataset Difficulty (Mean Accuracy) Greedy-Sampling Alignment ( ) Mean Gap (Sampling - Greedy Acc.)to permutation of questions, any dataset with M 0.35 0.40 0.45 0.50 0.55 0.60 0.650 0.675 0.700 0.725 0.750 0.00 0.01 0.02 0.03 0.04 0.05\nquestions is determined by the count vector c = Figure 6: Across our four benchmarks, the prior ad-\n(cx)x∈{0,1}3 ∈N8 with Px cx = M. For fixed M, vantage is not monotonically related to difficulty (a),\nthere are M+77 such vectors; thus the total number but it is associated with greedy–sampling alignment (b).\nof datasets with M ≤7 is The sampling–greedy accuracy gap (c) shows no clear\nrelationship. M=1 for (i) gold-standard agreement (method@1 vs. For each such dataset, we compute the induced av- BayesU@80) and (ii) self-consistency (method@1\nvs. method@80), collapsing method variants witherage ordering and the BT-ML ordering (obtained\nidentical mean and standard deviation across theby maximizing (40), equivalently solving (11)). Re-\n80 single-trial draws.stricting to datasets with (i) strict average ordering\nand (ii) strong connectivity (so the BT-ML maxE Additional Prior Diagnostics\nimizer is unique up to scale), an exhaustive enumeration yields 1506 instances for M ≤7; in all This appendix collects supplementary diagnostics\nof them the BT-ML ordering agrees with the av- for the empirical-prior analysis in Section 3.4.\nerage ordering. Therefore, no strict-disagreement\nF Categorical Rankingexample exists for M ≤7. Finally, Section C.2 exhibits a strict- This appendix gives the experimental setup and\ndisagreement dataset at M = 8, so Mmin = 8. per-dataset results for the categorical-ranking experiments summarized in Section 3.5.D Ranking-Method Stability at N = 1\nF.1 SetupThis appendix provides additional details for the\nN = 1 stability analyses in Section 3.2. We re- The binary Bayesian estimator (Section 2.3) modport method rankings on the Combined benchmark els each trial outcome as Rlmn ∈{0, 1} and places Table 18: Gold-standard agreement at N = 1 on the combined benchmark, measured as Kendall's τb between\neach method's single-trial ranking and the gold standard (BayesU@80). Statistics are computed over 80 single-trial\ndraws. Methods with identical mean/std. values are collapsed; we show the top 10 and bottom 5 groups. Rank Method(s) Mean Std. 1 baldwin_rank_ties_average, bayes, bayes_ci, borda, copeland, majority_judgment, 0.8647 0.0486\navg, minimax_variant_margin_tie_half, minimax_variant_margin_tie_ignore,\nminimax_variant_winning_votes_tie_half, nash_advantage_vs_equilibrium, nash_vs_equilibrium,\npagerank, rank_centrality_tie_half, ranked_pairs_strength_margin_tie_half,\nranked_pairs_strength_margin_tie_ignore, ranked_pairs_strength_winning_votes_tie_half,\nranked_pairs_strength_winning_votes_tie_ignore, schulze_tie_half, schulze_tie_ignore, spectral\n2 alpharank 0.8646 0.0486\n3 rasch_mml_credible 0.8642 0.0351\n4 hodge_rank_binary_uniform 0.8623 0.0491\n5 hodge_rank_binary_decisive 0.8623 0.0484\n6 hodge_rank_binary_total 0.8616 0.0493\n7 serial_rank_sign 0.8615 0.0503\n8 hodge_rank_log_odds_total, hodge_rank_log_odds_uniform 0.8603 0.0482\n9 rao_kupper_map 0.8603 0.0483\n10 rao_kupper 0.8601 0.0484 39 nanson_rank_ties_average 0.8067 0.0363\n40 bradley_terry_luce_map 0.8064 0.0556\n41 bradley_terry_luce 0.8058 0.0554\n42 bayes_greedy 0.7856 0.0309\n43 nanson_rank_ties_max 0.7825 0.0394 1.0 Bootstrap Distribution at N=1 (50 samples) Dirichlet prior on the C + 1 category probabilities\n0.9 θ = (θ0, . . . , θC) and compute the posterior mean\nof the weighted utility PCk=0 wkˆθk.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 64,
+    "total_chunks": 83,
+    "char_count": 3563,
+    "word_count": 473,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "13a3c5f8-f04a-4ed2-9949-7a8222eb8b9e",
+    "text": "Model-level Standard) 0.8\nGold scores are then aggregated across questions, as in\n(vs\n0.7 the binary case. Kendall's 0.6\nUniform Prior F.2 Base Signals\nGreedy Prior\n0.5\nAIME'24 AIME'25 HMMT'25 BrUMO'25 For each of the L = 11 models in the categorical cohort, we extract 9 features perFigure 7: Bootstrap distributions of Kendall's τb at N =\n1 (50 samples). Violin plots show the full distribution; completion (Table 20).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 65,
+    "total_chunks": 83,
+    "char_count": 420,
+    "word_count": 69,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "09f86c08-2a61-4382-8453-0c4fdcbfeb39",
+    "text": "These features span five\nthe greedy prior (red) yields narrower distributions but domains: answer format (has_box), correctness\ncan shift the mean negatively (HMMT'25) or positively (is_correct), generation cost (token_ratio,\n(BrUMO'25). repeated_pattern), decoding confidence\n(prompt_bpt, completion_bpt), and external\nverification via CompassVerifier (compass_A/B/C).\na Beta prior on the per-question solve rate. We The feature tensors have shape (N, M, 9) per\ngeneralize this to categorical outcomes Rlmn ∈ model, with N = 80 trials and M = 30 questions\n{0, . . . , C}, where each completion is mapped to per benchmark.\none of C + 1 categories based on auxiliary signals We use CompassVerifier-3B as a reward\nextracted during generation. A categorical scheme model for the external verification signals. Durs specifies: ing evaluation, we use its scores on comple-\n1. a categorical mapping tions generated by the other models to define\nϕs : completion features → {0, . . . , Cs}, the categorical schemes. The implementation\nwhich assigns each completion to a category uses Transformers (Wolf et al., 2019) and\nbased on predicates over the base signals Accelerate (Gugger et al., 2022), with FlashAt-\n(Table 20), and tention kernels (Dao, 2023) and the DFloat11 for-\n2. a utility weight vector ws = (w0, . . . , wCs) ∈ mat (Zhang et al., 2025) for throughput. RCs+1, encoding the relative value of each\ncategory. F.3 Derived Predicates and Thresholds Bayesian estimation replaces the Beta–binomial Several predicates are shared across schemes. All\nmodel with a Dirichlet–multinomial model: for thresholds are computed per-model from the availeach model–question pair, we place a symmetric able samples: Table 19: Self-consistency at N = 1 on the combined benchmark, measured as Kendall's τb between each method's\nsingle-trial ranking and its own full-trial ranking (method@80). Statistics are computed over 80 single-trial draws. Methods with identical (Mean, Std.) are collapsed; we show the top 10 and bottom 5 groups. Rank Method(s) Mean Std. 1 nanson_rank_ties_average 0.8925 0.0497\n2 rasch_mml_credible 0.8831 0.0370\n3 nanson_rank_ties_max 0.8669 0.0589\n4 baldwin_rank_ties_average 0.8664 0.0492\n5 copeland, ranked_pairs_strength_margin_tie_half, ranked_pairs_strength_margin_tie_ignore, 0.8654 0.0489\nranked_pairs_strength_winning_votes_tie_half, ranked_pairs_strength_winning_votes_tie_ignore,\nschulze_tie_half, schulze_tie_ignore\n6 rasch_mml 0.8648 0.0417\n7 bayes, bayes_ci, avg, nash_advantage_vs_equilibrium, nash_vs_equilibrium, pagerank, 0.8647 0.0486\nrank_centrality_tie_half, spectral\n8 alpharank 0.8646 0.0486\n9 borda 0.8646 0.0499\n10 hodge_rank_binary_uniform 0.8623 0.0491 45 elo_tie_correct_draw_only 0.8074 0.0507\n46 bayes_greedy 0.8064 0.0309\n47 elo_tie_draw 0.8063 0.0507\n48 minimax_variant_margin_tie_half, minimax_variant_margin_tie_ignore, 0.7963 0.0454\nminimax_variant_winning_votes_tie_half\n49 minimax_variant_winning_votes_tie_ignore 0.7655 0.0455",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 66,
+    "total_chunks": 83,
+    "char_count": 2976,
+    "word_count": 391,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "35ad6012-507a-42cf-92e8-c1cb9af9f28c",
+    "text": "Table 20: Nine base signals extracted per completion aware (L, Q), and composite (R). Many schemes\nfor the categorical ranking experiments. Each model– are metric-level near-duplicates (e.g., A ≡S, H ≡\nquestion–trial entry produces a vector in R9. Y, L ≡Q); we therefore select 8 non-redundant representative schemes covering distinct design axes\n# Signal Description\n(Table 21).\n1 has_box Boxed final answer present (0/1)\n2 is_correct Exact-match correctness (0/1)\n3 token_ratio Completion tokens / 32768 F.5 Evaluation Protocol\n4 repeated_pattern Non-stop finish reason (0/1)\n5 prompt_bpt Prompt bits-per-token For each scheme, we apply the same N = 1 sub-\n6 completion_bpt Completion bits-per-token sampling protocol as in Section 3.2: we subsam-\n7 compass_A Verifier P(correct)\nple one of the N = 80 trials per question, com- 8 compass_B Verifier P(wrong)\n9 compass_C Verifier P(irrelevant) pute the scheme's categorical ranking, and measure\nKendall's τb against three references:\n1. Gold-standard (τGS): agreement with the bi-\n• Invalid: repeated_pattern = 1 or\nnary BayesU@80 ranking, which treats outcompass_C ≥0.5.\ncomes as correct/wrong with a uniform Dirich-\n• Confidence: High confidence :=\nlet prior.\ncompletion_bpt ≤P40(completion_bpt); 2. Self-consistency (τSelf): agreement with\nwrong–high-confidence := wrong and\nthe scheme's own all-80-trial ranking\ncompletion_bpt ≤P60(completion_bpt | (Scheme@80).\nwrong).\n3. Greedy-prior (τGreedy): agreement with\n• Prompt OOD: prompt_bpt ≥\nBayesR0@80, the binary Bayes ranking incorP90(prompt_bpt). porating a greedy-decoding empirical prior.\n• Efficiency bands: Economical/moderate/verStatistics (mean and standard deviation) are combose based on P33 and P66 of token_ratio.\nputed over the 80 single-trial draws. Combined\n• Verifier: CompassVerifier dominant label is\nresults aggregate the four benchmarks (M = 120\narg max(A, B, C); verifier-high := A ≥0.6.\nquestions) and are reported in Table 5; per-dataset\nF.4 Scheme Definitions results are reported below. We design 25 categorical schemes spanning diverse\nF.6 Per-Dataset Results\ndesign axes: correctness-only baselines (A, H, S,\nY), confidence-aware (C, I, J, V), format-aware (B, Table 22 reports gold-standard agreement and selfP, T), efficiency-aware (F, G, M), verifier-based (D, consistency for each benchmark separately. Three\nK, O, U, Z), OOD-aware (E, N, W), abstention- patterns emerge. Table 21: Eight representative categorical schemes used in Section 3.5. Each scheme maps a completion to one of\nC + 1 categories using the base signals in Table 20 and scores the result with a utility weight vector w.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 67,
+    "total_chunks": 83,
+    "char_count": 2624,
+    "word_count": 378,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9647af72-07ca-465e-bf64-87cea9f7b0a8",
+    "text": "Category 0\nis always Invalid (w0 = 0) unless otherwise noted. Scheme Intent Categories (k) Weights w Conservative Penalize confidently-wrong 1: Wrong ∧HighConf (0, −0.10, 0.05, 1.00)\n2: Wrong ∧LowConf\n3: Correct\nEfficiency-adj. Discount verbose correct 1–3: Wrong × {Econ., Mod., Verb.} (0, 0.10, 0.07, 0.03, 1, 0.92, 0.85)\n4–6: Correct × {Econ., Mod., Verb.}\nFormat-aware Reward boxed correct 1: Wrong ∧Unboxed; 2: Wrong ∧Boxed (0, 0.10, 0.05, 0.90, 1)\n3: Correct; 4: Correct ∧Boxed\nBalanced comp. Format × confidence 1: Wrong ∧Unboxed; 2–3: Wrong ∧Boxed × Conf (0, 0.10, 0.06, −0.02, 0.90, 0.95, 0.97, 1)\n4–7: Correct × {Un/Boxed} × Conf\nOOD-robust Reward in-distribution 1: OOD ∧Wrong; 2: InDist ∧Wrong (0, 0.05, 0.10, 0.95, 1)\n3: OOD ∧Correct; 4: InDist ∧Correct\nRare-event OOD + abstention 1: OOD ∧Wrong; 2: OOD ∧Correct (0, 0.05, 1, 0.08, 0.95, 0.20)\n3: InDist ∧Wrong; 4: InDist ∧Correct; 5: Abstain\nVerifier-calib. Penalize false-positive 1: Wrong ∧A≥0.6; 2: Wrong ∧A<0.6 (0, −0.05, 0.05, 0.88, 0.94, 1)\n3–5: Correct × {Alow, Amid, Ahigh}\nVerifier-only No ground truth 0: Repeated; 1: Dominant = C (0, 0, 0.1, 1)\n2: Dominant = B; 3: Dominant = A Table 22: Per-dataset categorical ranking at N = 1. Gold-standard agreement (τGS: vs. BayesU@80) and selfconsistency (τSelf: vs.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 68,
+    "total_chunks": 83,
+    "char_count": 1281,
+    "word_count": 207,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "acfb0769-231c-4086-b423-5bb62237ef62",
+    "text": "Scheme@80) for the 8 representative schemes. Values are mean Kendall's τb over 80\nsingle-trial draws. Gold-standard agreement (τGS) Self-consistency (τSelf) Scheme AIME'24 AIME'25 HMMT'25 BrUMO'25 AIME'24 AIME'25 HMMT'25 BrUMO'25 Conservative 0.814 0.813 0.801 0.815 0.814 0.813 0.801 0.820\nEfficiency-adj. 0.814 0.821 0.812 0.817 0.814 0.814 0.814 0.828\nFormat-aware 0.820 0.808 0.812 0.819 0.820 0.811 0.813 0.830\nBalanced comp. 0.816 0.810 0.804 0.806 0.816 0.813 0.805 0.816\nOOD-robust 0.819 0.806 0.788 0.810 0.819 0.803 0.802 0.824\nRare-event 0.816 0.804 0.793 0.816 0.816 0.801 0.807 0.828\nVerifier-calib. 0.817 0.802 0.786 0.796 0.810 0.801 0.800 0.807\nVerifier-only 0.813 0.805 0.753 0.734 0.806 0.809 0.795 0.810 Narrow spread on individual benchmarks. On Self-consistency converges to gold-standard on\neach benchmark individually, all eight schemes individual benchmarks. On AIME'24, the selfachieve τGS between 0.73 and 0.83, with inter- consistency column is nearly identical to the goldscheme variation much smaller than on the com- standard column for most schemes, indicating that\nbined benchmark. On AIME'24, the range across the all-80 scheme ranking coincides with the binary\nthe 8 schemes is only 0.007 (0.813–0.820). This BayesU@80 ranking when the number of quesis because, with M = 30 questions and L = 11 tions is small. On the combined benchmark (Tamodels, a single trial provides limited information ble 5), self-consistency consistently exceeds goldfor distinguishing among category structures; the standard agreement, reflecting the fact that each\ncombined benchmark (M = 120) offers finer dis- scheme converges to its own distinct ordering when\ncrimination. given enough questions. G Extended Related WorkVerifier-only degrades on hard benchmarks. The Verifier-only scheme exhibits the largest per- Test-time scaling produces repeated stochastic outformance drop on the harder benchmarks: τGS falls comes per item, making LLM benchmarking closer\nfrom 0.813 (AIME'24) to 0.753 (HMMT'25) and to classical repeated-measurement settings than to\n0.734 (BrUMO'25), a decline of 0.06–0.08. In single-run leaderboards. This appendix summacontrast, correctness-driven schemes (Conservative, rizes the main ranking families we use and their\nEfficiency-adjusted, Format-aware) remain above typical applications.\n0.80 on all benchmarks.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 69,
+    "total_chunks": 83,
+    "char_count": 2353,
+    "word_count": 328,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3d28cb24-9f91-424a-8b02-d1cd71a40261",
+    "text": "This suggests that CompassVerifier judgments are less reliable proxies for Paired-comparison and rating models. Pairedcorrectness on more challenging problems. comparison models represent comparisons through win/tie counts and infer latent strengths, with ank and related spectral methods interpret comBradley–Terry as a canonical likelihood-based parisons as edge flows and decompose them into\nmodel (Bradley and Terry, 1952). Practical systems global and cyclic components (Jiang et al., 2011;\noften use online rating updates such as Elo and its Fogel et al., 2016). AlphaRank was introduced\nextensions (e.g., Glicko) or fully Bayesian skill rat- for multi-agent evaluation with potentially nonings such as TrueSkill (Elo, 1978; Glickman, 1999; transitive interactions (Omidshafiei et al., 2019),\nHerbrich et al., 2006). For data with ties, common and related work studies open-ended evaluation dygeneralizations include Rao–Kupper and Davidson namics (Balduzzi et al., 2019). Our study brings\nmodels (Rao and Kupper, 1967; Davidson, 1970). these families into a common test-time-scaling\nThese models are widely used for preference aggre- benchmark setting and compares them under congation in LLM leaderboards (Chiang et al., 2024; trolled increases in the number of repeated trials. Ameli et al., 2025), but are also natural in dense\nH Experiment Setup and Reproducibilitybenchmarks once per-item outcomes are reduced\nto pairwise wins. H.1 Models and Datasets\nListwise, setwise choice models. We evaluate on four Olympiad-style\ntrial yields an ordering over many items, listwise math benchmarks: AIME'24 (Mathematical\nchoice models such as Plackett–Luce provide a Association of America, 2024), AIME'25 (Mathlikelihood over permutations (Plackett, 1975; Luce, ematical Association of America, 2025),\n1959). Davidson–Luce extends setwise choice to BrUMO'25 (Brown University Math Olympiad\nallow ties within selected sets (Firth et al., 2019). Organizers, 2025), and HMMT'25 (Harvard–MIT\nIn our binary benchmark setting, each trial induces Mathematics Tournament, 2025). For AIME'24\na two-level partition (solved vs. unsolved), so these and AIME'25, we combine AIME I and AIME II\nmodels reduce to structured forms of pairwise like- from the corresponding year, yielding 30 integerlihoods while still providing a principled view of answer problems per benchmark. For HMMT'25,\naggregation. we use the official February 2025 contest set,\nwhich spans algebra, geometry, number theory,\nIRT and difficulty-aware benchmarking. Item and combinatorics.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 70,
+    "total_chunks": 83,
+    "char_count": 2545,
+    "word_count": 356,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "38f99a8e-b6a0-4c37-9498-b1551b3cdfb1",
+    "text": "For BrUMO'25, we use the\nresponse theory models couple model \"ability\" published 2025 problem sets from the tournament\nwith item difficulty (and sometimes discrimina- archive.\ntion), with the Rasch and Birnbaum formulations as\nModels. To reduce prompt-format confounds,classic examples (Rasch, 1960; Birnbaum, 1968).\nwe use provider-recommended chat templates (de-IRT has recently been proposed as a way to disenfaulting to DeepSeek/Qwen-style templates whentangle model skill from benchmark composition in\nno model-specific template is given) and sharedLLM evaluation (Zhou et al., 2025). When multidecoding settings across models unless noted other-ple trials per item are available, repeated-measures\nwise. Our base cohort comprises 11 configurations:extensions and binomial-response formulations are\neight distinct models plus three reasoning-effortnatural (De Boeck and Wilson, 2004; Verhelst and\nmodes (low, medium, and high) of gpt-oss. TheseGlas, 1993; Wang and Nydick, 2020), and diffiare: Sky-T1-32B-Flash (NovaSky Team, 2025)culty reweighting has also been explored in NLP\n(Sky-T1 Flash release), Qwen3-30B-A3B-evaluation contexts (Gotou et al., 2020). Thinking-2507 (Qwen Team, 2025) (Qwen3\nGraph, spectral, and social-choice methods. thinking model), DeepSeek-R1-Distill-QwenBeyond likelihood-based models, ranking from 1.5B (Guo et al., 2025) (1.5B distilled reasoning\ncomparisons has a long tradition in social choice model), gpt-oss-20b (OpenAI, 2025) (OpenAI\nand graph-based aggregation. Voting rules such as open-weight model; we use the default MXFP4\nBorda and Condorcet-style methods satisfy differ- quantization and the Harmony reasoning-effort\nent axioms and can behave differently under noise controls), LIMO-v2 (Ye et al., 2025) (reasoning\nand ties (de Borda, 1781; Condorcet, 1785; Arrow, model), EXAONE-4.0-1.2B (LG AI Research,\n1951; Brandt et al., 2016). Spectral and Markov- 2025) (hybrid reasoning/non-reasoning model),\nchain approaches derive scores from transition OpenReasoning-Nemotron-1.5B (NVIDIA,\ngraphs, including PageRank and Rank Centrality 2025b) (NVIDIA reasoning model), and\n(Page et al., 1999; Negahban et al., 2017); HodgeR- OpenThinker2-32B (Guha et al., 2025) and ID Model Short name Task Inference Time (hours) Completion Tokens (M)\n1 DeepSeek-R1-Distill-Qwen-1.5B DS-R1-Qwen AIME'24 1,699.4 680.0\n2 LIMO-v2 LIMO-v2 AIME'25 1,878.4 728.3\n3 OpenThinker2-32B OpenThinker2\nHMMT'25 2,216.5 851.2\n4 OpenThinker3-1.5B OpenThinker3\nBrUMO'25 1,650.9 666.9\n5 Qwen3-30B-A3B-Thinking-2507 Qwen3-Thinking\n6 Sky-T1-32B-Flash Sky-T1-Flash TOTAL 7,445.2 2,926.4\n7 gpt-oss-20b_high gpt-oss-high\n8 gpt-oss-20b_low gpt-oss-low\n9 gpt-oss-20b_medium gpt-oss-medium Table 24: Task-level computational cost aggregated over\n10 EXAONE-4.0-1.2B EXAONE-4.0 20 models, 80 trials, four tasks, and 30 questions per\n11 OpenReasoning-Nemotron-1.5B OR-Nemotron task. Token counts correspond to completion tokens 12 Phi-4-reasoning Phi-4\n13 Phi-4-reasoning-plus Phi-4-plus only.\n14 OpenR1-Distill-7B OR1-Distill\n15 FuseO1-DeepSeekR1-QwQ- FuseO1-DS-QwQ-SkyT1\nSkyT1-Flash-32B-Preview\n16 Light-R1-14B-DS Light-R1-DS trials per dataset–model pair. All models are\n17 AceReason-Nemotron-1.1-7B AR-Nemotron served with vLLM (PagedAttention) (Kwon et al., 18 NVIDIA-Nemotron-Nano-9B-v2 NVIDIA-Nemotron\n19 Qwen3-4B-Thinking-2507 Qwen3-4B 2023) in bf16 precision, except releases that re-\n20 Bespoke-Stratos-7B Bespoke quire MXFP4 quantization (e.g., gpt-oss). We\nrecord log-probabilities for both input prompts andTable 23: Mapping between model IDs, full model\nnames, and the shortened names used in figures and generated tokens, with max_tokens set to 32,768.\nlegends. All experiments run on clusters equipped with 8×\nNVIDIA H200 GPUs (141 GB per GPU).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 71,
+    "total_chunks": 83,
+    "char_count": 3760,
+    "word_count": 476,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "da4eac82-bb54-4983-862b-d46ed2c2f646",
+    "text": "OpenThinker3-1.5B (Guha et al., 2025) (models H.3 Computational Cost and Token Statistics\ntrained from the OpenThoughts data recipes). We evaluate 20 models across four benchmarks,\nIn addition to this base cohort, we evaluate nine\nwith 80 trials per model and 30 questions per\nmore reasoning-capable models to study how the\nbenchmark, for a total of 192,000 independent inconclusions change with cohort size: Phi-4-\nference runs. The full evaluation requires 7,445\nreasoning and Phi-4-reasoning-plus (Abdin\nGPU-hours (approximately 310 GPU-days) and\net al., 2025), OpenR1-Distill-7B (Huggenerates 2.96B tokens (2,963,318,176 total); Taging Face, 2025), FuseO1-DeepSeekR1-\nble 24 reports the task-level totals. Of these tokens,\nQwQ-SkyT1-Flash-32B-Preview (FuseAI,\n37M (1.2%) are prompt tokens and 2.93B (98.8%)\n2025), Light-R1-14B-DS (Wen et al., 2025),\nare completion tokens, for an average of 15,434\nAceReason-Nemotron-1.1-7B (Liu et al., 2026),\ntokens per query. Among the four benchmarks,\nNVIDIA-Nemotron-Nano-9B-v2 (NVIDIA,\nHMMT'25 is the most computationally expensive\n2025a), Qwen3-4B-Thinking-2507 (Qwen\nat 2,217 GPU-hours, whereas BrUMO'25 is the\nTeam, 2025), and Bespoke-Stratos-7B (Bespoke\nleast expensive at 1,651 GPU-hours. Across model\nLabs, 2025).\nconfigurations, gpt-oss-20b-low is the most efPrompting.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 72,
+    "total_chunks": 83,
+    "char_count": 1319,
+    "word_count": 175,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0e4de0cf-b681-45a3-88ba-266d53ebdaaf",
+    "text": "We use provider-recommended ficient (48.4 GPU-hours for 9,600 queries) and\nprompt templates for each model. For most LIMO-v2 the least efficient (894.3 GPU-hours for\nmodels, we adopt the standard DeepSeek/Qwen- the same workload), with a corpus-wide average of\nstyle prompt, \"Please reason step by step, 139.6 seconds per query.\nand put your final answer within \\boxed{}.\"\nH.4 Ranking-Method IdentifiersFor gpt-oss-20b, we use the OpenAI\nHarmony prompt template, which specifies Tables that report individual ranking methods use\nthree discrete levels of reasoning effort. For the corresponding Scorio identifiers (e.g., avg,\nOpenReasoning-Nemotron-1.5B, we use the bayes, rasch_mml) for compactness. We print\ntask-specific prompt, \"Solve the following math these identifiers verbatim to match the implemenproblem. Make sure to put the answer (and only tation used in the experiments and to make the\nthe answer) inside \\boxed{}.\" reported rankings directly reproducible. H.2 Reproducibility H.5 Rank Correlation Metrics For stochastic runs, we use top-p sampling with Kendall's tau Kendall's tau (τ) (Kendall, 1938)\ntemperature 0.6, p = 0.95, batch size 1, and ran- measures ordinal agreement between two rankings\ndom seeds 1234 through 1313, yielding N = 80 through pairwise concordance and discordance. 1 import numpy as np 1 # Pass@k: probability at least 1 of k draws\n2 from scorio import rank succeeds\n3 2 rankings, scores = rank.pass_at_k(R, k=3,\n4 # Binary response tensor: L=3 models, M=4 return_scores=True)\nquestions, N=5 trials 3\n5 R = np.random.randint(0, 2, size=(3, 4, 5)) 4 # G-Pass@k with threshold tau\n6 5 rankings = rank.g_pass_at_k_tau(R, k=5, tau=0.6)\n7 # Rank by mean accuracy 6\n8 rankings = rank.avg(R) 7 # Bayesian posterior ranking with optional prior\n9 outcomes\n10 # Return both rankings and scores 8 R0 = np.random.randint(0, 2, size=(3, 4, 2)) #\n11 rankings, scores = rank.avg(R, return_scores= prior data\nTrue) 9 rankings = rank.bayes(R, R0=R0) Listing 1: Constructing the response tensor and Listing 2: Evaluation-based ranking methods.\ncomputing rankings with Scorio. 1 # Categorical outcomes: 0=wrong, 1=partial, 2=\ncorrect\nFor rankings of n items, let nc and nd denote the 2 # L=3 models, M=4 questions, N=5 trials\nnumbers of concordant and discordant pairs, let 3 R_cat = np.random.randint(0, 3, size=(3, 4, 5))\nn0 = n(n −1)/2 be the total number of pairs, and 45 # Weight vector mapping categories to scores\nlet n1 and n2 be the numbers of tied pairs in the 6 w = np.array([0.0, 0.5, 1.0])\ntwo rankings. The two common variants are 7\n8 rankings, scores = rank.bayes(R_cat, w=w,\nnc −nd 9 return_scores=True\nTau-a: τa = , (18) )\nn0 10\nnc −nd 11 # Using greedy decoding results as Bayesian\nTau-b: τb = . (19) prior\np(n0 −n1)(n0 −n2) 12 # R0 shape (M, D): shared prior across all\nmodels\nTau-a ignores ties, whereas Tau-b corrects for them. 13 R0_greedy = np.random.randint(0, 3, size=(4, 2))\nBecause ties are common in our setting, we use τb 14 rankings = rank.bayes(R_cat, w=w, R0=R0_greedy)\nthroughout. 16 # Conservative ranking via posterior quantile\n17 rankings = rank.bayes(R_cat, w=w, R0=R0_greedy,\nI Scorio, Open-Source Library for LLM 18 quantile=0.05)\nRanking Listing 3: Bayes@N with categorical outcomes and\ngreedy prior. Scorio is a Python library for ranking LLMs from\nrepeated-trial benchmark evaluations under testtime scaling. It provides a unified interface for\nmapping the response tensor R ∈{0, 1}L×M×N accepts an optional return_scores=True flag to\n(and, where relevant, optional prior outcomes) additionally return the underlying scores. Rankings\nto model scores and rankings across evaluation are 1-indexed, with lower values indicating better\nmetrics, probabilistic paired-comparison and rat- models.\ning systems, voting rules, listwise choice models, Scorio provides a broad collection of ranking\nitem response theory, and graph- or spectral-based methods. Listing 2 illustrates evaluation-based\nmethods.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 73,
+    "total_chunks": 83,
+    "char_count": 3956,
+    "word_count": 608,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "354fe23c-98ee-4ca3-8578-f6a566f42225",
+    "text": "The package can be installed with pip methods, including the Pass@k family that quantiinstall scorio. fies how reliably models solve questions within k\nAll ranking methods in Scorio operate on the sampled trials.\nresponse tensor R, where L is the number of mod- The bayes method generalizes beyond binary\nels, M the number of questions, and N the number correctness to categorical outcomes Rlmn ∈\nof trials per question. In Python, this is represented {0, . . . , C} via a weight vector w ∈RC+1 that\nas a NumPy array of shape (L, M, N). Listing 1 maps each category to a score. It also accepts an opshows how to construct R and call a basic ranking tional prior tensor R0 that incorporates outcomes\nmethod. from a different evaluation setting (e.g., greedy deEvery function in the rank module follows the coding) as a Bayesian prior. Listing 3 demonstrates\nsame interface: it takes the tensor R as the first ar- both use cases.\ngument, returns a ranking array of shape (L,), and For probabilistic paired-comparison models, 1 # Bradley-Terry maximum likelihood Algorithm 1 Pointwise scoring (mean and inverse-\n2 rankings, scores = rank.bradley_terry(R, difficulty)\nreturn_scores=True)\n3 Require: R ∈{0, 1}L×M×N, ϵ > 0\n4 # Bradley-Terry with MAP regularization Ensure: Scores s ∈RL\n5 N PNn=1 Rlmn rankings = rank.bradley_terry_map(R, prior=1.0) 1: Compute bplm ←1 6 2: Mean: sl ← M PMm=1 7 # Elo rating system bplm1\n3: Inv-diff: compute pm ← LN Pl,n Rlmn 8 rankings, scores = rank.elo(R, K=32.0,\n4: Set wm ∝ 1/ clip(pm, ϵ, 1 −ϵ) and normalize to return_scores=True)\nPm wm = 1 9\n10 # TrueSkill Bayesian rating 5: sl ←Pm wm bplm\n11 rankings = rank.trueskill(R) Listing 4: Paired-comparison and rating system\nquestion by the inverse of its global solve rate methods.\npm := LN1 Pl,n Rlmn: 1 # PageRank on the pairwise win-probability graph 1\n2 rankings, scores = rank.pagerank(R, damping=0.85, wm ∝ clip(pm, ϵ, 1 −ϵ),\n3 return_scores= M (21)\nTrue) sinv-diffl := X wm 4 bplm,\nm=1\n5 # Spectral ranking (principal eigenvector)\n6 rankings = rank.spectral(R)\n7 with weights normalized to Pm wm = 1.\n8 # Rank centrality via Markov chain stationary\ndistribution I.1.2 Evaluation-metric Methods\n9 rankings = rank.rank_centrality(R)\nThese methods rank models by evaluation metListing 5: Graph-based ranking methods. rics computed from per-question trial outcomes. The simplest baseline is mean accuracy (avg; Section I.1.1); below we detail Pass@k-family metrics\nScorio implements the Bradley–Terry model and and Bayes@N. For a fixed model l, define the\nits extensions, as well as Elo and TrueSkill rat- per-question success counts νlm := PNn=1 Rlmn.\ning systems (Listing 4). These methods construct Each metric defines a per-question score f(νlm; N)\npairwise comparisons from R and estimate latent (or f(νlm; N, k, τ)) and then averages across quesstrength parameters. tions. Graph-based and spectral methods rank models\nby analyzing the structure of a pairwise comparison Pass@k (pass_at_k). Pass@k (Chen et al.,\ngraph derived from R, as shown in Listing 5. 2021) is the probability that at least one of k samThe full list of ranking methods, organized by ples is correct. For each question m,\nfamily, is given in Section I.1, and the exact method\nN−νlm\nconfigurations used in our experiments are reported k\nPass@klm := 1 − N , (22) in Section I.2. I.1 Ranking Methods\nand the model-level score is sPass@kl :=\nI.1.1 Pointwise Methods 1 PMm=1 Pass@klm.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 74,
+    "total_chunks": 83,
+    "char_count": 3438,
+    "word_count": 568,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "de0d6dba-6731-4477-80a4-5a25551d5e3b",
+    "text": "The simplest pointwise score is\nPass-hat@k / G-Pass@k (pass_hat_k). This the mean accuracy\nmetric (also called G-Pass@k in parts of the reM cent LLM evaluation literature (Yao et al., 2025))\nsmeanl := X (20) is the probability that all k selected samples are M bplm,\nm=1 correct:\nνlm\n\\ k\nwhich corresponds to avg in Scorio. Pass@klm := N , (23)\nInverse-difficulty weighting. To emphasize hard\nquestions, inverse_difficulty weights each with sPass@kl := M1 PMm=1 Pass@klm.\\ G-Pass@kτ (g_pass_at_k_tau). G-Pass@kτ I.1.3 Bayesian Methods\n(Liu et al., 2025) generalizes the above by requiring Thompson sampling ranking (thompson).\nat least j0 := ⌈τk⌉successes among the k selected Thompson sampling (Thompson, 1933; Russo\nsamples. Let Xlm ∼Hypergeom(N, νlm, k) be et al., 2018) ranks by Monte Carlo samples from\nthe number of successes in a draw of size k without a conjugate Beta–Binomial posterior over each\nreplacement; then model's aggregate success probability. We model\nG-Pass@kτ,lm := Pr(Xlm ≥j0) pl ∼Beta(α, β) and treat all MN trials as i.i.d. Bernoulli outcomes (Gelman et al., 2013). Let k νlm N−νlm\n(24) Sl := PMm=1 PNn=1 Rlmn be the total number of = X j k−j , N\nsuccesses for model l; then j=j0 k\nand sG-Pass@kτl := M1 PMm=1 G-Pass@kτ,lm. pl | R ∼Beta(α + Sl, β + MN −Sl) . (28)\nScorio defines the endpoint τ = 0 to recover | R indepen- For t = 1, . . . , T we draw p(t)l ∼pl\nPass@k (and for any τ ∈(0, 1/k] the threshold dently for each model, compute the induced rank\nj0 = ⌈τk⌉equals 1, so the expression matches r(t)l ∈{1, . . . , L} (smaller is better), and score byPass@k), while τ = 1 recovers Pass-hat@k.\nthe negative average rank\nmG-Pass@k (mg_pass_at_k). mG-Pass@k T\n(Liu et al., 2025) aggregates G-Pass@kτ over sTSl := −1 X r(t)l . (29) Tτ ∈[0.5, 1]. In Scorio, we use the equivalent t=1\nexpectation form Bayesian Bradley–Terry via MCMC\n2 (bayesian_mcmc). To obtain a full Bayesian\nmG-Pass@klm := E[(Xlm −m0)+] ,\nk (25) posterior over paired-comparison strengths, we\nm0 := k2 , combine the Bradley–Terry likelihood (Bradley\nand Terry, 1952) with a Gaussian prior and apwhere (x)+ := max(x, 0) and Xlm ∼\nproximate the posterior with Metropolis–Hastings\nHypergeom(N, νlm, k) as above. The model-level\n1 sampling (Metropolis et al., 1953; Hastings, 1970).score is smG-Pass@kl := M PMm=1 mG-Pass@klm.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 75,
+    "total_chunks": 83,
+    "char_count": 2316,
+    "word_count": 393,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "97ff0261-9e03-400e-bd5c-c77ab574da34",
+    "text": "We first form decisive win counts\nBayes@N (bayes). Bayes@N (Hariri et al., M N\n2026) applies to multi-category outcomes Rlmn ∈ Wij := X X 1{Rimn = 1, Rjmn = 0},\n{0, . . . , C} with a weight vector w ∈RC+1. m=1 n=1\n(30)For a fixed model l and question m, let\nnmk := PNn=1 1{Rlmn = k} be category ignoring ties (both correct or both incorrect). Parameterizing πi = exp(θi), the BT likelihood iscounts. Optionally, a prior outcome matrix\nR0 ∈{0, . . . , C}M×D contributes pseudo-counts exp(θi)\nn0mk := 1 + PDd=1 1{(R0)md = k} (a Pr(i ≻j | θ) = exp(θi) + exp(θj),\nDirichlet(1, . . . , 1) prior), giving νmk := nmk + (31) log p(W | θ) = X Wij log Pr(i ≻j | θ),\nn0mk and T := 1 + C + D + N. Bayes@N re- i̸=j\nturns a posterior mean µl and uncertainty σl of the\nweighted score: with an independent prior θi ∼N(0, σ2) (Caron\nM C and Doucet, 2012). W)\nµl = w0 + X X νmk(wk −w0), (26) and rank models by the posterior mean score\nM T m=1 k=0 sMCMCi := E[θi | M I.1.4 Voting-based Methods 1 νmk σl = X hX (wk −w0)2 M2(T + 1) T Voting rules aggregate per-question preferences\nm=1 k\ninto a global ranking. To adapt them to our test-\nνmk 2i 1/2 − X . time-scaling setting, we treat each question m as (wk −w0)\nT k a \"voter\" that ranks models by their per-question\n(27) solve frequency across trials:\nScorio ranks by µl (default) or by a conservative N\nnormal-quantile score µl + Φ−1(q)σl for a chosen klm := X Rlmn ∈{0, 1, . . . , N}. (32)\nq ∈[0, 1]. n=1 When N = 1, each question induces only a two- Minimax (Simpson–Kramer). The minimax\nlevel ranking (correct vs. incorrect), so Borda/- score is based on a model's worst pairwise defeat:\nCopeland reduce to (ties of) accuracy-based ordering; when N > 1 these rules exploit the additional sminimaxi := −max max(0, ∆ji), (37)\nj̸=i\nresolution from klm.\nand ranks models by the size of their worst defeat\nBorda count. For each question m, let rlm ∈ (closer to 0 is better) (Brandt et al., 2016).\n{1, . . . , L} be the (tie-averaged) rank of model l\nwhen sorting k·m in descending order (smaller rank Schulze (beatpath). Schulze computes strongestis better). The Borda score is path strengths pij in the directed graph of pairwise\nvictories and ranks i above j if pij > pji (Schulze,\n2011; Brandt et al., 2016).\nsBordal := X (L −rlm), (33)\nm=1 Ranked Pairs (Tideman). Ranked Pairs sorts\npairwise victories by strength (e.g., margin ∆ij),\nwhich assigns (L−1) points for a unique first place\nthen locks them in that order whenever doing so\nand 0 for a unique last place, with ties receiving\ndoes not introduce a cycle; the resulting acyclic\nthe average of the tied positions (de Borda, 1781;\ndominance graph induces a ranking (Tideman,\nBrandt et al., 2016).\n1987; Brandt et al., 2016).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 76,
+    "total_chunks": 83,
+    "char_count": 2714,
+    "word_count": 517,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b9f04031-b4fb-4617-9e68-360b9b5f2684",
+    "text": "For each pair (i, j), define the num- Kemeny–Young. Kemeny–Young returns an or- (q)\nber of questions that prefer i to j as W ij := dering π that maximizes agreement with the pairPm I[kim > kjm]. Copeland declares i to beat wise preferences:\n(q) (q)\nj if W ij > W ji and scores each model by net\npairwise dominance: π ∈arg max X P ij(q) , (38)\ntotal orders π\ni≺πj\nsCopelandi := X sign W ij(q) −W ji(q) , (34)\nwhich is equivalent to a maximum-likelihood rankj̸=i\ning under certain noise models and is a classic\nwhere sign(0) = 0 (Copeland, 1951; Brandt et al., Condorcet extension (Kemeny, 1959; Young, 1977;\n2016). Brandt et al., 2016). (Exact optimization is NPhard in general; we solve the induced linear orderWin rate. Using the same question-level win ing problem via MILP for the problem sizes in this\ncounts W (q), define a model's win rate as the frac- paper.)\ntion of decisive pairwise outcomes it wins:\nBorda elimination rules (Nanson and Baldwin).\n(q) Nanson's method iteratively recomputes Borda Pj̸=i W ij\nswinratei := (q) (q) , (35) scores over remaining candidates and removes\nPj̸=i W ij + W ji those below the mean, while Baldwin's method removes the lowest Borda scorer(s) each round (Nanwith the convention swinratei = 0.5 if the denomi- son, 1883; Baldwin, 1926; Brandt et al., 2016).\nnator is zero. Majority Judgment treats\nCondorcet-style pairwise-majority rules. klm ∈{0, . . . , N} as discrete grades and ranks\nMany voting rules are defined from an aggregated models by their median grade, breaking ties uspairwise preference matrix. To incorporate ing the majority-gauge rule (Balinski and Laraki,\nper-question ties when kim = kjm, we define 2011). M I.1.5 Paired-comparison Probabilistic Models\n(q)\nP ij := X I[kim > kjm] + 2I[kim1 = kjm] , These methods first reduce R to pairwise win/tie\nm=1 counts between models, then fit a parametric paired-\n(36)\n(q) (q) comparison model. For each ordered pair (i, j),\nso that P ij + Pji = M. Let margins be ∆ij := define wins Wij and ties Tij as in Section 2.2 (pair-\n(q) (q)\nP ij −P ji . wise representation). Algorithm 2 Voting rules on per-question trial Algorithm 3 Paired-comparison models (BT,\ncounts Davidson, Rao–Kupper) via ML/MAP\nRequire: R ∈{0, 1}L×M×N Require: R ∈{0, 1}L×M×N; model family; optional prior\nEnsure: Borda scores sBorda, Copeland scores sCopeland, penalty on log-strengths; max iterations T\nwin-rate scores swinrate Ensure: Scores (strengths) ˆπ ∈RL+\n1: Compute klm ←PNn=1 Rlmn 1: Compute pairwise win/tie counts (Wij, Tij) from R\n2: sBorda ←0; sCopeland ←0; initialize W (q) ←0 2: Parameterize strengths by log-strengths θi = log πi and\n3: for m = 1 to M do enforce identifiability by centering: θ ←θ −1L Pi θi\n4: Rank models by k·m (descending) with average-tie 3: Define the family-specific log-likelihood log p(W, T |\nranks r·m θ, tie-params)\n5: sBordal += L −rlm for all l 4: Define objective L = −log p(·) + prior(θ) (prior term is\n6: end for 0 for ML)\n7: for 1 ≤i < j ≤L do 5: Optimize L with L-BFGS for up to T iterations\n8: Wij(q) ←Pm I[kim > kjm] 6: Return ˆπi = exp(ˆθi) as scores (larger is better)\n9: Wji(q) ←Pm I[kjm > kim]\n10: if Wij(q) > W ji(q) then sCopelandi += 1;\nFor Davidson, with tie parameter ν > 0, sCopelandj −= 1\n11: else if Wji(q) > W ij(q) then sCopelandi −= 1; πi Pr(i ≻j) = , sCopelandj += 1 πi + πj + ν√πiπj\n12: end if πj\n13: end for Pr(j ≻i) = (41) P j̸=i Wij(q) πi + πj + ν√πiπj ,14: swinratei ← (q) (q) (or 0.5 if denominator is\nP j̸=i(Wij +W ji ) ν√πiπj\n0) Pr(i ∼j) = . πi + πj + ν√πiπj For Rao–Kupper, with κ ≥1,\nBradley–Terry (BT). The BT model (Bradley\nand Terry, 1952) assigns each model a positive πi Pr(i ≻j) = ,\nstrength πi > 0 and assumes πi + κπj\nPr(j ≻i) = , (42) πi\nPr(i ≻j) = . (39) κπi + πj\nπi + πj (κ2 −1)πiπj\nPr(i ∼j) = (πi + κπj)(κπi + πj).Given win counts Wij, the log-likelihood is log p(W | π) = X Wij h log πi −log(πi + πj)i , I.1.6 Sequential Rating Systems\nSequential rating systems process a stream of head- i̸=j\n(40) to-head \"matches\" rather than aggregating all pairwith identifiability enforced by centering log- wise outcomes into a single count matrix. Scorio provides ML (bradley_terry) benchmark setting, the natural match stream is inand MAP (bradley_terry_map) estimation; MAP duced by each question–trial (m, n): for every\nadds a prior penalty on log-strengths (e.g., Gaus- pair of models (i, j), we observe a binary outsian) (Caron and Doucet, 2012). come pair (Rimn, Rjmn) ∈{0, 1}2 and declare\ni to beat j if (1, 0) and j to beat i if (0, 1).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 77,
+    "total_chunks": 83,
+    "char_count": 4502,
+    "word_count": 825,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "27b15eac-126c-45a1-9660-f653c40282fc",
+    "text": "In our binary setting, a pairwise (Rimn, Rjmn) ∈{(1, 1), (0, 0)}, the comparison\ntie occurs when both models are correct or both is a tie; Scorio exposes tie-handling policies (e.g.,\nare incorrect on the same question–trial. Scorio treat ties as draws or ignore certain ties) for these\nimplements two classic tie models: methods. Elo (Elo, 1978) maintains a scalar rating• Davidson (Davidson, 1970): adds a tie parameter and models (i ≻j), (j ≻i), and ri for each model. For a match between i and j,\ndefine the expected score (i ∼j) explicitly (bradley_terry_davidson,\nbradley_terry_davidson_map). 1\nEij := , (43)\n1 + 10(rj−ri)/400\n• Rao–Kupper (Rao and Kupper, 1967): alternative tie parameterization via κ ≥1 (rao_kupper, and let Sij ∈{0, 12, 1} be the realized match score\nrao_kupper_map). for i against j (win/draw/loss, depending on the The sequential Elo update is I.1.7 Listwise / Setwise Choice Models (Luce\nFamily)\nri ←ri + K(Sij −Eij),\n(44) Unlike pairwise models, these methods operate\nrj ←rj + K((1 −Sij) −(1 −Eij)),\non setwise events induced by each question–trial\nwith learning rate K > 0 (elo in Scorio). Define the winner and loser sets\nthe updates are sequential, the final ratings can\ndepend on the order in which the match stream is Umn := {l : Rlmn = 1},\n(49)\nprocessed. Vmn := {l : Rlmn = 0}. Glicko (Glickman, 1999) augments Elo\nIf Umn = ∅or Umn = L, the event contains no\nwith an uncertainty parameter (rating deviation)\nranking information and is discarded. RDi and updates ratings using batches of matches\nwithin rating periods. In our implementation, each Plackett–Luce (PL). The PL model (Plackett,\nquestion–trial (m, n) constitutes one rating period 1975; Luce, 1959) is a listwise generalization of BT\ncontaining all pairwise matches on that (m, n).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 78,
+    "total_chunks": 83,
+    "char_count": 1778,
+    "word_count": 296,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5d0ac1db-672b-4eb7-a7d5-3b2dedb466b1",
+    "text": "De- for full rankings. In our binary setting we apply PL\nfine q := ln(10)/400 and to the pairwise win matrix (equivalently BT) and es-\n1 timate strengths using the MM update from Hunter\ng(RD) := . (45) (2004) (plackett_luce, plackett_luce_map). q 3q2RD2\n1 + π2\nDavidson–Luce (setwise ties). Davidson–Luce\nFor a player i in a rating period with opponents (Firth et al., 2019) models the probability of a tied\nj ∈Oi and outcomes Sij, define expected scores winner set Umn emerging from the full set Umn ∪\n1 Vmn, explicitly accounting for ties within Umn and\nEij := , (46) 1 + 10−g(RDj)(ri−rj)/400 Vmn (davidson_luce, davidson_luce_map). Let\nπi > 0 be strengths and δt > 0 be tie-prevalence\nand\nparameters with δ1 ≡1. For a comparison set S\n  −1 and tie order t, define gt(T) := Q i∈T πi 1/t and\nd2i := q2 X g(RDj)2Eij(1 −Eij) .\nj∈Oi min(D,|S|)\n(47) Z(S) := X δt′\nThe Glicko updates are t′=1\n(50)\n−1/2 · X gt′(T), 1 1\nRD′i := + , T⊆S\nRD2i d2i |T|=t′\nr′i := ri + 1 1 X g(RDj)(Sij −Eij), + where D is the maximum tie order considered. RD2i d2i j∈Oi\nThen, for an event (U, V ) with S = U ∪V and (48)\nt = |U|,with optional RD inflation between rating periods and a maximum RD cap (as in the original\nδt gt(U)\nGlicko specification). This corresponds to glicko Pr(U ≻V | S) = . (51)\nZ(S)in Scorio; we rank by r′i (larger is better), and RD′i\ncan be used as an uncertainty summary. Bradley–Terry–Luce (BTL) setwise-choice conTrueSkill. TrueSkill (Herbrich et al., 2006) is a struction. BTL converts each winner i ∈\nBayesian rating system that models each model's Umn into a Luce choice event from {i} ∪\nlatent skill as a Gaussian N(µi, σ2i ) and updates Vmn, with choice probability Pr(i | {i} ∪\n(µi, σi) after each match using approximate infer- V ) = πi/(πi +Pj∈V πj) (bradley_terry_luce,\nence. In Scorio, we apply a two-player TrueSkill bradley_terry_luce_map). Equivalently, for an\nupdate to each decisive (1, 0) or (0, 1) pairwise event (U, V ) the BTL likelihood factorizes as\nmatch in the induced stream (ties are ignored) and\nreturn the final µi as the score (trueskill); a per- Pr(U ≻V ) = Y . (52)\nπi + Pj∈V πjround dynamics parameter τ inflates σ between i∈U\nrounds to model drift. Algorithm 4 MM algorithm for PL/BT on the pair- for an item-model pair is the correct-count\nwise win matrix N\nRequire: Pairwise win matrix W ∈RL×L+ , itera- klm := X Rlmn ∈{0, 1, . . . , N}, (53)\ntions T n=1\nEnsure: Strengths ˆπ ∈RL+ (normalized) so that likelihood-based IRT estimation can be writ-\n1: wi ←Pj Wij (total wins); nij ←Wij + Wji ten as a binomial-response model (McCullagh and\n(total comparisons) Nelder, 1989; De Boeck and Wilson, 2004).\n2: Initialize πi ∝wi and normalize Pi πi = 1 Rasch (1PL). The Rasch model (Rasch, 1960)\n3: for t = 1 to T do\nassumes a single item parameter (difficulty bm):\n4: for i = 1 to L do\nnij klm ∼Binomial(N, σ(θl −bm)) , (54) 5: di ←Pj̸=i: nij>0 πi+πj\n6: πi ←wi/di where σ(x) = 1/(1+e−x).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 79,
+    "total_chunks": 83,
+    "char_count": 2920,
+    "word_count": 544,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8100be77-06bb-439a-abb9-215a6a27730c",
+    "text": "The model is invariant\n7: end for to global shifts (θ, b) 7→(θ + c, b + c), so we\n8: Normalize π to sum to 1 impose an identifiability constraint by centering\n9: end for item difficulties (e.g., Pm bm = 0).\n10: Return π\n2PL and 3PL. The 2PL model (Birnbaum, 1968)\nadds an item discrimination parameter am > 0:\nAlgorithm 5 Setwise event extraction and Luceklm ∼Binomial N, σ am(θl −bm) . (55)\nfamily estimation (Davidson–Luce / BTL)\nThe 3PL model further adds a pseudo-guessing\nRequire: R ∈{0, 1}L×M×N; model type ∈\nparameter cm:\n{Davidson–Luce, BTL}; optional prior on logstrengths; max iterations T klm ∼Binomial(N, plm) ,\n(56)\nEnsure: Strength scores ˆπ ∈RL+ plm := cm + (1 −cm)σ am(θl −bm) .\n1: Build events E ←{(Umn, Vmn) : 0 < In our implementation, we constrain am via a log-\n|Umn| < L} parameterization and keep cm in a bounded range\n2: Parameterize πi = exp(θi) with centered θ for (or optionally fix cm to a known chance level).\nidentifiability\n3: Define the event log-likelihood Estimation variants used in Scorio. P(U,V )∈E log p(U ≻ V | θ) for the • JMLE / MLE (rasch, rasch_2pl, rasch_3pl):\nchosen model optimize the joint log-likelihood over θ and item\n4: Add prior penalty on θ for MAP (or 0 for ML) parameters.\n5: Optimize with L-BFGS for up to T iterations\n• MAP (rasch_map, rasch_2pl_map, and return ˆπ\nrasch_3pl_map): add a prior penalty on\nabilities, typically Gaussian, as in Bayes modal\nestimation (Mislevy, 1986). I.1.8 Item Response Theory (IRT) Methods\n• MML + EAP (rasch_mml): integrate out abiliScorio includes several IRT-inspired ranking meth- ties under a population model (we use a standard\nods that treat each model as an \"examinee\" with a normal prior), fit item parameters by EM, then\nlatent ability and each question as an \"item\" with compute EAP ability estimates (Bock and Aitkin,\nlatent parameters (e.g., difficulty). We use IRT pri- 1981; Chen et al., 1998).\nmarily as a ranking model: we estimate abilities\n• Credible/LB scoring (rasch_mml_credible):{θl}Ll=1 and rank models by θl (larger is better),\nrank by a posterior quantile of θl (e.g., a lowerusing rank_scores for tie-aware rank variants.\nbound), which yields a conservative, uncertaintyaware ranking. Data and binomial reduction. Our raw observa-\n• Dynamic IRT (dynamic_irt): a longitudinal\ntions are binary trial outcomes Rlmn ∈{0, 1} for\nextension that allows per-model trends across\nmodel l ∈{1, . . . , L}, question m ∈{1, . . . , M},\ntrials (Verhelst and Glas, 1993; Wang and Nydick,\nand trial n ∈{1, . . . , N}. When trials are i.i.d.\n2020).\nconditional on parameters, the sufficient statistic Algorithm 6 Binomial xPL IRT (JMLE/MAP) for Algorithm 7 Rasch MML (EM + quadrature) with\nranking EAP and posterior-quantile scoring\nRequire: Response tensor R ∈{0, 1}L×M×N; Require: Counts k ∈{0, . . . , N}L×M; trials N;\nmodel type ∈{1PL, 2PL, 3PL}; optional abil- quadrature points {θq, wq}Qq=1; EM iterations\nity prior p(θ); max iterations T S\nEnsure: Ability scores ˆθ ∈RL and optional item Ensure: EAP scores ˆθEAP (or quantile scores) and\nparameters item difficulties ˆb\n1: Compute counts klm ←PNn=1 Rlmn and set 1: Initialize item difficulties b from per-item solve\nn ←N rates and center b\n2: Initialize θ from per-model accuracy; initial- 2: for s = 1 to S do\nize b from per-item solve rate; set am ←1 3: E-step: compute log p(kl | θq, b) for each\n(2PL/3PL); set cm ←0.25 (3PL) model l and quadrature point q\n3: Define plm(θ, b, a, c) according to the chosen 4: Compute posterior weights wlq ∝\nxPL link exp(log p(kl | θq, b)) wq and normalize over q\n4: Define the binomial log-likelihood 5: Define ℓ(k; n, p) ← k log p + (n −\nℓ(k; n, p) ←k log p + (n −k) log(1 −p) k) log(1 −p)\n5: Define objective (negative log posterior) 6: M-step: for each item m, update bm by\nminimizing\nL(θ, b, a, c) = − X ℓ(klm; n, plm)\nl,m − X wlq ℓ(klm; N, σ(θq −bm)) .\n−log p(θ). l,q 7: Center b Set log p(θ) = 0 for pure MLE.\n8: end for 6: Impose identifiability at each iteration by cen-\n9: Recompute posterior weights wlq under final b tering item difficulties: b ←b −1M Pm bm\nˆθEAPl ←Pq wlqθq 7: Optimize L with a quasi-Newton method (e.g., 10: Compute EAP scores:\nL-BFGS) for up to T iterations 11: (Optional) Compute quantile score Qα(θl |\n8: Return ˆθ as scores (larger is better) and option- k) from the discrete posterior CDF (used by\nrasch_mml_credible) ally ˆb, ˆa, ˆc\n12: Return scores and ˆb I.1.9 Graph and Spectral Methods\nwith the standard dangling-node convention of a\nThese methods operate on the pairwise comparison uniform column if the denominator is zero. PageRgraph derived from the win/tie counts (Wij, Tij) ank scores r ∈∆L−1 solve\ndefined in Section 2.2. A common derived quantity\nis the empirical tied-split win probability r = d P r + (1 −d) L1,1 (59) Wij + 12Tij 1 where d ∈(0, 1) is the damping factor and 1 is\nbPi≻j := , bPi≻i := 2. (57) the all-ones vector (Page et al., 1999). This corre- Wij + Wji + Tij\nsponds to pagerank in Scorio.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 80,
+    "total_chunks": 83,
+    "char_count": 4949,
+    "word_count": 883,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f1e25431-e963-43db-a8fa-fc9d05f4ef22",
+    "text": "In our fully observed benchmark setting, Wij + Spectral (eigenvector centrality). We form the\nWji + Tij = MN for all i ̸= j (Section 2.2), so nonnegative matrix W with off-diagonal entries\nbPi≻j is a simple rescaling of aggregated counts. Wij := and set the diagonal to the row sum bPi≻j\nWii := Pj̸=i Wij (a self-loop that makes the ma-PageRank. We build a directed weighted graph\ntrix diagonally dominant). The spectral score vecwhere an edge from j to i has weight bPi≻j (in- tor is the principal right eigenvector v ≥0 of W,terpreting \"losers link to winners\"), then form a\nnormalized to Pi vi = 1. This corresponds tocolumn-stochastic transition matrix P by normalizspectral in Scorio.ing each column:\nRank Centrality. Rank Centrality (Negahban\nbPi≻j (i ̸= j), (58) et al., 2017) constructs a random walk on the com- Pij :=\nPk̸=j bPk≻j parison graph whose transition probabilities pre- Algorithm 8 Dynamic IRT growth model (logistic Nash equilibrium mixture. Following the use\nlongitudinal Rasch) of Nash equilibria as evaluation summaries in symmetric zero-sum games (Balduzzi et al., 2019), weRequire: Response tensor R ∈{0, 1}L×M×N;\ndefine a zero-sum payoff matrix normalized time grid tn ∈[0, 1]; max iterations T\nAij := 2bPi≻j −1, Aii := 0, (63)Ensure: Baseline abilities ˆθ0 ∈RL, slopes ˆθ1 ∈\nRL, and item difficulties ˆb ∈RM\nwhich is antisymmetric when bP is derived from 1: Fit the longitudinal model P(Rlmn = 1) = tied-split win rates. We compute a maximin mixed\nσ(θ0,l + θ1,ltn −bm) by maximizing the strategy x ∈∆L−1 (a Nash equilibrium strategy\nBernoulli likelihood over all (l, m, n)\nfor the row player)\n2: Add weak regularization on slopes (e.g.,\n∥θ1∥22) to avoid overfitting i.i.d. sampling noise x ∈arg max min x⊤Ay, (64)\n3: Center b for identifiability x∈∆L−1 y∈∆L−1\n4: Optimize with a quasi-Newton method (e.g.,\nvia a standard linear program. To obtain a perL-BFGS) for up to T iterations\nmodel evaluation score (\"Nash averaging\"), we 5: Return ˆθ0 as ranking scores and optionally\nˆθ1,ˆb then score each model by its expected performance\nagainst the equilibrium mixture opponent: fer moving from a model to those that beat it.\nsi := X bPi≻j xj ∈[0, 1], (65)Let dmax be the maximum (undirected) degree of\nj=1\nthe comparison graph (in our benchmark setting\ndmax = L −1). Define a row-stochastic matrix and rank models by s (higher is better). We ad-\n1 ditionally report the equilibrium mixture x as a\nPij := bPj≻i (i ̸= j), strategic summary of the meta-game when needed. dmax\n(60) This corresponds to nash in Scorio. Pii := 1 − X Pij.\nj̸=i I.1.10 Seriation-based Methods\nThe stationary distribution π of P is used as the SerialRank.",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 81,
+    "total_chunks": 83,
+    "char_count": 2654,
+    "word_count": 448,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "72d7128d-27e8-422c-b354-b33d9767eaec",
+    "text": "SerialRank (Fogel et al., 2016) is\nscore vector (larger πi is better). This corresponds a spectral seriation method that constructs a simto rank_centrality in Scorio. ilarity graph from a skew-symmetric comparison\nmatrix. From pairwise counts (W, T), define\nα-Rank. α-Rank (Omidshafiei et al., 2019) ranks\nstrategies via evolutionary dynamics by construct- Wij −Wji\nCij := ∈[−1, 1],\ning a Markov chain over models using fixation Wij + Wji + Tij (66)\nprobabilities in a finite population. In our constant- Cii := 0,\nsum binary evaluation setting, we treat bPi≻j as the\npayoff to strategy i against j (so the per-match so that Cij > 0 indicates i tends to beat j (and C is\npayoff sum is 1 when ties are split as 12). For pop- skew-symmetric).",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 82,
+    "total_chunks": 83,
+    "char_count": 740,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ebe3b5fa-7ea0-4f5c-bb4e-cb3abea38a5b",
+    "text": "SerialRank forms the similarity\nulation size m ≥2 and selection intensity α ≥0, matrix\nthe (constant-sum) fixation probability of a mutant S := 1 L 11⊤+ CC⊤ , (67) 2\nr in a resident population s is\nthen computes the graph Laplacian LS :=\n1−exp(−u) ( u ̸= 0, diag(S1) −S. The ordering is given by sorting a 1−exp(−mu) ρr,s := (61)\n1 u = 0, Fiedler vector (the eigenvector associated with the m\nsecond-smallest eigenvalue of LS), with the sign\nu := α . (62) chosen to best agree with the observed comparisons. 2 m −1 bPr≻s −1 This corresponds to serial_rank in Scorio. The induced Markov chain on models has offdiagonal transitions Csr := L−1ρr,s1 and diagonal I.1.11 Hodge-theoretic Methods\nCss := 1 −Pr̸=s Csr; the stationary distribution HodgeRank. HodgeRank (Jiang et al., 2011) inof C is the α-Rank score vector. This corresponds terprets pairwise comparisons as a skew-symmetric\nto alpharank in Scorio. edge flow on a graph and recovers global scores by Using the same tied-split probabili- • glicko_tie_skip (initial_rating=1500.0,\nties as above, define the observed edge flow initial_rd=350.0, c=0.0,\nrd_max=350.0, tie_handling=skip,\nWji −Wij\nreturn_deviation=false) , Y ij := bPj≻i −bPi≻j = Wij + Wji + Tij (68) • glicko_tie_draw (initial_rating=1500.0,\nY ii := 0, initial_rd=350.0, c=0.0,\nrd_max=350.0, tie_handling=draw,\nand choose symmetric edge weights wij (e.g.,\nreturn_deviation=false)\nthe total number of comparisons on edge (i, j)).\n• glicko_tie_correct_draw_only\nHodgeRank solves the weighted least-squares prob-\n(initial_rating=1500.0,\nlem\ninitial_rd=350.0, c=0.0, rd_max=350.0,\ns⋆∈arg min X wij (sj −si) −Y ij 2 tie_handling=correct_draw_only,\ns∈RL\ni<j (69) return_deviation=false)\n= arg min ∥grad(s) −Y ∥22,w, • trueskill (mu_initial=25.0,\ns sigma_initial=8.333333333333334,\nwhich reduces to a weighted graph Laplacian sys- beta=4.166666666666667,\ntem; we compute the minimum-norm solution via tau=0.00333333333)\nthe Moore–Penrose pseudoinverse and rank by s⋆\nProbabilistic comparisons.\n(higher is better). This corresponds to hodge_rank\n• bradley_terry (return_scores=false,\nin Scorio.\nmax_iter=500)\nI.2 Ranking Method APIs and • bradley_terry_map (prior=1.0,\nHyperparameters max_iter=500)\n• bradley_terry_davidson\nWe evaluate the ranking methods described in Sec-\n(return_scores=false, max_iter=500)\ntion I.1. Each method maps the trial outcome ten-\n• bradley_terry_davidson_map (prior=1.0,sor R ∈{0, 1}L×M×N (and, where applicable, an\nmax_iter=500)\noptional prior tensor R0) to a ranking over the L\n• rao_kupper (tie_strength=1.1,\nmodels. For reproducibility, we list the exact API\nmax_iter=500)\nidentifiers and argument values used in our experi-\n• rao_kupper_map (tie_strength=1.1,\nments; None denotes an unset optional argument.\nprior=1.0, max_iter=500)\nMetrics. • thompson (n_samples=10000,\n• avg prior_alpha=1.0, prior_beta=1.0,\n• pass_at_k_2 (k=2) seed=42)\n• pass_hat_k_2 (k=2) • bayesian_mcmc (n_samples=5000,\n• mg_pass_at_k_2 (k=2) burnin=1000, prior_var=1.0, seed=42)\n• bayes (R0=None, quantile=None) • plackett_luce (return_scores=false,\n• bayes_greedy (R0=R0, quantile=None) max_iter=500, tol=1e-08)\n• bayes_ci (R0=None, quantile=0.05) • plackett_luce_map (prior=1.0,\n• inverse_difficulty max_iter=500)\n(return_scores=false, clip_range=[0.01, • bradley_terry_luce\n0.99]) (return_scores=false, max_iter=500)\n• bradley_terry_luce_map (prior=1.0,\nPairwise rating.\nmax_iter=500)\n• elo_tie_skip (K=0.05,\ninitial_rating=1500.0, Voting rules.\ntie_handling=skip) • borda (return_scores=false)\n• elo_tie_draw (K=0.05, • copeland (return_scores=false)\ninitial_rating=1500.0, • win_rate (return_scores=false)\ntie_handling=draw) • minimax_variant_margin_tie_ignore\n• elo_tie_correct_draw_only (variant=margin, tie_policy=ignore)\n(K=0.05, initial_rating=1500.0, • minimax_variant_margin_tie_half\ntie_handling=correct_draw_only) (variant=margin, tie_policy=half) • minimax_variant_winning_votes_tie_ return_item_params=false)\nignore (variant=winning_votes, tie_ • rasch_mml_credible (quantile=0.05,\npolicy=ignore) max_iter=100, em_iter=20,\n• minimax_variant_winning_votes_tie_ n_quadrature=21)\nhalf (variant=winning_votes, tie_ • dynamic_irt_linear\npolicy=half) (variant=linear, max_iter=500,\n• schulze_tie_ignore (tie_policy=ignore) return_item_params=false)\n• schulze_tie_half (tie_policy=half) • dynamic_irt_growth\n• ranked_pairs_strength_margin_tie_ (variant=growth, max_iter=500,\nignore (strength=margin, tie_ return_item_params=false)\npolicy=ignore)\n• ranked_pairs_strength_margin_tie_half Graph/game.\n(strength=margin, tie_policy=half) • pagerank (damping=0.85, max_iter=100,\n• ranked_pairs_strength_winning_votes_ tol=1e-12)\ntie_ignore (strength=winning_votes, • spectral (max_iter=10000, tol=1e-12)\ntie_policy=ignore) • alpharank (alpha=1.0,\n• ranked_pairs_strength_winning_votes_ population_size=50, max_iter=100000,\ntie_half (strength=winning_votes, tie_ tol=1e-12)\npolicy=half) • nash_vs_equilibrium (n_iter=100,\n• kemeny_young_tie_ignore temperature=0.1, solver=lp,\n(tie_policy=ignore, time_limit=None) score_type=vs_equilibrium,\n• kemeny_young_tie_half (tie_policy=half, return_equilibrium=false)\ntime_limit=None) • nash_advantage_vs_equilibrium (n_\n• nanson_rank_ties_average iter=100, temperature=0.1, solver=lp,\n(rank_ties=average) score_type=advantage_vs_equilibrium,\n• nanson_rank_ties_max (rank_ties=max) return_equilibrium=false)\n• baldwin_rank_ties_average • rank_centrality_tie_ignore\n(rank_ties=average) (tie_handling=ignore, smoothing=0.0,\n• baldwin_rank_ties_max (rank_ties=max) teleport=0.0, max_iter=10000,\n• majority_judgment tol=1e-12)\n(return_scores=false) • rank_centrality_tie_half\n(tie_handling=half, smoothing=0.0,\nIRT. teleport=0.0, max_iter=10000,\n• rasch (return_scores=false, tol=1e-12)\nmax_iter=500, • serial_rank_prob_diff\nreturn_item_params=false) (comparison=prob_diff)\n• rasch_map (prior=1.0, max_iter=500, • serial_rank_sign (comparison=sign)\nreturn_item_params=false) • hodge_rank_binary_total\n• rasch_2pl (return_scores=false, (pairwise_stat=binary,\nmax_iter=500, weight_method=total,\nreturn_item_params=false) return_diagnostics=false)\n• rasch_2pl_map (prior=1.0, max_iter=500, • hodge_rank_binary_decisive\nreturn_item_params=false) (pairwise_stat=binary,\n• rasch_3pl (return_scores=false, weight_method=decisive,\nmax_iter=500, fix_guessing=None, return_diagnostics=false)\nreturn_item_params=false) • hodge_rank_binary_uniform\n• rasch_3pl_map (prior=1.0, (pairwise_stat=binary,\nmax_iter=500, fix_guessing=None, weight_method=uniform,\nreturn_item_params=false) return_diagnostics=false)\n• rasch_mml (return_scores=false, • hodge_rank_log_odds_total\nmax_iter=100, em_iter=20, (pairwise_stat=log_odds,\nn_quadrature=21, weight_method=total, epsilon=0.5, return_diagnostics=false)\n• hodge_rank_log_odds_decisive\n(pairwise_stat=log_odds,\nweight_method=decisive, epsilon=0.5,\nreturn_diagnostics=false)\n• hodge_rank_log_odds_uniform\n(pairwise_stat=log_odds,\nweight_method=uniform, epsilon=0.5,\nreturn_diagnostics=false)",
+    "paper_id": "2603.10960",
+    "title": "Ranking Reasoning LLMs under Test-Time Scaling",
+    "authors": [
+      "Mohsen Hariri",
+      "Michael Hinczewski",
+      "Jing Ma",
+      "Vipin Chaudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10960v1",
+    "chunk_index": 83,
+    "total_chunks": 83,
+    "char_count": 6978,
+    "word_count": 686,
+    "chunking_strategy": "semantic"
+  }
+]

@@ -1,0 +1,420 @@
+[
+  {
+    "chunk_id": "eeada375-0ddd-4f8d-97a2-8d46c3b815c3",
+    "text": "Simultaneous estimation of multiple discrete unimodal\ndistributions under stochastic order constraints Yasuhiro Yoshida ∗ Noriyoshi Sukegawa † Jiro Iwanaga ‡§ Abstract2026 We study the problem of estimating multiple discrete unimodal distributions, motivated\nby search behavior analysis on a real-world platform. To incorporate prior knowledge of\nprecedence relations among distributions, we impose stochastic order constraints and formulate\nthe estimation task as a mixed-integer convex quadratic optimization problem. Experiments onMar\nboth synthetic and real datasets show that the proposed method reduces the Jensen–Shannon\n12 divergencecomparablybyto 2.2%existingon averagemethods(upwhento 6.3%)sufficientwhendatathearesampleavailable.size is small, while performing In this paper, we present a mixed-integer convex optimization model to simultaneously estimate\nmultiple discrete unimodal distributions under stochastic order constraints, motivated by a realworld search behavior analysis.[math.OC]\n1.1 Background Maternal mental health has become a serious concern, especially during the Covid-19 pandemic [9]. The WHO reports that about 10% of pregnant women and 13% of postpartum women experience\nmental disorders, mainly depression [35].",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 0,
+    "total_chunks": 22,
+    "char_count": 1246,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c6f384ff-c2df-499e-ba53-a886c68dfe40",
+    "text": "In this context, Connehito Inc. operates Mamari, an\ninformation platform for pregnancy, childbirth, and childcare, featuring user-to-user Q&A. By\n2024, Mamari is projected to have 3.5 million users, with 4 million monthly searches and 1.1\nmillion monthly Q&A posts. Understanding user interest through search queries is a fundamental challenge in information\nretrieval [25]. As reported in [18], search timing for typical Mamari keywords depends on children's\nages. Specifically, the search timing distributions tended to be unimodal, as depicted in Figure 1. In this figure, the black line, for example, shows the normalized histogram of the number of users\nwho searched for first trimester body weight per week, with the x-axis indicating the age of\nthe children. This figure suggests that most users in the first trimester are interested in their bodyarXiv:2603.11532v1 weight approximately 30 weeks before the expected date of birth, which is indicated by zero on\nthe x-axis.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 1,
+    "total_chunks": 22,
+    "char_count": 979,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8562243d-2950-4af0-a502-5d3123d21484",
+    "text": "In [18], unimodal regression [31] outperformed baseline methods in estimating search timing distributions for typical keywords. The estimation error, however, increases for multi-term keywords,\nsuch as first trimester body weight, owing to smaller sample sizes. To mitigate this limitation, we exploit prior knowledge of search timing distributions. By definition, the distribution of first trimester body weight should precede that of second trimester body ∗School of Engineering, Stanford University, Stanford, CA 94305, USA\n†Faculty of Science and Engineering, Hosei University, Tokyo, Japan\n‡Erdos Inc., Kanagawa, Japan\n§The University of Electro-Communications, Tokyo, Japan",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 2,
+    "total_chunks": 22,
+    "char_count": 679,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "90689bc8-01b7-406c-a14f-9206f446ff3c",
+    "text": "0.14\nfirst trimester body weight\nsecond trimester body weight\n0.12 third trimester body weight 0.08\nprobability 0.06 −40 −20 0 20 40 60 80 100 Figure 1: Three search timing distributions for keywords containing body weight on Mamari Figure 1 validates this assumption and suggests that samples from first trimester may\nalso improve estimation for second trimester. In this study, we propose a model that incorporates prior knowledge of precedence relations among\nsearch timing distributions to improve estimation accuracy under limited samples.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 3,
+    "total_chunks": 22,
+    "char_count": 544,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0d0192ac-2e16-4e88-8495-cfa34c3d7cde",
+    "text": "The main\ncontributions are: We formalize precedence relations via stochastic order [28] and show that the resulting estimation problem reduces to a mixed-integer convex quadratic program solvable by standard\nsolvers such as Gurobi. Using real search history data from Mamari, we demonstrate that the proposed model substantially reduces estimation error compared with baseline methods.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 4,
+    "total_chunks": 22,
+    "char_count": 385,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "22b9bf22-5105-48c3-93c4-a7738d0fa0f5",
+    "text": "The remainder of this paper is organized as follows. Section 2 reviews related work. Section 3\npresents the proposed model and its formulation as a mixed-integer convex quadratic program. Section 4 provides a proof of concept, followed by numerical results in Section 5. Section 6 concludes\nthe paper.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 5,
+    "total_chunks": 22,
+    "char_count": 301,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2b8343e7-0224-4599-94a0-ff4edb953959",
+    "text": "Distribution estimation has been widely studied [30, 27], with most work focusing on single distributions or the independent estimation of multiple distributions. In contrast, this work considers the\nsimultaneous estimation of multiple discrete distributions subject to cross-distribution structural\nconstraints. A common approach to distribution estimation is nonparametric modeling, such as kernel\ndensity estimation [6, 15, 29]. While highly flexible, nonparametric models are prone to overfitting, motivating the incorporation of application-specific prior knowledge [34, 36, 13]. Typical\nprior knowledge includes shape constraints such as unimodality [33, 17], log-concavity [26], and\nk-monotonicity [1]. Monotonicity leads to isotonic regression [2], for which efficient algorithms\nexist [19, 32]. Unimodal estimation has also been studied in discrete settings, notably through the\noptimal pyramid [7, 8], which focuses on single distributions. However, existing frameworks do not\nhandle stochastic order constraints across multiple distributions or jointly enforce inter-distribution\nordering and shape constraints within a unified optimization model. Stochastic orders play an important role in probability theory and statistics as tools for comparing stochastic models and deriving probabilistic inequalities [5, 22]. Most existing work on\nstochastic dominance focuses on testing and inference rather than estimation [20, 3]. There are\nalso studies on optimization under stochastic order constraints [10, 12, 11, 24], including analytical results for maximum likelihood estimation of two distributions under a stochastic order constraint [14]. However, these approaches are typically restricted to pairwise ordering and specific\nestimation settings. In contrast, we propose a mixed-integer optimization framework for the simultaneous estimation of multiple discrete distributions that jointly enforces unimodality, stochastic\norder constraints across more than two distributions, and additional structural constraints such as\nbounded support, while directly minimizing deviation from empirical distributions. We review stochastic order for continuous and discrete distributions [4, 16, 21] and formulate the\nestimation problem as a mixed-integer convex quadratic optimization problem. For two random variables X1 and X2, we say that X1 is stochastically smaller than X2 and write\nX1 ≤st X2 if E[f(X1)] ≤E[f(X2)] for all increasing functions f.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 6,
+    "total_chunks": 22,
+    "char_count": 2452,
+    "word_count": 328,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8c21a523-4f1d-412d-bfb7-541874b4b4ba",
+    "text": "It is known that X1 ≤st X2 holds\nif and only if FX1(t) ≥FX2(t) holds for any t ∈R, where FX denotes the distribution function of\nFrom the above characterization, for any two discrete distributions P1 and P2 with a common\nsupport T = {l, . . ., u}, we have P1 ≤st P2 if\nX X\np1i ≥ p2i (1) holds for any t ∈T , where p1i and p2i denote the ith components of P1 and P2, respectively. 3.2 Unimodal regression A discrete distribution P is unimodal if pi ≤pi+1 for i < t and pi ≥pi+1 for t ≤i for some t ∈T . The unimodal regression fits a unimodal distribution X to an empirical distribution P, which can\nbe formulated as the following 0-1 mixed integer convex programming problem: s. t. xi = 1 (C1)\ni∈T\nxi ∈[0, 1] (i ∈T ) (C2)\nxi ≤xi+1 + (1 −yi) (i ∈T \\ {u}) (C3)\nxi ≥xi+1 −yi (i ∈T \\ {u}) (C4)\nyi ≥yi+1 (i ∈T \\ {u}) (C5)\nyi ∈{0, 1} (i ∈T ) where d(X, P) is some distance metric between X and P. (C1) and (C2) ensure that X is a distribution. Each yi is a binary variable indicating whether index i is before the peak. Monotonicity\nand single-peakedness are ensured by (C3) and (C4), and (C5), respectively. We propose to use\nthe mean squared error (MSE) X 1\n(xi −pi)2\n|T |\ni∈T for the objective function to ease computation. We also tested the Earth mover's distance and\nthe mean absolute error (MAE); however, these did not demonstrate satisfactory performance.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 7,
+    "total_chunks": 22,
+    "char_count": 1358,
+    "word_count": 267,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c31752ef-f170-478c-9343-7b3fc74b6991",
+    "text": "In the evaluation, we use the Jensen–Shannon divergence (JSD), a symmetrized version of the\nKullback–Leibler divergence (KLD), defined as follows:\nX p1i\nDKL(P1, P2) = p1i log ,\np2i\ni∈T\n1 1\nDJS(P1, P2) = 2DKL(P1, (P1 + P2)/2) + 2DKL(P2, (P1 + P2)/2). 3.3 Unimodal regression with a stochastic order constraint Suppose we estimate the search timing distributions X1 and X2 for queries Q1 and Q2. Given prior\nknowledge that Q1 should precede Q2, we impose X1 ≤st X2, yielding the following formulation: Rst(P1, P2) : min. d(X1, P1) + d(X2, P2) X X\ns. t. x1i = 1, x2i = 1 i∈T i∈T\nx1i ∈[0, 1], x2i ∈[0, 1] (i ∈T )\nx1i ≤x1,i+1 + 1 −y1i, x2i ≤x2,i+1 + 1 −y2i (i ∈T \\ {u})\nx1i ≥x1,i+1 −y1i, x2i ≥x2,i+1 −y2i (i ∈T \\ {u})\ny1i ≥y1,i+1, y2i ≥y2,i+1 (i ∈T \\ {u})\ny1i ∈{0, 1}, y2i ∈{0, 1} (i ∈T ) X X\nx1i ≥ x2i (t ∈T ) where P1 and P2 are the empirical discrete distributions, and the last constraint imposes X1 ≤st X2\nas indicated in (1). The following points should be noted:",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 8,
+    "total_chunks": 22,
+    "char_count": 964,
+    "word_count": 190,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cafd29ce-ddc0-4162-aeac-a59a75d6b6dd",
+    "text": "• In our application, we use ≤st because our prior knowledge concerns only the location of the\ndistributions. However, our model readily extends to alternatives such as the convex and\nincreasing convex orders, since their definitions also admit linear representations; • With sufficient data, the validity of imposing the stochastic order can be statistically tested\nprior to estimation; see [20, 3] for the corresponding testing procedures. We first validate our model using a toy example. For comparison, we evaluate the following five\nmethods: • EMPIRICAL: the empirical distribution; • GAUSSIAN: the Gaussian maximum likelihood estimator; • KERNEL: a continuous distribution fitted via kernel density estimation using KDEMultivariate\nfrom statsmodels (ver. 0.13.1), with the bandwidth selected from 0.05, 0.10, . . ., 0.95 by twofold cross-validation to minimize the mean squared error; • UNIMODAL: a unimodal distribution estimated by the model in Section 3.2; • OURS: multiple unimodal distributions estimated under stochastic order constraints using the\nmodel in Section 3.3. All code was implemented in Python, and the optimization problems were solved using Gurobi\nOptimizer1 (ver. 9.0.3) on a machine running macOS Sonoma 14.1.2 (Apple M1, 8GB). 1https://www.gurobi.com/products/gurobi-optimizer/ Figure 2: Change in the estimation error (JSD) with respect to sample size using synthetic data Figure 3: Visual comparison of estimated distributions with varying sample sizes Suppose that the search timing distributions X1 and X2 for two search queries are given by\nnormal distributions N(−20, 50) and N(20, 50).",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 9,
+    "total_chunks": 22,
+    "char_count": 1621,
+    "word_count": 237,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c2ffff2-cecd-44d3-98db-408f4477d23d",
+    "text": "It is known [23] that two normal distributions\nwith identical variances satisfy the stochastic order if and only if their means are ordered; thus,\nX1 ≤st X2. We constructed their empirical distributions, P1 and P2, by randomly generating n\nsamples for each query, where the sample size n ranges from 10 to 100. Figure 2 illustrates the change in the estimation error (JSD) with respect to the sample size,\nwhere the bars indicate the confidence intervals computed from 100 trials.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 10,
+    "total_chunks": 22,
+    "char_count": 480,
+    "word_count": 80,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "012880a9-abad-491f-8e54-83cf0c3d462f",
+    "text": "Since the data are generated from normal distributions, GAUSSIAN naturally achieves the lowest error. When the sample\nsize is small (n < 40), OURS considerably outperformed KERNEL, but only slightly outperformed the\nconventional one, UNIMODAL. As the sample size increases, the accuracy of KERNEL improves, and\nthe JSD scores of all methods eventually converge to a lower value. To better understand these behaviors, Figure 3 provides a visual comparison of the estimated\ndistributions. In this figure, the upper row presents the estimation results for X1, whose true search timing distribution follows a normal distribution N(−20, 50), while the lower row presents\nthose for X2, whose true distribution follows N(20, 50). Here, TEST corresponds to the true distribution. When the sample size is insufficient (n = 10), KERNEL suffers from overfitting due to data\nsparsity, resulting in a spiky distribution that deviates from the true distribution. In contrast,\nOURS successfully recovers the unimodal shape and the correct peak positions even with limited\nsamples by leveraging the prior knowledge of unimodality and the stochastic order constraint. This\nrobustness against data sparsity leads to the superior JSD performance observed in Figure 2. On the other hand, we see that OURS and UNIMODAL produce extremely steep distributions\ndue to the monotonicity constraint. Such estimates may cause practical issues in applications,\nparticularly when computing summary statistics such as quantiles. Therefore, in practice, it may\nbe necessary to apply additional smoothing techniques to the estimated results or to incorporate\nappropriate regularization at the estimation stage, such as imposing constraints or penalties that\ndiscourage large differences between adjacent variables xi and xi+1. 5 Numerical Experiment Next, we report the experimental results on a real-world dataset accumulated on Mamari and\nprovided by Connehito Inc.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 11,
+    "total_chunks": 22,
+    "char_count": 1933,
+    "word_count": 286,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2fa9defd-7a5e-4b44-b6c1-4715f907344a",
+    "text": "The computational environment and comparison methods are the\nsame as those in the previous section. This dataset originally consisted of 96,662,493 records collected from January 1, 2021, to December\n31, 2022. We preprocessed this dataset as follows.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 12,
+    "total_chunks": 22,
+    "char_count": 250,
+    "word_count": 37,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e10fa71-248f-403c-ab61-017ed1ad4040",
+    "text": "For simplicity, we extracted users who have registered only one child, totaling 407,849 users. We then extracted the queries searched by at least one of the users identified in (1) during\nthe specified period, totaling 29,836,147 queries. We define an instance as a set of search queries in the form (Q1, Q2, . . . , Qk), where each search\nquery is a pair of keywords such as, language 1 month old.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 13,
+    "total_chunks": 22,
+    "char_count": 398,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "86e4d6fd-1b2a-4c93-b530-3cd682e64a98",
+    "text": "We considered the following three\nforms: (F1) (X first trimester, X second trimester, X third trimester) (F2) (X 1 month old, X 2 months old, . . . , X 6 months old) (F3) (X 1 year old, X 2 years old, . . . , X 12 years old) where X represents a specific term. Examples of X in (F1) include diarrhea and body weight.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 14,
+    "total_chunks": 22,
+    "char_count": 316,
+    "word_count": 66,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "419cdc0c-7002-428d-8c94-656058645d4c",
+    "text": "We selected certain terms as X if the corresponding search query yielded 80 or more records from\nJanuary 2021 to December 2021 (training) and January 2022 to December 2022 (testing). As a\nresult, we obtained 27 instances, as listed in the first column of Table 2. The number of records\nper search query ranged from 80 to 28,276. We constructed datasets by randomly sampling a fixed\nnumber of records n ∈{10, 20, . . ., 80} for each search query. Table 1 reports the estimation errors (JSD) of all methods, averaged over the 27 instances for\neach number of records. For each instance, the smallest estimation error is highlighted in bold,\nand the second smallest is indicated with an underline. As observed in the previous section, OURS\nconsiderably outperforms the baselines when the number of records is small (n < 40), and as the\nnumber of records increases, this advantage diminishes. Unlike in the previous section, even when\nthe number of records is large, KERNEL does not outperform OURS; rather, their performances are\ncomparable, and in some cases OURS performs slightly better. Since GAUSSIAN does not achieve\ngood performance for this dataset, its results are omitted from the subsequent detailed experiments\nTable 2 presents the estimation error of each model for each instance in the 10-record dataset. Here, ∅in the first row of (F3) represents an instance in which X is empty, corresponding to cases",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 15,
+    "total_chunks": 22,
+    "char_count": 1413,
+    "word_count": 235,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "692ec58e-e749-4cb2-abaf-73f1d662080a",
+    "text": "Table 1: Average estimation error (JSD) for each model with varying record sizes Data set EMP GAUSSIAN KERNEL UNIMODAL OURS\n10 records 0.1425 0.0932 0.0983 0.0888 0.0869\n20 records 0.0859 0.1043 0.0568 0.0571 0.0561\n30 records 0.0656 0.1147 0.0450 0.0453 0.0446\n40 records 0.0552 0.1218 0.0375 0.0391 0.0386\n50 records 0.0487 0.1379 0.0354 0.0350 0.0348\n60 records 0.0442 0.1261 0.0310 0.0323 0.0322\n70 records 0.0410 0.1379 0.0304 0.0302 0.0302\n80 records 0.0385 0.1489 0.0302 0.0286 0.0287 Table 2: Estimation error by each model for the 10-record dataset Instance EMP KERNEL UNIMODAL OURS\n(F1) diarrhea 0.238 0.157 0.115 0.113\nbody weight 0.251 0.171 0.131 0.130\nconstipation 0.209 0.128 0.097 0.095\nabdominal pain 0.205 0.135 0.111 0.109\nanemia 0.213 0.139 0.109 0.108\n(F2) toddler defiance 0.122 0.089 0.090 0.087\nnot walking 0.195 0.139 0.113 0.113\nlanguage 0.130 0.092 0.086 0.080\n(F3) ∅ 0.104 0.074 0.075 0.071\nlying down on stomach 0.137 0.099 0.091 0.089\nself-settle 0.126 0.086 0.082 0.083\nbody weight 0.128 0.090 0.085 0.082\nnot gaining weight 0.139 0.097 0.092 0.090\ncrying at night 0.108 0.076 0.076 0.074\nnot sleeping 0.106 0.077 0.077 0.075\nnot turning over 0.186 0.133 0.109 0.104\nthumb sucking 0.109 0.077 0.077 0.077\nbreastfeeding interval 0.113 0.079 0.078 0.075\nformula milk interval 0.114 0.081 0.080 0.079\nexclusive breastfeeding interval 0.112 0.079 0.076 0.074\nmix feeding interval 0.109 0.077 0.077 0.075\ndaily rhythm 0.126 0.089 0.086 0.082\nsleep duration 0.114 0.079 0.078 0.076\nsleep regression 0.112 0.079 0.078 0.078\ncomfort nursing 0.104 0.073 0.074 0.074\nweaning amount 0.119 0.081 0.078 0.076\nnot eating weaning 0.119 0.080 0.080 0.077 where users search for terms such as 1 year old alone, without combining them with other terms. We see from this table that OURS achieves the best performance for all but two instances; even in\nthose two cases, it attains the second-best performance. Similarly, UNIMODAL achieves either the\nbest or the second-best performance in all but two instances.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 16,
+    "total_chunks": 22,
+    "char_count": 2022,
+    "word_count": 318,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "00c382a0-d301-4b80-bec1-cb9ca8f2e12b",
+    "text": "Compared to EMP, the reduction\nrate of the estimation error by OURS was 36.87% on average, 54.29% at most, and 28.34% at least. Compared to KERNEL, the reduction rate was 9.31% on average, 27.97% at most, and −1.65% at\nleast. Finally, compared to UNIMODAL, the reduction rate was even smaller, 2.19% on average,\n6.35% at most, and −0.68% at least. Table 3 is the 80-record dataset version of Table 2. While OURS has a smaller advantage over\nthe baselines than in Table 2, it still outperforms them in most instances. Specifically, out of the",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 17,
+    "total_chunks": 22,
+    "char_count": 541,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e2cb2daa-fee4-47f6-8910-3bf4db9b432c",
+    "text": "Table 3: Estimation error by each model for the 80-record data set\nInstance EMP KERNEL UNIMODAL OURS\n(F1) diarrhea 0.068 0.041 0.037 0.041\nbody weight 0.075 0.061 0.060 0.061\nconstipation 0.044 0.033 0.030 0.030\nabdominal pain 0.058 0.037 0.037 0.038\nanemia 0.051 0.037 0.036 0.036\n(F2) toddler defiance 0.039 0.030 0.032 0.031\nnot walking 0.068 0.048 0.044 0.049\nlanguage 0.039 0.031 0.028 0.027\n(F3) ∅ 0.027 0.022 0.019 0.017\nlying down on stomach 0.045 0.040 0.036 0.036\nself-settle 0.030 0.023 0.024 0.025\nbody weight 0.037 0.032 0.031 0.030\nnot gaining weight 0.044 0.033 0.034 0.034\ncrying at night 0.028 0.024 0.022 0.022\nnot sleeping 0.024 0.025 0.021 0.020\nnot turning over 0.069 0.049 0.046 0.046\nthumb sucking 0.025 0.023 0.020 0.020\nbreastfeeding interval 0.026 0.022 0.019 0.018\nformula milk interval 0.027 0.024 0.023 0.023\nexclusive breastfeeding interval 0.025 0.024 0.020 0.020\nmix feeding interval 0.024 0.023 0.020 0.020\ndaily rhythm 0.034 0.028 0.028 0.027\nsleep duration 0.030 0.025 0.024 0.023\nsleep regression 0.023 0.020 0.019 0.019\ncomfort nursing 0.024 0.023 0.021 0.021\nweaning amount 0.027 0.020 0.020 0.019\nnot eating weaning 0.030 0.020 0.022 0.022 27 instances, OURS achieves the smallest estimation error in 19 instances and attains either the\nsmallest or the second-smallest estimation error in 25 instances; similarly, UNIMODAL achieves the\nsmallest estimation error in 15 instances and attains either the smallest or the second-smallest\nestimation error in 26 instances. Compared to EMP, KERNEL, and UNIMODAL, the reduction rates\nin the estimation error were 24.07%, 5.75%, and 0.35% on average ranging from 12.37%, −9.66%,\nand −11.70% at least to 39.59%, 20.49%, and 7.68% at most, respectively. In Table 1, when the number of records is small, OURS outperforms KERNEL and UNIMODAL. This\nimprovement can be attributed to the unimodality and stochastic order constraints, which allow the\nestimator to effectively pool the limited samples allocated to each distribution and estimate them\njointly. Indeed, in Tables 2 and 3, we confirm that the cases in which OURS achieves relatively better\nperformance tend to involve a larger number of distributions estimated simultaneously. On the\nother hand, as the number of records increases, the unimodality and stochastic order constraints are\noften satisfied automatically. In such cases, imposing these constraints may unnecessarily restrict\nthe flexibility of the estimator, which can in turn deteriorate estimation accuracy. Compared with the previous section, Table 2 shows that GAUSSIAN does not perform well. One possible reason is that the target distributions are asymmetric and steep, and thus deviate\nsubstantially from normality. This may also explain why the performance of KERNEL does not\nimprove significantly as the number of records increases, since kernel-based methods generally\nrequire the underlying distribution to be reasonably smooth in order to perform well. We next examine cases where UNIMODAL and OURS yield different performance. 0.5 test\nunimodal\nours −40 −20 0 20 40 60 80 100 (a) body weight in (F1)",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 18,
+    "total_chunks": 22,
+    "char_count": 3107,
+    "word_count": 478,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b059da92-3d24-4821-a9d5-2cfa8e483efb",
+    "text": "test\n0.20 unimodal\nours −40 −20 0 20 40 60 80 100 Figure 4: Estimated distributions for two instances two representative examples. In each figure, dotted lines indicate the true distributions used for\nevaluation, while solid lines show the estimated distributions. In (a), the three distributions correspond to the first, second, and third trimesters. The left and right distributions are nearly identical\nfor UNIMODAL (blue) and OURS (red). However, for the middle distribution (second trimester), the\nblue curve is slightly shifted to the left relative to the red curve due to the stochastic order constraint imposed in OURS. This adjustment reduces the estimation error of OURS compared with\nUNIMODAL. In (b), the red curve for the left distribution exhibits a heavier left tail induced by the\nstochastic order constraint, resulting in a noticeable deviation from the blue curve. In this case,\nthe constraint adversely affects accuracy, and OURS yields a larger estimation error than UNIMODAL. Finally, in terms of computation time, KERNEL and OURS required a few seconds for all datasets,\nwhile UNIMODAL terminated in less than one second. We addressed the problem of estimating the timing of specific keyword searches on an information\nsite. We proposed a mixed-integer convex quadratic optimization model that incorporates prior\nknowledge of precedence relations among search timing distributions and can be efficiently solved\nby solvers.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 19,
+    "total_chunks": 22,
+    "char_count": 1444,
+    "word_count": 221,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa8bab0b-c7eb-4078-b18b-603e05f64fbe",
+    "text": "Through experiments on both synthetic and real-world datasets, we confirmed that our model improves estimation accuracy when the sample size is small. In terms of JSD, the\nproposed method achieves an average reduction of 2.2%, with a maximum improvement of 6.3%\nand a maximum deterioration of 0.7%. When the sample size is sufficiently large, the proposed\nmethod performs comparably to existing models.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 20,
+    "total_chunks": 22,
+    "char_count": 402,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "edb8f0b0-de61-484d-a51a-6525ef5a1d11",
+    "text": "Future work includes: • investigating broader application settings involving multiple distributions with natural precedence relations, such as marketing analyses that track changes in customer interest; • developing methods to automatically determine which stochastic order constraints should be\nimposed, beyond the standard one considered in this study; and • advancing the theoretical aspects of the framework, including analysis of the properties of the\nestimators and the development of models and algorithms for producing smoother estimates. We would like to thank Connehito Inc. for providing the valuable dataset. We are also grateful\nto the three anonymous reviewers for their constructive and insightful comments, which led to\nsubstantial improvements in the numerical experiments.",
+    "paper_id": "2603.11532",
+    "title": "Simultaneous estimation of multiple discrete unimodal distributions under stochastic order constraints",
+    "authors": [
+      "Yasuhiro Yoshida",
+      "Noriyoshi Sukegawa",
+      "Jiro Iwanaga"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11532v1",
+    "chunk_index": 21,
+    "total_chunks": 22,
+    "char_count": 790,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  }
+]

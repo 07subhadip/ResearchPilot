@@ -1,0 +1,542 @@
+[
+  {
+    "chunk_id": "5a79c9e7-ce4b-4a11-8cd0-726c0dbd2add",
+    "text": "When Fine-Tuning Fails and when it Generalises: Role of\nData Diversity and Mixed Training in LLM-based TTS Anupam Purwar∗† Aditya Choudhary∗\nSprinklr AI\nGurugram, India",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 0,
+    "total_chunks": 30,
+    "char_count": 168,
+    "word_count": 25,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "58602526-a1e2-4cc1-bb67-d35272e30038",
+    "text": "Abstract\nLarge language models are increasingly adopted as semantic backbones for neural text-to-speech\nsystems. However, frozen LLM representations are insufficient for modeling speaker-specific acoustic\nand perceptual characteristics. Our experiments involving fine tuning of the Language ModelMar\nbackbone of TTS show promise in improving the voice consistency and Signal to Noise ratio (SNR) in\n11 voice cloning task. Across multiple speakers, LoRA fine-tuning consistently outperforms the non–fine- tuned base Qwen-0.5B model across three complementary dimensions of speech quality. First,\nperceptual quality improves significantly, with DNS-MOS gains of up to +0.42 points for speakers\nwhose training data exhibits sufficient acoustic variability. Second, speaker fidelity improves for all\nevaluated speakers, with consistent increases in voice similarity, indicating that LoRA effectively\nadapts speaker identity representations without degrading linguistic modeling. Third, signal-level\nquality improves in most cases, with signal-to-noise ratio increasing by as much as 34 percent.[cs.SD]\nCrucially, these improvements are strongly governed by the characteristics of the training data. Speakers with high variability in acoustic energy and perceptual quality achieve simultaneous gains\nin DNS-MOS, voice similarity, and SNR. In contrast, speakers trained on acoustically homogeneous\ndata experience limited gains or perceptual degradation, even when voice similarity improves. This\nreveals that LoRA can faithfully clone speaker identity while also amplifying noise characteristics\nand recording artifacts present in narrow training distributions. We further identify a loss–quality\ndivergence phenomenon in which training and validation loss continue to improve during fine-tuning\nwhile perceptual quality degrades for low-variability speakers. Besides, we show that optimal\ninference temperature of the language model backbone depends on training data variability, with\nconservative sampling benefiting low-variability speakers but degrading quality for high-variability\nones. Overall, this work establishes that LoRA fine-tuning is not merely a parameter-efficient optimization\ntechnique but an effective mechanism for better speaker-level adaptation in compact LLM-based\nTTS systems. When supported by sufficiently diverse training data, LoRA-adapted Qwen-0.5BarXiv:2603.10904v1 consistently surpasses its frozen base model in perceptual quality, speaker similarity with low latency\nusing GGUF model hosted in quantized form. Voice to voice architecture are integral to multi-modal agent development.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 1,
+    "total_chunks": 30,
+    "char_count": 2613,
+    "word_count": 336,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1cfcd5fc-663a-4996-b805-47118f0f8881",
+    "text": "Different voice to voice architectures viz.\ncascaded, end to end and hybrid architectures have been proposed. Cascaded systems are easier to build initially whereas\nend-to-end requires more specialized expertise. End-to-end native voice models are being prioritized for consumer\napplications where naturalness and latency matter most, while cascaded approaches remain popular in enterprise\nsettings where tool calling and advanced reasoning capabilities provided by frontier LLMs are priority. Cascading\nmulti-modal agents which support voice input and output, comprise of three principle components, Automated Speech *Equal contribution by both authors\n†Corresponding author: anupam.aiml@gmail.com. Project page: https://anupam-purwar.github.io/page/.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 2,
+    "total_chunks": 30,
+    "char_count": 752,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c9f53a2b-deea-4319-956c-254364a8df42",
+    "text": "Recognition (ASR), Text based Agent (LLM) and Text-to-Speech (TTS), each of which are susceptible to errors of\ndifferent kinds. TTS powered by language model backbones have shown promise in using Language model backbone\nto predict sequences of acoustic tokens conditioned on text and a speaker prompt Choudhary and Purwar (2025) neu\n(2025) kan (2025) Wang et al. (2023) gpt (2025). Language model based TTS systems collapse linguistic modeling,\nprosody planning, and long-range acoustic coherence into a single autoregressive backbone. However, despite their\nLM-centric design, existing literature does not report systematic LoRA fine-tuning of these language model backbones\nfor TTS adaptation, leaving its impact on perceptual audio quality in voice cloning largely unexplored. Parameter-efficient fine-tuning (PEFT) methods, particularly Low-Rank Adaptation (LoRA), have emerged as a practical\nsolution for adapting large text-to-speech (TTS) models under memory and latency constraints. Existing LoRA-based\nTTS literature predominantly applies adaptation to downstream synthesis components viz. acoustic decoders, speaker\nembeddings, or style and emotion control modules, while keeping the linguistic or semantic modeling backbone frozen. Representative works including LoRP-TTS, StyleSpeech, EELE, and LoRA-based multi-speaker VITS adaptations\nfollow this paradigm, focusing on efficient control or personalization without modifying the core generative model\n(Table 1). UtterTune represents one of the only reported research which inject LoRA into LM layers; however, its scope\nis primarily limited to pronunciation and pitch-accent control, without broader analysis of perceptual quality, inference\nlatency, or stability trade-offs (Table 1). As a result, several fundamental questions remain unanswered in the literature.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 3,
+    "total_chunks": 30,
+    "char_count": 1828,
+    "word_count": 245,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b8778f4b-d69d-4415-aa69-5112764679a6",
+    "text": "First, it is unclear how LoRA adaptation\nof an LM-based TTS backbone interacts with the pretrained acoustic prior encoded in large-scale speech-trained\nlanguage models. Second, the reliability of validation loss as a proxy for perceptual quality parameters like MOS,\nSNR, and speaker similarity has not been rigorously examined in token-level generative TTS models. Third, the role\nof training data characteristics, such as acoustic variability, energy spread, and linguistic diversity, in determining the\nsuccess or failure of LM-level LoRA adaptation is poorly understood. Finally, while inference-time decoding controls\nsuch as temperature and top-k sampling are known to influence perceptual outcomes in language models, their joint\noptimization with LoRA-adapted LM backbones for TTS has not been systematically studied, particularly in the context\nof balancing naturalness, stability, and latency. In contrast to prior approaches summarized in Table 1, our work directly addresses these gaps.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 4,
+    "total_chunks": 30,
+    "char_count": 998,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c0f936bf-67f8-4d5e-ba02-d2284270786f",
+    "text": "First, by conducting\na comprehensive empirical study of LoRA fine-tuning applied to the Qwen-0.5B language model backbone for TTS. Next, we evaluated its performance across multiple datasets and speakers, with following main contributions: • LM-Backbone LoRA for TTS: We apply LoRA directly to attention layers of a language model backbone\n(Qwen-0.5B) used for acoustic token prediction, moving beyond synthesis-layer-only adaptation. • Loss–Quality Decoupling Analysis: We identify and characterize a failure mode where validation loss\nimproves monotonically while perceptual quality (DNS-MOS) degrades, challenging conventional earlystopping criteria for LM-based TTS. • Training Data Variability Study: Through controlled experiments across speakers and datasets, we demonstrate that acoustic variability, is a strong predictor of successful LM-level LoRA adaptation. • Hyperparameter Optimization: We show that decoding hyperparameters (temperature and top-k sampling)\ncan partially mitigate perceptual degradation induced by LoRA adaptation, enabling post-training control over\nquality stability trade-offs. • Latency Optimization: We show that model quantization and use of GGUF to store model weights, enables\nfaster inference by significantly reducing first chunk latency. We performed fine tuning of qwen 0.5 billion which forms the language model backbone of NeuTTS. After fine tuning,\nwe performed an exhaustive analysis of the effect of fine tuning on voice quality.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 5,
+    "total_chunks": 30,
+    "char_count": 1478,
+    "word_count": 200,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c530d247-f674-4d0d-954e-74aac9f89fc7",
+    "text": "Table 1: Comparison of LoRA-based Methods in Text-to-Speech Systems Paper What was implemented (2-line summary) LoRA on LLM\nTTS Backbone\nLoRP-TTS Łukasz Bondaruk Applies LoRA to TTS model layers for rapid speaker personalization from No\nand Kubiak (2025) a single noisy reference utterance. Low-rank updates adapt speaker characBondaruk & Kubiak (2025) teristics while keeping the synthesis backbone frozen. TTS-Hub Anonymous (2025) Introduces modular LoRA adapters trained for individual speech attributes No\nOpenReview (ICLR submis- and composed arithmetically. Enables controllable TTS without modifying\nsion) the underlying language or synthesis backbone. StyleSpeech Lou et al. (2024) Employs parameter-efficient LoRA fine-tuning on pre-trained TTS compo- No\nLou et al. (ACM MM Asia nents for phoneme and style control. Focuses on efficiency and controllabil-\n2024) ity rather than LM adaptation. LoRA-based Multi-Speaker Integrates LoRA and residual adapters into VITS-based multi-speaker TTS No\nTTS architectures. Achieves efficient speaker adaptation with substantially fewer\nIEEE Access (2024) trainable parameters. EELE Qi et al. (2024) Applies LoRA modules to emotional and expressive control layers in TTS No\narXiv:2408.10852 systems. Targets parameter-efficient emotion adaptation without altering\nlinguistic modeling layers.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 6,
+    "total_chunks": 30,
+    "char_count": 1338,
+    "word_count": 180,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b0753724-cb53-4fe1-bdc1-337e2e8210cc",
+    "text": "UtterTune Kato (2025) Injects LoRA directly into the Transformer-based language model backbone Yes\n(2025) of an LLM-TTS system. Enables pronunciation and pitch-accent control by\nadapting semantic/phoneme prediction layers. Figure 1: End-to-End Pipeline of a cascading voice agent comprising of a ASR module to transcribe voice to text, LLM\nmodule to reason over the text and generate text output and lastly a TTS module to synthesize speech for the reasoned\ntext. Our work to the pipeline focuses on finetuning the LLM backbone (enclosed in red) responsible for token\nprediction, which are subsequently decoded by the neural codec to generate the waveform The dataset comprised of audio files along with the transcripts, the data was exclusive to a single speaker in order to\nobserve the learning of the model to a particular speaking style. Full Finetuning was conducted on the entire set of\nparameters, leading to higher memory utilization.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 7,
+    "total_chunks": 30,
+    "char_count": 942,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "76ba0b1f-019e-4ded-8024-a8d540b76b10",
+    "text": "Considering training on low resource GPUs, we were constrained to\nkeep a batch size of 2 which may have introduced instabilities in the training process. Training was performed for 5\nepochs on NVIDIA L4 GPU (24GB VRAM) using Stochastic gradient descent with Adam optimizer. We also performed LoRA Hu et al. (2021) Fine-tuning considering the memory requirements and the need for fast\nadaptation to a particular speaking style. LoRA with rank 8 and alpha 16 reduced the number of trainable parameters\nallowing use of batch size 4 and gradient accumulation of 2 leading to an effective batch size of 8. LoRA finetuning\nwas performed on attention layers, in particular q_proj, k_proj, v_proj. Training with LoRA had a much more stable decrease of training loss over the training steps. Similar to full finetuning, the dataset was structured to contain audio\nfiles and transcripts and the training process was carried for 5 epochs. We have used audio data curated from following two sources to perform fine tuning of qwen 0.5b model. • HiFi TTS: HiFi-TTS Bakhturina et al. (2021) includes audio data and transcripts based on public audiobooks\nfrom LibriVox and texts from Project Gutenberg. This is the source of data for speaker IDs 1, 2 and 11614. • Libriheavy-HQ: Libriheavy-HQ Thornbury, Bryan and Mythic Infinity Labs (2024) Kang et al. (2023) is the\nsource for data corresponding to speaker IDs 1401, 1212, 1259. On an average, the average length of audio\nclips in the data is lesser than the data in HiFi TTS dataset. Hence with a comparable count of files, the total\nlength of data in the dataset is much higher.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 8,
+    "total_chunks": 30,
+    "char_count": 1616,
+    "word_count": 271,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eeea02ef-0f9a-4e60-91eb-d9dac1ef343e",
+    "text": "Acknowledging the need for datasets segregated by speaker IDs for fine-tuning on a particular speaker's voice, we\nplan to release open-source datasets on HuggingFace conforming to this practice to support further experiments on\nfine-tuning of TTS models to a particular voice. Table 2: Summary of the datasets used Data Len Avg Len Std. Unique\n(hr.) (s) (s) Words Avg Words\n1 3.523 2.536 1.239 4492 6.717\n2 3.907 2.813 1.633 7981 7.521\n11614 3.860 2.778 1.471 7460 8.069\n1401 17.590 14.314 6.209 16064 41.399\n1212 18.492 15.543 6.446 13067 42.575\n1259 13.652 14.675 6.202 11943 42.978",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 9,
+    "total_chunks": 30,
+    "char_count": 584,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f6f713c9-eeb4-4f0e-83ba-e6a9c2c331a8",
+    "text": "• Voice Similarity: For Text-to-Speech (TTS) systems, cloning a reference audio sample has become an\nimportant use-case for serving virtual assistants. Hence, speaker similarity in terms of audio generated being\nsimilar to the reference audio emerges as an important metric. We utilize wespeaker's embeddings and use\ncosine-similarity followed by a linear transformation to 0-1 scale as the metric for performance • Signal to Noise Ratio (SNR): Signal to Noise Ratio is usually computed in presence of a clean signal and a\nnoise augmented distorted signal. However, in our use-case we do not have a \"clean\" signal to measure the\ngenerated audio against and hence we utilize WADA-SNR Kim and Stern (2008), a blind SNR estimation\ntechnique • MOS: In order to provide a synthetic estimate for MOS we utilize DNSMOS Reddy et al. (2021) to obtain an\nestimate on a scale of 1-5. Section 4.1 discusses other synthetic MOS methods we explored in our study",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 10,
+    "total_chunks": 30,
+    "char_count": 947,
+    "word_count": 155,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "856082ff-a90f-4898-9392-66a2e29bfbd5",
+    "text": "Developing on the work presented in Choudhary and Purwar (2026), we utilized the evaluation framework to measure\nthe performance of fine tuned Qwen-0.5 billion language model backbone. Different evaluation metrics viz. Mean\nOpinion Score (MOS), voice similarity and latency have been rigorously investigated. In this section, we present a comprehensive analysis of the perceptual quality outcomes for Qwen-2.5 0.5B Yang et al.\n(2025) fine-tuned via Low-Rank Adaptation (LoRA) for per-speaker voice cloning. We focus on DNS-MOS (OVRL)\nReddy et al. (2021) as the primary evaluation metric and report results for the base model, 1000 training steps and five\nepochs of LoRA, as well as effects of decoding-time distribution control. The evaluation is conducted over a set of\nsix distinct speakers with varying reference audio quality. Unless specified, the audios generated for were for a 180",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 11,
+    "total_chunks": 30,
+    "char_count": 888,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "70e24cc1-bf3c-4ace-a332-cd49a05fa9b5",
+    "text": "Table 3: Detailed Speaker Fine-tuning Results across HiFiTTS and LibriHeavy Datasets Speaker Dataset Dataset Len. Energy Data MOS Base LoRA 1000 ∆vs LoRA 5\nID used (hours) Spread (Mean ± Std) MOS Train Steps Base Epochs\n1 HiFiTTS 3.523 -29.73 ± 12.93 3.48 ± 0.32 3.832 3.861 +0.029 3.813\n2 HiFiTTS 3.907 -29.34 ± 13.11 3.51 ± 0.37 3.717 4.141 +0.424 4.106\n11614 HiFiTTS 3.860 -32.20 ± 13.34 3.30 ± 0.38 3.680 3.818 +0.138 3.768\n1401 LibriHeavy 17.590 -32.11 ± 11.89 3.44 ± 0.26 3.659 3.385 −0.274 3.435\n1212 LibriHeavy 18.492 -28.41 ± 9.91 3.42 ± 0.25 3.647 3.233 −0.414 3.350\n1259 LibriHeavy 13.652 -31.18 ± 8.25 3.56 ± 0.29 3.665 3.664 −0.001 3.614 character long input sentence with T=1.0, top_k=50 and the numbers reported are averaged over 5 generations. The\nLoRA adapters were added to the base during inference (unless specified by \"Merge\" in Figure 3)",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 12,
+    "total_chunks": 30,
+    "char_count": 859,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8077464d-e107-4a08-b16b-55d2463b50eb",
+    "text": "3.1 DNS-MOS Quantitative Comparison Table 4 summarizes the DNS-MOS (OVRL) scores obtained across different training and inference conditions. The first\ntwo columns report the reference audio quality and base model performance, respectively. Columns three and four\ncorrespond to one and five epochs of LoRA fine-tuning evaluated with temperature T=1.0 and top-k sampling at k=50. The final column reports the average DNS-MOS scores obtained with a constrained decoding regime (T=0.8, k=40)\nfor the 1000 training steps LoRA models, averaged over five runs. Table 4: DNS-MOS (OVRL) Comparison Across Reference, Base, and\nLoRA Models Table 5: Results for LoRA vs Full\nFinetuning of LLM Backbone\nSpeaker Ref Base LoRA LoRA (5 ep) LoRA\n(1000 Tr. (T=0.8, Speaker ID 1 2\nSteps) k=40) MOS LoRA 3.861 4.141\n1 3.481 3.832 3.861 3.813 3.739 MOS Full FT 4.077 4.008\n2 4.145 3.717 4.141 4.106 4.048 Ref Audio MOS 3.481 4.145\n11614 3.598 3.680 3.818 3.768 3.733 Dataset Length 3.523 3.907\n1401 3.564 3.659 3.385 3.435 3.454 LoRA Batch Size 4x2\n1212 3.242 3.647 3.233 3.350 3.461 Full Batch Size 2\n1259 3.772 3.665 3.664 3.614 3.754 3.2 Perceptual Trends and Analysis The results in Table 4 reveal several consistent patterns.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 13,
+    "total_chunks": 30,
+    "char_count": 1210,
+    "word_count": 196,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1bdc026e-fa53-4cbb-9b66-aed532441592",
+    "text": "First, LoRA fine-tuning for 1000 training steps produces\nthe most pronounced shifts in DNS-MOS relative to the base model, reflecting rapid adaptation to speaker-specific\nacoustic distributions. Notably, Speaker 2, with high reference quality, exhibits near-perfect alignment with its reference\nafter 1000 training steps of LoRA, corroborating the capacity of LoRA to capture salient speaker characteristics when\nthe reference is clean. Conversely, speakers with lower reference quality (e.g., Speaker 1212) manifest perceptual\ndegradation after 1000 training steps, indicating that LoRA faithfully encodes both desirable and undesirable aspects\nof the reference distribution. With extended LoRA training (five epochs), several speakers display partial recovery in\nDNS-MOS, particularly those adversely affected by early adaptation. This behavior aligns with the hypothesis that\nthe underlying pretrained LLM backbone exerts a regularizing influence, mitigating extreme deviations induced by\nlow-quality speaker distributions. Speaker 1401, for example, experiences an increase in MOS from 1000 training steps\nto five epochs, suggesting stabilization as training progresses.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 14,
+    "total_chunks": 30,
+    "char_count": 1174,
+    "word_count": 155,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "46a692c3-2d4b-4ca6-bc73-c75cd15f52ef",
+    "text": "The final column highlights the impact of decoding-time\ndistribution shaping (reduced temperature and top-k) on perceptual quality. In this regime, low-quality speakers (e.g.,\nSpeakers 1212 and 1401) exhibit substantial MOS improvements, indicating that decoding constraints effectively\nsuppress low-likelihood acoustic artifacts produced by early LoRA adaptation. High-quality speakers (e.g., Speaker 2)\nsee slight MOS reductions under constrained sampling, consistent with the hypothesis that expressive nuances may\noccupy lower-probability regions of the learned distribution. 4.1 Metrics: Mean Opinion Score (MOS) Mean Opinion Score (MOS) is a subjective metric that is awarded by human evaluators to a sound on basis of its quality. We compared several tools for synthetic estimation of MOS viz. UTMOSv2 Baba et al. (2024), WVMOS Andreev et al.\n(2023), TorchAudio-Squim Kumar et al. (2023). • UTMOSv2: Results calculated by UTMOSv2 across various runs for the same audio are inconsistent with\nsignificant standard deviation being observed across 10 runs for an audio file. On average, the scores for\nUTMOSv2 are generally lower than the other two tools (compared to WVMOS and TorchAudio-Squim) • WVMOS: WVMOS is consistent across runs, however it has a bias towards ranking shorter audio clips\ndisproportionately high with MOS score exceeding the threshold of 5 in some cases • TorchAudio-Squim: Unlike UTMOSv2 and WVMOS which are blind estimation methods, TorchAudioSquim requires a reference audio to compare a sample against and deliver MOS scores. This turns out to\nbe unfavorable in case of TTS generated audio which do not have a reference audio to be compared against. Similar to WVMOS, Squim has a bias towards shorter audio clips and scores them disproportionately higher DNS-MOS (OVRL) is used as the primary evaluation metric due to its consistency across runs and lack of bias towards\naudio length, making it suitable for evaluating TTS-generated audio without reference samples. 4.2 Discussion: Finetuning epochs and effect on MOS",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 15,
+    "total_chunks": 30,
+    "char_count": 2048,
+    "word_count": 306,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3b54d1c6-e881-427f-b3c7-073b611906a2",
+    "text": "As illustrated in Fig. 2, the dynamics of speaker-specific LoRA adaptation reveal a fundamental departure of LLMbased acoustic modeling from classical text-to-speech (TTS) paradigms. In conventional sequence-to-sequence or\ndiffusion-based TTS systems Liu et al. (2023) Popov et al. (2021), reductions in training and validation loss are typically\ncorrelated with improvements in perceptual quality metrics such as MOS or MCD, as these models directly regress\nintermediate acoustic representations (e.g., mel-spectrograms or waveform samples Shen et al. (2018)) using pointwise\nor frame-level objectives. In contrast, the Qwen-0.5B LLM backbone employed in this work models speech generation\nas a conditional likelihood over learned acoustic token sequences, thereby embedding a strong pretrained acoustic prior\nthat persists throughout speaker adaptation. Across all speakers, the loss curves in Fig. 2 exhibit smooth and monotonic convergence, indicating stable optimization\nof the low-rank LoRA parameters. However, the corresponding DNS-MOS (OVRL) trends show pronounced nonmonotonic behavior. For speakers with relatively clean and expressive adaptation data (e.g., Speaker 2), rapid loss\nreduction within the first 1000 training steps aligns with significant gains in DNS-MOS relative to the non–fine-tuned\nbase model. Conversely, for speakers whose adaptation data contains lower perceptual quality or narrower acoustic\ndiversity (e.g., Speaker 1212 and Speaker 1401), similarly rapid early loss reduction is accompanied by a marked\ndrop in DNS-MOS. This indicates that early LoRA updates amplify speaker-specific acoustic modes present in the\nfine-tuning data, including undesirable artifacts, despite improved likelihood. Notably, continued optimization beyond the first 1000 training steps does not result in divergence or overfitting, as\nevidenced by the stable loss trajectories in Fig. 2. Instead, DNS-MOS partially recovers or stabilizes for several speakers\nat later epochs. This behavior supports the hypothesis that the frozen Qwen-0.5B backbone reasserts its pretrained\nacoustic prior over time, constraining excessive deviation induced during early adaptation. Because LoRA updates\nare both low-rank and norm-bounded, they act as structured perturbations within the pretrained likelihood landscape,\nenabling refinement of speaker identity while limiting sustained amplification of low-quality acoustic modes. Such\nimplicit regularization is notably absent in classical TTS adaptation pipelines, which often require explicit regularizers,\nauxiliary losses, or extensive data curation to mitigate overfitting. Overall, the observed mismatch between likelihood-based convergence and perceptual quality highlights a defining\ncharacteristic of LLM-based TTS systems: improvements in token-level predictability do not necessarily correspond\nto monotonic gains in perceptual naturalness. Instead, perceptual quality emerges from the interaction between\nthe pretrained acoustic prior, the trajectory of parameter-efficient speaker adaptation, and inference-time generation\nbehavior.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 16,
+    "total_chunks": 30,
+    "char_count": 3092,
+    "word_count": 406,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ad2d5062-8f75-4ccc-9e0c-e3f2d043de86",
+    "text": "Figure 2: Plots of Training and Validation Loss at various training steps for each speaker ID. The curves indicate\nstochastic decrease of training loss with training steps with saturation in validation loss as we approach 4 epochs A comparison of LoRA and full finetuning on the performance is outlined below in Table 5. The MOS scores indicated\nare averaged across 5 runs with same generation parameters.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 17,
+    "total_chunks": 30,
+    "char_count": 405,
+    "word_count": 66,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "939d36a0-d6e7-45eb-acf3-41ecbab6ef8a",
+    "text": "4.3 LoRA Fine-tuning : Impact on Inference latency We noticed a trend in Table 6 is that post finetuning the latency with longer reference audios is lesser than the latency\nwith shorter reference audios, alongside the expected gains in MOS due to using longer reference length audio. This\npresents a favorable result for LoRA finetuning which facilitates use of longer cloning audios to generate audio with\nhigher MOS. Table 6: Latency and MOS figures for LoRA finetuning with varying\nreference audio length Dataset HiFi TTS\nSpeaker ID 1 2 11614 Table 7: Latency for non-streaming generation with\nRef Audio 5.84 8.98 5.02 7.98 5.21 9.38 the neuphonic/neucodec codec for Speaker ID 1 and 2\nLen. (s)\nLoRA Infer- 30.92 28.85 37.58 33.80 32.51 32.23 Speaker ID 1 2\nence Time Ref Len 5.84 8.98 5.02 7.98\n(s) LoRA Gen Time 30.92 28.85 37.58 33.80\nLoRA 3.76 4.10 3.95 4.01 3.86 3.91 Base Gen Time 24.39 24.74 24.48 25.74\nMOS LoRA Q8 Gen Time 4.46 4.73 6.58 5.85\nRef Audio 3.48 3.96 4.15 3.17 3.60 3.39 Base Q8 Gen Time 5.42 5.14 4.40 4.96\nMOS\nIncrease 7.95 3.59 -4.63 26.55 7.34 15.61\nLoRA/Ref Table 8 indicates a steady increase in Speaker Similarity on fine-tuning which was an expected result considering\nfine-tuning was performed on a particular voice to enable better voice cloning. Similarly, increase in Signal to Noise\nRatio (SNR) was also observed in cases where the cloning reference audio itself had a good SNR (>25) for the LoRA\nfine tuned model to use during inference and generated audio. In particular, for speaker ID 1259 and 1212, the reference\naudio used for voice cloning itself had noise, which worsened the quality of generate audio tokens leading to a decrease Figure 3: Plots indicating MOS Score (Y axis) of Audio Generated with varying lengths of cloning audio provided (X\naxis). Base refers to the standard NeuTTS model, Ref refers to the audio used for cloning. \"Long\" refers to generation\nof a longer sentence (180 characters) whereas other audios have 70 characters.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 18,
+    "total_chunks": 30,
+    "char_count": 1988,
+    "word_count": 339,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8dca2e5d-a467-4870-be46-7f0d43e0e065",
+    "text": "Table 8: Results of LoRA Finetuning Metric / Speaker ID 1 2 11614 1401 1212 1259\nDataset HiFi TTS LibriHeavy-HQ\nDataset Length (Hr) 3.523 3.907 3.860 17.590 18.492 13.652\nBase 41.747 31.562 33.403 32.163 20.397 16.895\nLoRA 55.854 39.567 36.217 40.778 12.412 15.395\nRef 31.900 27.047 24.905 26.791 22.032 17.630\nSNR\nInc. Base/Ref % 30.868 16.690 34.124 20.049 -7.420 -4.170\nInc. LoRA/Ref % 75.089 46.288 45.423 52.207 -43.665 -12.679\nInc. LoRA/Base % 33.790 25.364 8.424 26.787 -39.150 -8.879\nBase 0.732 0.750 0.727 0.438 0.511 0.450\nSimilarity LoRA 0.818 0.801 0.820 0.546 0.610 0.455\nInc. LoRA/Base % 11.799 6.808 12.871 24.649 19.472 1.306\nBase 3.832 3.717 3.680 3.659 3.647 3.665\nLoRA 3.998 4.172 3.879 3.749 3.713 3.859\nRef 3.481 4.145 3.598 3.564 3.242 3.772\nMOS\nInc. Base/Ref % 10.106 -10.318 2.276 2.691 12.497 -2.831\nInc. LoRA/Ref % 14.861 0.645 7.818 5.216 14.537 2.309\nInc. LoRA/Base % 4.318 12.224 5.418 2.459 1.813 5.290 in SNR for both base and finetuned models. Infact, the worsening of SNR was more amplified for fine tuned model,\nhighlighting the decremental effect of fine tuning done using audio with poor SNR. For MOS values, it was observed\nthat LoRA fine tuned model consistently delivered an increase in MOS scores over both base model and the reference\naudio. Contrastingly, the base model whereas lead to a decrease in MOS for speaker IDs 2 and 1259. 4.4 Impact of Training Data: Energy Variability, DNS-MOS Dispersion For a better understanding of the finetuning process for various speaker IDs, we explored the metadata for the audio\nfiles.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 19,
+    "total_chunks": 30,
+    "char_count": 1566,
+    "word_count": 256,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e3412d44-03ad-4e4a-a94f-4e6f7f7a42a6",
+    "text": "In particular, we focused on the frequency and energy statistics of the data. Frequency and energy play a key role\nin determining naturalness of the voice and making an audio sound human-like. Energy captures the environmental\nrecording conditions such as background noise, microphone gain, room acoustics, distance from mic etc. Low variance\nin energy indicates homogeneous recording conditions (same room, same mic, same setup) and consistent speaking style\n(reading, not conversational) with limited acoustic diversity. Frequency on the other hand captures the characteristic\ntied to a particular human instead of global characteristics one would observe across human conversations.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 20,
+    "total_chunks": 30,
+    "char_count": 685,
+    "word_count": 98,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4e71539c-07ca-4f02-ad31-c43651fb97f7",
+    "text": "Table 9: Impact of training-data energy statistics on DNS-MOS variability and fine-tuning outcome for speaker-specific\nLoRA adaptation of a Qwen-0.5B TTS backbone. While absolute energy levels (mean) show no consistent influence,\nhigher energy variability in the training data strongly correlates with increased DNS-MOS variability and improved\nperceptual gains after fine-tuning. Speaker ID Energy Mean Energy Std DNS-MOS Std Fine-tuning Observed Pattern\n(Training data) (Training data) Outcome 2 -29.34 13.11 0.370 +0.424 × High energy variability + high\nDNS-MOS variability\n11614 -32.20 13.34 0.383 +0.138 × Highest energy variability +\nhighest DNS-MOS variability 1 -29.73 12.93 0.321 +0.029 Medium energy and DNS-MOS\nvariability\n1401 -32.11 11.89 0.255 -0.274 × Low energy variability + low\nDNS-MOS variability\n1212 -28.41 9.91 0.248 -0.414 × Second-lowest energy variability + lowest DNS-MOS variability 1259 -31.18 8.25 0.293 -0.001 Lowest energy variability Table 9 analyzes the relationship between energy statistics of speaker-specific training data, DNS-MOS variability,\nand perceptual outcomes obtained after LoRA fine-tuning of a Qwen-0.5B language model based TTS backbone. The results reveal a clear distinction between the roles of absolute energy level and energy variability in determining\nfine-tuning effectiveness. First, the mean energy of the training data exhibits no consistent association with DNS-MOS dispersion or perceptual\ngains after fine-tuning. Speakers with comparable energy means (e.g., -29 dB to -32 dB) demonstrate markedly different\noutcomes, ranging from substantial improvement to significant degradation. This indicates that absolute loudness or\nglobal signal energy is not a reliable predictor of fine-tuning success.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 21,
+    "total_chunks": 30,
+    "char_count": 1759,
+    "word_count": 244,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4f8a283b-1785-4f40-823d-277752e68b7a",
+    "text": "In contrast, energy standard deviation emerges as a strong explanatory factor. Speakers with higher energy variability in\nthe training data consistently exhibit larger DNS-MOS standard deviation and positive fine-tuning gains. In particular,\nspeakers with energy standard deviation exceeding approximately 13 dB achieve the largest perceptual improvements,\nwhereas speakers with energy standard deviation below 10 dB experience pronounced degradation. This monotonic\ntrend suggests that energy variability serves as an effective proxy for acoustic diversity in the training corpus. The\nobserved coupling between energy variability and DNS-MOS variability indicates that perceptual score dispersion\nreflects the breadth of acoustic conditions present during fine-tuning. High DNS-MOS variability implies exposure to\ndiverse signal qualities, enabling the LoRA adaptation to better shape internal representations without overfitting to\nnarrow acoustic manifolds. Conversely, low-variance data constrains the adaptation space, increasing susceptibility\nto overfitting and perceptual collapse. These findings highlight that robust fine-tuning of LLM-based TTS systems\nis governed by distributional diversity rather than absolute signal statistics. From a practical standpoint, enforcing\nminimum variability thresholds on energy-related features during data selection may be more effective than energy\nnormalization alone.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 22,
+    "total_chunks": 30,
+    "char_count": 1417,
+    "word_count": 180,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cb0a63e6-769e-449e-be20-1bfbb8b1431d",
+    "text": "4.5 Effect of context audio length We also tried to evaluate the effect of context/ reference audio length on quality of audio output from LoRA fine\ntuned qwen-0.5b. For the same, we created different context length audios, by concatenating audio samples from the\nHiFi-TTS dataset to get longer audios, whereas for Libriheavy-HQ dataset which had longer audio samples, we sliced\nthem to form shorter audios. Our investigation into the impact of reference audio length on voice cloning quality yielded\ninconsistent, speaker-dependent patterns that reveal a critical methodological insight, refer Fig. 3. Reference audio\nsamples constructed through concatenation of shorter clips (for HiFi-TTS) or temporal slicing of longer recordings (for\nLibriheavy-HQ) introduced prosodic discontinuities and unnatural acoustic boundaries that confounded the relationship\nbetween context length and synthesis quality. Speakers exhibited erratic MOS score trajectories across varying reference\nlengths (Figure 3), with no consistent trend emerging—some speakers (e.g., Speaker 11697) showing degradation with\nlonger references, while others (e.g., Speaker 2) demonstrated modest improvements. These mixed results suggest that\nthe quality and naturalness of reference audio is more critical than raw duration alone. We conclude that reference audio\nshould be sourced from single, continuous recordings to preserve prosodic coherence, rather than artificially constructed\nthrough segmentation or concatenation. Our findings indicate that high-quality (high SNR), naturally-spoken (good\nMOS, >3.5) reference audio from a continuous utterance is bested suited for voice cloning.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 23,
+    "total_chunks": 30,
+    "char_count": 1658,
+    "word_count": 227,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a3ed6535-95b9-4079-8a0a-4440cf797b9a",
+    "text": "4.6 Finetuning on Mix Data To evaluate the impact of training data composition (refer Appendix: Data Configuration Index) on generalisation\nand speaker fidelity, we compare three multi-speaker fine-tuning strategies against speaker-specific Pure FT baselines:\n2+2+2 FT, trained on 2 hours each of HiFiTTS speakers (1, 2, 11614); 1+1+1 FT, trained on 1 hour each of the\nsame speakers; and Mix FT, trained on all six speakers using 2/9th of available HiFiTTS data and 1/9th of LibriHeavy\ndata per speaker. A critical distinction governs the interpretation of these results: the 2+2+2 and 1+1+1 models were\ntrained exclusively on HiFiTTS speakers, making evaluation on LibriHeavy speakers (1401, 1212, 1259) a zero-shot\ngeneralisation test.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 24,
+    "total_chunks": 30,
+    "char_count": 737,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "997d2e13-1b27-4932-8974-fb29baec6fb2",
+    "text": "On the other hand, Mix FT had exposure to all six speakers during training with less data per speaker\nthan Pure FT. Zero-shot generalization of multi-speaker models The most striking finding is that models trained solely on\nHiFiTTS speakers generalise to improve MOS on completely unseen LibriHeavy speakers. Averaged across speakers\n1401, 1212, and 1259, the 2+2+2 FT model achieves a DNS-MOS of 3.806 compared to 3.513 for Pure FT, a gain of\n+0.293 despite never encountering these speakers during training. The 1+1+1 FT model similarly improves to 3.628\n(+0.114 over Pure FT).",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 25,
+    "total_chunks": 30,
+    "char_count": 579,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dfd6cbc5-18ea-43c2-9888-8d6448035410",
+    "text": "This zero-shot MOS gain arises because LibriHeavy speakers have inherently lower-quality\nreference audio and narrower acoustic distributions (energy std < 12 dB); a model overfitted to this narrow manifold\namplifies its artifacts, whereas the multi-speaker model, exposed to the broader acoustic diversity of HiFiTTS, generates\noutput of higher perceptual quality. On HiFiTTS speakers, where all models share training data, results are expectedly\nsimilar: the 2+2+2 FT model matches Pure FT closely (3.883 vs. 3.877), while 1+1+1 FT shows a small reduction to\n3.824, attributable to its halved per-speaker data budget. Notably, the 2+2+2 FT model exhibits substantially lower\nMOS variance across all six speakers (0.008 vs. 0.052 for Pure FT), demonstrating that multi-speaker training yields\nsignificantly more consistent perceptual quality across diverse voices, even in the zero-shot setting. Speaker similarity and fidelity-generalization trade-off All multi-speaker strategies reduce speaker similarity\nrelative to speaker-specific Pure FT, but the magnitude and interpretation differ by speaker group. For the three HiFiTTS\nspeakers present in all training sets, the similarity degrades modestly from 0.774 (Pure FT) to 0.738 (2+2 + 2 FT),\n0.735 (1+1 +1 FT) and 0.721 (Mix FT), reflecting that cost of sharing model capacity across multiple voices. For the\nthree LibriHeavy speakers, the similarity reductions for 2+2+2 FT (0.425) and 1+1+1 FT (0.454) relative to Pure FT\n(0.554) are expected consequences of zero-shot prediction: these models never encountered speakers 1401, 1212, or\n1259 during training, and their similarity scores reflect generalised acoustic representations rather than speaker-specific\nvoice identity. Data efficiency of Mix FT Mix FT, using only 11-22% of the per-speaker training data of Pure FT, achieves speaker\nsimilarity of 0.721 on HiFiTTS speakers and 0.506 on LibriHeavy speakers within 7% and 9% of Pure FT respectively. Crucially, Mix FT outperforms the zero-shot 2+2+2 FT model on LibriHeavy similarity (0.506 vs. 0.425), confirming\nthat even minimal speaker-specific data substantially improve voice fidelity over zero-shot generalization. together, these results demonstrate that distributing limited data across multiple speakers is a viable and efficient strategy\nfor multi-speaker TTS: a single shared model trained on as little as 1/9th of per-speaker data can match within 9% of a\ndedicated model's similarity while serving all speakers simultaneously, without maintaining separate model weights per\nvoice. Speaker ID 1 2 11614 1401 1212 1259\nPure FT final 3.76 4.01 3.86 3.50 3.32 3.72\nPure FT 1000 3.86 4.14 3.82 3.39 3.23 3.66\n2+2+2 FT final 3.96 3.95 3.738 3.83 3.74 3.84\n2+2+2 FT 1000 3.95 4.09 3.77 3.56 3.69 3.70\n2+2+2 FT 2000 3.79 4.09 3.75 3.63 3.71 3.83\n1+1+1 FT final 3.81 3.92 3.73 3.51 3.69 3.67\n1+1+1 FT 2000 3.96 3.86 3.78 3.63 3.71 3.76 Table 10: Impact of different audio training data combinations used for Fine tuning Language model on MOS Speaker ID 1 2 11614 1401 1212 1259\nPure FT final 0.790 0.794 0.737 0.503 0.678 0.481\n2+2+2 FT final 0.749 0.780 0.686 0.412 0.569 0.292\n2+2+2 FT 1000 0.740 0.813 0.728 0.354 0.569 0.292\n2+2+2 FT 2000 0.752 0.799 0.698 0.438 0.546 0.423\n1+1+1 FT final 0.740 0.786 0.679 0.396 0.566 0.399\n1+1+1 FT 2000 0.756 0.785 0.672 0.422 0.539 0.401\n1+1+1 FT 1000 0.736 0.790 0.696 0.421 0.567 0.443\nMix FT 0.723 0.768 0.669 0.442 0.643 0.432 Table 11: Impact of different audio training data combinations used for Fine tuning Language model on Similarity Speaker ID 1 2 11614 1401 1212 1259\nPure FT final 57.265 41.640 51.437 35.504 19.995 22.704\n2+2+2 FT final 51.957 55.632 45.849 32.065 76.746 23.612\n2+2+2 FT 1000 41.104 67.328 65.867 36.580 32.736 22.195\n2+2+2 FT 2000 43.791 45.714 37.693 33.385 26.819 23.006\n2+2+2 FT final 28.871 50.757 54.411 32.979 27.112 21.942\n1+1+1 FT 2000 62.695 35.731 67.628 38.310 37.083 19.507\n1+1+1 FT 1000 76.634 50.358 41.926 28.440 23.863 19.859\nMix FT 61.638 76.206 63.381 32.753 28.485 17.049 Table 12: Impact of different audio training data combinations used for Fine tuning Language model on SNR",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 26,
+    "total_chunks": 30,
+    "char_count": 4136,
+    "word_count": 647,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f8331f2c-e17c-4e47-8e4b-0e859338d949",
+    "text": "4.7 Optimizing Codec: GGUF vs non-GGUF Latency We evaluate the impact of 8-bit GGUF quantisation on latency, in non-streaming mode using the neuphonic/neucodec\ncodec, full-precision models incur generation times that are impractical for deployment. Base F32 requires 24.4-\n25.7 seconds to generate audio for a single utterance regardless of reference length. GGUF Q8 quantisation eliminates\nthis overhead entirely: Base Q8 reduces generation time to 4.4-5.4 seconds (a 4.5-5.6× speedup over Base F32), and\nLoRA Q8 achieves 4.5-6.6 seconds (a 5.7-6.9× speedup over LoRA F32). Importantly, LoRA Q8 generation times are\nwithin 4% of Base Q8 for Speaker 1 across both reference lengths, demonstrating that quantised LoRA adapters add\nnegligible computational overhead relative to the base quantised model. Sentence S1 S2 S3 S4 S5\nEnv. CPU GPU CPU GPU CPU GPU CPU GPU CPU GPU\n1st Chunk Latency (s) 0.3988 0.3067 0.4032 0.311 0.4134 0.3189 0.4195 0.3237 0.4167 0.3212\n1st Chunk RTF 0.7386 0.568 0.7466 0.576 0.7656 0.5906 0.7768 0.5994 0.7717 0.5949\n2nd Chunk RTF 0.5195 0.3155 0.5211 0.3124 0.524 0.3111 0.5217 0.313 0.5189 0.3194\nMOS 3.19489 3.19882 3.48858 3.48964 3.78335 3.78371 3.89385 3.89359 3.73711 3.73772\nSpeaker Similarity 0.68481 0.68464 0.60134 0.60058 0.62643 0.62618 0.74191 0.74214 0.71144 0.71538\nSNR 20.419 20.4192 65.8338 65.8338 39.0074 39.0007 55.878 55.8779 43.636 43.6364 Table 13: Impact of running codec (NeuCodec) in onnx-runtime running on CPU vs GPU for different input text\nsentences ( Language model in GGUF format running on GPU in all cases) The quest for better voice-2-voice architectures has resulted in exploration of optimal STT and TTS techniques for\ncascaded/half-cascaded architectures as well as multi-modal speech-to-speech architecture. Better TTS architectures\nare central to cascaded/half-cascaded architectures, our work explores optimising the Language model backbone of\nTTS by investigating fine tuning of qwen-0.5 billion component of NeuTTS. Here are the salient findings from our\ninvestigation:",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 27,
+    "total_chunks": 30,
+    "char_count": 2040,
+    "word_count": 300,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a1cb7ff8-eeec-412a-b434-88f3f45ca6fe",
+    "text": "• LoRA fine-tuning of the LLM backbone yields significant MOS gains for speakers with high acoustic energy\nvariability and DNS-MOS dispersion in their training data. Speakers with low variability show limited gains\nor perceptual degradation, confirming that training data diversity is the primary driver of adaptation success. • Perceptual robustness in LLM-based TTS fine-tuning arises from exposure to heterogeneous acoustic conditions. Energy standard deviation and DNS-MOS dispersion jointly predict fine-tuning outcome, with energy\nstd above 13 dB reliably indicating positive adaptation and below 10 dB indicating risk of perceptual collapse. • LoRA fine-tuning consistently improves speaker similarity across all evaluated speakers, regardless of training\ndata quality. SNR gains are observed when reference audio quality is high; conversely, noisy reference audio\namplifies artefacts in the fine-tuned model, highlighting the importance of clean cloning audio. • Training and validation loss curves are unreliable proxies for perceptual quality in LLM-based TTS. Loss\nimproves monotonically while DNS-MOS may degrade, particularly for low-variability speakers. Checkpoint\nselection must therefore be guided by perceptual evaluation rather than loss convergence alone. • Robust fine-tuning of LLM-based TTS requires distributional diversity in training audio. Acoustically homogeneous data causes the model to overfit narrow acoustic manifolds, amplifying recording artefacts. Enforcing\nminimum energy variability thresholds during data selection is more effective than energy normalisation alone. • Multi-speaker LoRA fine-tuning with 1 to 2 hours per speaker generalises to completely unseen speakers,\nyielding MOS gains of +0.11 to +0.29 over speaker-specific baselines on LibriHeavy speakers never seen\nduring training. This demonstrates that multi-speaker LLM-backbone adaptation learns transferable acoustic\nrepresentations beyond the voices present in the fine-tuning set. • Mixed-data fine-tuning across all six speakers, using only 11–22% of per-speaker data, achieves speaker\nsimilarity within 5–9% of dedicated single-speaker models.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 28,
+    "total_chunks": 30,
+    "char_count": 2151,
+    "word_count": 287,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9441fcd2-3a48-48f3-af69-513414700b23",
+    "text": "A single shared model trained on minimal perspeaker data can serve all speakers simultaneously, offering a scalable alternative to maintaining separate\nfine-tuned weights per voice. Fine tuning of language model backbone demonstrates improvement in performance of Text to speech model. In\nfuture, we envisage to deploy this fine tuned language model in our production voice-2-voice architecture and evaluate\ncustomer feedback.",
+    "paper_id": "2603.10904",
+    "title": "When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS",
+    "authors": [
+      "Anupam Purwar",
+      "Aditya Choudhary"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10904v1",
+    "chunk_index": 29,
+    "total_chunks": 30,
+    "char_count": 426,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  }
+]

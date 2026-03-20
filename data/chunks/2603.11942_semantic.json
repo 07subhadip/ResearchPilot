@@ -1,0 +1,830 @@
+[
+  {
+    "chunk_id": "9a50662a-d4a1-4698-8ac7-5ef8d132067a",
+    "text": "Causal Matrix Completion under Multiple Treatments\nvia Mixed Synthetic Nearest Neighbors Minrui Luo * 1 Zhiheng Zhang * 2 Abstract completion is particularly pertinent in contemporary applications, where treatment regimes are multi-faceted (e.g.,\nSynthetic Nearest Neighbors (SNN) provides a\nvarying exposure levels in online advertising or policy inprincipled solution to causal matrix completion\ntensities) and data are missing not at random (MNAR), as\nunder missing-not-at-random (MNAR) by exploitthe very process of treatment assignment is often driven by2026 ing local low-rank structure through fully ob- unobserved latent factors.\nserved anchor submatrices. However, its effectiveness critically relies on sufficient data availability Within this broader context, we focus on the problem of\nwithin each treatment level, a condition that often causal matrix completion under multiple, discrete treatmentMar\nfails in settings with multiple or complex treat- levels. This extends the binary treatment framework introments. In this work, we propose Mixed Synthetic duced by Agarwal et al. (2023b) to accommodate a more12\nNearest Neighbors (MSNN), a new entry-wise realistic and complex setting. The problem shifts from the\ncausal identification estimator that integrates in- task of completing a single matrix of potential outcomes to\nformation across treatment levels. We show that addressing a collection of matrices (or equivalently, a threeMSNN retains the finite-sample error bounds and dimensional tensor), one for each treatment level, where\nasymptotic normality guarantees of SNN, while only one outcome per unit is observed. While previous\nenlarging the effective sample size available for work, such as the Synthetic Interventions framework (Agar-[cs.LG]\nestimation. Empirical results on synthetic and wal et al., 2020), also considers multi-level treatments, it is\nreal-world datasets illustrate the efficacy of the primarily designed for panel data with a temporal dimenproposed approach, especially under data-scarce sion, aiming to estimate average effects over post-treatment\ntreatment levels. periods. In contrast, our approach abstractly separates the\ntemporal aspect, focusing on entry-wise counterfactual estimation in a general matrix completion setting under MNAR.\n1. Introduction This distinction is crucial: our goal is the fine-grained identification of causal effects at the unit level, rather than agCausal inference from observational data has become a gregate temporal effects. The theoretical complexity of this\ncornerstone of modern data science, enabling the rigorous multi-treatment setting, particularly under MNAR condievaluation of interventions across diverse domains such as tions, remains largely unexplored, presenting formidable\neconomics, public policy, and digital platforms. A critical identification and estimation challenges.\nchallenge in this field is the estimation of counterfactual\noutcomes—i.e., what would have transpired had a differ- A significant challenge arises when treatment assignments\nent treatment been applied—when faced with incomplete are highly imbalanced—some treatment levels are data-arXiv:2603.11942v1\ndata and complex treatment structures. Recent advance- scarce.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 0,
+    "total_chunks": 46,
+    "char_count": 3236,
+    "word_count": 439,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "af88bd38-4376-402a-94a6-7df1cc48ce9d",
+    "text": "Existing methods, such as the Synthetic Nearest\nments in matrix completion, a well-established tool from Neighbors (SNN) algorithm, encounter difficulties in this\nmachine learning, have been adapted to this causal inference regime. The SNN approach requires the construction of\nframework, providing a principled methodology for imput- \"anchor\" rows and columns, exclusively using data from the\ning missing potential outcomes under low-rank structural same treatment level. However, when data for a given treatassumptions.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 1,
+    "total_chunks": 46,
+    "char_count": 521,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "296db0f2-a0bd-4f79-bff0-a5c7bc691363",
+    "text": "This fusion of causal inference and matrix ment level is sparse, constructing sufficiently large and valid\nanchor sets becomes increasingly improbable, leading to es-\n1Institute for Interdisciplinary Information Sciences, Tsinghua timation failure. This issue is not merely a data limitation; it\nUniversity, Beijing, China 2School of Statistics and Data Sci- reflects a fundamental inefficiency in the utilization of availence, Shanghai University of Finance and Economics, Shangable information. The key insight bridging this gap is that, hai, China.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 2,
+    "total_chunks": 46,
+    "char_count": 551,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "17198e7c-d3de-41de-b17f-014e0a540d32",
+    "text": "Correspondence to: Zhiheng Zhang <zhangzhiheng@mail.shufe.edu.cn>. under the assumption of shared latent row factors across\ntreatments, the imputation coefficients required for counPreprint. Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors terfactual estimation can be identified by leveraging data sample efficiency for sparse treatments.\nfrom multiple treatment levels. Previous multi-treatment\n3. Through simulations and a case study on California'sframeworks, including Synthetic Interventions, either fail\ntobacco control policy, we demonstrate that MSNNto exploit this cross-treatment identifiability for entry-wise\nreliably estimates effects for data-scarce treatmentsestimation or are not designed to tackle the general MNAR\nwhere SNN fails, highlighting its practical applicabil-matrix completion problem that we address.\nity. To overcome these challenges, we propose the Mixed\nSynthetic Nearest Neighbors (MSNN) algorithm. Preliminariesmethod systematically tackles the data scarcity problem\nby relaxing the stringent same-treatment requirement inher- This section formalizes the problem, introducing necessary\nent in the SNN approach. The key innovation lies in the notations and assumptions.\nintroduction of Mixed Anchor Rows (MAR) and Mixed Anchor Columns (MAC), enabling the imputation coefficient We define the exposure levels: L = {1, 2, · · · , l} and treat-\nβ to be estimated from a block of data that spans multi- ment assignment D: for consumer i ∈[m] and product\nple treatment levels, while preserving the target row's data j ∈[n], the assigned exposure level is Dij ∈{0} ∪L,\n(x(d)) from the treatment level of interest. This is made where Dij = 0 denotes no exposure. Potential outcomes\npossible by the shared latent factor assumption, which en- are defined as Y : for consumer i and product j, under exposures the identifiability of β across treatments.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 3,
+    "total_chunks": 46,
+    "char_count": 1916,
+    "word_count": 272,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ae697538-31fa-4a54-91a3-cbf420d51d0d",
+    "text": "The core sure level d (d ∈L), the platform obtains a benefit Yij(d) ∈\ntechnical challenge is managing the heterogeneous scales R. The expected potential outcome is A(d)ij , which repreand variances introduced by mixing treatments, which we sents a latent signal matrix assumed to be low-rank across\naddress through the careful design of appropriate weights. users and items. Specifically, suppose the rank is r, then\nThe most counterintuitive and theoretically impactful re- A(d) = U (d)V (d)⊤, where U (d) ∈Rm×r, V (d) ∈Rn×r.\nsult is the exponential improvement in sample efficiency for The zero-mean noise is defined as ϵ(d)ij = Yij(d) −A(d)ij .",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 4,
+    "total_chunks": 46,
+    "char_count": 647,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "89696a4d-8df1-4547-938f-7a36c6048756",
+    "text": "We\nsparse treatment levels. We demonstrate that, under a Miss- consider general MNAR regime: D ⊥⊥Y | A, meaning\ning Completely at Random (MCAR) treatment assignment, that the assignment mechanism depends on the latent atthe expected number of usable data subgroups for MSNN, tributes but not on the random noise. Only the observed\nE[KMSNN], surpasses that of SNN, E[KSNN], by a factor of outcome ˜Y under the assigned treatment D is observed:\nPd′(pd′/pd)r+1 c, where pd is the observation probabil- (Yij(Dij) , Dij ≥1 ˜Yij = . Here ∗means this entry isity for treatment d, and r, c are the sizes of the anchor sets. ∗ , Dij = 0\nThis exponential improvement significantly enhances the\nnon-observable (missing), where ˜Yij = 0 under Dij = 0feasibility of causal estimation in data-scarce environments.\nreflects that non-exposed items contribute no benefit. Importantly, MSNN retains the finite-sample error bounds\nand asymptotic normality of the original SNN estimator, Problem Statement. Given noisy observation ˜Y with the\nensuring that this efficiency gain does not come at the cost treatment assignment D, under causal model D ⊥⊥Y | A,\nof statistical rigor. This challenges the conventional wisdom we are tasked to find an estimator of the latent expected pothat estimating effects for a rare treatment necessarily re- tential outcome A from ˜Y , and provide an entry-wise upper\nquires more data from that specific treatment. Instead, we bound of error of estimation and ground truth: ˆA −Ashow that information from more prevalent treatments can ∞.\nbe effectively leveraged to learn about rare treatments via Assumptions. Below we introduces basic assumptions for\nshared latent structures. Our contributions are summarized our low-rank multiple matrix completion model.\nas follows: Assumption 2.1. (Low-rank factorization per layer). For\neach (i, j, d) ∈Rm × Rn × L, Yij(d) = D u(d)i , v(d)j E + ϵ(d)ij ,\n1. We formalize the problem of entry-wise causal matrix\ncompletion under multiple MNAR treatment levels and\nwhere u(d)i , v(d)j ∈Rr are latent factors specific to treat- establish a novel identification result, demonstrating\nment level d. This is equal to the expression of Y (d) = that imputation coefficients can be shared across treatments under a shared latent row factor assumption.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 5,
+    "total_chunks": 46,
+    "char_count": 2295,
+    "word_count": 367,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b8e75c22-7d49-4ad2-ac8d-b017fd2d8ec3",
+    "text": "U (d)V (d)⊤+ E(d), where u(d)i , v(d)j are the ith and jth\nrows of U (d) ∈Rm×r, V (d) ∈Rn×r respectively.\n2. We propose the MSNN algorithm, which integrates\nBelow we denote U, V and E as the collection of data across treatment levels via Mixed Anchor Sets. U (d), V (d), E(d) over treatment d.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 6,
+    "total_chunks": 46,
+    "char_count": 293,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ecc449e6-0ef7-4f65-8866-4605d700ac96",
+    "text": "We prove that MSNN retains the desirable statistical\nproperties (finite-sample bound, asymptotic normality) Assumption 2.2. (Selection on latent factors). For any\nof SNN, while achieving exponential improvements in treatment D, E [E|U, V , D] = 0. Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors By taking conditional expectation over D, β(d)l I(d)(i) . E [E|U, V ] = ED [E [E|U, V , D]|U, V ] = 0, further\nimplying E [Y |U, V , D] = E [Y |U, V ], which is a condi- Proof is presented in Appendix C.1. Due to this lemma,\ntional mean independence. the index set and coefficient are shared across treatments,\nAssumption 2.4. (Linear span inclusion on latent row fac- and thus we omit the index (d) for I(d)(i) and β(d) in the\ntors). There exists a universal constant µ ∈N, such that derivation below.\ngiven arbitrary (i, d) ∈Rm × L, for all I(d)(i) ⊆[m]\\{i}\nTheorem 2.7. Under Assumptions 2.1, 2.2, 2.4, 2.5, given\nsatisfying I(d)(i) ≥µ, u(d)i is a linear combination of (i, j, d) and I(i) ∈[m]\\{i} such that Dlj,l∈I(i) = d, then\nu(d)l∈I(d)(i). To rephrase, there exists a β(d) I(d)(i) ∈\nA(d)ij = Pl∈I(i) βl (I(i)) E h ˜Ylj U, V , D i .RI(d)(i) such that u(d)i = Pl∈I(d)(i) β(d)l I(d)(i) u(d)l . The above three assumptions simply extend the basic as- Proof is presented in Appendix C.1.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 7,
+    "total_chunks": 46,
+    "char_count": 1326,
+    "word_count": 234,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7964fca9-d21c-4a1b-a33a-248f1696299f",
+    "text": "Similar to the identificasumptions of the binary causal matrix completion frame- tion theorem in Agarwal et al. (2023b), one can estimate the\nwork (Agarwal et al., 2023b) into multiple treatment setting potential outcome A(d)ij through the linear model parameter\nwithout considering the connection among different treat- β. The main difference under multiple treatment is that,\nment levels. We characterize this low-rank structure across here the estimation of a valid β does not require the data\ndifferent treatments in the following assumption: from the same treatment level. Assumption 2.5. (Shared latent row factors). All the\ntreatment levels d ∈L share the same latent row factors, 3. From SNN to MSNN: Data Integration\nu(d)i ≡ui. across Treatment levels\nJustification for Assumption 2.5. This assumption is nec- In this section, we introduce MSNN (Mixed Synthetic Nearessary for enabling cross-treatment data integration in our est Neighbors) to address the lack of data in multiple treatMSNN. It means that while treatment assignment may af- ment setting.\nfect observed outcomes, the underlying latent characteristics\nassociated with each row remain invariant.\n3.1. SNN under multiple treatment\nThis assumption mirrors Assumption 2 of Agarwal et al.\nh i h i\n(2020) under a row–column exchange and does not impose Denote x(d) := ˜Yaj a∈AR(d), q(d) := ˜Yib b∈AC(d). (q\nstronger structural constraints. For example, when rows cor- is a row vector. ) From the definition of AR(d), x(d) =\nrespond to users and columns to items, different treatment h (d) i h (d) i\nib Yaj a∈AR(d), q(d) = Y b∈AC(d), which is exactlylevels may represent varying exposure or intervention intensities. In such settings, it is natural to assume that a user's the potential outcome at treatment level d. (·)(k) means the\nintrinsic preferences are stable across treatments, while the kth group out of total group KSNN. Now we present the\nrealized outcomes change through treatment-specific load- SNN algorithm in Algorithm 1.\ning matrices. To estimate potential outcome on (i, j) under treatment\nWe note that this assumption covers the low-rank tensor d, trivial SNN on multiple treatment needs to select Anfactorization model Yij(d) = Pl∈[r] uilvjlλdl + ϵ(d)ij men- chor Rows (AR) and Anchor Columns (AC) specific to\ntioned in Agarwal et al. (2020) as a special case, by setting treatment level d such that: Dab:a∈AR(d),b∈AC(d) = d,\nv(d)jl = vjlλdl. Daj:a∈AR(d) = d, Dib:b∈AC(d) = d.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 8,
+    "total_chunks": 46,
+    "char_count": 2463,
+    "word_count": 390,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "90faee41-10a4-4b53-860a-e3a0072f7e87",
+    "text": "Mixed Synthetic Nearest Neighbors: data2.1. Identification\ncombination\nBelow we define A := E [Y |U, V ] as the ground truth. The\nMSNN leverages data across different treatment levels astheoretical guarantee of Mixed Synthetic Nearest Neighbors\nensured by Theorem 2.7. The key insight is that, while(MSNN) we introduce below is the irrelevance of treatment\nthe linear combination factors x(d) come from the samein the estimation of β, which is followed by the low-rank\ntreatment level as the estimated target treatment level d,assumption on treatment represented by latent row factor\nthe estimation of the coefficient vector β can incorporate(Assumption 2.5).\ninformation from other treatments. This observation motiLemma 2.6. Under Assumption 2.4 and 2.5, the invates relaxing the notions of Anchor Rows (AR) and Anchordex set I(d)(i) and coefficient β(d) I(d)(i) are irColumns (AC) to their mixed counterparts - Mixed Anchor\nrelevant to treatment d, i.e. ∀d′ ∈ L, u(d′)i = Rows (MAR) and Mixed Anchor Columns (MAC) - defined\nPl∈I(d)(i) β(d)l I(d)(i) u(d′)l for any valid I(d)(i) and as follows. Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors Algorithm 1 SNN(i, j, d) Algorithm 2 MSNN(i, j, d) Input: λ(k)(d) : k ∈[KSNN], d ∈L , Input: λ(k)(d) : k ∈[KMSNN], d ∈L ,\nn AR(k)(d), AC(k)(d) : k ∈[KSNN]o with mu- n MAR(k)(d), MAC(k)(d) : k ∈[KMSNN]o with tually disjoint sets nAR(k)(d) : k ∈[KSNN]o. mutually disjoint sets nMAR(k)(d) : k ∈[KMSNN]o\nfor k ∈[KSNN] do w.r.t. column treatment levels d b : b ∈MAC(k)(d) .\n1. Define S(k)(d) =\nfor k ∈[KMSNN] do\nh ˜Yab : (a, b) ∈AR(k)(d) × AC(k)(d)i 1. Define S(k)w (d) =\n2. Compute SVD decomposition S(k)(d) ← h w (b, d(b)) · ˜Yab : (a, b) ∈MAR(k)(d) × MAC(k)(d)i\nPl≥1 ˆτl(k) (d)ˆu(k)l (d) ⊗ˆv(k)l (d)\n3. Compute ˆβ(k)(d) ← 2. Compute SVD decomposition S(k)w (d) ←\n(k)\nl≥1 ˆτl (d)ˆu(k)l (d) ⊗ˆv(k)l (d) Pl≤λ(k)(d) 1/ˆτl(k) (d) ˆu(k)l (d) ⊗ˆv(k)l (d) q(k)(d) P\n3.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 9,
+    "total_chunks": 46,
+    "char_count": 1944,
+    "word_count": 322,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0f23f54a-a276-4a78-a3ec-93485fdbb722",
+    "text": "Compute ˆβ(k)(d) ← D E 4. Compute ˆAij,k(d) ← x(k)(d), ˆβ(k)(d) (k)\nPl≤λ(k)(d) 1/ˆτl (d) ˆu(k)l (d) ⊗ˆv(k)l (d) q(k)w (d)\nend for\n1 D E Output ˆA(d)ij ← KSNN PKSNNk=1 ˆAij,k(d) 4. Compute ˆAij,k(d) ← x(k)(d), ˆβ(k)(d)\nend for\nOutput ˆA(d)ij ← KMSNN1 PKMSNNk=1 ˆAij,k(d)\nMixed Anchor Rows (MAR) and Mixed Anchor Columns\n(MAC) at treatment level d for entry (i, j) satisfy the following conditions: 1. ∀a ∈MAR(d), b ∈MAC(d), 1 0 d(2) has large scale of C, consider S(k)w (d) = ,\nDab:a∈MAR(d),b∈MAC(d) = Dib:b∈MAC(d) =: d(b) ̸= 0 0 C\n(where we call column treatment level below); 2. ∀a ∈ then the conditional number of S(k)w (d) is C ≫1. HowMAR(d), Daj:a∈MAR(d) = d. ever if we apply w(1, d(1)) = 1, w(1, d(1)) = 1/C, then\n1 0\nIntuitively, this means that within the block MAR(d) × S(k)w (d) = , which has a conditional number of 1. 0 1\n{MAC(d)∩{j}}, every column shares the same (non-zero)\ntreatment assignment as the row i corresponding to those A natural selection of w(b, d(b)) is inversely proportional\nhcolumns. Now x(d) = Yaj(d) i remains, however to the scale of treatment level d(b) (that is, normalizing\na∈MAR(d) all observed outcomes to the same scale), under which we\nh (d(b)) i\nq(d) = Yib where entries may consist of establish the following finite-sample bound and asymptotic\nb∈MAC(d)\nnormality. When the scale factors are unknown in practice,different treatment levels.\na simple and feasible approach is to estimate using the\nTo balance the probable scale and variance heterogeneity maximum observed absolute entry within each treatment.\nintroduced by mixed treatment levels, we also introduce\npositive weight functions w(j, d) : [n] × L →R+. 3.3. Finding Mixed Anchor Rows and Columns\nWe denote the weighted q(d) as Given treatment assignment D, we can construct\nhqw(d) := w(b, Dib) · ˜Yib i = the {0, 1} valued matrix B ∈ Rm×n by B =\nb∈MAC(d)\n[1{Dab = Dib, Daj = d, a ̸= i, b ̸= j}], which indicatesh (d(b)) i\nw(b, d(b)) · Yib b∈MAC(d). Now we can intro- whether an entry of ˜Y is usable for constructing\nduce our MSNN algorithm in Algorithm 2 above. Giving KMSNN subgroups of\nillustrative comparison between SNN and MSNN is also (MAR(k)(d), MAC(k)(d)), they equivalently represents\nprovided in Figure 1. KMSNN all-1 submatrices of B with disjoint columns. Utility of weight w(b, d(b)). Since S(k)w (d) Now if given |MAR(d)| = r and |MAC(d)| = c, the probis a combination of observed data from different treatment\nlem equivalently reduces to selecting KMSNN all-1 submalevels, heterogeneity of different level of data may affect its trices from B with disjoint columns. By modifying algoconditional number, causing the matrix to be ill-conditioned rithm AnchorSubMatrix discussed in (Agarwal et al.,\nand introducing numerical instability to the SVD step of 2023b), we can construct MAR(d) and MAC(d) by our\nAlgorithm 2. We provide a simple illustration below: Algorithm 3: MixedAnchorSubMatrix. Then given\nIllustration.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 10,
+    "total_chunks": 46,
+    "char_count": 2933,
+    "word_count": 493,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b970f86-773e-40f0-b8e3-3a2fccf3a5c4",
+    "text": "Consider S(k)w (d) consists of two columns of MAR(d) and MAC(d), we construct KMSNN subgroups by\ndata from treatment level d(1) and d(2), where data from selecting MAC(k)(d) = MAC(d), while partition MAR(d) Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors Comparison between SNN and MSNN. The leftmost subfigure illustrates the SNN algorithm with KSNN = 2: it requires S(k),\nq(k) and x(k) are all fully observed at treatment level as the same of the estimated treatment, which is rare under data-scarce levels (e.g.\nthe \"red\" level in the second subfigure). The rest four subfigures explain the procedure of MSNN for a specific subgroup k: given entry\n(i, j) and estimated treatment level (here is \"red\"), one need to find a fully observed x(k) under same \"red\" level, but the S(k) and q(k)\ncan be integrated from other treatments (here: \"blue\" and \"green\" level). The only requirement is that for each column of S(k) (namely,\ns(k)i ), its treatments should be as the same as the treatment of corresponding q(k)i , see the third and fourth subfigures. Algorithm 3 MixedAnchorSubMatrix (i, j, d) σ(d)ij ≤f(d)σ for some universal σ > 0 and constant\nC > 0. Input: createGraph, maxBiclique\n1. Assign B = [1{Dab = Dib, Daj = d, a ̸= i, b ̸= j}] Assumption 4.3. (Well balanced spectra under appropri-\n2. Generate G ←createGraph(B) ate scaling). For every treatment level d ∈L, conditioned\n3.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 11,
+    "total_chunks": 46,
+    "char_count": 1425,
+    "word_count": 239,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ae70db4-2da1-4a77-b2c3-f1fb816975a0",
+    "text": "Compute (V′1, V′2, E′) ←maxBiclique(G) on E and given (i, j) with subgroup k, if w(b, d(b)) =\n4. Output MAR(d) ←V′1, MAC(d) ←V′2 1/f(d(b)) (b ∈MAC(k)(d)), the non-zero singular values of E h S(k)w (d) E i (namely, τ (k) are well bal- l∈[r(k)](d))\nanced, i.e. there exists universal constants c, c′ > 0\ninto KMSNN subgroups of equal size randomly. (k) (k) (k)\nsuch that τ r(k)(d)/τ1 (d) ≥ c and τ 1 (d) ≤ c′ ·\nHere we assume createGraph and maxBiclique as MAR(k)(d) MAC(k)(d) .\ntwo known algorithms. createGraph takes input B as\nan bipartite incident matrix for an bipartite graph G (that is, Assumption 4.4. (Subspace inclusion). Conditioned on E,\nG = (V1, V2, E) where |V1| = m and V2 = n; for vi ∈V1 given (i, j, d) with subgroup k,\nand vj ∈V1, (vi, vj) ∈E if and only if Bij = 1) and E x(k)(d) U, V , D ∈Col E h S(k)w (d) U, V , D i .outputs G. createGraph takes bipartite G as input and\nthen outputs the maximal bipartite clique.\n4.2. Preservation of Finite-sample bound and\nAsymptotic Normality\n4. Theoretical results\nUnder the above assumptions, the data that MSNN leverages\nWe further add Assumptions to establish results on finite- (in Algorithm 2) exactly satisfy the conditions that SNN\nsample bound and asymptotic normality. requires, thus the similar conclusions of finite-sample bound\nand asymptotic normality (refer to Theorem 2 and 3 of\n4.1. Additional assumptions Agarwal et al. (2023b)) can be transferred from SNN to\nMSNN:By following the notation in Agarwal et al. (2023b), below\nwe denote E = {U, V , E}. Following the requirements of Theorem 4.5. (Finite-sample error bound). CondiSNN (Agarwal et al., 2023b), we further states the following tioned on E, for a given entry (i, j) and treatment\nassumptions under the multiple treatment setting: level d, suppose MAR(k)(d) ≥µ for all subgroup\nAssumption 4.1. (Bounded expected potential outcomes k ∈[KMSNN], let Assumptions 2.1 to 4.3 hold. Furwith treatment heterogeneity). Conditioned on E, A(d)ij ∈ ther let KMSNN = o mink MAC(k) 10 MAR(k) 10 .\n[−f(d), f(d)], where f(d) : L →R+ characterizes the\nrange of potential outcome for each treatment. Finally set λ(k) = rank E h S(k)w i , w(b, d(b)) =\nAssumption 4.2. (Sub-gaussian noise with treatment het- 1/f(d(b)), then ˆA(d)ij − A(d)ij = f(d) ·\nerogeneity). Conditioned on E, the error ϵ(d)ij are inde- 1 i1/2 hPKMSNNk=1 ∥˜β(k)∥22 , Op KMSNN error +pendent sub-gaussian mean-zero random variables with\n2 2\nE ϵ(d)ij = σ(d)ij and ϵ(d)ij ≤Cσ(d)ij , where where error := PKMSNNk=1 (errork,1 + errork,2). Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 12,
+    "total_chunks": 46,
+    "char_count": 2608,
+    "word_count": 448,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b641922-70f3-414e-9d17-29c78094be82",
+    "text": "˜β(k) := PEhS(k)w (d) E iβ(k) is the projection of β(k) onto |MAR|, |MAC| exceed 10. This motivates us to consider another important problem: can we find a feasible\nthe column space of E h S(k)w (d) E i , and Anchor Matrix to estimate under data-scarce treatment\nlevels Subject to the identifiability requirement that the\n(r(k))1/2\nerrork,1 := |MAC(k)(d)|1/4 , (Mixed) Anchor Rows/Columns are no smaller than a\nthreshold, this probability is linked to the expectation\n(r(k))3/2∥˜β(k)∥1 log1/2(|MAC(k)(d)||MAR(k)(d)|)\nerrork,2 := min{|MAC(k)(d)|1/2,|MAR(k)(d)|1/2} . of the subgroup count:\nTheorem 4.6. (Asymptotic Normality). For a given en- E K(·) = Pk≥1 P K(·) ≥k\ntry (i, j) and treatment level d, let the setups of Theorem E[K(·)]\n≤P K(·) ≥1 ≤E K(·) . max K(·)4.5 holds. Define (˜σ(k)(d))2 := Pl∈MAR(k)(d)(˜β(k)l σ(d)lj )2. =⇒\nFurther assume that Generally, the improvement of E K(·) leads to the improvement of P K(·) . For the simulation study in the(i) KMSNN →∞,\nnext section, we mainly focus on the data-scarce case\n(ii) |MAC(k)(d)|, |MAR(k)(d)| →+∞for each k, that SNN fails to find any Anchor Matrix while MSNN\nachieves feasible estimation: although E K(·) ≪1,(iii) For each k, r(k)∥˜β(k)∥21 log(|MAC(k)(d)||MAR(k)(d)|) =\nwe have E K(·) ≳1.o min{|MAC(k)(d)||MAR(k)(d)|} , CASE STUDY: MISSING COMPLETELY AT RANDOM\n(iv) f(d) · error = o hPKMSNNk=1 (˜σ(k)(d))2i1/2 .",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 13,
+    "total_chunks": 46,
+    "char_count": 1372,
+    "word_count": 216,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6b6285b0-b60a-4168-84fe-dc361ec191e5",
+    "text": "We consider the simplest case of MCAR. Each entry (i, j)\nis revealed i.i.d. with the following distribution: KMSNN( A(d)ˆij −A(d)ij )Then conditioned on E, d→N(0, 1).\nhPKMSNNk=1 (˜σ(k)(d))2 i1/2 (P(Dij = d) = pd, ∀d ∈L,\nP(Dij = 0) = 1 −Pd′∈L pd′.Proof of Theorem 4.5 and 4.6 are provided in Appendix C.2. The above two Theorems have the same form We require for each treatment level, pd > 0, and\nwith the finite-sample bound and asymptotic normality of 1 −Pd′∈L pd′ ≥ 0. We denote the largest probaSNN, by replacing |MAR|, |MAC| with |AR|, |AC|. bility as pmax := (maxd′ pd′), and its treatment level\ndmax := arg maxd pd. For simplicity we denote γ :=\nr+1\n. Now we calculate the expectation of4.3.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 14,
+    "total_chunks": 46,
+    "char_count": 697,
+    "word_count": 126,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e18ace34-622f-47d2-be43-de01c8a1b5bd",
+    "text": "Sample efficiency for large matrix Pd′∈L pmaxpd′\nTo exhibit the efficacy of MSNN, we illustrate that our new K(·) for both SNN and MSNN in the following theorem:\nAlgorithm 2 surpasses Algorithm 1 under the following Theorem 4.8. Expectation of number of samples.\nregime: given the distribution of treatment assignment D,\nConsider estimation of any entry (i, j) under treatment levelwe compare the expected number of subgroups we can\nextract at most from observed outcome ˜Y for MSNN and d. Suppose the treatment assignment D follows missing\ncompletely at random distribution, for fixed sample sizeSNN: E[KMSNN] and E[KSNN]. We expect that under dataAR(d) = MAR(d) = r and AC(d) = MAC(d) = c, if thescarce treatment levels, E[KMSNN] ≫E[KSNN].\nprobabilities are efficiently small, that is for some α ∈(0, 1)\nWe analyze E K(·) mainly because of the following rea- the following sparsity conditions holds:\nsons from both theoretical and empirical perspectives:\nmrpdpαcmax = o(1), ncγp(1−α)r+1+αmax = o(1),\n1. Based on previous section, under the conditions of The- then the expectations of K(·) are bounded by:\norem 4.6 (Asymptotic Normality), the error term is of\nE[KSNN(d)] ∈[1 −o(1), 1], m−1\nr )(n−1c )prc+r+cd order K−1/2(·) . For large matrix size m, n ≫1, this (\nsection now presents theoretical guarantee that the esti- E[KMSNN(d)]\nq E[KSNN] m−1 n−1 ∈[1 −o(1), 1] .\nmax mation error is smaller at the rate of order E[KMSNN]. ( r )( c )γcprdp(r+1)c\n2. It is computationally hard to find the maximum num- Proof is presented in Appendix C.3.1.\nber of all-1 submatrix from a 0 −1 valued matrix Remark 4.9. The sparsity condition above does not conflicts\n(Algorithm 3 addresses this by providing K(·) feasible with E[KMSNN] = ω(1). For example, consider r = o(m),\nsubmatrices without optimal guarantee, where K(·) is c = o(n), then E [KMSNN] = Θ mrncr!c! γcprdp(r+1)cmax =\na tunable hyperparameter), especially when the shape p−αcmax o r!rrc!cc , which does not conflict with E[KMSNN] = of submatrices are large. Even for Algorithm 3, it\nis computationally almost unaffordable to find when ω(1) for fixed r, c.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 15,
+    "total_chunks": 46,
+    "char_count": 2108,
+    "word_count": 348,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1fd5ab6a-9120-4331-9f54-fe8298c27e45",
+    "text": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors λAd ij eBased on the above theorem we analyze the sample effi- (λ is a max function pMNAR Ad′∈Lij , d = λAd′ij eciency of MSNN quantitatively: P d′̸=0\nchosen hyper-parameter), generalizing the standard logistic\nCorollary 4.10. Estimation efficiency of MSNN compared ex\nfunction σ(x) = 1+ex discussed by Ma & Chen (2019).to trivial SNN. Under the setting of Theorem 4.8, for estimation of entry (i, j) at treatment level d we have Since the data that MSNN can use strictly covers all data\nthat SNN can leverage and thus MSNN outperforms SNN, r+1 c\nE[KMSNN(d)]\nE[KSNN(d)] = (1 + o(1)) Pd′∈L pd′pd . we mainly focus on cases that SNN fails, that is estimating data-scarce treatment levels. Following the implementation of Agarwal et al. (2023b), we filter out the inCorollary 4.11. Estimation efficiency compared to the treat- valid estimations by testing whether the (Mixed) Anchor\nment level with the most data. Under the setting of Theorem\nRows/Columns are feasible: approximate satisfaction of\n4.8, for estimation of entry (i, j) at treatment level d com- x(k)(d) ∈Col(S(k)(d)) (corresponding to Assumption 4.4)\npared the level with most data dmax, and q(k)(d) ∈Row(S(k)(d)) (corresponding to AssumpE[KSNN(d)] pd rc+r+c tion 2.4). We also filter out the estimations which (Mixed) = O γ−c ,E[KMSNN(dmax)] pmax Anchor Matrix is of size (1, 1). We report both the feasir ble rate FR := #feasible estimatedmn entries and mean relative esti- E[KMSNN(d)] pd = O . P ij −A(d)ij )/A(d)ijE[KMSNN(dmax)] pmax A(d)ˆ ij is feasible ( A(d)ˆ\nmation error MRE := #feasible estimated entries condiProof are presented in Appendix C.3.1. tioned on feasibility. Corollary 4.10 and 4.11 together guarantee Results. We calculate the feasible ratio (FR) and mean\nefficient estimation under data heterogeneity. For a treat- relative error (MRE) of SNN and MSNN for all entries\nment level with sparse data, Corollary 4.10 shows that the under data-scarce treatment levels (d =low, medium, high).\nexpected number of samples KMSNN increases by a factor Results for MCAR and MNAR settings (λ = 0.05 and\nof at least the power of rc compared to KSNN, which is an λ = 0.02) are reported in Tables 1, 2, and 3.\nexponential improvement, while Corollary 4.11 shows that\nAcross all settings, MSNN consistently achieves substanthe relative efficiency gap between the data-sparsest and the\ntially higher feasible ratios than SNN, often nearly doubling\ndata-richest levels is efficiently reduced - specifically, its\nthe proportion of entries for which at least one valid anchor\ndependence on the proportion pd/pdmax is reduced from a\nis found. Correspondingly, MSNN achieves lower estimaquadratic order rc to a linear order r.\ntion error, with MRE reduced by a factor of two to three\nfor all treatment levels. This improvement arises from two\n5.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 16,
+    "total_chunks": 46,
+    "char_count": 2898,
+    "word_count": 466,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6c3d2011-6420-4eb2-b956-5f0490ef78a5",
+    "text": "Experiments complementary effects: MSNN increases the probability\nthat at least one valid anchor exists, and, conditioned on\nThis section exhibits the efficacy of MSNN on both synthetic\nfeasibility, leverages substantially larger mixed anchor row\ndata and real-world data. Experimental details including\nand column sets than SNN. As a result, MSNN uses a larger\nhyperparamters and real-world experiment background are\neffective sample size for reconstruction and attains lower\nprovided in Appendix B.\nestimation error. Simulation Study These observations align with the theoretical sample efficiency analysis in Section 4.3. While the theory characterOur theoretical analysis characterizes the expected number izes the expected number of anchors, it predicts a higher\nof valid anchors. In practice, enumerating multiple anchors\nprobability that K(·) ≥1 under MSNN, which is exactly\nis computationally expensive for large matrices; we there- reflected in the improved feasible ratio observed in practice.\nfore focus on the practically relevant regime K(·) = 1, and When the observed proportion of a treatment level falls beevaluate the feasibility probability P(K(·) ≥1) predicted low 2.5%, the data are too sparse for reliable estimation,\nby our theory along with the prediction error. and even MSNN can only recover a small fraction of enExperimental Setup. Under our multi-treatment frame- tries. For treatment levels with observed proportions above\nwork, we randomly generate latent factors U ∈Rm×r 4%, MSNN operates efficiently with high feasibility and\nand V (d) ∈Rn×r, here U is normalized while V (d) is low error, whereas SNN continues to suffer from low feasiscaled by a factor f(d). For the treatment assignment, we ble ratios and large estimation errors. This highlights that\nfocus on two settings: (i) MCAR, each entry is revealed MSNN substantially enlarges the range of sparsity levels\nat treatment level d with P(Dij = d) = pMCAR(d); (ii) under which reliable estimation is possible. MNAR, each entry at (i, j) is revealed with P(Dij = d) =\npMNAR Ad′∈Lij , d .",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 17,
+    "total_chunks": 46,
+    "char_count": 2075,
+    "word_count": 319,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "82688d95-634b-48c8-9ef4-5a8b3d96d4f0",
+    "text": "For (ii) we take the multi-variant soft- Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors Performance comparison of MSNN and SNN on MCAR data. Low (p(d) = 0.01) Medium (p(d) = 0.025) High (p(d) = 0.05)\nAlgorithm\nFR % (↑) MRE (↓) FR % (↑) MRE (↓) FR % (↑) MRE (↓) SNN 0.03 ± 0.00 0.806 ± 0.240 1.20 ± 0.36 0.577 ± 0.110 11.34 ± 0.82 0.515 ± 0.046\nMSNN (ours) 4.69 ± 1.11 3.91 ± 1.09 × 10−2 63.73 ± 5.67 1.18 ± 0.33 × 10−3 99.29 ± 0.81 7.05 ± 0.21 × 10−4 Performance comparison of MSNN and SNN on MNAR data, λ = 0.05. Low (Proportion = (1.30 ± 0.06)%) Medium (Proportion = (1.49 ± 0.06)%) High (Proportion = (2.50 ± 0.10)%)\nAlgorithm\nFR % (↑) MRE (↓) FR % (↑) MRE (↓) FR % (↑) MRE (↓) SNN 0.19 ± 0.07 0.349 ± 0.139 0.38 ± 0.12 0.390 ± 0.143 4.17 ± 0.84 0.351 ± 0.050\nMSNN (ours) 3.13 ± 0.41 0.117 ± 0.006 3.26 ± 0.34 0.114 ± 0.007 4.52 ± 0.62 0.106 ± 0.004 Performance comparison of MSNN and SNN on MNAR data, λ = 0.02. Low (Proportion = (3.54 ± 0.12)%) Medium (Proportion = (3.76 ± 0.12)%) High (Proportion = (4.59 ± 0.11)%)\nAlgorithm\nFR % (↑) MRE (↓) FR % (↑) MRE (↓) FR % (↑) MRE (↓) SNN 9.57 ± 0.85 0.366 ± 0.027 11.70 ± 1.62 0.379 ± 0.037 22.66 ± 2.24 0.383 ± 0.025\nMSNN (ours) 26.96 ± 3.50 0.129 ± 0.008 33.88 ± 4.20 0.135 ± 0.010 54.16 ± 4.30 0.118 ± 0.009 Selected prediction results of MSNN on Proposition 99 study in Abadie et al. (2010). The three states Kansas, Arizona, New\nJersey belong to treatment group of control, program, taxes respectively.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 18,
+    "total_chunks": 46,
+    "char_count": 1498,
+    "word_count": 300,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db7ae40e-f466-42d3-86cd-64cf1199d055",
+    "text": "The dashed lines are estimation results, while the solid lines\nindicates real-world observation. Before the year of 1989 (illustrated by the vertical dotted gray lines) all states are in control group so\nthe solid lines are black-colored, after which their color varies. The dotted line indicates the time of Proposition 99 assignment. The\ndashed lines and solid lines of same color at the same time periods are close to each other, indicating successful validation and thus the\ncorrectness of applying our model on this real-world dataset.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 19,
+    "total_chunks": 46,
+    "char_count": 540,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4ffebf83-5de8-4644-a492-6f1f09f1796c",
+    "text": "Case study: California Proposition 99 bound for each single year in their theoretical framework. To exhibit the effect of our method on real-world model,\nwe revisit the classic Proposition 99 study in Abadie et al. 6. Conclusions and Future work\n(2010). Different from Agarwal et al. (2020) who focuses\nIn this work we introduce a new entry-wise causal idention time-average treatment effect, we further estimate the\nfication estimator named Mixed Synthetic Nearest Neighcounterfactual outcome at each specific year for each state.\nbors (MSNN), enabling cross-treatment data integration\nIn Figure 2 we select three states covering all treatment under the assumption that certain low-rank latent factors\ngroups. In each sub-figure the solid line indicates observed are shared across treatments. Theoretically, we prove that\noutcomes and dash lines indicate the estimated outcome of MSNN achieves an exponential improvement in sample effiour Algorithm. The dash lines which have the same color ciency for sparse treatment levels under the MCAR setting,\nwith solid line at some years indicates validation (for exam- while preserving the finite-sample error bound and asympple, the black dash lines before 1989), while others indicate totic normality guarantees of the original SNN estimator.\nestimated counterfactual outcomes (not observed in reality). Experiments on both synthetic and real-world data further\nThe results are consistent with the predicted counterfactual demonstrate the efficacy of MSNN under limited data. We\ntrends until the year of 2000 in the Figure 4 of Agarwal et al. hope our work inspires future research in causal matrix\n(2020), though the latter does not discuss guaranteed error completion under multiple treatment levels. Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors Impact Statement Ma, W. and Chen, G. Missing not at random in matrix completion: The effectiveness of estimating missingThis paper presents work whose goal is to advance the field ness probabilities under a low nuclear norm assumption.\nof Machine Learning. There are many potential societal Advances in neural information processing systems, 32,\nconsequences of our work, none which we feel must be 2019.\nspecifically highlighted here. Sportisse, A., Boyer, C., and Josse, J. Imputation and lowReferences rank estimation with missing not at random data.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 20,
+    "total_chunks": 46,
+    "char_count": 2391,
+    "word_count": 356,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5797f07f-2198-452c-9239-80cf920c9b62",
+    "text": "Statistics and Computing, 30(6):1629–1643, 2020. Abadie, A., Diamond, A., and Hainmueller, J. Synthetic\ncontrol methods for comparative case studies: Estimating Wei, V. A lower bound on the stability number of a\nthe effect of california's tobacco control program. Journal simple graph, 1981.\nof the American statistical Association, 105(490):493–\nYang, C., Ding, L., Wu, Z., and Udell, M.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 21,
+    "total_chunks": 46,
+    "char_count": 388,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "148962f0-97a7-4252-bdf8-79eba5d935e2",
+    "text": "Tenips: Inverse\n505, 2010.\npropensity sampling for tensor completion. In International Conference on Artificial Intelligence and Statistics,Agarwal, A., Shah, D., and Shen, D. Synthetic interventions.\npp. 3160–3168. PMLR, 2021. arXiv preprint arXiv:2006.07691, 2020. Zhang, M., Cai, B., Sun, W. Generalized\nAgarwal, A., Agarwal, A., and Vijaykumar, S. Synthetic tensor completion with non-random missingness. arXiv\ncombinations: A causal inference framework for combi- preprint arXiv:2509.06225, 2025.\nnatorial interventions. Advances in Neural Information\nProcessing Systems, 36:19195–19216, 2023a. Agarwal, A., Dahleh, M., Shah, D., and Shen, D. Causal\nmatrix completion.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 22,
+    "total_chunks": 46,
+    "char_count": 673,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "843a596c-788c-48ae-b8e7-1a58b0b84790",
+    "text": "In The thirty sixth annual conference\non learning theory, pp. 3821–3826. Athey, S., Bayati, M., Doudchenko, N., Imbens, G., and\nKhosravi, K. Matrix completion methods for causal panel\ndata models. Journal of the American Statistical Association, 116(536):1716–1730, 2021. Candes, E. and Recht, B.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 23,
+    "total_chunks": 46,
+    "char_count": 296,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ae1c9e5-fd10-4644-bf45-d6332da108e7",
+    "text": "Exact matrix completion via\nconvex optimization. Communications of the ACM, 55\n(6):111–119, 2012. New results on the independence number. Technical report, Technical Report, Tel-Aviv University, 1979.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 24,
+    "total_chunks": 46,
+    "char_count": 200,
+    "word_count": 26,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4a97847a-638a-4f10-b985-405f4a5fbef6",
+    "text": "Choi, K., Feitelberg, J., Chin, C., Agarwal, A., and Dwivedi,\nR. Learning counterfactual distributions via kernel nearest neighbors, 2025. URL https://arxiv.org/\nabs/2410.13381. Dwivedi, R., Tian, K., Tomkins, S., Klasnja, P., Murphy,\nS., and Shah, D. Doubly robust nearest neighbors in\nfactor models, 2024. URL https://arxiv.org/\nabs/2211.14297. Gao, C., Chen, H., Zhang, A. Causal\ninference on sequential treatments via tensor completion.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 25,
+    "total_chunks": 46,
+    "char_count": 440,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "351bba85-f16b-4000-8c96-9074dd40302f",
+    "text": "H., Montanari, A., and Oh, S. Matrix completion from a few entries. IEEE transactions on information\ntheory, 56(6):2980–2998, 2010. Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors Classical matrix completion assumes data are missing completely at random (MCAR) or at random (MAR). (Candes &\nRecht, 2012; Keshavan et al., 2010) However in many real-world applications, missingness depends on the unobserved\nentries themselves, i.e., missing not at random (MNAR). Existing work addresses this by jointly modeling the missingness\nmechanism and low-rank structure. (Ma & Chen, 2019; Sportisse et al., 2020; Yang et al., 2021) In the causal inference\ncontext, matrix completion can be used to estimate potential outcomes, as in Athey et al. (2021); Agarwal et al. (2023b;a). Our work studies a general MNAR matrix completion problem under multiple treatments, which is formalized as a threedimensional tensor completion framework aiming to achieve entry-wise treatment effect identification. Agarwal et al.\n(2023b) addresses the MNAR matrix completion problem under a binary treatment setup, and we show that our result strictly\nreduces to theirs in the binary case. Other approaches in causal matrix completion under multiple treatment levels have different frameworks from ours. Agarwal\net al. (2020) adopts a similar three-dimensional tensor completion framework as ours, but one of the three dimensions is\ninterpreted as time index t. Consequently, their goal is to estimate the time-average expected potential outcome during the\npost-treatment period, rather than entry-wise treatment effects. In contrast, our framework removes this interpretation and\nfocuses on more general matrix completion setting, aiming to construct fine-grained, entry-wise treatment identification\nunder multiple-treatment settings. Gao et al. (2025) also relies on time sequential data assumption different from our\nsetting. They also utilizes a gradient descent method different from ours. Zhang et al. (2025) considers a generalized\nthree-dimension causal tensor completion framework under MNAR, where each entry is missing independently, which is\ndifferent from our assumption that for an element at most one treatment level's potential outcome can be observed (the\nobservation on the treatment dimension are mutually exclusive).",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 26,
+    "total_chunks": 46,
+    "char_count": 2350,
+    "word_count": 336,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f141757b-87fd-4632-88aa-3b1ea45ee190",
+    "text": "Choi et al. (2025) proposes KernelNN, estimating the\nunderlying distributions rather than entry-wise value. Dwivedi et al. (2024) proposes a doubly robust nearest neighbors\nmethod under binary treatment, differs from our multiple treatment setting. This section further provides experimental details for Section 5. Hyperparameters of the simulation study.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 27,
+    "total_chunks": 46,
+    "char_count": 355,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d1f2d972-6384-40a7-bc4f-2e879fd9f24f",
+    "text": "In Section 5.1, the shape of the matrix is m = 300, n = 100, rank r = 3,\nthe relative noise scale σ is set to 0.001. Due to the small scale of experiments, the number of samples K(·) is set\nto 1. The treatment levels are L = {low, medium, high, very high}, while the scales of treatment levels are f(d) =\n1 , d = low\n5 , d = medium .\n25 , d = high\n625 , d = very high For MCAR simulation (i), the ground truth entries are within [−f(d), f(d)], the probability distribution for each entry is\n0.115 , d = 0 (not observed)\n0.01 , d = low pMCAR(d) = 0.025 , d = medium . For MNAR simulation (ii), we take the absolute value of each ground truth\n0.050.8 ,, dd == highvery high\nentry so that they are constrained within [0, f(d)], the hyperparameter λ in the probability distribution pMNAR(d) is set to\n0.05 and 0.02. For the feasible rate (FR) and mean relative estimation error (MRE), we report the mean and standard deviation on 10\nrepetitions. Background information of California Proposition 99 Data In 1988, California passed the Proposition 99 as the first large-scale anti-tobacco program, followed by other states which\nintroduced similar programs (Arizona, Massachusetts, Oregon, and Florida) or raised tobacco taxes at least 50 cents (Alaska,\nHawaii, Maryland, Michigan, New Jersey, New York, Washington). The other 38 states remains status quo, which are treated\nas the control group. One natural question is that what if a state remains status quo had raised tobacco taxes or introduced Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 28,
+    "total_chunks": 46,
+    "char_count": 1606,
+    "word_count": 281,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "caf6fcff-7a1d-45ff-bd05-1859685a8ee1",
+    "text": "anti-tobacco program, or what if a state introduced anti-tobacco program had remained status quo or raised tobacco taxes\netc., that is estimating the counterfactual outcomes, as discussed in Agarwal et al. (2023a; 2020). Follow the experiment settings in Agarwal et al. (2020), we leverage the data from both pre-treatment time and post-treatment\ntime. For simplicity we approximately treat the years after 1989 as post-treatment time.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 29,
+    "total_chunks": 46,
+    "char_count": 435,
+    "word_count": 65,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e1dc1d22-06c2-42c1-8d38-d790fced3f01",
+    "text": "Proof of Identification The proof is straight forward: u(d′)i A2.5= u(d)i ∵Assumption 2.5 A2.4\n= X β(d)l I(d)(i) u(d)l ∵Assumption 2.4\nl∈I(d)(i) (1) A2.5\n= X β(d)l I(d)(i) u(d′)l . ∵Assumption 2.5\nl∈I(d)(i) Proof of Theorem 2.7: A(d)ij = E h Yij(d) U, V i A2.1\n= E hD u(d)i , v(d)j E + ϵ(d)ij U, V i ∵Assumption 2.1 A2.2 D E = u(d)i , v(d)j U, V ∵Assumption 2.2 D E = u(d)i , v(d)j U, V , D L2.6\n= X βl (I(i)) D u(d)l , v(d)j E U, V , D ∵Lemma 2.6 (2)\nl∈I(i) A2.2\n= X βl (I(i)) E hD u(d)l , v(d)j E + ϵ(d)lj U, V , D i ∵Assumption 2.2\nl∈I(i) A2.1\n= X βl (I(i)) E h Ylj(d) U, V , D i ∵Assumption 2.1\nl∈I(i)\n= X βl (I(i)) E h ˜Ylj U, V , D i . The last step is from Dlj,l∈I(i) = d, which gives ˜Ylj = Ylj(d) , ∀l ∈I(i). Proof of Finite-sample bound and Asymptotic Normality",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 30,
+    "total_chunks": 46,
+    "char_count": 771,
+    "word_count": 172,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "35ed8992-447e-4b29-9315-a07e747e02ae",
+    "text": "Before proceeding on the proofs of Theorem 4.5 and 4.6, we provide a simple illustration under zero-noise condition: For Algorithm 2, under Assumptions 2.1, 2.5, 2.2, 2.4, 4.4, given (i, j, d) with subgroup (k). If\nMAR(k)(d) ≥µ, then Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 31,
+    "total_chunks": 46,
+    "char_count": 322,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ea181c24-8c3c-4a77-b1ef-2a6e5a658f7e",
+    "text": "E h x(k)(d) E i , (3) A(d)ij = E h q(k)w (d) E i E h S(k)w (d) E i+ · where ·+ denotes pseudo-inverse. To rephrase, let λ(k)(d) = rank E h S(k)w (d) E i , if ϵ(d)ij = 0 a.s., then ˆA(d)ij,k = A(d)ij . Under Theorem 2.7, there exists β ∈ RMAC(k)(d) s.t. for all b ∈ MAC(k)(d) ∩{j}, A(d(b))ib =\nh iPl∈MAR(k)(d) βlE ˜Ylj E . Then E h q(k)w (d) E i = β⊤E h S(k)w (d) E i , A(d)ij = β⊤E x(k)(d) E . From Assumption 4.4, there exists some η ∈RMAC(k)(d) s.t. E h x(k)(d) E i = E h S(k)w (d) E i η. (4) Then for any such η, we have A(d)ij = β⊤E h x(k)(d) E i = β⊤E h S(k)w (d) E i η = E h q(k)w (d) E i η. (5) Let η = E h S(k)w (d) E i+ E x(k)(d) E , where ·+ denotes pseudo-inverse, clearly E h S(k)w (d) E i η =\nis the projection onto Col E h S(k)w (d) E i . ThenPEhS(k)w (d) E iE x(k)(d) E = E x(k)(d) E , where PE hS(k)w (d) E i\nthe proof is completed. Now we prove Theorem 4.5 and 4.6: Suppose we aim to estimate A(d)ij a fixed unit (i, j) and treatment level d, and we obtain KMSNN subgroups of\nS(k)w (d), q(k)w (d) and x(k)(d) (k ∈[KMSNN]). h 1 iGiven treatment assignment D with the scaling factor f(d), we define the scaling matrix F := We f(Dij) i∈[m],j∈[n].\nfurther define the normalized latent factor as V (d)′ := f(d)V1 (d), and similarly the normalized error term E(d)′ = f(d)E(d).1\n2 2\nSince we assume that E ϵ(d)ij = σ(d)ij and ϵ(d)ij ≤Cσ(d)ij , where σ(d)ij ≤f(d)σ, then for E′ we have\n2 2\nE ϵ(d)′ij = σ(d)′ij and ϵ(d)′ij ≤Cσ(d)′ij , where σ(d)′ij ≤σ. For observed outcome ˜Y , we construct ˜Y ′ = ˜Y ⊙F , where ⊙denotes entry-wise product (Hadamard product).",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 32,
+    "total_chunks": 46,
+    "char_count": 1568,
+    "word_count": 338,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3603374d-6537-4bdd-85a3-6d4368993ae9",
+    "text": "Given\nS(k)w (d), q(k)w (d) and x(k)(d), we denote the submatrices/vectors at the same positions of ˜Y ′ as S(k)′, q(k)′ and x(k)′\nrespectively: S(k)′ = h ˜Yab′ : (a, b) ∈MAR(k)(d) × MAC(k)(d)i ,\nq(k)′ = h ˜Yib′ i , (6) b∈MAC(k)(d)\nx(k)′ = h ˜Yaj′ i .\na∈MAR(k)(d) Now from definition, S(k)w (d) = S(k)′, q(k)w (d) = q(k)′, x(k)(d) = f(d) · x(k)′.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 33,
+    "total_chunks": 46,
+    "char_count": 345,
+    "word_count": 66,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "946b432e-cd0d-4002-91fc-b6017f1151cc",
+    "text": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors Thus if we apply SNN (Algorithm 1) to S(k)′, q(k)′ and x(k)′ to obtain another estimation ˆA(d)′ij,k (though now we do not\nknow its meaning), then the estimation ˆA(d)ij,k satisfy: ˆA(d)ij,k = f(d)ˆA(d)′ij,k. (7) Now from Theorem 2 and 3 of Agarwal et al. (2023b), it remains us to prove that S(k)′, q(k)′ and x(k)′ comes from another\nlow-rank factor model. We construct the model as the following procedure: • As the first step, we select V ′′ to be V (d)′, where d is the estimated treatment level mentioned at the beginning.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 34,
+    "total_chunks": 46,
+    "char_count": 616,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "969567ad-e6ac-4d85-8062-d816d1d0122f",
+    "text": "Then\nfor all k ∈[KMSNN], for all b ∈MAC(k)(d), replace the bth column of V ′′ by the bth column of V (d(b))′. (Notice\nthat from the construction of subgroups k ∈[KMSNN], d(b) := Dab:a∈MAR(k)(d),b∈MAC(k)(d) = Dib:b∈MAC(k)(d). ) • We conduct similar procedure for the error matrix: first we set E′′ = E(d)′, then for all k ∈[KMSNN] and for\nall b ∈MAC(k)(d), replace the bth column of E′′ by the bth column of E(d(b))′. (Now the entries of E′′ are still\nindependent. ) • Finally, we set A′′ = UV ′′⊤, ˜Y ′′ = A′′ + E′′. Now ˜Y ′′ = UV ′′⊤+ E′′ satisfy the assumptions of low-rank factor model discussed in Agarwal et al. (2023b), while the\nentries of A′′ are bounded by [−1, 1] conditioned on E. From the construction of S(k)w (d), q(k)w (d) and x(k)(d), ˜Y ′′ and ˜Y ′\nare exactly the same on the positions of S(k)w (d), q(k)w (d) and x(k)(d). This reduces our proof to the Theorem 2 and 3 of\nAgarwal et al. (2023b) and thus completes the proof of finite-sample bound and asymptotic normality. Proof of Data Efficiency\nFor simplicity, below we denote the K (·)(d)′ to be the number of subgroups with the constraint of disjoint x(k)(d) removed,\nKp(·)(d) to be the number of pairs of subgroups k1, k2 that x(k1) ∩x(k1) ̸= ∅. DATA EFFICIENCY UNDER MISSING COMPLETELY AT RANDOM\nAt the beginning, we need to bound the expectation of the maximum number of samples E[K(·)] by the following lemma: Given any entry (i, j) under treatment d, for |AR(d)| = |MAR(d)| = r, |AC(d)| = |MAC(d)| = c, the\nexpectation of its KSNN and KMSNN can be upper/lower bounded by: E K(·)(d) /E h K′(·)(d)i (8)  2E h Kp(·)(d)i −1 \ni  . ∈ 1 + E h K′(·)(d) , 1 For simplicity, we omit (d) in K(·)(d), K′(·)(d) and Kp(·)(d) during the proof. The upper bound is constructed by omitting the row-disjoint constraint: K(·) ≤K′(·). By taking expectation for both sides\nthe upper bound is proven. For the lower bound, we formalize the original problem into a graph problem with randomness, then apply the Caro-Wei\nTheorem (Caro, 1979; Wei, 1981).",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 35,
+    "total_chunks": 46,
+    "char_count": 2016,
+    "word_count": 368,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f7e8947e-dcc3-476c-9a5b-532559647076",
+    "text": "Denote the index set of all possible (M)AR(d) × (M)AC(d) as S (|S| = m−1r n−1c ). Define the edge set ES :=\nn o (k1, k2) : k1,2 ∈S, (M)AR(k1)(d) ∩(M)AR(k2)(d) ̸= ∅ , the base graph H := (S, ES). Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 36,
+    "total_chunks": 46,
+    "char_count": 283,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "65ae3254-4289-434e-b0ce-254dfc6f4228",
+    "text": "To address the randomness of activation, for index k ∈S define Xk = 1{(M)AR(k)(d) × (M)AC(k)(d) is valid} to be its\nindicator function. Specifically, for SNN Xk = 1{Dab:a∈AR(k)(d),b∈AC(k)(d) = Daj:a∈AR(k)(d) = Dib:b∈AC(k)(d) = d}, for\nMSNN Xk = 1{Dab:a∈MAR(k)(d),b∈MAC(k)(d) = Dib:b∈MAC(k)(d), Daj:a∈MAR(k)(d) = d}. Thus Xk = 1 means subgroup\nk can be a valid sample. Under a given treatment assignment D, we define the induced subgraph G(D) of {S, ES} on the active vertex set\nV (D) := {k ∈S : Xk = 1}. Its edge set is naturally ES(D) = ES ∩(V (D) × V (D)). Then K(·) is the independence\nnumber (size of the largest independent set) of the induced subgraph G = (V (D), ES(D)). From the Caro-Wei Theorem, D ≥ X = X (9)\n1 + deg(k1) 1 + Pk2∈V (D)\\{k1} 1{(k1, k2) ∈ES(D)}, k1∈V (D) k1∈V (D) where deg(k1) := Pk2∈V (D)\\{k1} 1{(k1, k2) ∈ES(D)} is the degree of vertex k1. By taking expectation over D,  \nE K(·) ≥E X  1 + Pk2∈V (D)\\{k1} 1{(k1, k2) ∈ES(D)}  k1∈V (D)\n\" # Xk1 = E X\n1 + Pk2∈S\\{k1} 1{(k1, k2) ∈ES}Xk1Xk2 k1∈S (10)\n\" # Xk1 = X E\n1 + Pk2∈S\\{k1} 1{(k1, k2) ∈ES}Xk1Xk2 k1∈S\n\" # 1\n= X P(Xk1 = 1) · E Xk1 = 1 .\n1 + Pk2∈S\\{k1} 1{(k1, k2) ∈ES}Xk2 k1∈S By applying Jensen's inequality, P(Xk1 = 1) E K(·) ≥ X\nk1∈S E h 1 + Pk2∈S\\{k1} 1{(k1, k2) ∈ES}Xk2 Xk1 = 1i\nP(Xk1 = 1) = X\n1 + Pk2∈S\\{k1} 1{(k1, k2) ∈ES}P [Xk2 = 1|Xk1 = 1] (11) k1∈S\nP(Xk1)2 = X P(Xk1) + Pk2∈S\\{k1}, P (Xk1 ∩Xk2). k1∈S\n(k1,k2)∈ES This givesBy Titu's Lemma (or the Engel's Form of Cauchy-Schwarz inequality), for positive ak, bk, Pk bk ≥(PP k bk P E h K′(·) i2 k1∈S P(Xk1) 2 (12) = E K(·) ≥ i.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 37,
+    "total_chunks": 46,
+    "char_count": 1562,
+    "word_count": 314,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "04786167-1b02-4977-a996-2725b21fe579",
+    "text": "P k1∈S P(Xk1) + P k1,2∈S, P (Xk1 ∩Xk2) E h K′(·) i + 2E h Kp(·) (k1,k2)∈ES The last step is from the definition of Kp(·). Then the proof for both sides are completed. To prove Theorem 4.8, we first provide a Lemma on Summation of combinatorial numbers. Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 38,
+    "total_chunks": 46,
+    "char_count": 341,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e74f6f3-4dab-4d0a-b58e-2a29cdeebe36",
+    "text": "Summation of combinatorial numbers. For p1, p2, p3 > 0, we have M r N c\nX pr′1 p(r+1)c′2 pr′(c−c′)3 r′ r′ c′ c′\n0≤r′≤r−1,\n0≤c′≤c,\n(r′,c′)̸=(0,0)\n(13)\n≤ I0 2 pMrp1pc3 −1 + I0 2 Ncpr+12 −1 + I0 2 pMrp1pαc3 −1 I0 2 Ncpr+12 pα(1−r)3 −1 . where α ∈(0, 1) is an arbitrary constant, I0(x) := P+∞k=0 (x/2)2k(k!)2 is the Modified Bessel Function of the First Kind, Order\nZero.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 39,
+    "total_chunks": 46,
+    "char_count": 367,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9387994f-ae81-42c5-9330-69ff4bcf20b1",
+    "text": "By reorganizing the summation, M r N c\nX pr′1 p(r+1)c′2 pr′(c−c′)3 r′ r′ c′ c′\n0≤r′≤r−1,\n0≤c′≤c,\n(r′,c′)̸=(0,0) M r N c\n= X (p1pc3)r′ + X p(r+1)c′2 (14) r′ r′ c′ c′\n1≤r′≤r−1 1≤c′≤c\nM r N c\n+ X pr′1 p(r+1)c′2 pr′(c−c′)3 . r′ r′ c′ c′\n1≤r′≤r−1,\n1≤c′≤c By applying xk ≤xkk! , r−1 r−1 +∞\nM r (Mrp1pc3)r′ (Mrp1pc3)r′ X ≤ X (p1pc3)r′ ≤ X ≤I0 2 pMrp1pc3 −1 r′ r′ (r′!)2 (r′!)2\nr′=1 r′=1 r′=1\n(15)\nc c +∞\nq (Ncpr+12 )c′ (Ncpr+12 )c′ X X ≤ X ≤I0 2 N c p(r+1)c′2 ≤ Ncpr+12 −1. c′ c′ (c′!)2 (c′!)2\nc′=1 c′=1 c′=1 For the cross term, by appropriate scaling, Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors M r N c\nX pr′1 p(r+1)c′2 pr′(c−c′)3 r′ r′ c′ c′\n1≤r′≤r−1,\n1≤c′≤c\nM r N c c′\n= X (p1pαc3 )r′ pr+12 pα(1−r)3 pα(r−r′−1)c′+(1−α)r′(c−c′)3 r′ r′ c′ c′\n1≤r′≤r−1,\n1≤c′≤c\nM r N c c′\n≤ X (p1pαc3 )r′ pr+12 pα(1−r)3 (16) r′ r′ c′ c′\n1≤r′≤r−1,\n1≤c′≤c\n\" r−1 # \" c M r N c c′#\n= X (p1pαc3 )r′ X pr+12 pα(1−r)3 r′ r′ c′ c′\nr′=1 c′=1\n≤ I0 2p Mrp1pαc3 −1 I0 2 Ncpr+12 pα(1−r)3 −1 . By combining result above, the proof is completed. Now we present the proof of Theorem 4.8 under a relaxed sparsity condition: mrpdpαcmax ≤1, ncγp(1−α)r+1+αmax ≤1. (17) For simplicity, we omit (d) in K(·)(d), K′(·)(d) and Kp(·)(d) during the proof. For the upper bound, we consider E h K′(·) i : E [KSNN] ≤E [K′SNN]\n \n=E AR(d)⊆[m]\\i,X 1{Dab,a∈AR(d),b∈AC(d) = Daj,a∈AR(d) = Dib,b∈AC(d) = d}\nAC(d)⊆[n]\\j\n= X E 1{Dab,a∈AR(d),b∈AC(d) = Daj,a∈AR(d) = Dib,b∈AC(d) = d} (18)\nAR(d)⊆[m]\\i,\nAC(d)⊆[n]\\j\nm −1 n −1\n= X prc+r+cd = prc+r+cd , r c\nAR(d)⊆[m]\\i,\nAC(d)⊆[n]\\j Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 40,
+    "total_chunks": 46,
+    "char_count": 1655,
+    "word_count": 315,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5efdb36b-7494-4d43-95d0-bac7eb408d06",
+    "text": "E [KMSNN] ≤E [K′MSNN]\n \n=E MAR(d)⊆[m]\\i,X 1{Dab,a∈MAR(d),b∈MAC(d) = Dib,b∈MAC(d), Daj,a∈MAR(d) = d}\nMAC(d)⊆[n]\\j\n= X E 1{Dab,a∈MAR(d),b∈MAC(d) = Dib,b∈MAC(d), Daj,a∈MAR(d) = d}\nMAR(d)⊆[m]\\i, (19)\nMAC(d)⊆[n]\\j\n= X prd · P Dab,a∈MAR(d),b∈MAC(d) = Dib,b∈MAC(d)\nMAR(d)⊆[m]\\i,\nMAC(d)⊆[n]\\j\n\" !c# m −1 n −1\n= X prd · X pr+1d′ = γcprdp(r+1)cmax . r c\nMAR(d)⊆[m]\\i, d′∈L\nMAC(d)⊆[n]\\j Then we upper bound the number of overlapped pairs E h Kp(·) i . We denote events I(k)SNN = {Dab,a∈AR(k)(d),b∈AC(k)(d) = Daj,a∈AR(k)(d) = Dib,b∈AC(k)(d) = d}, and I(k)MSNN =\n{Dab,a∈MAR(k)(d),b∈MAC(k)(d) = Dib,b∈MAC(k)(d), Daj,a∈MAR(k)(d) = d}, given group (k) and corresponding row/column\nsets (M)AR(k)(d) and (M)AC(k)(d). The number of overlapped rows (M)AR(1)(d) ∩(M)AR(2)(d) can vary from 1 to\nr, while the number of overlapped columns can vary from 0 to c (despite the case of the two matrices are the same). For notation simplicity, we denote β(r′, c′) := m−1−rr′ r′r n−1−cc′ c′c .",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 41,
+    "total_chunks": 46,
+    "char_count": 970,
+    "word_count": 150,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5373ea25-ace2-4654-aab6-9766bf1f07bf",
+    "text": "By taking expectation, E [K′SNN] −E [KSNN] ≤E [KpSNN]\n  =E X 1 nI(1)SNN, I(2)SNN o\nAR(1,2)(d)⊆[m]\\i,  AC(1,2)(d)⊆[n]\\j, \n{AR(1)(d),AC(1)(d)}̸={AR(2)(d),AC(2)(d)}\n(20)\n= X E h 1 nI(1)SNN, I(2)SNN oi\nAR(1,2)(d)⊆[m]\\i,\nAC(1,2)(d)⊆[n]\\j,\n{AR(1)(d),AC(1)(d)}̸={AR(2)(d),AC(2)(d)}\n=1 X m −1 n −1 β(r′, c′) · pr+r′d pc+c′d p2rc−(r−r′)(c−c′)d , 2 r c\n0≤r′≤r−1,\n0≤c′≤c,\n(r′,c′)̸=(0,0) Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors E [K′MSNN] −E [KMSNN] ≤E [KpMSNN]\n  =E X 1 nI(1)MSNN, I(2)MSNN o\nMAR(1,2)(d)⊆[m]\\i,  MAC(1,2)(d)⊆[n]\\j, \n{MAR(1)(d),MAC(1)(d)}̸={MAR(2)(d),MAC(2)(d)}\n= X E h 1 nI(1)MSNN, I(2)MSNN oi (21)\nMAR(1,2)(d)⊆[m]\\i,\nMAC(1,2)(d)⊆[n]\\j,\n{MAR(1)(d),MAC(1)(d)}̸={MAR(2)(d),MAC(2)(d)}\n!2c′ !c−c′\nX pr+1d′ X pr+r′+1d′ . =1 X m −1 n −1 β(r′, c′) · pr+r′d 2 r c\n0≤r′≤r−1, d′∈L d′∈L\n0≤c′≤c,\n(r′,c′)̸=(0,0) From properties of combinatorial number, β(r′, c′) ≤(mr)r′(nc)c′(r′)!2(c′)!2 . From the property of the Modified Bessel Function of the First Kind, Order Zero, I0(x) ≤ 1−x2/41 for 0 ≤x < 2.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 42,
+    "total_chunks": 46,
+    "char_count": 1074,
+    "word_count": 151,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ae86393b-b653-474d-a613-6e4142f55878",
+    "text": "By Lemma C.3 and condition (17), we have 2E [KpSNN] /E [K′SNN]\n= X β(r′, c′) · pr′+c′+r′c+rc′−r′c′d\n0≤r′≤r−1,\n0≤c′≤c,\n(r′,c′)̸=(0,0) q q (22)\n≤ I0 2 mrpc+1d −1 + I0 2 ncpr+1d −1 q q + I0 2 mrpαc+1d −1 I0 2 ncpr+1+α(1−r)d −1 =O mrpc+1d + ncpr+1d + mrncp(1−α)r+αc+2+αd , Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors 2E [KpMSNN] /E [K′MSNN]\n!2c′−c !c−c′\n= X β(r′, c′) · pr′d X pr+1d′ X pr+r′+1d′\n0≤r′≤r−1, d′∈L d′∈L\n0≤c′≤c,\n(r′,c′)̸=(0,0)\n!c′\n≤ X β(r′, c′) · pr′d X pr+1d′ pr′(c−c′)max\n0≤r′≤r−1, d′∈L\n0≤c′≤c, (23)\n(r′,c′)̸=(0,0)   v u ! \n≤ I0 2p mrpdpcmax −1 + I0 2utnc X pr+1d′ −1 \nd′∈L   v u !  \nmax + I0 2p mrpdpαcmax −1 I0 2 utnc X pr+1d′ pα(1−r) −1 \nd′∈L =O mrpdpcmax + ncγpr+1max + mrncγpdpαc+(1−α)r+1+αmax . By combining the results above, under (17) we have  \nE [KSNN(d)] 1\n∈ n−1 m−1  , 1, c prc+r+cd r 1 + O mrpc+1d + ncpr+1d + mrncp(1−α)r+αc+2+αd\n(24)\n \nE [KMSNN(d)] 1\n∈ , 1 m−1 n−1  . r c γcprdp(r+1)cmax 1 + O mrpdpcmax + ncγpr+1max + mrncγpdpαc+(1−α)r+1+αmax Further by the sparsity condition in Theorem 4.8, O mrpc+1d + ncpr+1d + mrncp(1−α)r+αc+2+αd = o(1),\n(25)\nO mrpdpcmax + ncγpr+1max + mrncγpdpαc+(1−α)r+1+αmax = o(1). This completes the proof.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 43,
+    "total_chunks": 46,
+    "char_count": 1227,
+    "word_count": 231,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "98a7e6d4-70ed-4f67-b97d-9952af8477c2",
+    "text": "Proof of Corollary 4.10: By Theorem 4.8 we have m −1 n −1\nE [KSNN(d)] = (1 −o(1)) prc+r+cd , r c\n(26)\nm −1 n −1\nE [KMSNN(d)] = (1 −o(1)) γcprdp(r+1)cmax .\nr c By taking division we completes the proof. Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 44,
+    "total_chunks": 46,
+    "char_count": 290,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8cf6ca5d-f9eb-4953-9f20-44e11f85886e",
+    "text": "Proof of Corollary 4.11: m −1 n −1\nE [KSNN(d)] = (1 −o(1)) prc+r+cd , r c\nm −1 n −1\nE [KMSNN(d)] = (1 −o(1)) γcprdp(r+1)cmax , (27)\nr c\nm −1 n −1\nE [KMSNN(dmax)] ≤ γcprc+r+cmax .\nr c By taking division, we completes the proof.",
+    "paper_id": "2603.11942",
+    "title": "Causal Matrix Completion under Multiple Treatments via Mixed Synthetic Nearest Neighbors",
+    "authors": [
+      "Minrui Luo",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11942v1",
+    "chunk_index": 45,
+    "total_chunks": 46,
+    "char_count": 226,
+    "word_count": 49,
+    "chunking_strategy": "semantic"
+  }
+]

@@ -1,0 +1,1602 @@
+[
+  {
+    "chunk_id": "daca0d9d-fdf7-476f-8c6d-6317a278d48c",
+    "text": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting Jing Liu∗1, Maria Grith2, Xiaowen Dong3, and Mihai Cucuringu4,1,5\n1Department of Statistics, University of Oxford, UK 2Finance Department, Neoma Business School, FranceMar\n11 3Department of Engineering Science, University of Oxford, UK\n4Department of Mathematics, University of California Los Angeles, US 5Oxford-Man Institute of Quantitative Finance, University of Oxford, UK\n[cs.LG] This paper studies cross-market return predictability through a machine learning framework",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 0,
+    "total_chunks": 80,
+    "char_count": 548,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4c67a60b-e41a-4203-88ca-278eae8683bd",
+    "text": "that preserves economic structure. Exploiting the non-overlapping trading hours of the U.S. and Chinese equity markets, we construct a directed bipartite graph that captures time-ordered predictive linkages between stocks across markets. Edges are selected via rolling-window hypothesis testing, and the resulting graph serves as a sparse, economically interpretable feature-selectionarXiv:2603.10559v1 layer for downstream machine learning models. We apply a range of regularized and ensemble methods to forecast open-to-close returns using lagged foreign-market information. results reveal a pronounced directional asymmetry: U.S. previous-close-to-close returns contain substantial predictive information for Chinese intraday returns, whereas the reverse effect is This informational asymmetry translates into economically meaningful performance differences and highlights how structured machine learning frameworks can uncover cross-market dependencies while maintaining interpretability. ∗Corresponding author; Email: jing.liu@exeter.ox.ac.uk Keywords: Return prediction, cross-market analysis, machine learning, bipartite graphs JEL Classification: G17, G15, C58 Return prediction remains a central problem in empirical asset pricing and portfolio management, yet",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 1,
+    "total_chunks": 80,
+    "char_count": 1269,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1763e9dd-81c7-474a-a1f6-5d844f262f47",
+    "text": "its statistical difficulty is amplified by noise, non-stationarity, and nonlinear dependence structures",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 2,
+    "total_chunks": 80,
+    "char_count": 103,
+    "word_count": 12,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "89f34c63-b0a8-412c-9b4e-d1eae42287ec",
+    "text": "in financial markets. While machine learning methods have become increasingly prevalent in singlemarket forecasting applications (Chen et al., 2015; Wang, 2024; Yang and He, 2026), comparatively little attention has been paid to stock-level cross-market return prediction under realistic tradingsession timing constraints. Most existing studies on return forecasting focus on predicting within a single market. example, Chen et al. (2015) apply a Long Short-Term Memory (LSTM) model to predict stock returns in the Chinese market, while Wang (2024) studies U.S. stock return prediction using neural Similarly, Yang and He (2026) propose an intraday volume-based uncertainty proxy to predict return direction in the Chinese market.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 3,
+    "total_chunks": 80,
+    "char_count": 730,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b8cd805d-dd64-4dab-a82d-a56a60c3889a",
+    "text": "These studies demonstrate the growing use of machine learning methods in single-market settings. By contrast, research on cross-market interactions has largely emphasized contemporaneous co-movement, spillovers, or causal transmission rather than explicit stock-level return prediction. For instance, Eun and Shim (1989) analyze the",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 4,
+    "total_chunks": 80,
+    "char_count": 332,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5a351a92-09dc-4f73-9a38-1fe79a4580b7",
+    "text": "international transmission of stock market movements using vector autoregression, Baur and Jung (2006) evaluate contemporaneous return correlations using GARCH models, and Rapach et al. (2013) document the leading role of the U.S. market through causality tests. Sarwar (2014) examine the",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 5,
+    "total_chunks": 80,
+    "char_count": 288,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "95a71bfd-0964-493f-a0a7-0741a6effada",
+    "text": "relationship between U.S. market uncertainty and European equity returns during crisis periods, while Jung et al. (2024) study interdependency patterns between the U.S. and Chinese markets using threshold overnight co-movement processes. Only a limited number of studies have attempted explicit cross-market predictive analysis using machine learning models. For example, Lee and Yoo (2020) apply a deep neural network to fuse information from the U.S. and South Korean markets for index-level return prediction, and Kumar et al. (2024) propose a graph neural network to model volatility spillovers across markets. most existing work operates at the index level, and to our knowledge no prior study has examined",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 6,
+    "total_chunks": 80,
+    "char_count": 711,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9fafb950-7877-4172-bac4-6c8d509031a2",
+    "text": "stock-level cross-market return prediction between the U.S. and Chinese markets under realistic trading-session timing. Our study fills this gap by developing a directed bipartite graph framework for stock-level cross-market return forecasting between the U.S. and Chinese equity markets. time-ordered bipartite graph that selects cross-market predictors based on rolling-window screening, thereby capturing directed predictive links across non-overlapping trading sessions. predictors are then embedded into a suite of ten machine learning models to forecast next-session",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 7,
+    "total_chunks": 80,
+    "char_count": 572,
+    "word_count": 73,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "20a2cd9b-6a64-414a-a2c9-f95a3d497455",
+    "text": "open-to-close (OPCL) returns in each market. Empirically, we demonstrate a pronounced directional asymmetry: U.S. market information is substantially more informative for predicting Chinese stock returns than vice versa. Ratios (SRs) obtained when forecasting Chinese stocks using U.S. predictors consistently exceed those in the reverse direction.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 8,
+    "total_chunks": 80,
+    "char_count": 348,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a31083ed-bbf2-4ba7-b8f3-a59f210beb60",
+    "text": "We further show that both the graph-based selection mechanism and cross-market information contribute materially to predictive performance. Sector-level patterns in the estimated graph reveal economically interpretable transmission channels across markets. For instance, sector-level aggregation of the bipartite graph reveals meaningful cross-sector transmission patterns rather than a block-diagonal structure. is on documenting directional cross-market predictability and the structure of the associated dependency graph rather than designing a fully implementable trading strategy. performance metrics are reported pre-transaction-cost and without liquidity-optimized weighting, and should be interpreted as evidence of predictive asymmetry rather than deployable alpha. Our setting is economically and statistically distinctive because the U.S. and Chinese equity",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 9,
+    "total_chunks": 80,
+    "char_count": 868,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "be9094d7-1c2e-4e0b-a9e6-8b6976ec7e2e",
+    "text": "sessions do not overlap. This implies that U.S. previous-close-to-close (pvCLCL) information is fully observed before the subsequent Chinese OPCL window begins, yielding a clean timing structure for cross-market prediction. The directed bipartite graph can therefore be interpreted as a time-ordered map of potential information transmission channels across markets, rather than a contemporaneous The structure of the paper is arranged as follows. Section 2 provides a detailed review of related Section 3 describes the data we use and the definitions of financial terms involved. introduces the graph-based methodology for feature selection and prediction. Section 5 presents the evaluation metrics and experimental results.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 10,
+    "total_chunks": 80,
+    "char_count": 725,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "67030693-bfe4-4200-af51-4b0cce01b6e2",
+    "text": "Finally, Section 6 summarizes the study and discusses future research directions. 2.1 Cross-Market Analysis and Prediction Global financial markets have become increasingly interconnected with the intensification of international economic and financial integration. As a result, shocks, volatility, and information can propagate rapidly across countries through multiple transmission channels. A substantial body of",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 11,
+    "total_chunks": 80,
+    "char_count": 415,
+    "word_count": 52,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ffa36859-a1dd-4ca9-8b36-8c82df179c8b",
+    "text": "research therefore examines cross-market linkages, including price discovery, return co-movement, volatility spillovers, and broader measures of financial interconnectedness, typically within econometric frameworks. Such interconnectedness has motivated studies of directional information flow and market leadership across countries. For example, Liu and An (2011) examine information transmission and price discovery between the U.S. and Chinese markets. Asgharian et al. (2013) study how economic and geographical relationships across countries affect stock market returns. and Tan (2015) analyze daily returns and volatility dynamics in the U.S. and Chinese markets. Clements et al. (2015) investigate global transmission of news and volatility across financial markets, while Ahmad et al. (2018) explore market interconnectedness through return and volatility spillovers. Huang and Liu (2023) construct a financial network to characterize cross-market risk spillovers and interaction topology. These studies primarily emphasize contemporaneous relationships and",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 12,
+    "total_chunks": 80,
+    "char_count": 1065,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fb2a7edd-a43f-43c4-a3d3-74f14a885150",
+    "text": "transmission mechanisms rather than explicit stock-level return prediction. Beyond studying cross-market information propagation, a growing strand of research incorporates signals from multiple markets into forecasting models to improve predictive performance. integration typically relies on feature engineering that embeds external market indicators, deep learning architectures that fuse multi-market inputs, or graph-based models designed to capture inter-market dependencies. For example, Thenmozhi and Sarath Chand (2016) use foreign index information to enhance index prediction, Lee and Yoo (2020) develop multimodal deep learning models for cross-market index forecasting, and Lin et al. (2025) leverage external futures market data to predict movements of the China Securities Index. Gong et al. (2025) propose a cross-market volatility forecasting framework exploiting risk transmission across markets. However, much of this literature focuses on aggregate indices or volatility measures rather than stock-level return prediction. Moreover, network structures are often employed to characterize",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 13,
+    "total_chunks": 80,
+    "char_count": 1105,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7729180b-c519-4641-88f1-325eff8e0fc5",
+    "text": "spillovers and interconnectedness rather than as predictive screening devices for individual stocks. Explicit stock-level cross-market return forecasting under time-ordered, non-overlapping trading sessions remains largely unexplored. Applying our methodology in this setting is therefore novel.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 14,
+    "total_chunks": 80,
+    "char_count": 295,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f425e5ab-2e90-45b1-a660-38960197dce1",
+    "text": "Empirically, the directed bipartite structure reveals pronounced asymmetry in cross-market predictability, with U.S. stocks exerting substantially stronger predictive influence on Chinese stocks These findings align with the literature documenting asymmetric cross-market return predictability with a leading role for the U.S.. Rapach et al. (2013) show that lagged U.S. market returns possess substantial predictive power for foreign equity markets, while the reverse predictability is considerably weaker, highlighting the central role of the U.S. in global price discovery. Similarly, Siliverstovs (2017) finds that the predictive influence of the U.S. is particularly pronounced during market downturns, reinforcing the view that U.S. information dominates international return Focusing specifically on China-related markets, Mohammadi and Tan (2015) document significant return and volatility spillovers from the U.S. to China mainland and Hong Kong, with weaker effects in the opposite direction.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 15,
+    "total_chunks": 80,
+    "char_count": 1002,
+    "word_count": 133,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "61591ce7-92eb-4919-b5e9-d0825e123785",
+    "text": "2.2 Graph Methods in Finance Graph methods provide a way to represent relationships among financial entities, rather than treating each entity in isolation.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 16,
+    "total_chunks": 80,
+    "char_count": 156,
+    "word_count": 23,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8dd39627-582b-428a-96da-5901b425ee5d",
+    "text": "The use of graphs aligns with the view that financial systems are interconnected (Bardoscia et al., 2021), and that modeling these interconnections can improve forecasting and risk-management (Chen and Fan, 2025). Many financial phenomena, such as asset co-movements, spillovers and supply-chain linkages, are naturally represented as graphs. Bipartite graphs, which originate in graph theory and network science as representations of relationships between two distinct sets of nodes (Guillaume and Latapy, 2006; Newman, 2018), provide a natural framework for modeling interactions across disjoint groups. finance, bipartite structures arise in contexts such as credit networks, production networks, and supply-chain relationships, where connections form between two heterogeneous sets of entities rather than within a single homogeneous market.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 17,
+    "total_chunks": 80,
+    "char_count": 845,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "374e5260-70d8-4045-ae81-96f7a84c5fd3",
+    "text": "For instance, Kley et al. (2020) study extremal dependence for operational risk by a bipartite graph. Wang and Chen (2020) design a bipartite- graph-based recommender for crowdfunding with sparse data.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 18,
+    "total_chunks": 80,
+    "char_count": 201,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7b5c84e2-41b1-45ef-943d-bd123724a4a1",
+    "text": "In econometrics, Wu et al. (2024) propose a quasi-maximum likelihood approach to estimate a bipartite network influence model. A growing literature applies graph neural networks (GNNs) and related architectures to financial Wang et al. (2021) provide a survey of GNN methods in financial applications, including stock movement prediction, loan default risk assessment, recommender systems, fraud detection, and other financial events. Chen et al. (2018) apply a Graph Convolutional Network (GCN) to integrate information from related companies and improve stock price prediction. (2021) propose an LSTM-relational GCN that captures inter-stock relationships through correlation matrices to predict overnight movements. Capponi et al. (2024) develop a GNN framework for asset pricing using supply-chain data. Zhang et al. (2025) incorporate cross-stock spillover effects to forecast multivariate realized volatilities, and Luo et al. (2025) construct a semantic company relationship graph to enhance stock price forecasting.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 19,
+    "total_chunks": 80,
+    "char_count": 1023,
+    "word_count": 140,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0c67c099-ed6f-4d02-baca-ce052986b4e4",
+    "text": "Some recent empirical work extends graph-based forecasting to richer and more dynamic For example, Cheng and Li (2021) employ a Graph Attention Network (GAT) to model momentum spillovers in stock returns, while Kumar et al. (2024) introduce a temporal GAT that combines graph convolution and attention mechanisms to capture structural and temporal dependencies across global market indices. Lee et al. (2025) show that GCN- and GAT-based models can outperform conventional machine learning baselines by exploiting symmetric interdependencies among financial indices. Related research also incorporates multimodal information into graph Cheng et al. (2022) integrate financial events and news into a multimodal GNN framework for price prediction, and Liu et al. (2024) develop a multiscale dynamic GCN that combines textual and numerical inputs to forecast stock movements. Despite these advances, most graph-based forecasting models construct within-market networks, where edges are defined through contemporaneous similarity, correlation, or learned attention Such graphs typically capture symmetric interdependencies among assets within a",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 20,
+    "total_chunks": 80,
+    "char_count": 1140,
+    "word_count": 156,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f8ded89-3841-49e5-ae92-b7e051e9ba7c",
+    "text": "single market and are primarily used to enhance predictive performance through richer representation In contrast, our framework constructs a directed bipartite graph across two distinct markets, where edges are formed through time-ordered predictive screening rather than contemporaneous The resulting graph serves as a feature-selection mechanism for stock-level cross-market return prediction, explicitly exploiting the non-overlapping trading sessions between the U.S. and 2.3 Machine Learning in Finance Driven by increasing data availability and computational power, the application of machine learning in finance has expanded substantially in recent years. Compared to classical time-series and econometric models, such as ARIMA and GARCH, machine learning approaches are often considered better suited to high-dimensional and nonlinear settings. A survey by Rundo et al. (2019) documents that machine-learning-based systems demonstrate superior overall performance compared to traditional Another survey by Kelly et al. (2023) highlights how machine learning methods have",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 21,
+    "total_chunks": 80,
+    "char_count": 1078,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bec353b5-5f54-4ea8-b97e-07990e9b1d21",
+    "text": "become established in empirical financial research. Key applications include forecasting asset returns, volatility estimation, fraud detection, and algorithmic trading. Forecasting asset returns remains",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 22,
+    "total_chunks": 80,
+    "char_count": 202,
+    "word_count": 23,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "61c40f48-7e12-42d0-b98a-66d7b4e5e52c",
+    "text": "inherently difficult due to low signal-to-noise ratios, structural instability, and nonlinear dependence Moreover, evidence of predictive gains is often sensitive to model specification and feature These challenges partly motivate the adoption of flexible machine learning methods and the incorporation of richer information sets. Given recent developments in machine learning, its applications in finance can be grouped into several major categories: traditional machine learning methods, deep learning methods, and large-language-model-based methods. For traditional machine learning methods, Huang et al. (2005) employ support vector machines (SVM) to predict the direction of weekly price movements. Kumar and Thenmozhi (2006) investigate",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 23,
+    "total_chunks": 80,
+    "char_count": 742,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1929343c-cd24-49e8-bee3-ca216b355794",
+    "text": "the application of SVM and Random Forests (RF) in predicting the direction of a market index. and Trisedya (2015) incorporate sentiment information and use a basic linear regression model for stock price prediction. Thenmozhi and Sarath Chand (2016) predict stock prices of several major indices using support vector regression. Yang and He (2026) propose a novel proxy and apply Extreme Gradient Boosting (XGBoost) to predict return directions in the Chinese market. For deep learning methods, Chen et al. (2015) use an LSTM model for sequence learning and Chinese stock return forecasting. Wang (2024) investigates the performance of neural network models in predicting stock returns. A survey by Gao et al. (2024) highlights the expanding use of",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 24,
+    "total_chunks": 80,
+    "char_count": 748,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3e2d493f-0580-414a-8694-be284ae6a7ab",
+    "text": "deep neural networks, convolutional neural networks, recurrent neural networks, and other advanced architectures in financial contexts. For large-language-model-based methods, Nie et al. (2024) review how Large Language Models",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 25,
+    "total_chunks": 80,
+    "char_count": 226,
+    "word_count": 28,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ff6834c8-365e-439e-8a68-46ca5dc4eaa9",
+    "text": "(LLMs) are applied in finance. Ding et al. (2023) demonstrate the effectiveness of LLMs in forecasting Chen et al. (2023) propose a framework that integrates ChatGPT and GNN to forecast Chen et al. (2024) investigate the ability of ChatGPT for stock return forecasting. Despite these advances, most existing studies focus on single-market return prediction and rely primarily on information drawn from within the same market. Additional information is often shown to improve predictive performance, yet it is typically incorporated in contemporaneous or symmetric Very few studies employ machine learning methods in stock-level cross-market forecasting environments characterized by asynchronous trading sessions and explicitly time-ordered information Differing from existing studies, our framework combines directed bipartite screening with a second-stage machine learning prediction step, enabling systematic exploitation of cross-market dependencies, temporal ordering, and asymmetric predictive structure.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 26,
+    "total_chunks": 80,
+    "char_count": 1010,
+    "word_count": 133,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7d92c35e-1724-458d-aa9d-1677ba65feb1",
+    "text": "The stock data used in this study cover several of the world's largest markets by market capitalization, including the New York Stock Exchange (NYSE), Nasdaq, the Shanghai Stock Exchange (SSE), and the Shenzhen Stock Exchange (SZSE). Daily U.S. stock data are sourced from the Center for Research in Security Prices1 (CRSP), while daily Chinese stock data are sourced from the Wind The data span the period from 2014 through 2021. This selection of data enables us to investigate the transferability of signals across the world's largest and most liquid equity markets operating under non-overlapping trading sessions. In this paper, we rely on the market excess return of a stock, defined as the difference between the raw return of its price and the return of an exchange-traded fund (ETF) representing overall stock market performance. We use both pvCLCL returns and OPCL returns in one market to forecast OPCL returns in the other market (see Section 4.2 for a more detailed justification of this The pvCLCL logarithmic raw return for stock i on day t can be calculated by:",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 27,
+    "total_chunks": 80,
+    "char_count": 1077,
+    "word_count": 177,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a15afdc-e7dd-4a07-8dc3-4be825a6d088",
+    "text": "while the OPCL logarithmic raw return for stock i on day t can be calculated by: p(t)i,cl\nR(t)i,OPCL = log . (2)\np(t)i,op Here p(t)i,cl and p(t)i,op denote the closing and opening price of stock i on day t respectively. market excess return of stock i on day t can be defined as: r(t)i = R(t)i,pvCLCL −R(t)ETF,pvCLCL (3) for pvCLCL returns, or\nr(t)i = R(t)i,OPCL −R(t)ETF,OPCL (4) We use SPY as the market ETF in the U.S. and 513500.SH in China. We select 500 stocks with the highest average market capitalizations over the years covered in",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 29,
+    "total_chunks": 80,
+    "char_count": 540,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f2681eea-25ea-4e3a-b3a9-7e12174a6d18",
+    "text": "the dataset from each country.3 Unless otherwise specified, all returns mentioned in the following contents refer to market excess returns. To mitigate the influence of extreme values and potential outliers, we apply winsorization to the training-sample returns of each stock, replacing observations below the 0.5th percentile with the 0.5th percentile value and those above the 99.5th percentile with the 99.5th percentile value.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 30,
+    "total_chunks": 80,
+    "char_count": 430,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3e70e026-7de9-44cf-a838-dcb3e676f57d",
+    "text": "This study aims to predict individual stock returns using a cross-market directed bipartite graph. The prediction framework consists of two main stages. First, we build a directed bipartite graph using return data from two markets within a look-back training window. This graph identifies cross-market predictive links: if a directed edge connects two stocks, the stock at the source of the edge is treated as a predictor for forecasting the returns of the stock at the destination. 3This universe selection relies on full-sample information (average market capitalization over 2014–2021) and\ntherefore introduces a mechanical look-ahead component. We adopt it as a pragmatic way to focus on continuously\ntraded, highly liquid stocks and reduce missing observations. However, we caution that a fully investable design\nwould require time-t reconstitution based solely on lagged market capitalization information. Importantly, our main\nqualitative finding is directional asymmetry (the influence of the U.S. market on the Chinese market being stronger\nthan the reverse effect), which is unlikely to be driven solely by this selection procedure. Nonetheless, we consider\ntime-local universe formation as a valuable extension. second stage, we apply various machine learning methods to forecast returns based on the identified",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 31,
+    "total_chunks": 80,
+    "char_count": 1322,
+    "word_count": 193,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "68740ef1-b6c3-4e0c-be0f-92930af12394",
+    "text": "4.1 Directed Bipartite Graph A graph can be defined as G = (V, E), where V represents the vertex set and E represents the edge G is called bipartite if V can be divided into two disjoint sets X and Y such that all edges have one endpoint in X and another in Y. We denote a directed edge from vi to vj as eij with associated For a bipartite graph G, the biadjacency matrix B is defined where rows correspond to nodes in X, columns correspond to nodes in Y, and each entry bij contains the weight wij of edge We represent two different markets, the source market X and target market Y, as two vertex sets, where stocks in each market are interpreted as nodes. Edges originate from nodes in X and For a specific period of time w, which is the look-back training window in the",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 32,
+    "total_chunks": 80,
+    "char_count": 772,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4fbf60b1-ef5b-44b3-8b71-d7b0515e23e7",
+    "text": "experiment, the daily return vector of the jth stock in market X is x = [r(t−l−w) , r(t−l−w+1) , ..., r(t−l−1) ]⊺, Xj Xj Xj where r(t) is the return of the jth stock on day t. The daily return vector of the ith stock in market Xj Y is\ny = [r(t−w) , r(t−w+1) , ..., r(t−1) ]⊺. The lag parameter l captures the temporal ordering induced by non-overlapping trading sessions, ensuring that returns in the source market precede those in the target market. study the calculation with t uses the trading calendar rather than the natural calendar.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 33,
+    "total_chunks": 80,
+    "char_count": 539,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "24c489a2-1a15-4861-af59-77b44f2966c2",
+    "text": "This time-ordered screening procedure induces a directed bipartite graph, where nodes in the source market X are connected to nodes in the target market Y whenever statistically significant predictive links are detected within the rolling training window. Figure 1 provides a schematic illustration of this bipartite structure. For each ordered pair (Xj, Yi), we estimate a univariate linear regression of y on x within the Figure 1: Schematic illustration of the directed bipartite graph linking source-market stocks to target-market stocks based on significant predictive relationships. We quantify such relationship using the t-statistic from regression, defined as tβ = . (5)\nse/pPwi=1 (xi −¯x)2 cov(x, y)\nHere, β is the slope coefficient of the simple linear regression, given by β = and se denotes\nvar(x)\nr SSE\nthe standard error of the regression se = SSE denotes the sum of squared residuals, w −2. SSE = X (yi −ˆyi)2, where ˆy = βx + α, and α = ¯y −β ¯x. Here, ˆyi is the fitted value of yi, and α\ni=1\nis the intercept of the regression line. The use of pairwise univariate screening serves primarily as a computationally tractable sparsification device rather than as a formal structural inference procedure. Similar marginal screening",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 34,
+    "total_chunks": 80,
+    "char_count": 1245,
+    "word_count": 203,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2c11e816-9d9d-4951-9699-0325e502a416",
+    "text": "approaches are common in high-dimensional predictive settings where the objective is feature selection rather than causal identification (see, e.g., Fan and Lv (2008); Hastie et al. (2009)). recognize that testing across a large number of stock pairs raises multiple-testing considerations and may introduce spurious edges in finite samples (cf. Harvey et al. (2015)). discovery rate or multiple-comparison corrections could be applied. However, our primary goal is to construct a predictive graph that enhances out-of-sample forecasting performance rather than to perform statistical inference on individual edges. We therefore treat the screening step as a",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 35,
+    "total_chunks": 80,
+    "char_count": 658,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa30f7d7-7080-4a0f-ab74-5a8e3f8df85a",
+    "text": "model-selection heuristic and assess its validity through out-of-sample forecasting performance and Figure 2 shows the return time series for an example pair of U.S. and Chinese technology stocks, CDNS (pvCLCL returns) and 002410.XSHE (OPCL returns), smoothed with a three-day moving average for visualization purposes. Here l = 1 and w = 250. The t-statistic from the regression of 002410.XSHE on CDNS is high during the period shown, illustrating a statistically significant cross-market predictive relation within the training window under the linear screening specification. Figure 2: Example time series of U.S. pvCLCL returns for CDNS and Chinese OPCL returns for\n002410.XSHE over the rolling training window. The series are shown for illustrative purposes to",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 36,
+    "total_chunks": 80,
+    "char_count": 765,
+    "word_count": 113,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0ba15688-187f-42c8-b803-3a0161676b80",
+    "text": "highlight cross-market co-movement underlying the detected predictive link. In our setting, either the U.S. or the Chinese market can be treated as the source market X, with the target market of prediction serving as market Y. After performing the regression t-test above for all ordered stock pairs in market X and Y, we set a threshold to filter the resulting t-statistics by We introduce an explicit threshold parameter, denoted by τ, to facilitate later reference. In our experiments, we set τ = 2, and select edges whenever |tβ| > τ, corresponding approximately to conventional significance levels under standard asymptotic approximations. of the t-statistics for x and y is larger than τ, we select the return of Xj on day t −l to predict the return of Yi on day t. This selection forms a directed edge in the graph pointing from Xj to Yi.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 37,
+    "total_chunks": 80,
+    "char_count": 845,
+    "word_count": 144,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ac5e30a6-b44a-4de6-a21a-80bf77c5d565",
+    "text": "Note that the thresholding step is used purely as a sparsification mechanism, aimed at denoising the signal and improving computational tractability rather than constituting a formal multiple-testing A sample directed bipartite graph is shown in Figure 1, where Xj and Xk on day t −l are selected to predict Yi on day t. This construction yields a time-lagged cross-market predictive network that can be naturally interpreted as a directed bipartite graph. Figure 3 presents a section of the heatmap corresponding to the biadjacency matrix of the U.S.–Chinese stock network on 21 October 2021.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 38,
+    "total_chunks": 80,
+    "char_count": 593,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "15fa9f41-4b71-42be-94eb-fca7c88fb492",
+    "text": "To illustrate the structure more clearly, we select 25 representative stocks from each sector. For sectors containing fewer than 25 stocks in the original dataset, all available stocks are included, resulting in 254 U.S. stocks and 235 Chinese stocks in this Each row corresponds to a Chinese stock, while each column represents a U.S. stock. The colour intensity represents the value of the t-statistic, and black grid lines delineate sectoral This visualization shows that cross-market predictive connectivity is not restricted to within-sector interactions (which would lead to a block-diagonal structure), thereby motivating a",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 39,
+    "total_chunks": 80,
+    "char_count": 630,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0378f441-67a1-46f7-ab6f-389fbc7a20ee",
+    "text": "flexible cross-market predictive framework. Figure 3: Heatmap of the directed biadjacency matrix for a representative trading day. correspond to Chinese stocks and columns to U.S. stocks, grouped by sector. Each entry represents",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 40,
+    "total_chunks": 80,
+    "char_count": 228,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "efb222cd-0764-462b-b005-c8e6d1573cc3",
+    "text": "the t-statistic from the rolling-window regression of Chinese returns on lagged U.S. returns. intensity reflects the magnitude and sign of the predictive relationship. To summarize cross-market structure over time, we average the daily biadjacency matrices across the full sample period, obtaining an aggregate representation of predictive linkages. then compute, for this time-averaged matrix, the median of absolute t-statistics within each sectorby-sector block of the corresponding heatmap (Figure 4). This aggregation highlights systematic sectoral dependencies rather than stock-specific effects. For example, the financial services sector in the Chinese market exhibits strong predictive links with the utilities sector in the U.S. market.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 41,
+    "total_chunks": 80,
+    "char_count": 746,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4c7f14b6-bd3e-40dc-889e-459a7875c93a",
+    "text": "Figure 4: Sector-level heatmap of the absolute median t-statistic in the time-averaged biadjacency matrix of the directed cross-market graph. Rows correspond to Chinese sectors and columns to U.S. Each entry reports the median absolute predictive strength across all stock pairs within the corresponding sector-by-sector block. We also examine the cross-market relations over time.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 42,
+    "total_chunks": 80,
+    "char_count": 381,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "014586c3-3d7e-4ba3-a8c2-f2f83ce09eab",
+    "text": "Figure 5 shows how the in-degree of all nodes in set Y evolves over time. For each day, the 25th, 50th, and 75th percentiles of the in-degree distribution are computed across all target nodes.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 43,
+    "total_chunks": 80,
+    "char_count": 192,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4b82a2fe-f347-4400-8f77-79afbc304c9d",
+    "text": "The blue curves represent the number of U.S. pvCLCL nodes selected to predict Chinese OPCL returns, while the red curves correspond to the number of Chinese pvCLCL nodes selected to predict U.S.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 44,
+    "total_chunks": 80,
+    "char_count": 194,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c734477c-aed1-4a52-bdc3-e7819770abfb",
+    "text": "As time progresses, the in-degree in both directions increases, suggesting strengthening cross-market predictive connectivity over the sample period. 4.2 Predictive Analysis with Machine Learning In order to predict the return of stock Yi on day t, we use training data from day t −w to day t −1 for market Y and from day t −l −w to day t −l −1 for market X. Since we wish to predict",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 45,
+    "total_chunks": 80,
+    "char_count": 383,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1ccf5ff1-1b41-4c10-a51a-e738f83dd32c",
+    "text": "Figure 5: The figure shows the 25th, 50th, and 75th percentiles of the in-degree distribution of\ntarget nodes by day. US-CN represents the number of U.S. pvCLCL nodes selected to predict Chinese OPCL returns, while CN-US represents the number of Chinese pvCLCL nodes selected to r(t) by using information from market X, we select n stocks, i.e., X1, X2, ..., Xn from market X, Yi corresponding to those stocks that exhibit the strongest cross-market predictive associations with Yi\naccording to the t-statistic defined above. Their daily returns on day t −l are r(t−l) , r(t−l) , ..., r(t−l) . The data used for training and prediction are illustrated in Figure 6. All predictor selection is performed within the rolling training window to avoid look-ahead bias.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 46,
+    "total_chunks": 80,
+    "char_count": 762,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "45ba1268-e285-4e16-a6a0-badb08aef843",
+    "text": "The U.S. market is open from 9:30am to 4:00pm U.S. Eastern Time (ET), while the Chinese market is open from 9:30am to 11:30am, and 1:00pm to 3:00pm China Standard Time (UTC+8). There is no overlap between the two trading periods, as shown in the time zone diagram in Figure 7, under the standard time difference. Note that adjusting for daylight saving time does not result in any overlap between the trading sessions. We predict OPCL returns for both countries. l = 1 when predicting Chinese stocks using the latest information from the U.S. market, and l = 0 in the reverse direction. This timing structure ensures that predictor information from the source",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 47,
+    "total_chunks": 80,
+    "char_count": 659,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "76b4ff97-31cd-485e-8ec8-6d2820ad1e21",
+    "text": "market is fully observable prior to the opening of the target market. We build the forecasting model as follows: r(t) , r(t−l) , ..., r(t−l) ; θ) + ϵ(t)i . (6) Xn = Fi(r(t−l)X1 X2 Yi Figure 6: Schematic illustration of the rolling training and prediction framework.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 48,
+    "total_chunks": 80,
+    "char_count": 265,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dd8bba4f-beb7-4dde-a007-d4bf0066009d",
+    "text": "For each target\nstock Yi, returns over the look-back window [t −w, t −1] are regressed on lagged source-market\nreturns over [t−l−w, t−l−1]. The bottom row represents the out-of-sample prediction of r(t) using Yi\nsource returns observed at t −l, thereby preserving temporal ordering and eliminating look-ahead Figure 7: Timeline of opening and closing times for the U.S. and Chinese stock markets. non-overlapping trading sessions induce a natural temporal ordering of information, with U.S. day\nt −1 close preceding Chinese day t trading, and Chinese day t close preceding U.S. day t trading.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 49,
+    "total_chunks": 80,
+    "char_count": 592,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e9d88fe8-f748-4302-8c61-b22c68286b36",
+    "text": "Here, the function Fi represents the different machine learning methods we use, and θ refers to the parameters that are estimated for each machine learning model. The aim is to identify a model that can generate accurate out-of-sample predictions of r(t) so that a high SR can be achieved. We applied a total of ten machine learning models to forecast returns. They include: Ordinary",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 50,
+    "total_chunks": 80,
+    "char_count": 383,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2e595ca3-6ba7-4556-8c63-616429670e96",
+    "text": "Least Squares (OLS), Least Absolute Shrinkage and Selection Operator (LASSO), Ridge Regression (RIDGE), Support Vector Machine (SVM), Extreme Gradient Boosting (XGBoost), Light Gradient Boosting Machine (LGBM), Random Forests (RF), Adaptive Boosting (AdaBoost), ensemble by results average (ensemble-avg) and ensemble by results median (ensemble-med). models spans linear, regularized, kernel-based, tree-based, and ensemble approaches, allowing us to assess whether cross-market predictive gains depend on model class or are robust across specifications. We describe each model in detail below. All models are estimated within each rolling training window and evaluated out-of-sample to ensure temporal validity.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 51,
+    "total_chunks": 80,
+    "char_count": 713,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fb570bad-ce92-475d-8d6d-f371677f676e",
+    "text": "• Ordinary Least Squares (OLS): The main idea of OLS is to estimate regression coefficients by choosing parameter values that minimize the sum of squared residuals between observed and predicted values. Specifically, the model is defined as: r(t) + ϵ(t)i . (7) Yi = αi + X βijr(t−l)Xj\nj=1 The linear model is fit with an objective of minimizing the residual sum of squares (RSS): min ∥y −αi1 −Xw∥22 . (8) αi,w y ∈Rd is the vector of returns corresponding to r(t) , X ∈Rd×n is the matrix of predictors Yi\nwhere each row is [r(t−l) , . . . , r(t−l) ], and w = [βi1, . . . , βin]⊤is the associated coefficient vector. Here d = w, which is the length of training window, i.e., the number of time points.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 52,
+    "total_chunks": 80,
+    "char_count": 699,
+    "word_count": 133,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fd9c76a9-ebc5-4202-a543-1534adf850ca",
+    "text": "• Least Absolute Shrinkage and Selection Operator (LASSO): The OLS method often leads to low bias but high variance (Hastie et al., 2009). Shrinkage methods are introduced to mitigate this problem, and LASSO is one of them. It uses ℓ1-norm regularization to impose a penalty on the size of regression coefficients (Hastie et al., 2009). The objective function is min ∥y −αi1 −Xw∥22 + λ∥w∥1 . (9) αi,w 2d Here λ is the regularization parameter. • Ridge Regression (RIDGE): RIDGE is another type of shrinkage method. regularization to the linear least squares loss function. The objective function is given by: min ∥y −αi1 −Xw∥22 + λ∥w∥22 . (10) αi,w",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 53,
+    "total_chunks": 80,
+    "char_count": 648,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "01e147db-341c-429c-af96-6519f1cbefcd",
+    "text": "• Support Vector Machine (SVM): SVMs can tackle complex learning problems while retaining the analytical simplicity of linear models. With kernel functions, this method avoids direct computation in high-dimensional spaces, enabling nonlinear learning using a linear algorithm in the feature space (Hearst et al., 1998). We use the radial basis function kernel throughout our experiment.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 54,
+    "total_chunks": 80,
+    "char_count": 386,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d038fe68-b438-4b1a-959f-1a83084cca1f",
+    "text": "The goal is to minimize the following dual optimization problem with respect to the Lagrange multipliers: n n n\nmin X X αjαkyjykK(xj, xk) − X αj\nα 2\nj=1 k=1 j=1\ns.t. 0 ≤αj ≤C, j = 1, 2, . . . , n. Here αj is the Lagrange multiplier, C is a hyperparameter that controls the trade-off between the flatness of the function and the amount by which deviations larger than ϵ are tolerated, in the training window, and xj is its K(xj, xk) is the kernel function, yj is r(t−w+j−1)Yi\ncorresponding vector of predictors [r(t−w+j−1−l) , . . . , r(t−w+j−1−l) ]⊺. • Extreme Gradient Boosting (XGBoost): XGBoost is a scalable end-to-end tree boosting method (Chen and Guestrin, 2016). It implements parallel and distributed computing to",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 55,
+    "total_chunks": 80,
+    "char_count": 722,
+    "word_count": 129,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7e9f24c4-1654-4392-af99-670f8d8cebea",
+    "text": "The model is defined by the following equation: ˆyj = ϕ(xj) = X fk(xj), fk ∈F, (12) where F is the space of regression trees, and fk is one independent tree. The objective function min X l(ˆyj, yj) + X Ω(fk), (13)\nj k where\nΩ(f) = γM + 2λ∥w∥2. (14) Here l is a differentiable convex loss function, Ω(f) is the regularization term, M is the number of leaves, w is the leaf weight, and γ and λ are the corresponding regularization parameters. • Light Gradient Boosting Machine (LGBM): LGBM is another gradient boosting method that improves computational efficiency compared with standard gradient boosting tree algorithms (Ke et al., 2017). Two key techniques employed by LGBM are Gradient-Based One-Side Sampling and Exclusive Feature Bundling.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 56,
+    "total_chunks": 80,
+    "char_count": 743,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2fc4b03a-6cf8-4a80-b541-e414ff16ae5c",
+    "text": "The former retains instances with large gradients and randomly samples those with small gradients. The latter combines mutually exclusive sparse features, which never take nonzero values at the same time, into a single combined feature, effectively reducing computational complexity (Ke et al., 2017). • Random Forests (RF): Random forests consist of an ensemble of decision trees. node of each tree, the algorithm randomly selects a subset of features to consider for splitting. Each tree is grown using bootstrap sampling of the data (Breiman, 2001). de-correlated trees, the final prediction is obtained by averaging their outputs (Hastie et al., • Adaptive Boosting (AdaBoost): AdaBoost combines multiple weak learners to form a Each weaker learner is trained to correct the errors made by the previous The algorithm iteratively reweights training observations based on their absolute prediction errors, so that more emphasis is given to instances with larger errors from earlier The final prediction is obtained by aggregating the weak learners, summing their probabilistic predictions (Freund and Schapire, 1997).",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 57,
+    "total_chunks": 80,
+    "char_count": 1119,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b7be54e9-09e3-4594-9716-03dd40a7185b",
+    "text": "We choose a decision tree regressor as the base learner in our experiment. • Ensemble by results average (ensemble-avg): For each stock and each day, we take the average of the prediction results from the eight methods above as the final output. • Ensemble by results median (ensemble-med): Similar to ensemble-avg, we take the median of the prediction results from the eight methods as the final output for each stock on In this section, we conduct an extensive set of experiments to evaluate the cross-market predictability of individual stock returns and examine the economic relevance of the proposed graph-based All results are obtained using a rolling-window estimation scheme and evaluated strictly 5.1 Evaluation Metrics We use Profit and Loss (PnL) and Sharpe Ratio (SR) to evaluate the performance of forecasting We abstract from liquidity-optimized portfolio construction and explicit transaction cost modeling, and therefore interpret reported SRs as pre-cost measures of predictive strength rather than implementable performance.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 58,
+    "total_chunks": 80,
+    "char_count": 1042,
+    "word_count": 156,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "02c82191-8145-493e-8055-53639541490f",
+    "text": "• Profit and Loss (PnL): The PnL on day t is calculated with the following equation: PnL(t) = X sign(s(t)i ) · r(t)i · b(t)i . (15) Here s(t)i denotes the predicted return of stock i on day t, and r(t)i denotes the actual return\nof stock i on day t. b(t)i = min(0.001 × mdv(21)i , L) is the amount of capital deployed on stock\ni, where mdv(21)i denotes the median daily traded volume of stock i over the 21-day interval preceding day t, and L is the maximum limit to the bid. The parameter L controls the maximum position size. This position-sizing rule serves as a coarse liquidity proxy, limiting exposure in less actively traded names.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 59,
+    "total_chunks": 80,
+    "char_count": 638,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "962a72bc-0732-428b-9a5b-b14d31a6aab0",
+    "text": "Throughout our experiment, L is set to 100,000 USD for the U.S. market prediction and 1,500,000 CNY for the Chinese market prediction. • Sharpe Ratio (SR): After computing daily PnLs of all stocks, we calculate the mean and standard deviation of the daily PnL vector with length T, denoted as µ(T)PnL and σ(T)PnL, where T is the length of predicting period in our experiment. The annualized SR is given by: µ(T)PnL √ SR = · 252. (16)\nσ(T)PnL Here the scaling accounts for the fact that there are 252 trading days in a calendar year and annualizes daily PnL variability. Several practical limitations should be noted. First, the graph is obtained via large-scale pairwise screening and therefore may include spurious edges in the presence of multiple testing.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 60,
+    "total_chunks": 80,
+    "char_count": 758,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3a515644-89b7-4e31-a70d-d183571392d4",
+    "text": "economic evaluation abstracts from transaction costs, market impact, short-sale constraints, and other trading frictions, so reported SRs reflect pre-cost predictive performance. implement liquidity-weighted portfolio construction or dynamic capacity controls; position sizes are capped but not optimized with respect to market depth. Consequently, the trading design is stylized rather than fully implementable. As emphasized by Cartea et al. (2025), ignoring stock-level capacity constraints can substantially overstate the implementable value of predictive strategies. Our objective is to isolate and quantify directional cross-market predictive asymmetries rather than to construct a production-ready trading strategy. 5.2 Experimental Setup We use a 250-day training window and update both the graphs and the predictive models every 10 Prediction begins on the first trading day of 2016 and ends on the last trading day of 2021.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 61,
+    "total_chunks": 80,
+    "char_count": 933,
+    "word_count": 128,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c8b9c66e-2afd-4e7d-9bff-d793d44cd354",
+    "text": "All models are re-estimated using a rolling-window scheme to ensure strict out-of-sample evaluation and avoid look-ahead bias. 5.2.1 Graph-Based Cross-Market Prediction. • Predicting the Chinese Market with the U.S. market: We let market X denote the U.S. market, and market Y denote the Chinese market. We use the most recent available U.S.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 62,
+    "total_chunks": 80,
+    "char_count": 341,
+    "word_count": 52,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "13ba6967-c91c-484f-b77b-325252cfebfe",
+    "text": "returns as predictors to forecast Chinese returns, i.e., l = 1, reflecting the non-overlapping trading sessions and the temporal ordering of information flow. • Predicting the U.S. Market with the Chinese market: We let market X denote the Chinese market, and market Y denote the U.S. market. We also use the most recent available returns for forecasting, i.e., l = 0, since Chinese trading concludes before the U.S. market",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 63,
+    "total_chunks": 80,
+    "char_count": 423,
+    "word_count": 69,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "174ba370-bb0f-452f-9988-b531969a35ab",
+    "text": "opens on the same calendar day. • Non-Graph-Based Same-Market Baseline: For each target stock, the previous 25 days of daily return data are used as predictive features. The training window remains 250 days and",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 64,
+    "total_chunks": 80,
+    "char_count": 210,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c7d2bc93-730f-4e7a-a57d-7db968180206",
+    "text": "models are updated every 10 days to ensure comparability with the graph-based specifications. This baseline model can be described with the following equation: r(t) , r(t−24) , ..., r(t−1) ; θ) + ϵ(t)i . (17) Yi = Fi(r(t−25)Yi Yi Yi Note that the predictive features r(t−25) , r(t−24) , ..., r(t−1) can be either all pvCLCL returns or Yi Yi Yi\nall OPCL returns, while r(t) is an OPCL return. • Graph-Based Same-Market Baseline: Based on the methodology described in Section 4.1, this baseline sets markets X and Y identical, so that for each stock its predictors are drawn from the same market. The return values of predictors are one-day ahead of the response This specification isolates the incremental contribution of cross-market information relative to graph-based modeling per se.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 65,
+    "total_chunks": 80,
+    "char_count": 786,
+    "word_count": 129,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5af56a6f-fdf8-4055-9dff-a70c68b4cdd8",
+    "text": "We begin by evaluating the economic performance of the cross-market forecasting framework. Portfolio sorts based on model-implied signals are standard in the return predictability literature. For each day t, stocks are ranked by the absolute value of their predicted returns, |ˆr(t)i |. how performance varies with signal strength, we construct six nested quantile portfolios: • quantile 1 (qr1): all stocks; • quantile 2 (qr2): top 80% of stocks ranked by |ˆr(t)i |; • quantile 3 (qr3): top 60%; • quantile 4 (qr4): top 40%; • quantile 5 (qr5): top 20%; • quantile 6 (qr6): top 10%. These portfolios are nested, so that qr6 ⊂qr5 ⊂qr4 ⊂qr3 ⊂qr2 ⊂qr1. This construction allows us to assess whether stronger model signals translate into improved risk-adjusted performance. Importantly, the ranking at day t is based solely on model predictions available at that date and does not use realized returns, thereby avoiding look-ahead bias in portfolio formation.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 66,
+    "total_chunks": 80,
+    "char_count": 956,
+    "word_count": 152,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f7aeebc4-b1a2-47cb-a2e6-4ca9cc6edac9",
+    "text": "first document that cross-market information and graph-based modeling contribute to improved forecasting performance. (a) Predictors: U.S. pvCLCL returns. (b) Predictors: U.S. Figure 8: Sharpe Ratios for forecasting Chinese OPCL returns using U.S. pvCLCL and OPCL returns as predictors. Figure 8 and Figure 9 display the results of forecasting in two different directions. to Figure 8, when predicting Chinese stocks with U.S. stocks, RIDGE, LGBM, ensemble-avg and ensemble-med yield strong performance.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 67,
+    "total_chunks": 80,
+    "char_count": 503,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "22c7fd02-f5df-484c-ab85-81316bcc232b",
+    "text": "SVM appears less effective for this task, since its SRs are mostly lower than one. For other forecasting methods and most quantiles, SRs exceed one, with some approaching two.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 68,
+    "total_chunks": 80,
+    "char_count": 175,
+    "word_count": 29,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3808af1f-c181-4a94-ac03-9fd026e820cc",
+    "text": "Notably, the ensemble-average and ensemble-median methods maintain robust and stable performance, often comparable to the best individual models, highlighting the benefit of model diversification. Using U.S. pvCLCL returns as features performs better than using OPCL returns to predict Chinese OPCL returns. The cumulative PnL plots of each method for the former are shown in Figure 10, where the upward-sloping trajectories indicate economically meaningful profitability.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 69,
+    "total_chunks": 80,
+    "char_count": 472,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ba1b564b-46c7-48f3-84ff-3ec6895af6f4",
+    "text": "In contrast, as shown in Figure 9, when predicting the U.S. stocks with Chinese stocks, SRs are substantially lower across methods and quantiles. Therefore the Chinese market exerts weaker predictive influence than the U.S. market in cross-market return prediction. Since the performance is stronger when predicting Chinese stocks using U.S. pvCLCL returns, we focus on this setting in",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 70,
+    "total_chunks": 80,
+    "char_count": 385,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9f342849-7167-4b6f-b47e-5af4cd49919e",
+    "text": "subsequent experiments and analyses. (a) Predictors: Chinese pvCLCL returns. (b) Predictors: Chinese OPCL returns. Figure 9: Sharpe Ratios for forecasting U.S. OPCL returns using Chinese returns as predictors. Figure 11 shows the results of predicting Chinese stocks with Chinese stocks based on graph Figure 12 summarizes SRs across specifications, comparing graph-based cross-market approaches, graph-based single-market approaches, and the non-graph-based baseline, with pvCLCL returns used as predictors. Figure 13 reports the corresponding performance differentials (deltas), computed as SRs of graph-based approaches minus those of the non-graph-based baseline. results indicate that graph-based same-market approaches outperform non-graph-based same-market approaches for most machine learning models under most quantiles, especially for OLS, LGBM, and Turning to the incremental value of cross-market information, combining cross-market information with graph information yields the strongest overall performance, outperforming approaches that use graph structures with same-market information only, as well as the non-graph-based baseline",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 71,
+    "total_chunks": 80,
+    "char_count": 1147,
+    "word_count": 144,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4f5683ae-1707-4283-bfab-04c0af55de92",
+    "text": "relying solely on same-market information. Figure 10: Cumulative daily Profit and Loss (PnL) from forecasting Chinese OPCL returns using U.S. pvCLCL returns as predictors. Each panel corresponds to a different machine learning model, and coloured curves represent nested quantile portfolios ranked by the absolute value of predicted (a) Predictors: Chinese pvCLCL returns. (b) Predictors: Chinese OPCL returns. Figure 11: Sharpe Ratios for forecasting Chinese OPCL returns using Chinese returns as predictors. Figure 12: Comparison of Sharpe Ratios across graph-based cross-market, graph-based samemarket, and non-graph-based baseline specifications, using pvCLCL returns as predictors. denotes using Chinese stocks to forecast Chinese stocks, while US-CN denotes using U.S. stocks to forecast Chinese stocks. Figure 13: Performance differentials (Sharpe Ratio deltas) relative to the non-graph-based baseline, using pvCLCL returns as predictors. US-CN denotes using U.S. stocks to forecast Chinese stocks, while CN-CN denotes using Chinese stocks to forecast Chinese stocks.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 72,
+    "total_chunks": 80,
+    "char_count": 1075,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf796388-cfd6-4d91-ac88-fd6877470c5c",
+    "text": "5.4 Sensitivity Analysis We next evaluate the robustness of predictive performance to perturbations in graph structure and temporal alignment when forecasting Chinese returns using U.S. pvCLCL returns. a feature-replacement test, where selected informative stocks are randomly substituted with other Additionally, we assess temporal sensitivity by varying the recency of input data, using features from earlier days (e.g., t −2, t −3, etc.) instead of the most recent day t −1. First, we conduct a feature-replacement experiment. Based on graphs built for predicting returns on day t in the Chinese market using returns on day t −1 in the U.S. market, we maintain the same",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 73,
+    "total_chunks": 80,
+    "char_count": 672,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b8eebdfc-4269-4f40-b13e-1608013551ff",
+    "text": "in-degree of each target node to preserve graph sparsity while randomly changing some of their Only previously unconnected nodes are considered as replacements for the original We randomly replace 20%, 40%, 60%, 80% and all of the edges. level, we obtain the median of the results from all the 10 methods. As shown in Figure 14a, SRs generally decline as a larger fraction of edges is replaced, indicating that predictive gains depend critically on the economically meaningful structure captured by the graph rather than on generic diversification effects. The deterioration is strongest in lower and intermediate quantiles, whereas the highest quantile (qr6) exhibits comparatively greater resilience.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 74,
+    "total_chunks": 80,
+    "char_count": 702,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0c26ebaf-6f8b-4a1a-9c3a-ca4ba4926fc6",
+    "text": "Second, we assess temporal sensitivity by varying the recency of input data. graphs built for predicting returns on day t in the Chinese market using returns on day t −1 in the U.S. market, we look into forecasting performance as the temporal gap increases (e.g., two-day, three-day, or longer gaps) between the predictor window and the target return window. in Section 4.2, when we forecast r(t) , the predictors are given by [r(t−l) , r(t−l) , ..., r(t−l) ].",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 75,
+    "total_chunks": 80,
+    "char_count": 460,
+    "word_count": 79,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ee54225-e512-4b6f-93ba-df3e20955347",
+    "text": "Here we set Yi X1 X2 Xn l = 2, 3, ... when predicting Chinese stocks. For each quantile level, we also obtain the median of the results from all the 10 methods. Figure 14b shows that SRs generally decline as l increases, consistent with the hypothesis that cross-market predictive content decays with time. The decline is again less pronounced for qr6,",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 76,
+    "total_chunks": 80,
+    "char_count": 352,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "81593ed2-805d-4528-96de-c3d4c112398c",
+    "text": "suggesting that large-magnitude signals may capture more persistent cross-market effects. stabilization beyond Lag 4 likely reflects weekly trading-cycle effects. Taken together, these experiments confirm that predictive performance depends critically on both the structural accuracy of the graph and the recency of cross-market information. (a) Effect of graph randomization (fraction of edges (b) Effect of increasing temporal lag l.\nreplaced). Figure 14: Median forecasting performance under graph randomization (a) and increasing temporal Panel (a) reports Sharpe Ratios as a function of the fraction of replaced edges while preserving Panel (b) reports Sharpe Ratios as the lag parameter l increases, measuring the effect of 6 Conclusion and Future Research This paper investigates cross-market return forecasting at the individual stock level. graph-based architecture that enables structured information transmission across markets and use it to construct cross-market predictive features. Building on this framework, we implement a range",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 77,
+    "total_chunks": 80,
+    "char_count": 1045,
+    "word_count": 143,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "af69a623-bc16-43f6-a22e-badb167794f1",
+    "text": "of machine learning models to forecast OPCL returns for each stock. Empirically, we find that combining cross-market information with graph-based feature selection delivers superior performance relative to both graph-based same-market approaches and non-graphbased baselines. The predictive relationship is asymmetric: U.S. stocks are substantially more informative for forecasting Chinese returns than the reverse. In particular, U.S. pvCLCL returns exhibit stronger predictive power for Chinese OPCL returns than U.S. OPCL returns, highlighting",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 78,
+    "total_chunks": 80,
+    "char_count": 546,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "93362c22-2a73-4404-99d8-2d07cd251f66",
+    "text": "the importance of overnight information transmission. Sensitivity analyses confirm that preserving the economically meaningful bipartite graph structure is crucial for achieving strong risk-adjusted Moreover, forecasting performance deteriorates as the temporal gap between predictor and target returns widens, emphasizing the value of recency. Several directions for future research emerge. First, extending the analysis to additional regions, including European and other Asian markets, would help assess the generalizability of cross-market",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 79,
+    "total_chunks": 80,
+    "char_count": 543,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "10af183f-aadf-4348-aef6-1c0bdd4255f8",
+    "text": "Second, GNNs could be applied directly to the constructed bipartite graph to learn nonlinear cross-market dependencies. Finally, recent advances in time-series-specialized large language models may offer an alternative framework for modeling structured cross-market Conflicts of Interest The authors declare that they have no competing interests.",
+    "paper_id": "2603.10559",
+    "title": "A Bipartite Graph Approach to U.S.-China Cross-Market Return Forecasting",
+    "authors": [
+      "Jing Liu",
+      "Maria Grith",
+      "Xiaowen Dong",
+      "Mihai Cucuringu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10559v1",
+    "chunk_index": 80,
+    "total_chunks": 80,
+    "char_count": 346,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  }
+]

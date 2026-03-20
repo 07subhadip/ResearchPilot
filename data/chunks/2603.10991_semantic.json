@@ -1,0 +1,954 @@
+[
+  {
+    "chunk_id": "da584882-213b-4192-b7b2-41417ba3fd1a",
+    "text": "ForwardFlow: Simulation only statistical inference using deep Department of Biomedical Data Sciences",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 0,
+    "total_chunks": 56,
+    "char_count": 100,
+    "word_count": 12,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1df31038-f289-4a72-99fb-4b548c46aa4f",
+    "text": "Leiden University Medical Center Einthovenweg 20, 2333 ZC Leiden, The Netherlands s.boehringer@lumc.nl2026\n∗corresponding author\nMar\nMarch 12, 2026 Deep learning models are being used for the analysis of parametric statistical models based on simulation-only frameworks. Bayesian models using normalizing flows simulate data from a prior distribution and are composed of two deep neural networks: a summary network that[math.ST] learns a sufficient statistic for the parameter and a normalizing flow that conditional on the summary network can approximate the posterior distribution. Here, we explore frequentist",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 1,
+    "total_chunks": 56,
+    "char_count": 612,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "40b2829f-4d06-414c-a398-72494b3ea14b",
+    "text": "models that are based on a single summary network. During training, input of the network is a simulated data set based on a parameter and the loss function minimizes the mean-square error between learned summary and parameter. The network thereby solves the inverse problem of parameter estimation. We propose a branched network structure that contains collapsing layers that reduce a data set to summary statistics that are further mapped through fully connected layers to approximate the parameter estimate. We motivate our choice of network",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 2,
+    "total_chunks": 56,
+    "char_count": 543,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a0027a8a-3095-4a58-a5f2-403b685bbeff",
+    "text": "structure by theoretical considerations. In simulations we demonstrate three desirable properties of parameter estimates: finite sample exactness, robustness to data contamination, and algorithm approximation. ThesearXiv:2603.10991v1\nproperties are achieved offering the the network varying sample size, contaminated data, and data needing algorithmic reconstruction during the training phase. In our simulations an",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 3,
+    "total_chunks": 56,
+    "char_count": 415,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "094e192c-ef27-4906-8c47-1b172471a54e",
+    "text": "EM-algorithm for genetic data is automatically approximated by the network. Simulation only approaches seem to offer practical advantages in complex modeling tasks where the simpler data simulation part is left to the researcher and the more complex problem of solving the inverse problem is left to the neural network. Challenging future work includes offering pre-trained models that can be used in a wide variety of applications. Declaration of interest: The authors declare no conflict of interests.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 4,
+    "total_chunks": 56,
+    "char_count": 503,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1ef79d50-4f3e-4a42-a3c7-98567b7615c9",
+    "text": "Simulation based approaches have a long tradition in statistical inference problems and have recently become more prominent[12]. Approximate Bayesian Computation (ABC) is an early example and has been employed in complex inference problems where it is difficult or impossible to evaluate the data likelihood [3]. More recently, normalizing flows have been established as an",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 5,
+    "total_chunks": 56,
+    "char_count": 373,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "43f772bb-20b8-472f-b0a5-f3f0062e30db",
+    "text": "alternative for Bayesian inference [14]. To approximate the posterior distribution, normalizing flows do not need to evaluate the likelihood [13]. Normalizing flows employ deep neural networks (DNNs) to establish the normalizing mapping through a training process using simulations [13]. After training, sampling from the posterior can make use of the computationally efficient use of In these examples, the data likelihood does not have to be evaluated which is an advantage in practical modeling. Both ABC and normalizing flows require sufficient summary statistics to properly construct the posterior distribution. For ABC, summary statistics have to be user supplied and might require deep insight into the analysis problem. Normalizing flows employ internal networks, summary networks, to automatically construct summary statistics. An additional restriction on the network structure arises for normalizing flows in that the mapping between",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 6,
+    "total_chunks": 56,
+    "char_count": 945,
+    "word_count": 134,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db0bb362-5a71-459f-a058-ee49ec4617f2",
+    "text": "the normal and posterior distribution has to be bijective. Another advantage of simulation based approaches is that they can implicitly account for finite sample properties by training networks on appropriate sample sizes [16]. Arguably, this is an advantage over other approximations such as variational Bayes [9]. In this paper, we investigate simulation only approaches which are based on a single network which learns sufficient summaries for the data.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 7,
+    "total_chunks": 56,
+    "char_count": 456,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb9401de-bb6d-45f2-881c-d0e6739f7efa",
+    "text": "The focus is on offering a simulation-only approach for parametric models that can be implemented with little effort put into hyper-parameter tuning A second aspect is robustness, which can be easily added by training the estimator using In contrast to BayesFlow with a more complex network structure, training is faster and the summary network can be potentially also be simplified. These networks directly",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 8,
+    "total_chunks": 56,
+    "char_count": 407,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c28d0eed-b0af-4551-9d72-c9724cd18473",
+    "text": "allow to implement frequentist inference which is explored. In a second step, Bayesian models can be recovered from frequentist models using ABC methodology. Some previous work has investigated statistical properties of deep neural networks. either based in idealized assumptions (e.g. [1]) or concerned with model evaluation only (e.g. [8]). In general, such investigations face the difficulty that current DNNs are quantized at rather low numeric accuracy [17], a fact, that is difficult to account for in theoretic investigations. make some effort to motivate the choice of network structure by theoretical arguments. The paper is structured as follows. In the second section the approach is described in terms",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 9,
+    "total_chunks": 56,
+    "char_count": 713,
+    "word_count": 107,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fe46ec8e-a734-4d9b-a005-707221947684",
+    "text": "of statistical models, general DNN structure, and some theoretical properties. describes the network structure in detail, offering a family of models that can be tailored to the The next section describes simulations and is followed by a section describing In the final section, results are discussed and an outlook is given on future research.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 10,
+    "total_chunks": 56,
+    "char_count": 344,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8eea6125-d048-4322-8961-4493532ffa18",
+    "text": "For a parametric model, let Pϑ, ϑ ∈Θ ⊂Rk be the family of distributions. Denote with X : Ω→\nX N, X = (X1, ..., XN) a random variable, where Xi = (Xi1, ..., XiK) ∼Pϑ is K-dimensional data sampled from this model. Statistically, it is of interest to solve the inverse problem, i.e. find the\nmapping ˆϑ : X N →Θ that maps data to an estimate of the parameter. For statistical inference, it\nis required to derive the distribution of ˆϑ(X). For frequentist problems, the distribution of interest is the confidence distribution [6], i.e. the formal distribution on Θ from which all-level confidence sets for θ can be derived. Formally, the confidence distribution is implicitly defined by a mapping Cconf : X N →Θ so that P(Cconf(X, α) ∋θ) ≥α ∀α ∈(0, 1), where X N is the event space induced For a Bayesian model, the target distribution is the posterior P(θ|X) with prior distribution θ0 ∼Ppr, where data X is given by Xi ∼Pϑ0 as above. The posterior can also be implicitly defined by P(θ0 ∈Cpost(X, α, Ppr)) ≥α ∀α ∈(0, 1). ForwardFlow aims to approximate these distributions based on on estimator ˆθ which is learned",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 11,
+    "total_chunks": 56,
+    "char_count": 1112,
+    "word_count": 199,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "60803c34-4fc1-48b1-9683-11d39451f816",
+    "text": "by a deep neural network. 2.1 Frequentist inference Denote with ˆϑ the estimator X N →Θ, ˆθ := ˆθ(X). We also assume that parameters ϑ are drawn from a training distribution governed by a dispersion parameter σ > 0, so that ϑ ∼Ptr,σ. loss of generality, we assume σ to be one-dimensional. ˆϑσ := arg min Eσ(Eϑ((g(X) −ϑ)2)),\nˆϑ := lim ˆϑσ\nσ→∞ where g ∈G is a reasonably large class of functions. These definitions reflect the fact that ˆϑ is approximated using a neural network and training data has to be generated. is the result for a \"large\" dispersion parameter σ which, in practice, is chosen empirically. class G is defined by the network topology and network capacity [8].",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 12,
+    "total_chunks": 56,
+    "char_count": 678,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bea5c245-cba2-4866-9511-867b82103fbf",
+    "text": "Under standard regularity conditions for the maximum likelihood estimator to exist,\nˆϑ exists. ˆϑ can be interpreted as the ML estimator for ϑ as it estimates the posterior mode for the prior\ndistribution Ptr,σ under a Bayesian interpretation. Then, ˆϑ converges to the ML estimator as Ptr,σ becomes uninformative as σ →∞. If an efficient estimator exists, ˆϑ is efficient for ϑ As ˆϑ directly targets the MSE(ˆθ) = Varθ(ˆθ)+Biasθ(ˆθ, θ)2, ˆϑ is bias free, if possible, as otherwise\na bias-free ˆϑ′ with corresponding estimate ϑ′ could be found with MSE(ˆθ′) < MSE(ˆθ) 2.1.1 Robust inference The estimator ˆϑ can be designed to be unbiased in the presence of data contamination. contaminations considered here are mappings fc : X × U →X which transforms the data in Here, U = (U1, ..., Um), Ui iid ∼U(0, 1) introduces randomness into the An example would be a function replacing a value by a value drawn from an outlier distribution with a certain probability. We assume that ˆϑ is unbiased, i.e. Contamination is then formalized as follows.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 13,
+    "total_chunks": 56,
+    "char_count": 1041,
+    "word_count": 175,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7bb8d06e-d5d4-4994-9d1d-b799a346f734",
+    "text": "Under the assumptions of the previous paragraph, let fcn be a sequence of measurable functions fcn : Xn × Un →Xn, Un ∼U(0, 1)N×m multivariate iid uniform. (fcn)n is called a contamination sequence. The induced bias function bn, by (fcn)n, is defined as bn(ϑ) := Eϑ,U(ˆϑ(fcn(Xn, Un)) −ˆϑ(X\\)) The bias function is called consistent, if and only if bn does not depend on sample size, i.e. bn(ϑ) =\nb(ϑ). ϑc = Eϑ,U(ˆϑ(fcn(Xn, Un))) is called the biased parameter. Sequences fcn can be constructed as product functions from a base contaminator fc acting We now characterize types of bias that can be handled by a neural network Let (fcn)n be a contamination sequence and ˆϑ be a consistent. (fcn)n is called a bijective contamination, if and only if ϑc →(ϑ, bn(ϑ)) is bijective, for the induced bias function Important examples of data contamination that are covered by the following lemmata are missing data and outliers. Data contamination is here defined by a mapping of the data that affects only part of the data. Here, we assume that the corresponding mapping is the product of one unit at a time mappings, i.e. contamination does not depend on multiple samples at a",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 14,
+    "total_chunks": 56,
+    "char_count": 1167,
+    "word_count": 199,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "596e8e9f-e41c-440a-8414-ca381a66e3c0",
+    "text": "The missing at random (MAR) assumption would be one example falling into this class of In this case fcn could be represented by a logistic regression model determining the probability of contamination which is conditionally applied according to a uniform component Let fn be a bijective contamination., X′n = f(Xn), ˆθ(Xn) consistent. Then there\nexists as de-biasing function gn : X n →Θ as follows: ∃gn : E ˆθ(X′n) + gn(X′n) = ϑ. gn is simply defined as the negative bias, i.e. Let (fcn)n be a contamination function. Assume that fcn acts only on a known part\nof the data, i.e. for X′n = fn(Xn), X′ni = Xni, 1 ≤i ≤k. Then (fcn)n is bijective. The proof is given in the appendix. While the existence of a de-biasing function is guaranteed by the previous remark, the lemma allows to easily check existence of the debiasing function in For example, missing data is covered by this case but not outliers. The motivation for characterizing situations with bias is that the de-biasing function can be",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 15,
+    "total_chunks": 56,
+    "char_count": 996,
+    "word_count": 173,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "68f0312d-7d85-4dd8-a656-f7821952864a",
+    "text": "approximated by a neural network and as long as it exists, de-biasing is automatic when an appropriately trained model is used. 2.1.2 Confidence distribution If a consistent parameter estimator ˆϑ exists, confidence intervals can be derived the confidence distribution which can be approximated by a bootstrap procedure. Bootstrap samples can be quickly generated and analyzed as a single batch by neural networks.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 16,
+    "total_chunks": 56,
+    "char_count": 414,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c8b7c5d1-02ca-4045-a0ce-5b488f389b0b",
+    "text": "The estimator ˆϑ allows to recover the confidence distribution but does not give access to the posterior distribution of a Bayesian model. We suggest to use Approximate Bayes Computation (ABC) which uses a filtering step on draws from the prior to approximate the posterior empirically. For a sufficient statistic T, P(θ|X) = P(θ|T(x)). For a sample of statistics Ti = T(Xi), Xi ∼ Pϑi, ϑi ∼Ppr, i = 1, ..., n, ˆΘ := {ϑi|d(Ti, Tdata) < ϵ} approximates the posterior, where d is a metric on the space of summary statistics. By definition,\nˆϑ is a minimal, sufficient statistic which is used for the ABC algorithm. The choice of ϵ depends on the underlying model. Typically, ϵ is chosen based on a quantile, such as the 1% quantile of all",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 17,
+    "total_chunks": 56,
+    "char_count": 735,
+    "word_count": 130,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9ee6eff0-8b99-435f-a750-2a530a93710b",
+    "text": "distances which makes the algorithm inefficient. 2.2.1 Importance Sampling To improve efficiency of ABC sampling, importance sampling can be used, i.e. samples can be drawn from a distribution preferentially targeting the posterior distribution. sampling scheme suggested here assumes that an initial ABC sample has been drawn from the posterior Θ∗= {θi|θi accepted}, N = |Θ0|. For ensuing draws, a new prior distribution is defined\na mixture of normals centered at the accepted draws, i.e.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 18,
+    "total_chunks": 56,
+    "char_count": 490,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0c71fd59-3b6a-450c-b294-db60c420055d",
+    "text": "Z = PNi N1 Zi with Ziiid ∼N(θi, Σ),\nΣ = N−1Θ0ΘTs 0 , where Θ0 is interpreted as a matrix of row vectors ϑi and s is a scale factor s > 0. Using the modified prior, samples can be drawn according to ϑ′1 ∼Z, Θ1 := {ϑ′i|d(Ti, Tdata) < This sample has a higher acceptance probability than the original sampling scheme, according",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 19,
+    "total_chunks": 56,
+    "char_count": 324,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5640ac23-6b49-4ffc-82ca-5597b54ef385",
+    "text": "to the following lemma: Under posterior concentration, i.e. EXn(Pπ(Xn)(d(θ, θ0) < ϵn)) →1 and known covariance matrix Σ\nP(d(ˆθ∗, ˆθ) < ϵ) ≥P(d(ˆθ′, ˆθ) < ϵ), for n large enough, d(·, ·) metric on the parameter space, Xn the sampling space for sample size n. Due to the modification, accepted samples Θ1 can be related to the posterior distribution by",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 20,
+    "total_chunks": 56,
+    "char_count": 350,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a09759a3-cd76-45d7-b8e5-fcf5d7ff0413",
+    "text": "the ratio wiϵ, defined as follws: P(d(ˆθ′, ˆθ) < ϵ)\nP(d(ˆθ′, ˆθ) < ϵ) = P(d(ˆθ′, ˆθ′) < ϵ) = wiϵP(d(ˆθ′, ˆθ′) < ϵ). wi can be defined as the ratio of the corresponding densities. In downstream analyses, such as",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 21,
+    "total_chunks": 56,
+    "char_count": 210,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "62db47f5-5589-4102-b1cc-2005f207ad0b",
+    "text": "density or quantile estimation, sample Θ1 has therefore to be inversely weighted by wi. The scaling factor controls the concentration of samples in Θ1 around the initial posterior sample and thereby controls the acceptance rate. Small s lead to high acceptance rates whereas large values of s lower acceptance rates. The exploration of the posterior space follows an inverse relationship with respect to s such that the optimal choice of s is subject to empirical investigation.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 22,
+    "total_chunks": 56,
+    "char_count": 478,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "330a71e9-ee93-4fc6-9a0a-25c5d5b98b8c",
+    "text": "2.3 Training distribution The deep network approximates the parameter estimator ˆϑ : X n →Θ which is a deterministic\nfunction. We assume that the network first finds a sufficient statistic (ˆϑS which is then mapped\ninto the parameter space (ˆϑM, such that ˆϑ = ˆϑM ◦ˆϑS. Then, conditionally on ˆϑS(X) = s, ˆϑ finds the estimator by point-wise minimization of ˆϑ = arg min{(ϑi −ϑ)2|(ˆϑi, ϑi), ˆϑi = ˆϑ} = ¯ϑ = X ϑi,\nN ϑ| ˆϑS i i.e. among the training data sets with the same sufficient statistic s, the estimator is chosen as the\nsum-of-squares minimizer. Note that this decomposition implies that ˆϑ depends on the distribution\nof ϑ as used in the training process. If the training distribution is interpreted as a prior, ˆϑ can be interpreted as the expected value of the posterior distribution. In order to allow for frequentist",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 23,
+    "total_chunks": 56,
+    "char_count": 830,
+    "word_count": 144,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "246fade6-d701-4b29-8167-61f09588a77a",
+    "text": "inference, the training distribution has to be uninformative, similar to the situation in objective As parameter values have to be drawn during training, a flat prior cannot be In practice, a trade-off between training complexity and faithful frequentist inference has to be determined empirically.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 24,
+    "total_chunks": 56,
+    "char_count": 298,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f3d2c0b0-d289-4f3b-a83c-de192bc5350d",
+    "text": "2.4 Network structure The parameter estimator ˆϑ : X n →Θ that is to be approximated by the network is a deterministic In principle, there is no uncertainty about the network weights up to non-identifiability so that after training, the estimator is a parametrized function of the network weights β. over-parametrization, the network relies on random weight initialization to break symmetry and implicit regularization to find a local optimum using stochastic optimization [10]. design a generic network structure that can approximate a wide class of estimators. Figure 1 shows an example of a branched network structure that is proposed in this paper. The branching is motivated by Roa-Blackwellization and finite sample size exactness, both being For simplicity of exposition, we assume tabular i.i.d. data, i.e. input of the form\nX ∈RN×M. The networks accepts batches of data, i.e. a tensor B ∈RB×N×M. network, implicit parallelization over the first index takes place. Independence of observations that also the second index should be handled in parallel which implies that coordinate-wise dense layers are used, i.e. the dense layer maps over the second dimension of the input tensor which are",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 25,
+    "total_chunks": 56,
+    "char_count": 1198,
+    "word_count": 187,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b56d3f3b-1d21-475f-bc5d-2172f81c38df",
+    "text": "the individual samples for tabular data (see below). The general structure is that the input is fed into several branches with varying depth of coordinate-wise dense (or compatible) layers which end in custom so-called collapsing layers. These layers map tensors slices to a single number thereby reducing dimensionality of the tensor. Collapsing layers include the computation of mean values, covariances, or standard deviations. After collapsing several layers of dense mappings provide Figure 1: Network structure of a FowardFlow network. for further transformations.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 26,
+    "total_chunks": 56,
+    "char_count": 570,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c727e52b-48db-4319-86f4-c232b1bed83d",
+    "text": "All remaining branches are concatenated and dense layers map the remaining single branch to the required vector size of the parameter vector which is the final The coordinate-wise dense mapping is defined as follows for input X ∈RN×K and output\nX′ ∈RN×L. [lit]\nX′lm = φ X BlmijXijk + bl 2.4.1 Rao-Blackwellization Rao-Blackwell's theorem (RBT) states that for sufficient statistic T and estimator δ of ϑ, Blackwell (1947) With the notation of the paragraph above, let T be a sufficient\nstatistic for ϑ and ˆϑ an estimator of ϑ. E((ˆϑ∗(X) −ϑ)2) = E( (E(ˆϑ(X)|T(X)) −ϑ)2 ) ≤E(ˆϑ(X) −ϑ)2), where ˆϑ∗(X) := E(ˆϑ(X)|T(X)) i.e. for any estimator ϑ, the MSE of the conditional version ϑ|T can only have the same or decreased MSE. Informally, for a given value t = T(X), ˆϑ estimates the same ϑ, so we can as well take the average of all estimates for this t.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 27,
+    "total_chunks": 56,
+    "char_count": 851,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b4a4225-7036-4826-87cd-5e25709c442a",
+    "text": "Therefore, RBT can be equivalently defined using a function f : dom T →Θ with f(t) := E(δ(X)|T(X) = t): E((f(T) −ϑ)2) ≤E(δ(X) −ϑ)2). f can be well approximated by a deep neural network. For example, two full connected layers can define an approximate indicator function on a close interval of T and the bias component of the activation function can represent the expectation. The collapsing layers together with ensuing layers allow to implicitly make use of RBT.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 28,
+    "total_chunks": 56,
+    "char_count": 463,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cfcc7d65-c603-469f-89e7-06330a909c6e",
+    "text": "The branched structure allows the network to find different types of sufficient statistics for different components of the parameter vector (see appendix). 2.4.2 Finite Sample Properties For data analysis, finite sample properties are of interest. It is well known that consistent estimators can be bias for smaller sample sizes. It is possible to develop bias corrections in these situations. the current situation, the DNN can automatically learn these corrections when data sets of different sizes are offered during training.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 29,
+    "total_chunks": 56,
+    "char_count": 529,
+    "word_count": 79,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0b54bb91-07e0-4f3a-a3d6-01145f453372",
+    "text": "This goal also supports branched networks when different branches can potentially specialize on different sample sizes. The sample size dependence is then implicitly learned by the network. In experiments, it was not beneficial to offer the sample size explicitly in a repeated data column (data not shown).",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 30,
+    "total_chunks": 56,
+    "char_count": 307,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "390bd7c3-f04e-4852-90af-3e5ceeef21eb",
+    "text": "2.4.3 Hyperparameters Name Description Range\nNbranches Number of branches 1-3\nNdenseBranch Number of dense layers per branch 0-8\nCollapsing Collapsing layers applied after each projection, mean, stanbranch (same for all branches) dard devation (sd), covariance (cov)\nNdensePostColl Number of dense layers after collapsing 0-4\nNdensePostConcat Number of dense layers after concate- 0-4 nation\nNfeaturesBranch Number of features of dense layers in 16-64 branches\nNfeaturesPost Number of features of dense layers in 16-20 branches\nNfeaturesPostConcat Number of features of dense layers after 16-20 collapsing\nNproj Number of projections performed by 3 the projection collapsing layer\nLoss function loss function of the network Mean squared error (mse), Chi-square goodness-of-fit Table 1: Definitions of hyperparameters of ForwardFlow networks. Column range indicates values",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 31,
+    "total_chunks": 56,
+    "char_count": 871,
+    "word_count": 119,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ef3ca2b5-b546-4d03-985c-e5a9a44a10a3",
+    "text": "expolored in the simulations. Hyper-parameters of the network involve the network structure as well as parameters concerning The parameters are defined in table 1. Simulations were conducted for two types of statistical models. The first set of simulations concerns regression models, whereas the second illustrates implicit algorithm estimation for a problem involving a classic EM algorithm in standard modeling. 103 replications were performed per scenario to assess standard errors. Bootstrap confidence intervals were computed using parametric bootstrap resampling with 5 × 103 replications. In all simulations, during training, sample size was varied uniformly on an interval of sample sizes. On account of the batch based updating of the stochastic gradient descent algorithm, sample size was fixed for each batch. in available compute time, hyper-parameters were not systematically tuned but selected scenarios The full list of evaluated scenarios is given as supplementary information. The aim of the simulations is to investigate coverage probabilities of confidence intervals under",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 32,
+    "total_chunks": 56,
+    "char_count": 1092,
+    "word_count": 156,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "089dea33-c4b4-43eb-8df9-a16e882d8580",
+    "text": "several simulation scenarios. 3.1.1 Regression models Simulations concerning regression models focus on data contamination. Missingness patterns are induced in the data based on missing at random model. The network needs to perform implicit data imputation for consistent estimation. For the regression model simulations, the impact of discrepancies in sample sizes used during training and testing is investigated. Haplotype frequency estimation also concerns a missing data problem. In this case, consistent estimates cannot be recovered using complete case analysis. Instead, the network has to approximate an EM algorithms implicitly for consistent estimation. 3.2.1 Regression models Covariates were simulated with a fixed intercept (value 1) and three covariates which were drawn",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 33,
+    "total_chunks": 56,
+    "char_count": 785,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "40f4601e-c117-4f5d-a9b8-7b87e222e0f1",
+    "text": "from a multivariate normal distribution (MVN) with mean 0 and exchangeable covariance matrix For models with missing data, logit of probability of missingness was simulated according to x1,logit = (1, x2)T βm1, x2,logit = (1, x1, x3, x1x3)T βm2 with βm1 = (−1, .5), βm2 =",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 34,
+    "total_chunks": 56,
+    "char_count": 271,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5eda62cd-0cf2-47f7-9a4f-a685ceec44e4",
+    "text": "Missingness indicators were sampled according to these probabilities. were set to 0 and missingness indicators were added as additional columns to the data. For linear outcomes, iid standard errors were added to linear predictors to produce the final For binary outcomes, response values were independently drawn from Bernoulli variables according to probabilities given by the inverse logit of linear predictors. Outcome columns were added as first column to the covariate matrix without special treatment To train, parameters for each simulated data were drawn from an uncorrelated MVN with mean Per batch, sample size was drawn uniformly from the interval [30, 200]. 1000 epochs with 100 batches each were run. 300 data sets were drawn per batch, resulting in 3 × 107 data sets generated during training. Models were evaluated using the mean squared error (MSE) and coverage probabilities of confidence intervals. 103 epochs were used during training for the regression models.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 35,
+    "total_chunks": 56,
+    "char_count": 980,
+    "word_count": 151,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6bdc3765-9624-4add-bcce-ebf31a8997d6",
+    "text": "A classical problem in human genetics is the estimation of haplotype frequencies (HTFs). Haplotypes are tuples of alleles h = (h1, ..., hK) which are realizations of a genetic variant at genetic locations 1, ..., K and are taken to be Bernoulli variables for the purpose of this study.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 36,
+    "total_chunks": 56,
+    "char_count": 285,
+    "word_count": 49,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8e64a8d7-9c85-44fc-9e81-7edb89e8f24f",
+    "text": "A diplotype is a pair of haplotypes (h1, h2) representing both parental contributions. diplotype is unobserved. Instead, a genotype is observed which can be defined as the element-wise",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 37,
+    "total_chunks": 56,
+    "char_count": 184,
+    "word_count": 28,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "10e12354-b152-470e-8d0b-80b817c84d49",
+    "text": "addition g = h1 + h2. The genotype can be interpreted as counting the number of one of the alleles per locus which does no longer contain full information on the underlying diplotypes. haplotype distribution is assumed to be multinomial and, to ensure identifiability, the diplotype distribution is assumed to be the product distribution. The problem is to estimate HTFs from genotype data. To this end haplotype frequencies were drawn from a Dirichlet distribution. Due to the labeling invariance of haplotypes, the Dirichlet distribution can be chosen to be symmetric, i.e. being parametrized by a single real number α > 0 so that for Dir(α), α = (α, ..., α). From this fixed distribution, HTFs are drawn from which 2N haplotypes are drawn for a sample size of N. Haplotypes are converted to binary representation for which each digit corresponds to a locus.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 38,
+    "total_chunks": 56,
+    "char_count": 860,
+    "word_count": 143,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5c73934a-6f7d-4998-95f4-15ec3ad381e0",
+    "text": "The representation allows locus wise counting of alleles The resulting pair of HTFs and genotypes is used for training.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 39,
+    "total_chunks": 56,
+    "char_count": 119,
+    "word_count": 19,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cfd84c3e-ba57-4018-81d6-bdd314a52a97",
+    "text": "3.3.1 Regression models Parameter Value\nNdenseBranch (0, 2, 4)\nCollapsing Projection\nNdensePostColl 0\nNdensePostConcat 3\nNfeaturesBranch 32\nNfeaturesPost -\nNfeaturesPostConcat 32\nNproj 3\nLoss function mse Table 2: Values of hyperparameters used for the simulation of regression models. Hyperparameters of the network used in the simulation of regression models is given in table 2. No systematic hyperparameter tuning was performed. The network was gradually expanded until coverage probabilities were deemed sufficient.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 40,
+    "total_chunks": 56,
+    "char_count": 520,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9fb98f9f-f8c4-4449-8ed0-a9cb6b22a1da",
+    "text": "Hyperparameters of the network used in the simulation of models for genetic data is given in Again, n o systematic hyperparameter tuning was performed. The network was gradually expanded until coverage probabilities were deemed sufficient.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 41,
+    "total_chunks": 56,
+    "char_count": 239,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ca037b0f-1757-4cbd-b211-2ece63d1ddcf",
+    "text": "The main difference to the networks Parameter Value\nNdenseBranch (0, 2, 4)\nCollapsing Mean, Sdev\nNdensePostColl (0, 2, 4, 8)\nNdensePostConcat 0\nNfeaturesBranch 16\nNfeaturesPost 16\nLoss function mse Table 3: Values of hyperparameters used for the simulation of regression models. for the regression models is a secondary branching after collapsing. 4.1 Regression Models Sample Size Par 25 35 50 75 150 200 300\n0 0.976 0.969 0.945 0.951 0.941 0.945 0.942\n1 0.964 0.945 0.948 0.955 0.932 0.911 0.897\nLinear Regression A\n2 0.982 0.968 0.963 0.952 0.946 0.949 0.942\n3 0.955 0.957 0.931 0.966 0.932 0.939 0.929\n0 0.96 0.958 0.952 0.928 0.931 0.91 0.878\n1 0.949 0.947 0.919 0.927 0.901 0.885 0.842\nLinear Regression B\n2 0.977 0.968 0.947 0.936 0.929 0.913 0.905\n3 0.962 0.941 0.94 0.944 0.927 0.929 0.927\n0 0.862 0.872 0.819 0.795 0.72 0.69 0.632\n1 0.896 0.847 0.848 0.828 0.74 0.695 0.657\nLogistic Regression\n2 0.888 0.856 0.829 0.812 0.734 0.655 0.623\n3 0.874 0.869 0.834 0.838 0.733 0.684 0.63 Table 4: Marginal coverage probabilities per parameter for regression models at the 95%-level. Par: index of parameter. Sample size: sample size used in the simulation phase (top row).",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 42,
+    "total_chunks": 56,
+    "char_count": 1175,
+    "word_count": 196,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3eb9f867-af7c-4ce8-9a14-e5cf5ed80f2e",
+    "text": "Regression A: missing data model trained with 1000 epochs. Linear Regression B: missing data model trained with 100 epochs. Logistic Regression: binary output trained with 10 epochs. Table 4 shows marginal coverage probabilities for simulations of the linear model with missing Coverage probabilities are nominal for scenario Linear Regression A, except for the unseen The unseen sample size 25 shows excess coverage. For scenarios Linear Regression B, Logistic Regression under-coverage is observed. In these scenarios, 100 and 10 epochs, respectively, have been used during training.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 43,
+    "total_chunks": 56,
+    "char_count": 585,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "51e98431-359a-49de-b282-6c8ab8c30a28",
+    "text": "Results for a simulation of HTF estimation are shown in table 5. Slight under-coverage is observed (average coverage 0.942) for 1000 replications. Estimates are unbiased and the rMSE is 0.01 for Par Coverage rMSE Bias\n0 0.948 0.010 8.84e-05\n1 0.940 0.010 -5.70e-04\n2 0.948 0.010 6.49e-04\n3 0.946 0.010 6.71e-04\n4 0.938 0.010 -1.04e-04\n5 0.944 0.010 3.93e-04\n6 0.936 0.010 -1.80e-04 Table 5: Marginal coverage probabilities per parameter for haplotype frequency estimation at the To illustrate the ABC methodology, a single data set was simulated and analyzed. rate of this simulation was 5% and density plots of the estimated pairwise posterior distributions are shown in Figure 2.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 44,
+    "total_chunks": 56,
+    "char_count": 681,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5c4a4e8c-0334-4fea-8c3f-08fbe8581848",
+    "text": "In this conceptual paper, a simulation only, feed-forward network, likelihood-free based approach is proposed for parametric model inference. Simulations show that the approach can deal with data contamination, can implicitly learn algorithms, and can be employed in Bayesian inference. simulation is often simpler to implement than implementing the data likelihood and is required for model validation in any case. The promise of having completed the full work of model implementation is attractive in many applications. Even if the likelihood is straightforward to implement it may costly to evaluate which complicates model implementation, a step that can be omitted in the ForwardFlow framework.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 45,
+    "total_chunks": 56,
+    "char_count": 699,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9dc59f33-edc8-4ffe-9ba2-594c7a301367",
+    "text": "Our simulation results suggest exact coverage of marginal confidence intervals implying UMVU properties of the trained network. The ideas in this paper are borrowed from Bayesian models which use a more complicated network structure as compared to ForwardFlow. Apart from a SummaryNet which is comparable to the full ForwardFlow network, a normalizing flow is learned that conditionally on summaries from the SummaryNet learns the parameter distribution. In a second step, the flow can be used generatively to draw samples from the posterior distribution. In its current form, ForwardFlow",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 46,
+    "total_chunks": 56,
+    "char_count": 588,
+    "word_count": 88,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88428628-17a4-43a3-af27-e35cf09cda9f",
+    "text": "has to resort to a (non-)parametric bootstrap that has to generate data sets in addition to employing the network. The trade-off is between using a simpler network and generating new data (ForwardFLow) and using only a more complex network (BayesFlow). For both approaches, it is",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 47,
+    "total_chunks": 56,
+    "char_count": 279,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e0c1a4d9-bd44-45bd-b4ea-d6ad45c5f352",
+    "text": "possible to learn secondary models that learn, say, the multivariate cumulants of the target distribution (confidence, posterior). The models would have to be trained on accurate approximations of the target distributions, i.e. starting from a simulated parameter, many samples would have to be sampled from the confidence or posterior distribution the multivariate cumulants of which are Figure 2: Marginal density estimates (diagonal), pairs-wise controur plots (lower-left triangular matrix) and pair-wise scatter plots (top-right triangular matrix) of the posterior distribution of an example data set derived using ABC. True parameters are shown at the top. then learn by the network.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 48,
+    "total_chunks": 56,
+    "char_count": 689,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a0beeddf-2e60-4a26-afe4-d5efeb8156e9",
+    "text": "A standard approach to finite sample exactness is based on cumulative probabilities and is often computationally intensive [7, 15]. Deep learning models can acquire this exactness automatically when trained with varying sample sizes. Our simulations confirm this behavior but, surprisingly, it seems important to train the model on all samples sizes to be later analyzed. was observed in some simulations when the analyzed sample size was larger than seen in training This behavior might be caused by the relatively low sample sizes considered here, but is an impaortant caveat when employing the networks.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 49,
+    "total_chunks": 56,
+    "char_count": 606,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ebf45a08-8353-4dc9-9442-ff10f2dc5747",
+    "text": "In the simulations only marginal confidence intervals were analyzed. Multivariate confidence intervals can be constructed using concepts from data depth [4]. In case a secondary model has been trained to approximate the confidence distribution, multivariate cumulants can be used to construct joint confidence sets [5].",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 50,
+    "total_chunks": 56,
+    "char_count": 319,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7e050641-d67b-403b-bc3e-dae30d9ddfe0",
+    "text": "With respect to the analysis of data contamination, only a fixed missingness mechanism was Results are therefore purely conceptual as in practice, an unknown missingness mechanism has to be allowed for. For training a useful network, random missingness inducing models would therefore have to be drawn and employed on a data set that was drawn in parallel. a missingness model has been implemented in the software but has not yet been extensively simulated. The network would be likely to benefit from switching from fully connected layers to attention based layers which can help to accommodate the symmetry of columns of tabular data In the simulations, we demonstrate examples where, in the genetic situation, the development of",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 51,
+    "total_chunks": 56,
+    "char_count": 731,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ad997714-b070-4872-9452-08b3d7d77ccd",
+    "text": "an EM-algorithm is obviated by the simulation only approach. We give a compact implementation in the appendix for both data simulation and estimation. The difference is roughly a factor of 10 in lines of code, indicating that reduction in development time is an additional advantage of",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 52,
+    "total_chunks": 56,
+    "char_count": 285,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "192b1c64-ef6e-4709-bd19-a143a773f668",
+    "text": "The choice of network structure has to be motivated by conceptual considerations and makes idealized assumptions. Due to the limited numeric accuracy of standard implementations, it is unclear in how far these concepts are actually reflected in the network.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 53,
+    "total_chunks": 56,
+    "char_count": 257,
+    "word_count": 39,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "27e9a4e3-8741-4331-ba95-2b8ab2b184ad",
+    "text": "This quantization of the numeric parameter representation is a deliberate design principle of deep neural networks, trading offaccuracy against a larger number of parallelizable computations. Here, we surmise that accuracy can be regained by combining results from several computation paths. However, the final choice",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 54,
+    "total_chunks": 56,
+    "char_count": 317,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f1cde72a-eced-4c79-8557-704e40403c94",
+    "text": "of network depends on hyper-parameter tuning and might result in uniintuitive networks. In summary, we believe that the ForwardFlow approach can potentially offer significant advantages in practical data analysis by combining fast model implementation, robust inference and finite sample exactness. More work is needed to offer pre-trained models that can analyze a wide class of parametric models.",
+    "paper_id": "2603.10991",
+    "title": "ForwardFlow: Simulation only statistical inference using deep learning",
+    "authors": [
+      "Stefan BÃ¶hringer"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10991v1",
+    "chunk_index": 55,
+    "total_chunks": 56,
+    "char_count": 398,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  }
+]

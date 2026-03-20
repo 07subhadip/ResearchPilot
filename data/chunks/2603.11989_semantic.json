@@ -1,0 +1,1522 @@
+[
+  {
+    "chunk_id": "1756537d-5b4b-4ec3-b9ac-c2510338b19d",
+    "text": "On-Average Stability of Multipass Preconditioned\nSGD and Effective Dimension Simon Vary SIMON.VARY@STATS.OX.AC.UK\nDepartment of Statistics, University of Oxford\nTyler Farghly FARGHLY@STATS.OX.AC.UK\nDepartment of Statistics, University of Oxford\nIlja Kuzborskij ILJAK@GOOGLE.COM\nGoogle DeepMind Patrick Rebeschini PATRICK.REBESCHINI@STATS.OX.AC.UK\nDepartment of Statistics, University of Oxford AbstractMar\nWe study trade-offs between the population risk curvature, geometry of the noise, and preconditioning\non the generalisation ability of the multipass Preconditioned Stochastic Gradient Descent (PSGD).12\nMany practical optimisation heuristics implicitly navigate this trade-off in different ways — for\ninstance, some aim to whiten gradient noise, while others aim to align updates with expected loss\ncurvature. When the geometry of the population risk curvature and the geometry of the gradient\nnoise do not match, an aggressive choice that improves one aspect can amplify instability along the\nother, leading to suboptimal statistical behavior. In this paper we employ on-average algorithmic\nstability to connect generalisation of PSGD to the effective dimension that depends on these sources[cs.LG]\nof curvature. While existing techniques for on-average stability of SGD are limited to a single pass,\nas first contribution we develop a new on-average stability analysis for multipass SGD that handles\nthe correlations induced by data reuse. This allows us to derive excess risk bounds that depend on\nthe effective dimension. In particular, we show that an improperly chosen preconditioner can yield\nsuboptimal effective dimension dependence in both optimisation and generalisation. Finally, we\ncomplement our upper bounds with matching, instance-dependent lower bounds. Keywords: Algorithmic stability, generalization bounds, preconditioning Training of machine learning models is usually posed as a minimisation of the population risk. In\nparticular, given a data distribution Q supported on the example space Z, the goal is to minimise the\npopulation risk f. The population risk and its empirical counterpart are defined as,arXiv:2603.11989v1\nf(x) = Ez∼Q[ℓ(x, z)] , fS(x) = X ℓ(x, zi) ,\ni=1 respectively, where ℓis a smooth loss function parameterized by x and evaluated on an example\nz.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 0,
+    "total_chunks": 76,
+    "char_count": 2295,
+    "word_count": 319,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ba96d0c1-c1bb-4d45-86f8-7d0cf6e8da75",
+    "text": "In the standard setting, where the data distribution is unknown and we have access only to a\nfinite training set S = {z1, . . . , zn} ⊂Z of n-samples drawn i.i.d. from Q, we instead minimise\nthe empirical risk fS. Given the solution ˆx returned by an algorithm, its generalization ability is\ncaptured by the excess risk, E[δf(ˆx)] where δf(x) = f(x) −infx∈X f(x) . VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 1,
+    "total_chunks": 76,
+    "char_count": 399,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "865ec498-36d8-452f-a5fd-3ff162bbafea",
+    "text": "In this work, we focus on preconditioned SGD, meaning that empirical risk is minimised iteratively\nby observing gradients on individual examples drawn uniformly from the training set: xt+1 = xt −ηt P ∇ℓ(xt, zit) , it ∼Unif({1, . . . , n}) , t = 0, 1, 2, . . . (1) where ηt is the step size, P is a Positive Definite (PD) preconditioning matrix and zit ∈S are\nsampled randomly from S uniformly with replacement. Note that the update in Eq. (1) is often not\nlimited to a single pass over the training set. Hence, in the present work, we consider Preconditioned\nStochastic Gradient Descent (PSGD) in the multipass regime. Since gradients are random variables,\nthis randomised procedure is inevitably affected by the noise in stochastic gradients. In this work\nwe pay close attention to the geometry of gradient covariance considering the gradient covariance\nmatrix Σ ⪰Varz(∇ℓ(x, z)).1\nAt this point, we highlight that the learning problem is governed by three sources of curvature: the Σ := Varz[∇ℓ(x, z)]\nHessian of the population risk ∇2f ≡∇2f(ˆx) for x2 x\nsome minimiser ˆx, the gradient covariance matrix Σ,\n−Ez[∇ℓ(x, z)]and the preconditioner P which is chosen by the practitioner. The goal of this paper is to understand, in\nthe finite-sample nonasymptotic setting, how does the Ez[∇2ℓ(x, z)]\nexcess risk of PSGD depend on the interaction bex1tween ∇2f, Σ, and P. While, in the idealised scenario, these quantities coincide [Amari, 1998], in the\nFigure 1: Illustration of model misspecificageneral misspecified learning setting where Σ ̸= H,\ntion. The geometry of the expected loss curthe disparity creates a fundamental trade-off. This\nvature ∇2f differs from the geometry of the\ntrade-off is addressed in practice in different ways\ngradient noise (Σ). While setting P ≈Σ−1\nby different optimisation algorithms. Methods like\nwhitens the noise, it may result in unstable\nAdam [Kingma and Ba, 2014] and K-FAC [Martens\nupdates along high-curvature directions.\nand Grosse, 2015] target an approximate conditioning\nP ≈Σ−1, while others, such as AdaHessian [Yao\net al., 2021], PROMISE [Frangella et al., 2024a], SAPPHIRE [Sun et al., 2025], SketchySGD\n[Frangella et al., 2024b], target the inverse of the expected Hessian ∇2f. Thus, without the characterisation of the statistical properties associated with the mismatch between these geometries, the choice\nof preconditioner in the misspecified regime remains largely heuristic, which can lead to undesired\nbehaviour (see Figure 1 for a graphical example). From a non-asymptotic statistical perspective, here\nwe ask what is the optimal choice of P with respect to ∇2f, and Σ?",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 2,
+    "total_chunks": 76,
+    "char_count": 2624,
+    "word_count": 420,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "26dc69f0-efaa-4254-8921-cde3c4ee603e",
+    "text": "In this paper we are primarily interested how excess risk E[δf(xt)] depends on effective dimension which commonly appears in statistics as a replacement for the ambient dimension. This is also known\nas the Takeuchi Information Criterion (TIC) in the context of information theory [Shibata, 1989]. For example, the effective dimension controls excess risk bounds of linear (ridge) regression, for\nexact minimisers [Bach, 2024], Stochastic Gradient Descent (SGD) with iterative averaging [Neu\nand Rosasco, 2018], as well as asymptotic analysis in stochastic approximation [Polyak and Juditsky, Derivatives are always taken with respect to the first argument, unless stated otherwise.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 3,
+    "total_chunks": 76,
+    "char_count": 681,
+    "word_count": 98,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b22fa5c8-4a3f-46c3-b9b4-bf5fa86168c0",
+    "text": "ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION While it is known that dependence of the excess risk on (2) is not improvable asymptotically,\nwe ask here how P interacts with effective dimension in the non-asymptotic regime. In particular, we will study this question through the lens of generalisation error x 7→f(x) −\nfS(x) and algorithmic stability, which is a classical framework dating back to the study of nearestneighbor rules [Devroye and Wagner, 1979] and Empirical Risk Minimization (ERM) problems\n[Bousquet and Elisseeff, 2002]. The stability approach asks whether the solution produced by the\nlearning algorithm is insensitive to small perturbations in the training set, such as the removal of\na data point or its replacement by an independent copy. Namely, if ˆx(i) is a parameter produced\nwith such a perturbation (say when zi is replaced by its independent copy z′i), then the expected\ngeneralisation error is directly linked to stability gauged by the difference of losses: 1 i . (3) −ℓ(ˆx, zi) E[f(ˆx) −fS(ˆx)] = X ES,z′i h ℓ(ˆx(i), zi) n\ni=1 Numerous works [Feldman and Vondrak, 2019, Bousquet et al., 2020] establish high-probability\nbounds on the generalisation error by controlling the uniform stability supS,z,i |ℓ(ˆx, z)−ℓ(ˆx(i), z)| for\nvarious ERM formulations. However, such notions of stability tend towards covering the worst-case\nand are not suitable to achieving our goal, since (∇2f, Σ) are distribution-dependent quantities. Here\nwe turn our attention to the weaker notion of on-average stability maxi ES,z′i[ℓ(ˆx(i), zi) −ℓ(ˆx, zi)]\nwhich has, so far, largely been used to study ERM algorithms instead of the SGD-type algorithms of\ninterest in this work [Kearns and Ron, 1997, Bousquet and Elisseeff, 2002, Elisseeff et al., 2005]. Algorithmic stability of SGD-type algorithms has been studied extensively over recent years. A\nseminal paper from Hardt et al. [2016] derived uniform stability bounds for simultaneously smooth\nLipschitz and convex loss functions. These proof techniques were later extended by Kuzborskij and\nLampert [2018], Lei [2023] to the on-average stability, observing that generalisation error can be\ncontrolled by the data dependent quantities (such as the empirical risk), leading to optimistic bounds. However, none of these works showed dependence on the effective dimension or preconditioner P.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 4,
+    "total_chunks": 76,
+    "char_count": 2382,
+    "word_count": 362,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "118929ba-e981-46dd-b288-8d23c034252e",
+    "text": "By targeting a data-dependent analysis of PSGD, one runs into several difficulties. Most commonly\nknown, is the difficulty of managing dependence between parameter iterates and the dataset, which\nis usually circumvented by restricting to the single pass setting. In the present work, we consider the\nmulti-pass setting and we develop methods to manage parameter-dataset dependence. We develop an on-average stability analysis of multipass SGD that overcomes the technical\nchallenge of dependence between iterates arising through reused data points — see Section 2\nfor the sketch of the analysis. We derive excess risk bounds for multipass PSGD that depend on the effective dimension\ngoverned jointly by the loss curvature, preconditioning matrix, and gradient noise. We identify a regime where an improperly chosen preconditioner leads to suboptimal effective\ndimension dependence in both optimisation and generalisation. We complement our results by obtaining matching instance-dependent lower bounds. Rather than working directly with ∇2f we employ a proxy PD matrix H such that ∇2ℓ⪯βH and\nperform an analysis in the geometry of the ∥· ∥H-norm. We focus on β-smooth (but not necessarily VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 5,
+    "total_chunks": 76,
+    "char_count": 1223,
+    "word_count": 181,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf1240fe-9952-4ac0-b0fa-afab62c9ec60",
+    "text": "Lipschitz) losses and we consider two structural cases: strongly convexity, and non-convex losses\nsatisfying a Polyak-Łojasiewicz (PL) condition (see Eq. (5)), both in ∥· ∥H norm. Smooth strongly convex losses. In the first setting, we consider an arbitrary choice of the preconditioner P. Proposition 10 implies that with step size ∼1/(t + 1) the excess risk satisfies !! 64 ES[tr(PHPΣS)] 1 1\nES,A[δf(xt)] ≤ + tr(PΣ) + .\nλmin(PH)α t + 1 pn(t + 1) n Observe that the excess risk depends on the term tr(P Σ) which resembles effective dimension\nand multiplies 1/n, which is a statistical rate. The term ES[tr(PHPΣS)] bears a similar role as it\nmultiplies 1/t, which is an optimiser convergence rate.2 At the same time it is known that the optimal\nstatistical rate is tr(H−1Σ)/n and so the above suggests that the optimal choice P = H−1 recovers\nthe optimal rate tr(H−1Σ)(1/t + 1/n), while other choice will lead to the suboptimal statistical rate. This also demonstrates that the geometry required to minimise the variance in the optimisation error\nis identical to the geometry required to minimise finite-sample algorithmic instability. Thus, secondorder information is not only a tool for speed, but a mechanism for robustness against sampling\nnoise. The key to presence of tr(P Σ) stems from combination of on-average stability analysis and\nworking with weighted Euclidean norms. This is elucidated by Lemma 8, which states that for any\nstochastic iterative algorithm that satisfies geometric contractivity between xt and x(i)t (where the\nlater is obtained on the perturbed training set), for any PD matrix M and a constant step size we have tr(PMPΣ) 1 E h ∥xt −x(i)t ∥2M i = O η + as n →∞. n n Note that this result only requires smoothness, but not convexity of the loss. First, the lemma captures\nstability of PSGD in a subspace of choice rather than globally. Choosing curvature M = P −1\nnaturally leads to analysis of preconditioned SGD as iterates live in a subspace spanned by the\npreconditioner.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 6,
+    "total_chunks": 76,
+    "char_count": 2004,
+    "word_count": 335,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0855afa9-c581-4f5d-abc8-b90fa464415c",
+    "text": "Second, working with on-average stability allows us to gain dependence on Σ,\nwhereas a stronger, uniform stability would be oblivious to geometry of the noise. On-average stabiliy for smooth PL losses. Next in Section 4.2 extend our analysis to family\nof non-convex smooth losses that satisfy PL condition. In particular, we show that excess risk is\ncontrolled by the effective dimension, E[δf(xt(S))] ≤4β E[δfS(xt(S))] + 8 tr(H−1Σ) .\nµ µn",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 7,
+    "total_chunks": 76,
+    "char_count": 439,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8df4aeb3-3083-4df7-96f3-eb6fac06e00a",
+    "text": "Note that, excess risk no longer depends on a particular P and behaves\nas if an optimal P was chosen. The expected optimisation error E[δfS(xt(S))] scales with the\neffective dimension as well and the bounded is given by the standard convergence analysis for PL\nobjectives [Karimi et al., 2016]. Note that E[ΣS] can be controlled in terms of Σ with bias of order ptr(PHPΣ)/n, see Lemma 22. ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 8,
+    "total_chunks": 76,
+    "char_count": 465,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2b609971-8ed5-4551-9667-76106acaeaee",
+    "text": "Finally, a natural question is whether the results we presented are optimal. On one\nhand it is known that from both statistical and optimisation perspectives dependence on tr(H−1Σ) is\noptimal as there exist asymptotic lower bounds (Cram´er-Rao type lower bound [Polyak and Juditsky,\n1992]). To this end, focusing on the strongly-convex model, in Section 5 we complement this fact\nin non-asymptotic sense, by showing that in minimax lower bounds on the excess risk are of order\ntr(H−1, Σ)/(n β). Clearly we cannot expect any improvement in the minimax sense, however,\nthe message our analysis conveys is that a bad choice of the preconditioner might lead to a poor\nstatistical performance, and so minimax analysis is no longer appropriate. To this end we present an\ninstance-dependent lower bound, albeit limited to a single pass PSGD. In particular, for a decaying\nstep size ηt ∼1/t, for a sufficiently large t, the expected excess risk behaves as tr(PHPΣ) 1\n· .\nλmax(PH)λmin(PH) t\nWhile for the optimal choice of the preconditioner P = H−1 this bound matches the upper bound, for\na badly chosen preconditioner P (for instance, we can construct P that approaches rank-deficiency)\nthe above our result implies that tr(HΣ)/(εt) with t > 4/ε. In other words, for a general curvature\n(Σ, H) and large t, the associated constant in front of the asymptotic rate of the excess risk can\nbe arbitrarily large, even with decaying step. This, once more, emphasises the impact of the\npreconditioning on statistical performance. Notation and terminology. For symmetric matrices A, B, we write A ⪯B to denote the semidefinite order, meaning that B −A is Positive Semi-Definite (PSD), and similarly ≺to denote PD. We\ndenote ∥x∥H = x⊤Hx for a positive definite matrix H ≻0. We let λmin(A) and λmax(A) denote\nthe smallest and the largest eigenvalue and κ(A) = λmax(A)/λmin(A) is the condition number of a\nmatrix A ∈Rd×d. For α-strongly convex β-smooth function w.r.t. ∥· ∥H-norm we denote κℓ= β/α. Roman font Q, Px denote probability distributions, the latter parameterised by the vector x.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 9,
+    "total_chunks": 76,
+    "char_count": 2073,
+    "word_count": 341,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8628b612-d446-4d70-bfcc-112e46f8adcf",
+    "text": "Proof Sketch and Technical Challenges The expected excess risk of an estimator ˆx is typically bounded by balancing the trade-off between\nerror terms originating from the generalisation component and those arising from offline optimisation\nof the empirical risk:\nES [δf(ˆx)] = ES [f(ˆx) −fS(ˆx)] + ES [fS(ˆx) −fS(˜x)] ,\n| generalisation{z } | optimisation{z } where ˜x = arg minx∈X f(x). Here the optimisation error can be further upper bounded using the\nERM x∗S ∈arg minX fS(x) and noting that ES [fS(ˆx) −fS(˜x)] ≤ES [fS(ˆx) −fS(x∗S)]. The generalisation term can be controlled using the standard algorithmic stability argument. Let\nˆx(i) be computed from a perturbed dataset S(i) = S \\ {zi} ∪{z′}, where z′ ∼Q with the same\nalgorithmic procedure as ˆx. Then using the standard symmetricity argument leads to observation that\nthe generalisation term is equal to the on-average algorithmic stability, Eq. (3). Generalisation Geometry via On-Average Multipass Stability with Correlated Iterates In the multi-pass setting, when xt is computed by sampling examples from S with replacement, the\niterate is not independent with previously seen samples zit and the standard stability analysis fails. VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 10,
+    "total_chunks": 76,
+    "char_count": 1229,
+    "word_count": 188,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "56ab747b-9a91-4880-9dbb-e9dc2f5c5b1d",
+    "text": "This usually forces the analysis to rely on uniform stability bounds [Hardt et al., 2016] that assume\nuniform ℓ(·, z) is L-Lipschitz for all samples Ez∼Q[|ℓ(xt(S), z) −ℓ(xt(S(i)), z)|] ≤sup |ℓ(xt(S), z) −ℓ(xt(S(i)), z)| ≤L∥xt(S) −xt(S(i))∥.\nz∈Z This step effectively removes any dependence on the data distribution and its interaction with finer\ngeometric properties of the loss, which is commonly pointed out as a limitation [Zhang et al., 2017]. In order to reveal the generalisation geometry, we exploit that ℓ(·, z) is β-smooth w.r.t ∥·∥H-norm,\nand show that, when ηt is small, the generalisation is governed by ES [f(xt(S)) −fS(xt(S))] 1/2 h = O Varz∼Q ∥∇ℓ(xt(S), z)∥2∗ · EA,S,z′ ∥xt(S) −xt(S(i))∥2i1/2 . The choice for ∥· ∥-norm controlling the squared parameter stability ε2pstab(xt(S), ∥· ∥) :=\nEA,S,z′[∥xt(S) −xt(S(i))∥2] plays a crucial role in two ways: it bounds the parameter stability\nand its dual norm will interact with the the noise of gradients. We restrict ourselves to Hilbert spaces\nand consider ε2pstab(xt(S), ∥·∥M) for some M ≻0. If the deterministic PGD update is r-contractive\nwe can upper bound the parameter stability as η2t E h ∥P(ξt −˜ξt)∥2M i , ε2pstab(xt+1(S)) ≤(1 −c1ηtr) ε2pstab(xt(S)) + c2 n where ξt := ∇ℓ(xt(S), zi) −∇ℓ(xt(S(i)), z′) involves the challenging term with the correlated\nsamples and parameters, and ˜ξt := ∇f(xt(S)) −∇f(xt(S(i))). We overcome the problem of\ncorrelated iterates in the multi-pass setting by being able to upper bound it as E h ∥ξt −˜ξt∥2PMP i ≤tr(PMPΣ) + c3β2εpstab(xt(S)) . We identify a condition n ≥κℓκ(PH) depending on the geometry of ℓand P, that ensures the\ncontribution of the correlated terms is benign, resulting in tr(PMPΣ) tr(PMPΣ)\nε2pstab(xt(S), ∥· ∥M) ≤c4 + c5 η for a fixed ηt = η. n2 n\n|Irreducible{zFast Rate} |Optimisation{z Variance}",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 11,
+    "total_chunks": 76,
+    "char_count": 1816,
+    "word_count": 291,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d90f724b-c408-4cc9-af30-462fd42ad36c",
+    "text": "This decomposition is sharper than O(1/n) providing finer control as O(1/n2) when η ≤1/n, it\nisolates the intrinsic statistical complexity (the fast rate) from the noise induced by the algorithm's\nstep size, and establishes on-average stability for arbitrary t provided n is large enough. Thus, when\nthe deterministic PGD update is r-contractive in ∥· ∥M-norm, η is small enough3 ptr(M−1Σ) tr(PMPΣ) !\nES [f(ˆx) −fS(ˆx)] = O and selecting ∥· ∥M determines the analysis's sensitivity to parameter stability and gradient noise. Or, for example, in the standard setting of ηt ≈1/t and t ≥n.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 12,
+    "total_chunks": 76,
+    "char_count": 586,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cc8bc753-b59c-4f09-b7c8-88de388b0bae",
+    "text": "ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION Spectral Alignment under Geometric Mismatch In the standard stability analysis, for α-strongly convex and β-smooth functions w.r.t. ∥· ∥2, the\ncontractivity of the gradient descent (without preconditioning) comes from gradient co-coercivity: αβ 1\n⟨∇f(x) −∇f(y), x −y⟩≥ ∥x −y∥22 + ∥∇f(x) −∇f(y)∥22 . α + β α + β When the geometry of ℓis defined by ∥· ∥H-norm and we use preconditioning P the term needed to\nbe bounded is ⟨HP(∇f(x) −∇f(y)), x −y⟩, which does not need to be positive unless P = H−1. However, in practical settings we have almost never that P = H−1, the matrices P, H are misaligned\nand do not commute. We introduce a rigorous condition for spectral alignment based on the matrix pencil (P, H−1) and\nestablish a generalised co-coercivity inequality for gradients under non-commuting preconditioning Cℓ,P ⟨HP(∇f(x) −∇f(y)), x −y⟩≥λmin(PH) αβ∥x −y∥2H + ∥∇f(x) −∇f(y)∥2H−1 , α + β where the constant Cℓ,P ∈(0, 1] tracks the quality of the alignment: Cℓ,P = 1 for quadratic functions\n(β = α) and Cℓ,P →0 for badly aligned problems. This property allows to show the contractivity\nof the preconditioned gradient update in the parameterised family of metrics ∥· ∥Mθ defined by\n2 (1−θ)P −θH 12 (1−θ) interpolating between: the natural metric of the problem when θ = 0Mθ = H\n(∥·∥H) for P, H are spectrally aligned, and the metric defined by the algorithm when θ = 1 (∥·∥P −1),\nbut which holds for any P ≻0. Relative smoothness & strong convexity. We define the geometry w.r.t the weighted norm ∥· ∥H. Definition 1 (Smoothness w.r.t. ∥· ∥H) Let H ≻0 such that λmax(H) = 1, and β > 0. The\nfunction f(x) is β-smooth w.r.t ∥· ∥H when f(y) −f(x) ≤⟨∇f(x), y −x⟩+ β2 ∥y −x∥2H or\nequivalently, ∥∇f(x) −∇f(y)∥H−1 ≤β∥x −y∥H for convex f. Definition 2 (Strong convexity w.r.t. ∥· ∥H) Let H ≻0 such that λmax(H) = 1, and β > 0.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 13,
+    "total_chunks": 76,
+    "char_count": 1896,
+    "word_count": 330,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b33b3f6a-8f22-47f9-9efb-16dcba4478e3",
+    "text": "The\nfunction f(x) is α-strongly convex w.r.t ∥· ∥H when f(y) −f(x) ≥⟨∇f(x), y −x⟩+ α2 ∥y −x∥2H. The definitions are special cases of relative smoothness and strong convexity, see [Lu et al., 2018,\nDefinition 1.1 and 1.2], where we choose the reference function to be h(x) = ⟨x, Hx⟩. They have\nbeen referred to also as \"matrix smoothness\" employed by [Thomas et al., 2020, Li et al., 2024]. We\ndenote the condition number of the loss w.r.t. the ∥· ∥H-norm geometry by κℓ:= β/α. Since κℓexpresses the discrepancy between f and a quadratic function, on a bounded domain it can be bounded using higher order smoothness. If ℓ(·, z) has γ-smooth Hessian, i.e.,\nλmax(∇2ℓ(x1, z) −∇2ℓ(x2, z)) ≤γ∥x −y∥2, we have the following bound\nκℓ≤1 + γR/λmin(H) for ∥x −x0∥2 ≤R. 1 −γR/λmin(H), For f ∈C2, the combination of Definitions 1 and 2 acts as a quadratic upper and lower bound\nrespectively: αH ⪯∇2ℓ(x, z) ⪯βH. VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 14,
+    "total_chunks": 76,
+    "char_count": 932,
+    "word_count": 161,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b649aeff-0928-4281-b239-837eae5d481d",
+    "text": "Generalised co-coercivity. The following defines the spectrally aligned preconditioner when the\nrelative condition number κ(PH) is sufficiently bounded compared to κℓ. Definition 3 (Spectrally aligned preconditioner) For ℓ(·, z) that is α-strongly convex and β-\nsmooth w.r.t ∥· ∥H, we say that P is Cℓ,P -spectrally aligned with the geometry of ℓ(·, z) iff\nρ2ℓ−κ(PH) √κℓ+ 1 κ(PH) ≤ρ2ℓ with Cℓ,P = and ρℓ:= > 1. ρ2ℓ−1 √κℓ−1 This decomposes the conditioning misalignment into two parts: ρℓreflects how well the model of\nrelative smoothness/strong convexity captures the actual geometry of ℓ, and κ(PH) reflects how\nwell the algorithm, i.e., the choice of P, captures the model curvature defined by H. Definition 3 is\nsatisfied for many widely used choices of P and allows for a fine description of the geometry needed\nfor generalisation.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 15,
+    "total_chunks": 76,
+    "char_count": 835,
+    "word_count": 133,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "75feb596-674f-4988-a86d-3f85c5dc42e1",
+    "text": "Example 1 (Inexact-Newton Methods (q-approximate inverse curvature)) Assume that for some\nq ≥1 the preconditioner P ≻0 satisfies 1 H−1 ⪯P ⪯q H−1. Then (1/q)I ⪯PH ⪯qI, q\nhence κ(PH) ≤q2. Therefore, whenever q2 < ρ2ℓ, Assumption 3 holds and the alignment constant\nis lower bounded as\nρ2ℓ−κ(PH) ≥ρ2ℓ−q2 . Cℓ,P =\nρ2ℓ−1 ρ2ℓ−1\nSuch uniform spectral boundedness assumptions have been used in the Quasi-Newton literature to\nprove global convergence; see, e.g., see [Nocedal and Wright, 2006, Sec. 3.3] and [Dennis and\nMor´e, 1977]. More recently Cheng and Li [2010], showed that ensuring the q-approximate inverse\ncurvature leads to improved numerical performance. Example 2 (Diagonal preconditioning) Let P be a diagonal preconditioner P := diag(H)−1. If\nA := D−1/2HD−1/2 is strictly diagonally dominant in the sense that α := maxi Pj̸=i |Aij| < 1,\nthen by Gershgorin disc theorem we have that the spectrum λ(A) ⊂[1 −α, 1 + α], hence κ(PH) =\nκ(A) ≤ 1+α1−α. Consequently, whenever 1+α1−α < ρ2ℓ,\nρ2ℓ−1+α1−α\nCℓ,P ≥ ,\nρ2ℓ−1 yielding a simple explicit Cℓ,P bound for diagonal preconditioning whenever H is close to diagonal. Definition 3 allows to derive a generalisation of the standard gradient co-coercivity result, e.g., see\n[Nesterov, 2018, Theorem 2.1.12], that applies to preconditioned gradients and specific case of\nrelative smoothness and strong convexity [Lu et al., 2018]. Lemma 4 (Co-coercivity of spectrally aligned PSGD updates) Let f be α-strongly convex and\nβ-smooth w.r.t. ∥· ∥H and P is Cℓ,P -spectrally aligned with ℓ(·, z), i.e., κ(PH) < ρ2ℓin Definition 3. Then for all x, y ∈Rd:\n⟨∇f(x) −∇f(y), HP(x −y)⟩≥λmin(PH)Cℓ,P αβ∥x −y∥2H + ∥∇f(x) −∇f(y)∥2H−1 . α + β Proof is given in Section B.1. For P = H−1 this recovers the standard co-coercivity of gradients. Note, that Lemma 4 does not require that P and H commute.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 16,
+    "total_chunks": 76,
+    "char_count": 1823,
+    "word_count": 299,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "98c7cc08-e22a-4355-aa62-0165b8fdc4ec",
+    "text": "ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION Excess risk bounds of PSGD via on-average stability In this section, we derive excess risk bounds for the PSGD algorithm via on-average stability.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 17,
+    "total_chunks": 76,
+    "char_count": 223,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fd95aa74-3622-49e5-b15b-c1414e66263f",
+    "text": "Throughout this section, assume the following: Assumption 5 Suppose that for each z ∈Z, ℓ(·, z) is β-smooth with respect to the norm, ∥· ∥H. Assumption 6 Suppose there exists Σ ≻0 such that Covz∼Q(∇ℓ(x, z)) ≼Σ for all x ∈X. In traditional stabiltiy analyses of SGD-type algorithms, a uniform Lipschitz assumption is typically\nemployed to relate algorithmic stability to parameter stability. However, this Lipschitz assumption\nboth rules out several settings of interest (e.g. strongly convex losses on non-compact domains) and\noften conceals the curvature information present in smoothness and convexity. To fully exploit the\ngeometry of the problem, we proceed without the global Lipschitz assumption. We first provide a\ngeneral stability result for an algorithm A that maps from Zn to a random variable on X. Lemma 7 Suppose that assumptions 5 and 6 hold and let M ≻0. If the algorithm A is L2-\non-average parameter stable in ∥· ∥M-norm with constant ε2pstab ≥0, then the expected excess risk\non the parameters x = A(S) satisfies, tr(M−1Σ)1/2\nES,A[δf(xt)] ≤2ES,A[δfS(xt)] + εpstab + 4βλmax(HM−1) ε2pstab. 2\nNote that the primary limitation borne from the Lipschitz assumption, that we are able to overcome,\nis that parameter stability is measured in the weaker ∥· ∥M, whereas our analysis uses ∥· ∥2M-norm\ninstead. While this requires a tighter control on the iterates, it allows to use smoothness to identify\nthe explicit role of the curvature (via H and M) in the generalisation bound. The matrix M is\nchosen according to its amenability to the parameter stability analysis, but to optimise the bound, M\nmust also be chosen to align with either the curvature H or the covariance matrix Σ. Thus, under\nmisspecification, the natural geometry to analyse parameter stability in is not immediate.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 18,
+    "total_chunks": 76,
+    "char_count": 1795,
+    "word_count": 291,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5da48cf8-dc86-4559-9ef7-90701ebccee2",
+    "text": "We now focus on the PSGD algorithm defined by a positive definite preconditioner, P ≻0. To\nanalyse the stabiltiy PSGD, we will obtain that if the update is contractive in a suitable geometry\n∥x −ηP∇ℓ(x, z) −y + ηP∇ℓ(y, z)∥2M ≤(1 −ηr)∥x −y∥2M. (4) Lemma 8 (On-average parameter stability of PSGD) Suppose that Assumption 5 holds, choose\nany matrix M ≻0 and constants ¯η, r > 0 such that for any x, y ∈X, z ∈Z and η ≤¯η, the\nr-contractivity property in Eq. (4) holds. Then, if sups ηs ≤¯η ∧r−1 and n ≥8β pλmax(HPMP)\n·pλmax(M−1H)/r, we have that AP,t is on-average parameter stable with constant,\n¯ηt 1 −e−Ttr/4\nε2pstab ≤64 + tr(PMPΣ) , 8n n2r2 Tt−Ts\n4 η2s.where Ts = Ps−1s′=0 ηs′ and ¯ηt = Ps<t e−r\nThe proof is provided in Section C.1. A significant advantage of this bound over those in [Hardt et al.,\n2016] is the explicit dependence on the data distribution via the trace term tr(PMPΣ). Furthermore,\nunlike [Kuzborskij and Lampert, 2018], our result captures the exact interaction between the curvature\nH, the preconditioner P, and the noise Σ, while valid in the multi-pass setting. The quantity ¯ηt characterises how memory of past step-sizes decays. For standard step-size\nschedules, it behaves intuitively: for example, with a linearly decaying step size ηt = c/t, we have\n¯ηt ≤c2/t. VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 19,
+    "total_chunks": 76,
+    "char_count": 1324,
+    "word_count": 227,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6b4b6100-03a8-4e51-97f7-253d37d6002f",
+    "text": "On-average stability and risk bounds for strongly convex smooth losses Under additional assumption that the loss is also α-strongly convex, we can show that the PGD\nupdate is r-contractive in a specific family of ∥· ∥M-norms. Assumption 9 Suppose that for each z ∈Z, ℓ(·, z) is α-strongly convex with respect to ∥· ∥H. Lemma 19 in Section B shows that under Assumption 9, the PGD update is contractive in ∥· ∥Mθ\n2 (1−θ)P −θH 12 (1−θ) for θ ∈[0, 1] interpolating between H and P −1.where Mθ := H\nBy combining the stability result in Lemma 8, the contractivity result in Lemma 19, and the\noptimisation rates for PSGD (see Section D), we can derive explicit generalisation bounds, see\nLemma 25. We consider two natural geometries for measuring convergence: the geometry induced\nby P −1 (θ = 1) and the geometry induced by the Hessian H (θ = 0). Proposition 10 (Risk bounds in geometry defined by P −1)) Let P ≻0, suppose that Assumptions Assumption 5, 6 and 9 hold, and that n ≥4κℓκ(PH). Let r := 2 λmin(PH) α+β.β α Let\nVarz[∇ℓ(x, zit)] ⪯ΣS for all x. If the stepsizes are chosen as ηt := min{1/(β λmax(PH)), 8/(r(t + 1))}, then, for all t\nsufficiently large, the population excess risk satisfies ES,A[δf(xt)] ≤64 ES[tr(PHPΣS)] + tr(PΣ) 1 + 1 .\nr t + 1 pn(t + 1) n We get sublinear O(1/t + 1/ t n + 1/n) convergence rate which matches the single pass (when\nn = t) result [Rakhlin et al., 2012], however with the precise rates depending on the interplay of the\ncurvature, variance of noise, and how well the preconditioning adapts to these. Note that E[ΣS] can\nbe bounded by Σ with additive bias of order Lβεpstab assuming that ℓis L-Lipschitz, see Lemma 22. This means that any P ≻0, the excess risk of the last iterate of PSGD converges to zero\nasymptotically, although the rate in the upper bound can become arbitrarily loose with large κ(PH),\neven if the variance is bounded. Corollary 20 shows that minimizing the upper bound in terms of\nP ≻0 yields that P = H−1 minimizes the expected risk and gives the optimal Takeuchi Information\nCritertion for the noisy strongly convex smooth model (Theorem 15). Remark 11 (Approximate NGD under misspecification) Due to the connection to the natural\ngradient descent discussed in Section A, this result has implications for NGD under misspecification. Let ℓ(x, z) := −log p(z|x) be the negative log-likelihood of the distribution of z ∼Px and ℓ(·, z)\nis α strongly convex, β smooth w.r.t. ∥· ∥H.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 20,
+    "total_chunks": 76,
+    "char_count": 2436,
+    "word_count": 433,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "10d24c59-6144-4424-9b23-29c20be1e491",
+    "text": "If the data distribution differs from the model family\n(misspecification), we have Σ ̸= H. Our bounds show that choosing P = H−1 ≈(FPx(x))−1\nachieves a generalisation bound that is optimal even under this misspecification. In the case where P and H−1 are spectrally aligned, we can get more precise bounds through an\nanalysis in ∥· ∥H-norm. Proposition 12 (Risk bounds in geometry defined by H) Suppose that Assumptions Assumption 5,\n6 and 9 hold, and that n ≥ 8 β pλmax(HPHP). Assume further that κ(PH) ≤ρ2ℓand let r\nr := 2 λmin(PH) Cℓ,P (β α)/(α + β). ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION If the stepsizes are chosen as ηt := min{Cℓ,P /(β λmax(PH) κ(PH)), 8/(r(t + 1))}, then,\nfor all t sufficiently large, the population excess risk satisfies ES[tr(PHPΣS)] 1 1 !! p tr(H−1Σ) tr(PHPΣ) + . ES,A[δf(xt)] ≤64 +\nr t + 1 pn(t + 1) n Note, that since λmax(P) = λmax(H) = 1, we have that λmax(PH) ≤1, and thus tr(PHPΣ) ≤\ntr(PΣ) making the rate in Proposition 12 less or equal compared the one in Proposition 10. Risk bounds for non-convex losses under PL-property While the above analysis captures the generalisation properties of PSGD along the trajectory, it fails\nto capture what occurs at convergence. This can be seen due to the fact that, irrespective of the choice\nof preconditioner, the PSGD iterates should converge to the same empirical risk minimiser, and thus,\nexhibit the same generalisation properties. The inability of this type of stability analysis to capture\ngeneralisation at convergence is known [Hardt et al., 2016]. For that reason, we turn instead to a\nblack-box analysis of any algorithm A that produces parameters that approximately minimise fS.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 21,
+    "total_chunks": 76,
+    "char_count": 1705,
+    "word_count": 287,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d931df9f-3005-40e2-a29f-95a0fbd56640",
+    "text": "Here we also consider a more general setting than the previous analysis under strong convexity. In addition to β-smoothness w.r.t. ∥· ∥H we will assume that empirical risk satisfies the following\nPL condition [Karimi et al., 2016]: There exists µ > 0 a minimizer x∗of fS such that for all S, x, H ≥µ(fS(x) −fS(x∗)) . (5) 2∥∇fS(x)∥2 Our analysis is inspired by that of Charles and Papailiopoulos [2018] and we make the following\nassumption which is identical to their Assumption 1 and the stability analysis that follows is similar\nto their proof technique of Theorem 3(iii). Assumption 13 The empirical risk minimizers for fS and fS(i), i.e., ˆx∗, ˆy∗, satisfy ProjS(ˆy∗) = ˆx∗,\nwhere ProjS is the projection on the set of empirical risk minimizers of fS. Proposition 14 (Excess risk bounds for PL-losses) Suppose that for each z, fS is β-smooth and\nsatisfies µ-PL property w.r.t. ∥· ∥H and suppose that Assumption 13 holds. Then whenever n ≥\n32βλmax(HΣ−1), we have the excess risk bound,\nEA,S[δf(xt(S))] ≤2β E[δfS(xt(S))] + 2 tr(H−1Σ) + 64β tr(H−1Σ) .\nµ µn µ2n2 Together, these results suggest that the generalisation dynamics are governed by a delicate trade-off\nmediated by the preconditioner. The choice of P dictates the learning trajectory in two distinct ways: Optimisation Rate: P determines the convergence speed of the empirical error E[δfS(xt)],\nprimarily through the condition number κ(PH). Effective Dimension: P shapes the effective noise geometry, scaling the stability error by\ntr(PHPΣ) or tr(PΣ) in the worst case. Furthermore, once the algorithm converges, the excess risk it produces becomes independent of the\nchoice of preconditioner. The optimal choice P ≈H−1 simultaneously maximises the convergence\nrate and minimises the effective dimension, acting as a benefit to both optimisation and generalisation. VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 22,
+    "total_chunks": 76,
+    "char_count": 1862,
+    "word_count": 293,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6541284a-b9d2-494b-982e-70ef87c7c3b9",
+    "text": "Lower bounds on the expected risk Theorem 15 (Lower bound) Let ℓ(x, z) : X × Z →R be strongly convex w.r.t. ∥· ∥H norm in the\nparameters x and P is a family of distributions such that ∀P ∈P, x ∈X we have Ez∼P [∇ℓ(x, z)] =\n0 and Varz∼P (∇ℓ(x, z)) = Σ. Then we have that the expected excess risk of an estimator computed\nfrom S ∼P is lower bounded as inf sup ES∼P n[δf(ˆx(S))] ≥0.14 tr(H−1Σ) .\nˆx∈X P∈P nα Proof is in Section G.1. Theorem 15 establishes that the fundamental statistical limit of the problem\nis governed by the interaction between the geometry of the loss (H) and the noise structure (via Σ). Algorithmic lower bounds of single pass PSGD While previously we demonstrated that the\nchoice of P = H−1 results in non-asymptotically optimal rate, here we show that, even in our simple\nsetting, choosing a bad preconditioner P can increase the risk of the last iterate by a multiplicative\nfactor κ(PH). These bounds can be compared with the lower bound in [Nesterov, 2018, Theorem\n2.1.13], but here we have preconditioning, decaying step-sizes, and lower bound single pass risk. The\nfirst result shows that the rate in Proposition 12 is tight up to the constant κ(PH) for t large enough. Lemma 16 (Algorithmic single-pass lower bound) The expected excess risk of the online PSGD\nwith ηt = min{1/λmax(PH), 2/(λmin(PH)t)} on the quadratic noisy model is lower bounded as tr(PHPΣ) 1\nEz1,...,zt[δf(xt+1)] ≥ · for t ≥t0 := ⌊2κ(PH)⌋.\nλmax(PH)λmin(PH) t Proof is in Section G.2. Similar, but more refined bound is derived in [Martens, 2020, Theorem 5]. For any given H, Σ, choosing a badly conditioned P can make the risk lower bound arbitrarily\nlarger than the optimal rate. Corollary 17 (Algorithmic lower bound for ill-conditioned P) Choose ε > 0 and assume that\nt > 4/ε.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 23,
+    "total_chunks": 76,
+    "char_count": 1775,
+    "word_count": 313,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b535439-d0b0-40e1-a669-882e34ee6456",
+    "text": "Let H, Σ ≻0 and λmax(H) = 1 and Q be the eigenbasis of H. Then PSGD with a decaying\nstepsize η = min{1/βλmax(PH), 2/(tλmin(PH)α)}, a preconditioner Pε = I −(1 −ε)qkq⊤k ,\nwhere the choice of k is explicitly defined by the spectrum of H and Σ, has the risk lower bounded as tr(HΣ) Ez1,...,zt[δf(xt+1)] ≥ 1 −1 · .\nd εt The proof is given in Section G.3. This shows that for a general H, Σ and t large enough, the constant\nin front of the excess risk rate can get arbitrarily large in general, even with a decaying stepsize, as\nPε approaches a rank-deficiency. One would expect that P = I is a relatively safe choice. However, when the problem is illconditioned in the form of H, even well conditioned P can lead to significantly worse rates. We\nshow that for any given P and H, in the presence of low-dimensional noise Σ, the lower bound on\nthe risk of the last iterate of PSGD is at least κ(PH) worse than the optimal rate of tr(H−1Σ)/t. Corollary 18 (Algorithmic lower bound for ill-conditioned H) Let P, H ≻0 and λmax(P) =\nλmax(H) = 1. Assume that t > 4κ(PH). Let q1 be the leading eigenvector of H1/2PH1/2 and ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION set Σ = q1q⊤1 be the variance of noise. Then PSGD with a preconditioner P, a decaying stepsize\nη = min{1/βλmax(PH), 2/(tλmin(PH)α)}, has the risk lower bounded as, tr(H−1Σ)\nEz1,...,zt[δf(xt+1)] ≥κ(PH) · .",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 24,
+    "total_chunks": 76,
+    "char_count": 1392,
+    "word_count": 253,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ad8ad185-fc2e-4170-80fe-db6b9f5e784b",
+    "text": "The proof is given in Section G.4 consists of showing that the lower bound in Lemma 16 for any\nP ≻0 is κ(PH) larger than the optimal rate. Even for well-conditioned P the constant in the risk\nbound can be arbitrarily bad by having H badly conditioned. For example, SGD, i.e., when P = I,\nhas its risk at least κ(H) (which can be arbitrarily large) worse than the optimal rate. Simon Vary and Patrick Rebeschini were funded by UK Research and Innovation (UKRI) under the\nUK government's Horizon Europe funding guarantee [grant number EP/Y028333/1]. Tyler Farghly\nwas supported by Engineering and Physical Sciences Research Council (EPSRC) [grant number\nEP/T517811/1] and by the DeepMind scholarship. Naman Agarwal and Alon Gonen.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 25,
+    "total_chunks": 76,
+    "char_count": 728,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a94e7634-8889-4b1c-9284-bd4c0002dddf",
+    "text": "Optimal sketching bounds for exp-concave stochastic minimization. Natural Gradient Works Efficiently in Learning. Neural Computation, 10(2):\n251–276, 1998. Learning theory from first principles. Olivier Bousquet and Andre Elisseeff. Stability and Generalization. Journal of Machine Learning\nResearch, 2:499–526, 2002. Olivier Bousquet, Yegor Klochkov, and Nikita Zhivotovskiy. Sharper Bounds for Uniformly Stable\nAlgorithms. In Conference on Computational Learning Theory (COLT), 2020. Zachary Charles and Dimitris Papailiopoulos. Stability and Generalization of Learning Algorithms\nthat Converge to Global Optima. In International Conference on Machine Learing (ICML), 2018.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 26,
+    "total_chunks": 76,
+    "char_count": 675,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "08384ecf-11b2-43c7-89dd-08ce429d6648",
+    "text": "Spectral Scaling BFGS Method. Journal of Optimization Theory\nand Applications, 146(2):305–319, August 2010. ISSN 0022-3239, 1573-2878. doi: 10.1007/\ns10957-010-9652-y. John E Dennis, Jr and Jorge J Mor´e.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 27,
+    "total_chunks": 76,
+    "char_count": 204,
+    "word_count": 27,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a014fd63-cce4-4fac-b820-f85ed1d26781",
+    "text": "Quasi-Newton Methods, Motivation and Theory. SIAM Review,\n19(1):46–89, January 1977. ISSN 0036-1445, 1095-7200. doi: 10.1137/1019005. Luc Devroye and Terry Wagner. Distribution-free inequalities for the deleted and holdout error\nestimates. IEEE Transactions on Information Theory, 25(2):202–207, 1979. VARY FARGHLY KUZBORSKIJ REBESCHINI Simon S Du, Jason D Lee, Haochuan Li, Liwei Wang, and Xiyu Zhai. Gradient Descent Finds Global\nMinima of Deep Neural Networks. In International Conference on Machine Learing (ICML),\n2019. Andre Elisseeff, Theodoros Evgeniou, Massimiliano Pontil, and Leslie Pack Kaelbing. Stability of\nrandomized learning algorithms. Journal of Machine Learning Research, 6(1), 2005. Vitaly Feldman and Jan Vondrak. High probability generalization bounds for uniformly stable\nalgorithms with nearly optimal rate.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 28,
+    "total_chunks": 76,
+    "char_count": 832,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c0514deb-b425-44d4-994f-777e5836ebba",
+    "text": "In Conference on Computational Learning Theory (COLT),\npages 1270–1279. Zachary Frangella, Pratik Rathore, Shipu Zhao, and Madeleine Udell. PROMISE: Preconditioned\nStochastic Optimization Methods by Incorporating Scalable Curvature Estimates. 2024a. Zachary Frangella, Pratik Rathore, Shipu Zhao, and Madeleine Udell.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 29,
+    "total_chunks": 76,
+    "char_count": 317,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "da3527a6-8884-4be2-a067-a1370c4760b0",
+    "text": "SketchySGD: Reliable\nStochastic Optimization via Randomized Curvature Estimates. SIAM Journal on Mathematics of\nData Science, 6(4):1173–1204, December 2024b. ISSN 2577-0187. doi: 10.1137/23M1575330. Alon Gonen and Shai Shalev-Shwartz. Average stability is invariant to data preconditioning. implications to exp-concave empirical risk minimization. Journal of Machine Learning Research, 18\n(222):1–13, 2018. Moritz Hardt, Benjamin Recht, and Yoram Singer. Train faster, generalize better: Stability of\nstochastic gradient descent. In International Conference on Machine Learing (ICML), 2016. Arthur Jacot, Franck Gabriel, and Clement Hongler. Neural Tangent Kernel: Convergence and\nGeneralization in Neural Networks. In Advances in Neural Information Processing Systems, 2018. Hamed Karimi, Julie Nutini, and Mark Schmidt. Linear convergence of gradient and proximalgradient methods under the polyak-łojasiewicz condition. In Joint European conference on\nmachine learning and knowledge discovery in databases, 2016.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 30,
+    "total_chunks": 76,
+    "char_count": 1014,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "91c5fe3f-26df-4899-a6b1-9579571cec11",
+    "text": "Michael Kearns and Dana Ron. Algorithmic stability and sanity-check bounds for leave-one-out\ncross-validation. In Conference on Computational Learning Theory (COLT), 1997. Nitish Shirish Keskar, Dheevatsa Mudigere, Jorge Nocedal, Mikhail Smelyanskiy, and Ping Tak Peter\nTang.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 31,
+    "total_chunks": 76,
+    "char_count": 275,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "46cc211e-6d5a-44d5-9b2c-3a30a9ef6f2b",
+    "text": "On large-batch training for deep learning: Generalization gap and sharp minima. In\nInternational Conference on Learning Representations (ICLR), 2017. Adam: A Method for Stochastic Optimization. pages 58–62,\nDecember 2014. Ilja Kuzborskij and Christoph H Lampert. Data-Dependent Stability of Stochastic Gradient Descent. In International Conference on Machine Learing (ICML), 2018. Ilja Kuzborskij, Nicol`o Cesa-Bianchi, and Csaba Szepesv´ari.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 32,
+    "total_chunks": 76,
+    "char_count": 442,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "98b06a78-5d2e-4fc1-abf5-7e87d0a4c270",
+    "text": "Distribution-dependent analysis of\nGibbs-ERM principle. In Conference on Computational Learning Theory (COLT), 2019. ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION Jaehoon Lee, Lechao Xiao, Samuel S Schoenholz, Yasaman Bahri, Roman Novak, Jascha SohlDickstein, and Jeffrey Pennington. Wide neural networks of any depth evolve as linear models\nunder gradient descent*.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 33,
+    "total_chunks": 76,
+    "char_count": 397,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b6ddcfbd-f3a0-4f50-b456-21ae2e413242",
+    "text": "Journal of Statistical Mechanics: Theory and Experiment, 2020(12):\n124002, December 2020. Stability and Generalization of Stochastic Optimization with Nonconvex and Nonsmooth\nProblems. In Conference on Computational Learning Theory (COLT), 2023. Yunwen Lei and Yiming Ying. Fine-grained analysis of stability and generalization for stochastic\ngradient descent. In International Conference on Machine Learing (ICML), 2020. Hanmin Li, Avetik Karagulyan, and Peter Richt´arik. Det-CGD: Compressed Gradient Descent\nwith Matrix Stepsizes for Non-Convex Optimization. In OPT 2023: Optimization for Machine\nLearning at NeurIPS, 2024. Freund, and Yurii Nesterov.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 34,
+    "total_chunks": 76,
+    "char_count": 654,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c16cb45-fef5-4b49-bdd7-818fd42090ed",
+    "text": "Relatively Smooth Convex Optimization by\nFirst-Order Methods, and Applications. SIAM Journal on Optimization, 28(1):333–354, January\n2018. ISSN 1052-6234, 1095-7189. doi: 10.1137/16M1099546. Verchand, and Richard J.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 35,
+    "total_chunks": 76,
+    "char_count": 215,
+    "word_count": 25,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bbbd57e4-0be5-4a44-9695-6e39f2953487",
+    "text": "High-probability minimax lower bounds. New Insights and Perspectives on the Natural Gradient Method. Journal of Machine\nLearning Research, 21(146):1–76, 2020. James Martens and Roger Grosse. Optimizing Neural Networks with Kronecker-factored Approximate Curvature.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 36,
+    "total_chunks": 76,
+    "char_count": 264,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9efd645c-64b5-492d-a982-552e5140bfde",
+    "text": "In International Conference on Machine Learing (ICML), 2015. Lectures on Convex Optimization, volume 137 of Springer Optimization and Its\nApplications. Springer International Publishing, Cham, 2018. ISBN 978-3-319-91577-7 978-3-\n319-91578-4. doi: 10.1007/978-3-319-91578-4. Gergely Neu and Lorenzo Rosasco. Iterate averaging as regularization for stochastic gradient descent. In Conference on Computational Learning Theory (COLT), 2018. Behnam Neyshabur, Srinadh Bhojanapalli, David McAllester, and Nati Srebro. Exploring generalization in deep learning. Advances in Neural Information Processing Systems, 2017. Jorge Nocedal and Stephen J.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 37,
+    "total_chunks": 76,
+    "char_count": 640,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "48a69527-7f9f-4a1b-a864-33b39e6240d9",
+    "text": "Numerical Optimization. Springer Series in Operations\nResearch and Financial Engineering. Springer, New York, NY, second edition edition, 2006. Loucas Pillaud-Vivien, Alessandro Rudi, and Francis Bach. Statistical Optimality of Stochastic\nGradient Descent on Hard Learning Problems through Multiple Passes. In Advances in Neural\nInformation Processing Systems, 2018. Boris T Polyak and Anatoli B Juditsky.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 38,
+    "total_chunks": 76,
+    "char_count": 405,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cd438f7d-5a9b-4142-9e15-c0f9bba285bc",
+    "text": "Acceleration of Stochastic Approximation by Averaging. SIAM Journal on Control and Optimization, 30(4):838–855, July 1992. ISSN 0363-0129, 1095-\n7138. doi: 10.1137/0330046. VARY FARGHLY KUZBORSKIJ REBESCHINI Alexander Rakhlin, Ohad Shamir, and Karthik Sridharan. Making Gradient Descent Optimal for\nStrongly Convex Stochastic Optimization.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 39,
+    "total_chunks": 76,
+    "char_count": 339,
+    "word_count": 41,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7f8628af-62fa-4351-8476-3590e7a7e493",
+    "text": "In International Conference on Machine Learing\n(ICML), 2012. Statistical Aspects of Model Selection. Willems, editor, From Data to\nModel, pages 215–240. Springer Berlin Heidelberg, Berlin, Heidelberg, 1989. doi: 10.1007/\n978-3-642-75007-6 5. Jingruo Sun, Zachary Frangella, and Madeleine Udell. SAPPHIRE: Preconditioned Stochastic\nVariance Reduction for Faster Large-Scale Statistical Learning, January 2025. Valentin Thomas, Fabian Pedregosa, Bart van Merri¨enboer, Pierre-Antoine Mangazol, Yoshua Bengio,\nand Nicolas Le Roux. On the interplay between noise and curvature and its effect on optimization\nand generalization. In International Conference on Artificial Intelligence and Statistics (AISTATS),\n2020. Zhewei Yao, Amir Gholami, Sheng Shen, Mustafa Mustafa, Kurt Keutzer, and Michael Mahoney. ADAHESSIAN: An Adaptive Second Order Optimizer for Machine Learning. Conference on\nArtificial Intelligence (AAAI), 2021. Chiyuan Zhang, Samy Bengio, Moritz Hardt, Benjamin Recht, and Oriol Vinyals. Understanding deep learning requires rethinking generalization. In International Conference on Learning\nRepresentations (ICLR), 2017.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 40,
+    "total_chunks": 76,
+    "char_count": 1132,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ddd1ae36-f6c3-4dcc-bd63-71baf92466e9",
+    "text": "Guodong Zhang, Lala Li, Zachary Nado, James Martens, Sushant Sachdeva, George Dahl, Chris\nShallue, and Roger B Grosse.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 41,
+    "total_chunks": 76,
+    "char_count": 118,
+    "word_count": 18,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bbbe3410-d344-4b07-ae87-82be5b5dd666",
+    "text": "Which Algorithmic Choices Matter at Which Batch Sizes? Insights\nFrom a Noisy Quadratic Model. In Advances in Neural Information Processing Systems, 2024. Additional related work Algorithmic Stability. Algorithmic stability of SGD was first explored by Hardt et al. [2016] where\nthey focused exclusively on the uniform stability. Their involved multipass SGD only for strongly\nconvex, smooth, and Lipschitz losses.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 42,
+    "total_chunks": 76,
+    "char_count": 413,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "461b7072-3a72-4d84-9105-ec23025a1cf3",
+    "text": "To this end their bounds did not involve any distributiondependent quantites. Later on their analysis was extended to on-average stability setting by Kuzborskij\nand Lampert [2018], who showed that bounds on the expected generalisation gap controlled by the\nexpected empirical risk, however their analysis is limited to a single pass over the data. Lei and Ying\n[2020] improved rate obtained by Kuzborskij and Lampert [2018], however their analysis still did\nnot extend to multiple passes. Single pass limitation in on-average stability analysis is a common\nproblem, since iterates becomes correlated after a single pass. Notably, multipass analysis was\nexplored by Pillaud-Vivien et al. [2018] (Theorem 2 and 3), however their bounds become vacuous as\nλ →0. In this paper we address this limitation and recover optimal rates by exploiting smoothness\nand recursively controlling stability along the update trajectory (see Section 2). The connection between on-average stability and a slightly different notation effective dimension\n(tr(∇2f(∇2f + λI)−1)) in the context of regularized algorithms was studied by Agarwal and\nGonen [2018]. They showed that generalisation error bounds for minimizers of smooth Lipschitz\nexp-concave losses that depend on such an effective dimension. Here we study stochastic iterative\nalgorithm rather than a minimizer, we are particularly interested in the role of preconditioning and\ngeometry of the noise. The connection between on-average stability and preconditioning was explored by Gonen and\nShalev-Shwartz [2018], who established that on-average stability is invariant to data preconditioning:\nIn other words analyzing on-average stability of ERM one may assume the optimal preconditioning\nof the data – this is different from our setting as they look at asymptotic regime, in a sense t →∞.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 43,
+    "total_chunks": 76,
+    "char_count": 1826,
+    "word_count": 272,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "12453b4a-c5c3-4075-a4dc-212f535cae7c",
+    "text": "Moreover their analysis requires Lipschitzness of the loss, whereas do not require such as assumption. Generalisation and Flatness. Relationship between generalisation and flatness (or, conversely,\nsharpness) is a topic of significant interest, in particular in deep learning where it was empirically\nand theoretically observed that neural networks trained by SGD tend to have a smaller generalisation\nerror when they converge to 'wider' local minima [Keskar et al., 2017, Neyshabur et al., 2017],\nusually with some heuristic definition of width. In this paper we associate with with the effective\ndimension, which is a natural geometric characterisation. In the context of non-convex analysis linking effective dimension with generalisation, Kuzborskij\net al. [2019] prove distribution-dependent excess risk bounds for Gibbs-ERM principle (as an\nidealized model of stochastic optimisation), showing that in a neighborhood of a local minimizer\nthe excess risk is essentially controlled by an effective dimension tr ∇2f(∇2f + λI)−1 , so flatter\nminima (more small-curvature directions) yield tighter generalisation control than ambient-dimension\nbounds. They further characterize how the Gibbs density allocates probability mass across minima,\nand in the low-temperature limit the selection biases toward broader basins (over global minima,\nprobabilities scale like 1/ det(∇2f)), making a direct connection between flatness/volume and which\nsolutions are ultimately favored. Thomas et al. [2020] look at the impact of the effective dimension on optimisation (they provide\noptimisation error bound), obtaining bound on the error that scale with tr(ΣPHP)), similarly\nas in our paper. In addition they empirically study the correlation between empirical estimate of\ngeneralisation error δfS. They find that (P, H, Σ) have effect on both optimisation and generalisation VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 44,
+    "total_chunks": 76,
+    "char_count": 1899,
+    "word_count": 269,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "96c9d0c3-48db-4c53-b576-dd50c7255143",
+    "text": "In this paper, we theoretically show that this is indeed the case, by proving matching upper and\nlower bounds on the excess risk (which involves effect of both), in terms of tr(ΣPHP)). Relevance of quadratic model approximation. Although globally non-convex, deep networks are\neffectively modeled by local quadratic approximations. This surrogate is justified theoretically by the\nneural tangent kernel regime, where wide networks remain close to initialisation [Jacot et al., 2018,\nDu et al., 2019], and validated empirically to track realistic training dynamics [Lee et al., 2020]. As\nsuch, the quadratic noisy model serves as the standard framework for analyzing preconditioning and\ngeneralisation in deep learning [Martens, 2020, Thomas et al., 2020, Zhang et al., 2024]. Connection to information geometry. The setting we analyse can be understood as a natural\ngradient descent under misspecified model. It is well known, that when Px = Q, the two quantities,\nthe variance of gradients Σ and the expected Hessian Ez[∇2ℓ(x, z)] coincide and equal to the Fisher\nInformation Matrix (FIM): FPx(x) := Ez∼Px ∇2ℓ(x; z) = Varz∼Px [∇ℓ(x, z)] , which is a consequence of simple integration of parts. The classical result of Amari [1998] states\nthat when Q = Px, in asymptotic regime, locally around ˜x, and for single pass setting, the optimal\nchoice of the preconditioning matrix is P = FPx(x). However, in our setup, these do not coincide Ez∼Q ∇2ℓ(x; z) ≈H ̸= Varz∼Q [∇ℓ(x, z)] =: Σ, where the ≈denotes αH ⪯∇2ℓ(x; z) ⪯βH. This is better corresponding to the practical scenario,\nwhen in general, the model is almost always misspecified, i.e.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 45,
+    "total_chunks": 76,
+    "char_count": 1637,
+    "word_count": 263,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6a350b1f-d4d9-44c5-9c1b-6bcdfa3a64f0",
+    "text": "Additional examples of spectrally aligned constants. Example 3 (Regularized logistic regression) In logistic regression, curvature of H is directly\nrelated to the data distribution.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 46,
+    "total_chunks": 76,
+    "char_count": 181,
+    "word_count": 24,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0b926b82-4fcd-4fed-a747-6973e85f2e77",
+    "text": "Let ℓ(w, z) := log 1 + exp(−y a⊤w) + λ2∥w∥22 for λ > 0. Since σ(t)(1 −σ(t)) ≤1/4, the Hessian satisfies ∇2ℓ(w; z) = aa⊤σ(1 −σ) + λI ⪯\n1 aa⊤+ λI and we can choose H := 1 E[aa⊤] + λI4. Then one may take β = 1, and using4 4\n∇2ℓ(w; z) ⪰λI we have ∇2ℓ(w; z) ⪰λI ⪰ H,\nλ + 14λmax(E[aa⊤]) λ β λmax(E[aa⊤])\nso we can choose α ≥ =⇒ κℓ= ≤1 + . 1 λ + 4λmax(E[aa⊤]) α 4λ\n√κℓ+1\nHence ρℓ= √κℓ−1 is explicit. Combining the above bound on κℓwith any explicit bound on κ(PH)\n(e.g., Examples 1–2) immediately yields an explicit Cℓ,P . We rescale H if needed so that λmax(H) = 1 ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION Lemmata and proofs for relative co-coercivity and contractivity Proof of Lemma 4\nProof Fix x, y ∈Rd and denote the parameter difference by u := x −y and the gradient difference\nby v := ∇f(x) −∇f(y). Define the H1/2-transformed coordinates ˜u := H1/2u, ˜v := H−1/2v, and the symmetric positive definite matrix S := H1/2PH1/2. Since PH is similar to S, as S =\nH1/2(PH)H−1/2, they share the same spectrum. Let m := λmin(S) = λmin(PH) and M :=\nλmax(S) = λmax(PH), so that κ(PH) = M/m.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 47,
+    "total_chunks": 76,
+    "char_count": 1116,
+    "word_count": 218,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3db3bced-8490-45ce-be19-81718a0f6f9e",
+    "text": "The preconditioned inner product can be written as ⟨u, HPv⟩= u⊤HPv = (H1/2u)⊤(H1/2PH1/2)(H−1/2v) = ˜u⊤S˜v. (6) We can express S = ¯σI + E, where λmax(E) ≤δ for ¯σ := M+m2 and δ := M−m2 . We expand\n(6) using the decomposition of S to get ⟨u, HPv⟩= ¯σ ˜u⊤˜v + ˜u⊤E˜v = ¯σ⟨u, v⟩+ ˜u⊤E˜v, (7) where we used ˜u⊤˜v = u⊤v = ⟨u, v⟩. The first term is lower bounded using the standard co-coercivity inequality for functions that are\nα-strongly convex and β-smooth w.r.t. ∥· ∥H: αβ 1\n⟨u, v⟩≥ ∥u∥2H + ∥v∥2H−1. (8) α + β α + β The second perturbation term is bounded by Cauchy–Schwarz and λmax(E) ≤δ, ˜u⊤E˜v ≥−λmax(E)∥˜u∥2∥˜v∥2 ≥−δ∥u∥H∥v∥H−1. (9) Combining (7)–(9) yields αβ 1\n⟨u, HPv⟩≥¯σ ∥u∥2H + ∥v∥2H−1 −δ∥u∥H∥v∥H−1. (10) α + β α + β In order to remove the cross term, we apply AM–GM in the form 1 1\nH + ∥v∥2H−1 . ∥u∥H∥v∥H−1 = √αβ pαβ∥u∥H ∥v∥H−1 ≤ 2√αβ αβ∥u∥2 Substituting into (10) and factoring the standard co-coercivity expression gives",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 48,
+    "total_chunks": 76,
+    "char_count": 930,
+    "word_count": 172,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e3ca032f-0223-4cf7-8461-e04340b888df",
+    "text": "α + β αβ 1\n⟨u, HPv⟩≥ ¯σ −δ · 2√αβ α + β ∥u∥2H + α + β ∥v∥2H−1 (11) = M + m −M −m · α + β αβ ∥u∥2H + 1 ∥v∥2H−1 . 2 4 √αβ α + β α + β VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 49,
+    "total_chunks": 76,
+    "char_count": 166,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "16a439fd-f1ca-446a-873b-65ab1fba488a",
+    "text": "It remains to simplify the constant. Let κf := β/α and note that\nα + β κf + 1 √κf + 1\n√αβ = √κf , ρℓ:= √κf −1. We can express M = m κ(PH), which after an algebraic manipulation of the bracket in (11) yields M + m −M −m · κf + 1 = m · ρ2ℓ−κ(PH) = λmin(PH) · Cℓ,P . (12) 2 4 √κf ρ2ℓ−1 Under the assumption κ(PH) < ρ2ℓ, we have Cℓ,P ∈(0, 1]. Substituting (12) into (11) and recalling\nu = x −y, v = ∇f(x) −∇f(y) completes the proof. Lemma 19 (Contractivity of the preconditioned update Mθ-norm) Suppose that Assumption 5\nand 9 hold for ℓ(·, z). Let P ≻0 and Mθ := H1/2(H1/2PH1/2)−θH1/2 for θ ∈[0, 1]. For\nρ2ℓ≤κ(PH) the preconditioned gradient update x+ = x −ηP∇ℓ(x, z) is r-contractive in the\n∥· ∥Mθ, where αβ ρ2ℓ−κ(PH)1−θ r = 2λmin(PH) C(θ)ℓ,P and C(θ)ℓ,P := ,\nα + β ρ2ℓ−1 provided the step size satisfies ηt ≤2 C(θ)ℓ,P / λmax(PH)κ(PH)1−θ(α + β) . Proof Let ut := xt −yt and vt := ∇f(xt) −∇f(yt). The update gives ut+1 = ut −ηtPvt. We\nanalyze the squared Mθ-norm: ∥ut+1∥2Mθ = ⟨ut −ηtPvt, Mθ(ut −ηtPvt)⟩\n= ∥ut∥2Mθ −2ηt⟨vt, PMθut⟩+ η2t ⟨vt, PMθPvt⟩.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 50,
+    "total_chunks": 76,
+    "char_count": 1044,
+    "word_count": 208,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bba576cf-fea3-4118-aff4-ca37bc24b30f",
+    "text": "We bound the terms separately. Let S = H1/2PH1/2 and introduce the H1/2-transformed\nvariables\n˜ut := H1/2ut, ˜vt := H−1/2vt. Since Mθ = H1/2S−θH1/2 and P = H−1/2SH−1/2, we have ⟨vt, PMθut⟩= ˜v⊤t S1−θ˜ut, ⟨vt, PMθPvt⟩= ˜v⊤t S2−θ˜vt. The matrix S1−θ has eigenvalues in [λmin(PH)1−θ, λmax(PH)1−θ]. Applying the\nsame decomposition argument as in Lemma 4 (with S1−θ in place of S) yields αβ 1\n˜v⊤t S1−θ˜ut ≥λmin(PH)1−θ C(θ)ℓ,P ∥ut∥2H + ∥vt∥2H−1 . α + β α + β Since S2−θ ⪯λmax(PH)2−θI, we have ⟨vt, PMθPvt⟩≤λmax(PH)2−θ∥vt∥2H−1. ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION Substituting the bounds into the expansion gives ∥ut+1∥2Mθ ≤∥ut∥2Mθ −2ηtλmin(PH)1−θC(θ)ℓ,P ∥ut∥2H α + β\n 2λmin(PH)1−θC(θ)ℓ,P \n+ ηt ηtλmax(PH)2−θ − α + β ∥vt∥2H−1. The gradient term is non-positive provided 2 λmin(PH)1−θ C(θ)ℓ,P\nηt ≤ λmax(PH)2−θ(α + β). Under this condition, dropping the negative term and using ∥ut∥2H ≥λmin(PH)θ∥ut∥2Mθ yields",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 51,
+    "total_chunks": 76,
+    "char_count": 946,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "520aad11-dbe1-46e3-8d3b-90a087a5a6ab",
+    "text": "∥ut+1∥2Mθ ≤ 1 −2ηtλmin(PH) C(θ)ℓ,P ∥ut∥2Mθ. α + β Lemmata and proofs for stability results Proof of Lemma 8\nProof Let xt and yt be the iterate sequences of PSGD on datasets S and S(i) = S \\ {zi} ∪{z′}\nrespectively. We analyze the evolution of the expected squared parameter distance δt := EA,S,z′[∥xt−\nyt∥2M]. At iteration t, let j be the index of the sample selected by the algorithm A. With probability\n1 −1/n, j ̸= i (the samples match), and with probability 1/n, j = i (the samples differ). Using the\nlinearity of expectation: δt+1 = 1 −1 Ej̸=i[∥xt+1 −yt+1∥2M] + 1 −yt+1∥2M]. (13) n nEj=i[∥xt+1 For the matching sample case (j ̸= i), we use the contractivity of the PSGD update by assumption\nof the lemma\nEj̸=i[∥xt+1 −yt+1∥M] ≤(1 −ηtr)δt. For the differing sample case (j = i), denote the parameter difference as ∆t := xt −yt, the\ngradient difference as ξt := P(∇ℓ(xt, zi) −∇ℓ(yt, z′)), and the population gradient difference as\n˜ξt := P(∇f(xt)−∇f(yt)). We apply Young's inequality: ∥u+v∥2M ≤(1+α)∥u∥2M +(1+ α)∥v∥21 M\nfor α > 0 to be chosen later, and expand the update as δt+1 = ∥∆t+1∥2M = (1 + α)∥∆t −ηt ˜ξt∥2M + 1 + ∥∆t −ηt(ξt −˜ξt)∥2M (14) α\n≤(1 + α)(1 −ηtr)δt + 1 + η2t ∥ξt −˜ξt∥2M, (15) α VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 52,
+    "total_chunks": 76,
+    "char_count": 1233,
+    "word_count": 224,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "48e86291-78dc-4f26-a8ec-b7a7ad27226b",
+    "text": "where for the inequality we used that the preconditioned update is contractive w.r.t the population\ngradient by assumption of the lemma. Combining these terms yields the recursion: α 1 η2t δt+1 ≤(1 −ηtr) 1 + δt + 1 + E[∥ξt −˜ξt∥2PMP ]. n α n To bound the gradient variance we add and subtract ∇ℓ(yt, zi) −∇ℓ(xt, z′) E[∥ξt −˜ξt∥2PMP ] = E[∥∇ℓ(xt, zi) −∇f(xt) −(∇ℓ(yt, z′) −∇f(yt))∥2PMP ]\n≤4E∥∇ℓ(xt, zi) −∇ℓ(yt, zi)∥2PMP + 4E∥∇ℓ(yt, z′) −∇ℓ(xt, z′)∥2PMP\n+ 4E∥∇ℓ(xt, z′) −∇f(xt)∥2PMP + 4E∥∇ℓ(yt, z′) −∇f(yt)∥2PMP\n≤8 tr(PMPΣ) + 8β2λmax(HPMP)λmax(M−1H)δt, and in the second inequality we bound the gradient difference using Jensen's inequality combined\nwith the bounded variance assumption Var[∇ℓ] ⪯Σ, and smoothness to bound the cross terms\n∥∇ℓ(xt, zi) −∇ℓ(yt, zi)∥PMP and E∥∇ℓ(yt, z′) −∇ℓ(xt, z′)∥PMP . Denote γ2 = λmax(HPMP)λmax(M−1H) and τ 2 = tr(PMPΣ) and substitute the δt+1\nbound, we obtain: α 8η2t β2γ2 1 8η2t τ 2 1\nδt+1 ≤ (1 −ηtr) 1 + + 1 + δt + 1 + (16)\nn n α n α\n| {zAt } | {zBt } We set α = nηtr2 , and express At and Bt. ηtr 8η2t β2γ2 2\nAt = (1 −ηtr) 1 + + 1 +\n2 n nηtr\n16ηtβ2γ2 t r2 8η2t β2γ2 = 1 −ηtr −η2 + +\n2 2 n n2r\n≤1 −ηtr , 16ηtβ2γ2 ≤ηtrwhere the inequality holds when n ≥8βγ/r, which implies that 4 . The term Bt n2r\nbecomes 8η2t τ 2 16ηtτ 2\nBt = + .\nn n2r In particular, we have a recursion of the form, δt+1 ≤(1 −ηtr/4)δt + Bt ≤exp(−ηtr/4)δt + Bt.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 53,
+    "total_chunks": 76,
+    "char_count": 1365,
+    "word_count": 268,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c3b0a495-d191-4ebc-9ac6-7d5af7f34295",
+    "text": "Thus, we obtain that, δt ≤exp(−Ttr/4)δ0 + X exp(−(Tt −Ts)r/4)Bs.\ns<t ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 54,
+    "total_chunks": 76,
+    "char_count": 145,
+    "word_count": 20,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6acf60e7-162a-4404-8a76-4a5602001c26",
+    "text": "Since the second term produces a lower Riemann approximation of the integral of exp(−(T −s)r/4),\nwe obtain, 16τ 2 2 Z Tt X exp(−(Tt −Ts)r/4)ηs ≤16τ exp(−(Tt −s)r/4)ds\nn2r n2r 0 s<t\n≤(1 −exp(−Ttr/4))64τ ,\nn2r2 Then, using δ0 = 0 and the definition of ¯ηt, we obtain the bound, 2 8¯ηtτ 2 δt ≤(1 −exp(−Ttr/4))64τ + .\nn2r2 n Proof We decompose the excess population risk as f(xt) −f(˜x) = f(xt) −fS(xt) + fS(xt) −fS(x∗S) + fS(x∗S) −f(˜x),\n|generalization{z error} | optimization{z error } |≤0 in expectation{z } where x∗S = arg min fS(x). Taking the expectation over S and the randomness of A, we get δf(xt) := EA,S[f(xt) −f(˜x)] ≤EA,S[f(xt) −fS(xt)] + EA,S[fS(xt) −fS(x∗S)] .\n|expected generalization{z error} εopt(xt)| = expected{z optimization }error Let z′ ∼Q be an independent sample and let S(i) := S \\ {zi} ∪{z′} denote the perturbed\ndataset. Write xt(S) and xt(S(i)) for the corresponding PSGD iterates. The standard symmetrization\nargument yields \" n #\nX ℓ(xt(S), zi) EA,S[f(xt) −fS(xt)] = EA,S Ez′ℓ(xt(S), z′) −1\ni=1\n= X ES,z′,A h ℓ(xt(S), z′) −ℓ(xt(S(i)), z′)i , (17)\ni=1 where the second equality uses that (S, zi) has the same distribution as (S(i), z′). By the\nβ-smoothness of ℓ(·, z′) w.r.t. ∥· ∥H, we have",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 55,
+    "total_chunks": 76,
+    "char_count": 1217,
+    "word_count": 209,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cedc9075-ba2f-4b1d-90de-c5a3e4ffb4d7",
+    "text": "β 2\nE[ℓ(xt(S), z′) −ℓ(xt(S(i)), z′)] ≤E h ⟨∇ℓ(xt(S), z′), xt(S) −xt(S(i))⟩i + E xt(S) −xt(S(i))\n2 H\n≤E ∥∇ℓ(xt(S), z′)∥2M−1 1/2 E h ∥xt(S) −xt(S(i))∥2M i1/2 β 2\n+ E xt(S) −xt(S(i)) , (18)\n2 H VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 56,
+    "total_chunks": 76,
+    "char_count": 225,
+    "word_count": 41,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c40e8370-bb16-488a-b633-4cc063a9e033",
+    "text": "where we applied the Cauchy-Schwarz inequality w.r.t. the ∥· ∥M norm. By the bias-variance decomposition and the assumption Varz[ℓ(x, z)] ⪯Σ, we express the\ngradient factor in (18) as Ez′∥∇ℓ(xt(S), z′)∥2M−1 ≤∥∇f(xt(S))∥2M−1 + tr(M−1Σ)\n≤λmax(HM−1)∥∇f(xt(S))∥2H−1 + tr(M−1Σ)\n≤2βλmax(HM−1)(f(xt(S)) −f(˜x)) + tr(M−1Σ), where the second inequality follows from matrix operator bounds and the third from the smoothness\nof the population risk. Taking an expectation over S and A yields ES,z′,A∥∇ℓ(xt(S), z′)∥2M−1 ≤2βλmax(HM−1)δf(xt) + tr(M−1Σ). Using the parameter stability assumption E[∥xt(S) −xt(S(i))∥2M] ≤ε2pstab and the norm inequality\n∥v∥2H ≤λmax(M−1H)∥v∥2M, we substitute back into (17) and (18): βλmax(M−1H)ε2pstab δf(xt) −δfS(xt) ≤ 2βλmax(HM−1)δf(xt) + tr(M−1Σ) 1/2εpstab + . This inequality is of the form Y ≤ AY + B ϵ+C, where Y = δf(xt) and A = 2βλmax(HM−1). √\nSolving for Y (via the quadratic formula for Y ) implies:  s √ 2 βλmax(M−1H)ε2pstab Aεpstab\nδf(xt) ≤ δfS(xt) + + + B1/2εpstab.  2 2  Using the sub-additivity of the square root, we simplify the upper bound to the form stated in the\nlemma: 2 tr(M−1Σ)1/2εpstab\nδf(xt) ≤ δfS(xt)1/2 + p2βλmax(HM−1)εpstab + . Corollary 20 (Optimal choice of P) We have that P := λmin(H)H−1 = arg minP≻0 tr(PΣ)/λmin(PH). Proof Let A = H1/2PH1/2, so we have P = H−1/2AH−1/2. By definition of A we have that\nPH = H−1/2AH1/2, thus PH is similar to A, which means their eigenvalues are equal, which\nimplies that λmin(PH) = λmin(A).",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 57,
+    "total_chunks": 76,
+    "char_count": 1477,
+    "word_count": 236,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "89d21e72-617d-4436-93be-171c152bb6d2",
+    "text": "Furthermore, define ˆΣ := H−1/2ΣH−1/2 for which we\nget by cyclicality of the trace that tr(PΣ) = tr(AˆΣ). Denoting Pdi=1 aiviv⊤i to be the spectral\ndecomposition of A, the objective becomes tr(AˆΣ) 1\n= tr aiviv⊤i ˆΣ\nλmin(A) ad\n= X v⊤i ˆΣvi ≥tr(ˆΣ),\nad i=1 ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION where the lower bound comes from the fact that all ai/ad ≥1 and is attained when ai = a for all\ni ∈[d]. By A being symmetric this happens when A = aI. From the requirement that λmax(P) = 1 we get 1 = λmax(P) = λmax(H−1/2aIH−1/2) = λmin(H), implying that a = λmin(H). Substituting A = λmin(H)I into the formula for P yields that the\noptimal P = λmin(H)H−1. Optimization error bounds results Lemma 21 (Preconditioned PL-Growth Condition) Let f be α-strongly convex and β-smooth\nw.r.t. ∥· ∥H. Let x∗be the global minimizer. If the preconditioner is spectrally aligned, i.e.,\n√κf+1\nκ(PH) < ρ2 := √κf−1, then, for all x ∈Rn: 2α β\n⟨x −x∗, HP∇f(x)⟩≥ λmin(PH)Cℓ,P f(x) −f(x∗) + ∥x −x∗∥2H , (19) α + β 2",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 58,
+    "total_chunks": 76,
+    "char_count": 1027,
+    "word_count": 184,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9f72069b-dd96-4656-bd8e-fcd5625d9461",
+    "text": "where the co-coercivity constant Cℓ,P is given in the statement of Lemma 4. Proof Let u = x −x∗and v = ∇f(x). Note that ∇f(x∗) = 0. By Lemma 4 and the condition\nκ(PH) < ρ2, we have αβ 1\n⟨u, HPv⟩≥Cℓ,P λmin(PH) ∥u∥2H + ∥v∥2H−1 . (20) α + β α + β Since f is α-strongly convex, it satisfies the Polyak-Łojasiewicz (PL) inequality w.r.t. the H-norm: ∥∇f(x)∥2H−1 ≥2α(f(x) −f(x∗)). We substitute this lower bound for the gradient norm term in (20): αβ 2α\n⟨u, HPv⟩≥Cℓ,P λmin(PH) ∥u∥2H + (f(x) −f(x∗)) α + β α + β\n2α β\n= Cℓ,P λmin(PH) ∥u∥2H + f(x) −f(x∗) . α + β 2 The following lemma allows to relate ΣS to Σ. Lemma 22 Assume that x 7→ℓ(x, z) is L-Lipschitz for any z. Then, for any i ∈[n], under\nconditions of Lemma 8, s ¯ηt 1 −e−Ttr/4\n∥Var(∇ℓ(xt, zit)) −Var(∇ℓ(xt, z))∥2 ≤16Lβ + tr(PMPΣ) .\n8n n2r2 VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 59,
+    "total_chunks": 76,
+    "char_count": 826,
+    "word_count": 161,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c622a434-4869-45d3-9dd1-8c049eb087e1",
+    "text": "Proof Note that E[∇ℓ(xt, zit) | xt] = ∇fS(xt) while E[∇ℓ(xt, z) | xt] = ∇f(xt). ∥Var(∇ℓ(xt, zit)) −Var(∇ℓ(xt, z))∥2\n≤∥E[∇ℓ(xt, zit)∇ℓ(xt, zit)⊤−∇ℓ(xt, z)∇ℓ(xt, z)⊤]∥2\n+ ∥E[∇f(xt)∇f(xt)⊤−∇fS(xt)∇fS(xt)⊤]∥2\n= ∥E[∇ℓ(x(i)t , z)∇ℓ(x(i)t , z)⊤−∇ℓ(xt, z)∇ℓ(xt, z)⊤]∥2 (Here i ≡it)\n+ ∥E[∇f(xt)∇f(xt)⊤−∇fS(xt)∇fS(xt)⊤]∥2 We first bound the first term on the r.h.s. by observe that for any unit vector u\nE D u, ∇ℓ(x(i)t , z)E2 −E[⟨u, ∇ℓ(xt, z)⟩2\n= E hD u, ∇ℓ(x(i)t , z) −∇ℓ(xt, z)E Du, ∇ℓ(x(i)t , z) + ∇ℓ(xt, z)Ei\n≤2L E h D u, ∇ℓ(x(i)t , z) −∇ℓ(xt, z)E i\n≤2L E h ∥∇ℓ(x(i)t , z) −∇ℓ(xt, z)∥H−1 i (Since H ≻0)\n≤2L β E[∥xt −x(i)t ∥H−1] (ℓis L-Lipschitz)\ns ¯ηt 1 −e−Ttr/4\n≤2Lβ 64 + tr(PMPΣ)\n8n n2r2 The same chain of inequalities hold for the second term. Lemma 23 (Optimization rate of PSGD under PL and smoothness) Let P ≻0. Let fS(x) =\n1 Pni=1 ℓ(x, zi) be µ-PL and β-smooth w.r.t. ∥·∥H and it attains its minimal value f∗S = minx∈X fS(x).n\nLet ΣS ≻0, so that Var [∇ℓ(xt, zit) | xt] ⪯ΣS. Then, for ηt ≤ βλmax(PH)1 the expected empirical\nexcess optimization error is bounded as EA[fS(xt) −f∗S] ≤e−λmin(PH)µTt(fS(x0) −f∗S) + tr(PHPΣS)¯ηt, 2 where Ts and ¯ηt are defined as in the statement of Lemma 8. Proof Define the suboptimality process ϕt := EA[fS(xt) −f∗S]. Let gt := ∇ℓ(xt, zit) denote the\nstochastic gradient and note that E[gt | xt] = ∇fS(xt). By β-smoothness of fS w.r.t. ∥· ∥H β η2t fS(xt+1) ≤fS(xt) −ηt⟨∇fS(xt), Pgt⟩+ ∥Pgt∥2H. 2\nTaking conditional expectation given xt and using E[gt | xt] = ∇fS(xt) gives\nβ η2t E E[fS(xt+1) | xt] ≤fS(xt) −ηt∥∇fS(xt)∥2P + ∥Pgt∥2H | xt . (21) 2 Using the covariance bound and variance-bias decomposition, E[∥Pgt∥2H | xt] = ∥P∇fS(xt)∥2P + tr PHP Cov(gt | xt) ≤∥P∇fS(xt)∥2H + tr(PHPΣS).",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 60,
+    "total_chunks": 76,
+    "char_count": 1715,
+    "word_count": 303,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "feedc3be-9449-4705-8523-4a971ec24199",
+    "text": "ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION By ∥P∇fS(xt)∥2H ≤λmax(PH)∥∇fS(xt)∥2P and substituting into (21) yields E[fS(xt+1) | xt] ≤fS(xt) −ηt 1 −βλmax(PH)2 ηt ∥∇fS(xt)∥2P 2 and thus Whenever ηt ≤ βλmax(PH),1 we have 1 −βλmax(PH)2 ηt ≥12, β E[fS(xt+1) −fS(ˆx∗) | xt] ≤fS(xt) −fS(ˆx∗) −ηt ∥∇fS(xt)∥2P + η2t tr(PHPΣS). (22) 2 2 Since fS satisfies µ-PL property w.r.t. ∥· ∥H P ≥∥∇fS(xt)∥2H−1 ≥2µ fS(xt) −fS(ˆx∗) . λmin(PH)∥∇fS(xt)∥2 Substituting into (22) yields the scalar recursion E[fS(xt+1) −fS(ˆx∗) | xt] ≤ 1 −ηtµλmin(PH) fS(xt) −fS(ˆx∗) + η2t tr(PHPΣS). (23) 2 Taking total expectation gives ϕt+1 ≤(1 −ηtµλmin(PH))ϕt + η2t B, where B := tr(PHPΣS). 2 Denote a = µλmin(PH). Using 1 −x ≤e−x for x ≥0, ϕt+1 ≤e−aηtϕt + η2t B\nand unrolling, using that Ts = Ps−1s′=0 ηs′ and so Tt+1 −Tt = ηt, gives t−1\nϕt ≤e−aTtϕ0 + B X e−a(Tt−Ts)η2s = e−aTtϕ0 + B¯ηt.\ns=0",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 61,
+    "total_chunks": 76,
+    "char_count": 886,
+    "word_count": 148,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f3fe56ff-e828-4344-981b-94fb00d66ca7",
+    "text": "Tt−Ts\n4 η2sLemma 24 (Capped-harmonic bound for ¯ηt) Let Ts = Ps−1s′=0 ηs′ and ¯ηt = Ps<t e−r\nn c o l c m\nas in Lemma 8. Fix η0 > 0 and c > 0, and define ηt := min η0, t+1 , t0 := η0 −1, and\nα := rc . Then for every t ≥t0 + 1, 4\n¯ηt ≤¯ηt ≤Cburn + Charm , ∀t ≥t0 + 1,\nt + 1 and Cburn := η20 (t0 + 2)(α+1).where Charm := α−1c2 Proof Fix t ≥t0 + 1 and split the sum defining ¯ηt into \"burn-in\" and \"harmonic tail\" parts: t0 t−1\n¯ηt = X exp −r −Ts) η2s + X exp −r −Ts) η2s. 4(Tt 4(Tt\ns=0 s=t0+1 VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 62,
+    "total_chunks": 76,
+    "char_count": 524,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "21af39e2-52b2-4989-9e72-0ae31a728e0b",
+    "text": "Tail part (s ≥t0 + 1). For s ≥t0 + 1 we have ηk = c/(k + 1) for all k ≥s, hence t−1 t+1 c Z dx t + 1\nTt −Ts = X ≥c = c log .\nk + 1 s+1 x s + 1 k=s Therefore,\nexp −r −Ts) ≤exp −r c log t + 1 = s + 1 α . 4(Tt 4 s + 1 t + 1\nUsing also η2s = c2/(s + 1)2 on the tail, t−1 c2 t−1 X exp −r −Ts) η2s ≤ 4(Tt (t + 1)α X (s + 1)α−2.\ns=t0+1 s=t0+1 Since α > 1, we can bound the sum by an integral: t−1 t+1 Z (t + 1)α−1 −(t0 + 2)α−1 + 1)α−1 X (s + 1)α−2 ≤ xα−2 dx = ≤(t .\nt0+2 α −1 α −1 s=t0+1",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 63,
+    "total_chunks": 76,
+    "char_count": 480,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb21741d-807b-4b78-9157-abc2f95e9eb3",
+    "text": "Thus the tail contribution is at most t−1 c2 1 X exp −r −Ts) η2s ≤ · 4(Tt α −1 t + 1.\ns=t0+1 Burn-in part (s ≤t0). For s ≤t0, we only use ηs ≤η0 and monotonicity of Ts: X exp −r −Ts) η2s ≤(t0 + 1)η20 exp −r −Tt0+1) . 4(Tt 4(Tt\ns=0 For t ≥t0 + 1 the segment from t0 + 1 to t is harmonic, so t−1 t+1 c Z dx t + 1\nTt −Tt0+1 = X ≥c = c log ,\nk + 1 t0+2 x t0 + 2 k=t0+1 and hence\nexp −r −Tt0+1) ≤ t0 + 2 α . 4(Tt t + 1 Therefore the burn-in contribution is bounded by t0 + 2 α X exp −r −Ts) η2s ≤(t0 + 1)η20 . 4(Tt t + 1\ns=0 Combining burn-in and tail bounds yields the first displayed inequality. The simplified bound\nt0+2 α¯ηt ≤(Cburn + Charm)/(t + 1) follows since (t0 + 1)η20 t+1 ≤Cburn/(t + 1) for t ≥t0 + 1. ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION Proofs and lemmata for risk bounds in Mθ geometry Lemma 25 (Risk bounds in Mθ geometry) Suppose that Assumptions Assumption 5, 9, and 6 hold,\n8 β qand that n ≥ p λmax(HPMθP) λmax(M−1θ H).",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 64,
+    "total_chunks": 76,
+    "char_count": 973,
+    "word_count": 215,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "519997f9-f00d-4063-9057-017a085882e1",
+    "text": "Assume further that κ(PH)(1−θ) ≤ρ2ℓand r\nIf the stepsizes are chosen asdefine and let r := 2 λmin(PH) C(θ)ℓ,P α+β.β α C(θ)ℓ,P 8 o n ηt := min , ,\nβ λmax(PH) κ(PH)1−θ r(t + 1) then, for all t sufficiently large, the population excess risk satisfies",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 65,
+    "total_chunks": 76,
+    "char_count": 247,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eab43b75-317e-4dad-a983-ab07dad0a82f",
+    "text": "ES,A[δf(xt)] ≤64 ES[tr(PHPΣS)] + tr(M−1θ Σ) tr(PMθPΣ) r t + 1 p n(t + 1) n Proof From the assumed bounds, taking expectation over (S, A) in the optimization inequality yields ES,A[δfS(xt)] ≤ES e−λmin(PH)α Tt(fS(x0) −f∗S) + ES[tr(PHPΣS)] ¯ηt. 2 Plugging this into the generalization inequality gives ES,A[δf(xt)] ≤2 ES e−λmin(PH)α Tt(fS(x0) −f∗S) + β ES[tr(PHPΣS)] ¯ηt\nq tr(M−1θ Σ)\n+ εpstab + 4βλmax(HM−1θ )ε2pstab. 2\nUsing the stability inequality together with √u + v ≤√u + √vand 1 −e−Ttr/4 ≤1, we obtain q ¯ηt + εpstab ≤8ptr(PMθPΣ) n n 1 , ε2pstab ≤64 tr(PMθPΣ) ¯ηtn + n21 . Substituting and absorbing numerical constants yields ES,A[δf(xt)] ≤2 ES e−λmin(PH)α Tt(fS(x0) −f∗S)\nq q ¯ηt 1 + 64 ES[tr(PHPΣS)] ¯ηt + tr(M−1θ Σ) tr(PMθPΣ) n + n . (24) n C(θ)ℓ,P 8 β o ηt := min , ,\nβ λmax(PH) κ(PH)1−θ t + 1 λmin(PH) C(θ)ℓ,P β α and recall that\nβ α\nr = 2λmin(PH)C(θ)ℓ,P . α + β\nWith this choice, the harmonic phase satisfies ηt = r(t+1)8 for all t large enough, and the bound in\nLemma 24 yields\n¯ηt ≤64 · 1 √¯ηt ≤8 · 1 r2 t + 1, r √t + 1, VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 66,
+    "total_chunks": 76,
+    "char_count": 1068,
+    "word_count": 202,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e75d1459-5a6f-4ac4-bb95-b3408e7e04f2",
+    "text": "where the burn-in contribution decays faster and is absorbed into constants. Moreover, since Tt ≳8r log(t) in the harmonic regime, the exponential bias term decays at least\nas O(1/t2) and is negligible relative to the 1/t term. Substituting the above bounds into (24) and simplifying gives, for all t sufficiently large, ! 1 1 q\n+ , ES,A[δf(xt)] ≤64 ES[tr(PHPΣS)] + tr(M−1θ Σ) tr(PMθPΣ) r t + 1 pn(t + 1) n which is exactly the stated bound. Proofs for non-convex PL-losses in Section 4.2 Lemma 26 (Gradient Generalization Bound) Let ˆy be the empirical minimizer of fS and x∗be\nthe population minimizer. Assume f is β-smooth, fS is µ-PL, and the noise variance is bounded\nas Var(∇ℓ(x∗, z)) ⪯Σ. Then, the expected population gradient norm at the empirical minimizer\nsatisfies:\nES ∥∇f(ˆy)∥2H−1 ≤κ2 tr(H−1Σ), (25) n\nwhere κ = β/µ is the condition number. Proof Since fS is µ-PL and β-smooth, we have:\n∥ˆy −x∗∥2 ≤1 (26) µ∥∇fS(x∗)∥2. Since f is β-smooth and x∗is a critical point of the population risk (∇f(x∗) = 0), we can bound the\npopulation gradient at ˆy: ∥∇f(ˆy)∥2 = ∥∇f(ˆy) −∇f(x∗)∥2 ≤β∥ˆy −x∗∥2. (27) Combining this with (26), we relate the population gradient at ˆy to the empirical gradient at x∗:\n∥∇f(ˆy)∥2 ≤β = κ∥∇fS(x∗)∥2. (28) µ∥∇fS(x∗)∥2 Squaring both sides and converting to the H−1-norm (assuming metric equivalence or absorbing\nconstants into κ):\n∥∇f(ˆy)∥2H−1 ≤κ2∥∇fS(x∗)∥2H−1. (29)\nTaking the expectation over S, we observe that ∇fS(x∗) = n1 Pni=1 ∇ℓ(x∗, zi) is an average of i.i.d.\nmean-zero vectors (since E[∇ℓ(x∗, z)] = ∇f(x∗) = 0). ES ∥∇fS(x∗)∥2H−1 = X E ∥∇ℓ(x∗, zi)∥2H−1 n2\ni=1\n= tr(H−1Σ). (30)",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 67,
+    "total_chunks": 76,
+    "char_count": 1614,
+    "word_count": 272,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "572fa832-b078-41d5-abb1-247bfecf64b2",
+    "text": "ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION Proof We begin with the decomposition, δf(xt(S)) ≤E[f(xt(S)) −f(ˆx∗)] + δf(ˆx∗), (31) where we use the shorthand ˆx∗= ProjS(xt(S)) for brevity.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 69,
+    "total_chunks": 76,
+    "char_count": 220,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "38f60ef6-e1e1-4ecf-8c75-6e3ac13affc7",
+    "text": "We first analyse the parameter stability\nof this empirical risk minimiser. Setting ˆy∗= ProjS(i)(x∗) and using the quadratic growth property\nimplied by the µ-PL inequality, we obtain,\n∥ˆx∗−ˆy∗∥H ≤1 µ∥∇fS(ˆy∗)∥H−1\n1 1\n= zi) −1 z′) ∇fS(i)(ˆy∗) + µ n∇ℓ(ˆy∗, n∇ℓ(ˆy∗, H−1\n= µn∥∇ℓ(ˆy∗, zi) −∇ℓ(ˆy∗, z′)∥H−1,\nwhere we use that ∇fS(i)(ˆy∗) = 0. Taking the expectation and adding/subtracting population\ngradients: E[∥∇ℓ(ˆy∗, zi) −∇ℓ(ˆy∗, z′)∥2H−1]1/2\n≤E[∥∇ℓ(ˆy∗, zi) −∇f(ˆy∗)∥2H−1]1/2 + E[∥∇f(ˆy∗) −∇f(ˆx∗)∥2H−1]1/2\n+ E[∥∇f(ˆx∗) −∇ℓ(ˆx∗, z′)∥2H−1]1/2 + E[∥∇ℓ(ˆy∗, z′) −∇ℓ(ˆx∗, z′)∥2H−1]1/2\n≤2 tr(H−1Σ)1/2 + 2βE[∥ˆx∗−ˆy∗∥2H]1/2. Substituting this back into the bound for ∥ˆx∗−ˆy∗∥H and rearranging yields: −1 2 tr(H−1Σ)1/2 E[∥ˆx∗−ˆy∗∥2H]1/2 ≤ 1 −2β . µn µn Assuming n ≥4β/µ, the pre-factor is bounded by 2. Squaring gives the bound,\nE[∥ˆx∗−ˆy∗∥2H] ≤16 tr(H−1Σ) . (32) µ2n2 By Lemma 7 with M = H and the stability bound on the ERM minimizer, we have that,\nES,A[δf(x∗)] ≤2 tr(H−1Σ) + β 64 tr(H−1Σ) .\nµn µ2n2 Now, to bound the second term of (31), we use smoothness to obtain, E[f(xt(S)) −f(ˆx∗)] ≤E[⟨∇f(ˆx∗), xt(S) −ˆx∗⟩] + E[∥xt(S) −ˆx∗∥2H] 2\n≤1 E[∥∇f(ˆx∗)∥2H−1] + βE[∥xt(S) −ˆx∗∥2H] 2β\n≤E[δf(ˆx∗)] + E[δfS(xt(S))]. VARY FARGHLY KUZBORSKIJ REBESCHINI",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 70,
+    "total_chunks": 76,
+    "char_count": 1240,
+    "word_count": 187,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c5a0ab30-da1c-4de8-9323-b77280689c50",
+    "text": "Proofs for lower bounds in Section 5 The following formulation of Assouad's lemma is from [Ma et al., 2024, Lemma 23]. Lemma 27 (Assouad's lemma) Let d ∈N, Φ := {0, 1}d. For ϕ ∈Φ, let xϕ ∈X and Pϕ ∈Pxϕ. For ϕ, ϕ′ ∈Φ, we write ϕ ∼ϕ′ whenever ϕ and ϕ′ differ in precisely one coordinate, and ϕ ∼j ϕ′\nwhen that coordinate is jth. Supposed now that the loss function is of the form ℓ(x1, x2) := X g(ρj(x1, x2)), for x1, x2 ∈X, where ρ1, ...ρd are pseudo metrics on X with ρj(xϕ, xϕ′) ≥δj whenever ϕ ∼j ϕ′,\nand where g is an increasing function satisfying g(t1 + t2) ≤A(g(t1) + g(t2)) for all t1, t2 ≥0 and\nsome A > 0. Then, for X0 := {xϕ : ϕ ∈Φ}, we have\ninf sup sup E[ℓ(ˆx, x)] ≥inf max sup E[ℓ(ˆx, x0)]\nˆx x∈X Pθ∈Pθ ˆx x0∈X0 Px0∈Px0 X g(δj), ≥1 1 − max TV Pϕ, Pϕ′\n2A ϕ,ϕ′∈Φ:ϕ∼ϕ′\nj∈[d] where ˆx is computed from a sample of Px0. Proof of Theorem 15\nProof Let α > 0 and v ∈{0, 1}d. Let ℓ(x, z) := α2 ∥x −z∥2H, where z ∼Pv for Pv =\nN(µv, H−1ΣH−1/α2), and µv will be specified later. By definition, ℓ(·, z) is α-strongly convex in\n∥· ∥H-norm and Varz∈Pv(∇ℓ(x, z)) = Var(αHz) = Σ. We have the following equivalence\nhα hα hα EPv ∥x −z∥2H i = EPv ∥¯x −¯z∥22 i , ∥H−1/2¯x −H−1/2¯z∥2H i = E¯Pϕ 2 2 2\nafter we substituted ¯x := H1/2x, ¯z := H1/2z and ¯z ∼¯Pv where ¯Pv := N(ˆµv, H−1/2ΣH−1/2/α2)\nand ˆµv := H1/2µv.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 71,
+    "total_chunks": 76,
+    "char_count": 1301,
+    "word_count": 272,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d4e31f62-fb5f-4876-bb30-e77e5dac3607",
+    "text": "Let ¯Σ := H−1/2ΣH−1/2 and ¯Σ = QΛQ⊤be its spectral decomposition. Consider the set of\n¯µv = Pj∈[d] δjθjqj, where δj = 3α4 pλj/n, or in a matrix form ¯µv = QDv where D = 3α√nΛ1/2.4\nDefine M0 = {¯µv : v ∈{0, 1}d}. For v ∼j v′ we have |q⊤j (QDv −QDv′)| ≥|δj|. By Pinsker\ninequality we have n 1/2\nTV( ¯Pv, ¯Pv′) ≤ KL(N(¯µv, ¯Σ/α2), N(¯µv′, ¯Σ/α2))\nn 16 1/2\n= −v′∥22 = 2/3. 4 9αn∥v By Lemma 27, we have that\ninf sup ES∼P n[f(ˆx(S)) −f(˜x)] ≥1 1 − max TV(¯Pv, ¯Pv′) X δ2j\nˆx∈X P∈P 2 v,v′,v∼v′\nj∈[d]\n≥ tr(H−1Σ).\n27nα ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION Lemma 28 (Decaying step-size bounds) Let 0 < a < b and ηt = min 2b,1 at1 . Upper Bound: The recurrence rt+1 ≤(1 −2aηt)rt + η2t B satisfies 2b B 1\nrt ≤ e2ar0 + a2 t for all t ≥1. Lower Bound: The recurrence rt+1 ≥(1 −2bηt)rt + η2t B satisfies\nrt ≥ for all t ≥t0.\n2abt Phase 1 (Constant Step): For t < t0, the recurrence rt+1 ≤(1 −ab)rt + 4b2B\nimplies linear convergence to a noise floor. Unrolling from t = 0 to t0: t0−1\nt0 B i B X 1 −a ≤e−2r0 + rt0 ≤ 1 −a r0 + b 4b2 b 4ab.\ni=0 Phase 2 (Decaying Step): For t ≥t0, we prove rt ≤ν/t by induction.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 72,
+    "total_chunks": 76,
+    "char_count": 1131,
+    "word_count": 237,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4025fcf0-0fb0-45e5-93c5-cfc90a52399e",
+    "text": "Substituting ηt = 1/at: ν B ν rt+1 ≤ 1 −2 + = −1 2ν −B .\nt t a2t2 t t2 a2\nWe require rt+1 ≤ t+1.ν Using the inequality t+11 ≥1t −1t2 , it suffices that the drop in the recurrence\nis at least ν/t2.\n1 2ν −B ≥ν =⇒ν ≥B .\nt2 a2 t2 a2\nThe definition of ν satisfies this condition and ensures the bound holds at the transition t0 (since\nν/t0 ≥rt0). We prove rt ≥κ/t with κ = 2abB for t ≥t0. Base Case (t = t0): Unrolling the\nrecurrence with ηt = 1/2b implies rt0 accumulates noise terms summing to at least 4b2B . Checking\nκ =the bound: t0 2abt0 B . Since t0 ≥2b/a, we have 2abt0B ≤ 2ab(2b/a)B = 4b2B , so the base case holds. Inductive Step (t > t0): Assume rt ≥κ/t. Using ηt = 1/at, the recurrence drop is:\nrt+1 ≥κ −1 2bκ −B .\nt t2 a a2\nWe need this to be ≥ t+1κ ≥κt −κt2 . This requires the coefficient of the drop to satisfy:\n2bκ −B ≤κ =⇒κ 2b −1 ≤B .\na a2 a a2\nSubstituting κ = 2ab:B B 2b −a B(2b −a) B\n= = 1 −a < B .\n2ab a 2a2b a2 2b a2 The inequality holds strictly, validating the lower bound. VARY FARGHLY KUZBORSKIJ REBESCHINI Proof of Lemma 16\nProof Let ℓ(x, z) = α2 ∥x−z∥2H and z ∼P := N(µ, α21 H−1ΣH−1). Then we have that ∇ℓ(x, z) =\nα(x −z) and Varz∼P (∇ℓ(x, z)) = Varz(αH(x −z)) = Σ. The population risk is",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 73,
+    "total_chunks": 76,
+    "char_count": 1212,
+    "word_count": 267,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2c1f9123-4f30-4412-a552-7948f867d588",
+    "text": "α α\nf(x) := Ez∼P [ℓ(x, z)] = ∥x −µ∥2H + Ez∼P [∥z −µ∥2H −2 ⟨x −µ, z −µ⟩H] 2 2\nα 1\n= ∥x −µ∥2H + tr(H−1Σ). 2 2α Consider a single pass of the preconditioned SGD: xt+1 = xt −ηtP∇ℓ(xt, zt), where zt ∼P. Let rt = xt −µ and the update as rt+1 = (I −ηtPH)rt + ηtPH(zt −µ). We have the following exact relation between the expected population risk in next iteration δf(xt+1)\n= Ezt[f(xt+1)] −1 tr(H−1Σ)\n= Ezt∥xt −µ −ηtPH(xt −zt)∥2H 2\n= ∥xt −µ∥2H −2ηtEzt[ xt −µ, PH(xt −zt) H] + η2t Ezt[∥PH(xt −zt)∥2H] 2\nα αη2t = ∥xt −µ∥2H −αηt∥xt −µ∥2HPH + Ezt∥PH(xt −µ)∥2H + ∥PH(zt −µ)∥2H 2 2\n= t tr(PHPΣ), ∥xt −µ∥2H −αηt(xt −µ)⊤ HPH −ηt HPHPH) (xt −µ) + η2 2 2 2α\nα η2t = (xt −µ)⊤H1/2(I −ηH1/2PH1/2)2H1/2(xt −µ) + tr(PHPΣ)\n2 2α\n= t tr(PHPΣ) (xt −µ)⊤H1/2 I −2ηtH1/2PH1/2(I −ηt H1/2PH1/2) H1/2(xt −µ) + η2\n2 2 2α\nη2t\n≥(1 −2ηtλmax(PH))δf(xt) + tr(PHPΣ). The first t0 = ⌊4κ(PH)⌋steps we lower bound the excess risk with zero. For t > t0, we use the\nsecond part of Lemma 28 with a = λmax(PH), b = λmin(PH) and we get tr(PHPΣ) 1\nEzt[δf(xt+1)] ≥ .\nλmax(PH)λmin(PH) t for ηt = min{1/λmax(PH), 2/(λmin(PH)t)}. Proof of Corollary 17 Proof From Lemma 16 we have tr(PHPΣ) 1\nEz1,...,zt[δf(xt+1)] ≥ · ,\nλmax(PH)λmin(PH) t −t0 ON-AVERAGE STABILITY OF MULTIPASS PRECONDITIONED SGD AND EFFECTIVE DIMENSION for t ≥t0 := ⌊2κ(PH)⌋.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 74,
+    "total_chunks": 76,
+    "char_count": 1287,
+    "word_count": 245,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f45eb65c-ef03-4ccb-90d8-8787608dcfc5",
+    "text": "Let H = Qdiag(h)Q⊤be the spectral decomposition where h = (h1, . . . , hd). Define γi :=\nhiq⊤i Σqi. Then tr(HΣ) = Pdi=1 hiq⊤i Σqi = Pdi=1 γi. Thus by averaging there exists an index k\nsuch that γk ≤1d tr(HΣ). Construct Pε := I −(1 − ε )qkq⊤k , whose eigenvalues are (1, . . . , 1, ε). Thus, we have that hk\nκ(Pε) = 1/ε, λmin(PεH) = ε, and λmax(PεH) = 1. tr(PεHPεΣ) = tr(HΣ) −hkq⊤k Σqk + q⊤k Σqk\n≥tr(HΣ) −γk = tr(HΣ) 1 −1 , where we dropped the last term.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 75,
+    "total_chunks": 76,
+    "char_count": 454,
+    "word_count": 98,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d6cdb8f9-bca7-4dd3-a969-1d05952c00a7",
+    "text": "Putting it together we have that\ntr(PεHPεΣ) ≥tr(HΣ) 1 −1\nλmax(PεH)λmin(PεH) ε d Proof of Corollary 18 Proof Set A := PHP and B := H−1. For any Σ ≻0 write Σ = B−1/2XB−1/2 with X ≻0. tr(PHP Σ) tr B−1/2AB−1/2 X tr(MX)\n= = ,\ntr(H−1Σ) tr(X) tr(X)\nwith M :=B−1/2AB−1/2 = H1/2(PHP)H1/2 = H1/2PH1/2 ≻0. By the variational characterization over {X ⪰0 : tr(X) = 1}, tr(PHP Σ) 2\n≤λmax(M) = λmax H1/2PH1/2 = λmax(PH)2,\ntr(H−1Σ) where we used that H1/2PH1/2 is similar to PH and thus has the same (positive) spectrum. Dividing\nby λmax(PH)λmin(PH) gives\ntr(PHP Σ) ≤λmax(PH) .\nλmax(PH)λmin(PH) tr(H−1Σ) λmin(PH) The equality is attained by taking X = vv⊤, where v is a top eigenvector of M; equivalently, let\nu be a top eigenvector of H1/2PH1/2 (i.e., of PH), and choose tr(PHP Σ)\nThen = λmax(PH)2, yielding equality in the bound above. tr(H−1Σ)\nFor a fixed P, if one is allowed to vary H ≻0 under only the constraint ρ(H) = 1, the quantity\nλmax(PH)\ncan be made arbitrarily large because is unbounded in H, e.g., take H = diag(1, ε, . . . , ε) λmin(PH)\nin an eigenbasis of P and let ε →0.",
+    "paper_id": "2603.11989",
+    "title": "On-Average Stability of Multipass Preconditioned SGD and Effective Dimension",
+    "authors": [
+      "Simon Vary",
+      "Tyler Farghly",
+      "Ilja Kuzborskij",
+      "Patrick Rebeschini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11989v1",
+    "chunk_index": 76,
+    "total_chunks": 76,
+    "char_count": 1073,
+    "word_count": 201,
+    "chunking_strategy": "semantic"
+  }
+]

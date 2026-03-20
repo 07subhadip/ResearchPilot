@@ -1,0 +1,876 @@
+[
+  {
+    "chunk_id": "faae8649-846a-45a4-b3ae-85fefcf37165",
+    "text": "Prabhushankar, and G. AlRegib, \"BALD-SAM: Disagreement-based Active Prompting\nin Interactive Segmentation\", submitted at IEEE Access.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 0,
+    "total_chunks": 46,
+    "char_count": 133,
+    "word_count": 15,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e5b9323c-88cf-4444-9ef3-ea68e47752bb",
+    "text": "Review First submission: 02 March 2026 (Under Consideration) Code will be released upon acceptance Copyright © Creative Commons Attribution CC BY 4.0 Contact {pchowdhury6, alregib}@gatech.edu\nhttps://alregib.ece.gatech.edu/ Corresponding alregib@gatech.edu\nauthor\nMar\n[cs.CV] Date of publication xxxx 00, 0000, date of current version xxxx 00, 0000. Digital Object Identifier 10.1109/ACCESS.2017.DOI",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 1,
+    "total_chunks": 46,
+    "char_count": 399,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "234dfc13-cf72-407f-9854-ab4b38599656",
+    "text": "BALD-SAM: Disagreement-based Active\nPrompting in Interactive Segmentation PRITHWIJIT CHOWDHURY1, (Student Member, IEEE), MOHIT PRABHUSHANKAR1,\n(MEMBER, IEEE), AND GHASSAN ALREGIB.1, (Fellow, IEEE)\n1OLIVES at the Georgia Institute of Technology Corresponding author: Ghassan AlRegib (e-mail: alregib@gatech.edu). This work is supported by the ML4Seismic Industry Partners at Georgia Tech ABSTRACT\nThe Segment Anything Model (SAM) has revolutionized interactive segmentation through spatial prompting. While existing work primarily focuses on automating prompts in various settings, real-world annotation\nworkflows involve iterative refinement where annotators observe model outputs and strategically place\nprompts to resolve ambiguities. Current pipelines typically rely on the annotator's visual assessment of\nthe predicted mask quality. We postulate that a principled approach for automated interactive prompting\nis to use a model-derived criterion to identify the most informative region for the next prompt. In this\nwork, we establish active prompting: a spatial active learning approach where locations within images\nconstitute an unlabeled pool and prompts serve as queries to prioritize information-rich regions, increasing\nthe utility of each interaction. We further present BALD-SAM: a principled framework adapting Bayesian\nActive Learning by Disagreement (BALD) to spatial prompt selection by quantifying model (epistemic)\nuncertainty. To do so, we freeze the entire model and apply Bayesian uncertainty modeling only to a\nsmall learned prediction head, making intractable uncertainty estimation practical for large multi-million\nparameter foundation models.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 2,
+    "total_chunks": 46,
+    "char_count": 1668,
+    "word_count": 217,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "debee05a-12cd-4429-9f11-fcd707f1b166",
+    "text": "Across 16 datasets spanning natural, medical, underwater, and seismic\ndomains, BALD-SAM demonstrates strong cross-domain performance, ranking first or second on 14 of 16\nbenchmarks. We validate these gains through a comprehensive ablation suite covering 3 SAM backbones\nand 35 Laplace posterior configurations (5 subset sizes × 7 posterior sample counts), amounting to 38\ndistinct ablation settings. Beyond strong average performance, BALD-SAM surpasses human prompting\nand, in several categories, even oracle prompting, while consistently outperforming one-shot baselines such\nas Saliency, K-Medoids, Max Distance, and Shi-Tomasi in final segmentation quality, particularly on thin\nand structurally complex objects. INDEX TERMS Interactive segmentation, Bayesian methods, Foundation models, Uncertainty quantification, Prompting INTRODUCTION for new applications. The emergence of foundation models\nInteractive image segmentation enables users to delineate ob- has transformed the landscape of interactive segmentation.\njects through iterative feedback, combining human semantic The Segment Anything Model (SAM) [6], trained on 11\nunderstanding with computational efficiency. This paradigm million images and 1.1 billion masks, has demonstrated\nhas proven essential across diverse applications: medical pro- unprecedented zero-shot segmentation capabilities, enabling\nfessionals annotate anatomical structures for diagnosis and accurate mask generation on previously unseen images and\ntreatment planning [1], geoscientists identify subsurface for- domains without task-specific fine-tuning, through a unified\nmations in seismic surveys [2], [3], ecologists track species in promptable interface. SAM accepts spatial prompts in mulunderwater imagery [4], and computer vision researchers cre- tiple modalities, including points, boxes, and masks, and\nate training datasets for recognition systems [5]. Traditional produces high-quality segmentation outputs directly at inferinteractive segmentation methods require domain-specific ence time. This flexibility has catalyzed widespread adoption\nmodels trained on labeled data from each target domain, across medical imaging [7], remote sensing [8], robotics [9],\nlimiting applicability and necessitating extensive retraining and content creation. Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 3,
+    "total_chunks": 46,
+    "char_count": 2365,
+    "word_count": 300,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "93737046-0c96-4e2d-b01b-a9653255ca02",
+    "text": "FIGURE 1: Iterative prompt-based interactive segmentation using SAM. (a) In the interactive loop, SAM receives an input\nimage and a set of user-provided point prompts (positive/inclusion and negative/exclusion) and returns a segmentation mask. A\nhuman expert compares the predicted mask against the desired target segmentation and provides additional corrective prompts,\nwhich are fed back to SAM in the next iteration. (b) Prompt accumulation and mask evolution across iterations: the left panels\nshow the prompt set at iterations t = 0, 1, 2, and the right panels show the corresponding SAM outputs, demonstrating error\ncorrection and progressive convergence to the desired object mask. The success of promptable foundation models has natu- adds another inclusion prompt to encourage the full bird,\nrally motivated investigation into optimal prompting strate- but the mask overshoots and incorrectly includes background\ngies. Extensive research has explored automated prompt gen- (the black railing); at t = 2 the user adds an exclusion\neration [10], few-shot prompting techniques [11], and rein- (negative) prompt on the wrongly included region to mark\nforcement learning approaches for adaptive refinement [12]. it as background, and SAM then suppresses that area and\nHowever, these techniques focus on automating prompting outputs a clean segmentation of the pigeon. The PointPrompt\nthrough zero-shot (without task specific training example) dataset [14] is a large-scale benchmark of point-based visual\nor one-shot (with one task specific training example) strate- prompting for interactive segmentation with SAM, created to\ngies that minimize or eliminate human involvement. This fill the lack of publicly available datasets for systematically\nemphasis, while promising for large-scale dataset creation, studying such human prompting strategies across diverse\nfundamentally mischaracterizes the way humans use inter- vision domains. In models like SAM, prompts are not just\nactive segmentation systems. Humans do not generate a inputs but part of an iterative human model dialogue, and\nfixed prompt set and passively evaluate results. They observe we still do not have principled ways to characterize prompt\nmodel outputs, identify failure modes, and strategically place quality in terms of how much a prompt improves the mask,\nadditional prompts to resolve ambiguities [13]. Each prompt reduces uncertainty, or contributes useful information to subrepresents a response to the model's current understanding, sequent interactions. In this paper, we formalize interactive\ncreating a feedback loop where the model segments, the iterative prompting in SAM as active prompting.\nhuman evaluates, the human prompts, and the model reGiven a model and an unlabeled data pool, active learning\nsegments. This cycle continues until the segmentation meets\nasks: which examples should we query for labels to maximize\nthe user's quality threshold. Figure 1 illustrates an iterative\nmodel improvement under a limited annotation budget [15]? SAM prompting sequence on a pigeon, where a human increCanonical approaches score unlabeled samples using uncermentally guides the model by adding prompts, inspecting the\ntainty [16], diversity [17], or hybrid criteria [18]. Importantly,\npredicted mask, and correcting errors over successive rounds\neven in classical pool-based active learning, informativeness\nuntil the segmentation is satisfactory.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 4,
+    "total_chunks": 46,
+    "char_count": 3433,
+    "word_count": 494,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "51b18416-783a-40ff-a6dc-efc5e9864c73",
+    "text": "Here, at t = 0 a single\nis not static: after each query, the labeled set Dt changes,\ninclusion (positive) point prompt produces an incomplete\nthe model (or posterior) is updated, and acquisition scores\nmask that captures only the pigeon's tail; at t = 1 the user\nmust typically be recomputed for the remaining pool.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 5,
+    "total_chunks": 46,
+    "char_count": 315,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d34cae92-cbbf-407d-8bf6-19d461d7df0f",
+    "text": "Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS transpose this sequential selection perspective to interactive second-most efficient iterative gains after oracle, indicating\nsegmentation by treating candidate spatial locations within that the acquisition function generalizes even when the segan image as the unlabeled pool [19] and user prompts as mentation backbone does not.\nqueries. The key insight is that not all prompts contribute Our key contributions are:\nequally to segmentation quality: some resolve critical ambi- • We formalize interactive iterative prompting in SAM\nguities and yield substantial information gain, while others as active prompting, where the next point prompt is\nare redundant given the current interaction context. Adapting selected as an information-driven query and must be\nactive learning from sample-level querying to spatial prompt recomputed after each user interaction.\nselection therefore requires handling an evolving condition- • We propose BALD-SAM, a practical active prompting\ning set of prompts. At iteration t, the model has received framework that adapts BALD to interactive segmenSt = {(q1, ℓ1), . . . , (qt, ℓt)}, and we seek the next location tation by selecting the next prompt location with the\nqt+1 that maximizes information gain conditioned on St. highest expected information gain, while keeping SAM\nUnlike classical active learning where score changes are frozen and modeling uncertainty only in a lightweight\ndriven primarily by model updates, in active prompting the trainable head. It is a plug-and-play module which can\nacquisition landscape can shift even with fixed parameters fit on any frozen SAM backbone or variant.\nbecause the prompt set itself changes the model's condition- • We evaluate BALD-SAM on 16 datasets across nating context, and this must be recomputed over a vastly larger ural, medical, underwater, and seismic domains, and\nspatial candidate space at every interaction. show that it improves annotation efficiency and robustTo address this, we propose BALD-SAM, an information- ness over random, entropy-based, and human prompting\ndriven active prompting framework that adapts BALD to baselines, while matching or exceeding oracle perforinteractive segmentation by selecting the next point prompt mance on most datasets.\nat the spatial location with the highest expected information\ngain. BALD-SAM introduces a prompt-conditioned query II. RELATED WORKS\nformulation, where informativeness is recomputed after each A.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 6,
+    "total_chunks": 46,
+    "char_count": 2522,
+    "word_count": 368,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cb2fb925-c39c-42d3-a68f-b2d85901a2d7",
+    "text": "SEGMENTATION AND PROMPTABLE FOUNDATION\nuser interaction, and a practical Bayesian uncertainty mech- MODELS\nanism for foundation models that keeps SAM frozen and Semantic segmentation assigns class labels to every pixel\nplaces uncertainty only on a lightweight trainable head, and underpins dense visual understanding. Deep learning\npreserving SAM's pretrained zero-shot behavior while mak- advances progressed from FCN [21] through U-Net [22],\ning uncertainty estimation tractable. By measuring disagree- DeepLab [23], and PSPNet [24], driven by benchmarks such\nment across multiple plausible mask predictions, BALD- as COCO [5], PASCAL VOC [25], and ADE20K [26]. SAM identifies the most informative next prompt, reducing Domain-specific extensions address medical imaging [27],\nredundant interactions and improving annotation efficiency. [28], seismic interpretation [3], [29], [30], and remote sensAs a lightweight layer on top of frozen SAM features, it also ing [31], [32], each introducing challenges from limited\nintegrates seamlessly with existing SAM architectures and labels, noise, and multi-scale structure. Despite strong ininteractive prompting workflows. Our experiments span 16 domain performance, conventional segmentation remains\ndatasets across natural images (MS COCO), medical imag- data-hungry and poorly transferable, motivating interactive\ning (breast ultrasound, polyp, skin lesion), underwater pho- and promptable alternatives.\ntography (NDD20), and seismic interpretation (Netherlands Foundation models address these limitations through taskF3). We evaluate strategies using normalized ∆IoU metrics agnostic pretraining with flexible prompt-based adaptation.\nthat measure per-iteration segmentation gains. BALD-SAM Several systems unify segmentation modalities: SEEM [33]\nachieves the highest or second-highest performance across supports points, boxes, scribbles, and text via a shared\nall three metrics (peak, mean/iter, and AUC) on 14 of 16 visual-semantic space; Semantic-SAM [34] adds granulardatasets, sweeping first place on all medical and underwater ity control; and SegGPT [35] formulates segmentation as\nbenchmarks. It surpasses both oracle and human prompting in-context learning.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 7,
+    "total_chunks": 46,
+    "char_count": 2218,
+    "word_count": 289,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3fab8425-c772-4b51-9659-dda71032dc39",
+    "text": "We focus on the Segment Anything\non several natural image categories notably Dog (0.843 vs. Model (SAM) [6] due to its widespread adoption and well-\n0.604 peak normalized ∆IoU) and Stop sign (1.0 vs. 0.276) characterized prompting interface. SAM comprises a vision\nwhile maintaining lower variance than human annotation. transformer (ViT) image encoder [36], a prompt encoder\nCompared to one-shot geometric baselines (Saliency, K- for sparse (points, boxes) and dense (masks) prompts, and\nMedoids, Max Distance, Shi-Tomasi) benchmarked in [20], a mask decoder that fuses embeddings via cross-attention. BALD-SAM delivers substantially higher final IoU on ob- Trained on SA-1B dataset (11M images, 1.1B masks),\njects with complex boundaries, such as Tie (0.845 vs. SAM exhibits strong zero-shot generalization and has been\n0.649 for the best one-shot method) and Bird (0.795 vs. adapted to medical imaging [7], [37]–[39], seismic interpre-\n0.645), confirming that iterative mutual-information-guided tation [40], remote sensing [8], [41], and video [42].\nrefinement yields superior masks where single-shot heuris- Iterative human-model interaction has driven major adtics cannot adapt. On seismic data, where SAM's natural- vances in language models through chain-of-thought promptimage backbone limits absolute IoU, BALD still achieves the ing [43], in-context learning [44], and RLHF [45], where Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS corrective feedback loops progressively refine outputs. Vi- mation between the prediction y and the model parameters θ\nsual and multimodal models similarly benefit from iterative under the current posterior:\nrefinement in reasoning [46], instruction-based editing [47],\nBALD(x) = I(y, θ | x, D) = H[y | x, D]−Ep(θ|D)[H[y | x, θ]] .and active example selection [48]. However, the interactive\n(1)\nsegmentation literature has not systematically adopted this\nHere, H[y | x, D] is the predictive entropy under the posperspective; existing SAM research emphasizes automation\nterior (total uncertainty), while Ep(θ|D)[H[y | x, θ]] is theover dialogue and one-shot performance over iterative conexpected entropy of a model sampled from the posterior (data\nvergence.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 8,
+    "total_chunks": 46,
+    "char_count": 2226,
+    "word_count": 321,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b9b8e873-c72a-4e64-a160-0473c3c869b7",
+    "text": "Our work bridges this gap by bringing active\nambiguity). Their difference isolates uncertainty caused by\nlearning principles and iterative refinement insights into indisagreement among plausible models, i.e., the uncertainty\nteractive segmentation, establishing a framework for humanthat can be reduced by acquiring a new label. Intuitively,\nmodel collaborative annotation. BALD prioritizes queries for which different plausible models make different predictions, since labeling those examplesB. AUTOMATED AND ONE-SHOT PROMPTING\nis expected to yield the greatest information gain.STRATEGIES IN SAM\nApplying BALD in deep networks requires approximateSAM's interactive design has prompted extensive study foBayesian inference. Common practical approaches includecused primarily on automation and efficiency through reMonte Carlo dropout [68], deep ensembles [69], and Laplaceduced human involvement. Automated prompting and perapproximation around a trained solution [70]. These methodssonalization methods include PerSAM [49] for one-shot inhave enabled Bayesian active learning in image classifica-stance transfer and Grounded-SAM [50] for open-vocabulary\ntion [16], semantic segmentation [71], object detection [72],detection followed by SAM-based mask generation. These\nand medical imaging [73].approaches aim to synthesize effective prompts directly from\nPrior active learning works focus on selecting images toimages or text descriptions, bypassing iterative human relabel for supervised learning. In contrast, interactive segmen-finement. In sparse prompting regimes, work has analyzed\ntation requires selecting where within an image to query next,optimal point placement and sampling distributions [51],\nconditioned on an evolving set of user prompts. This spatial,[52], box prompting as a higher-information alternative to\nsequential setting is fundamentally different from classicalpoints [53], and hybrid prompt combinations for robustsample selection. Recent SAM-related work has exploredness [54]. Sequential decision-making has been explored\nuncertainty-guided prompting [9], but without a principledthrough reinforcement learning for iterative refinement [55],\nBALD objective or Bayesian posterior-based formulation.though these methods optimize policies in simulated enviOur work builds on BALD to define a theoretically groundedronments rather than modeling real human feedback loops.\ncriterion for active spatial prompt selection in interactivePrompt engineering studies further evaluate sensitivity to persegmentation.turbations [56], robustness under adversarial prompts [57],\nand prompt optimization [58]. While these efforts have advanced automated prompting, they largely treat prompting as D.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 9,
+    "total_chunks": 46,
+    "char_count": 2714,
+    "word_count": 338,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f4a9892d-93ae-40a2-ac37-3afdbeb02f6d",
+    "text": "POINTPROMPT DATASET\na single pass approach rather than an interactive dialogue, PointPrompt [14] is a large-scale dataset for studying pointand have not studied how to actively select prompts that based visual prompting in interactive SAM segmentation,\nmaximize information gain during iterative human-model designed to address the lack of publicly available datasets\ninteraction. for systematic prompt analysis in vision foundation models. It contains 6,000 curated image-mask pairs organized into\nC. ACTIVE LEARNING AND BALD 16 datasets (400 pairs each) spanning four domains: natural\nActive learning studies how to choose the most informative images, underwater imagery, medical imaging, and seismic\nqueries so that a model improves with minimal annotation data. The natural-image subset includes nine COCO cateeffort [15]. In the classical pool-based setting, the query gories [5] (e.g., dog, cat, bird, clock, bus, tie), covering both\nstrategy selects unlabeled examples for annotation using cri- rigid and deformable objects. The underwater subset is drawn\nteria such as margin sampling [59], predictive entropy [60], from NDD20 [74] (dolphins above and below water), introquery-by-committee disagreement [61], stable outputs [62], ducing challenges such as turbidity, illumination changes,\ngradient-based [63], [64], or prediction switches [18], [63]. and motion blur. The medical subsets include Chest-X [75],\nThe same strategies are extended from image-based to Kvasir-SEG [76], and ISIC [77], which present low-contrast\nvideos [65] and clinical trial settings [66]. These strategies boundaries, class imbalance, and clinically important boundtypically rely on predictive uncertainty alone and may con- ary precision. The seismic subsets (salt dome and chalk)\nflate epistemic uncertainty (model uncertainty due to limited come from F3 Facies [78], and are particularly valuable due\nknowledge) with aleatoric uncertainty (irreducible ambiguity to their strong domain shift from SAM's training distribution,\nin the data). low SNR, structural ambiguity, and 3D-to-2D projection\nBayesian Active Learning by Disagreement (BALD) ad- effects.\ndresses this by explicitly targeting epistemic uncertainty [67]. Prompting data was collected using a SAM-based inBALD selects the query x that maximizes the mutual infor- teractive annotation interface in which annotators itera- Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS tively placed inclusion (green) and exclusion (red) points Algorithm 1 Active Prompting for Interactive Segmentation\nuntil the segmentation was subjectively satisfactory. For Require: Image I, selection strategy π, candidate set Ω,\neach annotator-image interaction, the dataset records the stopping criterion C, model parameters θ\nfull prompt sequence, point coordinates, intermediate SAM Require: Optional seed prompts S0 (default: ∅)\nmasks, and IoU with the ground-truth mask, with multiple Ensure: Final prompt set ST and segmentation mask MTˆ\nannotators per image enabling analysis of inter-annotator 1: t ←0\nvariability and strategy diversity. Benchmarking in the orig- 2: St ←S0\ninal PointPrompt study [20] reported a ∼29% gap between 3: Generate initial segmentation Mtˆ from I and St\nhuman and automated prompting overall, exceeding 50% 4: while ¬C(Mt,ˆ St, t) do\nin out-of-distribution domains such as seismic imagery, and 5: for all q ∈Ωdo\nshowed that inclusion points are substantially more in- 6: sq ←π(q | I, St, θ)\nfluential than exclusion points (36.3% improvement when 7: end for\ncombining human inclusion with automated exclusion, ver- 8: qt+1 ←arg maxq∈Ωsq\nsus 2.43% for the reverse).",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 10,
+    "total_chunks": 46,
+    "char_count": 3649,
+    "word_count": 523,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "31107ee8-00a7-437a-a87e-cac63e826ef6",
+    "text": "The study further showed that 9: Query annotator for label ℓt+1 ∈{0, 1} ▷1 =\nprompt-encoder fine-tuning can recover much of this gap inclusion, 0 = exclusion\n(22%–68% gains over base SAM), with K-Medoids fine- 10: St+1 ←St ∪{(qt+1, ℓt+1)}\ntuning surpassing human performance on 11/16 datasets, 11: Generate updated segmentation Mt+1ˆ from I and\nand that simple interpretable prompt-geometry features (e.g., St+1\ncoverage, inclusion spread, exclusion margin) can predict 12: t ←t + 1\nsegmentation quality (R2 > 0.5 in OOD settings). 13: end while\n14: return St, Mtˆ\nIII. ACTIVE PROMPTING IN INTERACTIVE\nSEGMENTATION\nAt iteration t, given the current prompt set St = user interaction, and each new query is conditioned on the\n{(q1, ℓ1), . . . , (qt, ℓt)}, where qi is a spatial location and ℓi ∈ updated prompt history. This sequential, model-aware loop\n{0, 1} is an inclusion/exclusion label, a selection strategy π provides several practical advantages over intuition-driven\nassigns an informativeness score to each candidate location: prompting:\nsq = π(q | I, St, θ), qt+1 = arg maxq∈Ωsq (2) • Principled query selection: prompts are chosen using explicit, quantitative criteria (e.g., uncertainty, diversity,\nwhere I is the input image, Ωis the set of candidate locations, or hybrid strategies).\nand θ denotes model parameters. After the user provides • Lower cognitive burden: annotators no longer need to\nthe label ℓt+1, the prompt history is updated as St+1 = scan the entire image for failure regions. St∪{(qt+1, ℓt+1)}, and the process repeats. The full iterative • Better spatial coverage: informative locations are exprocedure is summarized in Algorithm 1. plored systematically rather than based on human visual\nThis perspective differs from standard SAM usage in three bias.\nways: (i) prompt placement is treated as query optimization • Model-aware adaptation: query locations adapt to the\nrather than ad hoc interaction, (ii) selection is driven by quan- model's evolving uncertainty as new prompts are added.\ntitative informativeness scores rather than visual inspection • Cross-domain applicability: the framework depends\nalone, and (iii) each query is explicitly conditioned on the on uncertainty and informativeness, not domain-specific\nevolving prompt history. semantics. In the next section, we instantiate this framework using\nA.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 11,
+    "total_chunks": 46,
+    "char_count": 2348,
+    "word_count": 361,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c96f9b60-93ed-4598-98e7-594a63c9f687",
+    "text": "ACTIVE PROMPTING WORKFLOW BALD with a Laplace-approximated Bayesian head on top of\nWe formalize the active prompting loop in Algorithm 1. frozen SAM features, yielding a tractable and effective active\nStarting from an optional seed prompt set S0, the method prompting strategy across diverse imaging domains.\nalternates between (i) scoring candidate locations using the\nselection strategy π, (ii) querying the annotator for an in- IV. BALD-SAM: INFORMATION-DRIVEN ACTIVE\nclusion/exclusion label at the highest-scoring location, and PROMPT SAMPLING\n(iii) updating the segmentation conditioned on the expanded We build our method on Bayesian Active Learning by Disprompt set. The loop terminates when a stopping criterion is agreement (BALD) [67], which selects queries that maximize\nmet (e.g., a prompt budget, convergence of the mask, or user mutual information between the unknown label and model\nsatisfaction). parameters under the current posterior. Intuitively, BALD\nfavors queries where plausible models disagree most, since\nB. WHY ACTIVE PROMPTING HELPS those queries lead to the highest reduction in epistemic\nAlgorithm 1 highlights that prompt selection is not a one-shot uncertainty (Details in Section II-C).\ndecision: informativeness scores are recomputed after every This introduces two practical challenges. First, query inVOLUME 4, 2016 5",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 12,
+    "total_chunks": 46,
+    "char_count": 1352,
+    "word_count": 194,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "767ca88a-4c4d-4452-bf88-984a36d8f180",
+    "text": "Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS formativeness must be recomputed after every interaction Accordingly, we use the factorized posterior\nbecause in our setting the acquisition score is explicitly\np(θ | D) = δ(θSAM −θ∗SAM) p(θhead | D), (4)conditioned on the evolving prompt set St. As new prompts\nare added, the interaction context changes, so the value of where θ∗SAM denotes the specific pretrained SAM weights\neach candidate location must be reassessed. Second, BALD loaded into the model, and δ(·) is the Dirac delta.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 13,
+    "total_chunks": 46,
+    "char_count": 558,
+    "word_count": 88,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "edb0eb0d-1fc1-4186-8389-7a50d9985670",
+    "text": "This\nrequires access to parameter uncertainty, yet full posterior term places all posterior mass on that fixed parameter value,\ninference is intractable for SAM-scale models (600M+ pa- indicating that no posterior uncertainty is modeled over the\nrameters). Direct Bayesian treatment of the entire network frozen SAM backbone.\nwould be prohibitively expensive, and modifying SAM's\nWe approximate the posterior over the trainable head paarchitecture risks disrupting the pretrained representations\nrameters using a Laplace approximation:\nand zero-shot behavior that make it effective in the first place. To address this, we use a partial posterior factorization ap- p(θhead | D) ≈N(ˆθhead, H−1), (5)\nproach: SAM is frozen, and Bayesian inference is performed\nwhere ˆθhead is the maximum a posteriori estimate of the headonly on a lightweight trainable head. This makes promptparameters and H is the Hessian of the negative log posterior\nconditioned mutual information tractable (via Laplace apevaluated at ˆθhead.proximation) while preserving SAM's pretrained representations and zero-shot capability. An overview of the full pipeline is illustrated in Figure 2.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 14,
+    "total_chunks": 46,
+    "char_count": 1160,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c2107e14-62bc-4434-9d7a-e29350015a19",
+    "text": "DISAGREEMENT-BASED SAMPLING VIA BALD 1) Bayesian Head for SAMA. ADAPTING BALD TO INTERACTIVE SEGMENTATION\nStandard BALD selects samples from an unlabeled dataset. We freeze SAM's image encoder, prompt encoder, and mask\nHere, we select locations within a single image, conditioned decoder. Let\non an evolving prompt set. ϕmask ∈RH×W ×d denote the final decoder feature map from SAM for image I1) Prompt-Conditioned Sequential Queries\nand prompt set St.Let M ∗∈{0, 1}H×W be the unknown ground-truth mask\nfor image I. For a candidate location q ∈Ω, define the We add a lightweight prediction head parameterized by\nunknown queried label as θhead,\nhθhead : RH×W ×d →[0, 1]H×W , (6)\nℓq := M ∗[q] ∈{0, 1}.\nwhich maps decoder features to a pixelwise foreground\nGiven a training set D (used to train the Bayesian head), the probability map. In our implementation, the head is a small\nnext query is convolutional network (two convolution layers with ReLU\nqt+1 = arg maxq∈ΩI(ℓq; θhead | I, St, D), (3) and dropout). We train the head on a dataset\nwhere θhead denotes the uncertain parameters of the Bayesian\nD = {(Ik, Sk, M ∗k)}Nk=1,head. This objective is prompt-conditioned: after each user re- where Ik is an image, Sk is a prompt set for that image,\nsponse, St changes, so the predictive uncertainty and BALD ∗k and M is its ground-truth mask. The head parameters are\nscores must be recomputed as described in details in Section. learned by maximizing the pixelwise log-likelihood:\nIV-B2. The iterative nature of this process—querying, labelN\ning, and updating the prompt set—is depicted in Figure 2\nˆθhead = arg max X X log p M ∗k[q] | hθhead(ϕkmask)[q] ,(right), where the prompt set grows across iterations t = 0 θhead\nand t = 1. k=1 q∈Ωk (7)\nwhere Ωk is the set of pixel locations in image k (or a\n2) Quantifying Posterior for Foundation Models\nsampled subset in practice). Let\nFor a test image I and current prompts St, the posterior θ = {θSAM, θhead},\npredictive distribution over probability maps P ∈[0, 1]H×W\nwhere θSAM denotes the full set of SAM backbone parame- is\nters, and θhead ∈Rp denotes the parameters of a lightweight Z\ntrainable head (p ≈35K in our implementation). I, St, D) = p(P | θ∗SAM, θhead, I, St) p(θhead |",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 15,
+    "total_chunks": 46,
+    "char_count": 2226,
+    "word_count": 382,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2cde496e-4795-4412-8927-b1a155ba0ecb",
+    "text": "D) dθhead.\nsetting, the SAM backbone is frozen at its pretrained check- (8)\npoint, so only the head parameters are treated as uncertain. We approximate this integral with Monte Carlo sampling:\nThis design choice is reflected in Figure 2, where the frozen\ndraw K parameter samples\nSAM components are indicated by the snowflake icon and\nthe trainable Bayesian head by the flame icon. {θk}Kk=1 ∼N(ˆθhead, H−1), Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS FIGURE 2: BALD-SAM active prompt sampling. At iteration t, the image I and current prompt set St are processed by frozen\nSAM components and a Bayesian head sampled from a Laplace posterior. Multiple posterior samples produce an ensemble\nof mask probability maps, from which we compute a disagreement (mutual-information) map. The location with the highest\nBALD score is queried next, the user returns its label, and the prompt set is updated.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 16,
+    "total_chunks": 46,
+    "char_count": 922,
+    "word_count": 148,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "847f4e13-3c0b-45a7-b3e8-01a340ba4c22",
+    "text": "and compute the corresponding probability maps therefore\n{Pθk}Kk=1, Pθk ∈[0, 1]H×W . K MI(q) = h2(¯p(q)) −1 X h2(pk(q)). (13)\nDisagreement among these K maps captures epistemic un- k=1\ncertainty. This ensemble disagreement is visualized as the We select the next query as\nMask Disagreement Map shown in Figure 2 (center), where\nhigh-uncertainty regions appear as warm-colored peaks in the qt+1 = arg maxq∈ΩMI(q), (14)\nheatmap.\nobtain the user label ℓt+1 ∈{0, 1} at that location, and\nupdate the prompt set:\n2) Computing BALD Mutual Information\nSt+1 = St ∪{(qt+1, ℓt+1)}. (15)\nFor each candidate location q ∈Ω, define the predictive\nprobability under posterior sample θk as This query-and-update cycle corresponds to the human annotator feedback loop shown in Figure 2, where the selected pk(q) := p(ℓq = 1 | I, St, θk) = Pθk[q]. (9)\nquery location is passed to the user and the resulting label is\nThe posterior-mean predictive probability is folded back into St+1. ¯p(q) = X pk(q). (10) 3) Stopping Criteria K\nk=1\nWe terminate prompting when any one of the following\nLet h2(p) = −p log p−(1−p) log(1−p) denote the binary conditions is met.\nentropy function. Then the two BALD terms are:",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 17,
+    "total_chunks": 46,
+    "char_count": 1186,
+    "word_count": 197,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d128a399-40c7-4b3e-8d6c-3f6e25127f35",
+    "text": "I, St, D) = h2(¯p(q)), (11) a: Global entropy threshold. Define the total predictive entropy over candidate locationsand\nas K\nX h2(pk(q)). Htotal := X h2(¯p(q)). (16) Eθhead∼p(θhead|D) [H(ℓq | I, St, θhead)] ≈1\nK q∈Ω\nk=1\n(12) If\nThe BALD score (mutual information) at location q is Htotal ≤τent, (17) Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 18,
+    "total_chunks": 46,
+    "char_count": 372,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3d05cadd-76e6-4d22-a7ac-c0d26fc7fd02",
+    "text": "where τent is a preset entropy threshold, the model is deemed 3) Backbone Selection\nsufficiently certain overall. We first verify that the ViT-H backbone dominates smaller\nvariants before committing to it for all subsequent ablations.\nb: Maximum mutual-information threshold. Table 1 compares ViT-H, ViT-B, and ViT-Tiny across the\nIf same hyperparameter grid. ViT-H achieves the highest IoU\nmaxq∈ΩMI(q) ≤τMI, (18) in every configuration, its worst setting (IoU=0.120) matches\nViT-B's best (0.121), and its mean across all configurations\nwhere τMI is a preset information-gain threshold, no re- (0.141) exceeds ViT-B by +0.029 and ViT-Tiny by +0.082.\nmaining candidate location is expected to yield substantial The performance gap is consistent rather than concentrated in\nadditional information. This condition corresponds to the a few outlier settings, confirming that the richer representaconvergence bound max MI(q) ≤δ annotated in Figure 2. tions from the 632M-parameter encoder translate directly to\nbetter-calibrated Bayesian posteriors. All remaining experic: Maximum prompt budget. ments use ViT-H. We additionally impose a hard cap of 15 prompts as a practical stopping criterion.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 19,
+    "total_chunks": 46,
+    "char_count": 1189,
+    "word_count": 170,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb69d737-3e5c-4294-964f-c8228bd8ccad",
+    "text": "This prevents excessively long inter- 4) Laplace Posterior Ablation\naction sequences that may drive SAM beyond the prompting After training, we fit a Laplace approximation over the\nregime encountered during pretraining, thereby helping pre- head's ∼35K parameters using a subset of the training data\nserve stable and reliable behavior. to estimate the posterior, and draw Monte Carlo samples\nfrom this posterior at test time. Table 2 ablates the two\nd: Fair comparison across strategies. key controls of this approximation: the Laplace subset size\nTo ensure a fair comparison, once BALD converges at itera- (the number of datapoints used to estimate the Hessian)\ntion T for a given image/seed, we run the Entropy, Random, and the posterior sample count (the number of Monte Carlo\nand Oracle baselines for the same number of iterations T. draws per image). First, subset size\ndetermines the performance floor: small subsets (100–300)\nV. EXPERIMENTS & RESULTS produce rank-deficient Hessians that additional sampling\nA. EXPERIMENTAL SETUP cannot rescue. For example, Laplace=100 with 100 samples\n1) Dataset and Prompting Strategies (IoU=0.132) still underperforms Laplace=500 with only 30\nWe leverage the PointPrompt dataset [14] across all 16 samples (IoU=0.145). Second, once the Hessian is estimated\nimage categories spanning natural, medical, seismic, and adequately (Laplace≥500), increasing the number of posunderwater domains.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 20,
+    "total_chunks": 46,
+    "char_count": 1431,
+    "word_count": 211,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "91b470f3-c5c7-405e-a47d-bf126868058c",
+    "text": "To create a diverse training set for terior samples yields diminishing returns: at Laplace=1000,\nthe Bayesian head, we generate synthetic prompt sets using increasing samples from 30 to 50 improves IoU by only\nsix sampling strategies: random, boundary-focused, center- +0.003 while increasing inference cost by 67%.\nbiased, uniform grid, mixed, and uncertainty-simulated sam- Importantly, the 1.00× inference cost is not a budget fixed\npling. For each image, we sample between 3 and 10 prompts a prior. Instead, after completing the full ablation, we selected\nper strategy, creating varied spatial configurations that expose Laplace=1000 with 30 samples as our reference operating\nthe model to different prompting patterns. point and normalized all reported inference costs relative to\nThe dataset is partitioned with 70% for training, 15% it. Thus, every other cost in Table 2 should be interpreted as a\nfor validation, and 15% for testing.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 21,
+    "total_chunks": 46,
+    "char_count": 941,
+    "word_count": 143,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1ae73dbf-53e2-45a0-b39b-a2d3f8f28074",
+    "text": "To ensure consistent multiplicative factor with respect to this chosen baseline, not\nevaluation across experiments, we use a fixed random seed the reverse.\n(seed=42) and maintain the same train/validation/test split Under this normalization, Laplace=1000 with 30 samples\nthroughout all experiments. Sample indices for each split ( orange ) achieves IoU=0.145, ECE=0.0105, and 1.00× relare recorded and reused to eliminate variance from data ative cost, and serves as our default inference configuration.\npartitioning. We describe it as Pareto-optimal because, among the evaluated settings, no other configuration dominates it; that is,\n2) Bayesian Head Training there is no alternative that achieves equal or better predictive\nThe Bayesian head consists of two convolutional layers with performance at lower cost, or equal or lower cost with better\nhidden dimensions [256, 128], kernel size 3, ReLU activa- predictive performance. Equivalently, it lies on the empirical\ntion, and 0.1 dropout.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 22,
+    "total_chunks": 46,
+    "char_count": 992,
+    "word_count": 144,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dc4dc258-b18a-4617-b2fe-813bf593fb18",
+    "text": "It takes SAM's 32-dimensional mask Pareto frontier of the cost-performance tradeoff. In practice,\ndecoder output and produces binary predictions. All SAM moving to higher-performing settings requires additional incomponents (image encoder, prompt encoder, mask decoder) ference cost, while cheaper settings incur a measurable drop\nare frozen; only the head parameters are trained. in accuracy or calibration. We use Adam with learning rate 10−3, weight decay 10−4, For BALD active learning, posterior quality matters even\nbatch size 8, and early stopping (patience 15, minimum delta more because mutual information estimates directly drive\n10−4) for up to 100 epochs. Images and masks are resized prompt selection, and approximation errors can compound\nto 512 × 512.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 23,
+    "total_chunks": 46,
+    "char_count": 766,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f965547e-636d-4a34-aba0-fdaac896a4a0",
+    "text": "Training was conducted on a single NVIDIA across interaction steps. We therefore evaluate four posterior\nH200 GPU (150 GB). sample counts: 30, 40, 50, and 70, all within the same Pareto Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 24,
+    "total_chunks": 46,
+    "char_count": 257,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "715b1699-0709-42ba-9410-8e521ff60d2f",
+    "text": "(a) Bus (b) Cat (c) Baseball Bat (d) Bird (e) Breast (f) Clock (g) Cow (h) Dog (i) Chalk group (j) Dolphin (above) (k) Dolphin (below) (l) Salt Dome (m) Skin (n) Stop Sign (o) Tie (p) Polyp",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 25,
+    "total_chunks": 46,
+    "char_count": 189,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3d5680e3-67eb-48f4-887e-42484d2eb934",
+    "text": "FIGURE 3: Strategy comparison across datasets using ∆IoU over iterative prompting. Each subplot corresponds to\none dataset (arranged in a 4×4 grid) and shows ∆IoU versus interaction iteration for HUMAN , BALD-SAM (ours) ,\nENTROPY , RANDOM , and ORACLE strategies, averaged across seeds for a 15-iteration run. To enable within-dataset\ncomparison of trend dynamics, ∆IoU values are min–max normalized separately for each data source. The grid spans diverse\ndomains, including natural images, medical images, underwater images, and seismic images, highlighting the robustness and\ncross-domain consistency of BALD-SAM under a unified evaluation protocol. plateau ( IoU≥0.145 ). This lets us vary posterior fidelity as the stopping criterion. We average over 4 different Monte\nwhile remaining in a near-equivalent performance regime, Carlo draws from the Laplace approximate posterior: 30, 40,\nand also provides a natural estimate of variability across pos- 50 & 70. All experiments use the pretrained SAM ViT-H\nterior approximations. In total, this requires 4 × 900 × 15 = checkpoint with device set to CUDA for GPU acceleration.\n54,000 forward passes (∼22.8 GPU-hours across seeds). The\none-time Laplace fitting itself takes only ∼3 minutes, which\nis less than 3% of training time, and is reused across all 6) Baseline Comparisons\ndownstream runs.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 26,
+    "total_chunks": 46,
+    "char_count": 1345,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4a80210e-0b29-4afa-804f-dbb2cc6fee61",
+    "text": "To validate that BALD-SAM-based sampling improves upon\nstandard approaches, we compare against four baseline\n5) Active Learning Configuration strategies across all datasets: During active prompting experiments, we set the maximum BALD-SAM (Ours): Our mutual information-driven apnumber of iterations to 15 prompts per image (to keep within proach that selects queries by maximizing I(ℓq; M ∗ | SAM's in-distribution prompt range of 5 −15 prompts) and I, St) through Bayesian uncertainty quantification with the\nuse the maximum mutual information threshold δ = 0.01 Laplace-approximated posterior. Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 27,
+    "total_chunks": 46,
+    "char_count": 668,
+    "word_count": 95,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3e2c6c12-0b62-4f8f-91a5-21828c30bfb2",
+    "text": "TABLE 1: ViT backbone comparison averaged across the liver reliable, monotonic convergence rather than sporadic\nsame hyperparameter configurations. We ablated on differ- gains followed by stagnation or degradation.\nent inference posterior samples for only 1000 Laplace sub- Area Under the Normalized ∆IoU Curve (AUC): The\nsets since they consistently give the best baselines. ViT-H area under the normalized ∆IoU curve across all iterations,\nachieves superior performance in all settings, establishing it summarizing both the magnitude and consistency of peras the backbone of choice for subsequent ablation studies. step improvements over the full prompting sequence. AUC\nintegrates peak performance and sustained gains into a sinParams Best Worst Mean gle scalar, penalizing strategies that achieve large early im- Backbone\n(M) Val IoU Val IoU All Cfgs provements but subsequently degrade or plateau.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 28,
+    "total_chunks": 46,
+    "char_count": 902,
+    "word_count": 130,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1ee390bc-a897-4180-8a5b-797e3cbe08f3",
+    "text": "This metric\nserves as our primary summary statistic for overall annotation\nViT-H 632 0.149 0.120 0.141 efficiency. ViT-B 86 0.121 0.100 0.112 Mean Final IoU: The average segmentation quality across\nViT-Tiny 5.7 0.068 0.048 0.059 all images in a dataset after completing the prompting sequence (detailed in Section V-A8f and Table 7). Unlike the\n∆-based metrics above, which measure the trajectory of\nEntropy-based sampling: Selects locations with highest improvement, mean final IoU captures the absolute output\nmarginal entropy H(¯p(q)) without accounting for expected quality. This enables direct comparison across a broader set\nconditional entropy. This captures total uncertainty but ig- of prompting strategies including one-shot geometric methnores the epistemic disagreement component that distin- ods (Saliency, K-Medoids, Max Distance, Shi-Tomasi corner\nguishes informative from redundant queries. detection) that do not operate iteratively and assesses whether\niterative refinement through BALD translates to superior final Random sampling: Uniformly samples prompt locations\nmasks.from the image, representing the default baseline without\nThroughout our analysis, we prioritize the normalized ∆information-theoretic guidance. IoU metrics (peak, mean/iter, and AUC) as the definitive Human annotation: Uses the actual human-provided\nmeasures of iterative annotation efficiency, while mean final\nprompt sequences from the PointPrompt dataset, reflecting\nIoU provides complementary assessment of ultimate segreal interactive annotation behavior with visual feedback.\nmentation quality across both iterative and one-shot promptOracle (upper bound): Has access to the ground truth\ning paradigms.\nmask M ∗and selects queries based on prediction error:\nqoraclet+1 = arg maxq∈Ω|MSt[q] −M ∗[q]| (19) 8) Observations\na: Smoother improvement trajectories in medical and\nseismic domains.\n7) Evaluation Metrics\nThe plots in Figure 3 also show a qualitative difference in\nWe evaluate each prompting strategy using four comple- how segmentation quality evolves across domains: the medmentary metrics that capture different aspects of annotation ical and seismic datasets exhibit noticeably smoother norefficiency, convergence quality, and final segmentation per- malized ∆IoU trajectories across prompting iterations than\nformance: the natural-image benchmarks. In natural images, prompt\nPeak Normalized ∆IoU: The largest single-iteration gain additions often produce sharp gains or fluctuations because\nin IoU observed across the entire prompting sequence, nor- object boundaries are typically more semantically distinct\nmalized per datasource. Formally, Peak Normalized ∆IoU = and visually salient, allowing a single well-placed prompt to\nmaxt∈[1,Tmax] IoU(St) −IoU(St−1) , where normalization trigger a large mask correction.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 29,
+    "total_chunks": 46,
+    "char_count": 2824,
+    "word_count": 378,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d9bf4b68-1643-4ce5-b5f5-bc824bc140e4",
+    "text": "In contrast, medical and seisis applied across all strategies within a given dataset. This mic images contain weaker edges, lower local contrast, and\nmetric captures a strategy's ability to identify maximally more ambiguous region semantics, so the boundary evidence\ninformative prompts, those that produce the largest step- available to SAM is less explicit. As a result, performance\nchange in segmentation quality in a single iteration. A high tends to improve in a more gradual and stable manner, with\npeak ∆IoU indicates that the acquisition function can locate each prompt contributing smaller but more consistent refinehighly informative spatial locations whose inclusion yields ments rather than abrupt jumps. This suggests that interactive\nsubstantial mask improvement. segmentation dynamics are domain-dependent and shaped\nMean Normalized ∆IoU per Iteration (Mean/Iter): not only by the prompting strategy but also by the saliency\nThe average per-iteration IoU improvement across the and semantic separability of the underlying structures. We\nprompting sequence, normalized per datasource. Computed view this as an important phenomenon that merits deeper\nas Mean/Iter = 1 PTmaxt=1 IoU(St) −IoU(St−1) .",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 30,
+    "total_chunks": 46,
+    "char_count": 1210,
+    "word_count": 174,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "efb184bb-74a5-47db-97a8-77ee8eb949ef",
+    "text": "While dataset-specific investigation in future work. Tmax\npeak ∆IoU measures the best single step, mean ∆IoU\nper iteration quantifies sustained annotation efficiency: how b: Cross-domain dominance of BALD-SAM.\nconsistently a strategy improves segmentation quality with Tables 3–5 reveal that BALD-SAM consistently ranks among\neach additional prompt. Strategies with high mean/iter de- the top two strategies across all three normalized ∆IoU Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS TABLE 2: Laplace subset × posterior samples ablation (ViT-H backbone). Each cell shows: Val IoU / ECE / Relative inference\ncost. Inference baseline (30 samples). & Pareto-optimal configurations are highlighted. Laplace Posterior Samples Training Subset 10 20 30 40 50 75 100 Overhead 100 0.120 0.124 0.128 0.129 0.130 0.131 0.132\n0.0195 0.0188 0.0185 0.0183 0.0182 0.0180 0.0178 0.92× 0.33× 0.67× 1.00× 1.33× 1.67× 2.50× 3.33× 300 0.132 0.136 0.140 0.141 0.142 0.142 0.143\n0.0148 0.0138 0.0135 0.0133 0.0132 0.0131 0.0130 0.96× 0.33× 0.67× 1.00× 1.33× 1.67× 2.50× 3.33× 500 0.135 0.140 0.141 0.142 0.142 0.143 0.143\n0.0128 0.0118 0.0115 0.0112 0.0110 0.0109 0.0108 0.98× 0.33× 0.67× 1.00× 1.33× 1.67× 2.50× 3.33×",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 31,
+    "total_chunks": 46,
+    "char_count": 1225,
+    "word_count": 183,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1d44082b-4a58-44df-baeb-44e4c85538e3",
+    "text": "700 0.137 0.142 0.143 0.143 0.144 0.145 0.146\n0.0118 0.0110 0.0108 0.0105 0.0103 0.0102 0.0102 0.99× 0.33× 0.67× 0.99× 1.32× =1.65× 2.48× 3.30× 1000 0.138 0.142 0.145 0.147 0.148 0.149 0.149\n0.0125 0.0112 0.0105 0.0101 0.0099 0.0096 0.0095 1.00× 0.33× 0.67× 1.00× 1.33× 1.67× 2.50× 3.33×",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 32,
+    "total_chunks": 46,
+    "char_count": 287,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "77306b88-03e0-4760-911e-858209ec4143",
+    "text": "metrics on the majority of datasets. On the MS COCO uncertainty that marginal entropy alone misses specifically,\nnatural image benchmarks (Table 3), BALD-SAM achieves BALD disentangles epistemic from aleatoric uncertainty,\nthe highest peak normalized ∆IoU on four of nine categories enabling it to select prompts that are informative about the\n(Baseball bat, Cat, Dog, Stop sign) and secures second place model's belief rather than merely uncertain in prediction.\non four others (Bird, Bus, Clock, Tie). The dominance is even\nmore pronounced on out-of-distribution domains: on all five d: Seismic and chalk segmentation.\nmedical and underwater datasets (Tables 4 and 5), BALD- On the Netherlands F3 seismic datasets (Table 6), ORACLE\nSAM attains the top rank across all three metrics: peak, achieves the highest scores across all metrics, with BALD\nmean/iter, and AUC without exception. This indicates that ranking consistently second.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 33,
+    "total_chunks": 46,
+    "char_count": 935,
+    "word_count": 140,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "23cd3812-eac2-4519-bcac-752719624b37",
+    "text": "Notably, BALD still substanthe information-theoretic objective underlying BALD trans- tially outperforms both ENTROPY and HUMAN on these\nfers robustly to domains whose visual characteristics differ datasets: on Salt dome, BALD achieves a peak normalized\nsubstantially from natural images, including ultrasound, der- ∆IoU of 0.6254 compared to 0.4284 for ENTROPY and\nmoscopy, colonoscopy, and underwater photography. 0.1642 for HUMAN. The strong ORACLE performance here\nlikely reflects the structured geometry of seismic horizons,\nwhere ground-truth-guided prompts align well with spatially\nc: Comparison with ORACLE and ENTROPY.\ncoherent target boundaries. Nevertheless, BALD remains the\nThe ORACLE strategy, which has privileged access to the best-performing strategy that does not require privileged acground-truth mask, does not uniformly dominate BALD- cess to annotations, confirming its practical utility in settings\nSAM on the natural image benchmarks. On Dog, BALD- where oracle labels are unavailable. SAM surpasses ORACLE in peak normalized ∆IoU by a\nwide margin (0.8430 vs. 0.6034), and on Stop sign it achieves e: Robustness and variance.\na perfect normalized score of 1.0 while ORACLE reaches Across datasets, BALD-SAM generally exhibits comparable\nonly 0.2759. ENTROPY, which shares a similar uncertainty- or lower standard deviation in peak normalized ∆IoU relabased motivation, occasionally matches or narrowly exceeds tive to HUMAN and RANDOM, indicating that the acquisiBALD-SAM (e.g., Bird and Clock) but fails to do so con- tion function yields stable prompt selections across different\nsistently and falls significantly behind on categories such images. The HUMAN strategy, while occasionally competas Baseball bat (0.3891 vs. 0.6570) and Dog (0.3141 vs. itive in mean/iter (e.g., Baseball bat, Cat), shows notably\n0.8430).",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 34,
+    "total_chunks": 46,
+    "char_count": 1844,
+    "word_count": 260,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0bbf736c-9ffe-43af-912c-d35de2cc3ac2",
+    "text": "This suggests that the mutual-information formu- higher variance, consistent with the inherent subjectivity of\nlation in BALD captures complementary aspects of model manual prompt placement. Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS f: Final segmentation quality and comparison with one-shot VI. We introduced active prompting, a formal framework that reTable 7 broadens the comparison to include one-shot geo- casts interactive segmentation as a sequential query selection\nmetric prompting strategies: Saliency, K-Medoids, Max Dis- problem, and proposed BALD-SAM, a practical instantiation\ntance, and Shi-Tomasi corner detection evaluated by mean that adapts Bayesian Active Learning by Disagreement to\nfinal IoU after completing the prompting sequence. On the spatial prompt selection in SAM. By freezing SAM entirely\nMS COCO benchmarks, BALD-SAM achieves the highest and placing Bayesian uncertainty only on a lightweight trainor second-highest mean final IoU on seven of nine categories. able head with a Laplace-approximated posterior, BALDNotably, BALD-SAM substantially outperforms all one-shot SAM makes prompt-conditioned mutual information estimamethods on deformable or thin objects: on Tie, BALD-SAM tion tractable for billion-parameter foundation models withreaches 0.845±0.227 while the best one-shot competitor (K- out degrading pretrained representations. Evaluated across 16\nMedoids) achieves only 0.649 ± 0.289, and on Bird, BALD- datasets spanning natural, medical, underwater, and seismic\nSAM (0.795 ± 0.167) surpasses K-Medoids (0.645 ± 0.212) domains, BALD-SAM ranks first or second in normalized ∆\nby a wide margin. These categories present complex bound- IoU efficiency on 14 of 16 benchmarks, sweeps all medical\naries where iterative refinement guided by mutual informa- and underwater datasets, surpasses the ground-truth oracle on\ntion yields substantially better masks than any single-shot ge- several natural image categories, and delivers substantially\nometric heuristic. Among the one-shot baselines, K-Medoids higher final IoU than all one-shot geometric baselines on\nand Shi-Tomasi consistently outperform Saliency and Max objects with complex boundaries confirming that principled,\nDistance, suggesting that spatially distributed prompts pro- information-theoretic prompt selection yields more efficient\nvide better initial coverage than attention-based or extremal- and robust interactive annotation than either human intuition\ndistance strategies. However, even the strongest one-shot or entropy-based alternatives.\nmethods fall short of the iterative approaches (BALD-SAM\nand HUMAN) on the majority of datasets, confirming the\nvalue of sequential refinement. On medical imaging, BALD-SAM remains competitive\nwith the best baselines despite the domain shift: on Skin,\nBALD-SAM (0.693±0.230) outperforms all methods including HUMAN (0.593 ± 0.195), and on Polyp it matches the\none-shot K-Medoids baseline while the iterative refinement\ncontinues to add value through the ∆IoU trajectory. On\nthe underwater datasets, BALD-SAM matches HUMAN on\nDolphin below (0.831) and remains within range on Dolphin\nabove (0.705 vs. 0.732). The seismic datasets represent the\nprimary exception: both Salt dome (0.205±0.128) and Chalk\ngroup (0.340 ± 0.172) show lower absolute IoU for BALD\ncompared to HUMAN and K-Medoids, reflecting the fundamental domain gap between SAM's natural-image pretraining and seismic imagery. Nevertheless, the normalized ∆\nIoU analysis (Table 6) confirms that BALD's iterative gains\nremain the second most efficient after ORACLE even in this\nchallenging domain, indicating that the acquisition function\nitself performs well despite the backbone's limitations. Taken together, the normalized ∆IoU analysis and the mean\nfinal IoU comparison paint a consistent picture: BALDSAM delivers the most efficient iterative annotation strategy\nacross natural, medical, and underwater domains, achieving\ntop-two performance in the vast majority of dataset–metric\ncombinations.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 35,
+    "total_chunks": 46,
+    "char_count": 4042,
+    "word_count": 551,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bbc0f237-ba5c-41ec-b7d8-26e11c7c3cad",
+    "text": "Where it does not rank first in ∆metrics (e.g.,\nBird, Clock), the gap to the best strategy is marginal, and\nit compensates with superior final IoU. The seismic results\nhighlight a meaningful limitation tied to the SAM backbone\nrather than the acquisition function, as BALD without SAM\nstill achieves second-best iterative efficiency on both Salt\ndome and Chalk group. Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS TABLE 3: Performance comparison of active prompting strategies on MS COCO natural images. Best and second-best\nentries are highlighted, and BALD-SAM (ours) is emphasized in bold. Dataset Strategy Peak Normalized ∆IoU Mean Normalized ∆IoU/Iter AUC",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 36,
+    "total_chunks": 46,
+    "char_count": 686,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3fa4f69c-2118-416c-8da8-3466cb829922",
+    "text": "Baseball bat BALD-SAM (ours) 0.6570 ± 0.1261 0.3462 ± 0.0575 0.3581\nORACLE 0.6094 ± 0.1169 0.2896 ± 0.0464 0.2933\nENTROPY 0.3891 ± 0.0915 0.1965 ± 0.0492 0.2041\nHUMAN 0.5100 ± 0.1544 0.3772 ± 0.1440 0.3873\nRANDOM 0.2174 ± 0.0059 0.1429 ± 0.0216 0.1429 Bird BALD-SAM (ours) 0.6189 ± 0.1584 0.3257 ± 0.1051 0.3212\nORACLE 0.3866 ± 0.0989 0.2534 ± 0.0258 0.2519\nENTROPY 0.6196 ± 0.1586 0.3338 ± 0.0908 0.3303\nHUMAN 0.3464 ± 0.1188 0.2475 ± 0.0525 0.2529\nRANDOM 0.3487 ± 0.0892 0.2572 ± 0.0700 0.2571 Bus BALD-SAM (ours) 0.2909 ± 0.1537 0.1992 ± 0.0417 0.2014\nORACLE 0.2873 ± 0.0386 0.2260 ± 0.0260 0.2281\nENTROPY 0.1940 ± 0.0563 0.1303 ± 0.0310 0.1270\nHUMAN 0.3159 ± 0.1114 0.2351 ± 0.0610 0.2390\nRANDOM 0.2030 ± 0.0364 0.1426 ± 0.0335 0.1433 Cat BALD-SAM (ours) 0.2460 ± 0.0229 0.2044 ± 0.0182 0.2066\nORACLE 0.2455 ± 0.0327 0.1985 ± 0.0126 0.2002\nENTROPY 0.2273 ± 0.0228 0.1760 ± 0.0179 0.1743\nHUMAN 0.2442 ± 0.0245 0.2106 ± 0.0106 0.2109\nRANDOM 0.1798 ± 0.0076 0.1616 ± 0.0097 0.1610 Clock BALD-SAM (ours) 0.6225 ± 0.4056 0.3894 ± 0.0508 0.3890\nORACLE 0.5343 ± 0.3752 0.3810 ± 0.0669 0.3851\nENTROPY 0.7373 ± 0.4803 0.4334 ± 0.0551 0.4321\nHUMAN 0.4930 ± 0.3482 0.2946 ± 0.1085 0.3007\nRANDOM 0.2851 ± 0.2743 0.1985 ± 0.0438 0.2006 Cow BALD-SAM (ours) 0.2495 ± 0.0589 0.2035 ± 0.0233 0.2074\nORACLE 0.2933 ± 0.0594 0.2028 ± 0.0233 0.2071\nENTROPY 0.2528 ± 0.0443 0.1987 ± 0.0417 0.1999\nHUMAN 0.2691 ± 0.0924 0.1693 ± 0.0373 0.1702\nRANDOM 0.2106 ± 0.0205 0.1682 ± 0.0277 0.1710 Dog BALD-SAM (ours) 0.8430 ± 0.0749 0.3515 ± 0.0320 0.3414\nORACLE 0.6034 ± 0.0684 0.3442 ± 0.0431 0.3520\nENTROPY 0.3141 ± 0.0499 0.2038 ± 0.0277 0.2087\nHUMAN 0.2478 ± 0.0686 0.2062 ± 0.0451 0.2072\nRANDOM 0.1962 ± 0.0108 0.1629 ± 0.0197 0.1626 Stop sign BALD-SAM (ours) 1.0000 ± 0.0976 0.3662 ± 0.0347 0.3495\nORACLE 0.2759 ± 0.0466 0.2165 ± 0.0088 0.2204\nENTROPY 0.3177 ± 0.0651 0.2139 ± 0.0436 0.2175\nHUMAN 0.3497 ± 0.1645 0.2901 ± 0.0718 0.2922\nRANDOM 1.0000 ± 0.0976 0.3591 ± 0.0386 0.3418 Tie BALD-SAM (ours) 0.3926 ± 0.0445 0.3179 ± 0.0354 0.3214\nORACLE 0.4504 ± 0.0343 0.3300 ± 0.0324 0.3363\nENTROPY 0.3749 ± 0.0428 0.2874 ± 0.0518 0.2924\nHUMAN 0.3802 ± 0.1471 0.2914 ± 0.0933 0.2954\nRANDOM 0.1987 ± 0.0290 0.1517 ± 0.0316 0.1532 Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS TABLE 4: Performance comparison of active prompting strategies on MS COCO natural images. Best and second-best\nentries are highlighted, and BALD-SAM (ours) is emphasized in bold.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 37,
+    "total_chunks": 46,
+    "char_count": 2455,
+    "word_count": 417,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6c0351a9-c640-45d8-8948-6211764eeab2",
+    "text": "Dataset Strategy Peak Normalized ∆IoU Mean Normalized ∆IoU/Iter AUC Breast BALD-SAM (ours) 0.3012 ± 0.0167 0.2636 ± 0.0111 0.2668\nORACLE 0.2313 ± 0.0145 0.2212 ± 0.0134 0.2229\nENTROPY 0.2556 ± 0.0095 0.2301 ± 0.0092 0.2327\nHUMAN 0.2121 ± 0.0292 0.1921 ± 0.0215 0.1927\nRANDOM 0.2719 ± 0.0227 0.2184 ± 0.0169 0.2225 Polyp BALD-SAM (ours) 0.4535 ± 0.0287 0.3937 ± 0.0248 0.3997\nORACLE 0.4431 ± 0.0172 0.3896 ± 0.0134 0.3956\nENTROPY 0.3743 ± 0.0103 0.3243 ± 0.0072 0.3281\nRANDOM 0.3970 ± 0.0222 0.3510 ± 0.0201 0.3571 Skin BALD-SAM (ours) 0.4589 ± 0.1422 0.3194 ± 0.0626 0.3202\nORACLE 0.3799 ± 0.1130 0.2867 ± 0.0275 0.2858\nENTROPY 0.3575 ± 0.0889 0.2787 ± 0.0587 0.2781\nHUMAN 0.2697 ± 0.0804 0.2281 ± 0.0066 0.2270\nRANDOM 0.2266 ± 0.0064 0.2213 ± 0.0031 0.2215 TABLE 5: Performance comparison of active prompting strategies on MS COCO natural images. Best and second-best\nentries are highlighted, and BALD-SAM (ours) is emphasized in bold.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 38,
+    "total_chunks": 46,
+    "char_count": 936,
+    "word_count": 153,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "75476647-009d-489b-9aa5-3edb4d5bc227",
+    "text": "Dataset Strategy Peak Normalized ∆IoU Mean Normalized ∆IoU/Iter AUC Dolphin above BALD-SAM (ours) 0.9013 ± 0.0715 0.4089 ± 0.0380 0.4273\nORACLE 0.2339 ± 0.0420 0.1784 ± 0.0237 0.1748\nENTROPY 0.2190 ± 0.0022 0.1349 ± 0.0406 0.1435\nHUMAN 0.2555 ± 0.2719 0.1360 ± 0.0566 0.1365\nRANDOM 0.2160 ± 0.0597 0.1646 ± 0.0761 0.1719 Dolphin below BALD-SAM (ours) 0.5531 ± 0.3085 0.3385 ± 0.0793 0.3425\nORACLE 0.2350 ± 0.0725 0.2181 ± 0.0058 0.2187\nENTROPY 0.4996 ± 0.0973 0.3190 ± 0.0376 0.3157\nHUMAN 0.3255 ± 0.1281 0.2644 ± 0.0671 0.2644\nRANDOM 0.2130 ± 0.0165 0.2035 ± 0.0053 0.2031 TABLE 6: Performance comparison of active prompting strategies on MS COCO natural images. Best and second-best\nentries are highlighted, and BALD-SAM (ours) is emphasized in bold",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 39,
+    "total_chunks": 46,
+    "char_count": 751,
+    "word_count": 121,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2d768234-ccbb-475b-9996-e6b2ed9878b4",
+    "text": "Dataset Strategy Peak Normalized ∆IoU Mean Normalized ∆IoU/Iter AUC Salt dome BALD 0.6254 ± 0.0155 0.4855 ± 0.0180 0.4929\nORACLE 0.7713 ± 0.0128 0.5497 ± 0.0194 0.5556\nENTROPY 0.4284 ± 0.0233 0.3371 ± 0.0195 0.3400\nHUMAN 0.1642 ± 0.0097 0.1642 ± 0.0097 0.1642\nRANDOM 0.5255 ± 0.0952 0.4311 ± 0.0703 0.4380 Chalk group BALD 0.5534 ± 0.0431 0.4376 ± 0.0340 0.4433\nORACLE 0.6757 ± 0.0124 0.4539 ± 0.0232 0.4563\nENTROPY 0.3793 ± 0.0656 0.2732 ± 0.0345 0.2733\nHUMAN 0.1666 ± 0.0001 0.1616 ± 0.0063 0.1615\nRANDOM 0.5390 ± 0.0844 0.4139 ± 0.0527 0.4187 Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS TABLE 7: Mean final IoU comparison across prompting strategies across datasets. Best and second-best performance per\ndataset are highlighted. BALD results are reported after at most 15 prompting rounds, or earlier when the mutual information\n(MI) reaches the stopping criteria. Category Human Random Saliency K-Medoids Entropy Max Dist Shi-Tomasi BALD-SAM",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 40,
+    "total_chunks": 46,
+    "char_count": 973,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d053e307-d1cf-4d2a-bd01-3e59fed96c19",
+    "text": "Baseball bat 0.747 ± 0.152 0.684 ± 0.198 0.422 ± 0.323 0.724 ± 0.172 0.653 ± 0.217 0.632 ± 0.249 0.701 ± 0.178 0.743 ± 0.175\nBird 0.677 ± 0.231 0.615 ± 0.222 0.308 ± 0.300 0.645 ± 0.212 0.483 ± 0.267 0.456 ± 0.296 0.620 ± 0.216 0.795 ± 0.167\nBus 0.803 ± 0.144 0.593 ± 0.196 0.158 ± 0.190 0.636 ± 0.172 0.359 ± 0.260 0.289 ± 0.277 0.548 ± 0.204 0.855 ± 0.190\nCat 0.887 ± 0.079 0.771 ± 0.149 0.487 ± 0.329 0.825 ± 0.108 0.583 ± 0.284 0.508 ± 0.342 0.795 ± 0.140 0.885 ± 0.105\nClock 0.814 ± 0.181 0.745 ± 0.209 0.432 ± 0.338 0.735 ± 0.205 0.680 ± 0.262 0.692 ± 0.265 0.715 ± 0.223 0.803 ± 0.226\nCow 0.808 ± 0.130 0.675 ± 0.189 0.321 ± 0.294 0.660 ± 0.185 0.423 ± 0.280 0.343 ± 0.314 0.646 ± 0.187 0.805 ± 0.198\nDog 0.848 ± 0.102 0.742 ± 0.166 0.436 ± 0.320 0.780 ± 0.135 0.544 ± 0.271 0.523 ± 0.317 0.745 ± 0.161 0.848 ± 0.162\nTie 0.700 ± 0.276 0.627 ± 0.292 0.368 ± 0.352 0.649 ± 0.289 0.569 ± 0.309 0.542 ± 0.337 0.646 ± 0.283 0.739 ± 0.277\nStop sign 0.886 ± 0.132 0.839 ± 0.169 0.550 ± 0.384 0.848 ± 0.158 0.773 ± 0.248 0.726 ± 0.314 0.640 ± 0.273 0.899 ± 0.136 Dolphin above 0.732 ± 0.100 0.642 ± 0.112 0.472 ± 0.249 0.655 ± 0.106 0.553 ± 0.176 0.543 ± 0.209 0.661 ± 0.099 0.705 ± 0.129\nDolphin below 0.831 ± 0.075 0.670 ± 0.135 0.391 ± 0.303 0.714 ± 0.114 0.473 ± 0.254 0.430 ± 0.315 0.681 ± 0.108 0.831 ± 0.124 Polyp 0.794 ± 0.145 0.747 ± 0.164 0.547 ± 0.326 0.757 ± 0.151 0.634 ± 0.290 0.415 ± 0.354 0.637 ± 0.246 0.810 ± 0.198\nSkin 0.593 ± 0.195 0.593 ± 0.196 0.375 ± 0.295 0.626 ± 0.154 0.452 ± 0.283 0.395 ± 0.317 0.515 ± 0.208 0.693 ± 0.230\nBreast 0.750 ± 0.126 0.621 ± 0.237 0.438 ± 0.336 0.674 ± 0.194 0.566 ± 0.286 0.532 ± 0.335 0.592 ± 0.305 0.610 ± 0.330 Salt dome 0.844 ± 0.096 0.513 ± 0.141 0.273 ± 0.177 0.588 ± 0.101 0.347 ± 0.197 0.306 ± 0.162 0.564 ± 0.111 0.205 ± 0.128\nChalk group 0.714 ± 0.101 0.409 ± 0.125 0.237 ± 0.135 0.441 ± 0.118 0.308 ± 0.143 0.299 ± 0.129 0.425 ± 0.121 0.340 ± 0.172",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 41,
+    "total_chunks": 46,
+    "char_count": 1913,
+    "word_count": 406,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ce0eb8f-6445-4861-91d4-6261eb4d5364",
+    "text": "Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS ACKNOWLEDGMENT [19] Ryan Benkert, Mohit Prabhushankar, and Ghassan AlRegib, \"Effective\nThis work is supported by ML4Seismic Industry Partners at data selection for seismic interpretation through disagreement,\" IEEE\nTransactions on Geoscience and Remote Sensing, vol. 62, pp. 1–12, 2024.\nthe Georgia Institute of Technology. [20] Jorge Quesada, Zoe Fowler, Mohammad Alotaibi, Mohit Prabhushankar,\nand Ghassan AlRegib, \"Benchmarking human and automated prompting\nin the segment anything model,\" in 2024 IEEE International Conference\nREFERENCES on Big Data (BigData). IEEE, 2024, pp. 1625–1634.\n[1] Guotai Wang, Wenqi Li, Maria A Zuluaga, Rosalind Pratt, Premal A [21] Jonathan Long, Evan Shelhamer, and Trevor Darrell, \"Fully convoluPatel, Michael Aertsen, Tom Doel, Anna L David, Jan Deprest, Sébastien tional networks for semantic segmentation,\" in Proceedings of the IEEE\nOurselin, et al., \"Interactive medical image segmentation using deep conference on computer vision and pattern recognition, 2015, pp. 3431–\nlearning with image-specific fine tuning,\" IEEE transactions on medical 3440.\nimaging, vol. 37, no. 7, pp. 1562–1573, 2018. [22] Olaf Ronneberger, Philipp Fischer, and Thomas Brox, \"U-net: Convo-\n[2] Anders U Waldeland, Are Charles Jensen, Leiv-J Gelius, and Anne lutional networks for biomedical image segmentation,\" in International\nH Schistad Solberg, \"Convolutional neural networks for automated Conference on Medical image computing and computer-assisted\nseismic interpretation,\" The Leading Edge, vol. 37, no. 7, pp. 529–537, intervention. Springer, 2015, pp. 234–241.\n2018. [23] Liang-Chieh Chen, George Papandreou, Florian Schroff, and Hartwig\n[3] Jorge Quesada, Chen Zhou, Prithwijit Chowdhury, Mohammad Alotaibi, Adam, \"Rethinking atrous convolution for semantic image segmentation,\"\nAhmad Mustafa, Yusufjon Kumakov, Mohit Prabhushankar, and Ghas- arXiv preprint arXiv:1706.05587, 2017.\nsan AlRegib, \"A large-scale benchmark on geological fault delineation [24] Hengshuang Zhao, Jianping Shi, Xiaojuan Qi, Xiaogang Wang, and Jiaya\nmodels: Domain shift, training dynamics, generalizability, evaluation, and Jia, \"Pyramid scene parsing network,\" in Proceedings of the IEEE\ninferential behavior,\" IEEE Access, vol. 13, pp. 215110–215131, 2025. conference on computer vision and pattern recognition, 2017, pp. 2881–\n[4] Malte Pedersen, Joakim Bruslund Haurum, Rikke Gade, and Thomas B 2890. Moeslund, \"Detection of marine animals in a new underwater dataset [25] Mark Everingham, Luc Van Gool, Christopher KI Williams, John Winn,\nwith varying visibility,\" in Proceedings of the IEEE/CVF conference on and Andrew Zisserman, \"The pascal visual object classes (voc) challenge,\"\ncomputer vision and pattern recognition workshops, 2019, pp. 18–26. International journal of computer vision, vol. 88, no. 2, pp. 303–338, 2010.\n[5] Tsung-Yi Lin, Michael Maire, Serge Belongie, James Hays, Pietro Perona, [26] Bolei Zhou, Hang Zhao, Xavier Puig, Sanja Fidler, Adela Barriuso, and\nDeva Ramanan, Piotr Dollár, and C Lawrence Zitnick, \"Microsoft coco: Antonio Torralba, \"Scene parsing through ade20k dataset,\" in Proceedings\nCommon objects in context,\" in European conference on computer vision. of the IEEE conference on computer vision and pattern recognition, 2017,\nSpringer, 2014, pp. 740–755. pp. 633–641.\n[6] Alexander Kirillov, Eric Mintun, Nikhila Ravi, Hanzi Mao, Chloe Rolland, [27] Fabian Isensee, Paul F Jaeger, Simon AA Kohl, Jens Petersen, and Klaus H\nLaura Gustafson, Tete Xiao, Spencer Whitehead, Alexander C Berg, Wan- Maier-Hein, \"nnu-net: a self-configuring method for deep learning-based\nYen Lo, et al., \"Segment anything,\" in Proceedings of the IEEE/CVF biomedical image segmentation,\" Nature methods, vol. 18, no. 2, pp. 203–\ninternational conference on computer vision, 2023, pp. 4015–4026. 211, 2021.\n[7] Junde Wu, Ziyue Wang, Mingxuan Hong, Wei Ji, Huazhu Fu, Yanwu Xu, [28] Yuchen Yuan, Lei Zhang, Lituan Wang, and Haiying Huang, \"MultiMin Xu, and Yueming Jin, \"Medical sam adapter: Adapting segment level attention network for retinal vessel segmentation,\" IEEE Journal of\nanything model for medical image segmentation,\" Medical image analysis, Biomedical and Health Informatics, vol. 26, no. 1, pp. 312–323, 2021.\nvol. 102, pp. 103547, 2025. [29] Xinming Wu, Luming Liang, Yunzhi Shi, and Sergey Fomel, \"Faultseg3d:\n[8] Simiao Ren, Francesco Luzi, Saad Lahrichi, Kaleb Kassaw, Leslie M Using synthetic data sets to train an end-to-end convolutional neural\nCollins, Kyle Bradbury, and Jordan M Malof, \"Segment anything, network for 3d seismic fault segmentation,\" Geophysics, vol. 84, no. 3,\nfrom space?,\" in Proceedings of the IEEE/CVF Winter Conference on pp. Applications of Computer Vision, 2024, pp. 8355–8365. [30] Xinming Wu, Zhicheng Geng, Yunzhi Shi, Nam Pham, Sergey Fomel, and\n[9] Zelin Wang, Zheng Wang, Yongsheng Li, Jianming Guo, and Yi Wu, Guillaume Caumon, \"Building realistic structure models to train convolu-\n\"Sam-parser: Fine-tuning sam efficiently by parameter space reconstruc- tional neural networks for seismic structural interpretation,\" Geophysics,\ntion,\" arXiv preprint arXiv:2308.14604, 2023. vol. 85, no. 4, pp. WA27–WA39, 2020.\n[10] Shilong Liu, Zhaoyang Zeng, Tianhe Ren, Feng Li, Hao Zhang, Jie Yang, [31] Ronald Kemker, Carl Salvaggio, and Christopher Kanan, \"Algorithms for\nQing Jiang, Chunyuan Li, Jianwei Yang, Hang Su, et al., \"Grounding dino: semantic segmentation of multispectral remote sensing imagery using deep\nMarrying dino with grounded pre-training for open-set object detection,\" learning,\" ISPRS journal of photogrammetry and remote sensing, vol. 145,\nin European conference on computer vision. Springer, 2024, pp. 38–55. pp. 60–77, 2018.\n[11] Jindong Gu, Zhen Han, Shuo Chen, Ahmad Beirami, Bailan He, Gengyuan [32] Emmanuel Maggiori, Yuliya Tarabalka, Guillaume Charpiat, and Pierre\nZhang, Ruotong Liao, Yao Qin, Volker Tresp, and Philip Torr, \"A Alliez, \"Convolutional neural networks for large-scale remote-sensing\nsystematic survey of prompt engineering on vision-language foundation image classification,\" IEEE Transactions on geoscience and remote\nmodels,\" arXiv preprint arXiv:2307.12980, 2023. sensing, vol. 55, no. 2, pp. 645–657, 2016.\n[12] Duojun Huang, Xinyu Xiong, Jie Ma, Jichang Li, Zequn Jie, Lin Ma, and [33] Xueyan Zou, Jianwei Yang, Hao Zhang, Feng Li, Linjie Li, Jianfeng Wang,\nGuanbin Li, \"Alignsam: Aligning segment anything model to open context Lijuan Wang, Jianfeng Gao, and Yong Jae Lee, \"Segment everything\nvia reinforcement learning,\" in Proceedings of the IEEE/CVF conference everywhere all at once,\" Advances in neural information processing\non computer vision and pattern recognition, 2024, pp. 3205–3215. systems, vol. 36, pp. 19769–19782, 2023.\n[13] Ryan Szeto and Jason J Corso, \"Click here: Human-localized keypoints [34] Feng Li, Hao Zhang, Peize Sun, Xueyan Zou, Shilong Liu, Chunyuan Li,\nas guidance for viewpoint estimation,\" in Proceedings of the IEEE Jianwei Yang, Lei Zhang, and Jianfeng Gao, \"Segment and recognize\nInternational Conference on Computer Vision, 2017, pp. 1595–1604. anything at any granularity,\" in European Conference on Computer Vision.\n[14] Jorge Quesada, Mohammad Alotaibi, Mohit Prabhushankar, and Ghassan Springer, 2024, pp. 467–484. AlRegib, \"Pointprompt: A multi-modal prompting dataset for segment [35] Xinlong Wang, Xiaosong Zhang, Yue Cao, Wen Wang, Chunhua Shen, and\nanything model,\" in Proceedings of the IEEE/CVF Conference on Tiejun Huang, \"Seggpt: Segmenting everything in context,\" arXiv preprint\nComputer Vision and Pattern Recognition, 2024, pp. 1604–1610. arXiv:2304.03284, 2023.\n[15] Burr Settles, \"Active learning literature survey,\" 2009. [36] Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weis-\n[16] Yarin Gal, Riashat Islam, and Zoubin Ghahramani, \"Deep bayesian senborn, Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias\nactive learning with image data,\" in International conference on machine Minderer, Georg Heigold, Sylvain Gelly, et al., \"An image is worth\nlearning. PMLR, 2017, pp. 1183–1192. 16x16 words: Transformers for image recognition at scale,\" arXiv preprint\n[17] Ozan Sener and Silvio Savarese, \"Active learning for convolutional neural arXiv:2010.11929, 2020.\nnetworks: A core-set approach,\" arXiv preprint arXiv:1708.00489, 2017. [37] Jun Ma, Yuting He, Feifei Li, Lin Han, Chenyu You, and Bo Wang,\n[18] Ryan Benkert, Mohit Prabhushankar, Ghassan AlRegib, Armin Pacharmi, \"Segment anything in medical images,\" Nature communications, vol. 15,\nand Enrique Corona, \"Gaussian switch sampling: a second-order approach no. 1, pp. 654, 2024.\nto active learning,\" IEEE Transactions on Artificial Intelligence, vol. 5, no. [38] Kaidong Zhang and Dong Liu, \"Customized segment anything model for\n1, pp. 38–50, 2023. medical image segmentation,\" arXiv preprint arXiv:2304.13785, 2023. Author et al.: Preparation of Papers for IEEE TRANSACTIONS and JOURNALS [39] Yuhao Huang, Xin Yang, Lian Liu, Han Zhou, Ao Chang, Xinrui Zhou, [58] Tao Zhou, Yizhe Zhang, Yi Zhou, Ye Wu, and Chen Gong, \"Can sam\nRusi Chen, Junxuan Yu, Jiongquan Chen, Chaoyu Chen, et al., \"Segment segment polyps?,\" arXiv preprint arXiv:2304.07583, 2023.\nanything model for medical images?,\" Medical Image Analysis, vol. 92, [59] Tobias Scheffer, Christian Decomain, and Stefan Wrobel, \"Active hidden\npp. 103061, 2024. markov models for information extraction,\" in International symposium\n[40] Shengrong Li, Changchun Yang, Hui Sun, and Hao Zhang, \"Seismic fault on intelligent data analysis. Springer, 2001, pp. 309–318.\ndetection using an encoder–decoder convolutional neural network with a [60] Claude Elwood Shannon, \"A mathematical theory of communication,\" The\nsmall training set,\" Journal of Geophysics and Engineering, vol. 16, no. 1, Bell system technical journal, vol. 27, no. 3, pp. 379–423, 1948.\npp. 175–189, 2019. [61] H Sebastian Seung, Manfred Opper, and Haim Sompolinsky, \"Query by\n[41] Enkai Zhang, Jingjing Liu, Anda Cao, Zhen Sun, Haofei Zhang, Huiqiong committee,\" in Proceedings of the fifth annual workshop on Computational\nWang, Li Sun, and Mingli Song, \"Rs-sam: Integrating multi-scale infor- learning theory, 1992, pp. 287–294.\nmation for enhanced remote sensing image segmentation,\" in Proceedings [62] Ryan Benkert, Mohit Prabhushankar, and Ghassan AlRegib, \"Targeting\nof the Asian Conference on Computer Vision, 2024, pp. 994–1010. negative flips in active learning using validation sets,\" in 2024 IEEE\n[42] Nikhila Ravi, Valentin Gabeur, Yuan-Ting Hu, Ronghang Hu, Chaitanya International Conference on Big Data (BigData). IEEE, 2024, pp. 820–\nRyali, Tengyu Ma, Haitham Khedr, Roman Rädle, Chloe Rolland, Laura 829.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 42,
+    "total_chunks": 46,
+    "char_count": 10781,
+    "word_count": 1529,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2b9c67ca-ebe3-4932-a1e2-4f4a42cc13ca",
+    "text": "Gustafson, et al., \"Sam 2: Segment anything in images and videos,\" arXiv [63] Jordan T Ash, Chicheng Zhang, Akshay Krishnamurthy, John Langford,\npreprint arXiv:2408.00714, 2024. and Alekh Agarwal, \"Deep batch active learning by diverse, uncertain\n[43] Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Fei Xia, gradient lower bounds,\" arXiv preprint arXiv:1906.03671, 2019. Ed Chi, Quoc V Le, Denny Zhou, et al., \"Chain-of-thought prompting elic- [64] Mohit Prabhushankar and Ghassan AlRegib, \"Introspective learning: A\nits reasoning in large language models,\" Advances in neural information two-stage approach for inference in neural networks,\" Advances in Neural\nprocessing systems, vol. 35, pp. 24824–24837, 2022. Information Processing Systems, vol. 35, pp. 12126–12140, 2022.\n[44] Tom Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared D [65] Kiran Kokilepersaud, Yash-Yee Logan, Ryan Benkert, Chen Zhou, Mohit\nKaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Prabhushankar, Ghassan AlRegib, Enrique Corona, Kunjan Singh, and\nSastry, Amanda Askell, et al., \"Language models are few-shot learners,\" Mostafa Parchami, \"Focal: A cost-aware video dataset for active learning,\"\nAdvances in neural information processing systems, vol. 33, pp. 1877– in 2023 IEEE International Conference on Big Data (BigData). IEEE,\n1901, 2020. 2023, pp. 1269–1278.\n[45] Long Ouyang, Jeffrey Wu, Xu Jiang, Diogo Almeida, Carroll Wainwright, [66] Zoe Fowler, Kiran Premdat Kokilepersaud, Mohit Prabhushankar, and\nPamela Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ghassan AlRegib, \"Clinical trial active learning,\" in Proceedings of\nRay, et al., \"Training language models to follow instructions with human the 14th ACM international conference on bioinformatics, computational\nfeedback,\" Advances in neural information processing systems, vol. 35, biology, and health informatics, 2023, pp. 1–10.\npp. 27730–27744, 2022. [67] Neil Houlsby, Ferenc Huszár, Zoubin Ghahramani, and Máté Lengyel,\n[46] Daniel Rose, Vaishnavi Himakunthala, Andy Ouyang, Ryan He, Alex Mei, \"Bayesian active learning for classification and preference learning,\" arXiv\nYujie Lu, Michael Saxon, Chinmay Sonar, Diba Mirza, and William Yang preprint arXiv:1112.5745, 2011. Wang, \"Visual chain of thought: bridging logical gaps with multimodal [68] Yarin Gal and Zoubin Ghahramani, \"Dropout as a bayesian approximainfillings,\" arXiv preprint arXiv:2305.02317, 2023. tion: Representing model uncertainty in deep learning,\" in international\n[47] Tim Brooks, Aleksander Holynski, and Alexei A Efros, \"Instructpix2pix: conference on machine learning. PMLR, 2016, pp. 1050–1059. Learning to follow image editing instructions,\" in Proceedings of the [69] William H Beluch, Tim Genewein, Andreas Nürnberger, and Jan M KöhIEEE/CVF conference on computer vision and pattern recognition, 2023, ler, \"The power of ensembles for active learning in image classification,\"\npp. 18392–18402. in Proceedings of the IEEE conference on computer vision and pattern\n[48] Shizhe Diao, Pengcheng Wang, Yong Lin, Rui Pan, Xiang Liu, and Tong recognition, 2018, pp. 9368–9377. Zhang, \"Active prompting with chain-of-thought for large language [70] Hippolyt Ritter, Aleksandar Botev, and David Barber, \"A scalable laplace\nmodels,\" in Proceedings of the 62nd Annual Meeting of the Association approximation for neural networks,\" in International conference on\nfor Computational Linguistics (Volume 1: Long Papers), 2024, pp. 1330– learning representations, 2018.\n1350. [71] Radek Mackowiak, Philip Lenz, Omair Ghori, Ferran Diego, Oliver Lange,\n[49] Renrui Zhang, Zhengkai Jiang, Ziyu Guo, Shilin Yan, Junting Pan, Hao and Carsten Rother, \"Cereals-cost-effective region-based active learning\nDong, Peng Gao, and Hongsheng Li, \"Personalize segment anything for semantic segmentation,\" arXiv preprint arXiv:1810.09726, 2018.\nmodel with one shot,\" arXiv preprint arXiv:2305.03048, 2023. [72] Chieh-Chi Kao, Teng-Yok Lee, Pradeep Sen, and Ming-Yu Liu,\n[50] Tianhe Ren, Shilong Liu, Ailing Zeng, Jing Lin, Kunchang Li, He Cao, \"Localization-aware active learning for object detection,\" in Asian\nJiayu Chen, Xinyu Huang, Yukang Chen, Feng Yan, et al., \"Grounded sam: Conference on Computer Vision. Springer, 2018, pp. 506–522. Assembling open-world models for diverse visual tasks,\" arXiv preprint [73] Lin Yang, Yizhe Zhang, Jianxu Chen, Siyuan Zhang, and Danny Z Chen,\narXiv:2401.14159, 2024. \"Suggestive annotation: A deep active learning framework for biomedical\n[51] Yang Liu, Muzhi Zhu, Hengtao Li, Hao Chen, Xinlong Wang, and Chun- image segmentation,\" in International conference on medical image\nhua Shen, \"Matcher: Segment anything with one shot using all-purpose computing and computer-assisted intervention. Springer, 2017, pp. 399–\nfeature matching,\" arXiv preprint arXiv:2305.13310, 2023. 407.\n[52] Keyan Chen, Chenyang Liu, Hao Chen, Haotian Zhang, Wenyuan Li, [74] Cameron Trotter, Georgia Atkinson, Matt Sharpe, Kirsten Richardson,\nZhengxia Zou, and Zhenwei Shi, \"Rsprompter: Learning to prompt for A Stephen McGough, Nick Wright, Ben Burville, and Per Berggren,\nremote sensing instance segmentation based on visual foundation model,\" \"Ndd20: A large-scale few-shot dolphin dataset for coarse and fine-grained\nIEEE Transactions on Geoscience and Remote Sensing, vol. 62, pp. 1–17, categorisation,\" arXiv preprint arXiv:2005.13359, 2020.\n2024. [75] Walid Al-Dhabyani, Mohammed Gomaa, Hussien Khaled, and Aly\n[53] Yichi Zhang and Rushi Jiao, \"How segment anything model (sam) boost Fahmy, \"Dataset of breast ultrasound images,\" Data in brief, vol. 28,\nmedical image segmentation: A survey,\" Available at SSRN 4495221, pp. 104863, 2020.\n2023. [76] Debesh Jha, Pia H Smedsrud, Michael A Riegler, Pål Halvorsen, Thomas\n[54] Maciej A Mazurowski, Haoyu Dong, Hanxue Gu, Jichen Yang, Nicholas De Lange, Dag Johansen, and Håvard D Johansen, \"Kvasir-seg: A\nKonz, and Yixin Zhang, \"Segment anything model for medical image segmented polyp dataset,\" in International conference on multimedia\nanalysis: an experimental study,\" Medical Image Analysis, vol. 89, pp. modeling. Springer, 2019, pp. 451–462.\n102918, 2023. [77] Noel CF Codella, David Gutman, M Emre Celebi, Brian Helba, Michael A\n[55] Yuheng Li, Mingzhe Hu, and Xiaofeng Yang, \"Polyp-sam: Transfer Marchetti, Stephen W Dusza, Aadi Kalloo, Konstantinos Liopyris, Nabin\nsam for polyp segmentation,\" in Medical imaging 2024: computer-aided Mishra, Harald Kittler, et al., \"Skin lesion analysis toward melanoma\ndiagnosis. SPIE, 2024, vol. 12927, pp. 749–754. detection: A challenge at the 2017 international symposium on biomedical\n[56] Yuqing Wang, Yun Zhao, and Linda Petzold, \"An empirical study on the imaging (isbi), hosted by the international skin imaging collaboration\nrobustness of the segment anything model (sam),\" Pattern Recognition, (isic),\" in 2018 IEEE 15th international symposium on biomedical imaging\nvol. 155, pp. 110685, 2024. (ISBI 2018). IEEE, 2018, pp. 168–172.\n[57] Xinru Shan and Chaoning Zhang, \"Robustness of segment anything model [78] Yazeed Alaudah, Patrycja Michałowicz, Motaz Alfarraj, and Ghassan\n(sam) for autonomous driving in adverse weather conditions,\" arXiv AlRegib, \"A machine-learning benchmark for facies classification,\"\npreprint arXiv:2306.13290, 2023. Interpretation, vol. 7, no. 3, pp.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 43,
+    "total_chunks": 46,
+    "char_count": 7358,
+    "word_count": 1024,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2902a72f-cb43-4995-89b7-6799a7f76350",
+    "text": "PRITHWIJIT CHOWDHURY received his\nB.Tech. degree from KIIT University, India, in\n2020. He joined the Georgia Institute of Technology as an M.S. student in the School of Electrical\nand Computer Engineering in 2021 and is currently pursuing his Ph.D. as a researcher in The\nCenter for Energy and Geo Processing (CeGP)\nand as a member of the Omni Lab for Intelligent\nVisual Engineering and Science (OLIVES). His\nresearch interests lie in digital signal and image\nprocessing and machine learning with applications to geophysics. He is\nan IEEE Student Member and a published author, with several works\npresented at the IMAGE conference, NeurIPS workshops and published in\nthe GEOPHYSICS journal. MOHIT PRABHUSHANKAR received his Ph.D.\ndegree in electrical engineering from the Georgia\nInstitute of Technology (Georgia Tech), Atlanta,\nGeorgia, 30332, USA, in 2021. He is currently\na Postdoctoral Research Fellow in the School\nof Electrical and Computer Engineering at the\nGeorgia Institute of Technology in the Omni Lab\nfor Intelligent Visual Engineering and Science\n(OLIVES). He is working in the fields of image processing, machine learning, active learning,\nhealthcare, and robust and explainable AI. He is the recipient of the Best\nPaper award at ICIP 2019 and Top Viewed Special Session Paper Award at\nICIP 2020. He is the recipient of the ECE Outstanding Graduate Teaching\nAward, the CSIP Research award, and of the Roger P Webb ECE Graduate\nResearch Assistant Excellence award,all in 2022. He has delivered short\ncourses and tutorials at IEEE IV'23, ICIP'23, BigData'23, WACV'24 and\nAAAI'24.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 45,
+    "total_chunks": 46,
+    "char_count": 1592,
+    "word_count": 249,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ed8d985-b291-48c0-a7df-8e3afaf73504",
+    "text": "GHASSAN ALREGIB is currently the John and\nMarilu McCarty Chair Professor in the School\nof Electrical and Computer Engineeringat the\nGeorgia Institute of Technology. In theOmni Lab\nfor Intelligent Visual Engineering and Science\n(OLIVES), he and his groupwork on robustand\ninterpretable machine learning algorithms, uncertainty and trust, and human in the loop algorithms. The group has demonstrated their work on\na widerange of applications such as Autonomous\nSystems, Medical Imaging, and Subsurface Imaging. The group isinterested\nin advancing the fundamentals as well as the deployment of such systems in\nreal-world scenarios. He has been issued several U.S.patents and invention\ndisclosures. He is a Fellow of the IEEE. AlRegib is active in the IEEE. He served on the editorial board of several transactions and served as the\nTPC Chair for ICIP 2020, ICIP 2024, and GlobalSIP 2014. He was area\neditor for the IEEE Signal Processing Magazine. In 2008, he received the\nECE Outstanding Junior Faculty Member Award. In 2017, he received the\n2017 Denning Faculty Award for Global Engagement.He received the 2024\nECE Distinguished Faculty Achievement Award at Georgia Tech. He and his\nstudents received the Best Paper Award in ICIP 2019and the 2023 EURASIP\nBest Paper Award for Image communication Journal. In addition, one of their\npapers is the best paper runner-up at BigData 2024. In 2024, he co-founded\nthe AI Makerspace at Georgia Tech, where any student and any community\nmember can access and utilize AI regardless of their background.",
+    "paper_id": "2603.10828",
+    "title": "BALD-SAM: Disagreement-based Active Prompting in Interactive Segmentation",
+    "authors": [
+      "Prithwijit Chowdhury",
+      "Mohit Prabhushankar",
+      "Ghassan AlRegib"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10828v1",
+    "chunk_index": 46,
+    "total_chunks": 46,
+    "char_count": 1540,
+    "word_count": 242,
+    "chunking_strategy": "semantic"
+  }
+]

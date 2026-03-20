@@ -1,0 +1,1085 @@
+[
+  {
+    "chunk_id": "596db422-8ae9-4cd6-aba4-550b03779dd0",
+    "text": "David Baumgartner∗, Helge Langseth, Heri Ramampiaro Department of Computer Science, Norwegian University of Science and Technology,\nTrondheim, Norway AbstractMar\nReal-world multivariate time series, particularly in critical infrastructure such\n12 as electrical power grids, are often corrupted by noise and anomalies that\ndegrade the performance of downstream tasks. Standard data cleaning approaches often rely on disjoint strategies, which involve detecting errors with\none model and imputing them with another. Such approaches can fail to\ncapture the full joint distribution of the data and ignore prediction uncer-[cs.AI]\ntainty. This work introduces Conditional Imputation and Noisy Data Integrity (CINDI), an unsupervised probabilistic framework designed to restore\ndata integrity in complex time series. Unlike fragmented approaches, CINDI\nunifies anomaly detection and imputation into a single end-to-end system\nbuilt on conditional normalizing flows. By modeling the exact conditional\nlikelihood of the data, the framework identifies low-probability segments and\niteratively samples statistically consistent replacements. This allows CINDI\nto efficiently reuse learned information while preserving the underlying physical and statistical properties of the system. We evaluate the framework\nusing real-world grid loss data from a Norwegian power distribution operator, though the methodology is designed to generalize to any multivariate\ntime series domain. The results demonstrate that CINDI yields robust per-arXiv:2603.11745v1 formance compared to competitive baselines, offering a scalable solution for\nmaintaining reliability in noisy environments. Keywords:\nConditional Normalizing Flows, Probabilistic Imputation, Multivariate ∗Corresponding author\nEmail address: david.baumgartner@ntnu.no (David Baumgartner) Time Series, Anomaly Detection, Smart Grids Accurately forecasting key values in modern electrical power grids, such\nas grid loss, is a growing challenge with direct financial implications.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 1,
+    "total_chunks": 57,
+    "char_count": 2014,
+    "word_count": 259,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6611cd00-1304-432d-86e3-a0e3265551fc",
+    "text": "In markets like the Nord Pool exchange, power distribution operators must report\nprecise loss estimates to determine pricing and manage risk.1 Grid losses\nare well understood and can be calculated with precision when the grid's\nconfiguration is known. However, the grid configuration is often unclear or\nevolving, making it a difficult task to compute losses. Further complications\nexist from stochasticity, the increasing share of renewable energy, changes in\nconsumer demand, and inherent issues with data quality [1, 2]. Consequently,\npower distribution operators increasingly rely on machine learning models to\npredict these values. However, the reliability of these predictive models is\nstrictly bound by the quality of their training data. This creates a significant bottleneck, as real-world time series data is\nfrequently corrupted by sensor malfunctions, transmission errors, and noise. These result from equipment malfunctions or data processing issues [3, 4]. Crucially, this data should not be cleaned using rudimentary, interpolationbased approaches. To be useful for downstream tasks, any cleaning process\nshould preserve the underlying physical and statistical properties hidden in\nthe data. This must be achieved while correcting corrupted observations. Standard approaches often treat anomaly detection and data imputation\nas separate, disjoint tasks [5, 6]. These methods typically rely on distinct\nmodels, limiting their ability to capture the full joint distribution of the\ndata. This fragmentation limits the model's ability to distinguish between\ngenuine system anomalies and mere data errors [7, 8, 3]. To address this, we propose Conditional Imputation and Noisy Data Integrity (CINDI), a unified framework that integrates detection, correction,\nand training into a single end-to-end system. Unlike methods that rely on\nfragmented architectures, CINDI utilizes a single conditional normalizing\nflow to model the data distribution of expected grid behavior [9, 10].",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 2,
+    "total_chunks": 57,
+    "char_count": 1988,
+    "word_count": 284,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b3319e38-0a3e-4097-bfff-d0f7c6296333",
+    "text": "By\nlearning the exact likelihoods of the data, CINDI can identify low-probability\nsegments (anomalies) and generate plausible, statistically consistent replace- 1See www.nordpoolgroup.com",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 3,
+    "total_chunks": 57,
+    "char_count": 187,
+    "word_count": 22,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "66e4e7f9-077d-483b-8f5c-c5187d823a34",
+    "text": "ments (imputation) in an iterative process. Fig. 1 provides a high-level\noverview of our iterative approach. By treating the tasks of detection and correction as intrinsic parts of\nthe probability modeling process, rather than external preprocessing steps,\nCINDI reuses learned information efficiently [11, 12, 13]. This yields a cleaner,\nmore stable dataset that retains the statistical integrity required for highstakes forecasting. Our experiments demonstrate that this unified, flowbased approach provides a competitive and robust solution for maintaining\ndata integrity in complex, multivariate time series. Fix relevant data\nif possible Train on current data Figure 1: Overview of our CINDI framework based on normalizing flows.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 4,
+    "total_chunks": 57,
+    "char_count": 734,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0bd71948-bbe4-4505-9a7e-c48400283238",
+    "text": "The framework\nalternates between the two states (green and blue), indicated by the orange path, of\ntraining and data improvement until convergence. At this point, no further changes are\nmade, and an improved dataset is available, as indicated by the black dotted path. In the\ngreen state, CINDI uses the current dataset and outputs a normalizing flow model. The\nfollowing blue state uses this model to identify data points that deviate from the expected\nbehavior and then corrects them by generating plausible replacements. This process leads\nto convergence away from detecting unexpected behavior, resulting in improved data for\nanother task.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 5,
+    "total_chunks": 57,
+    "char_count": 643,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1561995d-fa08-4b1e-827e-fdafadfe57a4",
+    "text": "contributions are as follows: • CINDI, a novel end-to-end probabilistic framework that detects and\nremoves dataset errors by modeling temporal dependencies in multi- variate time series data, utilizing a single conditional normalizing flow\nmodel for different tasks. • We apply CINDI to a real-world dataset from a Norwegian power distribution operator to demonstrate its practical applicability, and it is\nnot limited to this dataset. • We conduct extensive experiments and compare our results with those\nof standard methods, including recent model-based approaches.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 6,
+    "total_chunks": 57,
+    "char_count": 567,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7a169f9c-a04e-41b5-b3bf-f1b528d6eda2",
+    "text": "The remainder of the paper is organized as follows: Section 2 reviews\nrelated work, followed by Section 3, which details the proposed framework\nand the necessary background. Next, Section 4 describes the datasets, while\nSection 5 presents the experimental setup and results. Finally, Section 6\nreflects on the findings, and Section 7 concludes the paper.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 7,
+    "total_chunks": 57,
+    "char_count": 354,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d869aba4-8bb7-46f9-8c11-270a4000a001",
+    "text": "Learning from noisy data\nOur work is related to learning from data with noise (we use noise equal\nto error and anomalies in this context), which is an issue in any machine\nlearning task [14, 15, 16]. These works consider supervised learning and assume relatively balanced label classes. This differs significantly from anomaly\ndetection, where errors are rare occurrences that create heavily unbalanced\ndatasets. Several studies [17, 18, 19] show that noisy labels give rise to\nhard-to-learn examples and seek to improve classification performance by\nexplicitly constraining the model on such difficult data. These approaches\nneed to be tested and verified for anomaly detection, as anomalies are rare\noccurrences, which gives them less weight in the overall contribution to a\nmodel, but requires labeled data. Multivariate Time Series Imputation\nMotivated by the intuition that imputing time series adds valuable knowledge to a dataset, recent works have investigated using diffusion models,\ntransformers, and attention mechanisms [4]. Xiao et al. [20] and Chen et al.\n[21] both follow a diffusion approach. The former utilizes a multi-scale temporal state-space layer, while the latter restricts imputation diversity through negative entropy regularization. Extensions to transformer models are presented by Gudla and Chang [22], Wang et al. [23], and Liu et al. [24]. Common strategies include fusing transformers with different local and global\npathways, incorporating spectral information, and adding graph neural networks to model interconnections. Attention-based methods from Zhang et al.\n[25], Oh et al. [26], and Islam et al. [27] incorporate contrastive properties,\nutilizing bi-directional generative adversarial networks, or combining various\nattention types. All of these unite a technical aspect in that they introduce\ndifferent add-ons or regularization to the underlying base method.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 8,
+    "total_chunks": 57,
+    "char_count": 1900,
+    "word_count": 278,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8fb1b0d5-d50e-403c-996c-d25c06273587",
+    "text": "Hemmer and Durstewitz [28] builds on pre-training a mixture-of-experts\nmodel with a novel multivariate almost-linear RNN architecture for dynamical system reconstruction, yielding faithful forecasts and outperforming existing foundation models, such as Chronos [29], in zero-shot performance. Seifner et al. [30] propose, on the other hand, a mathematical approach using ordinary differential equations to construct functions for imputing data,\nshowing promising zero-shot performance without fine-tuning. These pretrained models can possess a solid abstraction from well-curated data, providing stability, especially as error levels increase in the data. CINDI: Conditional Imputation and Noisy Data Integrity Building on the foundation presented in the introduction (Section 1), we\npropose CINDI, a probabilistic end-to-end framework designed to address\nthe challenges discussed in that section by leveraging conditional normalizing flows. CINDI systematically detects unusual or corrupted measurements\nand generates plausible replacements.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 9,
+    "total_chunks": 57,
+    "char_count": 1042,
+    "word_count": 134,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8ae3d3fe-c416-4a6f-9f60-346e1345eb2b",
+    "text": "Most prominently, we use one model\nper iteration for different tasks within our framework. This provides a good\nfoundation for ensuring reliable learning and reusing learned expected behavior to improve a dataset. This section outlines the system's core principles,\nemphasizing its adaptation to multivariate time series and its potential to\nenhance datasets, thereby improving downstream tasks such as anomaly detection and analysis. Background\nCINDI uses normalizing flows [9], a generative probabilistic model. Normalizing flows are density estimators that learn a data distribution by learning a sequence of transformations that map the data to a known distribution. Normalizing flows can both calculate the log-likelihood (log p(x), normalizing) and sample (x ∼p, generate) efficiently. They are bijective transformers\nand require a tractable Jacobian determinant per transformation. We denote\nthe normalizing and likelihood of a data point x as pZ(z = F(x)) and the\ngeneration of a data point x = F −1(z). With multivariate time series data, we utilize conditioned normalizing\nflows [31], based on RealNVP [32], which enables us to capture sequential\nbehavior. We use RealNVP due to its efficiency in both operation modes\nand its extensibility. The inputs to the conditioned normalizing flow are the\ncurrent observation and a temporal context as defined below. We refer to a multivariate time series as a sequence {xt}Tt=1, where each\nxt ∈Rd is a d-dimensional vector of variables observed at time t, with d ≥2. Associated with the time series is a vector l = (l1, l2, . . . , lT), which is a\nsequence of binary values of the same length. For each t ∈{1, . . . , T},\nlt ∈{0, 1} indicates whether the observation at time t is a possible error\nor expected behavior; specifically, lt = 1 denotes a possible error (anomalous\nevent), while lt = 0 indicates normal behavior. Given the multivariate time\nseries, we define a windowed sequence with window length k (where k is a hyperparameter) as X = {(xt, wt)}Tt=k = {(xt, xt−1, . . . , xt−k)}Tt=k, where each\ntuple contains the current observation at time t and the k preceding observations as temporal context.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 10,
+    "total_chunks": 57,
+    "char_count": 2161,
+    "word_count": 353,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b4e57358-d3f3-4598-ade3-a7fb16025d6e",
+    "text": "We adopt the following short notation of the\ncurrent observation as xt and the temporal context as wt. The inputs to the\nconditioned normalizing flow are the current observation and the temporal\ncontext, serving as the conditioning. We train the normalizing flow unsupervised using negative log-likelihood\noptimization via the loss function L(X) = −1 PTt=1 log(pX(xt|wt)), where T\nxt depends on wt. Since pX(·) is an unknown data distribution, we resort to\na normal distribution as the base distribution pZ(·) with µ = 0 and Σ = I,\nas the normalization target distribution for the normalizing flow. The full\nloss function with the change-of-variable formula is written as T \" N #\nL(X) = −1 X log pZ(Fθ(xt|wt)) + X log | det J(Fθ,i)(xt,i|wt)| , (1)\nt=1 i=1 where NFθ is a conditional normalizing flow with parameters θ and temporal\ncontext as additional condition wt. N denotes the number of transformation\nlayers with Fθ,i being the ith transformation layer. The Jacobian of one such\nlayer is with respect to the input xt,i and the temporal context wt.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 11,
+    "total_chunks": 57,
+    "char_count": 1052,
+    "word_count": 177,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b1d7c241-5b9d-4d18-9e63-fb94f0f03bb7",
+    "text": "CINDI is independent of downstream tasks and focuses on improving\ndata quality. The improved data can then be further utilized for different\ndownstream tasks with or without reapplying parts of CINDI. The following\nsections introduce the various building blocks and their inner workings that\ncomprise CINDI. CINDI: Detection\nGiven that CINDI is built around conditional normalizing flows, we utilize\nits probabilistic capabilities to calculate the likelihoods of any data point. Therefore, we compare the negative log-likelihood of data points to an average\nobtained from known expected data points. If the negative log-likelihood is\nsignificantly higher than expected, then these data points get flagged. Hence,\nwe define the threshold τ as the average likelihood plus twice the standard\ndeviation of J expected data points with X(J,0) := {(xt, wt) : lt = 0 ∈\nl} ⊂X. At test time, a data point or a collection of data points gets\nflagged as detected and therefore marked for imputation if the expectation\nor the expected average over multiple data points exceeds the threshold τ >\nE(xt|wt). CINDI: Imputation\nCINDI uses the generative functionality of the conditional normalizing\nflow at its core to generate plausible replacements. It enables us to generate\nnew data points by sampling from the base distribution or by selecting a\npoint in the latent space and applying the inverse conditional normalizing\nflow, referred to as F −1. We obtain data point by ˆxt = F −1(zt, wt), with zt being the center of\nthe base distribution pZ(zt = µ, Σ). To impute a sequence of data points,\nthe generation process is the same as for a single data point, but the temporal context wt needs to be updated. The first temporal context is sourced\nfrom the original data and should contain only expected behavior. Every\nsubsequent imputation step requires updating the temporal context with the\ncurrent generated data point ˆxt, as wt+1 = (ˆxt, xt−1, . . . , xt−k+1) for the next\nstep. This results in a self-regressive chain and the generation of an alternative sub-sequence for a flagged section.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 12,
+    "total_chunks": 57,
+    "char_count": 2081,
+    "word_count": 341,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "48e30dac-810d-4a0a-903b-5c4ec469cc71",
+    "text": "We sample from zt = µ, because it\nis the most likely point in the distribution, and with the temporal context,\nit should produce the most likely expected observation in the data space.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 13,
+    "total_chunks": 57,
+    "char_count": 184,
+    "word_count": 33,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "875a3e9a-4484-4c9b-946a-f2ef2f992368",
+    "text": "CINDI: Model Selection\nThe model selection process in CINDI is responsible for training multiple models and selecting the one that best fits the given requirements. To\nautomatically find a suitable model for a training set X(train), we use CMAES [33], an evolutionary algorithm, to search the hyperparameter space to\nfind a fitting candidate. Based on the available data, the model selection\nprocess needs a function to rank all the candidates. We provide two functions tailored to the datasets in Section 4. The primary objective function is\nϕ, see Eq. 2, and is used for the real-world dataset. It requires an evaluation\nset X(eval) = {(xu, wu)}Uu with labels l(eval) = {lu ∈{0, 1}}Uu , which is independent or non-overlapping with the training data. The objective function\nevaluates a candidate on a balance between detecting the labeled areas via\nthe AUC-ROC (AUC) and VUS-ROC [34] (VUS) metrics, and in being able\nto reconstruct expected behavior where lt = 0 ∈l(eval). ϕ(X(eval), l(eval), M, S) = 0.3 · (1 −AUC(l(eval), Fθ(X(eval))))\n+ 0.7 · (1 −VUS(l(eval), Fθ(X(eval)))) (2)\n+ ∆(X(eval,0), M, S), where the model performance is based on the evaluation set and is lower\nbounded by 0, which would imply a perfect detection and reconstruction. The VUS score receives more weight in the scoring because of its strong\ncapability in scoring range detections compared to point detection in AUC.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 14,
+    "total_chunks": 57,
+    "char_count": 1395,
+    "word_count": 228,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "59b7cc70-2f53-4914-8cf6-f6ecdc1528e3",
+    "text": "We refer to clean data for the reconstruction metric as X(eval,0) := {(xt, wt) :\nlt = 0 ∈l(eval)} ⊂X(eval) and define the reconstruction metric as M S−1\n1 −1 2 ∆(X(eval,0), M, S) = X X xm+s −Fθ (zm+s|wm+s) , (3) |M| · S\nm s=0 where we calculate the mean reconstruction error from M := {u ∈U} subsets\nof length S. The set M contains starting points and remains fixed for all\ncandidates to ensure comparability. Next, the normalizing flow is run in\ninverse and generates new data points ˆxm+s from zm+s = µ starting with\nwm+0 from X(eval,0) as the initial temporal context. We update this temporal\ncontext wm+s for each s > 0 continuously with the previous predictions ˆxm+s,\nas in Section 3.3, and create a self-regressive chain. This allows us to calculate\na reconstruction metric that is lower bounded by 0 and reflects the model's understanding of expected behavior in a noisy environment, confirming that\nit remains stable over a period of steps.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 15,
+    "total_chunks": 57,
+    "char_count": 949,
+    "word_count": 168,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "332f6471-8340-4e9a-bd22-27c3caba8bec",
+    "text": "The second objective function ψ, see Eq. 4, is for cases when the evaluation set has no associated labels. The objective function uses, therefore, two\nnegative log-likelihood scores and the reconstruction metric in Eq. 3 and is\ndefined as ψ(X(val), X(eval), M, S) = λ · |X(val)|pZ(NFθ(X(val)))\n1 (4)\n+ β · |X(eval)|pZ(Fθ(X(eval)))\n+ ∆(X(eval), M, S),",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 16,
+    "total_chunks": 57,
+    "char_count": 350,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "92b2f358-912c-441a-8037-505bab029d33",
+    "text": "where X(val) is a hold-out validation set from the training data X(train) for\nearly-stopping the training optimization and to prevent overfitting. This\nobjective function calculates the average negative log-likelihoods from the\nvalidation and evaluation set, and weights them by λ and β, and includes the\nreconstruction score. The weighting factors in Eq. 4 are λ = 0.1 and β = 0.5\nfor sequences with D ≤10. This needs adjustment for sequences with higher\ndimensions and sequence lengths to weight and balance the different factors\naccordingly.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 17,
+    "total_chunks": 57,
+    "char_count": 544,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e4d9d29b-579d-4f8f-9ce1-71dec953afee",
+    "text": "Grid Loss Data\nThis work addresses the challenge of accurately predicting day-ahead grid\nloss, a critical task for power distribution operators. One important obstacle to reliable prediction is sometimes poor data quality. Our goal is to\ndemonstrate, using CINDI, that improving the input data can enhance the\nperformance of downstream tasks.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 18,
+    "total_chunks": 57,
+    "char_count": 342,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "796f9b25-572d-4714-bc1d-82bdcc8650f9",
+    "text": "To achieve this, we utilize an extended\ndataset of the grid loss prediction dataset [35], which covers hourly power\nconsumption and grid loss measurements from May 2017 to August 2023. While technical grid losses from physical effects like ohmic and corona\nlosses are understood [2], their practical prediction is often inaccurate, and\naccurate measurements are not available or delayed to be included for a\nprediction. This inaccuracy is not due to a lack of models, but rather due\nto deficiencies in the data itself. Faulty sensors, human error, and other unrecorded factors introduce significant errors, which undermine prediction\nperformance. The severity of this data quality issue is evident in the grid loss measurements, as shown in Fig. 2 with the marked error sections. In contrast\nto the relatively clean power consumption data, the grid loss signal exhibits\nincreased noise levels, particularly during the summer months following April\n2020.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 19,
+    "total_chunks": 57,
+    "char_count": 953,
+    "word_count": 148,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5524e6e1-4971-45d1-9220-4a8e14a9858f",
+    "text": "These extended error periods, manually flagged by inspection, begin\nand end in alignment with daylight saving time changes, as visible in the two\nplots on the bottom right of Fig. 2. This systematic noise in the grid loss\ndata is the central problem we aim to address, as cleaner data is essential for\nimproving the accuracy of day-ahead loss predictions. We divide the dataset into three main sections to validate our approach. The first section acts as the training set where we apply CINDI to iteratively detect and impute errors as detailed in Section 3. The second section\nfunctions as an evaluation set for ranking candidate solutions during model\nselection. After improving the data quality of the first section, we use the\nthird section solely as a test set to measure downstream anomaly detection\nperformance. This process fulfills the primary objective of CINDI by producing the clean data required to train robust downstream models [12, 36]. We create four different sets of training data D1, . . . , D4 with increasing\nlevels of errors, starting at 0% and ending at 24.19%, such that D1 ⊆· · · ⊆\nD4, where D4 is the largest training set and each smaller set is a subset of all\nsubsequent larger sets. Table 1 summarizes the date ranges for each partition\nand shows the different levels of errors present in each set. Table 1: Overview of the dataset splits, detailing their time ranges and the percentage of\ndata points flagged as errors. Name Start Date End Date Error % Length D1 Train (0%) 2019-03-17 0.00% 16461\nD2 Train (1.04%) 2020-05-03 1.04% 26370\n2017-05-01\nD3 Train (13.69%) 2020-10-15 13.69% 30330\nD4 Train (24.19%) 2021-10-21 24.19% 39233 Evaluation 2022-01-06 2022-07-01 56.72% 4224\nTest 2022-11-01 2023-08-25 52.25% 7149",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 20,
+    "total_chunks": 57,
+    "char_count": 1746,
+    "word_count": 292,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5e9082eb-d21e-4563-a8aa-ef66b935a986",
+    "text": "Measured dynamics in power grid Full dataset\nLoss\nConsumption MWh 4020 Errors\n0 Summer/Winter time\n2018 2019 2020 2021 2022 2023 20 Summer time start\nMWh 1510 Winter time start\n2018 2019 2020 2021 2022 2023\nExpected Time (h) Unexpected\nMWh 3020 MWh 3020\n10 10\nMar 17 Mar 24 Mar 31 Apr 7 Mar 14 Mar 21 Mar 28 Apr 4 Apr 11\n2019 2021\n8 6\n7 5\n6 MWh 5 MWh 4\n4 3\nMar 17 Mar 24 Mar 31 Apr 7 Mar 14 Mar 21 Mar 28 Apr 4 Apr 11\n2019 2021 Figure 2: Comparing expected (left) and unexpected (right) behavior in power grid measurements, showing both grid loss and power consumption. The top row displays the full\ntime series, while the bottom row zooms in on specific sections for a closer look. The\nexpected behavior on the left is mostly normal with a few unusual spikes. In contrast, the\nbehavior on the right starts normally but then shifts to consistently unusual readings, a\nchange that coincides with the start of daylight saving time.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 21,
+    "total_chunks": 57,
+    "char_count": 929,
+    "word_count": 179,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "503396ba-bad7-47a4-bd16-fdbb4eac0fea",
+    "text": "Synthetic Evaluation Data\nFor a controlled validation of our approach, we use the Fully Synthetic\nBenchmark suite (FSB) from the mTADS repository [37]. The FSB provides\na testbed of 70 synthetic sequences with a range of base signals and different\ntypes of anomalies. This setup allows us to evaluate the model's performance\non problems where the data and anomalies are fully defined and controlled. FSB contains per synthetic sequence a training sequence with and without\nanomalies, plus a sequence for testing with anomalies. Essentially, we are using the training sequences with anomalies for training and the sequence without anomalies as the evaluation sequence. This means we have no anomaly\nlabels for the evaluation sequence and can not utilize the main objective function from Eq. 2. Instead, we use the objective in Eq. 4 for model selection. In this section, we present experiments to evaluate the performance of the\nproposed CINDI framework. The code and experiment results are available\nonline2. All experiments were conducted on a computing cluster equipped\nwith various GPUs, ranging from P100 to H100.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 22,
+    "total_chunks": 57,
+    "char_count": 1117,
+    "word_count": 176,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "11d45649-f4e2-492e-9eef-4a819803c246",
+    "text": "CINDI, described in Section 3, can be applied to improve a dataset. The enhanced dataset is subsequently employed in a specific downstream\ntask, utilizing either CINDI's conditional normalizing flow or an alternative\nmethod. Here, we focus on anomaly detection with CINDI, aiming to identify\nmarked errors in the test set after enhancing the training dataset. We adopt\nthe definition for anomaly detection from Chandola et al. [38], referring to it\nas \"the problem of finding patterns in data that do not conform to expected or\nnormal behavior\". This definition emphasizes the importance of understanding expected behavior to distinguish patterns that do not align with these\nexpectations and is also relevant for error imputations. We report the results\nusing F1, VUS, and AUC metrics on the test set. Both VUS and AUC are\nnon-parametric, and the F1 threshold is set based on the intersection of the\nAUC-ROC curve with the diagonal.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 23,
+    "total_chunks": 57,
+    "char_count": 933,
+    "word_count": 150,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7d9e79d4-2866-47dc-8b0f-efd245cd68b5",
+    "text": "Setup\nThe experiment setup for the results is as follows, and we test the imputation fulfillment indirectly via the anomaly detection downstream task. We\nnormalize each set of data (train, evaluation, test) based on the training data\nfrom which we derive the normalization factors. The training data is divided\ninto training and validation sets in a 80 : 20 split, where five random sections\nare selected and expanded to make up 20% for validation. CINDI is tested\nagainst several baseline methods for imputing the errors, which are treated\nas missing values in this case. We use the following methods 3: 'cubic', 'cubicspline', 'linear', 'nearest', 'quadratic', and 'slinear'.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 24,
+    "total_chunks": 57,
+    "char_count": 677,
+    "word_count": 107,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "190f0ac1-5127-4c9c-96c5-a2f75279a60e",
+    "text": "We further test with\nand without errors in the training data, referred to as 'raw' and 'skip', respectively. In addition, we test with the following model-based imputation\nmethods: 'dynamix' [28] and 'knowimp' [21]. With model-based methods, we 2See https://github.com/2er0/CINDI\n3See https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.\ninterpolate.html",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 25,
+    "total_chunks": 57,
+    "char_count": 364,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8a72c5f5-7b72-4768-94de-7adab9c98f3f",
+    "text": "impute one error section at a time, providing each method with a temporal\ncontext of 150 days to predict an imputation of the required length. We use the conditional normalizing flow in CINDI for the anomaly detection task independently of the imputation method; therefore, we test the\nbenefit of improving the training data indirectly. Using CINDI's strategy for\nmodel selection in every scenario ensures fair anomaly detection capabilities,\neven with different versions of the imputed dataset. For the final downstream task, we utilize the model selection function described in Section 3.4,\nomitting the reconstruction term to focus solely on anomaly detection. For the conditional normalizing flow, we test with three different encoder\ntypes to utilize the temporal context: 'base', 'MLP', and 'CNN'. The base\nversion does no encoding and passes the temporal context information on\nwithout processing. The MLP and CNN versions utilize a single model to\nencode the temporal context before passing it on to all transformation layers,\nemploying an amortized approach.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 26,
+    "total_chunks": 57,
+    "char_count": 1067,
+    "word_count": 163,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "08d2bb4a-d3af-41f4-9637-5e47af747fa1",
+    "text": "Results in Tab. 2 are based on the model selection process. Fig. 3 further contains in the box plots the range of performances discovered during\nthis search. The reported max performance is derived from all steps on the\ntraining dataset, including imputation and detection. Results: Grid Loss Data\nThe analysis of the results highlighted that CINDI can improve a dataset\nup to a certain percentage of errors, in our case, up to 13.69%, as shown\nin Table 2, which summarizes all downstream results. For CINDI, we show\nboth final and maximum performance across iterations. This demonstrates\nthat any model evaluated during the iterative process can be tested for its\ndownstream performance, sometimes performing well even if not explicitly\ntargeted for that task. For all other methods, the results reflect the best\nmodel identified through the model selection process. We do not report results on the training set D1 with 0% errors in Table 2,\nas no imputation is needed in this case and only the anomaly detection task\nis relevant.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 27,
+    "total_chunks": 57,
+    "char_count": 1031,
+    "word_count": 170,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "63bdc538-9d48-4c06-929d-f3db84b17a55",
+    "text": "For these cases, we provide the average and standard deviation\nacross all experiments. The average results are: F1 score of 89% ± 4%, VUS\nof 93% ± 5%, and AUC of 93% ± 5%. Fig. 3 shows the results at an error level of 1.04%. Further figures for\nhigher error levels (13.69% and 24.19%) and F1 scores are provided in Appendix Appendix A and in our repository.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 28,
+    "total_chunks": 57,
+    "char_count": 357,
+    "word_count": 67,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e31e976f-69d9-4a41-aed3-400bb534e46c",
+    "text": "In each plot, the solid lines (left)\nand scatter points (right) represent the anomaly detection performance using In contrast, the box plots show the performance ranges of\nall evaluated candidates. This demonstrates that the model selection process\nexplores many options and that the chosen model achieves good performance\non the evaluation set and the test set.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 29,
+    "total_chunks": 57,
+    "char_count": 362,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dd32b6d5-1652-47e0-90dd-32d893e918e4",
+    "text": "CINDI framework with anomaly detection test scores Alternative methods with anomaly detection test scores\n1.0 0.2\nModel Type Model Type\n0.0 Base CNN MLP Base CNN MLP 0 1 2 3 4\nIteration 5 6 7 8 9 10 11 NearestLinearSLinearQuadraticCubicSpline Skip TrainDynamixKnowImp Cubic\nMethod name Figure 3: VUS performance results for CINDI and baselines with 1.04% errors in the\ntraining data. Points are the final model performance after model selection, and box plots\nshow all the tested candidate solutions.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 30,
+    "total_chunks": 57,
+    "char_count": 500,
+    "word_count": 80,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "da741d2e-5c42-4ca8-9ea3-1986d366fa30",
+    "text": "Fig. 4 and Fig. 5 show CINDI's imputation in the second iteration on\nthe training data. Fig. 4(a) and (b) show two flagged sections being imputed. Where Fig. 4(a) results in natural-looking sequences, while plot (b)\nreveals some uncertainty, especially after the first few steps. In Fig. 4(a),\nthe heatmap displays the most likely imputation path, which is less clear in\nFig. 4(b) with the increased uncertainty. Fig. 5(a) shows the reconstruction of seven two-day long sections.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 31,
+    "total_chunks": 57,
+    "char_count": 479,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "47c8f386-b48f-485f-bdba-dde4a66a59d5",
+    "text": "Here,\nthe model generally captures expected behavior, with only minor deviations,\nsuch as the omission of slight variations in complex regions. Overall, the\nreconstruction closely matches the data, therefore performing well in selfregression forecasting. Fig. 5(b) and (c) show the anomaly detection downstream task if this\nspecific model had been chosen as the final one. While it performs well (F1\nscore 0.87, VUS score 0.92), it does not outperform the best model found\nfor this task (F1 score 0.93, VUS score 0.97) in this end-to-end execution of\nCINDI. The collection in Fig. 6 tracks the process of one flagged section being\nimputed over four iterations. This demonstrates how CINDI refines its im-",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 32,
+    "total_chunks": 57,
+    "char_count": 704,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c11f48ab-64fc-49b2-bf09-93a232c5b4c6",
+    "text": "Iteration: 1, Step: 19, Position: 2020-04-16 18:00:00 Iteration: 1, Step: 23, Position: 2019-12-19 23:00:00 Before Before\n30 Generated 40 Generated NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob. Value 20 NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob. 6666666666666666666666666666666666666666 101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010\nChannel 1 4444444444444444444444444444444444444444 Channel 1 2222222222222222222222222222222222222222 20 555555555555555555555555555555555555555555555555\nValue 6 0000000000000000000000000000000000000000 Value 10 000000000000000000000000000000000000000000000000\n−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2\n5 0 2020-04-15 18:00:00 2020-04-16 18:00:00 2019-12-18 23:00:00 2019-12-19 23:00:00",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 33,
+    "total_chunks": 57,
+    "char_count": 1428,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f743037a-cf17-40dd-ad5d-7b541445fa2e",
+    "text": "(a) Imputation example 1 (b) Imputation example 2 Figure 4: Results from the second iteration on the dataset with 1.04% noise. Fig. (a), (b)\nshow self-regressing imputation of two flagged sections, where the heatmap indicates the\nnegative log-likelihood of possible other samples.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 34,
+    "total_chunks": 57,
+    "char_count": 280,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8ad22ac4-b956-4847-81bd-0400f9e9e71b",
+    "text": "putations until it settles on a final replacement, which is an improvement\nover the original sequence, though not always natural and intuitively desired\nby an observer. This highlights the system's flexibility in continuing to update already imputed sections as needed. With Fig. 7, we show that CINDI\ncan also handle longer error sections, imputing sequences beyond two days\nwithout introducing unexpected artifacts of this extended period. Table 2 further demonstrates the impact of increasing error levels in the\ntraining data. More errors reduce the benefits of imputing error sections with\nCINDI, resulting in decreased performance. It also shows that simply skipping error or marked sections generally does not harm the downstream performance and allows for solid performances. Further, the pretrained model\n'dynamix' [28] leads to solid performance with increasing level of errors in the\ntraining data and shows no performance degradation. This approach utilizes\nthe pre-trained model to impute all error sections, meaning it has been pretrained and therefore does not need to rely on unclean data to begin with. Results: FSB\nOn the FSB datasets, CINDI imputes training data errors under specific conditions: the data must contain noise, such as Gaussian noise, to a\nsmall percentage and a structure or pattern. In the case where the data\ndo not fulfill these requirements, the conditional normalizing flow will learn\na new manifold representation of the data, which will not follow the base Examples of imputations on the FSB dataset are provided in\nAppendix Appendix B. Limitations & Remarks Our CINDI framework is designed as a single unified system that utilizes\na single model per iteration while being capable of handling different tasks. This simplicity helps keep it efficient, while also encouraging exploration of\nthe limits of a unified solution and the reuse of learned behavior in practical\nscenarios. When comparing CINDI to other methods, it is clear that the baselines\nare highly competitive and can be difficult to outperform in this context.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 35,
+    "total_chunks": 57,
+    "char_count": 2066,
+    "word_count": 322,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "011c54d8-179a-4e14-a17f-c3ca3fb81768",
+    "text": "For\nthis reason, we ensured that the model selection capabilities of CINDI were\nutilized for every option involved in the experiments, thereby giving every\noption the best possible chance.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 36,
+    "total_chunks": 57,
+    "char_count": 188,
+    "word_count": 29,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b9a401b0-4e97-43fd-999f-d92660c043a5",
+    "text": "One interesting finding is that simply skipping ('skip') the error sections\nis a strong option. This means that avoiding imputation altogether for sections with errors can still lead to solid results, and it should not be ignored\nas a baseline. This holds especially with increased levels of errors in the\ntraining data, since too many errors can lead to biased models. Standard\nimputation methods, such as nearest or linear interpolation, turn out to be\nreasonable choices, especially as the amount of noise increases. In these cases,\nconditional normalizing flows tend to map these input sections to the same\nposition in the latent space, which limits what can be learned from those\ndata points. A challenge emerges when there is no noise in the data, as observed with\nmany sequences from the fully synthetic benchmark suite. In these cases,\ntraining the model results in new manifolds that are not useful for detection\nor imputation. This shows that some level of noise or imperfection is essential\nfor guiding CINDI in practical data improvement and detection applications. This work focused on the problem of predicting grid loss from the perspective of anomaly detection, which heavily depends on the quality of available\ndata. We introduced CINDI, an unsupervised probabilistic framework designed to enhance data quality by imputing errors in multivariate time series. By utilizing conditioned normalizing flows, our approach provides flexibility and efficiency, supporting multiple tasks related to data improvement and\nanomaly detection. With the end-to-end training, we were able to provide a unified framework\nmainly for detecting and imputing, but not limited to these tasks. Our\nexperiments demonstrate that the approach is robust and yields competitive\nresults overall when compared to other methods. The framework is effective\nat denoising existing data, but it cannot reconstruct actual values when the\nunderlying data is missing or severely corrupted.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 37,
+    "total_chunks": 57,
+    "char_count": 1968,
+    "word_count": 303,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "40a87ef6-5e16-4eda-a7b2-722299a1e751",
+    "text": "When the level of errors\nincreases, it becomes difficult for any method to deliver reliable imputations,\nand as a result, produces less useful replacements, except for pre-trained\nmodels.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 38,
+    "total_chunks": 57,
+    "char_count": 187,
+    "word_count": 28,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "85cb6ff0-e266-4a87-a8a9-8776bd596e61",
+    "text": "Overall, the proposed framework represents a practical step toward enhancing data quality for grid loss prediction, thanks to its unified and efficient\ndesign that supports multiple use cases. However, further work is required\nto overcome current limitations and make the approach even more useful. Future research directions include: • Improving the conditioning mechanism: Develop more sophisticated strategies for conditioning, such as learning a conditional distribution that better reflects the underlying signal on the distribution\nside.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 39,
+    "total_chunks": 57,
+    "char_count": 543,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f17e638c-7acb-4cc1-a0d4-6835dac2f3de",
+    "text": "• Selective imputation: Find ways to identify which components or\nchannels need imputation, such that only affected areas are modified\nwhile preserving valid data. • Adaptive imputation behavior: Investigate iterative and adaptive\ntechniques that allow gradual improvements instead of full replacement,\nwhich should lead to more stable and reliable results over time. • Exploring time embeddings: Examine time embedding methods to\ncapture temporal patterns more effectively in real-world data, possibly\nusing continuous or learned time features rather than separate static\nchannels.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 40,
+    "total_chunks": 57,
+    "char_count": 582,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "48cfe942-b133-40c6-bc00-0a065b8e7251",
+    "text": "This work has been carried out at the Centre for Research-based Innovation, SFI NorwAI, funded by the Research Council of Norway under grant The authors thank Are Løkken Ottesen and Nisha Dalal (Aneo,\nwww.aneo.com) for their constructive feedback and support. We are especially grateful for providing an extended version of the grid loss prediction\ndataset.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 41,
+    "total_chunks": 57,
+    "char_count": 357,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf0d9236-6ea5-4ab1-9322-e32629f90659",
+    "text": "Declaration of generative AI and AI-assisted technologies in the\nmanuscript preparation process. During the preparation of the manuscript, the authors utilized Google\nGemini to enhance the wording and writing. After using this tool/service, the\nauthors reviewed and edited the content as needed and take full responsibility\nfor the content of the published article.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 42,
+    "total_chunks": 57,
+    "char_count": 365,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b7628e99-0c26-457a-8af9-219c1a88df3f",
+    "text": "Table 2: Overview of test results on the grid loss data with anomaly detection as a\ndownstream task. With the CINDI methods, we present the final performance of the last\niteration and, in brackets, the maximum performance reached during all iteration steps. Values in bold highlight the highest performing score on the given dataset with a specific\nmetric.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 43,
+    "total_chunks": 57,
+    "char_count": 356,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c7d65106-bacd-409c-8ad8-5b16ef958c88",
+    "text": "Not completed experiments are shown as '-'. Dynamix as proposed by [28] and\nKnowIpm by [21]. D2 Train 1.04 % D3 Train 13.69 % D4 Train 24.19 %\nF1 VUS AUC F1 VUS AUC F1 VUS AUC\nMethod Encoder final final final final final final final final final\n(max) (max) (max) (max) (max) (max) (max) (max) (max) CINDI Base 0.93 0.97 0.97 0.92 0.97 0.96 0.81 0.82 0.81\n(0.94) (0.97) (0.98) (0.92) (0.97) (0.96) (0.86) (0.89) (0.88)\nCINDI CNN 0.83 0.83 0.82 0.82 0.85 0.85 0.65 0.76 0.74\n(0.91) (0.96) (0.95) (0.84) (0.88) (0.87) (0.81) (0.86) (0.85)\nCINDI MLP 0.90 0.94 0.96 0.75 0.83 0.82 0.80 0.74 0.72\n(0.91) (0.96) (0.96) (0.86) (0.91) (0.91) (0.85) (0.88) (0.88) F1 VUS AUC F1 VUS AUC F1 VUS AUC Nearest Base 0.74 0.79 0.77 0.94 0.96 0.97 0.87 0.94 0.93\nNearest CNN 0.83 0.87 0.87 0.88 0.90 0.91 0.94 0.96 0.97\nNearest MLP 0.83 0.77 0.76 0.78 0.81 0.80 0.92 0.96 0.97\nLinear Base 0.74 0.78 0.77 0.80 0.88 0.87 0.88 0.94 0.94\nLinear CNN 0.78 0.84 0.83 0.91 0.94 0.96 0.89 0.94 0.94\nLinear MLP 0.87 0.91 0.90 0.88 0.89 0.89 0.90 0.96 0.96\nSlinear Base 0.89 0.86 0.90 0.87 0.93 0.92 0.81 0.88 0.88\nSlinear CNN 0.92 0.91 0.95 0.92 0.88 0.96 0.92 0.96 0.96\nSlinear MLP 0.85 0.89 0.88 0.87 0.86 0.86 0.90 0.96 0.96\nQuadratic Base 0.89 0.93 0.94 0.80 0.85 0.84 0.87 0.93 0.93\nQuadratic CNN 0.83 0.84 0.84 0.82 0.88 0.88 0.90 0.96 0.97\nQuadratic MLP 0.76 0.84 0.83 0.89 0.85 0.84 0.88 0.94 0.94\nCubic Base 0.74 0.81 0.80 0.83 0.88 0.86 0.90 0.95 0.95\nCubic CNN 0.75 0.77 0.76 0.86 0.92 0.92 0.89 0.95 0.95\nCubic MLP 0.82 0.90 0.89 0.82 0.80 0.78 0.88 0.94 0.94\nCubicspline Base 0.78 0.73 0.71 0.00 0.51 0.50 0.00 0.51 0.50\nCubicspline CNN 0.80 0.77 0.76 0.00 0.49 0.46 0.00 0.52 0.54\nCubicspline MLP 0.85 0.91 0.91 0.00 0.51 0.50 0.00 0.52 0.54 Skip Base 0.93 0.97 0.97 0.91 0.96 0.95 0.86 0.94 0.93\nSkip CNN 0.87 0.92 0.91 0.93 0.96 0.96 0.93 0.97 0.97\nSkip MLP 0.84 0.91 0.90 0.83 0.90 0.89 0.90 0.96 0.96\nRaw Base 0.93 0.98 0.98 0.88 0.90 0.90 0.84 0.83 0.82\nRaw CNN 0.75 0.77 0.76 0.86 0.91 0.92 0.91 0.95 0.95\nRaw MLP 0.88 0.90 0.90 0.81 0.82 0.80 0.78 0.68 0.66 Dynamix Base 0.77 0.74 0.72 0.87 0.93 0.93 0.91 0.92 0.96\nDynamix CNN 0.73 0.73 0.74 0.92 0.88 0.96 0.91 0.91 0.96\nDynamix MLP 0.91 0.96 0.95 0.90 0.94 0.94 0.91 0.91 0.96\nKnowImp Base 0.92 0.87 0.96 0.88 0.92 0.92 - - -\nKnowImp CNN 0.85 0.85 0.85 0.86 0.86 0.85 - - -\nKnowImp MLP 0.83 0.68 0.66 0.80 0.81 0.80 - - - Reconstruction and Probability per Test-Subsection Section: 1 Section: 2 Section: 3 Section: 4 Section: 5 Section: 6 Section: 7",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 44,
+    "total_chunks": 57,
+    "char_count": 2495,
+    "word_count": 475,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2565bc7c-eada-425d-bf90-ecca9de95d21",
+    "text": "0 Ground Truth\nGenerated\n−0.5 NLL Prob. −2.8\n−3.2\n−3.4\n−3.6\n0 10 20 30 40 0 10 20 30 40 0 10 20 30 40 0 10 20 30 40 0 10 20 30 40 0 10 20 30 40 0 10 20 30 40 Steps from section start (a) Reconstruction performance ANEO Grid 1, Noise: 1.04%, Iteration: 1, Model type: tcNF-base 1 Test sequence\nNLL Prob.\n0.5 Anomalies\nChannel 1\nValue 0 Channel 0\n−0.5 Detection as normalized NLL probability and flagged anomalies Dec 2022 Jan 2023 Feb 2023 Mar 2023 Apr 2023 May 2023 Jun 2023 Jul 2023 Aug 2023",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 45,
+    "total_chunks": 57,
+    "char_count": 492,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c32e8baf-875c-4298-bbb6-a62a09b90755",
+    "text": "(b) Test data and negative log-likelihood ANEO Grid 1, Noise: 1.04%, Iteration: 1, Model type: tcNF-base Normalized train data without time Test data latent space\n1.5 2 Train data normal\nTrain data anomalies\n2 1 Test data normal\ndimension 0.50 1 TestTestTest datadatadata anomalieslatentlatent normalanomalies\nInput −0.5 2 0 Sequence\n−1 End\nNormalized test data without time dimension −1 1.5\n2 1 Latent 0.5 −2 dimension 0 Start\nInput −0.5 −3 −1 −0.5 0 0.5 1 −10 0 10 Input dimension 1 Latent dimension 1 (c) Input and latent space Figure 5: Results from the second iteration on the dataset with 1.04% noise. Fig. (a),\n(b) show self-regressing imputation of two flagged sections, with a heatmap indicating the\nnegative log-likelihood of possible options. Fig. (c) shows the reconstruction of expected\ndata with its negative log-likelihood. Fig. (d) and (e) display test data, detected anomalies,\nand latent space.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 46,
+    "total_chunks": 57,
+    "char_count": 912,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6711c6d9-c2d5-4b01-a014-477bc82a7e87",
+    "text": "Iteration: 0, Step: 23, Position: 2019-12-19 23:00:00 Iteration: 1, Step: 23, Position: 2019-12-19 23:00:00 Channel 0 Channel 0\n50 Before Before\nGenerated Generated NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob. Value 30 NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob. 20 666666666666666666666666666666666666666666666666 101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010 Channel 1 444444444444444444444444444444444444444444444444 Channel 1 30 222222222222222222222222222222222222222222222222 20 555555555555555555555555555555555555555555555555\nValue 20 000000000000000000000000000000000000000000000000 Value 10 000000000000000000000000000000000000000000000000\n−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2\n10 −4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4 0 2019-12-18 23:00:00 2019-12-19 23:00:00 2019-12-18 23:00:00 2019-12-19 23:00:00",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 47,
+    "total_chunks": 57,
+    "char_count": 1662,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "967634f2-7754-4b0c-88b4-2082f0002ce6",
+    "text": "(a) 1st iteration (b) 2nd iteration Iteration: 2, Step: 23, Position: 2019-12-19 23:00:00 Iteration: 3, Step: 23, Position: 2019-12-19 23:00:00 Before Before\n40 Generated 40 Generated\nValue 30 NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob. Value 20 NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.\n20 888888888888888888888888888888888888888888888888 888888888888888888888888888888888888888888888888 666666666666666666666666666666666666666666666666\n10 Channel 1 0 Channel 1 666666666666666666666666666666666666666666666666\n444444444444444444444444444444444444444444444444 40 30 444444444444444444444444444444444444444444444444\n222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222\nValue 10 000000000000000000000000000000000000000000000000−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2 Value 20 000000000000000000000000000000000000000000000000\n−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2\n−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4 0 2019-12-18 23:00:00 2019-12-19 23:00:00 2019-12-18 23:00:00 2019-12-19 23:00:00",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 48,
+    "total_chunks": 57,
+    "char_count": 1887,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f2f1c170-10ad-4567-81fe-be68ef601f53",
+    "text": "(c) 3rd iteration (d) 4th iteration Figure 6: Imputation of one section across the first four iterations with CINDI on the\ndataset with 1.04% noise. Iteration: 2, Step: 69, Position: 2020-04-26 01:00:00 Value 15 NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob. 666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666 5 444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444\nChannel 1 222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\nValue 5\n4 −2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2 3 −4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4−4 2020-04-25 01:00:00 2020-04-26 01:00:00 Figure 7: Imputation of an extended marked section in the third iteration with CINDI.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 49,
+    "total_chunks": 57,
+    "char_count": 1905,
+    "word_count": 67,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "debb7178-7e9b-4823-872e-faeec5b7e1b0",
+    "text": "[1] Statnett, The Way forward - Solutions for a changing Nordic power\nsystem, 2018. URL: https://www.statnett.no/globalassets/\nom-statnett/nyheter-og-pressemeldinger/with-appendices_\nthe-way-forward---solutions-for-a-changing-nordic-power-system_\nlowres.pdf. Gundersen, A Robust and Scalable Stacked\nEnsemble for Day-Ahead Forecasting of Distribution Network Losses,\nProceedings of the AAAI Conference on Artificial Intelligence 37 (2023)\n15503–15511. doi:10.1609/aaai.v37i13.26838. Gundersen, DayAhead Forecasting of Losses in the Distribution Network, AI Magazine\n42 (2021) 38–49. doi:10.1609/aimag.v42i2.15097. Wen, Deep Learning for Multivariate Time Series Imputation: A Survey, 2025. doi:10.48550/arXiv.2402.04059. Lee, Probabilistic imputation\nfor time-series classification with missing data, in: Proceedings of the\n40th International Conference on Machine Learning, PMLR, 2023, pp.\n16654–16667. URL: https://proceedings.mlr.press/v202/kim23m.\nhtml. Wang, Task-oriented Time\nSeries Imputation Evaluation via Generalized Representers, Advances\nin Neural Information Processing Systems 37 (2024) 137403–137431. Zheng,\nSoftpatch: Unsupervised anomaly detection with noisy data, 2022. URL:\nhttps://dl.acm.org/doi/abs/10.5555/3600270.3601393. Tian, Understanding and Mitigating Data Contamination in Deep Anomaly Detection: A Kernel-based Approach,\nin: Proceedings of the Thirty-First International Joint Conference",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 50,
+    "total_chunks": 57,
+    "char_count": 1418,
+    "word_count": 148,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "18d592f2-8052-44c1-bd91-e2f64d16e6af",
+    "text": "on Artificial Intelligence, International Joint Conferences on Artificial Intelligence Organization, Vienna, Austria, 2022, pp. 2319–2325. Lakshminarayanan, Normalizing Flows for Probabilistic Modeling and Inference,\nThe Journal of Machine Learning Research 22 (2021) 57:2617–57:2680. URL: http://jmlr.org/papers/v22/19-1028.html. Brubaker, Normalizing Flows: An\nIntroduction and Review of Current Methods, IEEE Transactions on\nPattern Analysis and Machine Intelligence 43 (2021) 3964–3979. doi:10.\n1109/TPAMI.2020.2992934, publisher: IEEE Computer Society. Marlin, Multi-time attention networks for irregularly\nsampled time series, in: International Conference on Learning Representations, 2021. doi:10.48550/arXiv.2101.10318. Fan, Unsupervised anomaly detection in the presence of\nmissing values, Advances in Neural Information Processing Systems 37\n(2024) 138130–138162. doi:10.52202/079017-4385. Yuan, E²GAN: end-to-end generative\nadversarial network for multivariate time series imputation (2019) 3094–\n3100. URL: https://www.ijcai.org/proceedings/2019/429. Gimpel, Using trusted data\nto train deep networks on labels corrupted by severe noise, 2018. URL:\nhttps://dl.acm.org/doi/10.5555/3327546.3327707. Tzamos, Distribution-Independent\nPAC Learning of Halfspaces with Massart Noise, 2019. URL: https:\n//dl.acm.org/doi/abs/10.5555/3454287.3454714. Pfister, Distilling Effective\nSupervision From Severe Label Noise, in: 2020 IEEE/CVF Conference\non Computer Vision and Pattern Recognition (CVPR), 2020, pp. 9291–\n9300. doi:10.1109/CVPR42600.2020.00931. Sugiyama,\nCo-teaching: Robust training of deep neural networks with extremely noisy labels, 2018. URL: https://dl.acm.org/doi/abs/10.\n5555/3327757.3327944.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 51,
+    "total_chunks": 57,
+    "char_count": 1711,
+    "word_count": 184,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d3422e51-5876-46aa-94cb-ea80272c5622",
+    "text": "Sanghavi, Learning with Bad Training Data via Iterative\nTrimmed Loss Minimization, 2019. URL: https://proceedings.mlr.\npress/v97/shen19e.html. Oymak, Gradient Descent with Early Stopping is Provably Robust to Label Noise for Overparameterized Neural Networks, 2020. URL: https://proceedings.mlr.press/v108/\nli20j.html. Chetty,\nBoundary-enhanced time series data imputation with long-term dependency diffusion models, Knowledge-Based Systems 310 (2025) 112917. Wang,\nRethinking the Diffusion Models for Missing Data Imputation: A Gradient Flow Perspective, Advances in Neural Information Processing\nSystems 37 (2024) 112050–112103. doi:10.52202/079017-3558. Chang, Multi-sensor data fusion via a cortical gap network for time series large data gap filling under uncertainties, Information Fusion 126 (2026) 103618. doi:10.1016/j.inffus.2025.103618. Du, Enhanced buoy-based water quality time series imputation in\ncoastal waters, Journal of Hydrology 663 (2025) 134071. doi:10.1016/\nj.jhydrol.2025.134071. Chen, Timecheat: A channel harmony strategy for\nirregularly sampled multivariate time series analysis, in: Proceedings\nof the AAAI Conference on Artificial Intelligence, volume 39, 2025, pp.\n18861–18869. doi:10.1609/aaai.v39i18.34076, issue: 18. Li, Real-Time Imputation\nModel for Missing Sensor Data Based on Alternating Attention Mecha- nism, IEEE Sensors Journal 25 (2025) 8962–8974. doi:10.1109/JSEN.\n2024.3519370. Khyalia, STING: Self-attention based Timeseries Imputation Networks using GAN, in: 2021 IEEE International\nConference on Data Mining (ICDM), 2021, pp. 1264–1269. doi:10.1109/\nICDM51629.2021.00155. Fern, Self-attention-based Diffusion\nModel for Time-series Imputation, Proceedings of the AAAI Symposium\nSeries 4 (2024) 424–431. doi:10.1609/aaaiss.v4i1.31827, number: 1. Durstewitz, True Zero-Shot Inference of Dynamical\nSystems Preserving Long-Term Statistics, 2025. doi:10.48550/arXiv.\n2505.13192, arXiv:2505.13192 [cs]. Wang, Chronos: Learning the Language of\nTime Series, Transactions on Machine Learning Research (2024).",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 52,
+    "total_chunks": 57,
+    "char_count": 2046,
+    "word_count": 240,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "32382871-cf0f-4b13-a665-283c37be8a75",
+    "text": "URL:\nhttps://openreview.net/forum?id=gerNCVqqtR. Sánchez, Zero-shot Imputation\nwith Foundation Inference Models for Dynamical Systems, 2025. doi:10.\n48550/arXiv.2402.07594. Vollgraf, Multivariate Probabilistic Time Series Forecasting via Conditioned Normalizing Flows, in: International Conference on Learning Representations,\n2020.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 53,
+    "total_chunks": 57,
+    "char_count": 332,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "36ae84f1-7cc3-44c9-bb19-c450f6d49655",
+    "text": "URL: https://openreview.net/forum?id=WiGQBFuVRv. Bengio, Density estimation using Real\nNVP, in: International Conference on Learning Representations, 2017. URL: https://openreview.net/forum?id=HkpbnH9lx. Hansen, A restart CMA evolution strategy with increasing\npopulation size, in: 2005 IEEE Congress on Evolutionary Computation,\nvolume 2, 2005, pp. 1769–1776 Vol. 2. doi:10.1109/CEC.2005.1554902,\niSSN: 1941-0026. Franklin, Volume under the surface: a new accuracy evaluation measure\nfor time-series anomaly detection, Proceedings of the VLDB Endowment\n15 (2022) 2774–2787. doi:10.14778/3551793.3551830. [35] TrønderEnergi, Grid Loss Prediction Dataset, 2020. URL:\nhttps://www.kaggle.com/datasets/trnderenergikraft/\ngrid-loss-time-series-dataset. Zhu, A robust anomaly\ndetector for imbalanced industrial internet of things data, Journal of\nComputational Design and Engineering 12 (2025) 46–60. doi:10.1093/\njcde/qwaf085. Engø-Monsen,\nmTADS: Multivariate Time Series Anomaly Detection Benchmark\nSuites, 2023. doi:10.1109/BigData59044.2023.10386980. Kumar, Anomaly detection: A survey,\nACM Computing Surveys 41 (2009) 15:1–15:58. doi:10.1145/1541880.\n1541882. Additional Grid Loss Dataset Results CINDI framework with anomaly detection test scores Alternative methods with anomaly detection test scores\n1.0 0.2\nModel Type Model Type\n0.0 Base CNN MLP Base CNN MLP 0 2 4\nIteration 6 8 10 12 NearestLinearSLinearQuadraticCubicSpline Skip TrainDynamixKnowImp Cubic\nMethod name Figure A.8: F1 performance results on training dataset with 1.04% noise.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 54,
+    "total_chunks": 57,
+    "char_count": 1544,
+    "word_count": 181,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3b3488b1-6c02-4389-ba9d-1b2f9fcd9d7e",
+    "text": "CINDI framework with anomaly detection test scores Alternative methods with anomaly detection test scores\n1.0 0.2\nModel Type Model Type\n0.0 Base CNN MLP Base CNN MLP 0 1 2 3 4\nIteration 5 6 NearestLinearSLinearQuadraticCubicSpline Skip TrainDynamixKnowImp Cubic\nMethod name Figure A.9: VUS performance results on training dataset with 13.69% noise. CINDI framework with anomaly detection test scores Alternative methods with anomaly detection test scores\n1.0 0.2\nModel Type Model Type\n0.0 Base CNN MLP Base CNN MLP 0 2 4\nIteration 6 8 10 12 NearestLinearSLinearQuadraticCubicSpline Skip TrainDynamixKnowImp Cubic\nMethod name Figure A.10: F1 performance results on training dataset with 13.69% noise. CINDI framework with anomaly detection test scores Alternative methods with anomaly detection test scores\n1.0 0.2\nModel Type Model Type\n0.0 Base CNN MLP Base CNN MLP 0 1 2 3 4\nIteration 5 6 NearestLinearSLinearQuadraticCubicSpline Skip TrainDynamixKnowImp Cubic\nMethod name Figure A.11: VUS performance results on training dataset with 24.19% noise. CINDI framework with anomaly detection test scores Alternative methods with anomaly detection test scores\n1.0 0.2\nModel Type Model Type\n0.0 Base CNN MLP Base CNN MLP 0 2 4\nIteration 6 8 10 12 NearestLinearSLinearQuadraticCubicSpline Skip TrainDynamixKnowImp Cubic\nMethod name",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 55,
+    "total_chunks": 57,
+    "char_count": 1325,
+    "word_count": 197,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cac3bc20-61e7-4df8-bae3-e3561c733088",
+    "text": "Figure A.12: F1 performance results on training dataset with 24.19% noise. CINDI CNN on 2-sine-all-channel-anomaly Sequence Iteration: 0, Step: 9 Iteration: 0, Step: 9 Before Before\n1 Generated Generated 0 NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.88888888888888888888 Value −10 NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.66666666666666666666 Value 44444444444444444444 −5 66666666666666666666\nChannel 1 Channel 1\n1 22222222222222222222 0 44444444444444444444 22222222222222222222\n0.5\n00000000000000000000 −0.5\n00000000000000000000 Value 0 Value −1\n−0.5 −2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2 −2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2 (a) 1st iteration section 302 to 311 (b) 1st iteration section 122 to 131 Iteration: 1, Step: 9 Iteration: 1, Step: 9 Before 2 Before\n1 Generated 1 Generated NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.\n−1 Value −10 NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.44444444444444444444 Value\n−2 −2 44444444444444444444\nChannel 1 22222222222222222222 −3 Channel 1 22222222222222222222\n0.5 0 00000000000000000000\nValue 0 00000000000000000000 Value −0.5\n−0.5 −2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2\n−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2 (c) 2nd iteration section 302 to 311 (d) 2nd iteration section 122 to 131 Iteration: 2, Step: 9 2-sine-all-channel-anomaly, Iteration: 2, Model type: tcNF-cnn Channel 0 Normalized train data without time Test data latent space\nTrain data normal 1 Before\nTrain data anomalies Generated 1\nTest data normal 0.5\nTest data anomalies\n5 0 Test data latent normal\nTest data latent anomalies 2dimension NLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLLNLL Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.Prob.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 56,
+    "total_chunks": 57,
+    "char_count": 2195,
+    "word_count": 183,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8d86afd5-8d20-4b6b-842d-095c36878250",
+    "text": "Sequence Value −1\nEnd 2 Input −0.5\n−2 44444444444444444444 −1 0\nChannel 1 Normalized test data without time dimension\n0.5 22222222222222222222 2 Latent −5\n0.5\nStart 0 Value 0 00000000000000000000 dimension\n−0.5 −2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2−2 Input −0.5 −10 −1 −1\n502 526 −1 −0.5 0 0.5 1 −5 0 5 10\nTime Input dimension 1 Latent dimension 1 (e) 3rd iteration section 302 to 311 (f) 3rd iteration input and latent space Figure B.13: Imputation of two errors in the training data using CINDI with model type\nCNN over three iterations, shown in Fig. (a)–(e). The anomaly detection performance on\nthe test set across iterations yields F1 scores of 0.33, 0.69, 0.33, 0.44, and VUS scores of\n0.90, 0.96, 0.97, 0.98. Fig. (f) shows the input and latent spaces where the error regions\nhave moved into the main data range. The latent space (right) shows that the error\nsections in the test set are shifted into lower density areas. CINDI CNN on 2-sine-one-channel-anomaly-noise-10% Sequence 2-sine-one-channel-anomaly-noise-10%, Iteration: 0, Model type: tcNF-cnn Normalized sequence before imputation\n0.5 Channel 0\n1 0 Channel\nAnomalies Value −0.5\n−1 NLL prob. Normalized NLL probability before imputation Normalized sequence after imputation\n0.5\n0 Value −0.5\nNormalized NLL probability after imputation 300 400 500 600 700 800 900 Figure B.14: Original and imputed training data with negative log-likelihoods, showing\nCINDI's long term prediction capabilities and denoising effect.",
+    "paper_id": "2603.11745",
+    "title": "CINDI: Conditional Imputation and Noisy Data Integrity with Flows in Power Grid Data",
+    "authors": [
+      "David Baumgartner",
+      "Helge Langseth",
+      "Heri Ramampiaro"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11745v1",
+    "chunk_index": 57,
+    "total_chunks": 57,
+    "char_count": 1482,
+    "word_count": 228,
+    "chunking_strategy": "semantic"
+  }
+]

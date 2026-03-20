@@ -1,0 +1,742 @@
+[
+  {
+    "chunk_id": "d07f55e8-a542-4d7b-a2c4-6d3dd78aeaef",
+    "text": "EFFECTIVE RESISTANCE REWIRING:\nA SIMPLE TOPOLOGICAL CORRECTION FOR OVERSQUASHING Bertran Miquel-Oliver1,2, Manel Gil-Sorribes3, Victor Guallar1,4,∗, Alexis Molina3,∗ 1Barcelona Supercomputing Center (BSC), Barcelona, Spain\n2Universitat Polit`ecnica de Catalunya - BarcelonaTech (UPC), Barcelona, Spain\n3Nostrum Biodiscovery, Barcelona, 08029, Spain\n4ICREA, Barcelona, Spain\n*alexis.molina@nostrumbiodiscovery.com, victor.guallar@bsc.es\nMar ABSTRACT Graph Neural Networks (GNNs) struggle to capture long-range dependencies\n12 duehoodsto mustover-squashing,pass throughwherea smallinformationnumber offromstructuralexponentiallybottlenecks.growingWhileneighbor-recent\nrewiring methods attempt to alleviate this limitation, many rely on local criteria such as curvature, which can overlook global connectivity bottlenecks that\nrestrict information flow. We introduce Effective Resistance Rewiring (ERR), a\nsimple topology correction strategy that uses effective resistance as a global signal to detect structural bottlenecks. ERR iteratively adds edges between node\npairs with the largest resistance while removing edges with minimal resistance,[cs.LG]\nstrengthening weak communication pathways while controlling graph densification through a fixed edge budget. The procedure is parameter-free beyond the\nrewiring budget and relies on a single global measure aggregating all paths between node pairs. Beyond evaluating predictive performance on GCN model, we\nanalyze how rewiring affects message propagation. By studying cosine similarity between node embeddings across layers, we study how the relationship between initial node features and learned representations evolves during message\npassing, comparing graphs with and without rewiring. his analysis helps determine whether performance gains arise from improved long-range communication. Experiments on homophilic (Cora, CiteSeer) and heterophilic (Cornell, Texas)\ngraphs, including directed settings with DirGCN, reveal a fundamental trade-off\nbetween over-squashing and oversmoothing, losing representation diversity across\nlayers. Resistance-guided rewiring improves connectivity and signal propagation\nbut can accelerate representation mixing in deep models. Combining ERR with\nnormalization techniques (e.g., PairNorm) stabilizes this trade-off and improves\nperformance, particularly in heterophilic settings.arXiv:2603.11944v1 Graph neural networks (GNNs) have become a standard approach for learning on relational data,\nbased on message passing which provides a strong inductive bias: node representations are updated\nby aggregating information from neighbors, so predictions can exploit both features and connectivity\n(Kipf & Welling, 2017). Yet the same mechanism imposes constraints on how information can\npropagate across a graph, and these constraints arise even when optimization and expressivity are\nnot the dominant bottlenecks (Alon & Yahav, 2020; Di Giovanni et al., 2023a). In contrast with other\nmodels such as Neural Networks or Transformers, message passing models face a tight balance\nwith depth. With too few layers, information remains local and the model cannot exploit nonlocal evidence, hence losing generalization (Black et al., 2023).",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 1,
+    "total_chunks": 37,
+    "char_count": 3215,
+    "word_count": 398,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "23caf154-ca23-44b2-8371-24991c1dbd89",
+    "text": "With too many layers, repeated\naggregation drives representations toward collapse, reducing discriminability between different class\nnodes (Chen et al., 2020; Zhou et al., 2021; Rusch et al., 2023). GRaM workshop at ICLR 2026 Proceedings Track",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 2,
+    "total_chunks": 37,
+    "char_count": 243,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2be21cd1-93bc-4d9b-ac93-9af9d3e9c1f9",
+    "text": "A classical explanation for depth degradation comes from viewing common propagation rules as\nsmoothing operators on the graph. In particular, Graph Convolutional Networks (GCNs) can be\ninterpreted as a form of Laplacian smoothing (Li et al., 2018). Moderate smoothing can denoise features and stabilize learning, but excessive smoothing makes node embeddings increasingly similar\nand eventually uninformative, a phenomenon referred to as oversmoothing (Rusch et al., 2023). This\nbehavior has been quantified using topological and energy-based measures (Chen et al., 2020; Zhou\net al., 2021), and analyzed theoretically as a trade-off between beneficial and harmful smoothing\n(Keriven, 2022). On the practical side, normalization techniques such as PairNorm aim to prevent\nrepresentation collapse and enable deeper message passing without architectural changes (Zhao &\nAkoglu, 2019). At the opposite extreme, shallow models can fail to incorporate non-local signals,\na limitation often discussed as underreaching (Black et al., 2023). However, depth alone does not\nexplain why long-range dependencies remain difficult even when receptive fields are increased. Over-squashing pinpoints a distinct topological obstruction to long-range reasoning in message passing GNNs. As depth increases, the receptive field of a node can grow rapidly, potentially encompassing many nodes. Nevertheless, information from this expanding neighborhood must traverse the\ngraph connectivity and be repeatedly aggregated into fixed-size vectors. When many distant nodes\ncan influence a target only through a narrow set of intermediate nodes or edges, message passing\nmust \"squeeze\" a rapidly growing number of signals through a limited number of channels, causing\ndistant information to have vanishing influence on the learned representation (Alon & Yahav, 2020). Crucially, recent evidence suggests that the topology of the input graph is the dominant driver of this\neffect. Architectural choices such as width or depth can modulate over-squashing, but bottlenecks\ninduced by global connectivity patterns remain the primary limitation (Di Giovanni et al., 2023a). This bottleneck view therefore shifts the focus from architecture alone to the interaction between\nmessage passing and graph topology. As an example, two graphs with similar size can induce very\ndifferent levels of over-squashing depending on where bottlenecks occur and how many alternative\nroutes exist for information to flow.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 3,
+    "total_chunks": 37,
+    "char_count": 2471,
+    "word_count": 351,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a96bd860-3fef-42e0-b4c8-c37807655464",
+    "text": "Geometry and topology perspectives on over-squashing. Recent work has formalized oversquashing through geometric and topological descriptors of graphs. Curvature-based analyses connect bottlenecks to negatively curved edges via Jacobian sensitivity and motivate topology modifications that target local bottlenecks. (Topping et al., 2022). A complementary viewpoint emphasizes\nrandom-walk accessibility. In such scenarios, if information must traverse a narrow bottleneck, the\nexpected time for a random walk to travel between two nodes (and return) can become large, indicating weak long-range influence (Di Giovanni et al., 2023b). At a high level, both lenses highlight\nthat over-squashing is primarily driven by the graph topology rather than solely by architectural\nchoices (Di Giovanni et al., 2023a). Nevertheless, curvature criteria are often local in nature, while\nrandom-walk quantities such as commute time can be informative but less direct as a design signal for topology interventions. This motivates seeking a global, pairwise measure that retains the\nrandom-walk interpretation while maintaining multi-path connectivity. Such measurements, however, come at a high computational expense. Effective resistance as a measure of over-squashing. Effective resistance provides a global and\ninterpretable measure of connectivity that is well suited to diagnosing over-squashing. An intuition\ncomes from the electrical-network analogy, where a graph can be viewed as a network transporting\ninformation, and the resistance distance captures how easily two nodes can communicate through the\navailable connections (Doyle & Snell, 1984; Klein & Randi´c, 1993). Because current in an electrical\nnetwork flows through all routes in parallel, effective resistance aggregates the contribution of all\npaths between two nodes rather than focusing on shortest paths alone. It is also proportional to\nrandom-walk commute time, thereby retaining a natural accessibility interpretation while remaining\nexplicitly multi-path (Black et al., 2023). Recent work has established a formal connection between\neffective resistance and over-squashing.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 4,
+    "total_chunks": 37,
+    "char_count": 2135,
+    "word_count": 292,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4c0d4a6e-9822-4f90-8ca2-65699ea77615",
+    "text": "In particular, Black et al. (2023) show that the influence\nof one node on another through message passing can be upper bounded by quantities related to\ntheir effective resistance, via bounds on suitable norms of the Jacobian of node embeddings with\nrespect to the input features. Under this perspective, pairs of nodes with large effective resistance\ncorrespond to interactions whose influence is strongly attenuated during message passing, which is\nconsistent with the notion of over-squashing. Their work further proposes reducing oversquashing\nby adding edges that minimize the total effective resistance of the graph. In this work, we adopt\neffective resistance primarily as a diagnostic signal for pairwise bottlenecks. GRaM workshop at ICLR 2026 Proceedings Track",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 5,
+    "total_chunks": 37,
+    "char_count": 769,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "169220b5-ecf6-4fcf-ac9e-f88264201ac4",
+    "text": "minimizing total resistance through edge addition, we focus on identifying node pairs whose high\nresistance indicates weak long-range connectivity. This perspective allows us to directly target the\nstructural locations where information flow is most constrained. Reducing resistance between such\ndistant nodes can strengthen end-to-end influence pathways and improve long-range communication\nwhen predictions depend on non-local interactions (Di Giovanni et al., 2023a; Black et al., 2023). Finally, effective resistance also admits connections to curvature-like notions on graphs, providing a\nbridge between global connectivity perspectives and geometric views of graph structure (Devriendt\n& Lambiotte, 2022). Rewiring must balance bottlenecks and smoothing. Topology interventions, however, must respect the oversmoothing trade-off. Adding edges can create alternative routes and relieve bottlenecks, but it can also increase mixing, accelerate representation collapse, and increase computational\ncost. Conversely, removing edges can reduce unnecessary mixing and can even improve information flow when redundancy leads to counterproductive diffusion patterns. This tension motivates\napproaches that explicitly modify topology while controlling structural drift and complexity. For\nexample, inductive rewiring methods aim to preserve aspects of global structure while remaining\nusable beyond transductive settings (Arnaiz-Rodr´ıguez et al., 2022). More recently, pruning guided\nby spectral objectives has been proposed to jointly mitigate over-squashing and oversmoothing (Jamadandi et al., 2024). Empirically and theoretically, the interaction between these phenomena has\nbeen studied as a trade-off. More precisely, alleviating one failure mode can amplify the other if\ntopology changes are not controlled (Giraldo et al., 2023). Related analyses also emphasize that\ndepth limitations, node degree effects, and long-range propagation constraints interact in practice\n(Qureshi, 2023), and that vanishing gradients can couple to both oversmoothing and over-squashing\nin deep message passing (Arroyo et al., 2025). These results collectively suggest that successful\nrewiring should not only densify graphs, but should actively control how connectivity is redistributed\nto relieve bottlenecks without amplifying collapse dynamics.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 6,
+    "total_chunks": 37,
+    "char_count": 2331,
+    "word_count": 304,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fc70c416-1a95-4153-925e-5573dbe7d5ec",
+    "text": "In this work, we investigate a simple, resistance-driven rewiring mechanism designed to probe and mitigate over-squashing while controlling densification through an explicit edge\nbudget. At each step, we add an edge between the pair of nodes with the worst (largest) effective\nresistance to directly strengthen the weakest long-range connectivity, and we simultaneously remove\nan edge attaining one of the best (smallest) resistance values to limit densification and curb excessive\nmixing in regions that are already strongly coupled under the same global criterion. The procedure\nis parameter-free beyond the rewiring budget and relies on a single global measure that aggregates\nall paths between node pairs. We evaluate the resulting topology changes on two homophilic citation graphs (Cora, CiteSeer) and two heterophilic graphs (Cornell, Texas). We study robustness\nacross common message passing architectures (GCN (Kipf & Welling, 2017)) as well as a directed\nsetting using DirGCN (Tong et al., 2020), for directed graphs, we rely on a directed generalization\nof effective resistance that is well-defined under appropriate connectivity conditions (Young et al.,\n2015). Beyond proposing rewiring as an intervention, our core contribution is a representation-level\nanalysis that compares the similarity structure of the initial node representations and the learned\nembeddings before and after rewiring. This approach lets us distinguish when improvements stem\nfrom genuinely better long-range communication versus when they arise from changes in embedding geometry. In turn, this leads to novel conclusions about where over-squashing originates, how\ntargeted structural edits reshape similarity patterns, and when resistance-guided rewiring improves\ntransmissivity rather than merely increasing feature/embedding alignment. We study node classification on both homophilic graphs (Cora, CiteSeer) and heterophilic graphs\n(Texas, Cornell), since the alignment between labels and edges strongly affects how message passing\nbehaves. We consider message passing GNNs where each layer corresponds to one hop of aggregation. For\nundirected graphs, we use the standard Graph Convolutional Network (GCN) update: H(l+1) = σ ˜D−12 ˜A ˜D−12 H(l)W(l) , (1) GRaM workshop at ICLR 2026 Proceedings Track where ˜A = A+I adds self-loops, ˜D is the corresponding degree matrix, W(l) are trainable weights,\nand σ(·) is a non-linear activation. When the input graph is directed, symmetrizing A discards directionality.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 7,
+    "total_chunks": 37,
+    "char_count": 2501,
+    "word_count": 356,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4dfcad63-7d18-422c-841a-f04479615442",
+    "text": "H(l+1) = σ D−1in AinH(l)W(l)in + D−1out AoutH(l)W(l)out + H(l)W(l)self , (2) where Ain is the incoming adjacency matrix with (Ain)ij = 1 iff j →i, and Aout is the outgoing\nadjacency matrix with (Aout)ij = 1 iff i →j. The corresponding degree matrices are diagonal:\n(Din)ii = Pj(Ain)ij and (Dout)ii = Pj(Aout)ij. All hyperparameters used are available in Appendix C.1.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 9,
+    "total_chunks": 37,
+    "char_count": 367,
+    "word_count": 61,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "63d56ca1-9011-44c2-8265-095817926f8f",
+    "text": "2.1 QUANTIFYING OVERSMOOTHING AND OVER-SQUASHING Deep message passing exhibits two coupled pathologies. Oversmoothing refers to loss of representational diversity, where embeddings become increasingly similar across layers. Over-squashing\nrefers to attenuation of long-range signals when information must traverse structural bottlenecks and\nbe compressed into fixed-size vectors. Oversmoothing metric. To monitor the evolution of representational collapse, we measure how\nthe similarity between node embeddings changes as depth increases. Oversmoothing manifests as\na progressive loss of diversity, where node representations become increasingly aligned and less\ndiscriminative across layers. In this work, we focus on cosine similarity as our primary diagnostic,\nas it directly captures the angular alignment between embeddings and provides an intuitive view of\nhow message passing drives representations toward or away from collapse, see Appendix B. Over-squashing metrics. Over-squashing is primarily a structural phenomenon where long-range\ninformation becomes ineffective when it must traverse narrow bottlenecks and be compressed into\nfixed-size representations. To quantify this effect, we focus on effective resistance as our main\ntopology-level diagnostic, since it captures global, multi-path connectivity between node pairs. Effective resistance. For an undirected connected graph with Laplacian L, the resistance distance\nbetween nodes i and j is\nRij = (ei −ej)⊤L†(ei −ej), (3)\nwhere L† is the Moore-Penrose pseudoinverse of L and ei is the i-th standard basis vector. Resistance distance can be interpreted through the electrical-network analogy: it measures how easily\n\"flow\" can pass between two nodes when it is allowed to traverse all available paths. Large Rij indicates weak multi-path connectivity, which is consistent with a bottlenecked route for information\ntransmission.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 10,
+    "total_chunks": 37,
+    "char_count": 1894,
+    "word_count": 258,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eefcc08e-83e3-4346-b4cb-8ceac3c6f309",
+    "text": "For directed graphs, we use the directed effective resistance (Young et al., 2015). Let L = D −A\nbe the (out-)Laplacian, with D = diag(dout), and let Π = I −1N 11⊤. Choose any Q ∈R(N−1)×N\nwith orthonormal rows spanning 1⊥(so Q⊤Q = Π), and set ¯L = QLQ⊤. Let Σ be the unique\nsolution of the Lyapunov equation\n¯LΣ + Σ¯L⊤= IN−1. (4) Define X = 2Q⊤ΣQ and the directed effective resistance\nRij = (ei −ej)⊤X(ei −ej). (5) In directed experiments, we only evaluate Rij for node pairs that lie in the same strongly connected\ncomponent (SCC), and ignore pairs in different SCCs. To emphasize bottlenecks beyond mere graph distance, we also consider the\nnormalized quantity\nRij\nRhopij = (6) d(i, j), GRaM workshop at ICLR 2026 Proceedings Track where d(i, j) is the shortest-path distance. Large Rhopij highlights pairs that are poorly connected\nrelative to their hop distance. Beyond its electrical-network interpretation, effective resistance is also theoretically linked to message passing sensitivity. In particular, recent analyses connect pairwise resistance to upper bounds\non the influence of node j on node i through the network, by bounding appropriate norms of the\nJacobian of the embeddings with respect to the input features (Black et al., 2023). Under these\nbounds, large Rij implies a stronger attenuation of long-range influence (i.e., a tighter bottleneck),\nwhich motivates using resistance as a proxy for over-squashing. As a baseline comparison, we report Ollivier-Ricci curvature on edges (Hamilton,\n1988):\nκ(u, v) = 1 −W1(µu, µv) , (7)\nd(u, v)\nwhere W1(·, ·) is the Wasserstein-1 distance between neighborhood measures µu and µv and d(u, v)\nis the shortest-path distance. Negative curvature (κ(u, v) < 0) indicates that the neighborhoods\naround u and v are, in a transport sense, farther apart than the nodes themselves, which is consistent\nwith an edge acting as a local bridge between poorly overlapping neighborhoods (Topping et al.,\n2022).",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 11,
+    "total_chunks": 37,
+    "char_count": 1953,
+    "word_count": 317,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a5df7399-3d79-429e-a2e3-e087d4d2012b",
+    "text": "Such edges are commonly interpreted as locally bottlenecked connections, and have been\nused to guide curvature-based rewiring. Here, we treat curvature as a local baseline indicator to\ncontrast with resistance-based, explicitly global diagnostics.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 12,
+    "total_chunks": 37,
+    "char_count": 247,
+    "word_count": 33,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ed2a33b-dfcb-46c5-b435-cc1f9fd2f1b2",
+    "text": "2.2 RESISTANCE-BASED ADD-REMOVE REWIRING Let G(0) = (V, E(0)) be the input graph and let B ∈N be the rewiring budget (number of iterations). We construct a sequence {G(t)}Bt=0, G(t) = (V, E(t)), by performing one add-remove step per\niteration. For undirected graphs, we compute effective resistance for all pairs. For directed graphs, we restrict\nall pairwise computations to nodes within the same strongly connected component (SCC), since\nresistances across different SCCs are not finite under the directed definition. Define the admissible pair set ({(i, j) ∈V × V : i ̸= j}, undirected,\nΩ(t) =\n{(i, j) ∈V × V : i ̸= j, SCC(i) = SCC(j)}, directed, and let R(t)ij denote the (undirected or directed) effective resistance computed on G(t). We first identify the maximally resistant pair (u⋆, v⋆) ∈arg max R(t)ij . (8)\n(i,j)∈Ω(t) If (u⋆, v⋆) /∈E(t), we add the edge (u⋆, v⋆).\n2. If (u⋆, v⋆) ∈E(t), we instead add two edges that connect u⋆and v⋆to each other's neighborhoods. Let N (t)(·) denote the (undirected) neighborhood, for directed graphs, we use\nthe union of in- and out-neighbors. Choose nu ∈N (t)(u⋆) and nv ∈N (t)(v⋆) such that\nthe candidate edges do not already exist, then add\n(u⋆, nv) and (v⋆, nu) (9)\n(undirected: add {u⋆, nv} and {v⋆, nu}). When multiple choices are possible, we apply a\ndeterministic tie-breaking rule which minimize the resistance value.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 13,
+    "total_chunks": 37,
+    "char_count": 1371,
+    "word_count": 230,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ad620c7a-0da5-4dc9-9d27-211209bbe345",
+    "text": "We identify the minimally resistant edge in the current graph, (p⋆, q⋆) ∈arg min R(t)ij . (10)\n(i,j)∈E(t) GRaM workshop at ICLR 2026 Proceedings Track We remove this edge only if it preserves connectivity.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 14,
+    "total_chunks": 37,
+    "char_count": 205,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f6cf828e-a8a8-45fb-bd0a-77b5e4e60a09",
+    "text": "In the directed case, we apply the same\nprinciple within SCCs. We remove (p⋆, q⋆) only if it does not split its SCC into multiple SCCs. If the\nminimizer is not removable, we consider the next-lowest-resistance edge until we find a removable\none. Writing E(t)add for the edge(s) added in the addition step, the update is\nE(t+1) = E(t) ∪E(t)add \\ {(p⋆, q⋆)}. (11)",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 15,
+    "total_chunks": 37,
+    "char_count": 361,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f5cb5038-1e56-45d2-b1b6-52552e533a7b",
+    "text": "Overall, this procedure strengthens the weakest pairwise connectivity (large resistance) while pruning redundant connections between already well-coupled nodes (small resistance), subject to preserving global connectivity (undirected) or SCC structure (directed). To mitigate oversmoothing during training, we optionally apply PairNorm (Zhao &\nAkoglu, 2019) to intermediate embeddings via normalization:\nH −¯H\nH′ = , (12)\nq 1 Pi,j ∥hi −hj∥2 |V|2 where ¯H is the mean embedding across nodes. This normalization controls the scale of pairwise\ndistances and helps prevent representation collapse across layers.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 16,
+    "total_chunks": 37,
+    "char_count": 607,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "35b4f8c2-044e-43eb-84fd-41c5240449fd",
+    "text": "The algorithmic pipeline pseudocode followed in the project is shared in Appendix A. We evaluate whether resistance-driven rewiring improves message passing by targeting oversquashing rather than oversmoothing. We therefore focus on analyzing (i) performance across depth,\n(ii) implications to an explicit oversmoothing regularizer (PairNorm), and (iii) representation-level\ndiagnostics. To control the amount of structural modification, we parametrize each rewiring operator by a budget\nr, which specifies an upper bound on the number of edge edits the operator may perform. We\nevaluate r ∈{0.01, 0.05, 0.1, 0.15}. The operators are not forced to add or remove an edge at every\nstep, an edit is applied only when it is necessary and valid under the operator constraints.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 17,
+    "total_chunks": 37,
+    "char_count": 771,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5c614e45-acd3-4e03-9b91-96db7ee9c552",
+    "text": "As a\nconsequence, the realized number of edits can differ from the nominal budget and can vary across\nrewiring types, see Appendix C.2. To characterize how performance evolves with depth, we train models with an increasing number of\nlayers and report test accuracy as a function of depth. We repeat this depth sweep across rewiring\nstrategies and budgets, and include training on the original (non-rewired) graph as a baseline reference. 3.1 MITIGATING OVERSMOOTHING Rewiring changes graph connectivity and can affect depth behavior, we therefore repeat the depth\nsweep with and without PairNorm to compare settings without oversmoothing regularization to settings with an explicit oversmoothing regularizer. Figures 1, 3 report GCN test accuracy as a function of depth for several rewiring strategies across\nfour datasets. On the homophilic citation graphs (Cora and CiteSeer), accuracy tends to degrade as\ndepth increases when PairNorm is not used, reflecting the onset of oversmoothing in deeper models. Introducing PairNorm stabilizes performance across layers, preventing the sharp accuracy drop\nobserved in the unregularized setting. In this regime, resistance-based rewiring strategies further\nhelp maintain accuracy as depth increases, suggesting that improving global connectivity can complement oversmoothing control by facilitating long-range information propagation without inducing\nearly collapse. In contrast, the heterophilic graphs (Cornell and Texas) exhibit a different behavior. Here, PairNorm\nhas a weaker effect on the depth dynamics, and performance does not deteriorate as sharply with",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 18,
+    "total_chunks": 37,
+    "char_count": 1608,
+    "word_count": 229,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "605a93c2-97e1-4b22-b47b-cba962f8b46a",
+    "text": "GRaM workshop at ICLR 2026 Proceedings Track (a) Cora dataset, without PairNorm. (b) Cora dataset, with PairNorm. (c) Cornell dataset, without PairNorm. (d) Cornell dataset, with PairNorm. Figure 1: GCN test accuracy versus depth (number of layers) under different rewiring strategies. increasing depth even without explicit normalization. Instead, the dominant factor becomes the\ngraph topology itself as rewiring strategies consistently improve accuracy compared to the baseline\nacross multiple depths.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 19,
+    "total_chunks": 37,
+    "char_count": 504,
+    "word_count": 69,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e36807d5-9f1b-4110-96fe-7f87f8c2d70a",
+    "text": "3.2 REPRESENTATION ANALYSIS Several rewiring strategies achieve similar test accuracy across depths and budgets. We therefore\ncomplement the performance curves with an embedding-level analysis, to compare the representations produced by different rewirings and to check whether similar accuracy corresponds to similar\nor different embeddings. Edge-set overlap as a starting point. We first compare the rewiring operators at the graph level,\nby analyzing which edges they add or remove under the same budget. The UpSet plots in Figures 6\nsummarize intersections between the sets of added edges for different rewiring strategies at r =\n0.1 (Cora, Cornell, CiteSeer and Texas). This establishes the extent to which the methods start\nfrom similar or different modified graphs before training, since distinct added-edge sets can lead to\ndifferent neighborhood structure and message-passing trajectories. Linear probe on penultimate-layer embeddings. We probe the penultimate layer (pre-logits)\nto assess linear separability of the learned representation independently of the final classifier head,\nfollowing the standard use of linear probes on intermediate representations (Alain & Bengio, 2016;\nTenney et al., 2019). Figure 2 reports linear-probe accuracy across depth for Curvature and Resistance (add and remove) rewiring strategies at budget r = 0.1, evaluated both without PairNorm\nand with PairNorm. On Cora and Cornell, probe accuracy varies with depth in both settings, with\ndifferences across rewiring strategies and across the PairNorm/no-PairNorm conditions. Cosine similarity between classes. To study how class-conditional representation similarity\nevolves through the network, we compute the mean cosine similarity between node embeddings for\npairs of nodes in the same class and for pairs in different classes, which provides a representationlevel view related to homophily versus heterophily. We report cosine similarity as a function of\nthe inner layer index (with the outer layer fixed), for Cora and Cornell at r = 0.1, both without\nPairNorm and with PairNorm (Figure 7). This diagnostic tracks how within-class similarity and",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 20,
+    "total_chunks": 37,
+    "char_count": 2141,
+    "word_count": 309,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6a4b809b-2c21-4967-a581-a5b56e2c9875",
+    "text": "GRaM workshop at ICLR 2026 Proceedings Track between-class similarity change across layers under each rewiring strategy, and how these trends\ndiffer when PairNorm is applied. CKA similarity between representations. Finally, we compare the learned representations across\nrewiring strategies using Centered Kernel Alignment (CKA) (Kornblith et al., 2019), which provides a representation-level similarity measure that is invariant to orthogonal transformations and\nisotropic scaling of features. This is useful for comparing embeddings across independently trained\nmodels where neuron bases can rotate or rescale without changing the underlying representation. Figures 4, 5 reports CKA similarity between last-layer representations learned with curvature versus\nthose learned with alternative rewiring strategies across depth, for the four different datasets, without\nPairNorm and with PairNorm. This complements the cosine and probe analyses by comparing full representations across methods\nrather than class-conditioned pairwise similarities or linear separability alone. All plots about the comparison between both rewiring techniques are available in Appendix C.4. (a) Curvature (b) Resistance (Add & remove) Figure 2: Linear-probe accuracy on penultimate-layer embeddings of a GCN as depth increases,\ncomparing rewiring strategies at budget 0.1. Results are shown for Cora (top) and Cornell (bottom),\nwithout PairNorm in the left columns and with PairNorm in the right ones; each colored curve\ncorresponds to a different readout (output) layer. PairNorm consistently stabilizes the depth trend of\nprobe accuracy, while resistance-driven rewiring alters the depth at which informative embeddings\nform and reduces the degradation observed in the unnormalized setting, highlighting the interaction\nbetween normalization (oversmoothing control) and topology edits (bottleneck alleviation). Our experiments highlight a practical trade-off in topology interventions for message passing. We\nobserved that reducing over-squashing by improving global connectivity can simultaneously increase neighborhood mixing and accelerate oversmoothing, and which effect dominates depends on\nboth graph type and network depth. On homophilic citation graphs, shallow GCNs already perform strongly, and the main degradation\nwith depth is consistent with oversmoothing-driven representation collapse rather than a lack of\nstructural reachability.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 21,
+    "total_chunks": 37,
+    "char_count": 2425,
+    "word_count": 321,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "22d63b0f-123a-4c40-b564-0c27988295fc",
+    "text": "In this regime, rewiring yields limited gains because additional edges largely\nact as extra diffusion paths. PairNorm stabilizes deep models and largely removes depth-related\ncollapse, once it is enabled, differences between rewiring strategies become comparatively small. Together, these results suggest that, on homophilic graphs, controlling collapse is the primary lever\nfor depth, while topology correction plays a secondary role. On heterophilic graphs, rewiring improves performance for shallow and moderately deep models,\nconsistent with the idea that bottlenecks can limit early information flow and that improving weak\nglobal connectivity helps distant signals reach target nodes. However, deeper models still degrade\neven after rewiring. This indicates that reachability alone is not sufficient since repeated aggregation GRaM workshop at ICLR 2026 Proceedings Track",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 22,
+    "total_chunks": 37,
+    "char_count": 877,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a6043e65-e128-48b4-b757-5b054fa491a7",
+    "text": "increasingly mixes signals across classes, and this mixing remains harmful at depth. PairNorm\nreduces collapse but does not eliminate the depth-induced mixing effect, aligning with the linearprobe behavior on Cornell where separability still degrades with depth. Overall, these results point\nto depth-induced mixing, not only collapse, as the dominant limitation in heterophilic settings. Curvature and resistance-based rewiring can reach similar accuracy levels, but they need not produce the same internal solutions. The two theoretical criteria operate at different scales. Curvature\nemphasizes local geometric bottlenecks, while effective resistance captures global multi-path connectivity. Our representation-level analyses via linear probing and similarity diagnostics suggest\nthat these strategies emphasize different structural aspects of the graph, leading to embeddings that\ncan differ even when end-task accuracy is comparable. This makes the choice of rewiring criterion\nrelevant not only for performance but also for what information the representation preserves. For directed graphs, restricting resistance computations to pairs within the same strongly connected\ncomponent keeps the directed resistance well-defined and preserves reachability during rewiring,\nbut it also constrains which bottlenecks can be modified. In practice, this means the directed extension is best viewed as a principled first step toward topology correction under directionality, while\nacknowledging that the SCC constraint can prevent interventions on certain global obstacles. Two limitations are central. First, computational cost is nontrivial, especially for directed effective resistance, which makes scaling and frequent recomputation a concern. Second, resistance is\ntask-agnostic, and while lowering resistance improves connectivity in heterophilic graphs it can also\ncreate harmful neighbors and amplify class mixing. These observations suggest that topology correction is most reliable when paired with mechanisms that explicitly control mixing, particularly in\ndeep or heterophilic regimes. The author thankfully acknowledges RES resources provided by BSC in MareNostrum to BCV-\n2025-3-0045.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 23,
+    "total_chunks": 37,
+    "char_count": 2194,
+    "word_count": 291,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7f867a3f-0f80-4846-9b9d-98f3fef7916b",
+    "text": "GRaM workshop at ICLR 2026 Proceedings Track Guillaume Alain and Yoshua Bengio. Understanding intermediate layers using linear classifier\nprobes. arXiv preprint arXiv:1610.01644, 2016. Uri Alon and Eran Yahav. On the bottleneck of graph neural networks and its practical implications. Arnaiz-Rodr´ıguez, A. Diffwire: Inductive graph rewiring via\nthe lov´asz bound. arXiv preprint arXiv:2206.07369, 2022. ´Alvaro Arroyo, Alessio Gravina, Benjamin Gutteridge, Federico Barbero, Claudio Gallicchio, Xiaowen Dong, Michael M. Bronstein, and Pierre Vandergheynst. On vanishing gradients, oversmoothing, and over-squashing in GNNs: Bridging recurrent and graph learning. arXiv preprint Mitchell Black, Zhengchao Wan, Amir Nayyeri, and Yusu Wang. Understanding oversquashing in\nGNNs through the lens of effective resistance. In International Conference on Machine Learning\n(ICML), 2023. Deli Chen, Yankai Lin, Wei Li, Peng Li, Jie Zhou, and Xu Sun.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 24,
+    "total_chunks": 37,
+    "char_count": 940,
+    "word_count": 126,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "50d61646-afca-4d26-93b2-0311638bfdd4",
+    "text": "Measuring and relieving the oversmoothing problem for graph neural networks from the topological view. In Proceedings of the\nAAAI Conference on Artificial Intelligence, volume 34, pp. 3438–3445, 2020. Discrete curvature on graphs from the effective resistance. Journal\nof Physics: Complexity, 2022. Francesco Di Giovanni, Lorenzo Giusti, Federico Barbero, Giulia Luise, Pietro Li`o, and Michael M. On over-squashing in message passing neural networks: The impact of width, depth,\nand topology. In International Conference on Machine Learning (ICML), 2023a. Francesco Di Giovanni, T. Bronstein, Andreea Deac, Mark Lackenby, Siddhartha Mishra, and Petar Veliˇckovi´c.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 25,
+    "total_chunks": 37,
+    "char_count": 665,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c0784ab7-a47a-40a7-bfae-1e63b32ecb2a",
+    "text": "How does over-squashing affect the power of GNNs? arXiv Random Walks and Electric Networks. Mathematical Association\nof America, 1984. Matthias Fey and Jan Eric Lenssen. Fast graph representation learning with pytorch geometric. Giraldo, Konstantinos Skianis, Thierry Bouwmans, and Fragkiskos D. On the\ntrade-off between over-smoothing and over-squashing in deep graph neural networks. In Proceedings of the 32nd ACM International Conference on Information and Knowledge Management\n(CIKM), 2023. The ricci flow on surfaces, mathematics and general relativity. Math.,\n71:237–261, 1988. Adarsh Jamadandi, Celia Rubio-Madrigal, and Rebekka Burkholz.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 26,
+    "total_chunks": 37,
+    "char_count": 646,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "031274d2-5a99-48ec-989a-5ba81a66698f",
+    "text": "Spectral graph pruning against\nover-squashing and over-smoothing. In Advances in Neural Information Processing Systems\n(NeurIPS), volume 37, 2024. Not too little, not too much: A theoretical analysis of graph (over) smoothing. Advances in Neural Information Processing Systems (NeurIPS), 2022. Kipf and Max Welling.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 27,
+    "total_chunks": 37,
+    "char_count": 315,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "01bf2a5f-88e8-443d-9862-7dea087164a7",
+    "text": "Semi-supervised classification with graph convolutional networks. In International Conference on Learning Representations (ICLR), 2017. Klein and Milan Randi´c. Journal of Mathematical Chemistry, 1993. Simon Kornblith, Mohammad Norouzi, Honglak Lee, and Geoffrey Hinton.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 28,
+    "total_chunks": 37,
+    "char_count": 270,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e1f9fb92-a75c-452f-969d-fb5102470e7e",
+    "text": "Similarity of neural\nnetwork representations revisited. In International conference on machine learning, pp. 3519–\n3529. GRaM workshop at ICLR 2026 Proceedings Track Qimai Li, Zhichao Han, and Xiao-Ming Wu. Deeper insights into graph convolutional networks\nfor semi-supervised learning. In Proceedings of the Thirty-Second AAAI Conference on Artificial\nIntelligence (AAAI-18), pp. 3538–3545, 2018. Hongbin Pei, Bingzhe Wei, Kevin Chen-Chuan Chang, Yu Lei, and Bo Yang.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 29,
+    "total_chunks": 37,
+    "char_count": 468,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1353f9b2-83ac-43ba-9b56-3b810869a89c",
+    "text": "Geom-gcn: Geometric\ngraph convolutional networks. arXiv preprint arXiv:2002.05287, 2020. Limits of depth: Over-smoothing and over-squashing in GNNs. Big Data Mining and\nAnalytics, 2023. A survey on oversmoothing in graph neural\nnetworks. arXiv preprint arXiv:2303.10993, 2023. Ian Tenney, Dipanjan Das, and Ellie Pavlick.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 30,
+    "total_chunks": 37,
+    "char_count": 321,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ea418044-87a4-43dd-b060-cbbb7ccb6717",
+    "text": "Bert rediscovers the classical nlp pipeline. In Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics, 2019. Directed graph convolutional network. arXiv Jake Topping, Francesco Di Giovanni, Benjamin Paul Chamberlain, Xiaowen Dong, and Michael M. Understanding over-squashing and bottlenecks on graphs via curvature. In International Conference on Learning Representations (ICLR), 2022. arXiv:2111.14522. George Forrest Young, Luca Scardovi, and Naomi Ehrich Leonard. A new notion of effective resistance for directed graphs—part i: Definition and properties. IEEE Transactions on Automatic\nControl, 61(7):1727–1736, 2015. Lingxiao Zhao and Leman Akoglu. Pairnorm: Tackling oversmoothing in GNNs. arXiv preprint Kaixiong Zhou, Xiao Huang, Daochen Zha, Rui Chen, Li Li, Soo-Hyun Choi, and Xia Hu.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 31,
+    "total_chunks": 37,
+    "char_count": 828,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2088ee5a-08ef-4d9b-b81e-0c4217ff68d0",
+    "text": "Dirichlet\nenergy constrained learning for deep graph neural networks. In Advances in Neural Information\nProcessing Systems (NeurIPS), volume 34, pp. 21834–21846, 2021. GRaM workshop at ICLR 2026 Proceedings Track A ALGORITHMIC PIPELINE Algorithm 1 Algorithmic Pipeline Require: Graph G = (V, E) (directed or undirected), rewiring budget r, GNN type M ∈\n{GCN, DirGCN}, PairNorm flag P\nEnsure: Trained model parameters and evaluation metrics\n1: Load data:\n2: Load graph G in its original directed or undirected form\n3: Apply rewiring:\n4: Construct rewired graph ˜G by applying the rewiring operator to G with budget r\n▷Includes edge addition and, if enabled, edge removal\n5: Train model:\n6: if M = GCN then\n7: if ˜G is directed then\n8: Apply undirecting map to ˜G (e.g., symmetrization)\n9: end if\n10: Train GCN on the resulting undirected graph\n11: else\n12: Train DirGCN directly on ˜G\n13: end if\n14: Normalization and readout:\n15: if P is enabled then\n16: Apply PairNorm at each GNN layer\n17: end if\n18: Compute task loss and evaluation metrics from final node representations B OVERSMOOTHING METRIC In order to measure oversmoothing evolution across the embeddings, we use cosine similarity, as\nintroduced in 2.1. Given node embeddings hi and hj, we compute: h⊤i hj\nCosineSimilarity(hi, hj) = |cos(hi, hj)| = (13)\n∥hi∥∥hj∥ C EXPERIMENTAL RESULTS C.1 EXPERIMENTAL SETUP We use the standard benchmark datasets and splits as commonly reported in prior work, as well as\nfor hyperparameters. For Cora and CiteSeer, we follow the experimental setup of Kipf & Welling\n(2017), using the default transductive split convention associated with that benchmark and the same\ntraining hyperparameters (hidden dimension 16, dropout 0.5, learning rate 0.01, weight decay 5 ×\n10−3). For Cornell and Texas, we follow Pei et al. (2020), using their dataset split protocol and\nhyperparameters (hidden dimension 64, dropout 0.5, learning rate 0.01, weight decay 5 × 10−4).",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 32,
+    "total_chunks": 37,
+    "char_count": 1950,
+    "word_count": 315,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2669fcf1-19f7-42e3-a7f5-c1696df829e8",
+    "text": "We load the datasets and their default split objects through PyTorch Geometric (Fey & Lenssen,\n2019), and we keep the training pipeline fixed across all experiments: we optimize cross-entropy on\nthe training nodes using Adam, select the checkpoint with the best validation accuracy, and report\nthe corresponding test accuracy. Table 1 summarizes the adopted hyperparameters. GRaM workshop at ICLR 2026 Proceedings Track Table 1: Hyperparameters adopted from prior work (no tuning): Kipf & Welling (2017) for\nCora/CiteSeer and Pei et al. (2020) for Cornell/Texas. Dataset Hidden dim d Dropout lr Weight decay\nCora 16 0.5 0.01 5 × 10−3\nCiteSeer 16 0.5 0.01 5 × 10−3\nCornell 64 0.5 0.01 5 × 10−4\nTexas 64 0.5 0.01 5 × 10−4 Table 2: Directed graphs: edge modifications by budget. Each cell reports added / removed edges,\nand on the next line the corresponding percentages relative to the initial number of edges E0. For\nres and res hop, we report added / –. Resistance Resistance per Hop Resistance\nDataset N E0 Budget Curvature Resistance (Add & Remove) (Add & Remove) per Hop\n105 / 105 105 / 105 105 / 105 105 / – 105 / –\n(1.0% / 1.0%) (1.0% / 1.0%) (1.0% / 1.0%) (1.0% / –) (1.0% / –)\ncora 2708 10556 5% 517 / 517 527 / 527 526 / 526 527 / – 526 / –\n(4.9% / 4.9%) (5.0% / 5.0%) (5.0% / 5.0%) (5.0% / –) (5.0% / –)\n1007 / 1007 1055 / 1055 1007 / 1007 1055 / – 1007 / –\n10%\n(9.5% / 9.5%) (10.0% / 10.0%) (9.5% / 9.5%) (10.0% / –) (9.5% / –)\n1489 / 1489 1583 / 1583 1440 / 1440 1583 / – 1440 / –\n15%\n(14.1% / 14.1%) (15.0% / 15.0%) (13.6% / 13.6%) (15.0% / –) (13.6% / –)\n91 / 91 91 / 91 91 / 91 91 / – 91 / –\n(1.0% / 1.0%) (1.0% / 1.0%) (1.0% / 1.0%) (1.0% / –) (1.0% / –)\nciteseer 3327 9104 5% 451 / 451 455 / 455 455 / 455 455 / – 455 / –\n(5.0% / 5.0%) (5.0% / 5.0%) (5.0% / 5.0%) (5.0% / –) (5.0% / –)\n895 / 895 910 / 910 909 / 909 910 / – 909 / –\n10%\n(9.8% / 9.8%) (10.0% / 10.0%) (10.0% / 10.0%) (10.0% / –) (10.0% / –)\n1336 / 1336 1365 / 1365 1312 / 1312 1365 / – 1312 / –\n15%\n(14.7% / 14.7%) (15.0% / 15.0%) (14.4% / 14.4%) (15.0% / –) (14.4% / –)\n3 / 3 3 / 3 3 / 3 3 / – 3 / –\n(0.9% / 0.9%) (0.9% / 0.9%) (0.9% / 0.9%) (0.9% / –) (0.9% / –)\ntexas 183 325 5% 16 / 16 16 / 16 15 / 15 16 / – 15 / –\n(4.9% / 4.9%) (4.9% / 4.9%) (4.6% / 4.6%) (4.9% / –) (4.6% / –)\n10 / 24 32 / 32 31 / 31 32 / – 31 / –\n10%\n(3.1% / 7.4%) (9.8% / 9.8%) (9.5% / 9.5%) (9.8% / –) (9.5% / –)\n32 / 32 46 / 46 46 / 46 46 / – 46 / –\n15%\n(9.8% / 9.8%) (14.2% / 14.2%) (14.2% / 14.2%) (14.2% / –) (14.2% / –)\n2 / 2 2 / 2 2 / 2 2 / – 2 / –\n(0.7% / 0.7%) (0.7% / 0.7%) (0.7% / 0.7%) (0.7% / –) (0.7% / –)\ncornell 183 298 5% 14 / 14 14 / 14 12 / 12 14 / – 12 / –\n(4.7% / 4.7%) (4.7% / 4.7%) (4.0% / 4.0%) (4.7% / –) (4.0% / –)\n26 / 26 29 / 29 25 / 25 29 / – 25 / –\n10%\n(8.7% / 8.7%) (9.7% / 9.7%) (8.4% / 8.4%) (9.7% / –) (8.4% / –)\n39 / 39 40 / 40 39 / 39 40 / – 39 / –\n15%\n(13.1% / 13.1%) (13.4% / 13.4%) (13.1% / 13.1%) (13.4% / –) (13.1% / –) GRaM workshop at ICLR 2026 Proceedings Track Table 3: Undirected graphs: edge modifications by budget. Each cell reports added / removed edges,\nand on the next line the corresponding percentages relative to the initial number of (undirected) edges\nE0.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 33,
+    "total_chunks": 37,
+    "char_count": 3169,
+    "word_count": 723,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "619efc6d-b66a-4f15-bc92-cdb644395f5b",
+    "text": "For res and res hop, removals are not performed and are shown as \"–\". Resistance Resistance per Hop Resistance\nDataset N E0 Budget Curvature Resistance (Add & Remove) (Add & Remove) per Hop\n52 / 52 52 / 52 52 / 52 52 / – 52 / –\n(1.0% / 1.0%) (1.0% / 1.0%) (1.0% / 1.0%) (1.0% / –) (1.0% / –)\ncora 2708 5278 263 / 263 263 / 263 263 / 263 263 / – 263 / – 5%\n(5.0% / 5.0%) (5.0% / 5.0%) (5.0% / 5.0%) (5.0% / –) (5.0% / –)\n527 / 527 519 / 519 522 / 522 527 / – 527 / –\n10%\n(10.0% / 10.0%) (9.8% / 9.8%) (9.9% / 9.9%) (10.0% / –) (10.0% / –)\n789 / 789 745 / 745 730 / 730 791 / – 791 / –\n15%\n(14.9% / 14.9%) (14.1% / 14.1%) (13.8% / 13.8%) (15.0% / –) (15.0% / –)\n45 / 45 45 / 45 45 / 45 45 / – 45 / –\n(1.0% / 1.0%) (1.0% / 1.0%) (1.0% / 1.0%) (1.0% / –) (1.0% / –)\nciteseer 3327 4552 227 / 227 227 / 227 227 / 227 227 / – 227 / – 5%\n(5.0% / 5.0%) (5.0% / 5.0%) (5.0% / 5.0%) (5.0% / –) (5.0% / –)\n455 / 455 453 / 453 454 / 454 455 / – 455 / –\n10%\n(10.0% / 10.0%) (10.0% / 10.0%) (10.0% / 10.0%) (10.0% / –) (10.0% / –)\n682 / 682 648 / 648 672 / 672 682 / – 682 / –\n15%\n(15.0% / 15.0%) (14.2% / 14.2%) (14.8% / 14.8%) (15.0% / –) (15.0% / –)\n3 / 3 2 / 2 3 / 3 3 / – 3 / –\n(1.0% / 1.0%) (0.7% / 0.7%) (1.0% / 1.0%) (1.0% / –) (1.0% / –)\ntexas 183 295 14 / 14 13 / 13 14 / 14 14 / – 14 / – 5%\n(4.7% / 4.7%) (4.4% / 4.4%) (4.7% / 4.7%) (4.7% / –) (4.7% / –)\n29 / 29 25 / 25 29 / 29 30 / – 30 / –\n10%\n(9.8% / 9.8%) (8.5% / 8.5%) (9.8% / 9.8%) (10.2% / –) (10.2% / –)\n44 / 44 36 / 36 44 / 44 44 / – 44 / –\n15%\n(14.9% / 14.9%) (12.2% / 12.2%) (14.9% / 14.9%) (14.9% / –) (14.9% / –)\n3 / 3 2 / 2 3 / 3 3 / – 3 / –\n(1.1% / 1.1%) (0.7% / 0.7%) (1.1% / 1.1%) (1.1% / –) (1.1% / –)\ncornell 183 280 14 / 14 13 / 13 14 / 14 14 / – 14 / – 5%\n(5.0% / 5.0%) (4.6% / 4.6%) (5.0% / 5.0%) (5.0% / –) (5.0% / –)\n30 / 30 24 / 24 30 / 30 30 / – 30 / –\n10%\n(10.7% / 10.7%) (8.6% / 8.6%) (10.7% / 10.7%) (10.7% / –) (10.7% / –)\n41 / 41 30 / 30 42 / 42 42 / – 42 / –\n15%\n(14.6% / 14.6%) (10.7% / 10.7%) (15.0% / 15.0%) (15.0% / –) (15.0% / –) GRaM workshop at ICLR 2026 Proceedings Track C.3 RESULTS OF ADDITIONAL DATASETS (a) CiteSeer dataset, without PairNorm. (b) CiteSeer dataset, with PairNorm. (c) Texas dataset, without PairNorm. (d) Texas dataset, with PairNorm. Figure 3: GCN accuracy versus depth (number of layers) under different rewiring strategies. GRaM workshop at ICLR 2026 Proceedings Track C.4 REPRESENTATION-LEVEL DIAGNOSTICS (a) Cora dataset, without PairNorm. (b) Cora dataset, with PairNorm. (c) Cornell dataset, without PairNorm. (d) Cornell dataset, with PairNorm. Figure 4: CKA similarity between last-layer GCN representations with curvature rewiring (curvature) and proposed rewiring strategies with 0.1 as budget. (a) CiteSeer dataset, without PairNorm. (b) CiteSeer dataset, with PairNorm. (c) Texas dataset, without PairNorm. (d) Texas dataset, with PairNorm. Figure 5: CKA similarity between last-layer GCN representations with curvature rewiring (curvature) and proposed rewiring strategies with 0.1 as budget.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 34,
+    "total_chunks": 37,
+    "char_count": 3013,
+    "word_count": 672,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e3bda2be-c482-4e53-ae04-c226e833665b",
+    "text": "GRaM workshop at ICLR 2026 Proceedings Track (a) Cora dataset. (b) CiteSeer dataset. (c) Cornell dataset. (d) Texas dataset. Figure 6: UpSet plots of edges added by different rewiring strategies at budget r = 0.1. Bars\nreport intersection sizes of the added-edge sets, bar color indicates Jaccard overlap (intersection\nover union) for each combination.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 35,
+    "total_chunks": 37,
+    "char_count": 352,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c0f91d34-c16e-422e-826c-db90705c535a",
+    "text": "GRaM workshop at ICLR 2026 Proceedings Track Baseline Curvature (Add & Remove) (a) Cora, no PairNorm (b) Cora, PairNorm (e) Cora, no PairNorm (f) Cora, PairNorm (c) Cornell, no PairNorm (d) Cornell, PairNorm (g) Cornell, no PairNorm (h) Cornell, PairNorm Resistance (Add & Remove) Resistance per hop (Add & Remove) (i) Cora, no PairNorm (j) Cora, PairNorm (m) Cora, no PairNorm (n) Cora, PairNorm (k) Cornell, no PairNorm (l) Cornell, PairNorm (o) Cornell, no PairNorm (p) Cornell, PairNorm Figure 7: Mean cosine similarity between node embeddings as a function of the inner layer index\n(outer layer fixed to 7), comparing node pairs from the same class versus different classes, under\ndifferent rewiring strategies at budget r = 0.1. Each grouped panel corresponds to one graph\nconstruction: Baseline, Curvature, Resistance, and Resistance per hop. Within each group, results\nare shown for Cora and Cornell, with and without PairNorm.",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 36,
+    "total_chunks": 37,
+    "char_count": 935,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cd10bd39-7fd6-4594-8a30-c33b93caf20f",
+    "text": "GRaM workshop at ICLR 2026 Proceedings Track Table 4: Directed graphs: best layer / max ac- Table 5: Directed graphs: best layer / max accuracy at budget 1% across datasets (Cornell, curacy at budget 1% across datasets (Cora, CiteTexas). seer). Model Rewiring Cornell Texas Model Rewiring Cora Citeseer\nGCN (PairNorm=No) GCN (PairNorm=No)\nCurvature 8 / 40.5 1 / 64.9 Curvature 3 / 81.0 1 / 71.0\nResistance Resistance\n12 / 40.5 1 / 64.9 3 / 78.4 1 / 71.0\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n12 / 40.5 1 / 64.9 3 / 79.1 1 / 70.7\n(Add & Remove) (Add & Remove)\nResistance 9 / 40.5 1 / 64.9 Resistance 3 / 77.9 1 / 71.0\nResistance per Hop 8 / 40.5 1 / 64.9 Resistance per Hop 3 / 78.6 1 / 71.4\nGCN (PairNorm=Yes) GCN (PairNorm=Yes)\nCurvature 2 / 48.6 10 / 70.3 Curvature 3 / 81.0 1 / 71.0\nResistance Resistance\n2 / 54.0 1 / 64.9 3 / 78.4 1 / 71.0\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n2 / 54.0 12 / 67.6 3 / 79.1 1 / 70.7\n(Add & Remove) (Add & Remove)\nResistance 2 / 51.4 1 / 64.9 Resistance 3 / 77.9 1 / 71.0\nResistance per Hop 2 / 51.4 1 / 64.9 Resistance per Hop 3 / 78.6 1 / 71.4\nDirGCN (PairNorm=No) DirGCN (PairNorm=No)\nCurvature 3 / 81.1 2 / 81.1 Curvature 4 / 75.8 2 / 68.4\nResistance Resistance\n3 / 81.1 7 / 83.8 2 / 74.7 2 / 68.2\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n3 / 81.1 4 / 81.1 4 / 75.2 2 / 68.2\n(Add & Remove) (Add & Remove)\nResistance 3 / 78.4 2 / 81.1 Resistance 2 / 74.6 2 / 67.9\nResistance per Hop 3 / 83.8 2 / 81.1 Resistance per Hop 4 / 75.7 2 / 68.1\nDirGCN (PairNorm=Yes) DirGCN (PairNorm=Yes)\nCurvature 3 / 81.1 8 / 86.5 Curvature 4 / 76.4 2 / 68.4\nResistance Resistance\n5 / 81.1 9 / 83.8 2 / 76.1 2 / 68.2\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n3 / 81.1 2 / 81.1 5 / 76.5 2 / 68.2\n(Add & Remove) (Add & Remove)\nResistance 2 / 78.4 2 / 81.1 Resistance 3 / 75.4 2 / 67.9\nResistance per Hop 3 / 83.8 2 / 81.1 Resistance per Hop 4 / 76.5 2 / 68.1 GRaM workshop at ICLR 2026 Proceedings Track Table 6: Directed graphs: best layer / max ac- Table 8: Directed graphs: best layer / max accuracy at budget 5% across datasets (Cornell, curacy at budget 10% across datasets (Cornell,\nTexas). Model Rewiring Cornell Texas Model Rewiring Cornell Texas\nCurvature 10 / 40.5 12 / 67.6 Curvature 1 / 40.5 1 / 64.9\nResistance Resistance\n9 / 40.5 1 / 64.9 1 / 40.5 2 / 67.6\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n10 / 40.5 1 / 64.9 1 / 40.5 1 / 64.9\n(Add & Remove) (Add & Remove)\nResistance 12 / 48.6 1 / 64.9 Resistance 12 / 40.5 1 / 64.9\nResistance per Hop 9 / 40.5 1 / 64.9 Resistance per Hop 10 / 40.5 1 / 64.9\nGCN (PairNorm=Yes) GCN (PairNorm=Yes)\nCurvature 2 / 46.0 1 / 64.9 Curvature 3 / 43.2 1 / 64.9\nResistance Resistance\n10 / 46.0 10 / 67.6 2 / 43.2 2 / 73.0\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n2 / 46.0 1 / 64.9 8 / 46.0 1 / 64.9\n(Add & Remove) (Add & Remove)\nResistance 2 / 51.4 9 / 67.6 Resistance 2 / 43.2 1 / 64.9\nResistance per Hop 2 / 51.4 1 / 64.9 Resistance per Hop 2 / 51.4 1 / 64.9\nDirGCN (PairNorm=No) DirGCN (PairNorm=No)\nCurvature 4 / 81.1 7 / 83.8 Curvature 3 / 83.8 7 / 86.5\nResistance Resistance\n3 / 86.5 4 / 83.8 2 / 75.7 3 / 81.1\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n4 / 86.5 8 / 83.8 3 / 78.4 5 / 83.8\n(Add & Remove) (Add & Remove)\nResistance 3 / 83.8 4 / 81.1 Resistance 3 / 81.1 2 / 75.7\nResistance per Hop 3 / 89.2 2 / 81.1 Resistance per Hop 3 / 86.5 6 / 86.5\nDirGCN (PairNorm=Yes) DirGCN (PairNorm=Yes)\nCurvature 2 / 81.1 2 / 83.8 Curvature 2 / 81.1 2 / 81.1\nResistance Resistance\n3 / 86.5 3 / 81.1 2 / 78.4 2 / 75.7\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n3 / 86.5 12 / 83.8 3 / 78.4 4 / 83.8\n(Add & Remove) (Add & Remove)\nResistance 3 / 86.5 2 / 78.4 Resistance 3 / 83.8 4 / 81.1\nResistance per Hop 3 / 89.2 2 / 81.1 Resistance per Hop 3 / 81.1 2 / 81.1 Table 7: Directed graphs: best layer / max ac- Table 9: Directed graphs: best layer / max accucuracy at budget 5% across datasets (Cora, Cite- racy at budget 10% across datasets (Cora, Citeseer). seer). Model Rewiring Cora Citeseer Model Rewiring Cora Citeseer\nCurvature 3 / 75.8 1 / 70.3 Curvature 3 / 73.8 1 / 69.8\nResistance Resistance\n1 / 71.7 1 / 70.1 1 / 69.6 1 / 69.3\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n1 / 74.2 1 / 72.0 1 / 73.3 1 / 71.8\n(Add & Remove) (Add & Remove)\nResistance 1 / 71.7 1 / 70.7 Resistance 1 / 70.4 1 / 68.9\nResistance per Hop 3 / 74.2 1 / 72.1 Resistance per Hop 3 / 78.7 1 / 71.9\nGCN (PairNorm=Yes) GCN (PairNorm=Yes)\nCurvature 3 / 75.1 1 / 70.3 Curvature 3 / 73.6 1 / 69.8\nResistance Resistance\n6 / 74.4 1 / 70.1 2 / 73.0 1 / 69.3\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n2 / 77.0 1 / 72.0 3 / 77.6 1 / 71.8\n(Add & Remove) (Add & Remove)\nResistance 5 / 75.7 1 / 70.7 Resistance 2 / 73.3 1 / 68.9\nResistance per Hop 6 / 77.6 1 / 72.1 Resistance per Hop 3 / 78.7 1 / 71.9\nDirGCN (PairNorm=No) DirGCN (PairNorm=No)\nCurvature 2 / 72.5 1 / 66.1 Curvature 3 / 71.1 1 / 65.7\nResistance Resistance\n2 / 74.1 2 / 69.0 2 / 73.6 2 / 67.5\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n2 / 75.0 2 / 70.6 4 / 76.8 2 / 71.4\n(Add & Remove) (Add & Remove)\nResistance 2 / 72.2 2 / 69.4 Resistance 2 / 73.5 2 / 68.9\nResistance per Hop 2 / 75.8 2 / 70.5 Resistance per Hop 2 / 75.7 2 / 71.3\nDirGCN (PairNorm=Yes) DirGCN (PairNorm=Yes)\nCurvature 5 / 73.6 1 / 66.1 Curvature 4 / 74.6 3 / 66.9\nResistance Resistance\n2 / 74.1 2 / 68.0 3 / 73.7 2 / 67.5\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n2 / 76.0 2 / 70.5 5 / 78.5 2 / 71.4\n(Add & Remove) (Add & Remove)\nResistance 2 / 72.9 2 / 69.4 Resistance 2 / 73.4 2 / 68.9\nResistance per Hop 2 / 77.5 2 / 70.5 Resistance per Hop 4 / 78.0 2 / 71.3 GRaM workshop at ICLR 2026 Proceedings Track Table 10: Directed graphs: best layer / max ac- Table 11: Directed graphs: best layer / max accucuracy at budget 15% across datasets (Cornell, racy at budget 15% across datasets (Cora, CiteTexas). seer). Model Rewiring Cornell Texas Model Rewiring Cora Citeseer\nGCN (PairNorm=No) GCN (PairNorm=No)\nCurvature 9 / 46.0 1 / 64.9 Curvature 3 / 73.8 1 / 69.2\nResistance Resistance\n10 / 40.5 2 / 70.3 1 / 69.5 1 / 67.8\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n1 / 40.5 1 / 64.9 3 / 74.4 1 / 71.7\n(Add & Remove) (Add & Remove)\nResistance 7 / 43.2 2 / 67.6 Resistance 1 / 68.3 1 / 67.3\nResistance per Hop 1 / 37.8 1 / 64.9 Resistance per Hop 4 / 76.0 1 / 71.3\nGCN (PairNorm=Yes) GCN (PairNorm=Yes)\nCurvature 8 / 46.0 1 / 64.9 Curvature 1 / 71.1 1 / 69.2\nResistance Resistance\n2 / 40.5 2 / 70.3 2 / 70.6 1 / 67.8\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n9 / 43.2 1 / 64.9 2 / 77.8 1 / 71.7\n(Add & Remove) (Add & Remove)\nResistance 10 / 43.2 10 / 67.6 Resistance 2 / 71.8 1 / 67.3\nResistance per Hop 2 / 40.5 1 / 64.9 Resistance per Hop 2 / 76.9 1 / 71.3\nDirGCN (PairNorm=No) DirGCN (PairNorm=No)\nCurvature 3 / 83.8 5 / 81.1 Curvature 2 / 67.2 1 / 64.9\nResistance Resistance\n3 / 83.8 4 / 81.1 2 / 72.8 2 / 68.5\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n3 / 78.4 5 / 83.8 2 / 75.5 2 / 70.4\n(Add & Remove) (Add & Remove)\nResistance 3 / 75.7 4 / 83.8 Resistance 3 / 72.6 1 / 66.3\nResistance per Hop 4 / 81.1 5 / 83.8 Resistance per Hop 2 / 77.7 1 / 68.9\nDirGCN (PairNorm=Yes) DirGCN (PairNorm=Yes)\nCurvature 3 / 81.1 4 / 83.8 Curvature 3 / 73.0 3 / 65.0\nResistance Resistance\n3 / 86.5 2 / 78.4 3 / 73.0 2 / 67.4\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n3 / 78.4 3 / 81.1 4 / 77.5 2 / 70.4\n(Add & Remove) (Add & Remove)\nResistance 3 / 81.1 2 / 81.1 Resistance 2 / 72.4 1 / 66.3\nResistance per Hop 3 / 81.1 2 / 83.8 Resistance per Hop 3 / 78.8 4 / 69.1 Table 12: Undirected graphs: best layer / max\naccuracy at budget 1% across datasets (Cornell,\nTexas). Model Rewiring Cornell Texas\nGCN (PairNorm=No)\nCurvature 2 / 48.6 9 / 73.0\nResistance\n9 / 59.5 12 / 70.3\n(Add & Remove)\nResistance per Hop\n10 / 59.5 9 / 70.3\n(Add & Remove)\nResistance 10 / 54.0 9 / 67.6\nResistance per Hop 9 / 48.6 9 / 70.3\nGCN (PairNorm=Yes)\nCurvature 2 / 54.0 10 / 67.6\nResistance\n10 / 59.5 9 / 67.6\n(Add & Remove)\nResistance per Hop\n9 / 56.8 9 / 67.6\n(Add & Remove)\nResistance 2 / 56.8 10 / 70.3\nResistance per Hop 11 / 59.5 12 / 67.6 GRaM workshop at ICLR 2026 Proceedings Track Table 13: Undirected graphs: best layer / max Table 16: Undirected graphs: best layer / max\naccuracy at budget 1% across datasets (Cora, accuracy at budget 10% across datasets (Cornell,\nCiteseer).",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 37,
+    "total_chunks": 37,
+    "char_count": 8628,
+    "word_count": 1833,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "80c23241-332b-4775-9cdd-69de098db32f",
+    "text": "Model Rewiring Cora Citeseer Model Rewiring Cornell Texas\nCurvature 3 / 80.7 1 / 70.8 GCN (PairNorm=No)\nResistance 3 / 78.7 1 / 70.9 Curvature 2 / 56.8 10 / 75.7\n(Add & Remove) Resistance\n2 / 56.8 8 / 70.3 Resistance per Hop 3 / 79.8 1 / 70.8 (Add & Remove)\n(Add & Remove) Resistance per Hop\n2 / 48.6 10 / 67.6\nResistance 3 / 78.4 1 / 70.9 (Add & Remove)\nResistance per Hop 3 / 79.6 1 / 71.5 Resistance 12 / 51.4 7 / 67.6\nGCN (PairNorm=Yes) Resistance per Hop 2 / 54.0 1 / 64.9\nCurvature 3 / 80.7 1 / 70.7 GCN (PairNorm=Yes)\nResistance 3 / 78.7 1 / 70.9 Curvature 2 / 56.8 12 / 70.3\n(Add & Remove) Resistance\n2 / 54.0 10 / 67.6 Resistance per Hop 3 / 79.8 1 / 70.8 (Add & Remove)\n(Add & Remove) Resistance per Hop\n2 / 51.4 1 / 64.9\nResistance 3 / 78.4 1 / 70.9 (Add & Remove)\nResistance per Hop 3 / 79.6 1 / 71.5 Resistance 2 / 51.4 7 / 73.0\nResistance per Hop 2 / 54.0 1 / 64.9 Table 14: Undirected graphs: best layer / max Table 17: Undirected graphs: best layer / max\naccuracy at budget 5% across datasets (Cornell, accuracy at budget 10% across datasets (Cora,\nTexas). Model Rewiring Cornell Texas\nModel Rewiring Cora Citeseer\nGCN (PairNorm=No)\nGCN (PairNorm=No)\nCurvature 2 / 56.8 2 / 70.3\nCurvature 3 / 74.2 1 / 69.8\nResistance\n12 / 59.5 9 / 70.3 Resistance\n(Add & Remove) 3 / 74.8 1 / 70.0\n(Add & Remove) Resistance per Hop\n2 / 51.4 10 / 67.6 Resistance per Hop\n(Add & Remove) 1 / 74.8 1 / 71.7\n(Add & Remove)\nResistance 2 / 54.0 12 / 70.3\nResistance 1 / 70.7 1 / 69.6\nResistance per Hop 2 / 54.0 9 / 67.6\nResistance per Hop 3 / 78.9 1 / 71.3\nGCN (PairNorm=Yes)\nGCN (PairNorm=Yes)\nCurvature 2 / 54.0 2 / 70.3\nCurvature 1 / 73.9 1 / 69.9\nResistance\n2 / 56.8 12 / 67.6 Resistance\n(Add & Remove) 3 / 74.3 1 / 70.0\n(Add & Remove) Resistance per Hop\n11 / 54.0 12 / 67.6 Resistance per Hop\n(Add & Remove) 2 / 77.9 1 / 71.7\n(Add & Remove)\nResistance 2 / 59.5 8 / 70.3\nResistance 2 / 73.9 1 / 69.6\nResistance per Hop 9 / 59.5 12 / 70.3\nResistance per Hop 3 / 78.8 1 / 71.3 Table 15: Undirected graphs: best layer / max Table 18: Undirected graphs: best layer / max\naccuracy at budget 5% across datasets (Cora, accuracy at budget 15% across datasets (Cornell,\nCiteseer). Model Rewiring Cora Citeseer Model Rewiring Cornell Texas\nGCN (PairNorm=No) GCN (PairNorm=No)\nCurvature 1 / 71.9 1 / 70.6 Curvature 2 / 62.2 2 / 73.0\nResistance Resistance\n1 / 73.0 1 / 70.1 2 / 56.8 8 / 70.3\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n1 / 74.5 1 / 71.2 2 / 43.2 1 / 64.9\n(Add & Remove) (Add & Remove)\nResistance 1 / 72.2 1 / 69.8 Resistance 2 / 54.0 8 / 67.6\nResistance per Hop 3 / 79.7 1 / 70.7 Resistance per Hop 10 / 54.0 8 / 67.6\nGCN (PairNorm=Yes) GCN (PairNorm=Yes)\nCurvature 3 / 77.1 1 / 70.5 Curvature 2 / 62.2 8 / 73.0\nResistance Resistance\n3 / 77.4 1 / 70.1 2 / 54.0 12 / 73.0\n(Add & Remove) (Add & Remove)\nResistance per Hop Resistance per Hop\n4 / 77.1 1 / 71.2 9 / 43.2 1 / 64.9\n(Add & Remove) (Add & Remove)\nResistance 2 / 76.4 1 / 69.8 Resistance 2 / 56.8 8 / 70.3\nResistance per Hop 3 / 79.7 1 / 70.7 Resistance per Hop 2 / 54.0 12 / 67.6 GRaM workshop at ICLR 2026 Proceedings Track Table 19: Undirected graphs: best layer / max\naccuracy at budget 15% across datasets (Cora,\nCiteseer). Model Rewiring Cora Citeseer\nGCN (PairNorm=No)\nCurvature 1 / 73.6 1 / 69.8\nResistance\n1 / 69.3 1 / 69.1\n(Add & Remove)\nResistance per Hop\n1 / 75.1 1 / 72.5\n(Add & Remove)\nResistance 1 / 69.9 1 / 68.5\nResistance per Hop 3 / 74.9 1 / 70.8\nGCN (PairNorm=Yes)\nCurvature 3 / 73.7 1 / 69.8\nResistance\n2 / 72.8 1 / 69.1\n(Add & Remove)\nResistance per Hop\n2 / 76.9 1 / 72.5\n(Add & Remove)\nResistance 2 / 72.4 1 / 68.5\nResistance per Hop 3 / 78.6 1 / 70.8",
+    "paper_id": "2603.11944",
+    "title": "Effective Resistance Rewiring: A Simple Topological Correction for Over-Squashing",
+    "authors": [
+      "Bertran Miquel-Oliver",
+      "Manel Gil-Sorribes",
+      "Victor Guallar",
+      "Alexis Molina"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11944v1",
+    "chunk_index": 38,
+    "total_chunks": 37,
+    "char_count": 3657,
+    "word_count": 769,
+    "chunking_strategy": "semantic"
+  }
+]

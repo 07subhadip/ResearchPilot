@@ -1,0 +1,534 @@
+[
+  {
+    "chunk_id": "cd9e82fc-20bc-44bc-976e-9b44619a9ce4",
+    "text": "Adapting Dijkstra for Buffers and Unlimited\nTransfers* Denys Katkalo∗, Andrii Rohovyi†, Toby Walsh†\n∗Igor Sikorsky Kyiv Polytechnic Institute, Kyiv, Ukraine\nkatkalo.denys@lll.kpi.ua\n†University of New South Wales, Sydney, Australia\n{a.rohovyi, t.walsh}@unsw.edu.au Abstract—In recent years, RAPTOR based algorithms have Patterns [7]. RAPTOR marked a major shift, replacing TDbeen considered the state-of-the-art for path-finding with un- Dijkstra in many practical applications including Bing Maps,\nlimited transfers without preprocessing. However, this status OpenTripPlanner, R5, Navitia.io, and Solari.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 0,
+    "total_chunks": 28,
+    "char_count": 605,
+    "word_count": 73,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "37a8b93c-97d1-4f11-8ae3-19db8edf460b",
+    "text": "During this evolargely stems from the evolution of routing research, where\nlution, Dijkstra-based techniques received less attention and Dijkstra-based solutions were superseded by timetable-based2026 algorithms without a systematic comparison. In this work, we were not thoroughly evaluated in modern multimodal scenarrevisit classical Dijkstra-based approaches for public transit ios.\nrouting with unlimited transfers and demonstrate that Time- For the unlimited transfer problem, where passengers may\nDependent Dijkstra (TD-Dijkstra) outperforms MR. However,Mar walk, cycle, or use other non-scheduled modes between any\nefficient TD-Dijkstra implementations rely on filtering dominated\nconnections during preprocessing, which assumes passengers can12 stops, RAPTOR-based algorithms such as MR and MCR have been treated as state-of-the-art. However, this assumption always switch to a faster connection.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 1,
+    "total_chunks": 28,
+    "char_count": 905,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "284c8f65-207e-4b52-b27a-a839a1accf9e",
+    "text": "We show that this filtering\nis unsound when stops have buffer times, as it cannot distinguish stems from the historical evolution of routing research rather\nbetween seated passengers who may continue without waiting than systematic comparison. A previous study [8] demonand transferring passengers who must respect the buffer. To strated that TD-Dijkstra can outperform CSA and RAPTOR\naddress this limitation, we introduce Transfer Aware Dijkstra\non unlimited transfer problems, but did not compare against (TAD), a modification that scans entire trip sequences rather\nthan individual edges, correctly handling buffer times while MR. We extend that analysis and demonstrate that TD-Dijkstra[cs.DS] maintaining performance advantages over MR. Our experiments variants outperform MR in this setting.\non London and Switzerland networks show that we can achieve a While TD-Dijkstra shows strong performance, efficient imgreater than two time speed-up over MR while producing optimal plementations rely on filtering dominated connections during\nresults on both networks with and without buffer times.\npreprocessing. A connection (d1, a1) dominates (d2, a2) if Index Terms—Pathfinding, Transportation, Algorithms, Public\nTransit Routing. d1 ≥d2 and a1 ≤a2, meaning it departs no earlier and\narrives no later. This filtering assumes passengers can always\nswitch to a dominating connection without penalty. INTRODUCTION\nHowever, this assumption fails when stops have buffer\nIn this work, we revisit the classical Dijkstra algorithm times. The GTFS specification allows each stop to define\nand observe that it outperforms standard unlimited transfer a buffer time that passengers must wait before boarding\nalgorithms such as MR [1]. We also adapt it to correctly a connecting service. Crucially, this buffer applies only to\nhandle buffer times, making it suitable for realistic public transferring passengers; a seated passenger continuing on the\ntransit routing. We call this adaptation Transfer Aware Dijkstra same trip incurs no delay.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 2,
+    "total_chunks": 28,
+    "char_count": 2029,
+    "word_count": 294,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0540b045-ecc1-411f-ad5c-7dcfc4494a22",
+    "text": "Dominated connection filtering\n(TAD). The key insight is that standard Time-Dependent Dijk- cannot capture this distinction because it analyzes edges in\nstra relies on dominated connection filtering, which fails when isolation, without knowledge of whether the passenger willarXiv:2603.11729v1 buffer times are present because it cannot distinguish between remain seated or transfer. TAD overcomes this limitation\nseated passengers (who may continue without waiting) and while preserving the performance advantages of Dijkstra-based\ntransferring passengers (who must respect the buffer). TAD routing.\naddresses this by scanning entire trip sequences rather than\nII. PRELIMINARIES individual edges, correctly modeling the asymmetry between\nseated and transferring passengers while maintaining the per- This section defines key terminology and presents the founformance advantages of Dijkstra-based approaches. dational algorithms. The development of public transit routing algorithms has\nA. Terminology\nprogressed from classical Time-Dependent (TD) Dijkstra approaches [2], [3] to timetable-based techniques such as RAP- Network: We define a public transit network as a 4-tuple\nTOR [4], CSA [5], Trip-based routing [6], and Transfer (S, T , R, G), where S denotes the set of stops, T the set\nof trips, R the set of routes, and G = (V, E) a directed,\n*Authors are listed in alphabetical order. weighted transfer graph. A stop represents any location within",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 3,
+    "total_chunks": 28,
+    "char_count": 1454,
+    "word_count": 208,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1f49d668-6395-447b-b5d3-ba8764000f67",
+    "text": "the network where passengers may enter or exit a vehicle, Journeys: A journey characterizes a passenger's movement\nencompassing various transit modes including buses, trains, through the network from a source vertex s ∈V to a target\nand ferries. Each trip T ∈T consists of an ordered sequence vertex t ∈V . Each segment where the passenger rides a\nof stop events ⟨ε0, . . . , εk⟩executed by a single vehicle. A public transit vehicle is represented by a trip segment, while\nstop event ε is characterized by a triple (τarr(ε), τdep(ε), v(ε)), transitions between rides are modeled as paths in the transfer\nwhere v(ε) identifies the stop, τarr(ε) specifies the vehicle's graph.\narrival time, and τdep(ε) indicates its subsequent departure A journey J = ⟨P0, T0ij , . . . , Tk−1,mn Pk⟩is an alternating\ntime. We use T[i] to reference the i-th stop event within trip sequence of transfers and trip segments, where transfers\nT, and define the trip length as |T| := k, representing the total may be empty (consisting of a single stop). For source and\nnumber of stop events. target vertices s, t ∈V , we call J an s-t-journey if P0\nThe transfer graph G = (V, E) comprises a vertex set V begins at s and Pk concludes at t. The departure time is\nthat contains all stops (S ⊆V ) and an edge set E ⊆V × V . τdep(J) := τdep(T0[i]) −τtra(P0), and the arrival time is\nEach edge e = (v, w) ∈E is associated with a transfer τarr(J) := τarr(Tk−1[n]) + τtra(Pk). The number of trips is\ntime τtra(e).",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 4,
+    "total_chunks": 28,
+    "char_count": 1481,
+    "word_count": 270,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b07de872-0166-4c72-ae31-ad059dcd0838",
+    "text": "For any path P = ⟨v1, . . . , vk⟩in G, we extend denoted |J| := k. A special case arises when J = ⟨P0⟩\nthis notion by defining τtra(P) := Pk−1i=1 τtra((vi, vi+1)). Our consists solely of a transfer graph path; since no trips are\nalgorithm places no constraints on the structure of G and involved, τdep(J) must be specified separately, with τarr(J) :=\ndoes not require precomputation: transitive closure is not τdep(J) + τtra(P0).\nrequired, strong connectivity is permitted, and transfer times When computing boarding times for transfers, the buffer\nmay correspond to walking, cycling, or any other mode of time must be respected. If a passenger arrives at stop v at\ntravel that operates independently of fixed schedules. time τ via a transfer (not by remaining seated), the earliest\nTimetable-based algorithms such as CSA and RAPTOR do time they can board a departing trip is τ + β(v).\nnot process transfer connections incrementally during their Non-FIFO Schedules: A set of trips on the same edge may\nmain loop. Instead, they require the transfer graph to be violate the FIFO property: a later-departing trip arrives earlier\ntransitively closed. A graph G = (V, E) is transitively closed than an earlier-departing trip. Consider two trips on edge A →\nif, whenever there exists a path from vertex a to vertex c, there B:\nis also a direct edge (a, c) ∈E. Formally, if (a, b) ∈E and\n(b, c) ∈E, then (a, c) ∈E must hold.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 5,
+    "total_chunks": 28,
+    "char_count": 1417,
+    "word_count": 248,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b1608b4e-d0f9-4cdc-b3d4-7f583d7cb72a",
+    "text": "In practice, transitively dep=08:00 T1 : A −−−−−−→B (arr = 09:30)\nclosed transfer graphs are constructed by inserting direct edges dep=08:30\nbetween all stop pairs whose shortest path distance falls below T2 : A −−−−−−→B (arr = 09:00)\na specified threshold (e.g., 5–10 minutes of walking). However, for the unlimited transfer problem, where the Here T2 departs 30 minutes later but arrives 30 minutes\ntransfer graph may span an entire road network with millions earlier than T1. This commonly occurs when express and local\nof vertices, computing the transitive closure becomes compu- services share stops, or when different transportation modes\ntationally infeasible. Limiting the maximal transfer duration (e.g., bus vs. train) serve the same origin-destination pair.\nto 20 minutes before computing the transitive closure already A naive algorithm that only considers the first available trip\nleads to a graph that is too large for practical applications [9]. would miss the faster option. This limitation motivates preprocessing techniques such as Filtering Dominated Connections: Non-FIFO schedules can\nULTRA, which avoid the need for transitive closure by pre- be resolved by filtering dominated connections during preprocomputing only the transfer shortcuts that are actually required cessing. A connection (d1, a1) dominates another connection\nfor optimal journeys. (d2, a2) on the same edge if d1 ≤d2 and a1 ≤a2, with at\nBuffer Times: The GTFS specification defines mini- least one inequality strict. In the example above, T2 dominates\nmum transfer times between pairs of stops in the optional T1 since T2 departs later but arrives earlier.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 6,
+    "total_chunks": 28,
+    "char_count": 1647,
+    "word_count": 251,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "93700f15-b278-4d4f-8c56-a1d6eda119ad",
+    "text": "After filtering,\ntransfers.txt file. When the source and destination stops only non-dominated connections remain, restoring the FIFO\nare identical, this represents the interchange time within a sta- property and enabling standard TD-Dijkstra.\ntion: the minimum time a passenger must wait after alighting This filtering approach is sound when no buffer times\nbefore boarding a connecting service at the same stop. We exist: a passenger who boards a dominated connection could\ndenote this buffer time as β(v) for stop v ∈S. It models real- always switch to the dominating connection and arrive no later.\nworld constraints such as platform changes, walking between However, as we show next, this reasoning fails when buffer\narrival and departure points within a station, or safety margins times are present.\nfor schedule variance. Why Filtering Fails with Buffer Times: When stops have\nCritically, buffer times apply only to transferring passengers. buffer times, filtering dominated connections may exclude\nA passenger who remains seated on the same trip does not optimal journeys. The fundamental issue is that dominated\nincur the buffer time, even if the vehicle stops at that location. connection filtering analyzes edges in isolation, without disThis asymmetry between seated and transferring passengers tinguishing between seated passengers (who incur no buffer)\nhas important implications for routing algorithms. and transferring passengers (who must wait). a) Motivating Example.: Consider stops A, B, C with Time-Dependent Dijkstra: Time-Dependent Dijkstra (TD-\n8:00 9:40\n−−→C (arrives Dijkstra) [10] extends classical Dijkstra's algorithm to handlebuffer β(B) = 20 min. Trip T1 : A −−→B\n8:30 graphs where edge weights vary with time.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 7,
+    "total_chunks": 28,
+    "char_count": 1740,
+    "word_count": 259,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7afbddef-b534-4e72-8038-258faa130a90",
+    "text": "In public tran- (arrives 9:30, terminates).10:30). Trip T2 : A −−→B\nOn edge A →B, we have two connections: sit networks, travel times depend on departure time due to\nscheduled vehicle departures. Rather than fixed edge lengths, • Connection from T1: departs 08:00, arrives 09:40\nTD-Dijkstra operates on a time-dependent graph where each • Connection from T2: departs 08:30, arrives 09:30\nedge e = (v, w) has an associated arrival time function The connection from T2 dominates the connection from T1:\nℓe(τ) : R+0 →R+0 that maps departure time τ to the arrivalit departs later (08:30 > 08:00) and arrives earlier (09:30 <\ntime when traversing e.09:40). Standard preprocessing would filter out T1's connecThe algorithm maintains tentative arrival times τarr[v] in-tion on edge A →B.\nstead of distances. When relaxing an edge e = (v, w), the Now consider a query from A to C departing at 07:50:\narrival time at w is computed as ℓe(τarr[v]), reflecting that Optimal journey (without filtering): Board T1 at A (depart\nthe travel time depends on when the traveler departs from v.08:00), remain seated through B, arrive at C at 10:30. The\nEfficient implementations filter dominated connections duringpassenger stays on T1 continuously and does not need to wait\npreprocessing to enable binary search, but as shown above,for the buffer time at B.\nthis approach is invalid when buffer times are present. Journey found by TD-Dijkstra (with filtering): The\nPrior work [8] has shown that TD-Dijkstra outperforms CSAdominated connection from T1 has been removed. Board T2 at\nand RAPTOR on the unlimited transfer problem because itA (depart 08:30), arrive at B at 09:30. To board another trip,\ndoes not require computing the transitive closure of the transferthe passenger must wait for the buffer time: earliest boarding\ngraph.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 8,
+    "total_chunks": 28,
+    "char_count": 1813,
+    "word_count": 292,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f3784b5f-7716-47b5-adb6-eec85e0de76d",
+    "text": "That work also introduced Timetable Nodes (TTN) [8],time is 09 : 30 + 20 = 09 : 50. But T1's connection from B\n[11], a technique that aggregates departure times at the nodeto C departs at 09:40, which is before 09:50. The passenger\nlevel and uses data structures such as Fractional Cascading tomisses this connection and must wait for a later service.\nreduce the number of binary searches from k (one per outgoing The filtered algorithm produces a suboptimal result because\nedge) to one. While TTN provides significant speedups init cannot represent the fact that a seated passenger on T1 may\ncontinue to C without waiting, while a transferring passenger the original Python implementation, we found that all TTN\nvariants are substantially slower than the classic per-edgearriving on T2 must respect the 20-minute buffer.\nb) General Principle.: Dominated connection filtering binary search approach in our C++ implementation (28–142%\nfails with buffer times because: slower depending on variant and CH type; see Table III). We attribute this to two factors: first, timetable data stored in 1) It analyzes each edge independently, without knowledge\ncontiguous std::vector structures already exhibits excel- of whether the passenger will continue on the same trip\nlent cache locality, and modern CPU prefetching effectively or transfer.\nhides the latency of sequential binary searches; second, the 2) A \"dominated\" connection may be part of a longer trip\nauxiliary data structures required by TTN variants (fractional that allows the passenger to bypass buffer times by\ncascading pointers, combined search trees, balanced trees) remaining seated.\nintroduce additional memory indirection and cache pressure 3) The dominating connection, while faster to a single stop,\nthat outweigh the reduction in binary searches. may force a transfer that incurs buffer time, ultimately\nContraction Hierarchies: Contraction Hierarchies resulting in a later arrival.\n(CH) [12] is a preprocessing technique for accelerating This demonstrates that dominated connection filtering is\nshortest path queries in graphs. The fundamental operation isunsound when buffer times are present in the timetable.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 9,
+    "total_chunks": 28,
+    "char_count": 2178,
+    "word_count": 328,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b25365b2-d7ec-46fa-a167-64d925aa430a",
+    "text": "Convertex contraction: removing a vertex from the graph whilesequently, TD-Dijkstra with dominated connection filtering\ninserting shortcut edges between its neighbors to preservecannot be applied to networks with buffer times.\nshortest path distances. During preprocessing, vertices of a\nB. Algorithms graph G = (V, E) are contracted in a heuristically determined\nDijkstra's Algorithm: Given a graph G = (V, E) with non- order, with each vertex's position in this order defining its\nnegative edge lengths ℓ: E →R+0 and a source vertex s ∈V , rank. The result is an augmented graph G+ = (V, E+)\nDijkstra's algorithm computes the shortest path length from s containing both original and shortcut edges. This augmented\nto every vertex v ∈V .",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 10,
+    "total_chunks": 28,
+    "char_count": 738,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e736c87-0e64-422d-9815-056d27a9659c",
+    "text": "The algorithm maintains a tentative graph decomposes into an upward graph G↑= (V, E↑) with\ndistance dist[v] for each vertex, initialized to ∞, along with edges directed from lower-ranked to higher-ranked vertices,\na priority queue Q that orders vertices by their tentative and a downward graph G↓ = (V, E↓) with the reverse\ndistances. The source s is inserted into Q with dist[s] = 0. orientation. Queries are answered using bidirectional Dijkstra,\nVertices are then extracted from Q in order of increasing with the forward search exploring G↑and the backward\ndistance. When a vertex v is extracted, it is settled by relaxing search exploring G↓.\nall outgoing edges. Relaxing an edge e = (v, w) ∈E Core-CH: Core-CH [1], [13], [14] is a variant of Concompares dist[w] against dist[v] + ℓ(e); if the latter is smaller, traction Hierarchies designed for multimodal route planning.\ndist[w] is updated and w is inserted into Q with the new Unlike standard CH, Core-CH prohibits the contraction of\ndistance as its key. vertices that correspond to stops, leaving a set of core vertices Vc with S ⊆Vc ⊆V uncontracted. In addition to on the core graph only guarantees shortest paths between\nthe partially augmented graph, this produces a core graph stop pairs, initial and final transfers for non-stop source and\nGc = (Vc, Ec) consisting of the core vertices and all shortcuts target vertices s, t ∈V are handled separately via searches\ninserted between them. If only stops were permitted as core on the upward and downward graphs produced by Core-CH,\nvertices, the number of core edges would grow quadratically respectively.\nwith the number of stops, rendering both preprocessing and Importantly, MR's architecture requires Core-CH and canqueries impractical. To address this, the contraction process is not benefit from Bucket-CH.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 11,
+    "total_chunks": 28,
+    "char_count": 1823,
+    "word_count": 294,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "68d6af25-0b42-4ee2-a940-3de7bd5af96c",
+    "text": "The transfer relaxation phase initerminated once the average vertex degree in the core graph tializes the priority queue with all marked stops simultaneously\nexceeds a specified threshold. and propagates from multiple sources at once within each\nBucket-CH: Bucket-CH [12], [15] extends Contraction Hi- round [14]. This many-to-many search pattern is incompatible\nerarchies to efficiently handle one-to-many queries. The algo- with Bucket-CH, which is designed for single-source one-torithm proceeds in three phases. First, standard CH preprocess- many queries.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 12,
+    "total_chunks": 28,
+    "char_count": 560,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e4bb1744-51af-442a-8204-1f16e3b21286",
+    "text": "In contrast, TD-Dijkstra and TAD perform a\ning is performed on the graph G = (V, E). Second, given a set single search from the source vertex, allowing them to leverage\nof target vertices Vt ⊆V , a bucket storing distances to targets Bucket-CH's precomputed distance buckets for efficient oneis computed for each vertex. This is achieved by running a to-many distance lookups to all stops.\nbackward search on G↓from every target t ∈Vt; for each Like RAPTOR, MR correctly handles buffer times because\nvertex v settled at distance dist(v, t), the entry (t, dist(v, t)) it inherits RAPTOR's trip-aware route scanning phase.\nis added to the bucket of v. Third, given a source vertex s, ULTRA: ULTRA (UnLimited TRAnsfers) [14] is a preproa forward search is performed on G↑. For each settled vertex cessing technique that enables efficient multimodal journey\nv at distance dist(s, v), the algorithm scans the bucket of v: planning with unrestricted transfers. Given an unlimited transfor each entry (t, dist(v, t)), the current shortest distance to fer graph representing any non-schedule-based transportation\nt is compared against dist(s, v) + dist(v, t) and updated if mode (e.g., walking, cycling), ULTRA computes a small set\nimproved. of transfer shortcuts that are provably sufficient for finding\nRAPTOR: RAPTOR answers one-to-one and one-to-all Pareto-optimal journeys with respect to arrival time and numqueries in public transit networks with single-hop transfers. ber of trips. The algorithm operates in rounds, where round i discovers At query time, transfers from the source and to the target are\njourneys with exactly i trips by extending journeys from round computed using Bucket-CH one-to-many searches, while the\ni−1. For each stop v ∈S and round i, a tentative arrival time precomputed shortcuts handle transfers between trips. This ap-\nτarr(v, i) represents the earliest known arrival at v using at proach can be integrated with various public transit algorithms,\nmost i trips. including RAPTOR, CSA, and Trip-Based Routing, enabling\nEach round consists of two phases. The route scanning unlimited transfers without sacrificing query performance.\nphase collects all routes passing through stops improved in CSA: The Connection Scan Algorithm (CSA) [5] is a simple\nthe previous round and scans them sequentially, maintaining yet efficient approach for answering earliest arrival queries\nan active trip Tmin representing the earliest boardable trip. in public transit networks. Unlike graph-based methods, CSA\nFor each stop v along a route, the algorithm checks whether operates directly on the timetable by scanning elementary\nalighting from Tmin improves τarr(v, i), and whether an earlier connections in chronological order.\ntrip can be boarded. The transfer relaxation phase then relaxes A connection c = (vdep, varr, τdep, τarr, T) represents a veall outgoing edges from improved stops: if τarr(v, i)+τtra(e) < hicle traveling from departure stop vdep to arrival stop varr,\nτarr(w, i) for edge e = (v, w), then τarr(w, i) is updated. For departing at time τdep and arriving at time τarr, as part of trip\na query from source s with departure time τdep, the algorithm T. CSA maintains a tentative arrival time τarr(v) for each stop\ninitializes τarr(s, 0) = τdep and all other arrival times to ∞, v, initialized to ∞except for the source stop s which is set to\nthen iterates until no further improvements occur. the query departure time. Connections are stored in a single\nRAPTOR correctly handles buffer times by applying them array sorted by departure time.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 13,
+    "total_chunks": 28,
+    "char_count": 3571,
+    "word_count": 567,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3816220c-4ede-4561-a0b2-15fc9b458c14",
+    "text": "The algorithm scans this array\nonly when boarding a new trip, not when continuing on the sequentially: a connection c is relaxed if the departure stop vdep\nsame trip. This is possible because RAPTOR explicitly tracks is reachable in time, i.e., τarr(vdep) ≤τdep(c). When relaxed,\ntrip membership during route scanning. the arrival stop's tentative time is updated if improved. The\nMR: MR is a bicriteria route planning algorithm that scan terminates once connections depart after the current best\nextends the RAPTOR framework to support multimodal sce- arrival time at the target.\nnarios with unlimited transfers. It leverages a core graph com- CSA correctly handles buffer times by tracking which trip\nputed via Core-CH to efficiently handle transfer relaxation. (if any) was used to reach each stop. A passenger arriving on\nUnlike standard RAPTOR, MR maintains tentative arrival trip T can board another connection of T without waiting, but\ntimes τarr(v, i) for every core vertex v ∈Vc, not just stops. must respect the buffer time when boarding a different trip. The transfer relaxation phase executes Dijkstra's algorithm CSA's simplicity yields excellent cache locality and preon the core graph using τarr(·, i) as tentative distances, with dictable memory access patterns. When combined with ULthe priority queue initialized from all marked stops; any stop TRA preprocessing (ULTRA-CSA), it achieves state-of-the-art\nsettled by the search is subsequently marked. Since Dijkstra query performance for one-to-one earliest arrival queries with unlimited transfers [14].",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 14,
+    "total_chunks": 28,
+    "char_count": 1572,
+    "word_count": 238,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "102d388b-6095-4de3-9f61-e42ec85eedf2",
+    "text": "We compare our approach against Algorithm 1: Transfer Aware Dijkstra (TAD)\nULTRA-CSA as it represents the fastest known algorithm for Input: Graph G, source s, departure time τdep, target t\nthis problem setting. Output: Earliest arrival time at t\n1 τarr[v] ←∞for all v ∈V ;\nIII. TRANSFER AWARE DIJKSTRA (TAD) 2 τarr[s] ←τdep;\n3 Q ←{s} ; // Priority queue keyed by τarr TAD is a modification of TD-Dijkstra that correctly handles\n4 while Q ̸= ∅do\nbuffer times without requiring dominated connection filtering. 5 u ←Q.ExtractMin();\nThe key insight is that when boarding a trip, TAD scans 6 if u = t then break;\nthe entire remaining trip sequence rather than processing 7 foreach edge e = (u, v) ∈E do\nindividual edges. This allows passengers to remain seated 8 if e is a transit edge and u ∈S then\n9 τboard ←τarr[u] + β(u) ; // Add bufferthrough intermediate stops without incurring buffer times,\ntime\nmatching the behavior of timetable-based algorithms like CSA 10 τbest ←∞;\nand RAPTOR. 11 foreach trip T with τdep(T, u) ≥τboard do\n12 if τbest ̸= ∞and τmin(T, u) > τbest + β(v)\nA. Algorithm Description then\nTAD maintains node labels τarr[v] storing the earliest arrival 13 break ; // Trip pruning\ntime at each vertex v ∈V . Algorithm 1 presents the main loop. 14 SCANTRIP(T, index of u in T);\nFor each settled vertex u, TAD examines all outgoing edges. 15 τbest ←min(τbest, τarr(T[u + 1]));\nFor edges representing public transit connections, it identifies 16 if e is a walking edge then\nall trips departing from u after the current arrival time plus 17 τ ′ ←τarr[u] + τtra(e);\nthe buffer time. For each such trip, the SCANTRIP procedure 18 if τ ′ < τarr[v] then\n(Algorithm 2) processes the entire remaining trip sequence, 19 τarr[v] ←τ ′;\n20 Q.Update(v);updating node labels at each subsequent stop. Handling Buffer Times: When a vertex u is settled with\narrival time τarr[u], TAD determines the earliest time at which 21 return τarr[t];\nthe passenger can board a departing trip by adding the buffer\ntime: the earliest boarding time is τarr[u] + β(u). Algorithm 2: SCANTRIP: Process remaining stops on\nOnce a trip is boarded, SCANTRIP processes all subsequent\ntrip T\nstops using the arrival times from the timetable. The passenger\nInput: Trip T, start index istart\nremains seated throughout, so no buffer times are incurred at\n1 for i ←istart + 1 to |T| do\nintermediate stops. This correctly models the real-world be- 2 v ←v(T[i]) ; // Stop vertex at index i\nhavior where seated passengers may continue without waiting. 3 τcur ←τarr(T[i]) ; // Arrival time from\nTrip Pruning: To handle non-FIFO schedules, TAD must timetable\nscan multiple trips departing from the same stop, presorted by 4 if τcur < τarr[v] then\n5 τarr[v] ←τcur;\ndeparture time, since a later-departing trip may arrive earlier at\n6 Q.Update(v);\nthe final destination.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 15,
+    "total_chunks": 28,
+    "char_count": 2834,
+    "word_count": 489,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e7297eb6-65fb-4059-8e25-51b5bddeaea1",
+    "text": "However, scanning all trips is inefficient. Trip pruning terminates the iteration early when no remaining\ntrip can improve over the current best arrival time, accounting\nfor the buffer time at the destination stop v. Specifically, if Implementation Note: The pseudocode in Algorithm 1 adds\nτmin(T, u) > τbest + β(v), all remaining trips can be skipped. the buffer time at query time (τboard ←τarr[u]+β(u)) for clarThe buffer term β(v) is included because a passenger arriving ity. Our implementation uses an equivalent formulation: during\nat v via transfer must wait the buffer before boarding a graph construction, each departure time is pre-decremented by\nconnecting service; thus, a trip arriving up to β(v) later than the buffer time of the departure stop, i.e., stored as τdep(T, u)−\nthe current best may still yield a better onward connection. β(u). The boarding condition τdep(T, u) ≥τarr[u] + β(u)\nConsider trips T1, T2, T3, T4 departing from A to B (with then simplifies to (τdep(T, u) −β(u)) ≥τarr[u], eliminating\nβ(B) = 0) with arrivals 9:30, 9:00, 10:00, 9:30 respectively, an addition from the inner loop. This pre-subtraction does\nand τmin values (minimum arrival among remaining trips) of not affect SCANTRIP, which uses unmodified timetable arrival\n9:00, 9:00, 9:30, 9:30. times stored in the trip leg array. With pruning (and β(B) = 0):\nB.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 16,
+    "total_chunks": 28,
+    "char_count": 1356,
+    "word_count": 218,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4190a18e-34f7-430f-b0b5-30457d8ca07a",
+    "text": "Correctness with Buffer Times 1) Scan T1 →τbest = 09:30\n2) Scan T2 →τbest = 09:00 (improved) The SCANTRIP procedure correctly handles buffer times by\n3) Check T3: τmin(T3) = 09:30 > 09:00 + 0 →break processing entire trips rather than individual edges. Consider\n8:00\nTrips T3 and T4 are skipped because their minimum arrival the motivating example from Section II with trips T1 : A −−→\n9:40 8:30\nexceeds τbest + β(B). When β(B) > 0, the pruning threshold B −−→C (arr 10 : 30) and T2 : A −−→B (arr 9 : 30),\nis relaxed, allowing more trips to be scanned to account for where β(B) = 20 min.\nthe buffer wait at the destination. For a query from A to C departing at 07:50: 1) TAD settles A with τarr[A] = 07 : 50. TABLE I\n2) TAD considers boarding T1 (departs 08:00 ≥07:50). DATASET CHARACTERISTICS.\n3) SCANTRIP processes T1: it updates τarr[B] = 09 : 40\nLondon Switzerland\nand τarr[C] = 10 : 30.\n4) TAD considers boarding T2 (departs 08:30 ≥07:50). Stops 19,682 25,125 Trips 114,508 350,006\n5) SCANTRIP processes T2: it would update τarr[B] to Routes 1,955 13,786\n09:30, since 09:30 < 09:40. Connections 4,394,136 4,336,859\n6) TAD settles B with τarr[B] = 09 : 30. Transfer graph vertices 181,642 603,691 Transfer graph edges 334,112 465,067\n7) At B, TAD considers outgoing trips.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 17,
+    "total_chunks": 28,
+    "char_count": 1276,
+    "word_count": 229,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d3bcfd42-0034-4dc1-9652-40db7af1f2de",
+    "text": "The earliest board- Stops with buffer > 0 0 12,847\ning time is 09 : 30 + 20 = 09 : 50 due to buffer. T1's\nB →C segment departs at 09:40 < 09:50, so it cannot\nTABLE II\nbe boarded. AVERAGE QUERY TIMES [MS] ON LONDON (NO BUFFER TIMES).\n8) However, C was already reached via T1's full scan with\nτarr[C] = 10 : 30. Algorithm Time [ms] Speedup\nTAD correctly finds the optimal journey: board T1 at A, MR (Core-CH) 12.85 1.00×\nremain seated through B, arrive at C at 10:30. The key insight TD-Dijkstra (Core-CH) 8.03 1.60×\nis that SCANTRIP updated τarr[C] when processing T1 from TD-Dijkstra (Bucket-CH) 4.47 2.88× TAD (Core-CH) 9.73 1.32×\nA, before B was even settled. This allows TAD to discover TAD (Bucket-CH) 5.93 2.17×\njourneys where remaining seated is better than transferring. ULTRA-CSA 1.64 7.86×\nIn contrast, TD-Dijkstra with dominated connection filtering\nwould remove T1's A →B connection, making it impossible\nto find the optimal journey. Importantly, these two datasets exhibit different characteristics with respect to buffer times. The London network has\nIV. EXPERIMENTS no buffer times: all stops have β(v) = 0.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 18,
+    "total_chunks": 28,
+    "char_count": 1121,
+    "word_count": 191,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "067c4ec1-7987-4e38-94f6-f401b04fd1de",
+    "text": "Experimental Setup compare all algorithms, including TD-Dijkstra with dominated\nconnection filtering. The Switzerland network has buffer times\nWe used the original implementation of MR, Core-CH,\nat 12,847 stops (51% of all stops), with values ranging from\nBucket-CH, and ULTRA-CSA from the Karlsruhe Institute\n1 to 10 minutes. Since dominated connection filtering breaks\nof Technology.1 We extended this codebase with our TAD\ndown with buffer times, we exclude TD-Dijkstra and TTN\nimplementation and made the fork publicly available.2\nvariants from the Switzerland evaluation and compare only\nAll code was compiled using the GNU C++ Compiler (g++)\nalgorithms that correctly handle buffer times: MR, TAD, and\nversion 13.3.0. Experiments were performed on an AMD\nULTRA-CSA. Ryzen 9 7900X (12 cores, 24 threads) running Ubuntu 24.04.3\nLTS under WSL2 (Linux kernel 6.6.87.2-microsoft-standardC. Results on Data Without Buffer Times (London)\nWSL2) on x86-64. The WSL2 VM had 30 GiB RAM available\n(host system: 64 GiB). We first evaluate query performance on the London network,\nwhich has no buffer times. Table II reports average query times\nB.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 19,
+    "total_chunks": 28,
+    "char_count": 1139,
+    "word_count": 172,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "66f6b4a4-3996-462d-8699-a7f7e9009c7b",
+    "text": "Datasets for 1,000 random source-target pairs with random departure\nWe evaluated our approach on the London and Switzerland times.\nnetworks, which have been used in previous unlimited transfer On data without buffer times, all algorithms produce idenresearch from KIT [14], [16].3 Table I summarizes the network tical results. Notably, TD-Dijkstra achieves a 1.60× speedup\ncharacteristics. over MR, outperforming TAD (1.32×). This occurs because\nThe unrestricted transfer graphs for both networks were TD-Dijkstra processes edges individually without the overhead\nconstructed following the methodology described in [14]. of trip scanning, which provides no benefit when dominated\nRoad graphs, including pedestrian zones and staircases, were connection filtering is valid. With Bucket-CH acceleration,\nextracted from OpenStreetMap.4 Walking was used as the TD-Dijkstra achieves a 2.88× speedup, the fastest among\ntransfer mode with a constant speed of 4.5 km/h. The transfer algorithms without ULTRA preprocessing.\ngraph was connected to the public transit network by matching The performance gap between Core-CH and Bucket-CH\nstops to their nearest vertices in the road graph, with vertices variants highlights a key architectural advantage of TDof degree one or two contracted unless they coincided with Dijkstra over MR. Because TD-Dijkstra performs a single\nstops. search from the source vertex, it can leverage Bucket-CH's\nprecomputed distance buckets to efficiently query distances\n1https://github.com/kit-algo/ULTRA to all stops. MR's round-based structure, which propagates\n2https://github.com/andrii-rohovyi/PublicTransitRoutingWithUnlimitedTr\nfrom multiple marked stops simultaneously in each transferansfer\n3https://i11www.iti.kit.edu/PublicTransitData/ULTRA/ relaxation phase, is fundamentally incompatible with Bucket-\n4https://download.geofabrik.de/ CH's single-source design. TABLE III TABLE V\nTTN VARIANTS VS TD-DIJKSTRA CLASSIC ON LONDON.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 20,
+    "total_chunks": 28,
+    "char_count": 1954,
+    "word_count": 251,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "46977d84-b918-4a9e-a111-372e9220f21d",
+    "text": "PREPROCESSING TIMES FOR SPEEDUP TECHNIQUES. Algorithm Time [ms] vs Classic Component London Switzerland TD Classic (Core-CH) 8.03 1.00× CH construction (Bucket-CH) 7.25 s 33.37 s\nTTN-FC (Core-CH) 10.31 0.78× Core-CH construction 1.81 s 3.66 s\nTTN-CST (Core-CH) 10.46 0.77× ULTRA stop-to-stop shortcuts 13 m 41 s 7 m 2 s\nTTN-BST (Core-CH) 15.22 0.53× TD Classic (Bucket-CH) 4.47 1.00×\nTTN-FC (Bucket-CH) 6.16 0.73×\nTTN-CST (Bucket-CH) 6.47 0.69× ULTRA-CSA achieves a 10.88× speedup over MR due\nTTN-BST (Bucket-CH) 10.82 0.41× to its precomputed transfer shortcuts, but requires significant\npreprocessing time as discussed in Section IV-F. Preprocessing AVERAGE QUERY TIMES [MS] ON SWITZERLAND (WITH BUFFER TIMES). Table V reports preprocessing times for the speedup techAlgorithm Time [ms] Speedup niques. Following prior work [17], [18], we omit shared\nMR (Core-CH) 26.12 1.00× pipeline costs (GTFS parsing, intermediate conversion) and\nTAD (Core-CH) 16.97 1.54× data structure construction times (under 20 s for all algoTAD (Bucket-CH) 9.08 2.88×\nULTRA-CSA 2.40 10.88× rithms). CH and Core-CH construction are one-time costs for a\nfixed transfer graph.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 21,
+    "total_chunks": 28,
+    "char_count": 1153,
+    "word_count": 169,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "121cd1b2-f3b4-4fb5-bc4f-7046b34ba890",
+    "text": "ULTRA stop-to-stop shortcuts dominate\npreprocessing at 7–14 minutes and must be recomputed when TAD with Bucket-CH achieves a 2.17× speedup over MR,\ndelay assumptions change, whereas TAD operates directly onwhile ULTRA-CSA remains the fastest overall at 7.86× due\nthe timetable without precomputed shortcuts.to its precomputed transfer shortcuts. Timetable Nodes (TTN) Comparison V. CONCLUSION AND FUTURE STEPS\nTable III compares TTN variants against TD-Dijkstra Clas- We have demonstrated that classical Dijkstra-based apsic on the London network. All TTN variants are substantially proaches can outperform state-of-the-art algorithms like MR\nslower than the classic approach: 28–90% slower with Core- for the unlimited transfer problem in public transit routing. CH and 38–142% slower with Bucket-CH. TTN-BST per- However, we identified a critical limitation: efficient TDforms worst, more than doubling query time with Bucket-CH. Dijkstra implementations rely on dominated connection filterWe attribute this to two factors: contiguous std::vector ing, which is invalid when stops have buffer times.\nstorage already provides excellent cache locality for per-edge The fundamental issue is that dominated connection filtering\nbinary searches, and the auxiliary data structures required by analyzes edges in isolation, without distinguishing between\nTTN (cascading pointers, combined trees) introduce additional seated passengers (who may continue without waiting) and\nmemory indirection that outweighs the reduction in search transferring passengers (who must respect buffer times). A\noperations. connection that appears dominated on a single edge may be\nNote that TD-Dijkstra and TTN variants cannot be applied part of a longer trip where remaining seated provides a faster\nto networks with buffer times, as they rely on dominated overall journey.\nconnection filtering which fails in that setting. To address this limitation, we introduced Transfer Aware\nDijkstra (TAD), a modification of TD-Dijkstra that scans entire\nE. Results on Data With Buffer Times (Switzerland) trip sequences rather than individual edges. When a passenger\nThe Switzerland network has buffer times at 51% of stops. boards a trip, TAD processes all subsequent stops, correctly\nSince TD-Dijkstra with dominated connection filtering is in- allowing the passenger to remain seated without incurring\napplicable in this setting, we compare only algorithms that buffer times at intermediate stops.\ncorrectly handle buffer times. Table IV reports the results.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 22,
+    "total_chunks": 28,
+    "char_count": 2527,
+    "word_count": 357,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5708e193-dbd7-434e-addb-919af7f1a98a",
+    "text": "Our experiments on the London and Switzerland networks\nTAD correctly handles buffer times by scanning entire reveal important findings:\ntrip sequences, allowing passengers to remain seated without • On data without buffer times (London), TD-Dijkstra with\nincurring buffer times at intermediate stops. This matches the Bucket-CH achieves a 2.88× speedup over MR, making\nbehavior of timetable-based algorithms like MR and ULTRA- it the fastest algorithm for unlimited transfers without\nCSA. TAD achieves a 2.17× speedup\nTAD with Core-CH achieves a 1.54× speedup over MR. with slightly more overhead due to trip scanning. With Bucket-CH acceleration, TAD achieves a 2.88× speedup • On data with buffer times (Switzerland), TD-Dijkstra\nover MR, making it the fastest correct algorithm for unlimited cannot be applied due to invalid dominated connection\ntransfers without ULTRA preprocessing when buffer times are filtering. TAD with Bucket-CH correctly handles buffer\npresent. times and achieves a 2.88× speedup over MR. • A key architectural advantage of Dijkstra-based ap- [9] D. Z¨undorf, \"Public Transit Routing with Unrestricted\nproaches is their compatibility with Bucket-CH. Because Walking,\" in 17th Workshop on Algorithmic Approaches for Transportation Modelling, Optimization, and Systems (ATMOS 2017), ser. Open\nTD-Dijkstra and TAD perform a single search from the Access Series in Informatics (OASIcs), G.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 23,
+    "total_chunks": 28,
+    "char_count": 1413,
+    "word_count": 205,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4855e7f6-76be-4559-a034-5b357e04da2e",
+    "text": "Dollevoet,\nsource vertex, they can leverage Bucket-CH's precom- Eds., vol. 59. Dagstuhl, Germany: Schloss Dagstuhl – Leibniz-Zentrum\nputed distance buckets for efficient one-to-many queries. f¨ur Informatik, 2017, pp. 7:1–7:14.\n[10] E. Zaroliagis, \"Efficient models for\nMR's round-based structure, which initializes the priority timetable information in public transportation systems,\" ACM Journal\nqueue with all marked stops and propagates from multiple of Experimental Algorithmics, vol. 12, no. 2.4, pp. 1–39, 2008.\nsources simultaneously, is fundamentally incompatible [11] A. Walsh, \"Timetable nodes for public\ntransport network,\" 2024.\nwith Bucket-CH's single-source design. [12] R. Vetter, \"Exact routing\n• TAD provides a robust solution that works correctly on in large road networks using contraction hierarchies,\" Transportation\nboth networks, combining correctness with performance Science, vol. 46, no. 3, pp. 388–404, 2012.\n[13] R. Schultes, and\nadvantages over MR.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 24,
+    "total_chunks": 28,
+    "char_count": 978,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "62d8d257-6785-4271-a29c-f02dd607a95c",
+    "text": "Wagner, \"Combining hierarchical and goal-directed speed-up tech-\n• Timetable Nodes (TTN), which provides 10–30% niques for Dijkstra's algorithm,\" Journal of Experimental Algorithmics\nspeedups in Python, is 28–142% slower in optimized (JEA), vol. 15, pp. 2.3:1–2.3:31, 2010.\n[14] M. The auxiliary data structures required by TTN in- ited TRAnsfers for Multi-Modal Route Planning: An Efficient Solution,\"\ntroduce memory indirection that outweighs the reduction in Proceedings of the 27th Annual European Symposium on Algorithms\nin binary searches, given the excellent cache locality of (ESA'19), ser. Leibniz International Proceedings in Informatics (LIPIcs),\nvol. 144. Schloss Dagstuhl – Leibniz-Zentrum f¨ur Informatik, 2019,\ncontiguous vectors and effective CPU prefetching already pp. 14:1–14:16.\npresent in the baseline. [15] S. Wagner, \"ComputULTRA-CSA remains the fastest algorithm overall, but ing many-to-many shortest paths using highway hierarchies,\" in Proceedings of the 9th Workshop on Algorithm Engineering and Experiments\nrequires significant preprocessing time that may be imprac- (ALENEX'07). Society for Industrial and Applied Mathematics (SIAM),\ntical when timetables change frequently or delays must be 2007, pp. 36–45.\nincorporated. Recent work on delay-robust multimodal journey [16] M. Z¨undorf, \"Fast\nmultimodal journey planning for three criteria,\" arXiv:1906.04832,\nplanning [18], [19] has addressed this limitation for UL- Wed, 1 Feb 2023. [Online]. Available: https://arxiv.org/pdf/1906.04832\nTRA with Trip-Based routing, though it requires assumptions [17] ——, \"Unlimited transfers for multi-modal route planning: An efficient\nabout maximum delay bounds.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 25,
+    "total_chunks": 28,
+    "char_count": 1682,
+    "word_count": 223,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db16211f-e393-4601-aeaf-e94e77907729",
+    "text": "TAD does not require such solution,\" 2019.\n[18] J. Sauer, \"Closing the performance gap between public transit and\nassumptions, as it operates directly on the timetable without multimodal journey planning,\" Ph.D. dissertation, Karlsruhe Institute of\nprecomputed shortcuts and naturally supports real-time delay Technology (KIT), Karlsruhe, Germany, 2024.\nupdates. Extending ULTRA-CSA to support real-time delay [19] D. Sauer, \"Fast and delay-robust multimodal journey planning,\" in Proceedings of the 26th Workshop on Algorithm Engineering\nupdates represents a promising direction for future research. and Experiments (ALENEX'24). Society for Industrial and Applied\nMathematics (SIAM), 2024, pp. 105–117. Werneck,\n\"Computing multimodal journeys in practice,\" in Proceedings of the\n12th International Symposium on Experimental Algorithms (SEA'13),\nser. Lecture Notes in Computer Science (LNCS), vol. 7933. Springer,\n2013, pp. 260–271.\n[2] E. Dijkstra, \"A note on two problems in connexion with graphs,\"\nNumerische Mathematik, vol. 1, no. 1, pp. 269–271, 1959.\n[3] G. Jacob, \"Time-dependent networks as models\nto achieve fast exact time-table queries,\" Electronic Notes in\nTheoretical Computer Science, vol. 92, pp. 3–15, 2003, proceedings\nof the 3rd Workshop on Algorithmic Methods and Models for\nOptimization of Railways (ATMOS 2003). [Online]. Available:\nhttps://cs.au.dk/∼gerth/papers/atmos03.pdf\n[4] D. Werneck, \"Round-Based Public Transit\nRouting,\" in Proceedings of the 14th Meeting on Algorithm Engineering\nand Experiments (ALENEX). SIAM, 2012, pp. 130–140. [Online]. Available: https://doi.org/10.1137/1.9781611972924.12\n[5] J. Wagner, \"Connection scan\nalgorithm,\" 2017.\n[6] W.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 26,
+    "total_chunks": 28,
+    "char_count": 1683,
+    "word_count": 222,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "75b4465d-63e2-48ef-b351-b49943c007c5",
+    "text": "Wagner, \"Trip-based public transit\nrouting,\" in Proceedings of the 23rd Annual European Symposium\non Algorithms (ESA), ser. Lecture Notes in Computer Science,\nvol. 9294. Springer, 2015, pp. 1025–1036. [Online]. Available:\nhttps://doi.org/10.1007/978-3-662-48350-3 85\n[7] H. Viger, \"Fast routing in very large public transportation\nnetworks using transfer patterns,\" in ESA 2010, vol. 6346, 2010, p.\n290–301.\n[8] A. Walsh, \"Multimodal pathfinding\nwith personalized travel speed and transfers of unlimited distance,\" in\nProceedings of the 37th IEEE International Conference on Tools with\nArtificial Intelligence (ICTAI'25). IEEE, 2025, pp. 925–931.",
+    "paper_id": "2603.11729",
+    "title": "Adapting Dijkstra for Buffers and Unlimited Transfers",
+    "authors": [
+      "Denys Katkalo",
+      "Andrii Rohovyi",
+      "Toby Walsh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11729v1",
+    "chunk_index": 27,
+    "total_chunks": 28,
+    "char_count": 646,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  }
+]

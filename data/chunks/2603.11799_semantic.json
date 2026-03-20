@@ -1,0 +1,1379 @@
+[
+  {
+    "chunk_id": "99ec87d0-6871-4e95-840c-09f95936c931",
+    "text": "Exponential-Family Membership Inference:\nFrom LiRA and RMIA to BaVarIA 1RISE Research Institutes of Sweden\n2026 Abstract et al., 2023, Steinke et al., 2023], complementing theoretical\nguarantees from differential privacy [Dwork et al., 2006]. As with any auditing technique, the same methods could inMar Membership inference attacks (MIAs) are becom- principle be misused; we focus on the defensive application\ning standard tools for auditing the privacy of ma- throughout.\nchine learning models. The leading attacks—LiRA12 The current landscape of score-based MIAs presents practi- [Carlini et al., 2022] and RMIA [Zarifzadeh et al.,\ntioners with several competing approaches. LiRA [Carlini 2024]—appear to use distinct scoring strategies,\net al., 2022] fits per-point Gaussian models to shadow-model while the recently proposed BASE [Lassila et al.,\nlog-odds and computes a likelihood-ratio score. RMIA 2025] was shown to be equivalent to RMIA, mak-\n[Zarifzadeh et al., 2024] uses a population-level reference to ing it difficult for practitioners to choose among\navoid per-point parameter estimation.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 0,
+    "total_chunks": 81,
+    "char_count": 1103,
+    "word_count": 158,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f79d6f8b-33d7-43fd-908b-66d1edb61ca0",
+    "text": "BASE [Lassila et al., them. We show that all three are instances of a sin-[cs.LG] 2025] centers the target loss against a pooled shadow sum- gle exponential-family log-likelihood ratio framemary. Lassila et al. [2025] proved that BASE and RMIA work, differing only in their distributional assumpare equivalent, but the connection between these population- tions and the number of parameters estimated per\nlevel methods and LiRA's per-point Gaussian approach has data point. This unification reveals a hierarchy\nnot been established. (BASE1–4) that connects RMIA and LiRA as endpoints of a spectrum of increasing model complex- We clarify the relationship by showing that LiRA, RMIA,\nity. Within this framework, we identify variance and BASE are all instances of a single framework.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 1,
+    "total_chunks": 81,
+    "char_count": 781,
+    "word_count": 119,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f3ec4e1e-4ba7-477a-b9d8-f7c6933f242e",
+    "text": "The key\nestimation as the key bottleneck at small shadow- insight is that each attack implicitly assumes a parametric\nmodel budgets and propose BaVarIA, a Bayesian distribution for a scalar summary statistic (loss, confidence,\nvariance inference attack that replaces threshold- or log-odds) under the IN and OUT membership hypotheses,\nbased parameter switching with conjugate normal- and then computes the corresponding log-likelihood ratio\ninverse-gamma priors. BaVarIA yields a Student-t (LLR). Different distributional assumptions and parameterpredictive (BaVarIA-t) or a Gaussian with stabi- sharing constraints yield different attacks.\nlized variance (BaVarIA-n), providing stable perThis unification yields three contributions:arXiv:2603.11799v1 formance without additional hyperparameter tuning. Across 12 datasets and 7 shadow-model bud- (1) A unifying framework (Section 3). We formalize the\ngets, BaVarIA matches or improves upon LiRA exponential-family LLR and show that it specializes to\nand RMIA, with the largest gains in the practically known attacks under specific distributional assumptions\nimportant low-shadow-model and offline regimes. (Exponential, Gaussian). We define the BASE hierarchy\n(BASE1–4), a family of Gaussian LLR attacks with progressively relaxed parameter sharing, connecting RMIA/BASE\n1 INTRODUCTION at one end to LiRA at the other. (2) BaVarIA: Bayesian Variance Inference Attack (SecMembership inference attacks (MIAs) determine whether tion 4). LiRA's performance degrades at small shadowa specific data point was used to train a machine learning model budgets K because per-point variance estimates bemodel [Shokri et al., 2017]. Beyond their role as privacy come unreliable. We replace maximum likelihood estimaattacks, MIAs serve as empirical auditing tools: they provide tion with conjugate normal-inverse-gamma (NIG) Bayesian\nlower bounds on the privacy leakage of trained models [Nasr inference, yielding two variants: BaVarIA-t (Student-t pre- 2025] scores each point by centering the target loss against\ndictive) and BaVarIA-n (Gaussian with Bayesian variance). a pooled shadow summary:\nBoth provide Bayesian shrinkage that smoothly transitions\nfrom global to per-point estimates as K grows, with all BASEi = −ℓi,0 −log K1 PKk=1 e−ℓi,k . (3)\nposterior updates available in closed form. Lassila et al. [2025] proved that BASE and RMIA (at γ = 1)\n(3) Empirical evaluation (Section 5). We evaluate all produce equivalent ROC curves.\nmethods across 12 datasets (image and tabular), 7 shadowmodel budgets (K ∈{4, . . . , 254}), and 32 experimental\nreplicates. On average, BaVarIA-n matches or improves 3 EXPONENTIAL-FAMILY\nover LiRA at K ≥16, while BaVarIA-t provides the best FRAMEWORK\nAUC across all K. We validate findings on an independent\nshadow-model collection.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 2,
+    "total_chunks": 81,
+    "char_count": 2810,
+    "word_count": 397,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d4d2117d-48b6-4977-9113-4a9f7a2bf80c",
+    "text": "We now show that the attacks of Section 2 are instances of\na single parametric framework. For a fixed point i, assume\nthe scalar statistic zi,k | mi,k = m follows an exponential-2 BACKGROUND\nfamily distribution\nSetup. Let D = {(xi, yi)}Ni=1 be a dataset. A target model p(z | m) = h(z) exp η⊤mT(z) −A(ηm) , (4)\nf(·; θ0) is trained on a subset S0 ⊂D, and K shadow\nmodels f(·; θk), k = 1, . . . , K, are each trained on subsets with sufficient statistics T(z), natural parameters ηm, base\nSk ⊂D. For a fixed point i, the membership indicator measure h(z), and log-partition function A. The LLR (1)\nmi,k ∈{0, 1} records whether (xi, yi) ∈Sk. Membership then takes the form\nis known for shadows (k > 0) and unknown for the target\nLLR(z) = (η1 −η0)⊤T(z) − A(η1) −A(η0) , (5)(k = 0). We observe the per-point loss ℓi,k = ℓ(f(xi; θk), yi), the which is an affine function of T(z). Under any exponentialpredicted confidence pi,k for the true label, and form scalar family model, the optimal membership score is thus a linear\nstatistics such as the rescaled logit φi,k = log(pi,k/(1 − combination of the sufficient statistics, plus a constant offset.\npi,k)). Under cross-entropy loss, ℓ= −log p, so all three\nquantities are monotone transforms of the same signal. 3.1 DISTRIBUTIONAL SPECIALIZATIONS Optimal membership score. Sablayrolles et al. [2019]\nWe consider two primary distributional families; others\nshowed that the Bayes-optimal membership score is the\n(Beta, Gamma) are developed in Appendix A.\nlog-likelihood ratio p(z | m = 1) Exponential model (loss statistic). Assume ℓi,k | m ∼\nLLR(z) = log (1) p(z | m = 0), Exp(λm). where z is any sufficient scalar statistic of the model out- λ1\nLLR(ℓ) = log −(λ1 −λ0) ℓ, (6)\nput.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 3,
+    "total_chunks": 81,
+    "char_count": 1722,
+    "word_count": 304,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4f42b4c1-e8eb-4b0b-8757-e5486d44ef37",
+    "text": "Their analysis further shows that the optimal attack λ0\ndepends on the model only through the loss, so black-box\naccess to a scalar output statistic is sufficient—justifying which is linear in the target loss without any structural\nthe restriction to scalar statistics throughout this paper. All constraint—the one-parameter exponential family yields\nscore-based MIAs can be viewed as estimating this quantity an affine LLR automatically.\nunder different modeling assumptions. Gaussian model (log-odds statistic). Assume φi,k | m ∼\nLiRA. For each point i, LiRA [Carlini et al., 2022] models N(µm, σ2m). The LLR is\nthe rescaled logit φi,k | m = m′ ∼N(µi,m′, σ2i,m′) with (φ −µ0)2 −µ1)2 σ0parameters estimated from shadow models. Let Ki,m = LLR(φ) = −(φ + log . (7)\n2σ20 2σ21 σ1{k > 0 : mi,k = m}. The LiRA score is\n(φi,0 −ˆµi,0)2 −ˆµi,1)2 ˆσi,0 Under equal variances σ20 = σ21 = σ2, this reduces to LiRAi = −(φi,0 + log , (2)\n2ˆσ2i,0 2ˆσ2i,1 ˆσi,1 µ1 −µ0 + µ0 LLR(φ) = φ −µ1 , (8)\nwhere ˆµi,m and ˆσ2i,m are the MLE from {φi,k}k∈Ki,m. σ2 2 which is linear in φ.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 4,
+    "total_chunks": 81,
+    "char_count": 1060,
+    "word_count": 186,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "79c98a01-0f37-4293-aab6-64bfb72ef718",
+    "text": "RMIA [Zarifzadeh et al., 2024] computes a likelihood ratio against a population reference, avoid- Table 1 summarizes the distributional families and their\ning per-point parameter estimation. BASE [Lassila et al., LLR forms. Table 1: Exponential-Family LLR-Based Attacks. Proposition 1 (Equivalences).",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 5,
+    "total_chunks": 81,
+    "char_count": 300,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a69025f4-0d9f-4561-b821-b5d9dc21ed56",
+    "text": "Under the standard implementations: (a) BASE1 on loss with log-sum-exp centering is\nModel Statistic z Params LLR form ROC-equivalent to RMIA at γ = 1; (b) BASE4 on rescaled\nlogits coincides with LiRA (2). Exponential loss ℓ 2 linear in ℓ\nGaussian log-odds φ 4 φ, φ2\n(equal var.) log-odds φ 3 linear in φ Part (a): Lassila et al. [2025] proved that the original BASE\nscore (3) is ROC-equivalent to RMIA; Corollary 2 in the Additional families (Appendix A):\nGamma loss ℓ 4 ℓ, log ℓ appendix shows that BASE is an instance of BASE1. Part (b)\nBeta confidence p 4 log p, log(1−p) follows from substituting MLE into the Gaussian LLR (7)\n(Corollary 1). The hierarchy BASE1 →BASE2 →BASE3 →BASE4 thus3.2 THE BASE HIERARCHY\nconnects RMIA and LiRA as endpoints of a spectrum of increasing model complexity. Moving from BASE1 to BASE4We define a hierarchy of four attacks by progressively relaxtrades robustness for expressiveness: BASE1 estimates noing parameter-sharing constraints. BASE1–4 follow from\nper-point dispersion parameters (maximally pooled), whilethe Gaussian LLR (7) under decreasing levels of paramBASE4 estimates four per-point parameters (maximally flex-eter sharing; BASE1 can also be derived from any oneible). The intermediate variants BASE2 and BASE3 offerparameter exponential family, including the exponential (6),\ncontrolled intermediate points; empirically, BASE3 is com-and Gamma models (Appendix B). All variants operate on a\npetitive with BASE4 at moderate K (Section 5).scalar statistic zi,k (loss, log-odds, or confidence) and differ\nonly in how parameters are estimated from shadow models. The derivation chain and two formal corollaries (LiRA = 3.3 WHEN DOES MORE STRUCTURE HELP? BASE4, BASE = BASE1) are given in Appendix B; here\nwe summarize. The hierarchy reveals a bias-variance tradeoff in the estimation of the LLR.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 6,
+    "total_chunks": 81,
+    "char_count": 1843,
+    "word_count": 286,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4b01475a-e053-4933-ba18-6abbdc02e0e3",
+    "text": "RMIA/BASE does not require an explicit\nBASE1 (pooled centering). Under a constant LLR slope, distributional assumption in its original formulation; we\nonly the per-point centering affects the ranking; pooling all show that it is equivalent to an exponential model with a\nshadows to estimate this center gives: pooled mean estimate. LiRA/BASE4 models the full Gaussian with separate parameters per class, exploiting variance BASE1i = zi,0 −ˆzi,pool, (9)\ndifferences that carry strong membership signal, but requirwhere ˆzi,pool is estimated from all K shadows. Setting z = ing enough data to estimate all four parameters reliably.\n−ℓwith log-sum-exp centering recovers the BASE score (3);\nThis tradeoff predicts that LiRA should dominate RMIAthe same result follows independently from the exponential\nwhen K is large enough for per-point Gaussian estimation,and Gamma models (Appendix B).\nwhile RMIA should be preferable at very small K where\nBASE2 (pooled centering and variance). Under the Gaussian parameters are poorly estimated. Gaussian model with equal variance and a constant mean\ngap µi,1 −µi,0 = ∆µ, the LLR is 4 BAVARIA: BAYESIAN VARIANCE\nINFERENCE ATTACK\nBASE2i = (zi,0 −ˆµi,pool)/ˆσ2i , (10)\nwhere ˆµi,pool and ˆσ2i are estimated from all shadows. The framework of Section 3 shows that LiRA is a Gaussian\nplug-in LLR with per-point MLE parameters. When K is\nBASE3 (separate means, pooled variance). Relaxing small, these estimates—especially the variance—become\nthe constant-gap assumption, we estimate means separately unreliable, motivating a Bayesian treatment.\nfor IN and OUT shadows while pooling variance: ˆµi,1 −ˆµi,0\nBASE3i = zi,0 −ˆµi,1 + ˆµi,0 . (11) 4.1 THE SMALL-K PROBLEM\nˆσ2i 2\nWith K shadow models and balanced membership, eachBASE4 (class-conditional parameters). Removing all\npoint has approximately K/2 IN and K/2 OUT observa-parameter-sharing constraints and substituting MLE into\ntions. At K = 8, per-class variance is estimated from ∼4the Gaussian LLR (7) gives four per-point parameters\n(ˆµi,m, ˆσ2i,m) for m ∈{0, 1}: samples—insufficient for reliable estimation. Carlini et al.\n[2022] address this with a hard switch: when fewer than\n(φi,0 −ˆµi,0)2 −(φi,0 −ˆµi,1)2 + log ˆσi,0 . ∼32 observations are available per class (i.e., K < 64 BASE4i =\n2ˆσ2i,0 2ˆσ2i,1 ˆσi,1 total shadow models), per-point variances are replaced by\n(12) a single global variance computed across all points. approach has two limitations. First, it is discontinuous: the ˆµi,m (as in LiRA) but replace the MLE variance with the\nattack behavior changes abruptly at the threshold.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 7,
+    "total_chunks": 81,
+    "char_count": 2585,
+    "word_count": 391,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8cbe4170-8c27-4b40-af1f-78d35e207809",
+    "text": "Second, it NIG posterior mean E[σ2 | data] = β′i,m/(α′i,m −1), then\nis all-or-nothing: it cannot leverage partial information from compute the standard Gaussian LLR (7). This provides\nsmall per-point samples while also incorporating global Bayesian shrinkage of the variance toward the global prior,\ninformation. A natural alternative is to smoothly interpo- serving as a continuous relaxation of the hard-switch stratlate between global and per-point estimates based on the egy, while preserving the Gaussian LLR form.\navailable evidence. 5 EXPERIMENTS\n4.2 NIG PRIOR AND POSTERIOR PREDICTIVE 5.1 SETUP\nWe place a normal-inverse-gamma (NIG) prior on the classconditional parameters:\nDatasets. We use 12 testbeds based on public datasets\n(µm, σ2) ∼NIG(µ∅,m, κ∅, α∅, β∅,m), (13) spanning image and tabular domains: 6 image (CIFAR-\n10/100 [Krizhevsky, 2009], CINIC-10 [Darlow et al., 2018],\nwhere subscript ∅denotes the prior—the hyperparameters each with ResNet-18 [He et al., 2016] and WideResNet\nbefore observing any point-specific data—estimated via [Zagoruyko and Komodakis, 2016]) and 6 tabular (Location,\nempirical Bayes from pooled shadow statistics (details in Purchase100, Texas100, each with 3- and 4-layer MLPs). Appendix C); the class-specific parameters µ∅,m and β∅,m\nare estimated separately for each class m, while the strength Protocol. For each dataset, we train K + 1 models\nparameters κ∅and α∅are shared. Given nm = |Ki,m| using the \"Design B\" protocol of Carlini et al. [2022]:\nshadow observations with sample mean ¯zm and sum of one target model and K shadow models, each trained\nsquares Sm, the posterior is NIG(µ′i,m, κ′i,m, α′i,m, β′i,m) on a random half of the dataset. We evaluate at K ∈\nwith standard conjugate updates {4, 8, 16, 32, 64, 128, 254} and average over 32 replicates\n(rotated target).\nκ∅µ∅,m + nm¯zm\nµ′i,m =\nκ∅+ nm Methods. We compare LiRA (= BASE4), RMIA (=\nκ′i,m = κ∅+ nm, α′i,m = α∅+ nm2 , BASE1), BASE3, BaVarIA-n, and BaVarIA-t. Sm κ∅nm(¯zm −µ∅,m)2 (14) β′i,m = β∅,m + 2 + Metrics. We report AUC and TPR at FPR = 0.01 (addi- 2(κ∅+ nm)\ntional FPR thresholds in Appendix D). The posterior predictive for a new observation z under class\nm is a student t-distribution, z | m ∼t νi,m, ˜µi,m, ˜σ2i,m 5.2 MAIN RESULTS AT K = 254 β′i,m(κ′i,m + 1)\nνi,m = 2α′i,m, ˜µi,m = µ′i,m, ˜σ2i,m = .",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 8,
+    "total_chunks": 81,
+    "char_count": 2321,
+    "word_count": 377,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cdb9db5b-69d4-4751-9230-4e1a28f45da7",
+    "text": "Figure 1 shows log-log ROC curves for CIFAR-10 WideRes-\nα′i,mκ′i,m Net at two shadow-model budgets. At K = 8 (left), RMIA\n(15) leads on AUC because its pooled centering avoids the\nIN/OUT split that starves per-class estimation; BaVarIAt is competitive while LiRA lags. At K = 254 (right), the4.3 TWO BAVARIA VARIANTS\nGaussian-family methods (LiRA, BaVarIA, BASE3) converge and outperform RMIA, confirming that richer distri-BaVarIA-t (Student-t predictive). The LLR using the\nbutional models benefit from adequate estimation budgets.posterior-predictive Student-t densities is\nTable 2 reports the difference (∆) relative to LiRA at the\ntνi,1 z−˜µi,1˜σi,1 ˜σi,1 full shadow budget K = 254, averaged over 32 replicates;\nLLR(z) = log −log , (16)\nz−˜µi,0 ˜σi,0 positive values indicate improvement over LiRA. tνi,0 ˜σi,0\nAt K = 254, all methods have ample data for parameter\nwhere tν is the standard Student-t density with ν degrees estimation, so differences are small but informative. The heavier tails of the t-distribution absorb patterns emerge. First, RMIA (= BASE1) generally trails\nparameter uncertainty, providing stability in the small-K all Gaussian-family methods: the exponential model's oneregime. parameter structure does not model the variance differences\nbetween IN and OUT that the Gaussian model exploits. The\nBaVarIA-n (Gaussian with Bayesian variance). To iso- gap is largest on CINIC-10 ResNet (∆AUC = −0.081) and\nlate the effect of better variance estimation from the heavier- Location (∆AUC = −0.089), datasets where the membertailed predictive, we define a hybrid variant: use MLE means ship signal is concentrated in the tails of the log-odds distri- (a) CIFAR-10 WideResNet, K = 8 (b) CIFAR-10 WideResNet, K = 254\n100 100 10 2 10 2 Positive Positive\nTrue True\n10 3 LiRA (AUC = 0.680) 10 3 LiRA (AUC = 0.726)\nRMIA (AUC = 0.688) RMIA (AUC = 0.692)\nBASE3 (AUC = 0.676) BASE3 (AUC = 0.725)\nBaVarIA- (AUC = 0.677) BaVarIA- (AUC = 0.726)\nBaVarIA-t (AUC = 0.684) BaVarIA-t (AUC = 0.726)\n10 4 10 4\n10 4 10 3 10 2 10 1 100 10 4 10 3 10 2 10 1 100\nFalse Positive Rate False Positive Rate Figure 1: Log-log ROC curves for CIFAR-10 WideResNet at K = 8 (left) and K = 254 (right). At small K, RMIA's pooled\napproach is competitive; at large K, the Gaussian-family methods dominate. BaVarIA-t bridges the gap, performing well\nacross both regimes.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 9,
+    "total_chunks": 81,
+    "char_count": 2355,
+    "word_count": 387,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "950cceb0-54bb-41dc-bc40-6a66403ba061",
+    "text": "Second, BASE3 (pooled variance, separate means) ing. RMIA is competitive with LiRA at K = 4: its pooled\ntrails LiRA by a small margin (∆AUC ≈−0.002 on aver- centering requires no IN/OUT split, which is advantageous\nage), suggesting that separate variance estimation provides when each class has only ∼2 observations. This is consisa slight benefit at large K, though the effect is small and tent with the framework's prediction: simpler models (fewer\nnot uniform across datasets. However, on tabular datasets parameters per point) are preferable when estimation budlike Purchase and Location, BASE3 occasionally matches gets are small (the SE bands in Figure 2 separate clearly at\nor exceeds LiRA—pooled variance estimation is more sta- K ≤16).\nble when the mean separation is the dominant signal. Third,\nMedium K (32–64).",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 10,
+    "total_chunks": 81,
+    "char_count": 822,
+    "word_count": 129,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ba42c440-32cb-497c-88c9-7918cf2c6240",
+    "text": "LiRA's MLE converges and the gap\nboth BaVarIA variants match or marginally improve upon\nto BaVarIA narrows. BaVarIA-n still provides consistent\nLiRA, with BaVarIA-t showing consistently non-negative\nsmall gains on TPR@0.01 (∆≈+0.017 at K = 32),\n∆AUC across all 12 datasets, confirming it as a safe default\nreflecting the continued value of Bayesian variance shrinkat large K.\nage. The gap narrows non-monotonically: BaVarIA's advanThe same patterns are amplified for TPR@0.01 (Table 2, tage peaks at K = 32 and drops sharply at K = 64, preright columns). RMIA's deficit grows to ∆TPR = −0.086 cisely where LiRA's hard switch activates per-point variance\non average, reaching −0.247 on CIFAR-100 ResNet— estimation (visible in the per-dataset scaling curves, Apconsistent with the prediction that its lack of variance mod- pendix D). BaVarIA's smooth Bayesian interpolation avoids\neling is most costly in the tails. BASE3 trails LiRA by 0.007 this discontinuity, yielding a monotonically improving scalon average, and BaVarIA again matches LiRA, with all ing curve. RMIA plateaus relative to the Gaussian methods:\n|∆TPR| ≤0.003. at K = 64, TPR@0.01 averages 0.19 for RMIA vs. 0.27\nfor LiRA across all datasets (non-overlapping SE bands in\nFigure 2).\n5.3 SCALING WITH SHADOW-MODEL BUDGET\nLarge K (≥128). All Gaussian-family methods converge as\nFigure 2 shows performance as a function of K, averaged the NIG posterior concentrates around the MLE. BaVarIA's\nover image and tabular datasets. The advantage of BaVarIA prior becomes non-informative and the Student-t degrees of\nover LiRA is largest in the small-K regime (K ≤16), which freedom grow, so BaVarIA-t →BaVarIA-n →LiRA. The\nis the most practically relevant since shadow models are remaining method ordering (LiRA > BASE3 > RMIA) is\nexpensive to train. Key observations across three regimes: stable and driven purely by structural differences in the LLR\nform. BaVarIA-t clearly separates from LiRA\non AUC, with ∆AUC ≈+0.009 at K = 4 averaged\nover 12 datasets. BaVarIA-n tracks LiRA more closely on\nTPR@0.01, making it the safer choice for low-FPR audit- Table 2: Performance Difference (∆) vs.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 11,
+    "total_chunks": 81,
+    "char_count": 2147,
+    "word_count": 335,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0da8b553-176a-4f32-950a-34255912e81f",
+    "text": "RMIA BASE3 BaVarIA-n BaVarIA-t Dataset ∆AUC ∆TPR.01 ∆AUC ∆TPR.01 ∆AUC ∆TPR.01 ∆AUC ∆TPR.01 Image datasets\nC10-R18 +.002 −0.002 +.003 +0.001 +.000 +0.000 +.000 +0.000\nC10-WRN −.037 −0.029 −.001 −0.002 +.000 +0.000 +.000 +0.000\nC100-R18 −.049 −0.247 −.004 −0.022 −.000 −0.000 +.000 −0.000\nC100-WRN −.029 −0.056 −.002 −0.003 +.000 +0.001 +.000 +0.000\nCN10-R18 −.081 −0.122 −.008 −0.013 +.000 +0.000 +.000 +0.000\nCN10-WRN −.054 −0.061 −.003 −0.004 −.000 +0.001 +.000 +0.001 Tabular datasets\nLoc-3 −.072 −0.170 −.009 −0.030 +.000 +0.001 +.000 +0.001\nLoc-4 −.089 −0.174 −.003 −0.002 +.000 +0.002 +.000 +0.003\nPur-3 −.002 −0.004 +.002 +0.002 +.000 +0.000 +.000 +0.000\nPur-4 −.018 −0.017 +.002 +0.002 +.000 +0.001 +.000 +0.001\nTex-3 −.025 −0.066 −.002 −0.007 +.000 −0.000 +.000 −0.000\nTex-4 −.038 −0.087 −.003 −0.006 −.000 +0.000 +.000 +0.000 Average −.041 −0.086 −.002 −0.007 +.000 +0.000 +.000 +0.001 5.4 BAVARIA ABLATION indicating that per-datapoint Gaussianity is a good approximation. On CIFAR-100 ResNet, 74% of IN distributions\nFigure 3 isolates the two components of BaVarIA's improve- reject normality, with heavy tails visible in the QQ plots (Apment. The ablation confirms that BaVarIA's improvement pendix D.3).",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 13,
+    "total_chunks": 81,
+    "char_count": 1216,
+    "word_count": 180,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7dc5aa79-4423-4f14-bcd4-33111b4d2255",
+    "text": "Despite these departures, the Gaussian-family\ndecomposes into two separable effects: (1) Better variance methods (BASE3, BASE4/LiRA, BaVarIA) consistently\nestimation (BaVarIA-n): the NIG posterior mean shrinks dominate the alternatives across all datasets and metrics.\nnoisy variance estimates toward a global prior, providing This robustness is expected: the LLR score is evaluated at\nconsistent improvement at K ≥16 and gracefully con- the target model's output, which typically lies in the bulk\nverging to the MLE at large K. At K = 32, BaVarIA-n of the distribution where the Gaussian approximation is\nimproves TPR@0.01 by +0.017 over LiRA on average— accurate. These results suggest that moderate departures\na substantial gain in the practically important regime. (2) from Gaussianity do not preclude effective use of LiRA or\nHeavier tails (BaVarIA-t): the Student-t predictive improves BaVarIA in practice. AUC at all K (e.g., ∆AUC = +0.009 at K = 4) but hurts\nTPR at low FPR when K is small. At K = 4, the degrees of\nfreedom ν ≈6 produce tails thick enough to increase false\npositives at extreme thresholds: ∆TPR@0.01 = −0.016 vs.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 14,
+    "total_chunks": 81,
+    "char_count": 1137,
+    "word_count": 180,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5e7902b4-9661-41cf-97f2-f5bf77e19b63",
+    "text": "LiRA, compared to +0.003 for BaVarIA-n. This reflects 5.6 CROSS-VALIDATION\na ranking-precision tradeoff: the t-predictive accounts for\nparameter uncertainty, improving global ranking (AUC), but\nTo verify that our findings generalize beyond a single trainits heavier tails inflate scores for both members and noning pipeline, we cross-validated all methods on an indepenmembers, increasing false positives at extreme thresholds.\ndent shadow-model collection trained without data augmenThe clean separation arises because BaVarIA-n uses the tation or dropout (224–1,480 shadows per dataset). Models\nsame Gaussian LLR as LiRA (isolating the variance estima- without augmentation exhibit substantially higher vulnertion effect), while BaVarIA-t adds the Student-t predictive ability on image datasets (e.g., CIFAR-10 ResNet AUC\n(adding the tail effect on top of better variance estimation). increases from 0.613 to 0.874), consistent with the known\nprotective effect of data augmentation. However, the relative\nmethod ranking is fully preserved across both data sources:\n5.5 DISTRIBUTIONAL DIAGNOSTICS BaVarIA-n ≥BaVarIA-t ≥LiRA > BASE3 > RMIA >\nBASE2. At K = 64 on the independent data, BaVarIA-n\nPer-datapoint Anderson-Darling tests (applied to each beats LiRA on TPR@0.01 in 10 of 12 datasets, with the\npoint's ∼128 IN and OUT shadow log-odds separately) re- exceptions being the two CIFAR-100 datasets where LiRA\nveal a range of departures from Gaussianity across datasets. retains a marginal edge (|∆TPR| < 0.003). These findings\nOn CIFAR-10 WideResNet, only ∼6% of datapoints re- hold across differences in training recipes and model reguject normality at the 5% level—close to the nominal rate— larization (Appendix G). Image datasets Tabular datasets\n0.90 0.80\nAUC 0.80\n0.75\n0.75 LiRA\nRMIA\n0.70 BASE3\nBaVarIA-\n0.70 BaVarIA-t\n0.65\n4 8 16 32 64 128 254 4 8 16 32 64 128 254\nNumber of shadow models (K) Number of shadow models (K) 40 30\n(%)\n1% 25\n= 30\nFPR 20\n@ 20 15\nTPR 10 4 8 16 32 64 128 254 4 8 16 32 64 128 254\nNumber of shadow models (K) Number of shadow models (K) Figure 2: Performance vs. shadow-model budget K, averaged over 6 image datasets (left) and 6 tabular datasets (right). Top: AUC; Bottom: TPR@0.01. Shaded regions show ±1 SE over 32 replicates. BaVarIA-t provides the best AUC at all K;\nBaVarIA-n is safer at low FPR for small K.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 15,
+    "total_chunks": 81,
+    "char_count": 2350,
+    "word_count": 374,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ce53b3dc-3882-4a76-8422-59117f942fad",
+    "text": "5.7 OFFLINE SETTING deriving a global-threshold (MALT) to per-sample (MAST)\napproximation hierarchy. BaVarIA's NIG prior interpolates\nThe framework extends naturally to the offline setting, smoothly along this axis, collapsing to a global prior (MALTwhere shadow data does not overlap with the target's training like) at small K and converging to per-point MLE (MASTset. BaVarIA is especially well-suited: with zero IN-class ob- like) at large K.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 16,
+    "total_chunks": 81,
+    "char_count": 446,
+    "word_count": 65,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e937cd1b-b877-4c5c-a00f-91682784c26c",
+    "text": "Carlini et al. [2022] operationalized this\nservations the NIG posterior reduces to the prior, recovering insight with LiRA, fitting per-point Gaussian models to\nthe behavior that LiRA's variance switching achieves—but shadow-model log-odds and achieving state-of-the-art reas a smooth limiting case requiring no separate implemen- sults, albeit at the cost of many shadow models. Appendix I evaluates all methods offline across 12 [2022] and Watson et al. [2022] developed calibrated varidatasets; no single method dominates, but offline perfor- ants that account for difficulty heterogeneity across data\nmance remains viable for all approaches (Tables 12–13). points. Salem et al. [2019] demonstrated that relaxed threat\nmodels (fewer shadow models, different architectures) still\nyield effective attacks. More recently, Zarifzadeh et al.\n6 RELATED WORK [2024] introduced RMIA, which compares the target output\nto a population reference rather than estimating per-point\nMembership inference attacks. MIA was introduced parameters, achieving competitive performance with lower\nby Shokri et al. [2017], who trained binary classifiers on computational cost. Lassila et al. [2025] introduced BASE\nshadow-model outputs to distinguish members from non- in the context of MIA on graph neural networks, which\nmembers. Subsequent work simplified the attack surface: simplifies for i.i.d. data to the conventional MIA setup, and\nYeom et al. [2018] showed that thresholding the loss suf- proved that BASE and RMIA are ROC-equivalent, simplifyfices, and Sablayrolles et al. [2019] proved that the Bayes- ing the landscape. Our framework unifies these approaches:\noptimal score is the log-likelihood ratio under IN vs. OUT, LiRA, RMIA, and BASE are instances of exponential- 0.03 6 BaVarIABaVarIA-t LiRA\n0.02 vs\nLiRA 0.01 (pp)\nvs 1% 2\nAUC 0.00 = FPR 0\n0.01 @\n0.02 BaVarIA- TPR 2\nBaVarIA-t 4 8 16 32 64 128 254 4 8 16 32 64 128 254\nNumber of shadow models (K) Number of shadow models (K) Figure 3: BaVarIA Ablation: ∆vs. LiRA Averaged over 12 Datasets.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 17,
+    "total_chunks": 81,
+    "char_count": 2039,
+    "word_count": 311,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "670c8e5b-0294-4111-a042-28624545979f",
+    "text": "Left: AUC; Right: TPR@0.01. BaVarIA-t's heavier\ntails help AUC uniformly but hurt TPR@0.01 at small K. BaVarIA-n provides safe improvement on both metrics at K ≥16. family LLR testing with different distributional assumptions 7 CONCLUSION\nand parameter-sharing constraints. We presented an exponential-family framework that unifies\nthe leading membership inference attacks—LiRA, RMIA,\nand the recently proposed BASE—as instances of logPrivacy auditing. MIAs serve as empirical lower bounds likelihood ratio testing under different distributional assumpon privacy leakage, complementing theoretical guarantees tions. The resulting BASE hierarchy (BASE1–4) reveals\nfrom differential privacy [Dwork et al., 2006]. Nasr et al. these attacks as points on a spectrum from maximal pooling\n[2023] demonstrated that well-calibrated MIAs can pro- (RMIA/BASE) to full per-point estimation (LiRA/BASE4).\nduce tight auditing bounds that approach the theoretical\nWithin this framework, we identified variance estimation as(ε, δ)-DP guarantee. Steinke et al. [2023] showed that meanthe primary source of degradation at small K and proposedingful auditing is possible with only a single training run,\nBaVarIA, which replaces LiRA's threshold-based variancereducing the computational burden. Song and Mittal [2021]\nswitching with conjugate NIG Bayesian inference. The ab-provided a systematic evaluation framework for comparing\nlation of BaVarIA-n (Gaussian with Bayesian variance) andMIA methods across diverse settings. Our work contributes\nBaVarIA-t (Student-t predictive) cleanly separates the ef-to this line by providing practitioners with a method selecfects of better variance estimation from heavier-tailed predic-tion criterion based on the shadow-model budget K.\ntives, providing practitioners with clear guidance: BaVarIAn for low-FPR auditing, BaVarIA-t for general AUC. Bayesian methods and robust estimation. Conjugate Limitations. Our evaluation uses Design B resamBayesian analysis of Gaussian parameters via normal- pling [Carlini et al., 2022] (each shadow model trains on\ninverse-gamma priors is classical [Murphy, 2007, Gelman a random half of the dataset; Section 5) with 32 replicates,\net al., 2013], and the resulting Student-t predictive is well un- which provides stable estimates for AUC and TPR@0.01\nderstood.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 18,
+    "total_chunks": 81,
+    "char_count": 2320,
+    "word_count": 314,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2e3947e8-2f51-4fde-b123-67ffe30ddb17",
+    "text": "Shrinkage estimation [James and Stein, 1961] and but limits precision for TPR@0.001. All methods assume\nempirical Bayes methods [Morris, 1983, Efron, 2010] pro- access to shadow models trained on data from the same disvide principled frameworks for borrowing strength across re- tribution; out-of-distribution transfer is not evaluated. The\nlated estimation problems. Our contribution applies this ma- NIG hyperparameters are set via simple empirical Bayes\nchinery to variance stabilization in membership inference: defaults; more sophisticated hierarchical estimation could\nthe NIG prior provides a shrinkage target that smoothly inter- further improve small-K performance.\npolates between global and per-point variance estimates as\nthe sample size grows, replacing the hard switch of Carlini\nPractical recommendation. Use BaVarIA-n as a drop-in\net al. [2022] with a continuous Bayesian alternative.\nreplacement for LiRA: it is rarely worse, and often better\nThe exponential-family framework also accommodates (especially at small K), requires no additional hyperparamGamma and Beta distributional assumptions, and a discrim- eter tuning, and runs in comparable time. For applications\ninative extension (ELSA) that learns the LLR feature map; where AUC is the primary metric, BaVarIA-t provides a\nthese are developed in Appendices E and H. small additional improvement at all shadow budgets. The exponential-family framework natu- Kevin P Murphy. Conjugate Bayesian analysis of the Gausrally extends to multi-output statistics (e.g., full softmax sian distribution. Technical report, University of British\nvectors rather than scalar confidence). The discriminative Columbia, 2007.\napproach (ELSA, Appendix H) suggests that learning the\nMilad Nasr, Jamie Hayes, Thomas Steinke, Borja Balle,LLR feature map from data—rather than fixing it via disFlorian Tramèr, Matthew Jagielski, Nicholas Carlini, andtributional assumptions—may yield further improvements\nAndreas Terzis. Tight auditing of differentially privatewhen sufficient shadow models are available, particularly\nmachine learning. In USENIX Security Symposium, 2023.with automatic relevance determination for feature selection. Alexandre Sablayrolles, Matthijs Douze, Cordelia Schmid,\nYann Ollivier, and Hervé Jégou. White-box vs black-box:References\nBayes optimal strategies for membership inference. In\nInternational Conference on Machine Learning (ICML),Nicholas Carlini, Steve Chien, Milad Nasr, Shuang Song,\npages 5558–5567.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 19,
+    "total_chunks": 81,
+    "char_count": 2486,
+    "word_count": 329,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1db6d58b-7a5c-4429-ba17-fad2f9ad3c75",
+    "text": "Membership inference attacks from first principles. In IEEE Symposium Ahmed Salem, Yang Zhang, Mathieu Humbert, Pascal\non Security and Privacy (SP), pages 1897–1914. IEEE, Berrang, Mario Fritz, and Michael Backes. Model and data independent membership inference attacks and defenses on machine learning models. In\nLuke N Darlow, Elliot J Crowley, Antreas Antoniou, and Network and Distributed System Security Symposium\nAmos J Storkey. CINIC-10 is not ImageNet or CIFAR-10. (NDSS), 2019. Reza Shokri, Marco Stronati, Congzheng Song, and Vitaly\nCynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Shmatikov.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 21,
+    "total_chunks": 81,
+    "char_count": 607,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0b0fcf8c-12a4-435f-a26c-03843da772bf",
+    "text": "Membership inference attacks against maSmith. Calibrating noise to sensitivity in private data chine learning models. In IEEE Symposium on Security\nanalysis. In Theory of Cryptography Conference (TCC), and Privacy (SP), pages 3–18. IEEE, 2017.\npages 265–284. Liwei Song and Prateek Mittal. Systematic evaluation of\nBradley Efron.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 22,
+    "total_chunks": 81,
+    "char_count": 329,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a1232fce-ec3a-4eee-a521-0ebbaa26705a",
+    "text": "Large-Scale Inference: Empirical Bayes privacy risks of machine learning models. In USENIX\nMethods for Estimation, Testing, and Prediction. Cam- Security Symposium, 2021.\nbridge University Press, 2010. Thomas Steinke, Milad Nasr, and Matthew Jagielski.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 23,
+    "total_chunks": 81,
+    "char_count": 252,
+    "word_count": 33,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2932eb35-bfaa-485c-a602-ca2bc537c42d",
+    "text": "Privacy auditing with one (1) training run. Advances inAndrew Gelman, John B Carlin, Hal S Stern, David B DunNeural Information Processing Systems (NeurIPS), 2023. son, Aki Vehtari, and Donald B Rubin. Bayesian Data\nAnalysis. CRC Press, 3rd edition, 2013. Lauren Watson, Chuan Guo, Graham Cormode, and Alexandre Sablayrolles.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 24,
+    "total_chunks": 81,
+    "char_count": 325,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "03601ba4-3422-4166-b8ef-198cdf3b5ae3",
+    "text": "On the importance of difficulty calibraKaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. tion in membership inference attacks. In International\nDeep residual learning for image recognition. In IEEE Conference on Learning Representations (ICLR), 2022. Conference on Computer Vision and Pattern Recognition\n(CVPR), pages 770–778, 2016. Jiayuan Ye, Aadyaa Maddi, Sasi Kumar Murakonda, Vincent Bindschaedler, and Reza Shokri. Enhanced memberWilliam James and Charles Stein. Estimation with quadratic ship inference attacks against machine learning models.\nloss. Proceedings of the Fourth Berkeley Symposium In ACM Conference on Computer and Communications\non Mathematical Statistics and Probability, 1:361–379, Security (CCS), pages 3093–3106. Samuel Yeom, Irene Giacomelli, Matt Fredrikson, and\nAlex Krizhevsky.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 25,
+    "total_chunks": 81,
+    "char_count": 813,
+    "word_count": 107,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db1f418d-c81a-499e-9c0b-c98c5dc11bb0",
+    "text": "Learning multiple layers of features from Somesh Jha. Privacy risk in machine learning: Analyzing\ntiny images. Technical report, University of Toronto, the connection to overfitting. In IEEE Computer Security\n2009. Foundations Symposium (CSF), pages 268–282. Marcus Lassila, Johan Östman, Khac-Hoang Ngo, and\nSergey Zagoruyko and Nikos Komodakis. Wide residual Alexandre Graell i Amat. Practical Bayes-optimal\nnetworks. arXiv preprint arXiv:1605.07146, 2016. membership inference attacks. arXiv preprint\narXiv:2505.24089, 2025. Sajjad Zarifzadeh, Philippe Liu, and Reza Shokri. Low-cost\nhigh-power membership inference attacks. In InternaCarl N Morris.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 26,
+    "total_chunks": 81,
+    "char_count": 652,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "02d3aac3-6e47-43f0-acec-8567922cf8d6",
+    "text": "Parametric empirical Bayes inference: Thetional Conference on Machine Learning (ICML). PMLR,\nory and applications. Journal of the American Statistical\n2024. Association, 78(381):47–55, 1983. SUPPLEMENTARY MATERIAL A EXPONENTIAL-FAMILY DERIVATIONS This appendix states the log-likelihood ratio implied by each distributional family and discusses parameter estimation for\nthe case when they are used directly for MIA. Derivations of the BASE hierarchy are in Appendix B. Recall from Section 3 that each distributional family models a scalar statistic z under the two membership classes m ∈{0, 1},\nwhere m = 1 denotes IN and m = 0 denotes OUT. We assume z | m follows an exponential-family distribution p(z | m) = h(z) exp η⊤mT(z) −A(ηm) , with sufficient statistics T(z), natural parameters ηm, base measure h(z), and log-partition function A (4). The log-likelihood\nratio for membership is\nLLR(z) = (η1 −η0)⊤T(z) − A(η1) −A(η0) , The LLR is affine in T(z): the optimal membership score is a linear combination of the sufficient statistics\nplus a constant offset. If some components of T(z) are nonlinear in z (e.g., z2 in the Gaussian), the LLR becomes nonlinear\nin z unless the corresponding natural parameters are shared across classes.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 27,
+    "total_chunks": 81,
+    "char_count": 1237,
+    "word_count": 193,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fddabaae-c623-4c79-ac2f-cb84163164f4",
+    "text": "The following subsections specialize this result\nto four distributional families, identifying the sufficient statistics, natural parameters, and LLR for each. A.2 EXPONENTIAL SPECIALIZATION The exponential model operates on the loss statistic z = ℓ, where ℓ= −log p is the cross-entropy loss and p is the model's\npredicted confidence for the ground truth label (see Table 1). For ℓ| m ∼Exp(λm) with rate λm > 0, the sufficient statistic is T(ℓ) = ℓ, the natural parameter is ηm = −λm, and the\nlog-partition function is A(ηm) = −log λm.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 28,
+    "total_chunks": 81,
+    "char_count": 535,
+    "word_count": 89,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1afe3feb-c3ef-40fe-9db4-b941258c8adb",
+    "text": "Substituting into (5): LLR(ℓ) = −(λ1 −λ0)ℓ−(−log λ1 + log λ0) = log −(λ1 −λ0)ℓ. The LLR is affine in ℓwith slope λ0 −λ1. Since the exponential family has a single sufficient statistic (ℓitself), the LLR is\nautomatically affine—no parameter constraints are needed to obtain a linear score. A.3 GAMMA SPECIALIZATION Like the exponential, the Gamma model operates on the loss statistic z = ℓ. For ℓ| m ∼Gamma(κm, ϑm) with shape κm > 0 and scale ϑm > 0, the sufficient statistics are T(ℓ) = (ℓ, log ℓ), the\nnatural parameters are ηm = (−1/ϑm, κm −1), and the log-partition function is A(ηm) = log Γ(κm) + κm log ϑm. Substituting into (5) gives the general Gamma LLR: LLR(ℓ) = 1 . 1 −1 ℓ+ (κ1 −κ0) log ℓ−log Γ(κ1) ϑκ1\nϑ0 ϑ1 Γ(κ0) ϑκ00 The LLR has two variable terms: one linear in ℓ(driven by the scale difference 1/ϑ0 −1/ϑ1) and one linear in log ℓ(driven\nby the shape difference κ1 −κ0). The constant offset depends on the normalizing constants of both class-conditional\ndistributions. Under shared scale ϑ0 = ϑ1 = ϑ, the linear-in-ℓterm vanishes and the LLR simplifies to Γ(κ1) ϑκ1\nLLR(ℓ) = (κ1 −κ0) log ℓ−log ,\nΓ(κ0) ϑκ0 which is affine in log ℓwith slope κ1 −κ0. Since ℓ= −log p, we have log ℓ= log(−log p), so the shared-scale Gamma\nLLR operates on the log-loss rather than on the loss or confidence directly.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 29,
+    "total_chunks": 81,
+    "char_count": 1310,
+    "word_count": 239,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4b9eb2a7-d50d-4cbf-afd3-eb518c689b67",
+    "text": "Conversely, under shared shape κ0 = κ1 = κ, the log ℓterm vanishes and the LLR simplifies to LLR(ℓ) = 1 −1 ℓ−κ log ϑ1 ,\nϑ0 ϑ1 ϑ0 which is affine in ℓwith slope 1/ϑ0 −1/ϑ1. This shared-shape case is structurally identical to the exponential LLR: both\nare linear in the loss itself. These two specializations illustrate a general pattern. The shared-scale case (affine in log ℓ) retains only the shape difference\nbetween classes, while the shared-shape case (affine in ℓ) retains only the scale difference and mirrors the exponential LLR.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 30,
+    "total_chunks": 81,
+    "char_count": 536,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6ed4d667-4e7f-49e6-bed4-1207ac597da5",
+    "text": "A.4 BETA SPECIALIZATION The Beta model operates on the confidence statistic z = p, where p is the model's predicted probability for the ground truth\nlabel. Under cross-entropy loss, p = e−ℓ, so confidence and loss are related by a monotone transform (see Table 1). For p | m ∼Beta(αm, βm) with shape parameters αm, βm > 0, the sufficient statistics are T(p) = (log p, log(1 −p)), the\nnatural parameters are ηm = (αm −1, βm −1), and the log-partition function is A(ηm) = log B(αm, βm), where B is the\nBeta function. Substituting into (5): B(α1, β1)\nLLR(p) = (α1 −α0) log p + (β1 −β0) log(1 −p) −log B(α0, β0). The LLR is linear in (log p, log(1 −p)), providing a natural two-parameter extension of the exponential model. With\ntwo shape parameters per class (four total), the Beta family can capture asymmetric behaviour near p = 0 and p = 1\nindependently. A.5 GAUSSIAN SPECIALIZATION The Gaussian model operates on the rescaled logit statistic z = φ, where φ = log(p/(1 −p)) is the log-odds of the ground\ntruth label confidence p. The rescaled logit maps p ∈(0, 1) to φ ∈(−∞, +∞), making the Gaussian a natural model for\nthis statistic (see Table 1). This is the distributional model underlying LiRA [Carlini et al., 2022]. For φ | m ∼ N(µm, σ2m), the sufficient statistics are T(φ) = (φ, φ2), the natural parameters are ηm =\nµm/σ2m, −1/(2σ2m) , and the log-partition function is A(ηm) = µ2m/(2σ2m) + log σm. Substituting into (5) and simplifying gives the full Gaussian LLR: LLR(φ) = (φ −µ0)2 −(φ −µ1)2 + log σ0 .\n2σ20 2σ21 σ1",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 31,
+    "total_chunks": 81,
+    "char_count": 1526,
+    "word_count": 277,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b72aa1e1-74a9-4ce8-820d-76524251aebe",
+    "text": "This is the full Gaussian LLR (7), written out here for reference. The LLR is quadratic in φ whenever σ0 ̸= σ1, because the\nφ2 coefficient 2σ21 0 − 2σ21 1 is nonzero. This nonlinearity allows the Gaussian model to capture differences in the spread of\nshadow statistics between IN and OUT, not just shifts in location. Under equal variances σ20 = σ21 = σ2, the quadratic terms cancel and the LLR simplifies to µ1 −µ0\nLLR(φ) = φ −µ1 + µ0 ,\nσ2 2 This is linear in φ: the slope is proportional to the mean gap µ1 −µ0 and inversely proportional to the variance,\nwhile the intercept is set by the midpoint of the two class means. A.6 PARAMETER ESTIMATION When using these distributional families for membership inference, we estimate class-conditional parameters from shadowmodel statistics. For a given audit point i, the K shadow models produce statistics zi,1, . . . , zi,K, each labeled by membership\nmi,k ∈{0, 1}, where m = 1 denotes IN (point i was in the training set of shadow model k) and m = 0 denotes OUT. Let\nKi,m = {k : mi,k = m} be the index set for each class. Parameters are estimated separately per class and per audit point. The exponential model has one parameter per class: the rate λi,m. The MLE is the reciprocal of the sample\nmean loss:\n1 1\nˆλi,m = , where ¯ℓi,m = X ℓi,k.\n¯ℓi,m |Ki,m|\nk∈Ki,m\nGamma. The Gamma model has two parameters per class: shape κi,m and scale ϑi,m.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 32,
+    "total_chunks": 81,
+    "char_count": 1389,
+    "word_count": 258,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f2b56b67-3b3d-46ed-b876-8479a1cf8919",
+    "text": "No closed-form MLE exists. The\nprofile log-likelihood yields the implicit equation\nlog ˆκi,m −ψ(ˆκi,m) = log ¯ℓi,m −log ℓi,m, where ψ is the digamma function and\nlog ℓi,m = X log ℓi,k\n|Ki,m|\nk∈Ki,m\nis the sample mean of the log-losses.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 33,
+    "total_chunks": 81,
+    "char_count": 235,
+    "word_count": 41,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "167b4591-3980-401a-bcb7-703f450fab69",
+    "text": "This equation is solved numerically (e.g. Newton–Raphson), after which the scale\nestimate follows as ˆϑi,m = ¯ℓi,m/ˆκi,m. For initialization, method-of-moments estimates are convenient:\n¯ℓ2i,m s2i,m\nˆκMoMi,m = , ˆϑMoMi,m = , s2i,m ¯ℓi,m\nwhere s2i,m = |Ki,m|−1 Pk∈Ki,m(ℓi,k −¯ℓi,m)2 is the sample variance. The Beta model has two parameters per class: αi,m and βi,m. The MLE requires solving the coupled digamma\nequations\nψ(ˆαi,m) −ψ(ˆαi,m + ˆβi,m) = log pi,m,\nψ(ˆβi,m) −ψ(ˆαi,m + ˆβi,m) = log(1 −p)i,m, where\n1 1\nlog pi,m = X log pi,k, log(1−p)i,m = X log(1 −pi,k). |Ki,m| |Ki,m|\nk∈Ki,m k∈Ki,m\nThese are solved numerically, using probability-weighted moment (PWM) estimators for initialization. The Gaussian model has two parameters per class: mean µi,m and variance σ2i,m. The MLEs are the sample\nmean and variance:\n1 1\nˆµi,m = X zi,k, ˆσ2i,m = X (zi,k −ˆµi,m)2.\n|Ki,m| |Ki,m|\nk∈Ki,m k∈Ki,m\nThe BASE hierarchy (Appendix B) introduces parameter-sharing constraints that reduce the number of free parameters. BASE3 pools the variance across the two classes while estimating means separately. BASE2 additionally constrains the\nmean gap to be constant across data points. BASE1 collapses to a single pooled centering estimate, discarding all per-class\nvariance information. Standard MLE estimates can be sensitive to outlier shadow statistics—for instance, a single anomalously low loss can heavily influence the exponential rate estimate. Several robust alternatives exist: • Trimmed means: discard the most extreme fraction of shadow statistics before computing the sample mean.\n• Winsorized variance: clamp extreme values to a quantile threshold before computing variance, reducing the influence\nof heavy tails.\n• Median-based estimators: replace the sample mean with the median, which has a bounded influence function.\n• Interquartile range (IQR): use the IQR as a robust spread estimate in place of the standard deviation, avoiding sensitivity\nto extreme tails.\n• Log-sum-exp averaging: estimate the pooled center via ˆzi,pool = −log K1 PKk=1 e−ℓi,k instead of the arithmetic mean. This is equivalent to the softmin and provides a natural robust centering in the confidence domain.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 34,
+    "total_chunks": 81,
+    "char_count": 2183,
+    "word_count": 329,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "23c76771-1ab5-4678-ac93-2d509963578f",
+    "text": "We explored trimmed means, winsorized variance, and median-based alternatives in our experiments, but did not find that\nthey improved MIA performance over standard MLE. The exception is log-sum-exp averaging for BASE1, which provides a\nmodest improvement and is used in the standard BASE implementation [Lassila et al., 2025]. B BASE HIERARCHY: DERIVATIONS AND FORMULAS",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 35,
+    "total_chunks": 81,
+    "char_count": 369,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b27062a5-e3aa-4098-b211-3805122c93b1",
+    "text": "We now fix a target point i and write LLRi for its per-datapoint membership log-likelihood ratio. The K shadow statistics\nzi,1, . . . , zi,K are split by membership label mi,k ∈{0, 1}. Each BASE variant follows from the exponential-family LLR\n(Appendix A) under specific parameter-sharing constraints. We present the hierarchy top-down, from the most flexible\n(BASE4) to the most constrained (BASE1).",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 36,
+    "total_chunks": 81,
+    "char_count": 400,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b90e1122-d4c5-4742-ac57-feb0b1f7a679",
+    "text": "Since the IN model has been trained on the target point while the OUT model has not, we generally expect\nhigher confidence for IN: pIN > pOUT, equivalently −ℓIN > −ℓOUT and φIN > φOUT. Throughout the derivations below we\ntherefore choose the scalar statistic z ∈{p, −ℓ, φ} so that the IN–OUT mean difference ∆µ := µi,1 −µi,0 is positive. This\nconvention ensures that the LLR slope is positive and membership scores increase with the target statistic.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 37,
+    "total_chunks": 81,
+    "char_count": 450,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e4113de3-8a95-4231-b6f9-6a24e2f679e9",
+    "text": "BASE4 (full Gaussian, 4 per-point parameters). Assume zi,k | m ∼N(µi,m, σ2i,m) with all four parameters\n(µi,0, σ2i,0, µi,1, σ2i,1) free. Substituting maximum-likelihood estimates into the Gaussian LLR (7) gives the BASE4\nscore (12):\n(zi,0 −ˆµi,0)2 −(zi,0 −ˆµi,1)2 + log ˆσi,0 . BASE4i =\n2ˆσ2i,0 2ˆσ2i,1 ˆσi,1 BASE3 (equal variance, 3 per-point parameters). Constrain σ2i,0 = σ2i,1 = σ2i . The equal-variance Gaussian LLR (8) is\nlinear in z:\nµi,1 −µi,0\nLLRi(z) = zi,0 −µi,1 + µi,0 .\nσ2i 2\nSubstituting MLE estimates yields the BASE3 score (11): ˆµi,1 −ˆµi,0\nBASE3i = zi,0 −ˆµi,1 + ˆµi,0 ,\nˆσ2i 2 1 1\nˆµi,m = X zi,k, ˆσ2i = X X (zi,k −ˆµi,m)2.\n|Ki,m| |Ki,0| + |Ki,1|\nk∈Ki,m m∈{0,1} k∈Ki,m BASE2 (constant mean gap, 2 per-point parameters). Additionally constrain µi,1 −µi,0 = ∆µ for all i. The LLR\nslope ∆µ/σ2i now varies only through the per-point variance; since ∆µ > 0 is constant, the ranking across data points is\ndetermined by\nzi,0 −ˆµi,pool\nBASE2i = ,\nˆσ2i\nwith pooled estimators that ignore membership labels: K K\n1 1\nˆµi,pool = X zi,k, ˆσ2i = X (zi,k −ˆµi,pool)2. BASE1 (mean–variance proportionality, 1 per-point parameter). Finally, suppose the means satisfy µi,m = am σ2i\nwith constants a0, a1 independent of i.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 38,
+    "total_chunks": 81,
+    "char_count": 1221,
+    "word_count": 207,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "87c1cebf-9c99-454e-a590-1b56f5f7ce9c",
+    "text": "Then µi,1 −µi,0 = (a1 −a0) σ2i , so the equal-variance LLR slope simplifies to the\nconstant a1 −a0:\nLLRi(z) = (a1 −a0)(zi,0 −¯µi) , where ¯µi = (µi,1 + µi,0)/2. Since a1 −a0 > 0 is constant across points, the ranking depends only on zi,0 −¯µi, yielding\nthe BASE1 score (9):\nBASE1i = zi,0 −ˆzi,pool, where ˆzi,pool estimates the centering ¯µi from all K shadow statistics for point i.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 39,
+    "total_chunks": 81,
+    "char_count": 383,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f539f73f-57db-4dd7-85ba-08e3207776be",
+    "text": "Corollary 1 (LiRA = BASE4). Setting z = φ (rescaled logits) in the BASE4 formula above and substituting MLE\nparameters (ˆµi,m, ˆσ2i,m) into (7) recovers the LiRA score (2). Direct substitution of MLE (ˆµi,m, ˆσ2i,m) into (7) gives (12), which equals (2). Corollary 2 (BASE = BASE1). Setting z = −ℓin the BASE1 score and estimating the centering via the log-sum-exp\naverage gives the BASE score of Lassila et al. [2025]: K ! 1\nBASEi = −ℓi,0 −log X e−ℓi,k .\nk=1 Substitute z = −ℓinto the BASE1 score zi,0 −ˆzi,pool. For the centering estimate, replace the arithmetic loss-domain\naverage with its Jensen-stable confidence-domain counterpart ˆzi,pool = log(K−1 Pk e−ℓi,k), giving the standard BASE\nformula. Independent derivation: BASE from the exponential model. Assume ℓi,k | m ∼Exp(λi,m) with a constant rate gap\nλi,1 −λi,0 = ∆λ > 0 across data points. The exponential LLR (6) for point i is λi,1\nLLRi(ℓ) = log −(λi,1 −λi,0) ℓi,0,\nλi,0 which is exactly affine in the target loss. Under the constant-gap assumption, the slope −∆λ is common to all points.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 40,
+    "total_chunks": 81,
+    "char_count": 1052,
+    "word_count": 177,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b7a2682-4d8e-40ab-b1e4-421e34be8d1b",
+    "text": "Introduce the pooled rate λi,pool = (λi,1 + λi,0)/2 and rewrite the intercept: λi,1 λi,pool + ∆λ/2 ∆λ\nlog = log ≈ ,\nλi,0 λi,pool −∆λ/2 λi,pool where the approximation holds for ∆λ/λi,pool ≪1. Substituting yields the approximate LLR LLRi(ℓ) ≈∆λ −ℓi,0 .\nλi,pool Since ∆λ > 0 is constant, the ranking depends only on λ−1i,pool −ℓi,0. The pooled rate inverse λ−1i,pool is the expected loss\nunder the pooled model, estimated by the sample mean ˆℓi,pool = K−1 Pk ℓi,k or the Jensen-stable log-sum-exp average. The latter choice yields\nBASEi = −ℓi,0 −log( X e−ℓi,k)\nk=1 Independent derivation: BASE from the Gamma model. Consider a Gamma model on the confidence: pi,k |\nm ∼Gamma(κi,m, ϑi) with a per-point scale ϑi > 0 shared across membership classes. Assume a constant shape\ngap κi,1 −κi,0 = ∆κ > 0 across data points. Under the shared-scale Gamma model, the density is f(p | κ, ϑ) =\n[Γ(κ) ϑκ]−1 pκ−1 e−p/ϑ, and the LLR for the target confidence pi,0 is Γ(κi,1)\nLLRi(pi,0) = (κi,1 −κi,0) log pi,0 −(κi,1 −κi,0) log ϑi −log Γ(κi,0). Since log pi,0 = −ℓi,0, this becomes Γ(κi,1)\nLLRi = −∆κ ℓi,0 −∆κ log ϑi −log Γ(κi,0).",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 41,
+    "total_chunks": 81,
+    "char_count": 1112,
+    "word_count": 196,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d5df08ec-ed96-4732-840b-2d9a897b3c99",
+    "text": "The slope −∆κ is constant across points, so the ranking depends on −ℓi,0 −log ϑi (the log-Gamma ratio varies slowly for\nmoderate shape variation). The shared scale ϑi is estimated by the pooled mean of the shadow confidences:",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 42,
+    "total_chunks": 81,
+    "char_count": 225,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dc4656c9-0703-44e9-8487-e1e3ab379294",
+    "text": "K K\n1 1\nˆϑi = X pi,k = X e−ℓi,k. Substituting ˆϑi and dropping the constant ∆κ gives K ! 1\nLLRi ∝−ℓi,0 −log X e−ℓi,k ,\nk=1 recovering the BASE score with log-sum-exp centering. Remark (unifying principle). All three BASE derivations share a common structure: the distributional LLR is affine in a\nscalar statistic with a slope that is constant across data points, so membership inference reduces to pooled centering. More\ngenerally, in any one-parameter exponential family with sufficient statistic T(z), the LLR is LLRi(z) = (ηi,1 −ηi,0) T(zi,0) − A(ηi,1) −A(ηi,0) . If the parameter gap ηi,1 −ηi,0 = ∆η is constant across data points, the slope is constant and the score ranking reduces to\nT(zi,0) minus a per-point centering term—exactly the BASE1 structure. The three derivations above are instances with\nT(ℓ) = ℓ(exponential), T(z) = z (Gaussian with mean–variance proportionality), and T(p) = log p = −ℓ(shared-scale\nGamma on confidence). In each case, centering in the confidence domain via K−1 P e−ℓi,k yields the log-sum-exp average\nof the standard BASE implementation [Lassila et al., 2025]. C.1 NIG POSTERIOR UPDATES The NIG prior (µ, σ2) ∼NIG(µ∅,m, κ∅, α∅, β∅,m) has density α∅+1 + κ∅(µ −µ∅,m)2 √κ∅ βα∅∅,m 1 p(µ, σ2) = √ exp −2β∅,m .\nσ 2π Γ(α∅) σ2 2σ2 For a fixed data point i and class m, after observing nm = |Ki,m| shadow statistics with sample mean ¯zm and sum of\nsquared deviations Sm = Pk∈Ki,m(zi,k −¯zm)2, the posterior hyperparameters (µ′i,m, κ′i,m, α′i,m, β′i,m) are given by (14).",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 43,
+    "total_chunks": 81,
+    "char_count": 1502,
+    "word_count": 253,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d6a629ff-f208-4bdb-abdb-0ef0451306df",
+    "text": "C.2 EMPIRICAL BAYES HYPERPARAMETERS The prior is estimated separately for each class m ∈{0, 1} via empirical Bayes, pooling shadow statistics across all points: • µ∅,m: global mean of the statistic across all class-m shadow observations. • κ∅: controls the strength of the mean prior; set to 1 (weakly informative).\n• α∅: controls the strength of the variance prior; set to 2 (weakly informative, ensuring E[σ2] is finite).\n• β∅,m: set to σ2m,global · (α∅−1), so that E[σ2] = β∅,m/(α∅−1) matches the observed class-m global variance. With\nα∅= 2, this gives β∅,m = σ2m,global. The strength parameters κ∅and α∅are shared across classes. These defaults are used throughout all experiments. No\nper-dataset tuning is performed.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 44,
+    "total_chunks": 81,
+    "char_count": 722,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "64896bd0-0228-40e1-8448-69a3753060c1",
+    "text": "C.3 CONVERGENCE TO LIRA As the number of shadow observations nm = |Ki,m| grows, the NIG posterior concentrates around the maximum likelihood\nestimates. Specifically, from the update equations (14) • The posterior mean converges to the sample mean: µ′i,m = κ∅µ∅,m+nm¯zmκ∅+nm →¯zm as nm →∞, since the prior\ncontribution κ∅µ∅,m becomes negligible.\n• The posterior variance converges to the MLE variance: β′i,m/α′i,m →Sm/nm = ˆσ2m, so the Bayesian shrinkage\nvanishes.\n• The degrees of freedom νi,m = 2α′i,m = 2α∅+ nm →∞, so the Student-t predictive (15) converges to a Gaussian. Consequently, BaVarIA-n reduces to LiRA (same Gaussian LLR with MLE parameters), and BaVarIA-t also reduces to\nLiRA since the Student-t converges to the Gaussian. The prior becomes non-informative, and all three methods produce\nidentical scores.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 45,
+    "total_chunks": 81,
+    "char_count": 820,
+    "word_count": 126,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "69c8c3ee-9261-4006-871e-297b508185ad",
+    "text": "Table 3: TPR@0.01 for the BASE hierarchy at K = 8 (32 replicates). Bold: best method per dataset. Dataset BASE1 BASE2 BASE3 BASE4 LiRA RMIA C10-WRN 0.081 0.039 0.070 0.019 0.107 0.081\nC100-WRN 0.191 0.070 0.122 0.036 0.157 0.191\nCN10-WRN 0.114 0.011 0.112 0.042 0.161 0.114\nLoc-4 0.160 0.053 0.230 0.097 0.267 0.160\nPur-4 0.037 0.014 0.029 0.013 0.039 0.037\nTex-4 0.237 0.016 0.211 0.083 0.237 0.237 D FULL EXPERIMENTAL RESULTS All experiments use Design B resampling with 32 replicates across 12 datasets and 7 shadow-model budgets (K ∈\n{4, 8, 16, 32, 64, 128, 254}). Figures 5–8 show the online BASE hierarchy scaling curves; Figures 9–12 include both online\n(solid) and offline (dashed) BaVarIA curves. Tables below show one representative architecture per data source (WideResNet\nfor image, MLP-4 for tabular); the second variant follows the same trends.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 46,
+    "total_chunks": 81,
+    "char_count": 858,
+    "word_count": 138,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1b9f73f9-9518-4209-80a0-875053be58b7",
+    "text": "D.1 VERIFICATION OF EQUIVALENCES BASE1 on loss with log-sum-exp averaging reproduces RMIA at γ = 1 exactly (max |∆AUC| = 0\nacross all K and datasets), confirming the equivalence of Lassila et al. [2025]. BASE4 on rescaled logits with MLE parameters (denominator n, i.e., the biased variance estimator)\nreproduces LiRA exactly at K ≥64 (max |∆AUC| < 10−6). At K < 64, LiRA's hard switch substitutes a global variance\nfor the per-point MLE, breaking the equivalence (max |∆AUC| = 0.039 at K = 8). D.2 BASE HIERARCHY AT MULTIPLE SHADOW BUDGETS Tables 3 and 4 report TPR@0.01 for the full BASE hierarchy at K = 8 and K = 64. At K = 8, LiRA dominates\nmost datasets thanks to numerical safeguards, while raw MLE (BASE4) collapses to near-random (TPR@0.01 = 0.019\non C10-WRN)—confirming that per-class variance estimation from ∼4 observations is unreliable. BASE1 (= RMIA) is\ncompetitive because pooled centering avoids the IN/OUT split. At K = 64, BASE3 (pooled variance) outperforms LiRA\n(e.g., 0.141 vs. 0.078 on C10-WRN): with ∼32 observations per class, means are stable but per-class variances remain\nnoisy, so pooling provides a more reliable denominator. At K = 254 (Table 2), the advantage reverses as LiRA's per-class\nvariances converge. LiRA's hard-switch discontinuity. Conventional LiRA implementations switch from a single global variance to per-point\nvariance estimation at K = 64 (i.e., when at least 32 observations are available per class). This binary switch produces\na visible kink in LiRA's scaling curve: the step gain from K = 32 to K = 64 is anomalously large compared to the\notherwise monotonically decreasing marginal returns at adjacent K values (Figures 7–8). The effect is most pronounced\nfor TPR@0.01, where the variance term in the Gaussian LLR has the greatest influence on tail behavior. Conversely,\nBaVarIA-n's advantage over LiRA peaks at K = 32—where LiRA is still constrained to global variance—and drops sharply\nat K = 64 once LiRA switches to per-point estimation.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 47,
+    "total_chunks": 81,
+    "char_count": 1996,
+    "word_count": 324,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "808377eb-951a-442e-a088-e7dcb5fa5492",
+    "text": "BaVarIA avoids this discontinuity entirely: the NIG posterior\nsmoothly shifts weight from the global prior to per-point data as K grows, producing a monotonically improving scaling\ncurve with no implementation-dependent threshold (Figure 2). D.3 DISTRIBUTIONAL DIAGNOSTICS Figure 4 shows QQ plots of per-datapoint standardized shadow log-odds against the N(0, 1) reference, and Table 5 reports\nAnderson-Darling (AD) rejection rates at the 5% level for all twelve testbeds. Rejection rates range from near-nominal\n(∼6% on CIFAR-10 WRN) to over 80% (Location MLP-3 IN class), with the IN class typically showing stronger departures\nthan OUT—consistent with heavier tails visible in the QQ plots for CIFAR-100 ResNet (74% IN rejection). Despite these departures, the Gaussian-family methods dominate across all datasets (Section 5).",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 48,
+    "total_chunks": 81,
+    "char_count": 829,
+    "word_count": 119,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b4e3be28-9592-4b8c-a4f6-d15075f283b1",
+    "text": "The LLR score is evaluated Table 4: TPR@0.01 for the BASE hierarchy at K = 64. BASE3 (pooled variance) slightly outperforms LiRA at this budget. Dataset BASE1 BASE2 BASE3 BASE4 LiRA RMIA C10-WRN 0.089 0.055 0.141 0.078 0.078 0.089\nC100-WRN 0.202 0.087 0.200 0.163 0.163 0.202\nCN10-WRN 0.133 0.009 0.187 0.182 0.182 0.133\nLoc-4 0.218 0.064 0.420 0.410 0.410 0.218\nPur-4 0.049 0.013 0.064 0.055 0.055 0.049\nTex-4 0.277 0.013 0.357 0.351 0.351 0.277 CIFAR-10 WideResNet CIFAR-100 ResNet\n4 4\nrej%(IN)=6% rej%(IN)=74%\nrej%(OUT)=6% rej%(OUT)=11%\n3 med AD(IN)=0.34 3 med AD(IN)=1.11\ncrit5%=0.75 crit5%=0.75\n2 2 3 3 IN IN\nOUT OUT\n4 4\n4 3 2 1 0 1 2 3 4 4 3 2 1 0 1 2 3 4\nTheoretical quantiles (N(0,1)) Theoretical quantiles (N(0,1)) Figure 4: Per-datapoint QQ diagnostic: standardized residuals of shadow log-odds (per data point, per class) pooled across\ndatapoints and plotted against N(0, 1) quantiles. Annotations show per-datapoint Anderson-Darling (AD) rejection rates. CIFAR-10 WRN is well-approximated by a Gaussian (∼6% AD rejection); CIFAR-100 ResNet shows heavier tails in the\nIN class (74% AD rejection). at the target model's output, which typically lies in the bulk of the distribution where the Gaussian approximation remains\naccurate; tail departures affect the density estimate but not the ranking of most data points. E DISTRIBUTION FAMILY COMPARISON Table 6 compares the four distributional families from the exponential-family framework at K = 64. The Gaussian model\n(on rescaled logits) matches LiRA exactly and dominates all alternatives on every dataset.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 49,
+    "total_chunks": 81,
+    "char_count": 1568,
+    "word_count": 248,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ff862822-e384-40f5-ba5a-824409737524",
+    "text": "The Exponential model (on\nloss) performs poorly, achieving near-random TPR on several datasets (C10-WRN: 0.011, Pur-4: 0.007). This occurs\nbecause the exponential's single rate parameter cannot capture the variance differences between IN and OUT that drive\ndiscrimination—the LLR is constrained to be linear in the loss. The Gamma model improves over the Exponential by adding a shape parameter but remains substantially below the Gaussian. The Beta model, operating on confidences with a two-parameter LLR, performs better than Gamma on most datasets but\nstill trails the Gaussian. These results confirm that the choice of sufficient statistic (log-odds vs. loss vs. confidence) matters\nmore than the parametric flexibility of the distributional family. F BAVARIA PER-DATASET RESULTS Tables 7 and 8 report per-dataset results for the BaVarIA variants at the shadow budgets where the Bayesian advantage is\nlargest. Figures 9–12 show the full scaling curves across all datasets (solid = online, dashed = offline). We discuss the online",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 50,
+    "total_chunks": 81,
+    "char_count": 1034,
+    "word_count": 155,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e50d5f30-52eb-4494-9522-3fc497ba5066",
+    "text": "Table 5: Per-datapoint Anderson-Darling normality test on shadow log-odds (K = 254, n = 1,000 datapoints per class). Rejection rate at the 5% significance level (critical value 0.748). Gaussianity holds well for WideResNet on CIFAR-10/100\nbut is strongly violated for Location and CINIC-10 WideResNet.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 51,
+    "total_chunks": 81,
+    "char_count": 301,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "161fa57a-5e6a-4c69-946b-b015064e8f9c",
+    "text": "Dataset med AD rej% med AD rej% C10-RN 0.475 22.4 0.438 19.4\nC10-WRN 0.342 5.9 0.355 6.5\nC100-RN 1.106 74.3 0.388 11.1\nC100-WRN 0.357 6.8 0.369 8.2\nCN10-RN 0.607 37.6 0.420 18.2\nCN10-WRN 0.934 57.3 1.463 67.2 Loc-3 1.966 85.0 0.402 12.9\nLoc-4 1.055 70.5 0.618 41.1\nPur-3 0.403 15.1 0.456 20.4\nPur-4 0.400 15.9 0.437 18.6\nTex-3 0.406 17.2 0.396 14.4\nTex-4 0.437 17.3 0.482 26.7 Table 6: TPR@0.01 by distributional family at K = 64. GAUSS on rescaled logits matches LiRA. Dataset EXP GAUSS GAMMA BETA LiRA RMIA C10-WRN 0.011 0.078 0.028 0.011 0.078 0.089\nC100-WRN 0.010 0.163 0.045 0.064 0.163 0.202\nCN10-WRN 0.171 0.182 0.047 0.153 0.182 0.133\nLoc-4 0.039 0.410 0.071 0.125 0.410 0.218\nPur-4 0.007 0.055 0.009 0.013 0.055 0.049\nTex-4 0.052 0.351 0.077 0.145 0.351 0.277 Table 7: AUC at K = 8 (32 replicates). BaVarIA-t achieves the best AUC on most datasets at this small shadow budget. Dataset BaVarIA-n BaVarIA-t LiRA RMIA C10-WRN 0.673 0.702 0.664 0.679\nC100-WRN 0.854 0.824 0.778 0.828\nCN10-WRN 0.673 0.730 0.726 0.708\nLoc-4 0.860 0.927 0.915 0.831\nPur-4 0.615 0.624 0.619 0.637\nTex-4 0.805 0.876 0.869 0.855 Table 8: TPR@0.001 at K = 64. Bayesian variance shrinkage provides dramatic improvements in the extreme tails. Dataset BaVarIA-n BaVarIA-t LiRA RMIA C10-WRN 0.059 0.048 0.014 0.034\nC100-WRN 0.098 0.067 0.039 0.051\nCN10-WRN 0.090 0.105 0.085 0.069\nLoc-4 0.119 0.261 0.273 0.111\nPur-4 0.011 0.014 0.009 0.011\nTex-4 0.111 0.194 0.181 0.142",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 52,
+    "total_chunks": 81,
+    "char_count": 1448,
+    "word_count": 241,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dff050f7-535c-4eb7-940b-c10125c57ed0",
+    "text": "results in this section and refer to Appendix I for an analysis of the offline results. At K = 8 (Table 7), BaVarIA-t achieves the best AUC on 4 of 6 datasets. The gains are largest on datasets with strong\nmembership signals: Location (+0.012 vs.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 53,
+    "total_chunks": 81,
+    "char_count": 246,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2d5ee418-f397-4329-8f6d-663dae4a7a1b",
+    "text": "LiRA) and CIFAR-10 WRN (+0.038). BaVarIA-n also improves over LiRA on\nsome datasets but less consistently, as its Gaussian LLR cannot exploit the heavier-tailed predictive distribution that helps\nAUC. At K = 64 on TPR@0.001 (Table 8), the Bayesian advantage is even more dramatic. BaVarIA-n achieves TPR@0.001\n= 0.059 on C10-WRN vs. 0.014 for LiRA—a 4.2× improvement—confirming that Bayesian variance shrinkage provides\nthe most benefit in the extreme tails at moderate K, where per-class variance estimates are still noisy enough to produce\nunreliable LLR scores. On Location, LiRA retains a slight edge (0.273 vs. 0.261 for BaVarIA-t), indicating that the Bayesian\nprior is already non-informative for datasets where the per-class signal is very strong.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 54,
+    "total_chunks": 81,
+    "char_count": 755,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cc16c3fc-e99e-4faf-8afb-16ab3ff1eaf7",
+    "text": "G CROSS-VALIDATION ON INDEPENDENT DATA To verify that our findings generalize beyond a single training pipeline, we cross-validated all methods on an independent\nshadow-model collection trained without data augmentation or dropout. This collection provides 224–1,480 shadow models\nper dataset (vs. 254 in our primary benchmark).",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 55,
+    "total_chunks": 81,
+    "char_count": 328,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2caaa091-596b-4a48-bfa9-8f950d45fc7a",
+    "text": "Absolute vulnerability. Models trained without augmentation are substantially more vulnerable to MIA on image datasets:\nCIFAR-10 ResNet AUC increases from 0.613 to 0.874, CIFAR-100 ResNet from 0.978 to 0.993. This is consistent with\nthe findings of Sablayrolles et al. [2019], who first documented this effect at scale on ImageNet (attack accuracy dropping\nfrom 90% to 68% with standard augmentation). On tabular datasets, the difference is smaller since these tasks already lack\naugmentation.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 56,
+    "total_chunks": 81,
+    "char_count": 493,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "759d7ae6-addc-4fc4-81a6-b204fa6cdf59",
+    "text": "Method ranking preservation. Despite the large shift in absolute vulnerability, the relative method ranking is fully\npreserved across both data sources: BaVarIA-n ≥BaVarIA-t ≥LiRA > BASE3 > RMIA > BASE2. At K = 64, BaVarIAn beats LiRA on TPR@0.01 in 10 of 12 datasets. The exceptions are the two CIFAR-100 datasets, where LiRA retains a\nmarginal edge (|∆TPR| < 0.003). Convergence at large K. On the independent data, the convergence of BaVarIA to LiRA is even more apparent because\nthe collection provides up to 1,480 shadow models. At K = 254, BaVarIA-n and LiRA produce identical AUC to three\ndecimal places on 6 of 10 available datasets, confirming the theoretical convergence result of Appendix C. These findings confirm that the BaVarIA advantage at small K, the BASE hierarchy ordering, and the convergence at large K are robust to differences in training recipes and model regularization. H ELSA: DISCRIMINATIVE SCORING",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 57,
+    "total_chunks": 81,
+    "char_count": 927,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f51bd422-af6d-4182-bbe4-9b6be5a639b0",
+    "text": "For any exponential-family model, the log-likelihood ratio is a linear function of the sufficient statistics (Section 3): LLR(z) = w⊤ϕ(z), (17) where ϕ is a feature map determined by the distributional family. Rather than estimating w generatively (via MLE of the\ndistributional parameters), we can estimate it discriminatively via logistic regression on shadow-model data. We define a universal feature map that subsumes the sufficient statistics of all distributional families\nconsidered in this paper:\nϕ(p) = 1, log(−log p), log p, log(1−p), φ2, p, p2 ⊤, (18) where φ = log(p/(1 −p)) is the rescaled logit. Different distributional families correspond to different active subsets of ϕ:\nthe Gaussian model on log-odds uses {1, φ, φ2}, the Beta model uses {1, log p, log(1−p)}, and the Gamma model uses\n{1, log(−log p), log p}. For each data point i, we fit weights wi by minimizing the ridge-penalized logistic loss over shadow-model\nobservations:",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 58,
+    "total_chunks": 81,
+    "char_count": 949,
+    "word_count": 150,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5d065c00-26ad-4cd4-a24c-64072da59b9a",
+    "text": "\" K #\nˆwi = arg min − X mi,k log σ w⊤ϕk + (1 −mi,k) log 1 −σ(w⊤ϕk) + λ∥w−0∥2 , (19)\nk=1 where ϕk = ϕ(pi,k), σ is the sigmoid function, and λ is the ridge penalty applied to all weights except the intercept w0. The intercept is excluded from penalization following standard practice in regularized logistic regression: including it\nwould shrink all predictions toward the 0.5 base rate, preventing the model from learning even the marginal membership\nprobability. Distribution-specific ELSA variants are obtained by feature masking: setting wj = 0 for features outside the active set\nforces the model to use only the sufficient statistics of the chosen family. For example, ELSA2ϕ optimizes only {w0, wφ},\nrecovering a discriminatively trained analogue of the equal-variance Gaussian LLR (8), while ELSA3ϕ adds wφ2 to capture\nthe full Gaussian structure (7).",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 59,
+    "total_chunks": 81,
+    "char_count": 857,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0cad393d-2287-4fea-8477-dd392cdceb92",
+    "text": "Tables 9 and 10 report AUC and TPR@0.001 at K = 64 for the ELSA variants. The feature maps correspond to\ndifferent distributional initializations: ELSA1 uses a single feature (intercept only, equivalent to the exponential model);\nELSA2ϕ uses the rescaled logit φ (two features, inspired by the Gaussian model); ELSA3β and ELSA3γ use three features\nfrom the Beta and Gamma sufficient statistics; ELSA3ϕ adds the quadratic term φ2; and ELSA-full uses all seven features. On AUC (Table 9), ELSA2ϕ and ELSA3β consistently outperform LiRA, with mean improvements of +0.065 and\n+0.062 respectively. The gains are largest on datasets where the Gaussian LLR is suboptimal: CIFAR-10 (+0.098), Location\n(+0.059). Interestingly, the simplest two-feature model (ELSA2ϕ) matches or beats the richer models, suggesting that\ndiscriminative training primarily learns a better slope for the Gaussian LLR rather than exploiting non-Gaussian structure. On TPR@0.001 (Table 10), results are more mixed. ELSA2ϕ beats LiRA on 4 of 6 datasets, with large\ngains on CINIC-10 (0.092 vs. 0.041) and Purchase (0.018 vs. 0.004). However, on Location, LiRA retains its advantage\n(0.214 vs. 0.174). Richer models degrade severely on some datasets: ELSA3ϕ achieves TPR@0.001 = 0.001 on CIFAR-10,\nand ELSA-full drops to 0.005. This indicates that ridge regularization shrinks extreme scores toward zero when the feature\nspace is too large relative to K, making feature selection critical.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 60,
+    "total_chunks": 81,
+    "char_count": 1455,
+    "word_count": 220,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7bc49000-a324-499d-821d-c15b41c3d6ea",
+    "text": "Practical assessment. ELSA's discriminative approach provides a useful diagnostic for whether the parametric LLR\nform is well-specified. However, it requires per-point logistic regression (additional computation) and is sensitive to feature\nselection—the gap between ELSA2ϕ (TPR = 0.058) and ELSA3ϕ (TPR = 0.001) on CIFAR-10 highlights this fragility. For practitioners seeking a simple, robust improvement over LiRA, BaVarIA offers a more reliable path. Table 9: ELSA: AUC at K = 64. Ridge-regularized two-feature models consistently improve over LiRA. Method C10 C100 CN10 Loc Pur Tex",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 61,
+    "total_chunks": 81,
+    "char_count": 586,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ef0f06ef-e93a-4f2a-88f7-46e55f321e26",
+    "text": "LiRA .613 .698 .651 .882 .638 .833\nRMIA .668 .831 .658 .839 .641 .862 ELSA1 .709 .847 .687 .834 .650 .861\nELSA2ϕ .711 .799 .707 .941 .650 .895\nELSA3β .713 .782 .710 .942 .648 .893\nELSA3γ .712 .793 .709 .941 .649 .894\nELSA3ϕ .695 .790 .711 .940 .643 .894\nELSA-full .694 .776 .711 .939 .643 .892 Table 10: ELSA: TPR@0.001 at K = 64. Feature selection strongly affects tail performance; richer models can collapse.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 62,
+    "total_chunks": 81,
+    "char_count": 411,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a5fe7c17-7e17-4f36-bdc2-3e4fda4744e5",
+    "text": "Method C10 C100 CN10 Loc Pur Tex LiRA 0.049 0.070 0.041 0.214 0.004 0.109\nRMIA 0.031 0.060 0.047 0.111 0.010 0.154 ELSA1 0.026 0.066 0.035 0.062 0.008 0.103\nELSA2ϕ 0.058 0.101 0.092 0.174 0.018 0.196\nELSA3β 0.053 0.067 0.087 0.143 0.015 0.166\nELSA3γ 0.060 0.092 0.092 0.156 0.017 0.186\nELSA3ϕ 0.001 0.004 0.063 0.184 0.012 0.122\nELSA-full 0.005 0.003 0.050 0.126 0.010 0.093 I OFFLINE SETTING ANALYSIS",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 63,
+    "total_chunks": 81,
+    "char_count": 401,
+    "word_count": 67,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "657a6fcd-7dc9-482f-ba29-c2197afbfd50",
+    "text": "In the online (audit) setting used throughout this paper, each target point appears in roughly half of the shadow-model training\nsets, providing per-point IN and OUT observations. In the offline (practical) setting, shadow models are trained on data\nfrom the same distribution as the target model but the target point does not appear in any shadow training set [Carlini et al.,\n2022]. All shadow observations for a given target point are therefore OUT-class samples; no direct IN-class observations are\navailable.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 64,
+    "total_chunks": 81,
+    "char_count": 513,
+    "word_count": 80,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "01909993-e9e3-44f2-a22d-d02a0b6646b3",
+    "text": "Existing offline approaches. LiRA [Carlini et al., 2022] estimates µout per-point from all (OUT-only) shadows but must\napproximate µin via a global mean-shift heuristic: ˆµin = ˆµout + ∆, where ∆is a population-level constant estimated from\nreference data. With forced equal variances σ2in = σ2out = σ2, the Gaussian LLR (7) reduces to ∆ φ −ˆµout −∆ , (20) LLRoffline(φ) =\nσ2 2 a linear function of the observation—an instance of the equal-variance Gaussian LLR (8) with the shifted mean. This\nrepresents a substantial degradation from the full four-parameter online LiRA, particularly at low FPR where per-point\nheterogeneity carries the strongest signal. In practice, Carlini et al. [2022] implement the offline attack via the Gaussian log-CDF: scorei = log Φ (φi,0 −ˆµi,out)/ˆσ ,\nwhere Φ is the standard normal CDF. When ˆσ is a single global constant (the offline regime), this is a monotone transformation\nof the linear score (20) and produces the same ROC curve. When ˆσ varies per-point, the two formulations can differ in\nranking. RMIA [Zarifzadeh et al., 2024] uses a population-reference mechanism that does not explicitly split shadow observations\ninto IN and OUT classes, making its score formula applicable without modification in the offline setting. However, the\noffline score distribution shifts because all shadow models are OUT-only: the likelihood ratios computed against reference\npoints are systematically biased when the target point never appeared in training. Empirically, RMIA shows a small but\nconsistent degradation in our experiments (∆AUC ≈0.008; Tables 12–13), confirming that the online/offline distinction is\nnot entirely transparent even for reference-based methods. Table 11: BASE hierarchy: online vs. offline parameter estimation. In the offline setting, methods that estimate separate\nIN-class parameters collapse toward pooled estimation. Method Online parameters Offline fallback",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 65,
+    "total_chunks": 81,
+    "char_count": 1918,
+    "word_count": 285,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3085c07b-b556-4f51-9c58-7981c46e3068",
+    "text": "BASE1 ˆzi,pool from all shadows Same; optional α scaling (21)\nBASE2 ˆµi,pool, ˆσ2i from all Same; all shadows are OUT\nBASE3 ˆµi,0, ˆµi,1; ˆσ2i pooled ˆµi,1 = ˆµi,0 + ∆; →eq-var LLR\nBASE4 ˆµi,m, ˆσ2i,m per class σ2in = σ2out, µin via shift; →eq-var LLR BASE [Lassila et al., 2025] introduces a scaling factor α ∈[0, 1] on the log-sum-exp term for the offline case: BASEoffi = −ℓi,0 −α · log K1 PKk=1 e−ℓi,k , (21)",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 66,
+    "total_chunks": 81,
+    "char_count": 412,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4f48335d-bf04-4802-b273-12389f27d2c5",
+    "text": "where the sum runs over OUT-only shadow models and α compensates for the systematically higher losses of models that\nnever trained on the target point. The BASE–RMIA equivalence (Proposition 1a) holds only in the online setting; offline, the\ntwo attacks diverge due to their different compensation mechanisms [Lassila et al., 2025]. BASE hierarchy in the offline setting. Table 11 summarizes how each BASE variant adapts to the offline case. The\nkey pattern is that methods requiring IN-class parameters lose access to per-point IN observations and must fall back on\npopulation-level estimates. BASE1 and BASE2 are inherently offline-friendly because they never split shadow observations into IN and OUT classes:\nthe pooled estimates use all available shadows regardless of membership status. BASE3 and BASE4, which require separate\nIN-class parameters, must estimate the missing µin via a global mean-shift heuristic and force equal variances. Under these\nconstraints, both reduce to the equal-variance Gaussian LLR (8) with the shifted mean—the same functional form as BASE2\n(affine in the observation, normalized by pooled variance), differing only in the ∆-dependent centering point.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 67,
+    "total_chunks": 81,
+    "char_count": 1187,
+    "word_count": 176,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "abb3ecb4-3be6-4613-91ca-7180e6f30a84",
+    "text": "BaVarIA in the offline setting. BaVarIA's conjugate NIG prior provides a principled mechanism for the offline case. With\nzero IN-class observations for the target point (n1 = 0), the NIG posterior updates (14) reduce to the prior: µ′i,1 = µ∅,1,\nκ′i,1 = κ∅, α′i,1 = α∅, β′i,1 = β∅,1. The IN-class parameters are thus set entirely by the empirical Bayes prior. Crucially, the prior estimation procedure is unchanged between online and offline settings. Even in the offline case, the\nadversary controls the shadow model training and therefore knows which reference points (the shadow models' own training\ndata, disjoint from the target's) were IN or OUT for each shadow model. The class-specific priors (µ∅,m, β∅,m) are estimated\nfrom these reference-point observations (Appendix C), which include both IN and OUT samples. The offline limitation is\npurely per-point: for the specific target point being audited, the IN-class posterior collapses to the (well-estimated) IN-class\nprior, while the OUT-class posterior is fully updated from K shadow observations. This parallels what LiRA's hard-switch heuristic achieves (global variance when K is small), but BaVarIA obtains it as a\nsmooth limiting case of the same Bayesian machinery used in the online setting. As per-point IN-class observations become\navailable (online setting with increasing K), the posterior smoothly transitions from population-level to per-point estimates. The offline-to-online transition requires no separate implementation or additional hyperparameters.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 68,
+    "total_chunks": 81,
+    "char_count": 1526,
+    "word_count": 224,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d1aa5504-1e5f-49ff-9eae-2f1024c9edb3",
+    "text": "Experimental results. Figures 9–12 compare online and offline performance for LiRA, RMIA, and the two BaVarIA\nvariants across all testbeds (solid = online, dashed = offline). Tables 12 and 13 report the mean offline performance and\nthe degradation ∆= online −offline. All methods show positive degradation: online consistently outperforms offline, as\nexpected. BaVarIA-n achieves the best offline AUC at K ≥64 and the best offline TPR at FPR=0.01 across all K, while\nBaVarIA-t leads for AUC at K=8. RMIA exhibits the smallest degradation (∆AUC ≈0.008), followed by BaVarIA-n\n(∆AUC ≈0.013–0.034); LiRA shows the largest gap (∆AUC ≈0.033–0.045).",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 69,
+    "total_chunks": 81,
+    "char_count": 643,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "97354d69-f8df-4162-8049-a062b6fee535",
+    "text": "Overall, the offline setting remains viable\nacross all approaches, with absolute performance differences between methods being more practically relevant than the\nonline-to-offline gap. No single method dominates: the best offline method varies across metrics and shadow budgets even at a fixed K. Table 12: Offline AUC (mean over 12 datasets, 32 replicates). ∆= online −offline. Bold: best offline value per K. Method Off ∆ Off ∆ Off ∆ LiRA 0.755 +0.033 0.772 +0.042 0.775 +0.045\nRMIA 0.763 +0.009 0.769 +0.008 0.770 +0.008\nBaVarIA-n 0.773 +0.013 0.785 +0.029 0.786 +0.034\nBaVarIA-t 0.778 +0.015 0.784 +0.031 0.784 +0.036 Table 13: Offline TPR at FPR=0.01 (mean over 12 datasets, 32 replicates). ∆= online −offline. Bold: best offline value. Method Off ∆ Off ∆ Off ∆ LiRA 0.174 +0.034 0.216 +0.050 0.233 +0.051\nRMIA 0.144 +0.013 0.180 +0.013 0.185 +0.013\nBaVarIA-n 0.200 +0.014 0.246 +0.027 0.254 +0.031\nBaVarIA-t 0.196 +0.005 0.242 +0.029 0.249 +0.035 CIFAR-10 (WRN) CIFAR-100 (WRN) 0.700\n0.85\n0.675\nAUC 0.650 0.80\n0.625 0.575\n4 8 16 32 64 128 254 4 8 16 32 64 128 254",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 70,
+    "total_chunks": 81,
+    "char_count": 1069,
+    "word_count": 176,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "512edcc3-a366-40e8-923f-1e9ba0cfc405",
+    "text": "CINIC-10 (WRN) Location (MLP3) 0.725\n0.90\nAUC 0.700 0.675 0.85\n0.650 4 8 16 32 64 128 254 4 8 16 32 64 128 254 Purchase (MLP3) Texas (MLP3)",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 71,
+    "total_chunks": 81,
+    "char_count": 139,
+    "word_count": 29,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ace42f55-2e6f-4ad1-98ad-1fa227ca74d7",
+    "text": "0.80 0.58 AUC\n0.56 0.75 4 8 16 32 64 128 254 4 8 16 32 64 128 254\nK (shadow models) K (shadow models) RMIA / BASE1 BASE2 BASE3 BASE4 LiRA Figure 5: Online AUC vs. K for the BASE hierarchy (WRN/MLP3 testbeds). BASE3 (pooled variance) overtakes\nLiRA/BASE4 at moderate K; RMIA/BASE1 lags at all budgets. CIFAR-10 (RN18) CIFAR-100 (RN)\n0.64\n0.975\n0.62\n0.950\n0.60 0.925 0.58 0.900AUC\n0.56 0.875 0.825 0.52\n4 8 16 32 64 128 254 4 8 16 32 64 128 254 CINIC-10 (RN) Location (MLP4)",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 72,
+    "total_chunks": 81,
+    "char_count": 472,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4e36c2b3-cedc-461c-a0e1-3516427a263b",
+    "text": "0.85 0.80AUC\n0.80\n0.75 0.75\n0.70\n4 8 16 32 64 128 254 4 8 16 32 64 128 254 Purchase (MLP4) Texas (MLP4)",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 73,
+    "total_chunks": 81,
+    "char_count": 103,
+    "word_count": 24,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a788ca51-147a-4af9-ae56-6923848d7cf8",
+    "text": "0.64\n0.85\n0.62\nAUC 0.60 0.80 0.54\n4 8 16 32 64 128 254 4 8 16 32 64 128 254\nK (shadow models) K (shadow models) RMIA / BASE1 BASE2 BASE3 BASE4 LiRA Figure 6: Online AUC vs. K for the BASE hierarchy (RN18/MLP4 testbeds). CIFAR-10 (WRN) CIFAR-100 (WRN)\n0.150 0.4 0.2FPR 0.075\n0.050\nTPR 0.025 0.1 0.0\n4 8 16 32 64 128 254 4 8 16 32 64 128 254 CINIC-10 (WRN) Location (MLP3)\n0.5\n0.20 0.10 FPR\n0.2\n0.05 0.1 TPR 0.0\n4 8 16 32 64 128 254 4 8 16 32 64 128 254",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 74,
+    "total_chunks": 81,
+    "char_count": 451,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3f830bfb-98b8-4bd5-a99e-ba7400c90833",
+    "text": "Purchase (MLP3) Texas (MLP3) 0.3 0.04 0.01\nFPR 0.03 0.2\n0.02 0.1\nTPR\n0.01\n0.0\n4 8 16 32 64 128 254 4 8 16 32 64 128 254\nK (shadow models) K (shadow models) RMIA / BASE1 BASE2 BASE3 BASE4 LiRA Figure 7: Online TPR at FPR=0.01 vs. K for the BASE hierarchy (WRN/MLP3 testbeds). CIFAR-10 (RN18) CIFAR-100 (RN) 0.05 0.60.01\n= 0.04\nFPR 0.03 0.4\n0.2\nTPR 0.02\n0.01 0.0\n4 8 16 32 64 128 254 4 8 16 32 64 128 254",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 75,
+    "total_chunks": 81,
+    "char_count": 402,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b961f5a6-b17f-47e9-8e81-bd0db65e68ef",
+    "text": "CINIC-10 (RN) Location (MLP4) 0.30 0.4\n0.01 0.25\n0.3= 0.20\nFPR 0.15 0.2\n@ 0.10\n0.1\n0.05TPR\n0.00 0.0\n4 8 16 32 64 128 254 4 8 16 32 64 128 254 Purchase (MLP4) Texas (MLP4)\n0.4\n0.07\n0.01 0.06 0.3\n= 0.05\n0.04 0.2FPR\n@ 0.03\n0.1\n0.02TPR\n0.01 0.0\n4 8 16 32 64 128 254 4 8 16 32 64 128 254\nK (shadow models) K (shadow models) RMIA / BASE1 BASE2 BASE3 BASE4 LiRA Figure 8: Online TPR at FPR=0.01 vs. K for the BASE hierarchy (RN18/MLP4 testbeds). CIFAR-10 (WRN) CIFAR-100 (WRN)\n0.74 0.92 0.88 0.70\n0.86\n0.68AUC\n0.84\n0.66\n0.82\n0.64\n0.80\n0.62\n4 8 16 32 64 128 254 4 8 16 32 64 128 254 CINIC-10 (WRN) Location (MLP3)\n0.96\n0.76\n0.94 0.90 0.72AUC\n0.88\n0.70\n0.86 4 8 16 32 64 128 254 4 8 16 32 64 128 254 Purchase (MLP3) Texas (MLP3)",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 76,
+    "total_chunks": 81,
+    "char_count": 719,
+    "word_count": 153,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d4c9ac97-bd00-45d5-9de7-60883e41d398",
+    "text": "0.60 0.84\nAUC 0.82\n0.58 0.80 4 8 16 32 64 128 254 4 8 16 32 64 128 254\nK (shadow models) K (shadow models) LiRA (on) RMIA (on) BaVarIA-n (on) BaVarIA-t (on)\nLiRA (off) RMIA (off) BaVarIA-n (off) BaVarIA-t (off) Figure 9: Online vs. offline AUC as a function of K (WRN/MLP3 testbeds). Solid = online, dashed = offline.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 77,
+    "total_chunks": 81,
+    "char_count": 317,
+    "word_count": 61,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "33bd7f25-22f1-44c0-8c8a-eabaa4045ac3",
+    "text": "CIFAR-10 (RN18) CIFAR-100 (RN) 0.60\n0.94AUC\n0.58\n0.92\n0.56 4 8 16 32 64 128 254 4 8 16 32 64 128 254 CINIC-10 (RN) Location (MLP4)",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 78,
+    "total_chunks": 81,
+    "char_count": 130,
+    "word_count": 27,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "af04e048-43fc-4863-a5bb-f3e4ccd5767b",
+    "text": "0.88\n0.925\n0.86\n0.900\n0.84\n0.875AUC 0.82\n0.850\n0.80\n0.825\n0.78 4 8 16 32 64 128 254 4 8 16 32 64 128 254 Purchase (MLP4) Texas (MLP4) 4 8 16 32 64 128 254 4 8 16 32 64 128 254\nK (shadow models) K (shadow models) LiRA (on) RMIA (on) BaVarIA-n (on) BaVarIA-t (on)\nLiRA (off) RMIA (off) BaVarIA-n (off) BaVarIA-t (off) Figure 10: Online vs. offline AUC as a function of K (RN18/MLP4 testbeds). CIFAR-10 (WRN) CIFAR-100 (WRN)\n0.40\n0.01 0.14 0.35\n0.12\nFPR 0.10 0.30\n0.08\n@ 0.25\n0.06\n0.20 TPR\n0.04 4 8 16 32 64 128 254 4 8 16 32 64 128 254 CINIC-10 (WRN) Location (MLP3)",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 79,
+    "total_chunks": 81,
+    "char_count": 564,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ac521c5e-2df9-4cfa-bfdf-40c285b55931",
+    "text": "0.20\n0.01 0.18\n0.4\n= 0.16\nFPR 0.14 0.3\n@ 0.12 4 8 16 32 64 128 254 4 8 16 32 64 128 254 Purchase (MLP3) Texas (MLP3)\n0.045 0.040 0.30 0.01\n= 0.035\n0.25\n0.030 FPR\n@ 0.025 0.20 0.020 TPR 0.15\n0.015\n4 8 16 32 64 128 254 4 8 16 32 64 128 254\nK (shadow models) K (shadow models) LiRA (on) RMIA (on) BaVarIA-n (on) BaVarIA-t (on)\nLiRA (off) RMIA (off) BaVarIA-n (off) BaVarIA-t (off) Figure 11: Online vs. offline TPR at FPR=0.01 as a function of K (WRN/MLP3 testbeds). Solid = online, dashed = offline.",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 80,
+    "total_chunks": 81,
+    "char_count": 497,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "47b698fe-598b-4608-9552-e3225387a54b",
+    "text": "CIFAR-10 (RN18) CIFAR-100 (RN)\n0.7 0.5FPR\n0.03\n0.4\n0.02TPR 4 8 16 32 64 128 254 4 8 16 32 64 128 254 CINIC-10 (RN) Location (MLP4)",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 81,
+    "total_chunks": 81,
+    "char_count": 130,
+    "word_count": 27,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "16a7ab6f-f330-4b14-b1fb-b5cd0d5c2578",
+    "text": "0.30 0.40\n0.01 0.35\n= 0.25\n0.30\nFPR 0.25 0.20\n@ 0.20 0.15 0.15TPR\n0.10\n4 8 16 32 64 128 254 4 8 16 32 64 128 254 Purchase (MLP4) Texas (MLP4) 0.07\n0.350.01 0.06\n0.30\nFPR 0.05 0.25\n@ 0.04\n0.20\n0.03TPR\n0.15\n4 8 16 32 64 128 254 4 8 16 32 64 128 254\nK (shadow models) K (shadow models) LiRA (on) RMIA (on) BaVarIA-n (on) BaVarIA-t (on)\nLiRA (off) RMIA (off) BaVarIA-n (off) BaVarIA-t (off) Figure 12: Online vs. offline TPR at FPR=0.01 as a function of K (RN18/MLP4 testbeds).",
+    "paper_id": "2603.11799",
+    "title": "Exponential-Family Membership Inference: From LiRA and RMIA to BaVarIA",
+    "authors": [
+      "Rickard Brännvall"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11799v1",
+    "chunk_index": 82,
+    "total_chunks": 81,
+    "char_count": 473,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  }
+]

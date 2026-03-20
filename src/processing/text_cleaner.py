@@ -174,7 +174,7 @@ def remove_reference_section(text: str) -> str:
     # Patterns that signal start of references section
     # re.IGNORECASE to handle "References", "REFERENCES", "Bibliography"
     # FIX: More robust patterns that handle varied spacing
-    referece_patterns = [
+    reference_patterns = [
         r'\n\s*References\s*\n',
         r'\n\s*REFERENCES\s*\n',
         r'\n\s*Bibliography\s*\n',
@@ -188,7 +188,7 @@ def remove_reference_section(text: str) -> str:
 
     last_match_pos = -1
 
-    for pattern in referece_patterns:
+    for pattern in reference_patterns:
         # Find all matches, take the last one
         matches = list(re.finditer(pattern, text, re.MULTILINE))
         if matches:

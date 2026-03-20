@@ -1,0 +1,724 @@
+[
+  {
+    "chunk_id": "b1b1df4f-77a7-4377-a7bc-23fdf45e8eb9",
+    "text": "Modeling Trial-and-Error Navigation With a Sequential Decision\nModel of Information Scent XIAOFU JIN, Aalto University, Finland\nYUNPENG BAI, National University of Singapore, Singapore\nANTTI OULASVIRTA, Aalto University, Finland",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 0,
+    "total_chunks": 38,
+    "char_count": 228,
+    "word_count": 28,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5947173a-d3fc-42eb-a5f9-2600970295c0",
+    "text": "Users often struggle to locate an item within an information architecture, particularly when links are ambiguous or deeply\nnested in hierarchies. Information scent has been used to explain why users select incorrect links, but this concept assumes\nthat users see all available links before deciding. In practice, users frequently select a link too quickly, overlook relevant cues,\nand then rely on backtracking when errors occur. We extend the concept of information scent by framing navigation as a\nsequential decision-making problem under memory constraints. Specifically, we assume that users do not scan entire pages\nbut instead inspect strategically, looking \"just enough\" to find the target given their time budget. To choose which item to2026\ninspect next, they consider both local (this page) and global (site) scent; however, both are constrained by memory. Trying to\navoid wasting time, they occasionally choose the wrong links without inspecting everything on a page. Comparisons with\nempirical data show that our model replicates key navigation behaviors: premature selections, wrong turns, and recoveryMar from backtracking. We conclude that trial-and-error behavior is well explained by information scent when accounting for the\n12 sequential and bounded characteristics of the navigation problem. Additional Key Words and Phrases: cognitive modeling, information scent, RL, POMDP 1 Introduction\nNavigating information architectures is challenging when links are ambiguous, overlapping, or buried in deep\nhierarchies. The concept of information scent has long explained why users follow incorrect links [20, 36]. However,\nmost accounts assume that users inspect all available options in order to estimate scent and make decisions[cs.HC]\nmyopically at the current page. Analytical \"mathematical\" scent models such as CoLiDeS [28], CWW [10], and\nACWW [9] compute semantic relatedness and predict the top-rated link or expected clicks per page under full\nobservability and deterministic choice.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 1,
+    "total_chunks": 38,
+    "char_count": 2005,
+    "word_count": 290,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d01c5c58-33e5-4a58-91d3-9d223b3ad6e6",
+    "text": "While precise, these models do not capture partial inspection, memory\nlimits, or non-myopic planning. Heuristic simulation models such as SNIF-ACT [20] and CogTool-Explorer [48]\nintroduced sequential evaluation of links and satisficing thresholds, but still rely on locally myopic strategies\nwithout a global probabilistic plan. This gap leaves an opportunity to move beyond static or locally myopic\nformulations toward a sequential, resource-rational account of navigation. We extend the notion of information scent to capture how users make navigation decisions under uncertainty,\nincluding premature selections, backtracking, and revisiting previously explored options. We approach this by\nframing scent-driven navigation as a sequential decision-making problem under memory limitations. Our model\nassumes that users do not exhaustively scan entire pages. Instead, they adopt a strategy of inspecting \"just\nenough\" to identify a promising target within the constraints of their time budget. In deciding what to inspect\nnext, users weigh both local scent (on the current page) and global scent (across the site) under limited memory. Because they aim to minimize wasted time, users sometimes commit to a link without fully inspecting all options,arXiv:2603.11759v1 which leads to errors. The model comprehensively reproduces trial-and-error behaviors established from empirical work:\n• Partial scanning: inspecting only a subset of items on a page before making a selection [12];\n• Backtracking: returning to a previous page [41];\n• Revisiting items: going back to inspect earlier options [25];",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 2,
+    "total_chunks": 38,
+    "char_count": 1596,
+    "word_count": 227,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "156659f6-d1b4-4e97-9bf0-fdf1f63411e0",
+    "text": "Authors' Contact Information: Xiaofu Jin, Aalto University, Espoo, Finland; Yunpeng Bai, National University of Singapore, Singapore,\nSingapore; Antti Oulasvirta, Aalto University, Espoo, Finland. • Effects of information architecture: capturing established empirical effects of task difficulties, hierarchy\ndepth, and target position within the layout [23, 30, 47, 51]. We frame this navigation task a partially observable Markov decision process (POMDP), with explicit memory\nbounds, local and global scent, and a reward function that penalizes wasted time. And the simulated user behaviors\nemerge as resource-rational policy could be learned by reinforcement learning. By comparing our model with\nempirical data, we demonstrate that it captures patterns of human exploration–exploitation in information\narchitectures, including how users make mistakes and recover from them. Taken together, our findings suggest that trial-and-error behavior can be effectively explained by information\nscent, once the sequential and bounded nature of the navigation task is taken into account. This paper makes\nthree contributions:\n(1) An extension of information scent theory to sequential decision-making under cognitive bounds, explaining\npremature selections, backtracking, and revisits;\n(2) A computational model of navigation formulated as a POMDP with memory limits, integrating both local\nand global scent into a non-myopic decision-theoretic framework grounded in resource rationality;\n(3) An evaluation showing that the model reproduces hallmark human trial-and-error behaviors and effects\nof information architecture. 2 Related Work\n2.1 Information Scent in Goal-Directed Navigation\nInformation scent is the central construct in Information Foraging Theory (IFT). It is defined as \"the user's\n(imperfect) perception of the value, cost, or access path of information sources obtained from proximal cues\" [36]. Such cues include link descriptors, images, contextual clues such as headings, or page arrangement [13]. Drawing\non the marginal value theorem (MVT) [14], Pirolli and Card argued that users should leave a page once its\nperceived yield drops below that of alternatives, offering a normative account of how navigation balances local\npayoff against global opportunity [36]. Empirical studies support this view: strong scent is linked to faster and more accurate navigation, whereas weak\nor ambiguous cues increase errors, backtracking, and abandonment [16, 27, 41]. At the same time, real navigation\noften departs from this ideal. Users rarely evaluate all options [12], sometimes commit prematurely [41], and\nrevisit earlier pages [25]. These behaviors suggest that scent guides decisions under bounded rationality, operating\nthrough partial and uncertain evidence rather than fully rational strategies.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 3,
+    "total_chunks": 38,
+    "char_count": 2808,
+    "word_count": 390,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "17dffb90-72ca-4aa4-a7c0-71af6132f153",
+    "text": "2.2 Computational Models of Scent-Driven Navigation\nSeveral computational models have sought to formalize or simulate how information scent guides navigation. Analytical models such as CoLiDeS [28], CWW [10], and ACWW [9] operationalize semantic relatedness between\nuser goals and link labels, predicting the most likely clicks or expected navigation costs. While mathematically\nprecise, these models assume full observability and deterministic choice, and they are fundamentally myopic: each\nstep is evaluated in isolation, with the highest-scent link assumed to be chosen immediately, without considering\nthe value of future options, the risk of error, or the cost of backtracking.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 4,
+    "total_chunks": 38,
+    "char_count": 683,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "368ac246-2f41-4ae8-b2a2-64b5b0573023",
+    "text": "As a result, they portray navigation as a\nmulti-step comprehension process rather than a dynamic, experience-driven adjustment of belief (e.g., realizing\n\"I am on the wrong path\"). Heuristic simulation models provide a more process-oriented account. SNIF-ACT [20] integrates scent into\nthe ACT-R cognitive architecture to model sequential link evaluation and satisficing thresholds, while CogToolExplorer [48] builds on the same algorithm to offer a design tool for predicting user navigation.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 5,
+    "total_chunks": 38,
+    "char_count": 493,
+    "word_count": 69,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "311f7e5a-086c-4e6b-9f1d-9878a020c898",
+    "text": "Although these\nmodels capture sequentiality, they inherit the same limitations. Their strategies remain locally myopic: users are\nmodeled as following the link with the strongest immediate scent until satisficing is achieved, with no mechanism Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent • for probabilistic foresight, global planning, or strategic exploration. Backtracking, when it occurs, is treated as a\nconsequence of failing the immediate choice, not as an anticipated or planned action. In summary, prior models have advanced understanding of scent-driven navigation but remain limited in\ntheir myopic assumptions, leaving open the opportunity for sequential, resource-bounded accounts that capture\nadaptive exploration under uncertainty. 3 Modeling Scent-Based Navigation as a Sequential Decision-Making Problem\nThe primary objective of this model is to reproduce human-like trial-and-error navigation in information\narchitectures. Specifically, the model seeks to capture phenomena documented in empirical studies: how users\nadapt under varying task difficulties [6, 11, 23], how positional layout biases influence navigation choices [47, 51],\nand how hierarchical structures shape efficiency and error rates [30, 33]. We frame this problem as a partially\nobservable Markov decision process (POMDP), reflecting that–like human users–the agent cannot directly observe\nthe full structure of the environment or the true relevance of each option. Instead, it must form beliefs from\nlimited cues, remember only a subset of them in memory, and plan actions sequentially under uncertainty.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 6,
+    "total_chunks": 38,
+    "char_count": 1637,
+    "word_count": 226,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0dbf1ff4-92dc-4118-a887-867764b44381",
+    "text": "Figure 1 illustrates the model architecture. The agent interacts with a hierarchical information environment\nby viewing a panel of local options while maintaining a small set of global memory traces. Each option has a\nlatent information scent value [36]. Scent becomes observable only when the option is inspected and is corrupted\nby Gaussian noise to reflect bounded perceptual precision. To simulate working memory limits, we restrict the\nnumber of cues that can be retained and apply decay so that unrehearsed traces fade over time [3, 17]. Given\nthese bounded observations, the agent can choose to inspect another option, select a candidate, or return to a\nprevious level. Rewards are given for successfully reaching the target, while small penalties are applied for each\nadditional step.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 7,
+    "total_chunks": 38,
+    "char_count": 792,
+    "word_count": 124,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "136b1401-b1fb-4fc6-8e06-37f3e55d77c1",
+    "text": "This cost-sensitive formulation follows the principle of resource rationality: humans optimize\nexpected utility under constraints of limited cognitive resources such as memory and attention [31, 44]. Figure2\nillustrates how working memory traces evolve over time in a sample navigation sequence. We now outline the structure of the remainder of this section. Section 3.1 examines four core computational\nprinciples underlying the model: sequential decision-making under partial observability, a resource-rational\nobjective, an information-scent based representation of options, and bounded memory capacity with decay. Section 3.2 then formalizes the POMDP, including the latent state representation, action space, transition dynamics,\nobservation function, and reward. The reward function consists solely of a terminal success reward and a small\nper-step penalty.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 8,
+    "total_chunks": 38,
+    "char_count": 863,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "26535fd7-d89a-40ad-968a-78a3436b7cb1",
+    "text": "3.1 Model Principles and Key Designs\n3.1.1 Sequentiality. Trial-and-error navigation is inherently sequential: users interleave information-gathering\nactions (e.g., visiting/inspecting links to reveal scent) with goal-directed actions (e.g., visit, select or return). Because each action changes what the user knows and where they can go next, the quality of a current choice\ndepends on its long-run consequences. This motivates a sequential decision-making formulation. Under policy 𝜋, the state-value and action-value functions are defined by the Bellman Q-value expectation\nequations:\n𝑄𝜋(𝑠,𝑎) = E 𝑟𝑡+ 𝛾𝑉𝜋(𝑠𝑡+1) 𝑠𝑡= 𝑠, 𝑎𝑡= 𝑎 , (1) where 𝑠is the current state (e.g., the current page), 𝑎is an action, 𝑟𝑡is the immediate reward, 𝑠𝑡+1 is the next\nstate, and 𝛾∈[0, 1] discounts future rewards. Equations (1) formalize two properties of navigation that static or purely myopic models cannot capture:\n(i) Value of information—visiting a link can be worthwhile even if it yields no immediate reward, because the\nrevealed scent informs better choices later; and (ii) Path dependence—each action reshapes future opportunities The agent interacts with an external environment (a hierarchical information space, such as a\nmenu) by choosing among three actions: visit, select, or return between pages to locate the target option. Each option has a\nlatent information scent that becomes observable only upon inspection, and it is corrupted by perceptual noise. Observed\ncues are stored in working memory within the internal environment, where limited capacity and memory decay constrain\nretrieval. To handle uncertainty about where the target resides, the agent forms beliefs over states and selects actions\naccording to its learned policy, receiving rewards (utility−cost) for reaching the goal and penalties for excessive steps. This\nresource-rational formulation frames human trial-and-error navigation as a sequential decision-making problem solvable\nwith reinforcement learning.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 9,
+    "total_chunks": 38,
+    "char_count": 1972,
+    "word_count": 283,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "920ba255-de07-4915-9a2a-bd1cf97cb782",
+    "text": "and memory contents (via decay and capacity limits), so the best current action depends on anticipated downstream\nstates. 3.1.2 Resource Rationality. We implement the principle of resource rationality by introducing explicit limits on\nperception, memory, and effort. Following the resource-rational framework [31, 44], we assume that humans\nmaximize expected utility subject to cognitive constraints, rather than in an unconstrained optimal manner. In\nnavigation tasks, this means that users seek to reach the target efficiently, but their decisions are bounded by\nnoisy perception, limited memory, and the cognitive cost of additional actions. Formally, the agent chooses actions that maximize an expected utility function of the form:\n𝜋∗= arg max E[𝑈(𝑠,𝑎) ] −E[𝐶(𝑠,𝑎; 𝜌,𝑡) ], (2)\n𝜋∈Π\nwhere 𝑈(𝑠,𝑎) is the task utility and 𝐶(𝑠,𝑎; 𝜌,𝑡) represents cognitive costs governed by resource-limit parameters\n𝜌(e.g., memory capacity, decay rate, perceptual noise) and elapsed time 𝑡. This formulation states that the agent\nis not an unconstrained optimizer: each decision trades off utility against the costs imposed by human-like\nperceptual and memory limitations. In practice, these costs are instantiated in the POMDP via noisy scent observations, a capacity-limited global\nmemory panel, and decaying memory traces with a retrieval threshold. Together, these mechanisms realize\n𝐶(𝑠,𝑎; 𝜌,𝑡) within the observation and transition dynamics, so the learned policy is optimal only relative to\nhuman-like resource limits rather than an unconstrained ideal observer. Under these constraints, the optimal Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent • policy naturally exhibits human-like behaviors. Premature selections and backtracking emerge not as hand-coded\nheuristics but as boundedly optimal responses to noisy cues, forgetting, and action costs—unlike an ideal agent\nwith perfect memory and no costs, which would exhaustively search without error.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 10,
+    "total_chunks": 38,
+    "char_count": 1986,
+    "word_count": 282,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d58f3544-f2c3-4cc7-8c96-192644aa429a",
+    "text": "3.1.3 Information Scent. Information scent refers to the local cues that users rely on–such as link labels, surrounding text, or semantic similarity–to estimate the value of a navigation option and decide whether to follow\nit [36]. In the environment state, every option 𝑖has a true scent value ˆ𝜓𝑖defined as the semantic similarity\nbetween its label and the goal, following information scent theory [36].",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 11,
+    "total_chunks": 38,
+    "char_count": 405,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "50ce3525-85e0-4f02-bd42-f1abcfb8894b",
+    "text": "We compute this similarity using a\npretrained sentence-transformer 1. Let g denote the embedding of the goal and l𝑖the embedding of option 𝑖's label (each a 384-dimensional vector). The true scent is the cosine similarity lies in [0, 1].\ng · l𝑖\nˆ𝜓𝑖= (3)\n∥g∥∥l𝑖∥ However, the agent does not observe these values initially: all unseen options begin with a default scent of\nzero. Human judgments of semantic relevance are variable across trials, so we model observed scent as a noisy\nestimate of the true value:\n˜𝜓𝑖∼N (ˆ𝜓𝑖, 𝜎2) (4) This assumption is consistent with the general ACT-R principle that memory activations—and thus cue\nstrengths—are noisy [2]. In our model, Eq.(4) captures this variability as uncertainty in information scent,\naligned with resource-rational accounts of limited precision [31]. The specific value of 𝜎is not fixed by theory;\ninstead we treat it as a tunable parameter within a plausible range (e.g. 0.01–0.1 on the normalized [0, 1] scent\nscale), analogous to how diffusion parameters are calibrated in ACT-R [2]. A noisy scent ˜𝜓𝑖is revealed only\nwhen the agent visits the option, reflecting the fact that users must inspect a label before assessing its relevance. Once revealed, scent values enter memory traces and are subject to decay, so that cues fade unless reinforced\nby repeated visits or clicks. This mechanism forces the agent to balance exploration (revealing new scents) and\nexploitation (following known strong cues). For clarity, Eq. (3) and Eq. (4) specifies how scent becomes observable\nwhen an item is inspected. These observed scent values enter the agent's perceptual input but do not affect the\nreward function.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 12,
+    "total_chunks": 38,
+    "char_count": 1659,
+    "word_count": 265,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8772c0a5-5d46-44f7-86ea-38ba31baf2c9",
+    "text": "We model memory limitations through two mechanisms: capacity and decay. Working memory capacity. Empirical evidence shows that working memory is severely constrained, with\na practical limit of about 3–5 items [17, 18]. We therefore restrict the active set of options to a few diagnostic\ncandidates at any given time. This bottleneck enforces selective attention and naturally produces human-like\ntrial-and-error when multiple links appear plausible.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 13,
+    "total_chunks": 38,
+    "char_count": 449,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "95a4c580-0042-45d1-9400-e7a6872638a0",
+    "text": "Memory decay over time. Memory accessibility declines with time and interference, producing robust\nrecency and frequency effects: recently and frequently encountered items are easier to retrieve [3]. We capture\nthis process as a resource-rational compression in which strong cues are retained while weaker ones fade [42]. Each option 𝑖is assigned a memory strength integrating three factors: its diagnosticity (information scent),\nrepetition through views, and deeper processing through clicks:",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 14,
+    "total_chunks": 38,
+    "char_count": 494,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f8e60d75-74f6-403b-b9c1-17c819913e8b",
+    "text": "𝑀𝑖(𝑡) = 𝑒−𝜆Δ𝑘𝑖(𝑡) 𝑏+ 𝑎𝑠ˆ𝜓𝑖+ 𝑎𝑣 √︁𝑉𝑖(𝑡) + 𝑎𝑐 √︁𝐶𝑖(𝑡) (5) Here, Δ𝑘𝑖(𝑡) is the number of steps since option 𝑖was last seen, 𝑏is a baseline activation term, ˆ𝜓𝑖is the scent\nvalue, and 𝑉𝑖(𝑡) and 𝐶𝑖(𝑡) are cumulative views and clicks. Square-root scaling reflects diminishing returns from",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 15,
+    "total_chunks": 38,
+    "char_count": 282,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7ce5f1de-c296-43b4-b2aa-35f648063bfd",
+    "text": "1We use paraphrase-multilingual-MiniLM-L12-v2, a multilingual embedding model from the Sentence-Transformers library [38, 39]. repetition [3], and clicks weigh more than views (𝑎𝑐> 𝑎𝑣) to capture deeper processing [19]. The exponential\nterm models time-based forgetting with half-life 𝐻, where 𝜆= ln 2/𝐻. This provides a stable approximation of\nthe power-law decay observed in human memory [3, 42], though the formulation also admits a power-law variant\nconsistent with cognitive architectures such as ACT-R [2]. In our model, each option maintains a memory-based\ncue representation whose strength is compared against the threshold 𝜃:: 𝑀𝑖(𝑡) ≥𝜃⇒cue remains accessible, 𝑀𝑖(𝑡) < 𝜃⇒cue is forgotten. This comparison is performed independently for each stored cue: those with 𝑀𝑖(𝑡) ≥𝜃remain accessible and\ncontribute observable information, whereas cues below the threshold are treated as forgotten and no longer\ninform perception.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 16,
+    "total_chunks": 38,
+    "char_count": 927,
+    "word_count": 131,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c5b2617d-bb2e-4b12-82f5-74d619261e8f",
+    "text": "This check is repeated at every step, so revisiting an item allows the agent to gain observable\ninformation again. In Section 3.2, we further reuse the activation values 𝑀𝑖(𝑡) to compute priority scores that\ndetermine which accessible cues enter the global-memory panel. Importantly, Eq. (5) affects only the agent's\ninternal memory state—and thus the observations it receives—by gating cue accessibility and modulating priority\nscores; it does not alter the reward function.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 17,
+    "total_chunks": 38,
+    "char_count": 475,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0c84ab92-7d42-46cd-93de-746b01e2d923",
+    "text": "3.2 POMDP Formulation\nWe formalize goal-directed navigation in information architecture as a POMDP M = ⟨S, A, T, O, Z, 𝑅,𝛾⟩. This\nprovides a principled account of latent task state (where the target is and what has been explored), limited and\nnoisy observations, and cost-sensitive decision making. The full state contains all information about the hierarchical interface: the current layer, the index of\nthe option in focus, the stack of previously selected parents, and the hidden target location. It also maintains\ntraces of information scent and user history (past visits and clicks).",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 18,
+    "total_chunks": 38,
+    "char_count": 588,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b0b68c3a-5d77-4f69-8d68-402c74f2f27c",
+    "text": "As in real interaction, this full state is not\ndirectly observable to the agent. Actions are discrete navigation operations. A Visit action shifts focus to a candidate option, a\nSelect action drills down into the selected option (or completes the task if it is the target), and a Return action\nmoves back up one level. Together these actions capture the sequential structure of exploration, decision making,\nand error recovery in hierarchical interfaces. At each step the agent perceives a bounded and noisy summary of the environment, consisting\nof a local panel and a global-memory panel. This design distinguishes between what is immediately visible on\nscreen and what persists across steps in memory. Each option carries a scent cue: its observed value ˜𝜓𝑖is computed\nvia Eq. (3)–(4). All cues are then subject to the memory gate in Eq. (5), which determines whether a trace is\nretained (𝑀𝑖≥𝜃) or forgotten. The local panel lists all options on the current layer. For each option 𝑖∈L𝑡, the observation\nincludes its currently revealed scent ˜𝜓𝑖(or zero if never visited), along with discretized visit and click counts: 𝑥loc𝑖 = ˜𝜓𝑖, 𝑣𝑖, 𝑐𝑖 . If the current layer exceeds 𝑁max items, we pad/clip to 𝑁max rows for a fixed tensor interface (default 𝑁max=12). The local panel is fully observable in the sense that all items are listed, but the quality of their scent information\ndepends on whether they have been inspected. Independently of the current screen, we maintain a memory of the most diagnostic\nitems seen so far. Each candidate 𝑖is assigned a priority score:",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 19,
+    "total_chunks": 38,
+    "char_count": 1567,
+    "word_count": 258,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "838de9ba-6856-4319-a212-d40f9d2e5109",
+    "text": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent • Illustration of the model's decision process and state of working memory in a two-level menu task. The agent navigates\nby choosing among visit, select, and return actions, guided by perceived information scent (darker green = stronger cue). Each option has a latent scent; visits reveal noisy observations that update the agent's belief. Scent is stored in working\nmemory at two scopes: the top row tracks the global top-𝑘memory (𝑘= 3 here) aggregated across visited pages; the bottom\nrow encodes the currently observed page. (a–b) On the top-level menu, visits expose option scents; the bottom row darkens\nfor inspected items while the top row retains the strongest 𝑘cues across panels. (c) A strong local cue prompts select (e.g.,\n\"Invertebrate Animals\"), entering level two. (d) Further visits sample suboptions, sharpening local beliefs. (e) If local scents\nare weak, the agent may return; and with memory decay, entries dropping below the threshold are forgotten (×), so the agent\nforgets having visited the two squares. (f–h) The agent continues visiting and selecting the final target. We denote the global candidate set at time 𝑡by G(𝑡), defined as the Top-𝐾items ranked by priority score 𝑞𝑖2. For\neach 𝑖∈G(𝑡), we expose a compact global feature 𝑦glob𝑖 maintaining its current scent estimate and normalized\ndistance-to-goal:\n𝑦glob 𝑖 = ˜𝜓𝑖, 𝑑norm𝑖 , 2Visit and click counts are included only in the local panel because they reflect perceptual information available on the current screen\nand support within-screen behaviors such as detecting recent recurrence. The global-memory panel is purposefully more compressed: it\nsummarizes longer-range diagnostic cues and does not store raw histories. where 𝑑norm𝑖 is a normalized distance-to-goal proxy, defined as\ncost(𝑠𝑡→𝑖)\n𝑑norm𝑖 = ,\n𝑑max\nwith cost(𝑠𝑡→𝑖) the shortest navigation path from current focus 𝑠𝑡to option 𝑖using {Return, Visit, Select},\nand 𝑑max an upper bound for normalization. State transitions are deterministic and mirror the structure of the information architecture.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 21,
+    "total_chunks": 38,
+    "char_count": 2128,
+    "word_count": 322,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c9a9b7d4-4785-4753-8097-d52df393f587",
+    "text": "For\nexample, a Select action pushes the current option onto the path stack and enters a child layer, while a Return\naction pops the stack and restores the previous layer. This design allows the model to simulate both progress\ntoward the goal and backtracking when needed. The reward function balances success and efficiency. A large positive reward is given for reaching\nthe target. Each step carries a small negative cost, which reflects the opportunity cost of time and effort and\ndiscourages fruitless detours. Formally, at step 𝑡the agent receives\n( +20, if the target is reached,\n𝑅𝑡=\n−0.01, otherwise (per step).",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 22,
+    "total_chunks": 38,
+    "char_count": 617,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "105b3dec-e1ff-42bb-8c11-6107546100e9",
+    "text": "This cost-sensitive control implements the idea that people prefer efficient paths over exhaustive search. Backtracking is neither prohibited nor free: it becomes an effective strategy when local cues are weak, reproducing\nhuman-like error recovery. Free parameters in the navigation model. These parameters govern how the agent perceives, stores, and retrieves\nnavigation cues. Their values were optimized using Bayesian optimization to improve model–human alignment.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 23,
+    "total_chunks": 38,
+    "char_count": 468,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a911fbfa-fd85-4e72-9d62-86714c30a091",
+    "text": "Type Name Explanation Range Value\nMemory capacity 𝐾𝑔𝑙𝑜𝑏 Capacity of global memory panel [3, 5] 4\n(Top-K strongest cues retained)\nScent noise 𝜎 Standard deviation of Gaussian [0.01, 0.1] 0.08\nnoise added to revealed scent values\n𝜆 Decay rate of memory trace; half- (0, 1] ln 2/5\nlife 𝐻=5 steps\nMemory decay 𝑏 Baseline memory strength (trace [0, 1] 0.50\nleft after a single exposure)\n𝑎𝑠 Weight of scent strength in memory [0, 2] 1.50\n(diagnostic cues retained longer)\n𝑎𝑣 Weight of visit frequency in mem- [0, 1] 0.80\nory (recency/frequency effects)\n𝑎𝑐 Weight of clicks/selection (deep pro- [0, 1] 0.50\ncessing strengthens memory)\n𝜃 Retrieval threshold; below this [0, ∞) 1\nmemory is considered forgotten Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent • Overall parameter sensitivity across three perturbation levels (5%, 10 25%). Aggregated sensitivity values reflect the\ncombined deviation in the three target effects when perturbing each parameter. The overall trend demonstrates that the\nmodel exhibits stable behavior under small perturbations and predictable, increases in sensitivity as perturbation levels grow. 3.3 Parameterization and Training\nWe approximate the solution of the POMDP using reinforcement learning. A policy network receives the bounded\nobservation (Top-𝐾cues, local history) and outputs one of the atomic actions (Visit, Select, Return), with infeasible\nactions masked out. The policy is trained to maximize cumulative reward under sparse success signals and small\nstep costs. Through repeated episodes, the agent learns to follow strong cues, to backtrack when evidence weakens,\nand to improve efficiency over time, thereby reproducing the practice effects observed in human navigation. We constrain all cognitive parameters to ranges informed by working-memory limits [17], forgetting timescales [3,\n42], and perceptual uncertainty in information scent [36] (Table 1). We then apply multi-objective Bayesian\noptimization over this space, targeting two human–model agreement metrics: a normalized delta-change metric\nfor the difficulty effect and a relative-change score for the hierarchy effect. This yields an empirically calibrated\nparameter set that best matches human effects. Robustness is assessed by perturbing each optimized parameter\nby ±5%, ±10%, and ±25% and recomputing the metrics; the model remains stable under small perturbations, with\nsensitivity increasing systematically as perturbation levels grow as Figure 3 shows3. Detailed parameter-wise\neffects are shown in Figure 9. 4 Evaluation Method\nTo evaluate whether our model reproduces established effects in information foraging, we designed proof-ofconcept tasks using reconstructed HTML menu materials inspired by Blackmon et al. [7, 9, 47].",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 24,
+    "total_chunks": 38,
+    "char_count": 2781,
+    "word_count": 403,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ccd0280a-165c-4dc1-badb-743a02854609",
+    "text": "Because the\noriginal stimuli are over two decades old and not fully reported, exact replication was not feasible, so we recreated",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 25,
+    "total_chunks": 38,
+    "char_count": 129,
+    "word_count": 21,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "77d8638d-ca65-4c6d-b2cd-d05676528b17",
+    "text": "3Aggregated sensitivity summarizes how strongly a parameter perturbation disrupts the three benchmark effects. For each parameter and\nperturbation level, we recompute: (i) the normalized delta-change metric for the task-difficulty effect, (ii) the relative-change score for\nthe hierarchy-depth effect, and (iii) a qualitative position-effect consistency indicator (whether left/top remains better than right/bottom). Deviations from the baseline values on these three measures are rescaled to a common range and combined into a single sensitivity score;\nlarger values indicate that small parameter changes distort multiple effects simultaneously. the experimental conditions as defined in prior studies and compared our results to the directional trends, rather\nthan absolute values[23, 30, 47]. We focused on three environmental factors known to influence navigation: Following Blackmon and Habuchi [7, 23], we instantiated three levels: no-problem (target\nlink has a clear semantic advantage), competing (distractors with similarly strong cues), and low-scent (all\nlinks weakly related to the goal). Reported task items were used as anchors to align our instantiations\nwith their operational definitions. For comparison, Habuchi et al. [23] tested the same manipulation with\n9 headings and 93 links derived from the Blackmon dataset, and found systematic increases in solution\ntime and errors as difficulty increased.\n• Hierarchy depth: We compared a two-level 8 × 8 menu (64 options) with a three-level 4 × 4 × 4 menu\n(also 64 options). This parallels Larson and Czerwinski [30], who showed that deeper hierarchies increase\nsolution time and disorientation. While their menus contained more total items, holding the choice-set\nsize constant allows us to isolate the effect of depth.\n• Target position: To test spatial biases, we varied target placement (top vs. bottom; left vs. right) consistent\nwith prior work. Visual search studies show that top/left targets are located faster [51], and Teo [47]\ndemonstrated left–right asymmetries using an encyclopedia-style layout. To ensure comparability, we\nselected the same target items and categories reported in their study. For each condition, we defined three task goals and evaluated the agent over 200 episodes per target. Performance was measured using established behavioral metrics: solution time (steps), click count, success rate,\nfirst-click accuracy, and lostness [46]. This design tests whether the model reproduces well-known effect directions: harder tasks require more steps, deeper hierarchies increase lostness, and top/left targets improve\nfindability.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 26,
+    "total_chunks": 38,
+    "char_count": 2620,
+    "word_count": 375,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "08f95cbf-fcb9-4b1f-a917-d38d62573974",
+    "text": "Finally, we conducted ablations on sequential foresight (via the discount factor 𝛾) and on the memory-decay\nand noise components, testing how each contributes to navigation efficiency and human-model alignment. 5 Results\nThis section presents the behavioral patterns and empirical effects captured by our model. (1) We show how the\nagent reproduces key trial-and-error behaviors. (2) We evaluate its predictions against empirical effects of task\ndifficulty, hierarchy depth, and target position. (3) We assess sequential foresight and the contributions of noise\nand memory components through ablation studies 𝛾. 5.1 Trial-and-error behaviors\nThe model captures three core trial-and-error behaviors consistently observed in human navigation.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 27,
+    "total_chunks": 38,
+    "char_count": 740,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f40e5173-793b-4101-878a-a64e2db43846",
+    "text": "The metric steps before first select was consistently smaller than the number of items per page,\nshowing that the agent inspects only a subset of available options before making a choice. This behavior mirrors\nhuman users' tendency to stop scanning once a promising link is found [12]. The return count metric was greater than zero across conditions, reflecting systematic backtracking. A qualitative example is shown in Fig.2d–e, where the agent retraces its steps after unsuccessful exploration,\nconsistent with human navigation patterns[41]. The model exhibits two forms of revisiting. First, it returns to promising options once they\nare re-evaluated as better candidates (Fig. 2b). Second, under memory decay it revisits previously inspected items\nwhose traces have fallen below the retrieval threshold, in order to regain scent information (Fig. 2e–f), consistent\nwith human findings of revisiting in navigation [25]. Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent • Beyond these trial-and-error behavior, we also reproduce the following effects of deign in information architecture reported in prior literature. 5.2 Effect of task difficulty\nWe first examine task difficulty conditions defined by information scent. Habuchi et al. [23] reported significantly\nlonger solution times and more clicks as difficulty increased (all pairwise differences p < .001) as Figure 4 shows. Beyond replicating the performance gradient (no-problem < competing < low-scent), our model also captured\nthe dynamic behavioral patterns characteristic of human navigation. In the no-problem condition, agents typically\nfollowed direct paths. In the competing condition, trajectories often included trial-and-error loops, where plausible\nbut incorrect links were explored before recovery. In the low-scent condition, agents not only exhibited trialand-error loops but also revisits (Figure 2).",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 28,
+    "total_chunks": 38,
+    "char_count": 1919,
+    "word_count": 272,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8c4b4901-36fc-4cfc-a53b-8ddc7f95b849",
+    "text": "Because weak scent provided little guidance, agents required more\nsteps, which increased the likelihood of memory decay and led to revisiting previously explored locations. These\nqualitative patterns are consistent with prior human observations [8, 37].",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 29,
+    "total_chunks": 38,
+    "char_count": 253,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a4c6885d-79d8-404f-92e5-19382a0603f0",
+    "text": "Navigation performance across task difficulties. Human data (top) show that both solution time and click count increase\nsystematically from no-problem to competing to low-scent conditions. Our model (bottom) reproduces this gradient, with\nmore steps and clicks required under greater uncertainty. Beyond matching overall performance, the model also captures\nhuman-like behavioral dynamics: direct paths in no-problem tasks, trial-and-error loops in competing tasks, and revisits\nunder low-scent conditions where weak cues and memory decay hinder efficient navigation. 5.3 Effect of hierarchy depth\nLarson and Czerwinski [30] demonstrated that deeper hierarchies substantially increase navigation difficulty. Comparing two-level (16×32) and three-level (8×8×8) menu layouts, they found that three-level menus yielded\nlonger solution times and higher lostness scores4 than two-level menus (𝑝< .01 and 𝑝< .001, respectively). To test whether our model reproduces this effect, we compared a two-level 8×8 layout with a three-level 4×4×4\nlayout, both containing 64 targets. The model replicated this depth effect: average steps increased from 13.5 in\nthe two-level hierarchy to 25.6 in the three-level hierarchy (𝑝< .001). Lostness scores likewise rose from 0.19 to\n0.28 (𝑝< .001).",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 30,
+    "total_chunks": 38,
+    "char_count": 1276,
+    "word_count": 178,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "de0c42f0-1a06-4230-8fef-1521dacfc980",
+    "text": "Effect of hierarchy depth on navigation performance. Human data (top) shows that three-level hierarchies (8×8×8)\nsignificantly increased solution time and lostness compared to two-level hierarchies (16×32). Using our layouts with the\nsame number of targets (bottom), the model reproduces this depth effect: three-level structures (4×4×4) required more steps\nand yielded higher lostness scores than two-level structures (8×8). This alignment indicates that deeper hierarchies amplify\nmemory demands and trial-and-error exploration, making navigation less efficient for both humans and the model. 4The lostness score [46] is a standard metric of disorientation in hypertext navigation. Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent • 5.4 Effect of target position\nTarget position has also been shown to influence search performance. Schaik et al. [51] showed that links placed\non the left or top of a page were located more quickly than those on the right or bottom (Fig. 6). To test whether our model exhibits a similar position effect, we systematically varied the location of the target\nheading in our 8×8 menu. Consistent with human data, the model required fewer steps when the target appeared\nin the left or top positions compared to the right or bottom. Average steps were 13.12 for left, 13.52 for right,\n12.56 for top, and 13.51 for bottom.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 31,
+    "total_chunks": 38,
+    "char_count": 1391,
+    "word_count": 212,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb0fdfa0-f24f-4642-8ec2-57170960a19c",
+    "text": "These results replicate the human trend that search is facilitated when targets\nare positioned at the left or top of the interface. Effect of target position on navigation performance. Human data (top) showed that targets placed on the left or top\nof a page were located more quickly than those on the right or bottom. Using our 8×8 menu layout (bottom), the model\nreproduces this positional bias: navigation required fewer steps when the target appeared at the left or top compared to the\nright or bottom. This alignment suggests that position effects in navigation can be explained as emergent consequences of\nbounded perception and sequential decision-making. Teo [47] found that targets located on the left side were found more efficiently: participants required fewer\nclicks (left ≈1.12 vs. right ≈1.38) and achieved higher first-click success (left ≈90.4%, right ≈66.4%), with all\ndifferences significant (𝑝< .01). In our proof-of-concept setting using an 8×8 hierarchical menu, we replicated this horizontal position effect. Although absolute values differed due to layout size, the model exhibited the same trend: left-placed targets were\nfound more quickly and more often on the first click than right-placed ones, as Figure 7 shows. Beyond reproducing the empirical trend, the model's positional preference can be understood as an adaptation\nto the statistical structure of the training environment. Following the view that human behavior is jointly\nshaped by cognitive limitations and the structure of the environment [1, 35, 45], we intentionally sampled more",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 32,
+    "total_chunks": 38,
+    "char_count": 1571,
+    "word_count": 241,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c7ecf331-eb5b-4a88-bfae-d56425e8221b",
+    "text": "left/top configurations when generating training layouts. This choice reflects a recurrent structural regularity\nof real-world interfaces, which has emerged from designers adapting to established viewing patterns. Critical\nelements, such as brand identity and primary navigation targets, are overwhelmingly placed toward the upper-left\nregion because this is the area where human visual attention is empirically highest, as shown by eye-tracking\nstudies [34]. Under bounded perception and sequential evaluation, the learned policy therefore adapts to this\nenvironmental prior—producing a positional bias as an emergent consequence of ecological statistics in the task\nenvironment. Effect of horizontal target position on navigation performance. Human data (top) showed that targets located on the left\nside of a menu were found more efficiently than those on the right, with fewer clicks and higher first-click success rates. Using\nour 8×8 hierarchical layout (bottom), the model reproduced this positional effect: left-placed targets required fewer clicks\nand were more often selected correctly on the first attempt compared to right-placed targets. This demonstrates that spatial\nbiases in human navigation can be captured as emergent outcomes of the model's bounded search and decision-making\nprocess. 5.5 Ablation study\n5.5.1 Ablation: effect of memory and noise components. Figure 8a provides an overview of how removing\ncomponents affects the model's alignment with human behavioral trends. Eliminating either the memory decay\nmechanism or the internal noise term substantially increases the Δ-distance from human data, indicating that\nboth components contribute to the qualitative structure of navigation. Figure 10 shows how varying the memory\ndecay threshold 𝜃affects the agent's behavior. In our formulation, larger values of 𝜃lead to more aggressive\nforgetting. As 𝜃increases, the agent discards scent information associated with certain locations more quickly and Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent •",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 33,
+    "total_chunks": 38,
+    "char_count": 2067,
+    "word_count": 289,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1474ada8-8c07-4ed1-bf2c-730f06106258",
+    "text": "(a) Ablation study of memory decay and noise components. (b) Radar plot illustrating the effect of the discount factor 𝛾\nWe evaluated the contribution of the memory decay and on five normalized performance metrics. The plot compares\nperceptual noise components by removing each module in- the agent's behavior across 𝛾∈{0.99, 0.75, 0.50} along: Sucdividually and jointly. The y-axis reports trend similarity to cess, Selection Accuracy, Steps (inv.), Lostness (inv.), and\nhuman data measured by absolute trend distance. Remov- Clicks (inv.). Metrics marked as \"inv.\" indicate that lower\ning either component led to a substantial degradation in raw values were inverted for visualization so that axes share\nmodel–human alignment, with the strongest drop observed the same orientation for comparison.\nwhen removing perceptual noise. Ablation Study Result Summary. must reconstruct its beliefs when needed, resulting in longer paths and more clicks. Return behavior and lostness\nalso rise, indicating a shift toward more exploratory, trial-and-error navigation.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 34,
+    "total_chunks": 38,
+    "char_count": 1058,
+    "word_count": 153,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d6aed6ee-7643-4b7d-8e66-a736ef6c9cc2",
+    "text": "Figure 11 illustrates how the\nnoise level 𝜎affects the agent's behavior. Increasing 𝜎reduces the reliability of scent discrimination, making the\nagent less certain about which option is most informative. As a result, steps and clicks increase, and both return\nbehavior and lostness rise, reflecting a progressive shift toward less structured and more exploratory navigation. These effects show that while some stochasticity is useful for capturing human-like variability, excessive noise\ndegrades the agent's ability to form stable preferences among competing actions. 5.5.2 Ablation: effect of discount factor 𝛾. The discount factor 𝛾(Bellman equation 1) controls the planning\nhorizon in reinforcement learning. High 𝛾(close to 1) values future rewards, encouraging cautious inspection\nof scent cues and reducing backtracking. Low 𝛾induces myopia: the agent favors immediate outcomes, selects\nprematurely, and neglects longer-term information. Figure 8b show that the discount factor 𝛾strongly influences the agent's navigation strategy. With a high 𝛾\n(0.99), the agent follows a stable long-horizon policy characterized by high success, short paths, and low lostness.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 35,
+    "total_chunks": 38,
+    "char_count": 1169,
+    "word_count": 164,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9315a6c4-0c89-48a3-828f-175f725439be",
+    "text": "Reducing 𝛾shortens the planning horizon and weakens this structure. At 𝛾= 0.75, navigation remains functional\nbut becomes less efficient, reflected in lower accuracy and higher steps and clicks. At 𝛾= 0.50, the strategy\ncollapses into an impulsive mode characterized by premature commitments, sparse inspection, and frequent\nmis-selections. Together, these results underscore that effective navigation requires sequential foresight. This\nablation validates our sequential formulation: goal-directed navigation cannot be explained by local heuristics\nalone but demands long-horizon planning under uncertainty. 6 Discussion\nOur model replicates the key trial-and-error navigation behaviors: partial scanning, backtracking, and revisiting. It also reproduces 3 effects of design reported in prior literature: (1) users take more time and clicks under\ncompeting or low-scent layouts, (2) deeper hierarchies increase navigation time and lostness, and (3) targets are\nlocated more easily when they appear at the left or top of a layout rather than the right or bottom. Our model extends the notion of information scent by framing navigation as a sequential decision-making\nprocess under bounded resources with fewer handcrafted assumptions than possible earlier; thus, it can model\ntrial and error behavior more broadly than possible before. A central contribution of this work is to demonstrate\nthat navigation cannot be fully explained by static or myopic scent estimates. Sequentiality is key: users do\nnot simply pick the link with the strongest immediate cue, but adaptively balance local and global information\nover time while managing uncertainty. By explicitly modeling this process, our account shows how errors and\nrecoveries emerge naturally from bounded rational strategies, rather than being treated as failures of otherwise\noptimal choice. This sequential perspective connects information scent to broader theories of resource-rational\ncognition, where limitations in memory and attention shape adaptive exploration [5]. Our findings have implications for both theory and design. For Theory, our model links Information Scent\nwith decision-theoretic accounts of navigation, offering a resource-rational framework that formally incorporates\ncognitive constraints such as memory decay and uncertainty. This extends existing IFT models with a quantitative,\npredictive tool that generalizes to other sequential tasks (e.g., menu selection, search, information retrieval).",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 36,
+    "total_chunks": 38,
+    "char_count": 2475,
+    "word_count": 343,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9cc1d319-0abc-4f7f-8ecd-6e2644e6fd59",
+    "text": "For Design Practice, the model provides a computational lens on where and why users \"get lost\" in complex\ninformation structures [36]. By quantifying uncertainty and expected information gain, it offers actionable\nguidance for improving navigation support, as detailed below. (1) Computational evaluation of Information Architectures (IA): The model serves as an efficient\ncomputational complement to traditional evaluation methods such as tree testing [29]by predicting\nbacktracking, path inefficiencies, and confusion points [40, 49], enabling early identification of structural\nissues without running full studies.\n(2) Identifying scent and labeling failures: By explicitly computing perceived utility for each category, the\nmodel reveals where scent collapses or labels induce high uncertainty [15], supporting precise revisions\nin wording and grouping.\n(3) Predicting lostness [22, 50] and intervention timing: By modeling how memory decay and ambiguity\naccumulate, the model predicts *when* and *where* disorientation emerges [22], guiding the timely\nintroduction of previews [52], visited-state indicators [32], and breadcrumbs [21].\n(4) Supporting optimal stopping decisions and branch abandonment: The agent's expected-gain\ncalculations identify where users abandon too early or persist too long [20, 37], offering guidance on\nrestructuring categories or reinforcing scent.\n(5) Enabling proactive and personalized design adaptation: Because the model tracks how scent ambiguity, policy entropy, and memory decay increase uncertainty, it can indicate *when* and *for whom*\nadditional cues are needed. This supports adaptive designs—for example, stronger visual cues for users\nwith lower working-memory capacity [26] or more prominent navigation aids when uncertainty rises [24]. A methodological limitation of our evaluation is that we do not align the model with raw human navigation\ntrajectories. In practice, trajectory-level comparison is not feasible for hierarchical IA tasks: individual paths vary\nwidely and are strongly influenced by unobserved factors such as prior familiarity, motor habits, or search styles. For this reason, prior models of menu and web navigation have also evaluated against aggregate behavioral\nsignatures (e.g., lostness, partial scanning) rather than attempting to predict individual click sequences. Moreover,\nno publicly available dataset provides process-level traces for goal-directed hierarchical navigation. Given these\nconstraints, we adopt the standard cognitive-modeling strategy of validating against well-established benchmark Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent •",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 37,
+    "total_chunks": 38,
+    "char_count": 2671,
+    "word_count": 358,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c411dc1-f480-45c5-bee9-69eda320aed9",
+    "text": "effects, which offer controlled, theoretically grounded testbeds that isolate the mechanisms under study. The\nmodern-interface case studies we include (Fig. 12) serve as demonstrations of external applicability rather than\nquantitative validation: real-world websites differ in visual salience, semantics, and interaction affordances, and\nmeaningful human–model comparison on these interfaces would require new matched datasets. Future work could enrich this direction by collecting process-level logs and clustering human trajectories into\ntypical strategy patterns, enabling qualitative and empirical comparison between human and model strategies and\nconnecting our framework to recent computational models of attention and interaction behavior [4, 43]. In addition,\nour current model does not capture users' prior knowledge, semantic associations, or individual differences\nin memory bounds. Incorporating such factors offers an important avenue for improving generalizability and\nmodeling human variability. 7 Conclusion\nWe modeled trial-and-error navigation as a sequential, resource-rational decision process. Our results show that\nbehaviors often seen as errors–premature selections, backtracking, and revisits–emerge naturally once perception,\nmemory, and effort limits are taken into account. Ablation studies highlight the importance of sequential foresight:\nonly with long-horizon planning (high 𝛾) does the agent behave efficiently, while reduced foresight leads to\nmyopic, error-prone exploration. By extending information scent into a resource-rational framework, our model\nexplains and predicts how task difficulty, hierarchy depth, and target position shape navigation performance. This approach offers a principled basis for understanding and improving information architectures without\nhand-crafted heuristics. Acknowledgments\nTo Robert, for the bagels and explaining CMYK and color spaces.",
+    "paper_id": "2603.11759",
+    "title": "Modeling Trial-and-Error Navigation With a Sequential Decision Model of Information Scent",
+    "authors": [
+      "Xiaofu Jin",
+      "Yunpeng Bai",
+      "Antti Oulasvirta"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11759v1",
+    "chunk_index": 38,
+    "total_chunks": 38,
+    "char_count": 1908,
+    "word_count": 243,
+    "chunking_strategy": "semantic"
+  }
+]

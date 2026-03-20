@@ -1,0 +1,1039 @@
+[
+  {
+    "chunk_id": "9a8fd655-2b69-4731-bdf7-7a389bb7ac89",
+    "text": "AGMARL-DKS: An Adaptive Graph-Enhanced\nMulti-Agent Reinforcement Learning for Dynamic\nKubernetes Scheduling 1Computer Science and Engineering, University of Westminster, 115\nNew Cavendish Street, London, W1W 6UW, United Kingdom. Mar Corresponding author(s).",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 0,
+    "total_chunks": 61,
+    "char_count": 257,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fd29b7f9-2677-4832-948b-88c0a3cd464a",
+    "text": "E-mail(s): H.Hamzeh@westminster.ac.uk;\n12 State-of-the-art cloud-native applicationsAbstractrequire intelligent schedulers that can\neffectively balance system stability, resource utilisation, and associated costs. While Kubernetes provides feasibility-based placement by default, recent research\nefforts have explored the use of reinforcement learning (RL) for more intelligent\nscheduling decisions. However, current RL-based schedulers have three major\nlimitations. First, most of these schedulers use monolithic centralised agents,\nwhich are non-scalable for large heterogeneous clusters. Second, the ones that[cs.DC]\nuse multi-objective reward functions assume simple, static, linear combinations\nof the objectives.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 1,
+    "total_chunks": 61,
+    "char_count": 718,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "379c4991-2789-4a4a-a117-20baf0bb2ae1",
+    "text": "Third, no previous work has produced a stress-aware scheduler\nthat can react adaptively to dynamic conditions. To address these gaps in current\nresearch, we propose the Adaptive Graph-enhanced Multi-Agent Reinforcement\nLearning Dynamic Kubernetes Scheduler (AGMARL-DKS). AGMARL-DKS\naddresses these gaps by introducing three major innovations. First, we construct a scalable solution by treating the scheduling challenge as a cooperative\nmulti-agent problem, where every cluster node operates as an agent, employing centralised training methods before decentralised execution. Second, to be\ncontext-aware and yet decentralised, we use a Graph Neural Network (GNN)\nto build a state representation of the global cluster context at each agent.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 2,
+    "total_chunks": 61,
+    "char_count": 739,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a7f95d88-8014-4e32-92ff-eff04ab777c5",
+    "text": "This\nrepresents an improvement over methods that rely solely on local observations. Finally, to make trade-offs between these objectives, we use a stress-aware lexicographical ordering policy instead of a simple, static linear weighting of these\nobjectives. The evaluations in Google Kubernetes Engine (GKE) reveal that\nAGMARL-DKS significantly outperforms the default scheduler in terms of faultarXiv:2603.12031v1\ntolerance, utilisation, and cost, especially in scheduling batch and mission-critical\nworkloads. Keywords: Fault Tolerance, Graph Neural Networks (GNNs), Kubernetes Scheduling,\nLexicographical Optimization, Multi-Agent Reinforcement Learning (MARL),\nStress-Aware Systems Kubernetes is the de facto standard open-source container orchestration platform for\nlarge-scale, distributed applications [1, 2]. The core concept in Kubernetes is the pod,\nwhich is an instance of a running process that holds one or more containers for tightly\ncoupled workloads [3]. Assigning a pod to a node in the cluster is a multi-dimensional\noptimisation problem [6]. Practical pod placement needs to account dynamically and\nsimultaneously for a large set of continuously changing parameters, including highly\nheterogeneous workloads, node capabilities, resource requirements, and constraints,\nas well as competing deployment objectives (e.g., load balancing, resource utilisation) [4]. Pod placement quality is therefore a fundamentally important problem with\na direct impact on the system's stability, resource utilisation, cost and responsiveness [5]. The built-in default scheduler of Kubernetes employs feasibility-based pod\nplacement, which proves too basic for handling real-world complex environments since\nit evaluates only basic node resource availability for hosting pods [7]. Significant work\nhas been done to integrate complex heuristics and specialised algorithms into Kubernetes systems, but these solutions introduce trade-offs with operational concerns and\nsystem complexity [4, 10]. The present solutions target specific workloads, but their\nspecialisation leads to performance improvements theoretically while substantially\nincreasing operational complexity and system maintenance requirements. Critically,\nthis category of solutions also suffers from a fundamental set of scalability and adaptability problems in dynamic, heterogeneous workloads, which makes them brittle and\nunresponsive to shifting application requirements [4, 10, 11]. To overcome the challenges of fixed heuristics, recent works have begun to focus on\ndeveloping more intelligent and adaptive frameworks based on Reinforcement Learning (RL) [8, 12, 20, 21, 31]. However, since today's cloud cluster scenarios are more\ncomplex and the state space is high-dimensional, it is necessary to introduce Deep\nReinforcement Learning (DRL) with deep neural networks to represent the value and\npolicy functions [29].",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 3,
+    "total_chunks": 61,
+    "char_count": 2889,
+    "word_count": 384,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f1635c98-bfe0-474c-9c1d-c9e847df1d3c",
+    "text": "The key idea of DRL is to treat the Kubernetes scheduler as a\nDRL agent that can learn a generalisable placement policy by interacting with the environment [12, 21, 23, 25, 31, 31–38]. The agent receives observations about the current\nsystem state, such as node resource utilisation, workload requirements, and network\nbandwidth, and produces actions through the scheduler to improve performance using\na reward signal as a learning guide. In this way, the agent can identify complex nonlinear scheduling policies from raw data. In addition, this data-driven approach also\nprovides a means for schedulers to learn highly customised policies to adapt to various real-world deployment environments, compared to the general-purpose algorithmic\nframework. For example, a Dynamic Resource Scheduling (DRS) framework formulates the Kubernetes scheduling problem as a Markov decision process and applies\nDRL to significantly improve the load balancing and optimisation [8]. However, traditional single-agent DRL frameworks are ill-suited to large-scale environments. Monolithic centralised agents restrict scalability in large clusters due to the\nexponential growth of state and action dimensions [7, 13]. Centralized single-agent\ndecisions demonstrate slow response times [12], form a point of failure, and lack global\noptimality [18, 19]. An intuitive alternative is a multi-agent (MARL) approach [14]. MARL uses multiple, local agents (one per node), providing natural scalability and\nfault tolerance [30]. The approach presents specific challenges which primarily involve\ncoordinating multiple agents [15].",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 4,
+    "total_chunks": 61,
+    "char_count": 1602,
+    "word_count": 227,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c83cc37-9634-4731-9d06-1949396fa144",
+    "text": "In addition, previous RL schedulers, even MARL, do\nnot adequately account for other important limitations. Scheduling is a multi-objective\nproblem that combines potentially competing metrics (fault tolerance, utilisation,\ncost) [9, 16, 22]. The complex nature of dynamic Kubernetes environments led previous studies to adopt static linear reward combinations that failed to reflect non-linear\nand state-dependent priorities [12, 17, 21]. None of the previous research offers explicit\n\"stress-aware\" capability which would allow policies to adapt dynamically to emerging cluster stress. Effective intelligent scheduling thus requires not only coordination,\nbut dynamic multi-objective management and stress-awareness. To overcome these limitations, we present the Adaptive Graph-enhanced MultiAgent Reinforcement Learning Dynamic Kubernetes Scheduler (AGMARL-DKS). The\nframework adopts MADD4PG [24, 28] as the foundational model and transforms\nscheduling into a collaborative process where each cluster node acts as an independent\nagent. The design permits a scalable and decentralised system [25, 26] yet presents\ndifficulties in synchronising local decisions with overarching objectives. AGMARLDKS addresses this with a Centralised Training with Decentralised Execution (CTDE)\nframework [58]. A centralised critic utilises global information to train decentralised\nagents throughout the offline phase which solves the non-stationarity challenge present\nin multi-agent systems [27]. The online phase enables each agent to independently\nand immediately use GNN-augmented local observations for decision-making. The\nmodel adopts a hierarchical structure of metrics to optimally trade off between fault\ntolerance, resource utilisation and cost. The primary contributions of this research can be summarised as follows:",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 5,
+    "total_chunks": 61,
+    "char_count": 1814,
+    "word_count": 238,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e7960a83-3afb-4fd1-bf95-c775f0690e3c",
+    "text": "By prioritising scheduling decisions according to a predetermined order of fault\ntolerance, resource utilisation, and cost, a lexicographic ordering technique more\nsuccessfully handles the multi-objective nature of pod placement than current\napproaches.\n2. A multi-agent architecture that alleviates complexity issues, improves scalability in\nlarge Kubernetes clusters, and allows decentralised decision-making.\n3. Graph Neural Networks (GNNs) are integrated to provide each agent with a\ncontext-rich local observation of the entire cluster state, enabling sophisticated\ncoordination without direct communication.\n4. A novel hybrid policy that combines learned, multi-objective evaluations from\ndecentralised actors with a centralised, stress-aware lexicographical selection mechanism, allowing agents to learn what is important while the system dictates how\nto prioritise it. The algorithm may dynamically modify its behaviour depending on the current\ncluster circumstances thanks to an adaptive learning rate mechanism and a stressaware reward function, meeting the demand for flexibility in a variety of dynamic\nsituations.\n6. We compare the perfromance of AGMARL-DKS with baseline Kubernetes scheduler on the production-grade Google Kubernetes Engine (GKE) under two comprehensive, custom-designed stress-test scenarios. We show that AGMARL-DKS\nlearns an intelligent smart consolidation policy for resource-intensive workloads,\nand an strategic self-restraint policy to preserve system stability under churn and\nfault-injection. Most notably, our correlation analysis gives direct evidence that\nAGMARL-DKS can successfully decouple conflicting goals of fault tolerance and\nresource utilisation as a fundamental limitation of existing schedulers, through\nlearning a sophisticated, risk-aware policy.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 6,
+    "total_chunks": 61,
+    "char_count": 1802,
+    "word_count": 232,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "428281d6-3713-43a9-8ea1-55478c68b2b9",
+    "text": "The remaining paper has been organised as follows. Section 3 discusses the problem\nstatement, including AGMARL-DKS formulation. Section 4 explains the experimental setup and how the workload is generated for evaluation. Section 5 contains the\nassessment and results. Finally, in section 6, we discuss the conclusion.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 7,
+    "total_chunks": 61,
+    "char_count": 316,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7321c215-d20e-4ac5-84d0-3811bb8fa2f3",
+    "text": "Recent works have started to explore the use of Deep Reinforcement Learning (DRL)\nfor cloud and fog computing scheduling. The proposed new approach shows potential\nto solve critical limitations of static heuristic methods like scalability problems and\ntrue multi-objective optimisation gaps while also improving adaptation to changing\ncluster stress levels. In [31], the authors use the combination of deep and reinforcement learning to adaptively schedule tasks in order to increase resource utilisation. This method does result\nin increased efficiency; however, this solution almost always uses a single monolithic\nagent with a very simple and static combination of rewards. We take a step further\nwith AGMARL-DKS by developing a scalable multi-agent system and a stress-aware\nlexicographical ordering policy. The work in [32] proposes DRL4HFC, a multi-agent\nDRL model for microservices placement in Fog/Cloud environments. It successfully\nminimizes execution time and resource consumption, but the need for manual parameter fine-tuning of DRL agents makes it unsuitable for dynamic and heterogeneous\nKubernetes clusters. In contrast, AGMARL-DKS uses an adaptive learning mechanism\nthat can automatically adjust to varying cluster configurations. Other approaches have been proposed for fog and IoT environments, such as the\nDynamic Mayfly Optimisation Scheduling (DMOS) algorithm [33] which is aimed\ntowards energy efficiency and reliability. This paper's approach is fog-specific to task\nscheduling and it does not consider the intricacies of Kubernetes pod placement. AGMARL-DKS is Kubernetes-specific as a scheduler, aiming to solve challenges of\ncontainer orchestration such as resource pressures and pod-to-node constraints. Decentralised agent-based architectures, e.g. The work presented in [34] demonstrates superior resilience to fog system failures but confines agent decision-making to local data sources which diminishes global decision effectiveness. The AGMARLDKS method delivers improved functionality compared to previous approaches by\ndeveloping Graph Neural Networks (GNNs) utilising a Centralised Training with\nDecentralised Execution (CTDE) model.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 8,
+    "total_chunks": 61,
+    "char_count": 2170,
+    "word_count": 297,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a31b9947-ed30-4b25-ba77-272d7899a63c",
+    "text": "This yields each agent an observation\nembedding of the entire cluster state, endowing it with context to support complex\ncoordination. A decentralised scheduling solution based on a Spatial Prisoner's Dilemma gametheoretic model is proposed in [35]. The proposed approach is scalable, but its direct\napplication to the problem is limited due to its reliance on cellular automata and a\nparticular game model.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 9,
+    "total_chunks": 61,
+    "char_count": 407,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "728d3353-3c5e-42ee-ade9-39bf7a1756e3",
+    "text": "The state space of Kubernetes, on the other hand, is far more\ncomplex and dynamic. AGMARL-DKS overcomes these limitations by implementing\na flexible multi-agent DRL approach that learns the policies through direct interaction\nwith the environment. The Hierarchical Multi-Agent Optimisation (HMAO) algorithm [36] also applies a\nmulti-agent approach to resource utilisation optimisation. This aspect is not a novelty\nin comparison to our work, but HMAO does not provide a method for the agents\nto dynamically perceive the global state.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 10,
+    "total_chunks": 61,
+    "char_count": 533,
+    "word_count": 79,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "52e1edee-8a4f-4d66-9e86-5d54cc51d6f2",
+    "text": "AGMARL-DKS builds on this concept by\nimplementing GNNs to facilitate dynamic sharing of comprehensive cluster topology\nand health representations among agents. Approaches based on single-agent DRL have also been explored, such as the Deep\nQ-Network (DQN) based model for workflow scheduling in [37] and the RL-based\nKubernetes plugin RLKube [21]. RLKube for example outperforms the default scheduler in terms of throughput and energy efficiency. Monolithic single-agent architectures\nat their core fail to scale effectively within the complex high-dimensional state space\nfound in extensive clusters. By contrast, AGMARL-DKS is intrinsically more scalable\nand robust as it distributes intelligence (one agent per node). In the context of our work, a recent and very related contribution [25] is a multiagent DRL framework for container allocation. The approach provides confirmation\nof the benefit of a multi-agent modelling approach. Although this work combined\nwith [37] exhibits reinforcement learning potential they fail to model and prioritize\ncompeting objectives during stress conditions unlike AGMARL-DKS which handles\nthese situations effectively. The system lacks both formal lexicographical ordering\nand stress-aware properties which are critical for AGMARL-DKS to enable principled\ndecisions during state-dependent conflicts.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 11,
+    "total_chunks": 61,
+    "char_count": 1337,
+    "word_count": 184,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c91966a7-41f0-44bb-a608-686c173691e0",
+    "text": "Our research shares significant similarities with the concurrent work in [38] as both\nstudies employ Graph Neural Networks (GIN) for multi-objective application placement tasks. This work essentially validates our choice to use a GNN to model the\ndependencies, however they still use a standard actor-critic architecture to implicitly\nlearn the trade-offs. In contrast, AGMARL-DKS marries the GNN based state representation with an *explicit* stress-aware lexicographical policy. This hybrid approach\nnot only allows agents to learn what constitutes a good placement, but the policy\nalso allows the system to control how to prioritise between placements in terms of the\noverall system stress, in an interpretable and controllable way. Ordering Networks Architecture System Learning Efficiency Neural Tolerance Approach Lexicographic Adaptive Graph Multi-agent Kubernetes-specific Fault Energy Decentralized Scalability Stress-aware\nAGMARL-DKS ✓ ✓ ✓ ✓ ✓ ✓ ✓ ✓ ✓ ✓\nDRL4HFC - ✓ - ✓ - - ✓ - ✓ -\nDMOS - ✓ - - - ✓ ✓ ✓ - -\nGame Theoretic - - - ✓ - ✓ - ✓ ✓ -\nHMAO - - - ✓ - - ✓ ✓ ✓ -\nRLKube - ✓ - - ✓ - ✓ - ✓ -\nDRL-GIN - ✓ ✓ - - - - - ✓ -\nDRL Framework - ✓ - - - - - - ✓ -\nMulti-agent DRL - ✓ - ✓ ✓ - - ✓ ✓ -\nAgent-based Framework - - - ✓ - ✓ - ✓ ✓ -\nTable 1: Comprehensive Feature Comparison of Different Approaches Fig. 1: AGMARL-DKS development Pipeline The AGMARL-DKS approach is designed to handle the dynamic multi-objective\nnature of pod scheduling in Kubernetes environments by utilising a cooperative\nmulti-agent reinforcement learning framework [39]. The pod scheduling problem is\nformulated as a partially observable multi-agent MDP, with the objective of learning a joint policy that achieves global system objectives [40]. This method departs\nfrom a traditional centralised and monolithic scheduler approach by distributing intelligence across decentralised, autonomous agents. By adopting a centralised training\nand decentralised execution approach, complex coordination strategies can be learned\noffline, while still supporting fast and scalable online decision-making [58]. 3.1 Problem Formulation as a Multi-Agent System Our solution models the pod scheduling decision-making process as a fully cooperative\nmulti-agent Markov decision process (MAMDP) [41]. The use of MAMDPs is natural\nin this setting because they are a mathematical formalism that naturally captures the\ninteraction of the set of distributed cooperative agents; one per Kubernetes node in\nour system. An MAMDP is given by: M = ⟨S, {Oi}Ni=1, {Ai}Ni=1, P, R, γ⟩ (1)\nwhere the components are defined as follows:",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 12,
+    "total_chunks": 61,
+    "char_count": 2585,
+    "word_count": 428,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "23907c13-ec7a-4810-9796-b111e340d3a0",
+    "text": "• S is the global state space, representing the collective state of the entire Kubernetes\ncluster at any given time.\n• {Oi}Ni=1 is the set of observation spaces. Each agent i perceives the environment\nthrough its own local observation oi ∈Oi.\n• {Ai}Ni=1 is the set of action spaces. Each agent i can take an action ai ∈Ai.\n• P : S ×A1 ×· · ·×AN ×S →[0, 1] is the state transition probability function, which\ndefines the dynamics of the environment based on the joint action of all agents.\n• R : S × A1 × · · · × AN →R is the shared reward function, which provides a global\nfeedback signal to all agents for their collective behaviour.\n• γ ∈[0, 1) is the discount factor, which balances the importance of immediate versus\nfuture rewards.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 13,
+    "total_chunks": 61,
+    "char_count": 736,
+    "word_count": 138,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c3040179-1da9-48f2-b913-03fbd328b0b1",
+    "text": "Each component of this tuple is instantiated to capture the specific dynamics\nand requirements of the Kubernetes scheduling problem within the AGMARL-DKS\nframework, as detailed in the following paragraphs. State and Observations\nThe global state of the environment st ∈S at the point of scheduling event t is a\nrepresentation of the current configuration of the full Kubernetes cluster. In our model,\nthis is a graph st = Gt = (V, E), where V are worker nodes in the cluster, and E are\nedges between them. For each node i ∈V there is a raw feature vector of dimension\n10, xi,t ∈R10, that describes its local state. This consists of the current allocations for\nCPU and memory as well as other health and performance metrics, such as a binary\nindicator for MemoryPressure and the number of pod restarts in the last hour. the true state st is global, in accordance with the principle of decentralised execution,\neach agent i acts based on a local observation, oi,t ∈Oi. A distinguishing feature of\nour approach is that this is not a naive local observation but is instead augmented\nwith global context.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 14,
+    "total_chunks": 61,
+    "char_count": 1099,
+    "word_count": 189,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b5cb0ae7-c80d-47be-8c3e-343e33281d6f",
+    "text": "Accordingly, we concatenate the agents 10-dimensional raw local\nmetrics with a 16-dimensional dense embedding, ei,t, generated by a shared GNN [43]\nfrom the full cluster graph. This GNN thus accepts the entire cluster graph Gt as input and, through a number\nof message passing steps, computes an embedding ei,t for each node, capturing highorder information about the global topology and state of the entire cluster into a\nfixed-size vector. The complete 26-dimensional local observation for each agent i is\nthen given by: oi,t = concat(xi,t, ei,t)\nThis design facilitates the propagation of the GNN embedding into each agent's local\nobservation, in order to diffuse global context to every agent's local perception. In this\nway, agents can make globally-aware decisions that implicitly consider the state of\nthe entire system, enabling high-level coordination without requiring agent-to-agent\ncommunication at execution time. Actions\nThe action space of agent i, denoted as Ai, is a continuous 3 dimensional vector\nspace, Ai ⊆R3. The action ai,t ∈Ai is not an actual control command (e.g. \"accept\npod\") but a learned, multi-objective, ranking of the suitability of its own node for the\npending pod. The action vector ai,t = [scoreFT, scoreUTIL, scoreCOST] is the output of\nagent i's deterministic actor network, µθi, in which the logits of the final layer are run\nthrough a sigmoid activation to bound the scores to the range (0, 1). The larger the\nscore, the greater the belief of the agent that placing the pod on its node will result in\na desirable outcome for that objective.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 15,
+    "total_chunks": 61,
+    "char_count": 1580,
+    "word_count": 254,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "42e19d5c-53d8-4595-8e96-641362a87101",
+    "text": "The metrics that underlie these learned scores\nare defined below. Fault Tolerance (scoreFT). This metric measures a node's stability and trustworthiness. It has two parts: the past stability of the node, and its current health. Let Ri be\nthe number of pod restarts on node i over a recent time window, and let Hi ∈{0, 1}\nbe a binary flag indicating that a node is currently under some kind of pressure\n(e.g. Let Hi = 1 represent an unhealthy node. We define the fault\ntolerance metric MFT,i of node i as: MFT,i = (1 −Hi) · (2)\n1 + log(1 + Ri)\nThe (1 −Hi) term is a hard constraint.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 16,
+    "total_chunks": 61,
+    "char_count": 581,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5efba64a-2c69-44d2-bba9-65cefca2c2a8",
+    "text": "If the node is under active pressure, the\nscore becomes zero and that node is immediately eliminated from contention. For\nhealthy nodes, the score scales inversely to the logarithm of the restart count. The\nlogarithm function serves to reduce extreme restart count outliers' effect to prevent\nthe metric from being excessively skewed by the worst performing node but retains\nsensitivity to initial instability signs. Resource Utilization (scoreUTIL). This score should incentivize efficient packing (consolidation) without overloading the nodes. Placements are rewarded on nodes that\nalready have a high utilization. Here Calloci and Mialloc are the allocated CPU and\nmemory on node i, while Ccapi and Micap are the capacity of these resources. The\nresulting utilization metric, MUTIL,i, is the average of the utilization of both: 1 Calloci M ialloc\nMUTIL,i = + cap (3)\n2 Ccapi M i\nIdeally, the agent's policy should learn to assign a high scoreUTIL to nodes where the\nvalue is high but not necessarily critical, essentially learning a \"packing\" strategy. The GNN-enhanced observation allows the agent to decide if packing on its node is\nglobally optimal. Cost Efficiency (scoreCOST). This score measures the economic cost of scheduling a\npod on a particular node. This is dependent on the instance type in a cloud setting\n(general-purpose, memory-optimised, spot etc). Let Costi be the normalised hourly\ncost of the instance type for node i. The cost efficiency metric is then:",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 17,
+    "total_chunks": 61,
+    "char_count": 1478,
+    "word_count": 233,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8aece3e6-f292-4f1a-a252-f0727e2f17c1",
+    "text": "MCOST,i = (4)\nCosti\nThis objective formulation incentivizes nodes with lower cost to be more efficient. The agent's actor network learns to output a high scoreCOST that it's own node is an\neconomical favorable option compared to other available nodes.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 18,
+    "total_chunks": 61,
+    "char_count": 251,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d7e19c48-75fa-4e3d-93b3-9e2cdce3f95e",
+    "text": "Policy and State Transitions The algorithm used in the framework is based on a hybrid policy, π, consisting of\nthe decentralised roll-out value estimation from the agents' local actors, as well as a\ncentralised, deterministic placement logic which makes the final action selection [42,\n44]. This hybrid policy can be factorised into: Decentralised Score Generation: At each scheduling event t, every agent i in\nthe candidate set Ct applies its learned actor policy µθi to its local observation oi,t. This produces a vector of objective scores, ai,t. The collection of these scores from\nall candidate agents forms the joint action set:",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 19,
+    "total_chunks": 61,
+    "char_count": 634,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5ab400ba-6703-475b-923d-a3a4936c63d6",
+    "text": "at = {ai,t | i ∈Ct} = {µθi(oi,t) | i ∈Ct} Centralised Node Selection: A central controller then applies a high-level,\ndeterministic policy function, Λ. This function implements the stress-aware lexicographical filtering algorithm [45], taking the joint action set at and the current\nglobal stress level Lt as input to select the single winning node, i∗: The state transition function P(st+1 | st, i∗) is then implicitly performed by the\nKubernetes control plane. The winning node i∗selecting a binding action is performed\nby kube-apiserver as state updates to the cluster's resource allocations and other state variables to transition from st to st+1.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 20,
+    "total_chunks": 61,
+    "char_count": 651,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "131bd0ba-6b20-4b12-bdd3-fe1a406a3cb8",
+    "text": "The internals of Kubernetes' operation are\na complex subject on their own, but under our model, this occurs as a deterministic\nenvironment transition due to the selection of i∗. The hybrid approach cleanly separates the learning of complex value estimations involving decentralised actors from\nexecuting high-level strategic priorities based on centralised logic [44]. Reward\nThe agents operate under a collective reward function R(s, a) which exists to promote\njoint cooperative behavior. Rather than having each agent compete against the others,\nthe collection of agents as a system are intended to learn a joint policy for system-wide\noptimisation [46]. A global reward signal Rt is computed after the placement decision is applied\nto the winning node i∗. The reward is designed to incentivise the agents to learn\nto be accurate estimators of their own fitness for the placement task. In order to\ncompute the reward, we first observe the vector of true, post-placement metric values\nat the winning node: m∗t = [m∗FT, m∗UTIL, m∗COST], the ground-truth values of fault\ntolerance, utilisation, and cost efficiency, respectively, that are achieved as a result of\nthe placement. The global reward Rt is then formulated as: Rt = −1 X (ai∗,t,j −m∗t,j)2 + B\nj=1 This function has two key components: Accuracy Penalty: The first term is simply −MSE(ai∗,t, m∗t ), the negative Mean\nSquared Error between the winning agent's score predictions (ai∗,t) and the true\nscores (m∗t ). Penalising inaccurate predictions provides a signal for each agent's\nactor to provide scores which are true to the state and capabilities of the node it is\nevaluating, rather than scores which are arbitrarily high, thus encouraging agents\nto learn a calibrated, meaningful evaluation function.\n2. Success Bonus: B is a small, constant bonus given for any successful placement. This positive signal for making a placement ensures the system isn't too\nconservative, and that learning is focused on doing useful work.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 21,
+    "total_chunks": 61,
+    "char_count": 1985,
+    "word_count": 314,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2c482cca-c4c8-4bec-a8c5-01fd960baa2c",
+    "text": "This scalar reward signal Rt is then communicated to all the agents. This global\nfeedback is key, as it allows the entire population to learn from the outcome of every\nindividual scheduling event, regardless of which of the competing agents was ultimately chosen as the winner. This allows the entire population to share experiences,\nand ultimately, leads to the emergence of coordinated, globally optimal scheduling\nstrategies. Finally, we choose a discount factor γ with a value close to 1 (e.g. 0.99). This causes the agents to be far-sighted, i.e. to place strong weight on future rewards\nduring their policy updates. This is key for our problem domain, as we want to incentivise the emergence of policies that lead to long-term system stability and efficiency,\nas opposed to myopic, short-term gain-seeking behaviours.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 22,
+    "total_chunks": 61,
+    "char_count": 823,
+    "word_count": 131,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fb3686b6-8d58-4c5b-90ab-60d98c0c422f",
+    "text": "3.2 System Architecture and Decentralised Execution The AGMARL-DKS framework is composed of two primary architectural components:\na shared Graph Neural Network for contextual state enrichment, and a set of Node\nAgents, each with an actor-critic architecture [53]. These components work in concert\nto enable the learning of sophisticated, coordinated scheduling policies.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 23,
+    "total_chunks": 61,
+    "char_count": 370,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e539ab10-4f38-4118-a30a-28856629e7a2",
+    "text": "3.2.1 Graph Neural Network for Context-Aware Observations Implicit coordination is facilitated by passing the global cluster state through a shared\nGNN at each timestep. We model the cluster as a fully connected graph Gt = (V, E)\nwhere V are the cluster's worker nodes and E are the edges between these nodes. We\nassign each node i its raw feature vector h(0)i,t . A multi-layer GNN is applied on graph Gt to obtain a context-aware embedding\nfor each node. This is done using a message-passing mechanism, in which each node\niteratively aggregates messages from its neighbours and updates its own representation. For layer k of the GNN, the hidden state (or feature vector) h(k)i,t for node i is\nupdated as follows:  (k) (k) h(k)j,t \n1 h(k)i,t + W 2 X h(k+1)i,t = σ W |N(i)| \nj∈N (i)\nwhere: • N(i) is the set of neighbouring nodes to node i.\n• h(k)j,t is the feature vector of a neighbouring node j at layer k.\n• W 1(k) and W2(k) are trainable weight matrices for layer k, shared across all\nnodes. W1(k) transforms the node's own representation, while W2(k) transforms the\naggregated information from its neighbours.\n• σ is a non-linear activation function, such as ReLU. After K layers of message passing, the final output of node i is a dense embedding\nvector ei,t = h(K)i,t . Our dense embedding representation encodes complex structure\ndetails and dependencies that span multiple hops within the neighbourhood of node\ni, which covers the whole cluster because of the fully connected graph structure [52]. This GNN embedding for each node is then concatenated to the respective raw feature\nvector to form the final local observation for agent i: oi,t = concat(h(0)i,t , ei,t)\nThis ensures that each agent has a rich, localised perception that is also aware\nof the global context of the whole system, which is necessary to learn coordinated\nbehaviour without communication. 3.2.2 Node Agent Actor-Critic Architecture",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 24,
+    "total_chunks": 61,
+    "char_count": 1921,
+    "word_count": 326,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d701676a-de92-41b5-916a-f2096b0ba1bf",
+    "text": "The actor-critic model of Agent i utilizes two neural networks which undergo updates\nduring centralised training [48]. Actor Network\nAgent i's Actor Network µθi is its policy function. It maps from local observations to\nactions [53]. It is implemented as a feed-forward neural network parametrised by θi. At each timestep t, it takes the agent's GNN-enhanced local observation oi,t ∈R26\nas input, and outputs a deterministic action vector ai,t ∈[0, 1]3. The action vector\nproduced by the agent represents its learned scores across three objectives which are\nFault Tolerance, Utilisation and Cost. The computation through the network's layers can be expressed as: h1 = ReLU(W1oi,t + b1) h2 = ReLU(W2h1 + b2)\nai,t = µθi(oi,t) = σ(W3h2 + b3)\nwhere:\n• h1 ∈R128 and h2 ∈R64 are the outputs of the two hidden layers, respectively.\n• W1 ∈R128×26, W2 ∈R64×128, and W3 ∈R3×64 are the weight matrices.\n• b1 ∈R128, b2 ∈R64, and b3 ∈R3 are the bias vectors.\n• ReLU(·) is the Rectified Linear Unit activation function.\n• σ(·) is the element-wise sigmoid activation function, normalising the final three\nobjective scores to [0, 1].",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 25,
+    "total_chunks": 61,
+    "char_count": 1117,
+    "word_count": 185,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "40d6b144-ca45-4268-9e20-d72d2a0b2afc",
+    "text": "This bounded output is important for learning stability as\nwell as the lexicographical selection mechanism that follows. 3.2.3 Hybrid Action Selection Mechanism The final action selection is based on a hybrid mechanism, which considers the value\nfunctions learned by the decentralised agents and a heuristic-based, centralised action\nselection policy. The hybrid, two-step procedure, which is performed at every scheduling instance, aspires to produce context-sensitive decisions while also maintaining\ncoherence with the overall operational objectives [54]. Step 1: Decentralised Score Generation",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 26,
+    "total_chunks": 61,
+    "char_count": 597,
+    "word_count": 80,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4ae5dd6b-0c17-403c-a430-b02e01eeca47",
+    "text": "When a new pod scheduling request is received at timestep t, the environment\nfirst prunes the set of all agents to the set of candidate nodes Ct based on\nthe hard constraints of the pod (resources, CPU, memory) and Kubernetes rules\n(taints/tolerations, node affinity). Each agent i for which i ∈Ct runs its actor network µθi with its local GNNaugmented observation oi,t as input and outputs its action vector ai,t as the multiobjective score for the requested pod: ai,t = µθi(oi,t) = [scoreFT, scoreUTIL, scoreCOST] The set of all actions at = {ai,t | i ∈Ct} from candidate agents represents the joint\ndecentralised learned evaluation of all candidate nodes over all 3 objectives (Fault\nTolerance, Utilisation, and Cost) and is used as input to the centralised selection stage. Step 2: Centralised Lexicographical Filtering\nThe joint action at is forwarded to the central scheduler extender which runs a deterministic lexicographical filtering algorithm to select the final winning node [55]. The\nalgorithm proceeds in three steps: Stress-Aware Objective Prioritisation: The current global system stress level\nLt is used to look up a priority-ordered sequence of objectives Ot = [o1, o2, o3]. For\nexample, in the case of high stress (Lt > threshold) the lexicographical order might\nbe set to [Fault Tolerance, Cost, Utilisation] while in normal conditions it might be\n[Utilisation, Cost, Fault Tolerance]. This renders the policy explicitly state-adaptive\nto the current conditions of the cluster.\n2.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 27,
+    "total_chunks": 61,
+    "char_count": 1500,
+    "word_count": 236,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ec1adb93-2046-4886-b2e8-0f6bb1017f88",
+    "text": "Iterative Candidate Filtering: The algorithm then iteratively filters the set of\ncandidate nodes Ct. It starts with the initial set C0 = Ct and produces a sequence of\nsmaller and smaller sets of candidates C0 ⊇C1 ⊇C2 ⊇C3. For each objective ok in\nthe priority-ordered sequence (k = 1, 2, 3), the next set of candidates Ck is obtained\nby taking the subset of nodes from the previous set Ck−1 whose score with respect\nto the considered objective ok is near-optimal: Ck = {c ∈Ck−1 | scoreok(c) ≥(1 −δlex) · max scoreok(c′)}\nc′∈Ck−1 where scoreok(c) is the learned score for objective ok obtained by querying the actor\nof the agent residing at node c. The parameter δlex is a small tolerance value (e.g.\n0.05) which allows to retain a set of high-scoring nodes, rather than a single best\nnode, at each stage of the algorithm. This ensures that the algorithm does not get\nstuck early on with a suboptimal set of candidates.\n3. Deterministic Tie-Breaking: If the last set C3 still contains more than one\nnode after the three filtering stages, then a deterministic tie-breaking rule (such as\nchoosing the node with the lowest index) is applied to produce a single winner [56]. The pod is finally bound to the winning node. This simple hybrid approach enforces a strong separation of concerns. It offloads\nthe complex, fine-grained state-dependent evaluation of which nodes are preferable, to\nthe learned actor networks. But at the same time, the high-level, high-stakes decision of\nhow to trade offbetween different objectives, is governed by an explicit, interpretable,\nand stress-aware policy.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 28,
+    "total_chunks": 61,
+    "char_count": 1588,
+    "word_count": 264,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a5a97805-279f-438f-8618-1102404078af",
+    "text": "3.3 Centralised Training and Decentralised Execution The AGMARL-DKS agents are trained using the Multi-Agent Deep Deterministic\nPolicy Gradient (MADDPG) algorithm [57] which is based on the Centralised Training\nwith Decentralised Execution (CTDE) paradigm [58]. CTDE was designed specifically\nfor the case of multi-agent reinforcement learning, where the main difficulty is nonstationarity. In multi-agent RL, every agent's policy changes throughout training,\nmeaning that for each agent the environment is non-stationary (as the behaviour of\nother agents in the environment is part of the state transition dynamics). In such a\nsetting, it is difficult for typical RL algorithms to converge.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 29,
+    "total_chunks": 61,
+    "char_count": 691,
+    "word_count": 98,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a065d92c-7471-4e1e-a0b1-a06bd0e84f66",
+    "text": "CTDE overcomes this by using a centralised critic for training that has access\nto the global state and actions of all agents. This critic is able to learn a stable\naction-value function for the joint policy and then at execution time, the need for the\ncentralised information is removed. At test time, each agent will select its own action\nbased on its local observation through its own actor network. The decoupling between\nthe training and execution of CTDE allows for the learning of coordinated policies\noffline and decentralised and reactive execution online at scale. In addition to CTDE,\nwe use two more methods to increase training stability and data efficiency, these are\na shared experience replay buffer and soft updates for target networks. 3.3.1 Centralised Critic for Stable Value Estimation Critic Network\nThe Critic Network, Qϕi, is used to approximate the agent's action-value function. The primary task of the critic network is to learn the centralised training signal, by\nestimating the expected long-term return (Q-value) for a particular global state and\njoint action [49, 50]. As with the MADDPG baseline, the critic of agent i has access\nto the observations and actions of all the agents in the system, rather than only to the\nlocal information available to agent i. This is necessary for stable multi-agent learning. In order to scale up to an arbitrary number of agents without a change in architecture, the critic network has the form shown in Algorithm 1, taking as input agent\ni's local observation oi,t, agent i's action ai,t, and the aggregation of the other agents'\nobservations and actions, {oj,t, aj,t}j̸=i. The network's forward pass is structured as follows:",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 30,
+    "total_chunks": 61,
+    "char_count": 1693,
+    "word_count": 275,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "83ce616b-53af-4fef-844f-f6b9a185e9c0",
+    "text": "Parallel Processing of Other Agents' Information: The observation-action\npairs from all other agents (j ̸= i) are first processed. Each pair is concatenated and\npassed through a shared feed-forward network, parametrised by ϕother, to generate\nan intermediate embedding: zj = fϕother(concat(oj,t, aj,t)) ∀j ̸= i Aggregation: These individual embeddings are then aggregated into a single\nfixed-size vector using mean-pooling [51]. This step ensures the input size to the\nsubsequent layers is independent of the number of agents, N:",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 31,
+    "total_chunks": 61,
+    "char_count": 529,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d312882c-6600-467f-8c8d-b434fb792ca8",
+    "text": "¯zothers = X zj\nN −1\nj̸=i In our implementation, this results in a 128-dimensional vector.\n3. Final Q-Value Estimation: This aggregated vector is concatenated with agent i's\nown observation and action. The resulting combined vector is then passed through\nthe final layers of the critic network, parametrised by ϕmain, to output a single\nscalar Q-value: Qϕi(oi,t, ai,t, {oj,t, aj,t}j̸=i) = fϕmain(concat(oi,t, ai,t, ¯zothers)) The complete critic function can be formally written as\nQϕi(oi,t, ai,t, agg({oj,t, aj,t}j̸=i)). By learning a function that explicitly considers\nthe actions of all agents, the centralised critic provides a stable learning target for\neach agent's actor. This mechanism is the key to overcoming the environmental nonstationarity inherent in multi-agent learning, enabling the agents to develop complex\nand cooperative strategies.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 32,
+    "total_chunks": 61,
+    "char_count": 853,
+    "word_count": 124,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "82d30392-8896-48fc-85a8-5de1ce2e3f2f",
+    "text": "3.3.2 Actor and Critic Updates using MADDPG Critic Update\nThe critic for each agent i, Qϕi, is trained to learn the joint action-value function by\nminimising a loss derived from the Bellman equation [59]. For each transition tuple\n(s, a, r, s′) randomly sampled from the shared replay buffer D, where s is the global\nstate, a = {a1, ..., aN} is the joint action, r is the global reward, and s′ is the next\nstate. Also, the critic's parameters ϕi are updated by minimising the Mean Squared\nError (MSE) loss, L(ϕi): h L(ϕi) = E(s,a,r,s′)∼D (Qϕi(s, a1, ..., aN) −yi)2i where yi is the one-step temporal difference (TD) target. This target value is computed\nusing the target critic (Q′ϕi) and target actor (µ′θj) networks, which are separate,\nslowly updated copies of the online networks: yi = ri + γQ′ϕi(s′, µ′θ1(o′1), ..., µ′θN (o′N)) Here, γ is the discount factor. The use of target networks is critical for stability; it\nprovides a consistent and slowly moving target yi, preventing the oscillations that\nwould occur if the critic were trying to learn from its own rapidly changing value\nestimates [49]. The centralised nature of the critic is essential, as it conditions on the\njoint action, allowing it to form a comprehensive and stable learning signal for each\nagent. Actor Update\nThe actor for each agent i, µθi, learns a deterministic policy that maps its local\nobservation oi to a specific action ai. The actor's parameters θi are updated using\nthe deterministic policy gradient theorem [60]. The goal is to adjust the policy in a\ndirection that leads to actions the centralised critic deems more valuable. The actor\nascends the gradient of its expected return objective function, J(θi), which is given by:",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 33,
+    "total_chunks": 61,
+    "char_count": 1714,
+    "word_count": 290,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "54702c07-a0b7-426d-b254-e7b44d5fd5e0",
+    "text": "h i ∇θiJ(θi) = Es,a∼D ∇θiµθi(oi)∇aiQϕi(s, a1, ..., aN)|ai=µθi(oi) This update rule is an application of the chain rule. The term ∇aiQϕi(·) is the gradient\nfrom the critic, indicating how agent i's action should change to increase the expected\nreturn. This signal is then backpropagated through the actor network via the term\n∇θiµθi(oi) to update the actor's parameters. In essence, the actor learns to produce actions that maximise the long-term, system-wide reward as estimated by the globallyinformed centralised critic [48]. 3.3.3 Training Stability Mechanisms To ensure the convergence and stability of the learning process, two standard\nmechanisms are employed. Experience Replay: There is a centralised experience replay buffer D that contains a large history of past transition tuples. The batch of experiences for each\ntraining iteration is sampled uniformly at random from this replay buffer. This\ntechnique decorrelates the updates and ensures that the samples obey the i.i.d.\nassumption needed by stochastic gradient descent, hence stabilising learning [61].\n2. Soft Target Updates: Each online actor (µθi) and critic (Qϕi) network has\na corresponding target network (µ′θi and Q′ϕi) that is also used to estimate the\ntarget value function. The weights of the target networks are not trained through\nbackpropagation, but are updated by slowly tracking the weights of the online\nnetworks via Polyak averaging [62]. This update rate τ ≪1 is: θ′i ←τθi + (1 −τ)θ′i and ϕ′i ←τϕi + (1 −τ)ϕ′i",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 34,
+    "total_chunks": 61,
+    "char_count": 1495,
+    "word_count": 232,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ffe76adb-4bce-4291-8a1c-7d1a563f5e7b",
+    "text": "This \"soft\" update, in contrast to a hard reset or a direct copy, ensures that the TD\ntarget yi changes slowly and in a predictable way which is helpful to avoid policy\ndivergence and stabilize training. Algorithm 1 AGMARL-DKS Training Process (MADDPG with Hybrid Policy) 1: Initialize:\n2: for all agent i = 1, . . . , N do\n3: Actor network µθi and Critic network Qϕi with random weights.\n4: Target networks µ′θi ←µθi and Q′ϕi ←Qϕi.\n5: end for\n6: Shared GNN Gnn(θGNN).\n7: Shared Replay Buffer D.\n8: for episode e = 1, . . . , Emax do\n9: Get initial global state st and stress level Lt.\n10: for step t = 1, . . . , Tmax do\n11: // Decentralized Score Generation\n12: Use GNN to compute embeddings et from st.\n13: Form local observations oi,t for each agent i.\n14: Get joint action (all scores) at = {µθ1(o1,t), . . . , µθN (oN,t)}.\n15: // Centralized Winner Selection\n16: Identify candidate nodes Ct based on pod requirements.\n17: Select winning agent i∗←LexSelect({ai,t | i ∈Ct}, Lt).\n18: // Environment Interaction\n19: Execute placement on node i∗, observe outcome.\n20: Compute shared reward Rt and get next global state st+1.\n21: Store transition tuple (st, at, Rt, st+1) in D.\n22: st ←st+1.\n23: // Centralized Training Step\n24: if |D| < BATCH SIZE then continue\n25: end if\n26: Sample a random minibatch of transitions from D.\n27: for all agent i = 1, . . . , N do\n28: // Update Critic Qϕi\n29: Set target yi = ri + γQ′ϕi(s′, µ′θ1(o′1), . . . , µ′θN (o′N)).\n30: Update critic by minimizing loss: L(ϕi) = (Qϕi(s, a) −yi)2.\n31: // Update Actor µθi\n32: Update actor using the policy gradient: ∇θiJ ≈\n∇aiQϕi(s, a)|ai=µi(oi)∇θiµθi(oi).\n33: end for\n34: // Soft Target Network Updates\n35: Update all target networks: θ′i ←τθi + (1 −τ)θ′i, ϕ′i ←τϕi + (1 −τ)ϕ′i.\n36: end for\n37: end for The proposed system, illustrated in Fig 2, offers an advanced pod placement solution\nfor Kubernetes that uses a multi-objective approach to achieve efficient fault tolerance\nin parallel with resource utilisation and operational cost management. The architecture\ndiagram demonstrates how a development pipeline for scheduling models merges with\na Kubernetes deployment environment to both execute and test runtime behaviour. Fig. 2: The high-level architecture design for the AGMARL-DKS implementation in\nGKE 4.1 Development Pipeline The Development Pipeline begins with the AGMARL-DKS Model training process. A sophisticated training phase occurs within a high-fidelity simulated Kubernetes\nenvironment. This environment is designed to bridge the sim-to-real gap by generating\nnodes that demonstrate realistic characteristics derived directly from the Kubernetes\nAPI, such as node conditions (e.g., MemoryPressure), taints, and labels. This\nreplaces a prior dependency on abstract metrics. The actor and critic models for each agent are trained to assess state-action pairs by\nusing an enhanced state representation that is consistent between the simulation and\na live cluster. The state vector includes normalised resource availability (CPU, RAM),\nbinary flags for node conditions, a count of node taints, and Graph Neural Network\n(GNN) embeddings, all contextualised by a global cluster stress factor. The training process uses a reward function that combines fault tolerance, resource utilisation,\nand cost metrics into a weighted composite which changes according to the simulated\ncluster stress levels, as detailed in Section 3.4. The training process employs lexicographical action selection during exploration to balance between various objectives\nand saves the trained critic and GNN model weights upon completion.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 35,
+    "total_chunks": 61,
+    "char_count": 3599,
+    "word_count": 592,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dc3dff49-babc-4896-8e47-4cdcd9a938e5",
+    "text": "The AGMARL-DKS Inference module loads these pre-trained model weights after\ntraining. This inference agent is designed to load the pre-trained actor model for\neach node agent and is designed to compute a multi-objective score vector for each\ncandidate node by constructing the same augmented state vector from live cluster\ndata and executing the critic model. The Scheduler Extender then integrates this inference function with the Kubernetes scheduling process. It is implemented as a Flask web application with filtering\nand prioritising HTTP endpoints, which are called by the main Kubernetes scheduler. When a request is received, the extender retrieves the current, real-world state\nof the nodes (resource availability from the Metrics API, node conditions, and taints),\npredicts the total cluster stress, and scores every node by using the AGMARL-DKS The entire Scheduler Extender, including the inference logic and\nmodel weights, is packaged into a Docker container image for deployment. 4.2 Kubernetes Deployment Environment The operational components of the AGMARL-DKS system operate within a standard\nGoogle Kubernetes Engine (GKE) [64]. The AGMARL-DKS Scheduler Deployment\ncreates a kube-scheduler instance that is configured via a ConfigMap to use an\nexternal HTTP extender for the filtering and prioritisation phases of the scheduling\ncycle. The AGMARL-DKS Scheduler Extender Deployment contains the actual intelligent decision-making logic. This deployment runs the Docker container housing the\nFlask application and the trained inference models. The aim is to receive the multiobjective score vectors from the inference agent and apply the lexicographical filtering\nlogic to determine the final node priorities.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 36,
+    "total_chunks": 61,
+    "char_count": 1726,
+    "word_count": 249,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ee2dbefd-f3b3-485d-a4c7-e685427ce78c",
+    "text": "A Kubernetes service exposes the extender's endpoints internally, allowing the main scheduler to communicate with it. The\nnode pool consists of virtual machines that host the user workloads (pods). All system\ncomponents interact through the central Kubernetes API. Finally, Test Deployments\nare used to deploy workloads specifically assigned to either the default scheduler or\nthe AGMARL-DKS scheduler, enabling direct performance comparisons. 4.3 Monitoring and Analysis The system uses an Advanced Analyser and a Metrics Collector for its monitoring\nand analysis functions. The Advanced Analyser is a Python script which delivers\ncomprehensive cluster health assessments by checking container statuses for problems\nsuch as CrashLoopBackOff or OOMKilled, evaluating Deployment health, examining\nnode conditions like MemoryPressure, and reporting critical Kubernetes events. The\nMetrics Collector uses both the Kubernetes API and the Metrics Server to gather\nextensive time-series data, covering pod resource usage, requests, restart counts, and\nscheduler assignments, alongside node capacity and utilisation data. The script combines and aggregates data from multiple test runs to produce a series of comparative\nplots. These visualizations demonstrate how the different schedulers perform across\nkey metrics, including pod distribution patterns, resource utilisation, pod failure rates,\nand stress-level adaptation. This section presents the experimental methodology used to evaluate the AGMARLDKS scheduling agent in comparison to the baseline Kubernetes default scheduler. The\nGoogle GKE environment served as the setting for our evaluation, which examined the\ncluster infrastructure, scheduler configurations, the robust synthetic workload design,\nand the metrics collection mechanisms. 5.1 Experimental Setup and Cluster Infrastructure To evaluate our approach, we ran experiments on Google Kubernetes Engine (GKE). We configured GKE to be as realistic, highly available, and heterogeneous as possible\nfor a production environment.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 37,
+    "total_chunks": 61,
+    "char_count": 2037,
+    "word_count": 275,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e35e4d1-1d43-4086-8899-bf203494c07a",
+    "text": "A regional cluster was created for high availability in a\nspecific region. Additionally, to avoid additional experiment artefacts, we configured\nthe GKE cluster with VPC-native networking and specified dedicated subnets and\nsecondary IP ranges for Pods and Services. This setup avoids Pod and Service IP\naddress exhaustion during large-scale and high-churn experiments. The cluster consisted of two separate node pools, in an attempt to create a heterogeneous environment that could handle both general and more demanding workloads. The configuration details for the pools can be seen below in Table 2. Table 2: GKE Node Pool Configurations for Experimental Scenarios Node Pool Name Machine Type vCPUs Memory (GB) Node Count\nbaseline-pool e2-standard-4 4 16 3 (Fixed)\nstress-pool e2-highmem-4 4 32 1–5 (Autoscaled) This configuration provided a dynamic total cluster capacity ranging from a baseline of 4 nodes (16 vCPUs, 80 GB memory) to a maximum of 8 nodes (32 vCPUs,\n208 GB memory). All nodes operated on Google's Container-Optimised OS with the\ncontainerd container runtime. The experimental setup incorporates both fixed and autoscaled node pools to\nachieve balanced performance assessment. We maintained the baseline-pool at a\nconstant size of three nodes, which provided a stable and static reference point for\nevaluating schedulers under uniform conditions. On the other hand, autoscaling is\nexplicitly enabled for the stress-pool, as this is of key importance for fault-injection\nand high-churn scenarios (Scenario 2), where the focus lies on the scheduler's performance, not on a constant topology, but rather in a dynamically adapting cluster size\nwith changing amounts of available resources as a result of stress-induced churn. 5.2 Workload Design and Deployment For a more quantitative and empirical evaluation of AGMARL-DKS, a set of intensive\nexperiments was conducted to analyse the behaviour of schedulers in a dynamic, heterogeneous, and adversarial setting, moving beyond conventional, fixed benchmarks. As such, we introduce a two-pronged evaluation framework that consists of two distinct stress tests.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 38,
+    "total_chunks": 61,
+    "char_count": 2125,
+    "word_count": 315,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2173d159-5676-4856-9161-8195b3310e6a",
+    "text": "The goal of each stress test is to create a unique and adversarial set\nof system-wide pressures that challenge specific aspects of a scheduler's intelligence. The section describes two specific tests which include the Cascading Resource Pressure\nTest and the Volatile Churn and Fault Injection Test.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 39,
+    "total_chunks": 61,
+    "char_count": 299,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "238dfc6b-ece3-4d80-a715-884ce2498bb0",
+    "text": "We applied uniform workloads\nto both the Kubernetes default scheduler and the AGMARL-DKS agent, enabling a\nstraightforward comparative analysis. Table 3: Experimental protocol for Scenario 1: cascading resource pressure test Time Workload Profile Stress Goal I 0–10 100 nginx Pods Static, minimal requests Low Baseline performance and\n(100 mCPU, 128 MiB). initial pod distribution. Stable and long-lived. II 10–20 75 stress-ng Pods 250 mCPU, 512 MiB. Medium Response to dynamic\nLatent memory spike to workload and emerging\n1 GiB after 5 min. node pressure.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 40,
+    "total_chunks": 61,
+    "char_count": 556,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a79f3bbe-912d-49c1-a0f2-0b4ea709f17f",
+    "text": "III 20–30 150 nginx Pods Heterogeneous, High Bin-packing and load\nhigh-demand (avg. balancing under peak load.\n500 mCPU, 800 MiB). IV 30–40 20 Batch Jobs Very large, non-preemptive Extreme Scheduler behaviour under\n(1.5 CPU, 2 GiB). severe scarcity and\nDesigned to oversaturate. contention. Table 4: Experimental protocol for Scenario 2: volatile churn and fault injection test Time Workload Profile Stress Goal I 0–30 150 busybox + 120 Liveness probes fail after High Maintain stability and\nstress-ng Pods 60 s; forced restarts. Pods avoid problematic nodes\nend with OOMKilled. under constant pod churn. II 15–30 50 Batch Jobs Short-lived (90 s) with Extreme Evaluate scheduling\nhigh, bursty resource latency and efficiency for\nrequests (1 vCPU, 1 GiB). high-priority tasks amid\nbackground chaos. III 30–45 Node failure simulation NoSchedule taint applied to Extreme Assess adaptive\na highly-utilized worker rescheduling and\nnode, removing it from the redistribution of workloads\nschedulable pool. under infrastructure\nfailure. 5.2.1 Scenario 1: Cascading Resource Pressure Test This scenario evaluates each scheduler's ability to optimise resource packing and load\nbalancing while assessing its performance in preventing total system starvation under\nmaximum or near-maximum resource usage levels. To achieve this, as shown in Table 3,\nwe first increase the cluster's utilization slowly, then rapidly, and then to maximum to\ncreate as much stress on the cluster as possible, to understand more about how each\nscheduler performs resource packing and load balancing as well as how it can avoid a\nnode starving state like MemoryPressure. 5.2.2 Scenario 2: Volatile Churn and Fault Injection Test This scenario is engineered to evaluate each scheduler's resilience and fault-tolerant\ncapabilities, which are central claims of the AGMARL-DKS framework. The objective is to quantify the ability to maintain system stability and service availability in a\nchaotic environment where the primary stress vector is not resource exhaustion, but\nrather high-frequency control plane operations and unpredictable infrastructure failures. The experimental protocol, outlined in Table 4, creates a sustained high-churn\nenvironment through workloads specifically designed to exhibit common failure modes.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 41,
+    "total_chunks": 61,
+    "char_count": 2287,
+    "word_count": 331,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "06f0141f-1003-4a57-8ada-23ef8218dbde",
+    "text": "This scenario directly tests the efficacy of the fault-tolerance objective prioritised by the AGMARL-DKS agent.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 42,
+    "total_chunks": 61,
+    "char_count": 111,
+    "word_count": 15,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d1efa07c-6dd5-4059-824f-649a1978f1b0",
+    "text": "The introduction of a simulated node failure via 'NoSchedule' tainting provides a critical test of the scheduler's ability to adapt dynamically to\nsudden, drastic reductions in available cluster capacity. The combination of these two scenarios provides a comprehensive and multi-faceted\nevaluation of scheduler performance. Scenario 1 rigorously tests the economic and\nefficiency aspects of resource allocation, while Scenario 2 directly validates the critical,\nnon-functional requirements of resilience and fault tolerance that are essential for\nproduction-grade systems.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 43,
+    "total_chunks": 61,
+    "char_count": 572,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0581bbcd-f026-4ce1-ac9d-300ee0e83451",
+    "text": "6 Experimental Results and Analysis This section presents a comprehensive empirical analysis of the AGMARL-DKS scheduler's performance in comparison to the standard Kubernetes default scheduler,\nfocusing on the results from the Cascading Resource Pressure Test (Scenario 1) as\ndetailed in Section 5.2. The analysis herein examines performance related to resource\nmanagement, intelligent workload distribution, and adaptive load balancing under\nconditions of progressively increasing systemic stress. The results pertaining to fault\ntolerance from Scenario 2 will be presented subsequently. 6.1 Scenario 1: Performance under Cascading Resource\nPressure This test tries to show how each scheduler behaves in its core resource management\nrole as the load on the system gradually increases. This can be seen on two axes: the\ngeneral strategy for distributing the workload, and how this strategy is adjusted as\nmore load and pressure on the available resources is put on the system.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 44,
+    "total_chunks": 61,
+    "char_count": 977,
+    "word_count": 143,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3b7bd556-ea9e-46bb-a755-8622bd287909",
+    "text": "Note that in\nthe Default scheduler graphs, the mad4pg-scheduler and mad4pg-scheduler-extender\npods are visible as well. That is not a mistake; since our custom scheduler is not started\nuntil after the kube-scheduler has finished its pass over the system, by default, the\nkube-scheduler does the first placement of everything, including our scheduler's own\npods. The scheduler's pods do not consume many resources, so their presence should\nnot affect the relative performance. 6.1.1 Workload Distribution and Resource Consolidation The placement of the overall workload clearly shows the distinct philosophies of the\ntwo schedulers. Figure 3 shows a heatmap of the number of pods in each application\ntype and on each node, demonstrating the Default scheduler's load-balancing strategy. The Default scheduler places pods from every type of application onto as many nodes\nas possible. This is more true for the nginx-baseline and peak-demand workloads, as\ncan be seen. The Default scheduler has load balancing as a primary goal, so it spreads\npods around to prevent overloading any one node.In contrast, the AGMARL-DKS\nagent is enforcing a learned, smart packing strategy. This agent is much more inclined\nto concentrate certain workloads onto a small number of nodes. The nginx-baseline\npods are densely installed across only 3 nodes according to the given setup.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 45,
+    "total_chunks": 61,
+    "char_count": 1361,
+    "word_count": 209,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5f976947-3cc4-4c1f-914d-733fc70eea08",
+    "text": "The agent's\npolicy has likely learned that this is an optimal decision for this workload based on this type of resource profile (CPU, Memory, other features), or other factors that it\nhas learned from the environment. This is an intentional policy that has been learned\nto try to optimise resource utilisation as opposed to simply balancing it. The rationale behind this behaviour is more easily understood by looking at the\ntotal requested CPU utilisation per node, as shown in Figure 4. As expected, the\nflat, homogeneous profile for the Default scheduler is largely caused by utilisation. In\ncontrast, AGMARL-DKS creates a heterogeneous profile in which a number of nodes\nare more densely packed to very high utilisation. This is not a side-effect of a lack of\nload balancing; instead, it is a direct consequence of performing it smartly by packing\ntogether. This allows AGMARL-DKS to use more effectively the capacity of those\nnodes, while leaving latent capacity available on other nodes. The system remains\nresponsive while ensuring available resources for scheduling high-priority or bursty\nfuture deployments which helps avoid resource fragmentation.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 46,
+    "total_chunks": 61,
+    "char_count": 1158,
+    "word_count": 181,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "46b79749-2329-4d7c-bc28-c529380aadc9",
+    "text": "Fig. 3: Pod distribution heatmap at the conclusion of Scenario 1. The default scheduler\n(left) exhibits a scattered placement. The AGMARL-DKS scheduler (right) demonstrates a consolidation strategy, grouping specific application types onto preferred\nnodes. This observation is further substantiated by an analysis of the requested CPU\nutilisation on each node, as shown in Figure 4. The default scheduler achieves a superficially balanced load, with most nodes carrying a similar total CPU request. The\nAGMARL-DKS scheduler, however, produces a more varied utilisation profile. This is\nnot a sign of poor balancing, but rather an emergent property of its intelligent packing\nstrategy. By concentrating certain workloads, it more effectively utilizes the capacity\nof those nodes while intentionally leaving other nodes with greater available capacity,\npotentially preserving them for future high-priority or bursty workloads. Fig. 4: Total requested CPU cores on each node, stacked by application type. The default scheduler (left) creates a relatively even but undifferentiated load. The\nAGMARL-DKS scheduler (right) creates a more varied load profile, indicating a specialized packing strategy. 6.1.2 Adaptive Placement and High-Density Packing under\nExtreme Stress The AGMARL-DKS framework posits that its trained agents develop dynamic policy\nadaptations to manage stresses impacting global system states. Evidence for this is\nseen in the results of Scenario 1 across phases. In both low and medium utilization\n(Figures 6 and 7) the AGMARL-DKS agent shows its consolidation approach in the\nresults from low and medium stress scenarios and by exhibiting strong node preferences for nginx-baseline and app-growth pods, respectively.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 47,
+    "total_chunks": 61,
+    "char_count": 1733,
+    "word_count": 249,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2625fe91-2d25-463f-a458-659a57df2b5d",
+    "text": "The effects of this learned\nintelligence are most demonstrably seen in the high and extreme cases. In the high\nstress phase (Figure 8), the AGMARL-DKS agent deploys the peak demand workload onto a distinct set of nodes than those used during the medium stress phase,\nand thereby shows that it has learned an affinity between a given workload and which\nnodes it prefers. The most evident contrast emerges when stress reaches its peak as schedulers must\nposition highly demanding batch jobs within the system (Figure 9). The Default scheduler, unwavering in its spread-the-load policy, deploys the batch jobs across nodes\nwith a very low and evenly distributed CPU request across all of them. This is the\nworst-case policy for high-performance computing workloads like these as it does not\nuse the full capacity of any given node and also leaves resources of those nodes unallocated and unreserved. In contrast, the AGMARL-DKS agent shows a very aggressive\npacking behaviour.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 48,
+    "total_chunks": 61,
+    "char_count": 973,
+    "word_count": 157,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "265b4e30-5093-44f4-bc3e-8f30bc75453e",
+    "text": "It smartly chooses the right nodes and it requests the highest CPU\ncores for these kinds of workloads. Indeed, the results prove AGMARL-DKS' capabilities in dealing with mission-critical workloads. This behavior is demonstrably a very\ncomplicated, learned policy: by aggressively packing these very compute intensive,\nnon-latency sensitive batch workloads, the agent is achieving the highest throughput Fig. 5: Stacked CPU utilization. Fig. 6: Requested CPU utilization under low stress. possible in their execution by dedicating nodes to the task and also simultaneously\nlocalizing the risk associated with large resource consumption while also maintaining\nthe other available nodes in a state of low utilization to free them for potentially more\nimportant or latency sensitive workloads that may arrive. This also shows that the\nAGMARL-DKS agent has learned a non-linear, stateful policy that is aware of the lexicographically ordered objectives it was provided, and in this case, has learned to apply\nvery high-density packing when under maximal duress to achieve better efficiency and\nthroughput in the system.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 49,
+    "total_chunks": 61,
+    "char_count": 1114,
+    "word_count": 165,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "11ba6486-70a4-48ce-984b-bb99a6dbe1de",
+    "text": "Fig. 7: Requested CPU utilization under medium stress. Fig. 8: Requested CPU utilization under high stress. 6.2 Scenario 2: Performance under Volatile Churn and Fault\nInjection This test scenario was designed to test the resilience and fault tolerance capabilities\nof each scheduler according to the AGMARL-DKS framework's main properties. The\ncluster underwent stress testing in a turbulent environment characterised by high pod\nchurn while applications were randomly terminated during the last phase of processing\nhigh-priority bursty workloads. 6.2.1 Intelligent Capacity Management and Strategic Self-Restraint A sophisticated scheduler excels by managing increased throughput without overwhelming the system, sometimes through deliberate pod placement limitations. Fig. 9: Requested CPU utilization under extreme stress. Figure 10 shows one such example of this behaviour, which can be seen clearly during the high-stress phase.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 50,
+    "total_chunks": 61,
+    "char_count": 933,
+    "word_count": 128,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f77c68ee-cbde-486d-a1da-ff67d4e77ed5",
+    "text": "As expected, the Default scheduler (being duty-bound to\nschedule everything it can as quickly as possible) immediately attempts to schedule all\n150 liveness-fail pods. However, in a learned and planned action, the AGMARL-DKS\nagent chooses to only schedule around 100 pods at this point, choosing to leave the\nremaining pods in pending state. The agent demonstrates controlled action by choosing not to schedule all pods, despite having the capacity to do so. The agent, through\nits GNN-augmented observation, is aware that the state of the cluster is (becoming)\nunhealthy from the high churn. Its learned policy thus rightly decides that scheduling the entire workload would violate its hard constraint of staying in a fault-tolerant\nregion and lead to cascading failures. By scheduling less of the unstable pods, it leaves\nheadroom of cluster capacity and stability. The effectiveness of this technique becomes\napparent when the system faces subsequent high stress phases. The AGMARL-DKS\nscheduler maintains system stability while high-priority burst jobs enter the queue\nand manages to clear its pending jobs in less than sixty seconds. The Default scheduler continues to manage the system instability from its earlier actions, which leads\nto unpredictable and slow scheduling of the high-priority tasks.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 51,
+    "total_chunks": 61,
+    "char_count": 1306,
+    "word_count": 199,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "08667d8d-dd88-48da-8b81-8f045b9d4a04",
+    "text": "6.2.2 Fault-Tolerant Placement and Mitigation of Failure Hotspots The key analysis point of this stress test involves how well schedulers can control and\nreduce the detrimental effects generated by faulty workloads. The restart heatmap of\nthe liveness-fail application (Figure 11a) provides a clear indication of the difference in\nrisk propagation. The Default scheduler places pods in a way that produces extreme\nconcentrations of failure: four out of the five nodes see more than 325 restarts each. In\nother words, the Default scheduler fails to notice the problematic behaviour on those\nnodes, or at least to take appropriate action to contain that behaviour. The AGMARLDKS scheduler exhibits risk awareness capabilities that are orders of magnitude more\npowerful compared to other schedulers.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 52,
+    "total_chunks": 61,
+    "char_count": 796,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4ef302e5-ad51-4c76-9130-b0090d5860e6",
+    "text": "To be sure, it cannot prevent restarts from Fig. 10: Number of Pending and Running pods over time during Scenario 2. Under\nhigh stress, AGMARL-DKS (solid line) schedules fewer unstable pods than the default\nscheduler (dashed line), allowing it to service extreme stress burst jobs more effectively. happening in the first place, given the application's liveness-failure behaviour. But it\ncertainly can prevent the creation of such extreme concentrations of failure.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 53,
+    "total_chunks": 61,
+    "char_count": 465,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c7cb51bd-78ee-48e4-a4ab-acd7a58c436f",
+    "text": "There is\nstill one node (...-28e1f021-jwbf) where the pod placement logic correctly places the\nmajority of the oom-fail pods due to the node's high stability, but that node is effectively quarantined, and the remaining faulty pods are more evenly distributed, with\none node having as few as 130 restarts. The agent has clearly learned to avoid actively\noverloading nodes that are already manifesting strong indications of instability. The effectiveness of this risk-aware placement logic is corroborated in the pod\ndistribution heatmap in a state of high stress (Figure 11b). The AGMARL-DKS agent\nprotected node (...-17d46a37-0rrp) stability for non-risk workloads by preventing the\nplacement of memory-intensive oom-fail pods. Through its lack of risk awareness, the\nDefault scheduler indiscriminately positions both faulty workload types throughout\nthe cluster and causes system-wide instability.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 54,
+    "total_chunks": 61,
+    "char_count": 898,
+    "word_count": 129,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3d5e9f3f-0be1-493d-8865-7cafc803a203",
+    "text": "6.2.3 Decoupling of Performance Objectives AGMARL-DKS long-term achievement depends on its ability to learn how to handle\ncomplex non-linear trade-offs among various performance targets. Figure 12 shows the\nPearson correlation matrix for key performance metrics, which reveals deep insight into\nthe learned policies. The Default scheduler exhibits a strong positive 0.72 correlation\nbetween memrequestedgb and failures as well as restarts. The data reveals the intrinsic\nnegative relationship between system stability and resource demands because increased\nmemory requests lead to higher failure rates. In contrast, AGMARL-DKS achieves a strong decoupling of these objectives.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 55,
+    "total_chunks": 61,
+    "char_count": 676,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "111aa3e7-a679-453a-a523-bbe2a3f95650",
+    "text": "Its\ncorrelation between memrequestedgb and failures or restarts is exactly -1.00. (a) Restart heatmap for 'liveness-fail' pods. (b) Distribution of faulty 'oom-fail' pods. Fig. 11: Analysis of fault-tolerant placement under high stress. Subfigure (a) shows\nthat the AGMARL-DKS scheduler mitigates restart hotspots. Subfigure (b) shows it\nisolates high-risk 'oom-fail' pods to a subset of nodes, unlike the default scheduler,\nwhich distributes them widely. remarkable result does not mean that requesting more memory causes fewer failures. Rather, this means that the agent has learned a policy where its fault-tolerance\ndecisions are made completely independently of the pods' resource requests. The properties of a given pod that affect its stability score (which, we hypothesise, includes\nnode health, historical restart rate, and other complex metrics from the GNN) are\northogonal to those that affect its resource utilisation score. This ability to make\ninformed, risk-aware decisions that are not dominated by simple resource utilisation",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 56,
+    "total_chunks": 61,
+    "char_count": 1042,
+    "word_count": 150,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dfe704a3-57bb-4c99-9373-3135fa61ffe5",
+    "text": "metrics is the core value of the AGMARL-DKS framework, and this is unambiguously\ndemonstrated by these results. Fig. 12: Correlation matrix of performance metrics. The default scheduler (left) shows\na strong link between memory requests and failures. The AGMARL-DKS scheduler\n(right) successfully decouples these objectives, indicating a more sophisticated, faultaware scheduling policy. 6.3 Holistic Performance and Multi-Objective Trade-offs A key performance indicator of a scheduler is its ability to reach a better-balanced\npoint in the multi-dimensional solution space. An effective scheduler can always find\na better assignment for any request by striking an improved balance between fault\ntolerance and resource usage while managing cost.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 57,
+    "total_chunks": 61,
+    "char_count": 746,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7d440df1-bf87-4f0d-86b7-cc525978e4a1",
+    "text": "This is evaluated in the pairplots\nin Figure 13 and Figure 14, which plots the metrics for the two schedulers, in both\ntest cases. Under the resource-constrained Scenario 1 (Figure 13), which corresponds to the\nhigh performance at increasing resource pressure, AGMARL-DKS scheduler (orange)\npresents an obviously better and more consistent policy. As can be seen in the distribution plots on the diagonal of the figure, the outcomes of AGMARL-DKS agent have\nnot only a lower mean on the metric (cost, failures, restarts) than the Default scheduler (blue), but also a much smaller variance. In addition, from the scatter plots, we\ncan see that its solutions are more concentrated in the favourable low-cost and lowfailure region, demonstrating that its smart packing strategy can effectively improve\nthe resource utilisation without being penalised by the cost and stability. On the other\nhand, those of Default are more scattered with an apparent tail on the failure distribution, suggesting the agent's tendency to enter unpredictable and high-failure states\nwhen the cluster is stressed. The performance gap becomes more pronounced during the chaotic failure conditions of Scenario 2 (Figure 14). In this figure, the scattered outcomes from Default Fig. 13: Pairplot of performance metrics for Scenario 1 (Cascading Resource Pressure). The AGMARL-DKS scheduler (orange) demonstrates a tighter clustering in the\ndesirable low-cost, low-failure region compared to the default scheduler (blue). scheduler manifest a failure in this scheduler to handle the trade-off between cost and\nfailure. The scheduler delivers inconsistent performance under these unstable conditions across both of our measurement metrics. On the other hand, the AGMARL-DKS\nscheduler has shown a much higher degree of control in these conditions by successfully\ndecoupling its objectives. The AGMARL-DKS scheduler achieves its main success by\nstopping issues of stability from resulting in expensive placement decisions, although\nit cannot stop injected failures. This is made manifest in the coupling between failures and cost. In the upper right panel, we can see that the cost of decisions made\nby the AGMARL-DKS agent stays tightly bunched around 0 even when the number\nof failures scales to the thousands.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 58,
+    "total_chunks": 61,
+    "char_count": 2281,
+    "word_count": 346,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f4d68a7-102a-4cb5-907c-cc0260b78bbc",
+    "text": "On the other hand, there is an obvious positive correlation between failure and cost for the Default scheduler, with high-failure\nstates frequently leading to high-cost, inefficient placement. The performance of the\nagent's lexicographical policy demonstrates that its sole focus on stability within a\nmore challenging environment does not represent the optimal strategy of implementing over-provisioning to mitigate such issues. Rather, its learned, GNN-informed value\nfunction has enabled the agent to learn to find better, more optimal solutions that are Fig. 14: Pairplot of performance metrics for Scenario 2 (Volatile Churn). Even in\na chaotic environment, the AGMARL-DKS scheduler (orange) maintains a superior\ntrade-offprofile, achieving lower costs and more predictable outcomes than the default\nscheduler (blue). both stable and low-cost across a variety of different, more adverse conditions. This\nability to find better solutions along the Pareto frontier in a variety of different conditions also serves to validate the key architectural decisions of the AGMARL-DKS\nframework. 7 Conclusion and Future Work In our paper, we present AGMARL-DKS, a multi-agent reinforcement learning framework that tackles the complex, multi-objective pod scheduling problem in large-scale,\ndynamic Kubernetes clusters. Traditional schedulers often struggle to optimally balance competing objectives like fault tolerance, resource utilisation, and cost efficiency. AGMARL-DKS addresses these challenges by leveraging a novel combination of a\nmulti-agent system, a stress-aware lexicographical policy for objective prioritisation,\nand Graph Neural Networks (GNNs) to give agents global cluster context for decentralised decision-making. The production-grade Google Kubernetes Engine (GKE) cluster evaluation supports the superior performance of AGMARL-DKS versus the\nstandard Kubernetes scheduler across many different test scenarios. AGMARL-DKS\ndisplayed intelligent packing behaviour in resource-centric situations by filling select\nnodes with resource-intensive batch jobs while keeping other nodes partially free. Under volatile conditions with high churn rates and fault injections, our system\ndemonstrated robustness by limiting admission of unstable pods strategically to maintain system stability, thereby enabling faster service delivery of high-priority traffic\ncompared to the default scheduler.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 59,
+    "total_chunks": 61,
+    "char_count": 2398,
+    "word_count": 319,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "06d3ff84-a228-41ff-9eb9-89d1e816e201",
+    "text": "The AGMARL-DKS approach is a comprehensive and effective method for addressing the complex problem of container orchestration in Kubernetes. It overcomes\nvarious challenges of modern-day cloud-native applications by successfully integrating\nthe lexicographical multi-objective optimisation method with the advanced multiagent reinforcement learning framework. The experimental results, including the\ncomparison with four state-of-the-art approaches and the A/B test, show the superiority of AGMARL-DKS in terms of success rate, adaptation speed, system resilience,\ncost savings, and more. This study can be extended further by applying the proposed methodology to other critical areas of Kubernetes management, such as smarter\nauto-scaling and network policy optimization. The ultimate objective is to incorporate\nthis advanced scheduling intelligence into production environments allowing multiple\noperators to leverage it in various operational scenarios. We would like to thank Dr Artie Basukoski for proofreading the manuscript.",
+    "paper_id": "2603.12031",
+    "title": "AGMARL-DKS: An Adaptive Graph-Enhanced Multi-Agent Reinforcement Learning for Dynamic Kubernetes Scheduling",
+    "authors": [
+      "Hamed Hamzeh"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12031v1",
+    "chunk_index": 60,
+    "total_chunks": 61,
+    "char_count": 1032,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  }
+]

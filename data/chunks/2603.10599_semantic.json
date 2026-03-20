@@ -1,0 +1,110 @@
+[
+  {
+    "chunk_id": "81eb2bb8-9f86-4956-8d44-a2b09e9ca15f",
+    "text": "Ivan Biolia,b Mikel Mendibe Abarrategic,d a Dipartimento di Matematica, Universit`a degli Studi di Pavia, Via A. Ferrata 5, 27100 Pavia, Italy\nb Dipartimento di Ingegneria Civile e Architettura, Universit`a degli Studi di Pavia, Via A. Ferrata 3, 27100 Pavia, Italy\nc University of the Basque Country, 48013 Bilbao, Spain\nd TECNALIA, Basque Research & Technology Alliance (BRTA), 48160 Derio, Spain We present a JAX implementation of the Self-Scaled Broyden family of quasi-Newton methods,\nfully compatible with JAX and building on the Optimistix [4] optimisation library. The implementation includes BFGS, DFP, Broyden and their Self-Scaled variants (SSBFGS, SSDFP, SSBroyden),2026 together with a Zoom line search satisfying the strong Wolfe conditions.",
+    "paper_id": "2603.10599",
+    "title": "Self-Scaled Broyden Family of Quasi-Newton Methods in JAX",
+    "authors": [
+      "Ivan Bioli",
+      "Mikel Mendibe Abarrategi"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10599v1",
+    "chunk_index": 1,
+    "total_chunks": 6,
+    "char_count": 755,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "620bca97-a578-477c-a53a-0579cc81ba5e",
+    "text": "This is a short technical\nnote, not a research paper, as it does not claim any novel contribution; its purpose is to document\nthe implementation and ease the adoption of these optimisers within the JAX community. The code is available at https://github.com/IvanBioli/ssbroyden_optimistix.git.Mar\n11 1 Introduction Optimistix [4] is a JAX library for nonlinear solvers providing modular and composable optimisation\nalgorithms. While Optimistix includes a standard BFGS implementation paired with a backtracking\nArmijo line search, it lacks both the Zoom line search, which satisfies the strong Wolfe conditions, and the\nbroader family of Self-Scaled Broyden methods [1, 3, 2]. This work provides a pure-JAX implementation[cs.MS] of these methods, designed to be fully compatible with the Optimistix solver interface: the new solvers\ncan be used as drop-in replacements, composed with existing Optimistix descents and searches, and\nbenefit from all JAX transformations. Specifically, our implementation addresses the following gaps in\nthe current Optimistix offerings: We integrate the Zoom line search (Algorithm 3.6 in [5]) into Optimistix, ensuring\nthat the strong Wolfe conditions are satisfied at each step. The implementation is adapted from\nbagibence/zoom linesearch1 with minor modifications to fit the new Optimistix interface. Self-Scaled Broyden family. We implement the full Self-Scaled Broyden family of quasi-Newton\nHessian updates, encompassing Broyden, BFGS, DFP, and their Self-Scaled variants SSBroyden, SSBFGS, and SSDFP. We provide a wrapper that distinguishes between actual quasi-Newton iterations\nand internal line search steps, which Optimistix does not separate by design choice. This allows for\nmore refined comparisons between solvers.arXiv:2603.10599v1\n2 The Self-Scaled Broyden Family The Self-Scaled Broyden family of quasi-Newton methods generalises the classic Broyden, BFGS, and\nDFP updates to minimize a function f : RN →R [1, 3, 2]. At each iteration k, these methods maintain\nan approximation Hk of the inverse Hessian of f and compute a search direction dk = −Hk∇f(xk). After a line search determines a step size αk, the iterate is updated as xk+1 = xk + αkdk.",
+    "paper_id": "2603.10599",
+    "title": "Self-Scaled Broyden Family of Quasi-Newton Methods in JAX",
+    "authors": [
+      "Ivan Bioli",
+      "Mikel Mendibe Abarrategi"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10599v1",
+    "chunk_index": 2,
+    "total_chunks": 6,
+    "char_count": 2195,
+    "word_count": 321,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6d14e4c8-fd94-4491-a40e-b9cee20bcc50",
+    "text": "The inverse\nHessian approximation is then updated using the step sk = xk+1 −xk and the gradient difference yk =\n∇f(xk+1) −∇f(xk). The Self-Scaled Broyden family update is parameterised by two scalars, θk and τk. In its most general\nform, the update is given by 1 k Hk Hk+1 = Hk + ϕk (y⊤k Hkyk) vkv⊤k + ρk sks⊤k , (1) τk −Hkyky⊤y⊤k Hkyk",
+    "paper_id": "2603.10599",
+    "title": "Self-Scaled Broyden Family of Quasi-Newton Methods in JAX",
+    "authors": [
+      "Ivan Bioli",
+      "Mikel Mendibe Abarrategi"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10599v1",
+    "chunk_index": 3,
+    "total_chunks": 6,
+    "char_count": 335,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "09789958-2fcf-468e-8499-79dfea78fe5f",
+    "text": "1https://github.com/bagibence/optimistix/tree/zoom_linesearch ρk = ,\ny⊤k sk\nsk Hkyk\nvk = , y⊤k sk − y⊤k Hkyk\n1 ϕk = −θk ,\n1 + (hkbk −1)θk\ns⊤k Bksk\nbk = ,\ny⊤k sk\ny⊤k Hkyk\nhk = .\ny⊤k sk The parameter θk interpolates between the BFGS (θk = 0) and DFP (θk = 1) updates, with the more\ngeneral Broyden family obtained by computing θk dynamically at each iteration as: 1 θk = max θ−k , min θ+k , −bk , bk 1/2\nak , 1+akwhere, letting ak = bkhk −1 and ck =\nρ−k 1 ρ−k = min 1, hk(1 , θ−k = −1 , θ+k = . −ck) ak ρ−k The parameter τk controls the Self-Scaled variant (τk = 1 means no scaling) and is computed as  min ρ+k σ(1−N)k , σk , if θk ≤0, τk =\notherwise, ρ+k min σ(1−N)k , θk1 ,  where\n1 1\n1−N . ρ+k = min 1, , σk = 1 + θk ak, σ(1−N)k = |σk| bk Table 1 summarises the six concrete solvers obtained by choosing θk and τk. Table 1: Solvers implemented as special cases of the Self-Scaled Broyden family. Solver θk τk Description BFGS 0 1 Classic BFGS\nSSBFGS 0 computed Self-Scaled BFGS\nDFP 1 1 Classic DFP\nSSDFP 1 computed Self-Scaled DFP\nBroyden computed 1 Broyden family (no scaling)\nSSBroyden computed computed Self-Scaled Broyden family The implementation follows a class hierarchy that mirrors the mathematical structure of the update\nfamily, building on top of the AbstractQuasiNewton base class already present in Optimistix: AbstractSSBroydenFamily implements the shared logic: Hessian initialisation, computation of the\nauxiliary quantities, and the dispatch to subclass-specific update terms. It exposes two hooks: compute thetak\nand compute tauk, which subclasses override to fix or compute θk and τk.",
+    "paper_id": "2603.10599",
+    "title": "Self-Scaled Broyden Family of Quasi-Newton Methods in JAX",
+    "authors": [
+      "Ivan Bioli",
+      "Mikel Mendibe Abarrategi"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10599v1",
+    "chunk_index": 4,
+    "total_chunks": 6,
+    "char_count": 1607,
+    "word_count": 296,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ef709232-d6a2-4617-89f2-98a82cb32e20",
+    "text": "AbstractSSBroyden implements the general update term (1) and computes both θk and τk dynamically. AbstractBroyden inherits from it but overrides compute tauk ≡1. AbstractSSBFGS fixes θk = 0, which simplifies the update to the BFGS Woodbury form. AbstractBFGS\nspecialises further with τk = 1. AbstractSSDFP fixes θk = 1, eliminating the vk term. AbstractDFP specialises further with τk = 1. Each abstract class has a concrete counterpart (e.g. BFGS, SSBFGS) that binds a default descent\n(NewtonDescent) and a default search (Zoom line search). Users can subclass the abstract variants to\nplug in alternative descents or searches. 3 Numerical Example: PINNs for the 3D Poisson Equation The SSBroyden family of optimizers has recently shown improved performance over BFGS for Physics\nInformed Neural Networks (PINNs) [2]. In this numerical example, available as example.py in our\nrepository, we solve the Poisson equation −∆u = f on Ω= [0, 1]3 with Dirichlet boundary conditions,\nwhere the exact solution is u∗(x) = Q3i=1 sin(πxi).",
+    "paper_id": "2603.10599",
+    "title": "Self-Scaled Broyden Family of Quasi-Newton Methods in JAX",
+    "authors": [
+      "Ivan Bioli",
+      "Mikel Mendibe Abarrategi"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10599v1",
+    "chunk_index": 5,
+    "total_chunks": 6,
+    "char_count": 1028,
+    "word_count": 159,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "149ef9f0-55ad-4f79-8941-cdbd3eec9603",
+    "text": "The solution is approximated by a fully connected\nneural network (3 hidden layers of 32 units with tanh activations). NΩ NΓ\n1 2 1\n= X ∆uθ(xi) + f(xi) + X uθ(xj) 2, L(θ) 2NΩ 2NΓ −u∗(xj) i=1 j=1 with NΩ= 5000 interior and NΓ = 800 boundary collocation points, sampled uniformly at random. Figure 1 compares the convergence of the implemented solvers (BFGS, SSBFGS, Broyden, SSBroyden). The self-scaled variants converge notably faster in terms of both loss reduction and relative L2 and\nH1 errors. Loss L2 Error Convergence H1 Error Convergence\n102 101\nBFGS BFGS BFGS\n100 SSBFGS 100 SSBFGS 100 SSBFGS\nBroyden Broyden Broyden\n10−1\nSSBroyden 10−2 SSBroyden error 10−1 SSBroyden error\nLoss 10−4 L2 10−2 H1 10−2\n10−6 10−3 10−3 Relative 10−4 Relative 10−8\n10−4\n10−10 10−5\n10−5\n0 2000 4000 6000 8000 10000 0 2000 4000 6000 8000 10000 0 2000 4000 6000 8000 10000\nIteration Iteration Iteration Figure 1: Convergence of quasi-Newton solvers on the 3D Poisson PINN problem. The self-scaled variants\n(SSBFGS, SSBroyden) achieve lower errors in fewer iterations compared to the standard BFGS and\nBroyden methods. This work has received funding from the European Union's Horizon Europe research and innovation\nprogramme under the Marie Sklodowska-Curie Action MSCA-DN-101119556 (IN-DEEP). Ivan Bioli is\nmember of the Gruppo Nazionale Calcolo Scientifico - Istituto Nazionale di Alta Matematica (GNCSINdAM).",
+    "paper_id": "2603.10599",
+    "title": "Self-Scaled Broyden Family of Quasi-Newton Methods in JAX",
+    "authors": [
+      "Ivan Bioli",
+      "Mikel Mendibe Abarrategi"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10599v1",
+    "chunk_index": 6,
+    "total_chunks": 6,
+    "char_count": 1391,
+    "word_count": 222,
+    "chunking_strategy": "semantic"
+  }
+]

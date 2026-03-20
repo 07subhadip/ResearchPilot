@@ -1,0 +1,572 @@
+[
+  {
+    "chunk_id": "63964349-f84f-4340-b52e-b3627e631980",
+    "text": "Reinforcement Learning with Conditional Expectation Reward Changyi Xiao 1 Caijun Xu 1 Yixin Cao 1 Abstract to a given reference answer, and is typically implemented\nusing carefully designed, domain-specific rules that enable\nReinforcement Learning with Verifiable Rewards\ndeterministic verification (Guo et al., 2025; He et al., 2025).\n(RLVR) has proven effective in enhancing the reaRLVR is particularly useful in mathematical reasoning tasks\nsoning capabilities of large language models, par-\n(Guo et al., 2025; Team et al., 2025), where answers admit\nticularly in domains such as mathematics where\ncanonical or easily normalized representations, allowing\nreliable rule-based verifiers can be constructed.2026 correctness to be verified reliably through exact matching However, the reliance on handcrafted, domainor symbolic equivalence checks (Hugging Face, 2025).\nspecific verification rules substantially limits the\napplicability of RLVR to general reasoning do- However, RLVR remains difficult to extend to broader rea-Mar mains with free-form answers, where valid an- soning domains such as physics, chemistry, finance, and\n11 swersing it oftendifficultexhibitto establishsignificantcompletevariability,and accu-mak- otherZhou etdomainsal., 2025;withLiuopen-formet al., 2025).answersIn these(Madomains,et al., 2025;valid\nrate rules. To address this limitation, we propose answers often exhibit diverse surface forms and substanConditional Expectation Reward (CER), which tial semantic variation, making it challenging to specify\nleverages the large language model itself as an exhaustive verification rules. Consequently, constructing\nimplicit verifier, and is therefore applicable to reliable verifiers becomes costly or even infeasible, which\ngeneral domains and eliminates the need for ex- substantially constrains the applicability of RLVR to nar-[cs.LG] ternal verifiers or auxiliary models. CER is de- rowly scoped tasks with well-defined answer spaces.\nfined as the expected likelihood of generating\nMoreover, rule-based verifiers typically provide binary feedthe reference answer conditioned on the generback, assigning rewards only to strictly equivalent answers\nated answer. In contrast to rule-based verifiers\nwhile treating all other answers as equally incorrect. As a\nthat yield binary feedback, CER provides a soft,\nresult, they are unable to assign positive rewards to answers\ngraded reward signal that reflects varying degrees\nthat are partially correct, thereby providing limited learning\nof correctness, making it better suited to tasks\nsignals during optimization.\nwhere answers vary in correctness. Experimental\nresults demonstrate that CER is effective across To address these issues, we propose Conditional Expectaa wide range of reasoning tasks, spanning both tion Reward (CER) to extend RLVR to general reasoning\nmathematical and general domains, indicating domains. Rather than relying on external verification rules\nthat CER serves as a flexible and general verifica- or auxiliary verifier models, CER uses the large language\ntion mechanism. The code is available at https: model itself as an implicit verifier. By exploiting the model's\n//github.com/changyi7231/CER. internal consistency with respect to a reference answer, CER\nprovides a model-intrinsic reward signal that remains appli-arXiv:2603.10624v1 cable even when explicit verification is unavailable.\n1. Introduction Specifically, CER measures the expected probability of genReinforcement Learning with Verifiable Rewards (RLVR) erating the reference answer conditioned on the model's\nhas demonstrated strong effectiveness in incentivizing the generated answer, thereby producing a soft, graded reward\nreasoning capabilities of large language models, which re- signal to verify the generated answer. The underlying inlies on a verifier to provide accurate and checkable reward tuition is that when a generated answer is identical to, or\nsignals during learning (Zhou et al., 2025). Such a verifier strongly consistent with, the reference answer, the model\nevaluates the correctness of a generated answer with respect will assign a higher conditional probability to reproducing\nthe reference answer given that generation.\n1Fudan University.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 0,
+    "total_chunks": 30,
+    "char_count": 4233,
+    "word_count": 574,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6a500f4c-2e8d-4dbe-996e-178aeefb447b",
+    "text": "Correspondence to: Yixin Cao <caoyixin2011@gmail.com>. We further show that CER can be theoretically interpreted\nas a smooth relaxation of the exact-match criterion, yielding Reinforcement Learning with Conditional Expectation Reward reward values that reflect varying degrees of consistency where D is the distribution of q, and f(a, a∗(q)) is a rebetween the generated and reference answers. This char- ward that evaluates the correctness of the generated answer\nacteristic is particularly well suited to general reasoning a with respect to the reference answer a∗associated with\ndomains, where partial correctness, semantic overlap, and question q, which is computed by a verifier f(·, ·). In pracmultiple valid surface realizations are common. tice, such a verifier is often implemented as a set of carefully\ndesigned rules (Hugging Face, 2025). Rule-based verifiers\nWe finally conduct experiments to demonstrate the effecare particularly effective in domains such as mathematics\ntiveness of CER. We show that CER achieves great perand code generation, where answers admit unambiguous\nformance on general domains, both mathematical and nonrepresentations and equivalence can be precisely defined.\nmathematical domains. These findings highlight CER as a\ngeneral and robust reward mechanism for RLVR, offering a However, extending rule-based verification to general reapractical solution for extending reinforcement learning to a soning domains remains challenging (Ma et al., 2025; Zhou\nwide range of reasoning domains. et al., 2025). In these domains, valid answers are often\nfree-form and exhibit substantial variation. Consequently, it\nis difficult to design a rule-based verifier that is both com-2.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 1,
+    "total_chunks": 30,
+    "char_count": 1706,
+    "word_count": 244,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "52e96562-ca3d-48f2-acd2-3788df1f7eaf",
+    "text": "Conditional Expectation Reward\nplete and accurate, which limits the direct applicability of\nWe first introduce RLVR, followed by the definition and RLVR beyond domains with well-structured and formally\ntheoretical properties of CER. We then present the empir- verifiable answer spaces.\nical formulation of CER and the corresponding training\nWe illustrate this limitation with a concrete example. Conobjective, and finally describe an efficient procedure for\nsider the following question, for which multiple answers\ncomputing CER.\nmay be semantically equivalent despite differing in surface\nform.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 2,
+    "total_chunks": 30,
+    "char_count": 595,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e51aa3b2-eb0c-4e65-ad17-76db2069ac5b",
+    "text": "A typical rule-based verifier would only treat a1 as\nRLVR RLVR is a reinforcement learning paradigm in\ncorrect, while assigning zero reward to other valid answers\nwhich the reward signal is objectively and automatically\nsuch as a2 and a3. This behavior collapses semantically corcheckable by a verifier (Zhang et al., 2025). Specifically,\nrect but lexically different answers into the same category\nfor a given question q with a unique reference answer a∗=\nas incorrect ones, leading to overly sparse and noisy reward\na∗(q), the policy model πθ autoregressively generates a signals. Such rigid verification discourages exploration of\nsolution s and a final answer a to address the question.\ndiverse yet correct answers and hampers effective learning\nHere, the solution s does not include the final answer a.\nin general reasoning settings.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 3,
+    "total_chunks": 30,
+    "char_count": 838,
+    "word_count": 131,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e57ad62e-bc3b-49df-9719-5820ed702cee",
+    "text": "Owing to the autoregressive factorization, the policy model\nπθ satisfies\nQuestion q: Is quantum physics deterministic? Reference answer a∗: No πθ(a, s|q) = πθ(s|q)πθ(a|s, q). (1)\nAnswer a1: No\nThis process yields a quadruple (q, s, a, a∗). An illustrative Answer a2: Quantum physics is not deterministic.\nexample is provided in the following box. Answer a3: No, quantum physics is not deterministic;\nit is probabilistic. Question q: What is the value of x in the equation\n2x + 3 = 7?",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 4,
+    "total_chunks": 30,
+    "char_count": 483,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2fbffa40-c0e0-464e-b830-26a82045a2c4",
+    "text": "Definition To generalize RLVR to general domains, we Solution s: Solve the equation step by step.\npropose the CER, which leverages the policy model itself First, subtract 3 from both sides:\nas an implicit verifier, without relying on external verifiers\n2x + 3 = 7 ⇒2x = 4. or models. Instead of explicitly checking answer correctness, CER evaluates the internal consistency of the policy\nNext, divide both sides by 2: model with respect to a reference answer, thereby enabling\napplicability to general domains.\nx = 2. For a quadruple (q, s, a, a∗), we define CER as:\nTherefore, the value of x is\nρ(a, a∗) :=Es′∼πθ(·|q) πθ(a∗|s′, q) A = a Answer a: 2\nReference answer a∗: 2 =Es′∼πθ(·|q,a) πθ(a∗|s′, q) . (3) RLVR is formulated as the optimization of the following CER measures the expected likelihood of generating the\nexpected reward: reference answer a∗given the condition that the model has\ngenerated an answer a. The intuition is that if the generated\nLf(θ) = Eq∼D,(s,a)∼πθ(·|q)[f(a, a∗(q))], (2) answer a is identical to, or strongly correlated with, the",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 5,
+    "total_chunks": 30,
+    "char_count": 1058,
+    "word_count": 177,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "52d56805-00ec-4bea-ac27-f23fef8ad3c8",
+    "text": "Reinforcement Learning with Conditional Expectation Reward reference answer a∗, then the policy model should assign a for every (q, s′) that can occur under the conditional\nhigher conditional probability to generating a∗after having distribution defined by A = a. In this case, the policy\nproduced a. cannot produce any alternative answer with positive\nprobability. Consequently,\nBy optimizing the policy model with respect to CER, the\nmodel is encouraged to place higher probability mass on ρ(a, a∗) = 1 =⇒ a = a∗\nanswers that are internally consistent with the reference\nanswer, thereby implicitly guiding the generation process • Self-Consistency.\ntoward a∗without requiring explicit verification. Theorem 1 (Exact-Match Case). If a = a∗, then\nWe illustrate CER with an example from training. For the ρ(a∗, a∗) =Es′∼πθ(·|q) πθ(a∗|s′, q) A = a∗\nfollowing given question, the model generates three distinct\nanswers, {14, 13, 94}. The answer 14 receives the highest =Es′∼πθ(·|q,a∗) πθ(a∗|s′, q)\nCER value (0.752), as it exactly matches the reference an- ≥Es∼πθ(·|q) πθ(a∗|s, q) .\nswer. The answer 13 attains the second-highest CER value\n(0.313), reflecting its numerical proximity to the reference with equality if and only if πθ(a∗|s, q) is constant over\nanswer 14. In contrast, the answer 94 receives a near-zero all (q, s) such that πθ(s|q) > 0. CER value (0.00004), as it is numerically distant from the\nSee Appendix A for the proof. This shows that condireference answer. tioning on the event that the policy has generated a∗\nstrictly increases the posterior predictive probability of\nQuestion q: How many positive multiples of 7 that are regenerating a∗, unless the policy assigns an identical\nless than 1000 end with the digit 3?\nlikelihood to a∗across all (q, s) pairs with πθ(s|q) > 0. Reference answer a∗: 14\nTherefore, CER exhibits a self-consistency amplifiGenerated Answers and CER (a, ρ(a, a∗)):\ncation effect via posterior reweighting toward higher\n{(14, 0.752), (13, 0.313), (94, 0.00004)}\nprobability assigned to the reference answer in the\nexact-match case. Properties We summarize several fundamental properties\n• Equivalence.\nof CER, which demonstrate the effectiveness of CER. Theorem 2 (Value Equivalence).\n• Boundedness.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 6,
+    "total_chunks": 30,
+    "char_count": 2243,
+    "word_count": 348,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e89f5f33-3950-4eb2-8423-7af9aa6b9750",
+    "text": "Lρ(θ) = Eq∼D,(s,a)∼πθ(·|q)[ρ(a, a∗(q))]\n0 ≤ρ(a, a∗) ≤1. = Eq∼D,(s,a)∼πθ(·|q)[I(a = a∗(q))], i.e., the expected CER objective is equivalent in value Since πθ(a∗|s′, q) ∈[0, 1] for all (q, s′), the weighted\nto the exact-match objective, where I(a = a∗(q)) indi- sum of these probabilities also lies in [0, 1]. As a result,\ncates whether a exactly matches a∗(q).",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 7,
+    "total_chunks": 30,
+    "char_count": 359,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "10abcf3b-81b6-4566-9c4a-da3954078dcd",
+    "text": "CER provides a bounded and well-scaled reward signal\nthat is suitable for stable optimization. Thus, ρ(a, a∗) can be interpreted as a soft generalization of the hard exact-match reward I(a = a∗), while • Minimum.\npreserving the same expected value. CER yields a\nρ(a, a∗) = 0 ⇐⇒ πθ(a∗|s′, q) = 0 continuous-valued reward rather than a binary signal.\nfor all (q, s′) with πθ(s′|q, a) > 0. This property allows CER to provide graded feedback\nthat reflects varying degrees of consistency between the\nρ(a, a∗) is zero exactly when the policy assigns prob- generated answer a and the reference answer a∗, which\nability 0 to a∗on any (q, s′) that appear in the con- is particularly beneficial in general domains where parditional distribution defined by A = a. In this case, tial correctness or semantic similarity may be present.\nonce the policy has generated a, it is impossible for\nthe model to regenerate a∗under the same posterior In summary, these properties show that CER is a welldistribution over (q, s′). behaved and principled reward function. It is bounded and\nproperly scaled, admits clear minimum and maximum con-\n• Maximum.\nditions, and exhibits a self-consistency amplification effect\nρ(a, a∗) = 1 ⇐⇒ πθ(a∗|s′, q) = 1 when the generated answer matches the reference answer.\nfor all (q, s′) with πθ(s′|q, a) > 0. Moreover, CER is value-equivalent in expectation to the\nexact-match objective while providing a continuous, graded\nρ(a, a∗) reaches its maximum value only when the reward signal, thereby serving as a soft generalization of\npolicy assigns probability 1 to the reference answer a∗ exact-match rewards in general domains. Reinforcement Learning with Conditional Expectation Reward Empirical CER We next derive an empirical form of For each q, we sample N independent (si, ai) from πθ(·|q)\nCER, as the definition in Eq. (3) is intractable due to the for estimating the gradient. The reward R(q, si, ai, a∗) is\nsummation over all possible outcomes under πθ(a∗|s′, q). treated as a fixed scalar with respect to θ during optimization\nTo obtain a computable approximation, we apply Bayes' to detach it from gradient computation for stable policy\nrule and Monte Carlo sampling to derive an empirical esti- learning (Ziegler et al., 2019; Ouyang et al., 2022).\nmator of CER:\nEfficiency We now describe an efficient procedure for\nρ(a, a∗) =Es′∼πθ(·|q) πθ(a∗|s′, q) A = a computing CER by reusing samples, avoiding redundant\n= X πθ(s′|q, a) πθ(a∗|s′, q) computations and adjusting the hyperparameter. As shown\ns′ in Eq. (5), computing CER requires sampling M indepenPs′ πθ(s′|q)πθ(a|s′, q)πθ(a∗|s′, q) dent solutions {sj}Mj=1 from πθ(·|q). However, CER can be =\nPs′′ πθ(s′′|q)πθ(a|s′′, q) seamlessly integrated into policy gradient without additional\nsampling. Specifically, for each question q, we already samPMj=1 πθ(a|sj, q) πθ(a∗|sj, q) ple N independent {si}Ni=1 from πθ(·|q) to estimate the ≈ , sj ∼πθ(·|q). PMj=1 πθ(a|sj, q) policy gradient. These same samples can be directly reused\n(4) for reward computation by setting {sj}Mj=1 := {si}Ni=1.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 8,
+    "total_chunks": 30,
+    "char_count": 3059,
+    "word_count": 493,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4a130890-95df-47b2-94f9-6ae6d6c15024",
+    "text": "The third line applies Bayes' rule to rewrite πθ(s′|q, a) in\nTo understand the computation of CER more intuitively, weterms of quantities compatible with the autoregressive facfurther show that the CER computing can be expressed intorization of large language models.\na tensorized form. Let M := N and {sj}Mj=1 := {si}Ni=1,\nThe final line further applies Monte Carlo estimation by and define R ∈[0, 1]N with entries Ri = R(q, si, ai, a∗),\ndrawing M independent samples sj ∼πθ(·|q) to produce W ∈[0, 1]N×M with entries Wij = πθ(ai|sj, q), and\nan empirical estimate of CER. P ∈[0, 1]M with entries Pj = πθ(a∗|sj, q). The reward\nThe resulting empirical CER is a normalized likelihood- vector R can then be written as\nweighted average, where each term πθ(a∗|sj, q) is weighted\nR = D−1W P , (8)by πθ(a|sj, q). This weighting captures the joint consistency of a and a∗under the same conditional context, so\nwhere D is a diagonal matrix whose entries are the row\nthat samples for which the policy assigns high probability\nsums of W . See Figure 1 for an illustration.\nto both a and a∗contribute more to the estimator, leading\nto a larger value of CER. Although this approach avoids additional sampling, directly computing Eq. (8) still requires M(N + 1) forObjective We finally define the objective based on the ward passes to compute the entries of W and P .",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 10,
+    "total_chunks": 30,
+    "char_count": 1352,
+    "word_count": 235,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "178a0a3a-0360-4b40-8b0c-cf6a38afd369",
+    "text": "For a quadruple (q, s, a, a∗), the reward further reduce this cost by eliminating redundant compufunction is defined as: tations. In particular, if two sampled answers ai1 and\nai2 are identical, then their corresponding rewards satisfy\nPMj=1 πθ(a|sj, q)πθ(a∗|sj, q) R(q, si1, ai1, a∗) = R(q, si2, ai2, a∗), and thus the reward , R(q, s, a, a∗) =\nPMj=1 πθ(a|sj, q) only needs to be computed once for each unique answer.\nwhere sj ∼πθ(·|q). (5) Besides, the hyperparameter M controls a trade-off between\ncomputational efficiency and reward estimation accuracy. Using this reward function, we define the training objective Larger values of M yield more accurate estimates of CER\nas at the cost of increased computation, while smaller values\nimprove efficiency with a loss in precision. We can adjust\nLρ(θ) = Eq∼D,(s,a)∼πθ(·|q)[ρ(a, a∗)] M to achieve a balance between performance and efficiency.\n≈Eq∼D,(s,a)∼πθ(·|q)[R(q, s, a, a∗)]. (6)\nThen the corresponding policy gradient is given by 3. ∇θLρ(θ) We first describe the experimental settings in Section 3.1.\n≈Eq∼D,(s,a)∼πθ(·|q)[R(q, s, a, a∗)∇θ log πθ(a, s|q)] We then present the main experimental results in Section 3.2\nto evaluate the effectiveness of the proposed method. Next,\n1 we analyze the computational efficiency of CER in Sec-\n≈Eq∼D[ X R(q, si, ai, a∗)∇θ log πθ(ai, si|q)],\nN tion 3.3. Finally, in Section 3.4, we provide a detailed visui=1 alization of the CER computation process to offer further\nwhere (si, ai) ∼πθ(·|q). (7) insights into its behavior and properties. Reinforcement Learning with Conditional Expectation Reward",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 11,
+    "total_chunks": 30,
+    "char_count": 1588,
+    "word_count": 250,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "05d0683e-9c30-4757-a2d3-a7d68498283a",
+    "text": "1s 1a\n* | q , s1 ) R ( q , s1 , a1 , a * ) ( a1 | q , s1 ) ( a1 | q , s2 ) ( a1 | q , s N 1 ) ( a1 | q , s N ) ( a\nR ( q , s2 , a2 , a * ) ( a2 | q , s1 ) ( a2 | q , s2 ) ( a2 | q , s N 1 ) ( a2 | q , s N ) ( a * | q , s 2 )\n2s 2a Ns 1 a N 1\nR ( q , s N 1 , a N 1 , a * ) ( a N 1 | q , s1 ) ( a N 1 | q , s2 ) ( a N 1 | q , s N 1 ) ( a N 1 | q , s N ) ( a * | q , s N 1 )\nR ( q , s N , a N , a * ) ( a N | q , s1 ) ( a N | q , s2 ) ( a N | q , s N 1 ) ( a N | q , s N ) ( a * | q , s N )\nNs a N An illustration of CER computation, where RN(·) denotes row normalization. The left panel depicts the generation process of\nthe quadruple (q, si, ai, a∗), while the right panel shows the CER computation for the quadruple, corresponding to Eq. (8).",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 12,
+    "total_chunks": 30,
+    "char_count": 795,
+    "word_count": 273,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7111cd0c-a5a4-47de-931e-5db27b6f206f",
+    "text": "Settings Hyperparameter settings We set the batch size of questions to 32, the number of solutions N to 16, M in Eq. (5)\nDatasets We evaluate the performance of CER across to 16, the learning rate to 10−6, epoch to 1 for WebInstruct\nboth mathematical and general reasoning domains. Acdataset and epoch to 5 for MATH-7.5K dataset. For traincordingly, we train models on two datasets: the mathemating, we use temperature = 1.0 and top-p = 1.0, while for\nical dataset MATH-7.5K (Hendrycks et al., 2021) and the\nevaluation we use temperature = 0.6, top-p = 0.95 and\ngeneral-domain dataset WebInstruct (Ma et al., 2025). The maximum question length is set to 2048\nWebInstruct, we retain only non-mathematical questions at\ntokens, and the maximum output length is set to 4096 tothe university difficulty level to focus on general-domain\nkens for training and 8192 for evaluation. We utilize RLOO\nbeyond mathematics, yielding a dataset of 50K questions.\n(Kool et al., 2019) as the optimization method.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 13,
+    "total_chunks": 30,
+    "char_count": 994,
+    "word_count": 163,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ac8d389b-cbee-4e08-90eb-2d1780ecd3c6",
+    "text": "WebInstruct includes domains such as physics, chemistry,\nbiology, finance and so on. This subset spans a wide range\n3.2. Results\nof disciplines, such as physics, chemistry and biology. CER demonstrates strong generality across domains. On the general-domain training dataset (Table 1), CEREvaluation We evaluate the models on four mathematical\nachieves the highest average performance among all com-datasets, MATH500 (Lightman et al., 2023), AMC23 (Art\npared methods for both Qwen3-4B-Base and Qwen3-8B-of Problem Solving, 2025b), AIME2024 and AIME2025\nBase (except the combined method Rule+CER). In partic-(Art of Problem Solving, 2025a), and two general-domain\nular, CER consistently outperforms exact-match rewardsdatasets, SuperGPQA (Du et al., 2025) and MMLU-Pro\nand the perplexity-based rewards VeriFree, and exceeds(Wang et al., 2024). Performance is reported using the\nthe performance of rule-based verifiers and learned verifierspass@1 metric. For the mathematical datasets, pass@1 is\nGeneral-verifier across most evaluation benchmarks. The ad-computed using a rule-based verifier (Hugging Face, 2025).\nvantage of CER is especially pronounced on general-domainFor the general-domain datasets, which consist of multipleevaluation datasets such as MMLU-Pro and SuperGPQA,choice questions, pass@1 is computed via exact matching.\nwhere it achieves consistent performance gains. Notably,For each mathematical dataset, we conduct 16 evaluation\nthis advantage holds without relying on domain-specificruns and report the average performance.\nhandcrafted rules or models. Baselines We compare CER with several baseline veri- When trained on the mathematical dataset (Table 2), CER\nfiers. These include the exact-match verifier, which checks attains performance comparable to rule-based rewards and\nwhether the generated answer exactly matches the reference outperform learned verifier approaches. Despite the absence\nanswer; a model-based verifier, General-verifier (Ma et al., of an external verifier, CER maintains strong results across\n2025), which employs an external large language model to mathematical benchmarks, indicating that it does not overfit\nassess answer correctness; and a perplexity-based verifier, to a specific domain. VeriFree (Zhou et al., 2025), which uses the perplexity of Taken together, these results suggest that CER can serve\nthe reference answer for verification, a rule-based verifier as a unified reward formulation applicable to both general-\n(Hugging Face, 2025), which verifies the correctness by domain and mathematics-oriented reasoning tasks.\nutilizing handcrafted rules. Reinforcement Learning with Conditional Expectation Reward",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 14,
+    "total_chunks": 30,
+    "char_count": 2668,
+    "word_count": 357,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0cd36c8e-f224-4c7d-ac38-6f642e859401",
+    "text": "Methods MATH500 AMC23 AIME2024 AIME2025 MMLU-Pro SuperGPQA Average Base 62.6 40.5 10.6 8.1 42.0 21.0 30.8\nExact-Match 78.0 61.4 22.3 20.6 62.9 33.5 46.5\nRule-based 84.5 65.8 21.7 18.5 62.3 32.6 47.6\nVeriFree 83.4 62.2 19.6 16.7 58.7 29.1 44.9\nGeneral-verifier 84.6 64.1 21.9 17.7 63.7 34.2 47.7\nCER 81.6 67.7 22.8 21.3 63.8 35.2 48.7\nRule+CER 85.6 66.6 22.5 19.9 64.1 35.2 49.0 Base 73.9 53.1 14.6 12.3 51.9 27.0 38.9\nExact-Match 82.4 66.6 25.4 20.4 66.2 36.2 49.5\nRule-based 86.0 72.0 26.7 21.0 66.6 37.7 51.7\nVeriFree 86.0 61.4 22.3 19.6 65.4 35.5 48.4\nGeneral-verifier 84.8 74.1 25.0 21.7 67.3 37.7 51.8\nCER 87.2 72.3 25.8 20.6 69.7 38.4 52.3\nRule+CER 85.2 76.4 23.5 20.6 71.0 38.3 52.5",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 16,
+    "total_chunks": 30,
+    "char_count": 689,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3a82aded-e9e4-41d0-96d7-290d47b76805",
+    "text": "The performance of models trained on a mathematical dataset. Methods MATH500 AMC23 AIME2024 AIME2025 MMLU-Pro SuperGPQA Average Base 62.6 40.5 10.6 8.1 42.0 21.0 30.8\nExact-match 81.2 57.3 17.7 15.6 46.7 24.2 40.5\nRule-based 84.2 63.1 22.9 21.5 62.5 32.2 47.7\nVeriFree 81.5 62.7 19.8 18.1 59.9 30.9 45.5\nGeneral-verifier 83.6 63.0 19.8 19.0 58.5 30.9 45.7\nCER 84.1 63.6 24.8 20.0 60.8 32.1 47.6\nRule+CER 85.0 67.5 23.3 20.8 61.2 31.3 48.2 Base 73.9 53.1 14.6 12.3 51.9 27.0 38.9\nExact-match 80.0 63.4 16.5 13.5 61.4 33.5 44.7\nRule-based 86.7 70.2 26.3 22.7 65.8 35.1 51.1\nVeriFree 85.0 68.4 22.9 20.2 62.3 32.4 48.5\nGeneral-verifier 86.0 69.4 26.7 20.6 64.3 34.9 50.3\nCER 87.2 70.9 23.8 23.1 64.8 35.0 50.8\nRule+CER 87.3 72.0 26.5 21.0 65.6 36.0 51.4 CER substantially improves over exact-match rewards. which is particularly beneficial when correct answers admit\nAs established in Theorem 2, CER can be viewed as a surface-level variations.\nsoft generalization of the hard exact-match reward. While\nCER is complementary to rule-based rewards. We furexact-match provides a binary signal that only distinguishes\nther investigate a simple yet effective strategy for combining\nperfectly correct answers from all others, CER assigns\nCER with rule-based rewards, in which the final reward is\ncontinuous-valued rewards that reflect partial correctness to\ndefined as the average of the CER score and the rule-based\nthe reference answer. Empirically, this difference translates\nreward. As shown in Tables 1 and 2, the combined apinto consistent gains over exact-match training across both\nproach (Rule+CER) generally achieves better performance\ndatasets and model scales. The graded feedback provided by\nthan either method used in isolation. This demonstrates that\nCER yields denser and more informative learning signals,\nintegrating them yields a more informative training signal. Reinforcement Learning with Conditional Expectation Reward On the general-domain training dataset, CER enhances rule- 3.4. Visualization of CER Computing\nbased methods by providing graded rewards: rule-based\nTo better illustrate the computing of CER, we visualize the\nschemes assign positive reward only to strictly equivalent\ncomponents involved in Eq. (8).",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 17,
+    "total_chunks": 30,
+    "char_count": 2232,
+    "word_count": 338,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cef6cd33-428e-4380-abe4-671859eb15af",
+    "text": "Recall that Ri denotes theanswers and treat all other outputs as equally incorrect. As\nCER associated with the quadruple (q, si, ai, a∗), Wij =a result, they fail to differentiate partially correct answers,\nπθ(ai|sj, q) represents the likelihood of generating answerleading to sparse and uninformative learning signals. CER\nai conditioned on solution sj and question q, and D isalleviates this limitation by assigning non-binary rewards\nthe diagonal matrix whose entries are the row sums of W ,\nthat better reflect answer quality. Pj = πθ(a∗|sj, q) measures the likelihood of producing the\nOn the mathematical dataset, rule-based rewards in turn reference answer a∗given (sj, q).\ncomplement CER. In this domain, rule-based methods more\nFigure 2 presents a training example.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 18,
+    "total_chunks": 30,
+    "char_count": 773,
+    "word_count": 119,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "257e7172-bfe9-47d9-b6e7-2456d710bb60",
+    "text": "The left panel shows\nreliably capture mathematical equivalence, thereby correctthe question q, the reference answer a∗, and the 16 generated\ning errors introduced by imperfect similarity estimation in\nanswers {ai}. The right panel visualizes the vectors R andCER. Overall, these results highlight the complementary\nP , together with D−1W . Specifically, the left column\nstrengths of CER and rule-based rewards and motivate their\ncorresponds to the reward vector R, the central block depicts\ncombined use across different domains.\nthe normalized matrix D−1W with each row summing to\none, and the right column corresponds to the vector P .\n3.3.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 19,
+    "total_chunks": 30,
+    "char_count": 642,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b6c3c6bf-ec57-457d-9c90-32ef366111be",
+    "text": "Efficiency\nSeveral observations can be drawn from this visualization. We analyze the computational efficiency of various rewards First, CER effectively captures surface-level variation\nand their corresponding performance. In CER, the computa- and semantic similarity among answers, which is partictional cost is governed by the hyperparameter M in Eq. (5), ularly important for questions with free-form answers.\nwhich specifies the number of samples used to estimate the In this example, the 16 generated answers contain 10 unique\nreward. By tuning M, CER enables a flexible mechanism surface forms that nevertheless share similar semantics,\nto balance runtime efficiency and reward fidelity. such as \"No, quantum physics is generally considered nonTable 3 reports runtime and average performance across deterministic.\" and \"No, quantum physics is not determinmethods, with all experiments conducted on four NVIDIA istic.\" CER assigns positive rewards to all such semanH100 GPUs. For CER, increasing M improves performance tically consistent answers, whereas exact-match or ruleat the cost of higher runtime overhead. Empirically, CER based methods would assign positive reward only to the\nexhibits a smooth and controllable trade-off, enabling practi- strictly matching answer \"No\" This demonstrates that CER\ntioners to select M that balances efficiency and performance provides richer and more informative reward signals for\nunder given computational constraints. general-domain reasoning tasks. Exact-match rewards incur the lowest overhead but yield Second, answers that receive higher CER rewards tend\ninferior performance. CER with smaller M and rule-based to exhibit stronger alignment with solutions that also\nrewards achieve reasonable performance while remaining assign high likelihood to the reference answer. Since\nefficient, whereas CER with large M, VeriFree, and General- most entries of P are relatively large, this alignment can\nverifier incur higher runtime costs due to multiple large be examined by inspecting the sparsity patterns of the norlanguage model queries during reward computation. malized matrix D−1W . From top to bottom, the rows of\nthe normalized matrix become increasingly sparse, which\nresults in smaller CER values. This trend is consistent with\nTable 3.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 20,
+    "total_chunks": 30,
+    "char_count": 2291,
+    "word_count": 329,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2bdfacc8-0962-43fd-9a73-3b463485b413",
+    "text": "The average performance across six datasets and correthe formulation in Eq. (5), where reduced overlap with othersponding runtime for each method.\nsolutions leads to a lower reward. Model Performance Runtime Third, the visualization suggests that increasing the\nExact-match 46.5 45.2h value of M in Eq. (5) can improve performance. A larger\nRule 47.6 54.7h M can yield a denser and more stable normalized matrix,\nVeriFree 44.9 58.7h leading to a more accurate estimation of CER and, conseGeneral-verifier 47.7 57.5h quently, improved performance. CER (M=1) 46.4 47.0h Finally, the figure also illustrates that identical answers\nCER (M=2) 47.7 52.2h receive identical CER rewards. For example, since a1 =\nCER (M=4) 48.0 55.6h a2, the corresponding rows in the normalized matrix are\nCER (M=8) 48.2 59.3h identical, which results in equal CER values for a1 and a2. CER (M=16) 48.7 67.4h This property reflects the consistency of CER with respect\nto repeated answer instances. Reinforcement Learning with Conditional Expectation Reward",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 21,
+    "total_chunks": 30,
+    "char_count": 1031,
+    "word_count": 158,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d4e7ac05-346d-4540-abc7-5d3b51010001",
+    "text": "This figure illustrates the computation of CER as defined in Eq. (8). The left panel shows the question, the reference answer,\nand the 16 generated answers. The right panel depicts the components: the reward vector R (left column), the row-normalized matrix\nD−1W (central block), and the reference-likelihood vector P (right column).",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 22,
+    "total_chunks": 30,
+    "char_count": 333,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c1b4d34e-656d-4163-8179-1876686427fa",
+    "text": "Related Work answer under the large language model. VeriFree (Zhou\net al., 2025) combines perplexity-based rewards with variRLVR RLVR (Lambert et al., 2024; Guo et al., 2025; ance reduction techniques to construct a training objective. Team et al., 2025) has emerged as a prominent paradigm Building on this line of work, Nover (Liu et al., 2025) infor improving the reasoning performance of large language troduces length normalization to mitigate length bias, while\nmodels. RLVR relies on rule-based verifiers to provide ac- RLPR (Yu et al., 2025) reformulates perplexity as a sum\ncurate and stable reward signals, such as the math-verify of token-level probabilities to further address sensitivity to\nlibrary (Hugging Face, 2025) for mathematical reasoning answer length.\ntasks (Guo et al., 2025) and the SandboxFusion toolbox\n(Cheng et al., 2024) for code generation (Luo et al., 2025; In contrast to both model-based and perplexity-based apHe et al., 2025). These rule-based verification methods are proaches, CER leverages self-consistency between generparticularly effective in domains where answers admit un- ated answers and the reference answer to produce soft,\nambiguous representations and deterministic equivalence graded, and model-intrinsic reward signals.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 23,
+    "total_chunks": 30,
+    "char_count": 1271,
+    "word_count": 185,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7251cffc-a8e7-451a-b763-90b97233f736",
+    "text": "This design\nrules can be readily constructed. However, their applica- enables reliable feedback without requiring additional verbility is limited in general reasoning domains, where valid ifier models or handcrafted rules, making CER applicable\nanswers are often open-form and exhibit substantial surface across a wide range of general reasoning domains.\nvariation. In contrast, CER aims to extend RLVR to such\ngeneral domains. 5. In this paper, we propose CER as a general framework for exGeneral Domains Existing verification methods applicatending RLVR beyond domains that rely on strict, rule-based\nble to general reasoning domains can be broadly categorized\nverification. By leveraging the large language model itself\ninto model-based verifiers and perplexity-based verifiers.\nas an implicit verifier, CER produces soft, graded reward sigModel-based verifiers employ a fine-tuned large language nals that reflect partial correctness and semantic consistency,\nmodel to assess the correctness of a generated answer thereby overcoming the limitations of binary rule-based\nwith respect to a reference answer.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 24,
+    "total_chunks": 30,
+    "char_count": 1109,
+    "word_count": 156,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "482fb879-78f4-4925-be06-0ab20215acc4",
+    "text": "For instance, Kimi- feedback. Our theoretical analysis shows that CER can be\nk1.5 (Team et al., 2025) fine-tunes a model on large-scale viewed as a smooth relaxation of exact-match evaluation,\nverification data to endow it with verification capabilities. providing a principled connection to conventional verifiable\nGeneral-Verifier (Ma et al., 2025) further develops a gen- rewards. Empirically, we demonstrate that CER is effective\nerative, model-based verifier trained specifically for chain- across both mathematical and general-domain reasoning\nof-thought answer verification, enabling more nuanced and tasks. Together, these results indicate that CER offers a\ncontext-aware judgments. flexible and broadly applicable mechanism for guiding reinforcement learning in large language models, enabling more\nPerplexity-based verifiers, in contrast, define reward siggeneral and robust reasoning capabilities.\nnals based on the likelihood or perplexity of the reference Reinforcement Learning with Conditional Expectation Reward Impact Statement Lightman, H., Kosaraju, V., Burda, Y., Edwards, H., Baker,\nB., Lee, T., Leike, J., Schulman, J., Sutskever, I., and\nThis paper seeks to advance the state of machine learning Cobbe, K. Let's verify step by step. In The Twelfth\nby introducing new insights and techniques. Progress in this International Conference on Learning Representations,\nfield can enable improvements across many domains, but the 2023.\nwork presented here is foundational. Consequently, no specific positive or negative impacts are uniquely attributable Liu, W., Qi, S., Wang, X., Qian, C., Du, Y., and He,\nto this work.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 25,
+    "total_chunks": 30,
+    "char_count": 1635,
+    "word_count": 230,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3cbd1634-003d-4c8b-8e3e-7c34409c44a6",
+    "text": "Nover: Incentive training for language models\nvia verifier-free reinforcement learning. arXiv preprint\nReferences arXiv:2505.16022, 2025. Art of Problem Solving. Aime problems and solutions, Luo, M., Tan, S., Huang, R., Patel, A., Ariyak, A., Wu, Q.,\n2025a. URL https://artofproblemsolving. Shi, X., Xin, R., Cai, C., Weber, M., et al. Deepcoder:\ncom/wiki/index.php/AIME_Problems_and_ A fully open-source 14b coder at o3-mini level. Art of Problem Solving. Amc problems and solutions, Ma, X., Liu, Q., Jiang, D., Zhang, G., Ma, Z., and Chen,\n2025b. URL https://artofproblemsolving. General-reasoner: Advancing llm reasoning across all\ncom/wiki/index.php?title=AMC_ domains. arXiv preprint arXiv:2505.14652, 2025. Problems_and_Solutions. Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C.,\nCheng, Y., Chen, J., Chen, J., Chen, L., Chen, L., Chen, W., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., Ray, A.,\nChen, Z., Geng, S., Li, A., Li, B., et al. Fullstack bench: et al. Training language models to follow instructions\nEvaluating llms as full stack coders. arXiv preprint with human feedback. Advances in neural information\narXiv:2412.00535, 2024. processing systems, 35:27730–27744, 2022.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 26,
+    "total_chunks": 30,
+    "char_count": 1200,
+    "word_count": 167,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5b0d791a-3295-42df-bbad-2a5d473b7017",
+    "text": "Du, X., Yao, Y., Ma, K., Wang, B., Zheng, T., Zhu, K., Liu, Team, K., Du, A., Gao, B., Xing, B., Jiang, C., Chen, C.,\nM., Liang, Y., Jin, X., Wei, Z., et al. Supergpqa: Scaling Li, C., Xiao, C., Du, C., Liao, C., et al. Kimi k1. 5:\nllm evaluation across 285 graduate disciplines. arXiv Scaling reinforcement learning with llms. arXiv preprint\npreprint arXiv:2502.14739, 2025. arXiv:2501.12599, 2025. Guo, D., Yang, D., Zhang, H., Song, J., Zhang, R., Xu, R., Wang, Y., Ma, X., Zhang, G., Ni, Y., Chandra, A., Guo, S.,\nZhu, Q., Ma, S., Wang, P., Bi, X., et al. Deepseek-r1: In- Ren, W., Arulraj, A., He, X., Jiang, Z., et al. Mmlu-pro:\ncentivizing reasoning capability in llms via reinforcement A more robust and challenging multi-task language unlearning. arXiv preprint arXiv:2501.12948, 2025. derstanding benchmark. Advances in Neural Information\nHe, J., Liu, J., Liu, C. Y., Yan, R., Wang, C., Cheng, P., Processing Systems, 37:95266–95290, 2024. Zhang, X., Zhang, F., Xu, J., Shen, W., et al. SkyYu, T., Ji, B., Wang, S., Yao, S., Wang, Z., Cui, G., Yuan,\nwork open reasoner 1 technical report. arXiv preprint\nL., Ding, N., Yao, Y., Liu, Z., et al. Rlpr: Extrapolating\nrlvr to general domains without verifiers. arXiv preprint\nHendrycks, D., Burns, C., Kadavath, S., Arora, A., Basart, arXiv:2506.18254, 2025.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 27,
+    "total_chunks": 30,
+    "char_count": 1313,
+    "word_count": 218,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c0a77a84-2cc6-4974-95ab-811aa47b5f39",
+    "text": "S., Tang, E., Song, D., and Steinhardt, J. Measuring mathZhang, K., Zuo, Y., He, B., Sun, Y., Liu, R., Jiang, C., ematical problem solving with the math dataset. arXiv\nFan, Y., Tian, K., Jia, G., Li, P., et al. A survey of preprint arXiv:2103.03874, 2021.\nreinforcement learning for large reasoning models. arXiv\nHugging Face. Math-verify: A robust mathematical ex- preprint arXiv:2509.08827, 2025.\npression evaluation system. GitHub repository and\nZhou, X., Liu, Z., Sims, A., Wang, H., Pang, T., Li, C., Python package, 2025. https://github.com/\nhuggingface/Math-Verify, version 0.8.0. Wang, L., Lin, M., and Du, C. Reinforcing general reasoning without verifiers. arXiv preprint arXiv:2505.21493,\nKool, W., van Hoof, H., and Welling, M. FORCE samples, get a baseline for free!, 2019.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 28,
+    "total_chunks": 30,
+    "char_count": 786,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cb854284-54bc-419f-b4e3-195413c390b8",
+    "text": "M., Stiennon, N., Wu, J., Brown, T. B., Radford,\nLambert, N., Morrison, J., Pyatkin, V., Huang, S., Ivison, A., Amodei, D., Christiano, P., and Irving, G. Fine-tuning\nH., Brahman, F., Miranda, L. V., Liu, A., Dziri, N., language models from human preferences. arXiv preprint\nLyu, S., et al. Tulu 3: Pushing frontiers in open language arXiv:1909.08593, 2019.\nmodel post-training. arXiv preprint arXiv:2411.15124,\n2024. Reinforcement Learning with Conditional Expectation Reward Theorem 1 (Exact-Match Case). If a = a∗, then\nρ(a∗, a∗) =Es′∼πθ(·|q) πθ(a∗|s′, q) A = a∗\n=Es′∼πθ(·|q,a∗) πθ(a∗|s′, q)\n≥Es∼πθ(·|q) πθ(a∗|s, q) . with equality if and only if πθ(a∗|s, q) is constant over all (q, s) such that πθ(s|q) > 0. Since ρ(a, a∗) is defined for a generated answer a, we always have the probability Pr(A = a) > 0. In particular, if\na = a∗, then Pr(A = a∗) > 0, so conditioning on A = a∗is well defined. By Bayes' rule,\nE s∼πθ(·|q)[πθ(a∗|s, q) I(A = a∗)]\nEs′∼πθ(·|q)[πθ(a∗|s′, q)|A = a∗] = Pr(A = a∗)\nE s∼πθ(·|q)[πθ(a∗|s, q) Pr(A = a∗|q, s)]\nEs∼πθ(·|q)[Pr(A = a∗|q, s)]\nEs∼πθ(·|q) πθ(a∗|s, q)2\n= . Es∼πθ(·|q)[πθ(a∗|s, q)] Hence,\nEs∼πθ(·|q) πθ(a∗|s, q)2 ρ(a∗, a∗) = . Es∼πθ(·|q)[πθ(a∗|s, q)]",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 29,
+    "total_chunks": 30,
+    "char_count": 1186,
+    "word_count": 197,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6c95ebdf-ae19-4a8d-8156-13ec8ae62550",
+    "text": "Since πθ(a∗|s, q) ≥0, Jensen's inequality (or equivalently E[X2] ≥E[X]2) implies\nρ(a∗, a∗) ≥Es∼πθ(·|q) πθ(a∗|s, q) , which proves the desired inequality. Equality holds if and only if πθ(a∗|s, q) is constant over all (q, s) such that πθ(s|q) > 0. Theorem 2 (Value Equivalence). Lρ(θ) = Eq∼D,(s,a)∼πθ(·|q)[ρ(a, a∗(q))]\n= Eq∼D,(s,a)∼πθ(·|q)[I(a = a∗(q))],\ni.e., the expected CER objective is equivalent in value to the exact-match objective, where I(a = a∗(q)) indicates whether a\nexactly matches a∗(q). By definition,\nLρ(θ) = Eq∼D,(s,a)∼πθ(·|q)[ρ(a, a∗(q))]\n# \"X . = Eq∼D πθ(s, a|q) ρ(a, a∗(q))\ns,a Using the definition of ρ, # \"X Lρ(θ) = Eq∼D πθ(s, a|q) X πθ(s′|q, a) πθ(a∗(q)|s′, q)\ns,a s′\n# \"X . = Eq∼D πθ(a∗(q)|s′, q) X πθ(s, a|q) πθ(s′|q, a)\ns′ s,a Reinforcement Learning with Conditional Expectation Reward",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 30,
+    "total_chunks": 30,
+    "char_count": 811,
+    "word_count": 131,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "507b2fd2-a32d-4620-bee6-d94e4f7c4dc4",
+    "text": "For fixed q, we have\nX πθ(s, a|q) πθ(s′|q, a) = X πθ(a|q) πθ(s′|q, a) = πθ(s′|q),\ns,a a where the first equality marginalizes out s and the second follows from the law of total probability. Therefore,\n# \"X Lρ(θ) = Eq∼D πθ(s′|q) πθ(a∗(q)|s′, q)\n \n= Eq∼D X πθ(s′, a|q) I(a = a∗(q))\ns′,a\n= Eq∼D,(s,a)∼πθ(·|q)[I(a = a∗(q))]. This shows that the expected CER objective is equivalent in value to the exact-match objective.",
+    "paper_id": "2603.10624",
+    "title": "Reinforcement Learning with Conditional Expectation Reward",
+    "authors": [
+      "Changyi Xiao",
+      "Caijun Xu",
+      "Yixin Cao"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10624v1",
+    "chunk_index": 31,
+    "total_chunks": 30,
+    "char_count": 420,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  }
+]

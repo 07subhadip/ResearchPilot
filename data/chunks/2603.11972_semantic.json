@@ -1,0 +1,699 @@
+[
+  {
+    "chunk_id": "d8258007-fd60-43a7-8ac6-859f9ee490ff",
+    "text": "Topological DeepONets and a generalization\nof the Chen–Chen operator approximation\ntheorem Abstract2026\nDeep Operator Networks (DeepONets) provide a branch–trunk neural architecture\nfor approximating nonlinear operators acting between function spaces. In the classical operator approximation framework, the input is a function u ∈C(K1) definedMar\non a compact set K1 (typically a compact subset of a Banach space), and the oper-\n12 ator maps u to an output function G(u) ∈C(K2) defined on a compact Euclidean\ndomain K2 ⊂Rd. In this paper, we develop a topological extension in which the\noperator input lies in an arbitrary Hausdorfflocally convex space X. We construct\ntopological feedforward neural networks on X using continuous linear functionals\nfrom the dual space X∗and introduce topological DeepONets whose branch component acts on X through such linear measurements, while the trunk component[cs.LG]\nacts on the Euclidean output domain. Our main theorem shows that continuous\noperators G : V →C(K; Rm), where V ⊂X and K ⊂Rd are compact, can be\nuniformly approximated by such topological DeepONets. This extends the classical\nChen–Chen operator approximation theorem from spaces of continuous functions\nto locally convex spaces and yields a branch–trunk approximation theorem beyond\nthe Banach-space setting. Keywords: DeepONet; topological neural network; locally convex space; branch–\ntrunk network; universal approximation theorem; operator approximation. 2020 MSC: 68T07, 41A30, 41A65, 46A03, 47H99arXiv:2603.11972v1 1 Introduction",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 0,
+    "total_chunks": 41,
+    "char_count": 1542,
+    "word_count": 218,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7055eb0e-4705-4eeb-a0bf-3b2735526fec",
+    "text": "Deep neural networks are usually used to approximate nonlinear mappings between finitedimensional Euclidean spaces. However, in many scientific and engineering applications,\nthe object of interest is not a function but an operator: a mapping that takes an input\nfunction and returns an output function. In the operator-learning viewpoint, one aims\nto learn a continuous nonlinear operator from sampled input–output data, where V is a compact set of admissible inputs and K\nis the output domain. ∗The author can be contacted at vugaris@mail.ru or vugaris@gmail.com.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 1,
+    "total_chunks": 41,
+    "char_count": 564,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f4097fff-4da8-4df0-890f-1d33751aec49",
+    "text": "A prominent architecture for this purpose is the Deep Operator Network (DeepONet),\nproposed in [14]. In its standard form, DeepONet employs a branch network (encoding\nthe input function through sensor measurements) and a trunk network (processing the\nvariable y), and combines their outputs through a dot product. In this way, DeepONet\napproximates G(u)(y) in a separable form as a finite sum of functions of y, with coefficients\ndepending on the input u. A central theoretical motivation for DeepONets comes from the universal approximation theorem for operators established by Chen and Chen [3]. This theorem shows that\ncontinuous operators between spaces of continuous functions can be uniformly approximated on compact sets by expressions depending on finitely many point evaluations of\nthe input function.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 2,
+    "total_chunks": 41,
+    "char_count": 810,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d01cf07f-c1b5-4f68-8a3a-49df090bdb3b",
+    "text": "DeepONets place such approximants into a structured branch–trunk\narchitecture and, in practice, make both sides deep. Since its introduction, DeepONet has been successfully applied to a wide range of engineering and scientific problems. Early studies demonstrated its ability to learn operators\nassociated with dynamical systems and diffusion–reaction equations [3,14]. Subsequent\nworks employed DeepONets for learning nonlinear operators arising in multiphysics and\nmultiscale models, including electro-convection phenomena [2], hypersonic flows governed\nby the Navier–Stokes equations with finite-rate chemistry [15], and multiscale bubblegrowth dynamics [13]. Related developments include physics-informed DeepONets for\nlearning solution operators of parametric PDEs [23]. More recent developments extend DeepONet-based operator learning to a variety\nof challenging application domains, including complex-valued formulations for threedimensional Maxwell equations [8], surrogate modeling for shape optimization [20], learning two-phase microstructure evolution using neural-operator and autoencoder architectures [16], and aerothermodynamic analysis of hypersonic configurations [21]. In addition, DeepONet architectures have been explored in control-oriented settings, including\nneural-operator approximation of backstepping controller and observer gain functions\nfor reaction–diffusion PDEs [10], predictor-based stabilization of nonlinear systems with\ninput delay [1], and predictive control [9]. The aim of the present paper is to develop a framework in which the input of the\noperator need not lie in a Euclidean space or, more generally, in a normed linear space\n(such as a Hilbert or Banach space). Instead, we treat the case where the input belongs\nto a locally convex topological vector space X. In this viewpoint, the network receives\nadmissible measurements of the input element in the form of continuous linear functionals. That is, each hidden neuron evaluates a continuous linear functional on the input element\nand then applies the activation function. This setting is natural when the input is an\nelement of an abstract function space endowed with a locally convex topology and the\narchitecture is allowed to use linear measurements compatible with that topology.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 3,
+    "total_chunks": 41,
+    "char_count": 2282,
+    "word_count": 308,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "271a3eab-21ba-4ab4-8db7-b16d71c83ee0",
+    "text": "Such\nsituations arise frequently in analysis and applications. For instance, spaces of differentiable functions, which arise naturally in the theory of\npartial differential equations, provide fundamental examples of non-normable topological\nspaces. The Schwartz space S(Rn) of rapidly decreasing smooth functions is equipped\nwith the countable family of seminorms pa,b(f) = sup xaDbf(x) , a, b ∈Nn,\nx∈Rn where xa = xa11 · · · xann and Db = ∂|b|/∂xb11 · · · ∂xbnn .",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 4,
+    "total_chunks": 41,
+    "char_count": 464,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d3ecd09d-27b3-4696-b7e7-708f1e586654",
+    "text": "This space is complete and metrizable,\nhence a Fr´echet space, but it is not normable. Another important example is the space D(U) of smooth functions with compact\nsupport in an open set U ⊂Rn. For each compact set K ⊂U, the subspace\nC∞0 (K) = {f ∈C∞(U) : supp(f) ⊂K} is a Fr´echet space with seminorms\npK,m(f) = max sup |Dαf(x)|, m ∈N.\n|α|≤m x∈K\nThe space D(U) is obtained as the inductive limit of the spaces C∞0 (K), where (Kj) is a\ndirected family of compact subsets of U whose union equals U, that is, D(U) = −→C∞lim\nIn this topology, D(U) is locally convex and complete, but not metrizable and therefore\nnot normable. The space D(U), known as the space of test functions, plays a fundamental\nrole in the theory of distributions. More generally, for a topological space X, the space C(X) of continuous functions\nendowed with the topology of uniform convergence on compact sets, defined by the seminorms\nφK(f) = max |f(x)|, K ⊂X compact,\nx∈K\nis a locally convex space that is not normable unless X is compact. In our recent work [6] we proved a universal approximation theorem for feedforward\nneural networks on topological vector spaces with the Hahn–Banach extension property,\nin particular on locally convex spaces. These networks are constructed using continuous\nlinear functionals from the dual space X∗together with a fixed scalar activation function. The present paper uses this density mechanism on compact sets to build a DeepONet-type\napproximation framework and to prove an operator approximation theorem of branch–\ntrunk type. Specifically, we introduce a topological DeepONet architecture in which the branch\ncomponent acts on a locally convex input space X through continuous linear measurements from X∗, while the trunk component acts on the output domain K ⊂Rd. Within this setting we prove a universal approximation theorem for continuous operators G : V →C(K; Rm) on compact sets V ⊂X by finite separable expansions whose\ncoefficient maps are realized by topological neural networks on X. As a consequence, we obtain approximation theorems related to DeepONets, showing\nthat continuous nonlinear operators admit approximations of branch–trunk type extending the classical dot-product formulation beyond the Banach-space setting. The results\nplace the Chen–Chen operator approximation principle [3] and the DeepONet architecture [14] into a unified locally convex framework. The remainder of the paper is organized as follows.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 5,
+    "total_chunks": 41,
+    "char_count": 2447,
+    "word_count": 390,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1c86c889-1551-40e5-8ae1-1317cdc45197",
+    "text": "Section 2 introduces topological\nneural networks and recalls the universality theorem on locally convex spaces. Section 3\ndevelops the topological DeepONet architecture and proves the main operator approximation theorems and their corollaries. Section 4 presents several examples. 2 Topological networks on locally convex spaces This section provides definitions and results that will be used later.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 6,
+    "total_chunks": 41,
+    "char_count": 399,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "486ad307-3cbd-4b46-84cf-6b0671791cd0",
+    "text": "Throughout the paper, X denotes a locally convex topological vector space and X∗\nits continuous dual. All locally convex spaces are assumed to be Hausdorff. Definition 2.1 (Topological neural network on a locally convex space). Fix an activation\nfunction σ : R →R and let m ≥1. A (vector-valued) topological feedforward neural\nnetwork on X with one hidden layer is any mapping H : X →Rm of the form where\nT(x) = (f1(x) −θ1, . . . , fr(x) −θr),\nwith fi ∈X∗, θi ∈R, and A ∈Rm×r. Here σ acts componentwise on Rr. Each hidden\nneuron evaluates a continuous linear functional on the input element and then applies\nthe activation function. Deep networks are obtained by alternating affine maps and componentwise activation\nfunctions, with the output layer given by a linear map. For completeness, we recall one\nconvenient formulation. Definition 2.2 (Deep topological neural network on X). Fix integers L ≥2 and m ≥1,\nand let n1, . . . , nL−1 ≥1.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 7,
+    "total_chunks": 41,
+    "char_count": 939,
+    "word_count": 164,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0ffaf1cf-9256-43d0-9061-6e8f428fe59e",
+    "text": "A (vector-valued) deep topological feedforward neural network\non X of depth L is a mapping H : X →Rm of the form where the hidden-layer outputs zℓ(x) ∈Rnℓare defined by z1(x) = σ T1(x) , zℓ(x) = σ Aℓzℓ−1(x) −bℓ , ℓ= 2, . . . , L −1. Here σ acts componentwise, each Aℓis a real matrix of appropriate size, and each bℓis a\nreal bias vector.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 8,
+    "total_chunks": 41,
+    "char_count": 338,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4e552a69-0226-4ddd-8b33-a3da162112fe",
+    "text": "The first affine map T1 : X →Rn1 is defined by T1(x) = f1(x) −θ1, . . . , fn1(x) −θn1 , with fj ∈X∗and θj ∈R. When X = Rd endowed with its usual topology, the above classes of\nnetworks reduce to the standard feedforward neural networks used in the classical theory.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 9,
+    "total_chunks": 41,
+    "char_count": 265,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88c94ac6-e4ff-4470-863a-2667531caec0",
+    "text": "Indeed, in this case every continuous linear functional f ∈X∗has the form for some vector w ∈Rd, where w · x denotes the Euclidean inner product. This follows\nfrom the well known representation theorem for continuous linear functionals on Hilbert\nspaces. Consequently, the expressions fj(x)−θj appearing in the first affine map become which are exactly the affine forms used in classical neural networks on Rd. Therefore,\nthe topological neural networks introduced above extend the traditional Euclidean neural\nnetworks to inputs belonging to general locally convex spaces. We work with the space C(X; Rm) of continuous functions from X into Rm equipped\nwith the topology of uniform convergence on compact sets. This topology is generated\nby the family of seminorms\n∥g∥K = sup ∥g(x)∥Rm,\nx∈K\nwhere K ranges over all compact subsets of X and ∥·∥Rm denotes any fixed norm on Rm. Since all norms on a finite-dimensional space are equivalent, the resulting topology does\nnot depend on the particular choice of the norm. A subbasis at the origin for this topology is given by the sets U(K, r) = {g ∈C(X; Rm) : ∥g∥K < r} , where K ⊂X is compact and r > 0. Thus, when we say that a family of functions F acting from X into Rm is dense\nin C(X; Rm), we mean density with respect to the topology of uniform convergence on\ncompact sets. That is, for every compact K ⊂X, every g ∈C(K; Rm), and every ε > 0,\nthere exists f ∈F such that\n∥g −f∥K < ε. Equivalently, for each compact K ⊂X, the restrictions",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 10,
+    "total_chunks": 41,
+    "char_count": 1488,
+    "word_count": 264,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "248a0fe5-715c-4d5c-b1eb-5fa4b0c94f5a",
+    "text": "are dense in C(K; Rm) with respect to ∥· ∥K. The space C(X; R) will be denoted by C(X). Definition 2.3 (Tauber–Wiener function). A function σ : R →R is called a Tauber–\nWiener function if the linear span of the set is dense in C([a, b]) for every closed interval [a, b] ⊂R. Functions with this property generate dense families of translations and dilations of\nσ on every compact subset of the real line and play a central role in neural network\napproximation theory. The terminology originates from the work of Chen and Chen [3],\nwhere this condition is used in the study of operator approximation by neural networks. Tauber–Wiener functions have also been exploited in several subsequent works (see, e.g.,\n[7,22]). We denote by Sσ(X; Rm) the class of all single-hidden-layer topological feedforward\nneural networks H : X →Rm constructed from continuous linear functionals in X∗and\nthe activation function σ (see Definition 2.1). A scalar-valued version of the following theorem was proved in [6] for neural networks\non topological vector spaces possessing the Hahn–Banach extension property. Since every\nlocally convex space has this property, the scalar case follows from that result. In the\npresent paper we restrict attention to locally convex spaces, which are widely used in\nanalysis, although the results remain valid for topological vector spaces with the Hahn–\nBanach extension property. For completeness, we include below a direct proof for the\nvector-valued case. Let X be a locally convex topological vector space and assume that the\nactivation function σ is a Tauber–Wiener function. Then for every compact set K ⊂X,\nevery function g ∈C(K; Rm), and every ε > 0, there exists a topological neural network\nH ∈Sσ(X; Rm) such that\n∥g −H∥K < ε.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 11,
+    "total_chunks": 41,
+    "char_count": 1752,
+    "word_count": 289,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "71cd7eb7-b109-4c44-8bcd-295034be0d75",
+    "text": "In other words, the class Sσ(X; Rm) is dense in C(X; Rm) with respect to the topology of\nuniform convergence on compact subsets of X. Fix a compact set K ⊂X, a function g = (g1, . . . , gm) ∈C(K; Rm), We construct a topological neural network H ∈Sσ(X; Rm) such that ∥g −\nH∥K < ε. We equip Rm with the sup norm ∥x∥Rm = max |xr|.\n1≤r≤m Since all norms on the finite-dimensional space Rm are equivalent, this choice does not\nchange the topology of uniform convergence on compact sets.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 12,
+    "total_chunks": 41,
+    "char_count": 481,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f7f58ce0-6249-4360-b01a-cb225d285c06",
+    "text": "∥g −H∥K = sup ∥g(x) −H(x)∥Rm = sup max |gr(x) −Hr(x)|.\nx∈K x∈K 1≤r≤m Hence\n∥g −H∥K = max ∥gr −Hr∥K,\n1≤r≤m where for scalar-valued functions on K we write ∥h∥K = supx∈K |h(x)|. Thus it suffices to construct, for each r = 1, . . . , m, a scalar topological neural network\nHr such that\n∥gr −Hr∥K < ε. Fix r ∈{1, . . . , m}. E = span{ eℓ(x) : ℓ∈X∗} ⊂C(K). This set is an algebra, since for ℓ1, ℓ2 ∈X∗we have eℓ1(x)eℓ2(x) = e(ℓ1+ℓ2)(x), ℓ1 + ℓ2 ∈X∗, and it contains the constant functions because e0 = 1. Moreover, E separates points of K. Indeed, if x, y ∈K with x ̸= y, then by the\nHahn–Banach continuous extension theorem there exists ℓ∈X∗such that ℓ(x) ̸= ℓ(y)\n(see, e.g., [19, Theorem 3.6]). Therefore, by the Stone–Weierstrass theorem, E is dense in C(K) with respect to the\nuniform norm. Hence there exist ℓ1, . . . , ℓM ∈X∗and real coefficients α1, . . . , αM such that gr − X αieℓi(·) < 2. (2.1)\ni=1 K Since each ℓi is continuous and K is compact, the image ℓi(K) is a compact subset of\nR.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 13,
+    "total_chunks": 41,
+    "char_count": 993,
+    "word_count": 201,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9f00305f-4092-4a8d-8a5f-ebbd351b18f5",
+    "text": "Hence there exists a compact interval [ai, bi] such that ℓi(K) ⊂[ai, bi]. Because σ is a Tauber–Wiener function, the linear span of the family {σ(wt −θ) :\nw, θ ∈R} is dense in C([ai, bi]). Applying this property to the function t 7→et, we obtain,\nfor each i, an integer Ni and real parameters ci,j, wi,j, θi,j such that sup et − X ci,jσ(wi,jt −θi,j) < .\n2(1 + PMi=1 |αi|) t∈[ai,bi] j=1 Since ℓi(K) ⊂[ai, bi], substituting t = ℓi(x) gives sup eℓi(x) − X ci,jσ(wi,jℓi(x) −θi,j) < . (2.2)\nx∈K 2(1 + PMi=1 |αi|) j=1 Note that for each i, j, the map x 7→wi,jℓi(x) is again a continuous linear functional\non X, that is, wi,jℓi ∈X∗. Thus each term σ(wi,jℓi(x) −θi,j) has the form σ(f(x) −θ)\nwith f ∈X∗. Define\nM Ni\nHr(x) = X αi X ci,jσ wi,jℓi(x) −θi,j , x ∈X. i=1 j=1\nThen Hr ∈Sσ(X; R). Using (2.2), multiplying the corresponding estimates by |αi| and summing over i =\n1, . . . , M, we obtain\nX αieℓi(·) −Hr < 2.\ni=1 K\nCombining this with (2.1) yields Repeating the construction for each component r = 1, . . . , m, we obtain scalar topological neural networks H1, . . . , Hm. H(x) = (H1(x), . . . , Hm(x)), x ∈X. Then H ∈Sσ(X; Rm) and ∥g −H∥K = sup max |gr(x) −Hr(x)| < ε.\nx∈K 1≤r≤m",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 14,
+    "total_chunks": 41,
+    "char_count": 1176,
+    "word_count": 238,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2fa3de9e-6a40-4053-9099-4307f6669a48",
+    "text": "This completes the proof. In the next section, topological neural networks on X play the role of the branch\ncomponent in a DeepONet.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 15,
+    "total_chunks": 41,
+    "char_count": 132,
+    "word_count": 23,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cdbf0f73-ba2d-435e-ae80-b373c1cf5f99",
+    "text": "Theorem 2.1 provides the tool for approximating continuous\ncoefficient maps in the locally convex setting, where the available measurements are given\nby continuous linear functionals. The preceding result provides a universality principle for neural networks on locally\nconvex input spaces. An important example arises when the input space is the Banach\nspace C(K) endowed with the uniform norm. In this case, Theorem 2.1 yields the classical\noperator approximation theorem of Chen and Chen [3]. Theorem 2.2 (Chen and Chen [3]). Let K be a compact metric space and let V ⊂C(K)\nbe compact. Assume that the activation σ ∈C(R) is a Tauber–Wiener function. Then\nfor every continuous functional f ∈C(V ) and every ε > 0 there exist integers N, k ≥1,\npoints x1, . . . , xk ∈K, and real parameters ci, θi, ξij (i = 1, . . . , N, j = 1, . . . , k) such that N k !\nf(u) − X ci σ X ξij u(xj) −θi < ε We regard C(K) as a Banach space and hence as a locally convex space. Thus,\nTheorem 2.1 applies with X = C(K), compact set V ⊂X, and m = 1. Therefore, there\nexist N ≥1, continuous linear functionals ℓ1, . . . , ℓN ∈C(K)∗, and real numbers ci, θi\nsuch that\nsup f(u) − X ci σ(ℓi(u) −θi) < 2. (2.3) u∈V\ni=1 Each ℓi is a continuous linear functional on C(K) and hence, by the Riesz representation theorem, admits a representation for a finite signed Borel measure µi on K. Since V ⊂C(K) is compact, it is equicontinuous by the Arzel`a–Ascoli theorem.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 16,
+    "total_chunks": 41,
+    "char_count": 1436,
+    "word_count": 272,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0d564d3b-cb33-4efb-9c85-70fcf5bb6191",
+    "text": "Consequently, for every δ > 0, each functional ℓi can be uniformly approximated on V by\na Riemann-type sum for the integral R u dµi, i.e., by a finite linear combination of point K\nevaluations. That is, there exist points x1, . . . , xk ∈K and coefficients ξij such that sup ℓi(u) − X ξij u(xj) < δ, i = 1, . . . , N.\nu∈V\nj=1 Since σ is uniformly continuous on compact intervals containing the ranges of the\narguments, we may choose δ sufficiently small so that N N k ! ε\nsup X ci σ(ℓi(u) −θi) − X ci σ X ξiju(xj) −θi < 2. (2.4) u∈V\ni=1 i=1 j=1 Combining (2.3) and (2.4) by the triangle inequality gives the desired ε-approximation. 3 DeepONets on locally convex spaces and operator\napproximation Let X be a locally convex topological vector space, V ⊂X a compact set, and K ⊂Rd\na compact set. We consider continuous operators where C(K; Rm) is equipped with the uniform norm ∥·∥K. In the DeepONet framework,\none seeks to approximate the mapping (u, y) 7−→G(u)(y), (u, y) ∈V × K, by a structured network that separates the dependence on the input u from the dependence on the coordinate y. Definition 3.1 (Topological DeepONet). Fix integers p ≥1 and m ≥1.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 17,
+    "total_chunks": 41,
+    "char_count": 1156,
+    "word_count": 219,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d7070583-727f-4f48-8b62-85300d22c7b5",
+    "text": "A topological\nDeepONet consists of 1) a branch network\nB : X →Rm×p, which takes an input u ∈X and outputs a matrix B(u) = [b1(u) · · · bp(u)], where each column bk : X →Rm is a topological neural network on X constructed\nusing continuous linear functionals from the dual space X∗and an activation function σ (see Definition 2.1); 2) a trunk network\nT : Rd →Rp,\nwhich takes a point y ∈Rd as input and outputs the vector T (y) = (t1(y), . . . , tp(y))T, represented by a Euclidean neural network (for example, a single-hidden-layer network), whose components tk : Rd →R, k = 1, . . . , p, denote the p outputs of the\nnetwork. The resulting DeepONet defines an operator given by\n(bG(u))(y) = B(u) T (y), u ∈X, y ∈Rd. Equivalently,\nbG(u)(y) = X bk(u) tk(y). (3.1)\nk=1 The architecture of the topological DeepONet is illustrated in Figure 1. u ∈X\n(locally convex space) f1(u), f2(u), . . . , fr(u) y ∈Rd\nfj ∈X∗ Trunk network Branch network",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 18,
+    "total_chunks": 41,
+    "char_count": 934,
+    "word_count": 178,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "99b72c98-1e5b-4b03-ac39-21e1b33472a6",
+    "text": "Figure 1: Topological DeepONet architecture. The branch network encodes the input\nelement u ∈X, where X is a locally convex space, through finitely many linear measurements f1(u), . . . , fr(u) with fj ∈X∗. The trunk network takes y ∈Rd as input and\nyields [t1(y), . . . , tp(y)]T ∈Rp. The outputs of the branch and trunk networks are then\nmultiplied to produce the final output.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 20,
+    "total_chunks": 41,
+    "char_count": 379,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "61f6778a-bc95-4e9e-8ffc-de600138fde5",
+    "text": "If X is the space of continuous functions and the\nfunctionals fj are point evaluation functionals, fj(u) = u(xj), then the classical DeepONet architecture is recovered. When m = 1, (3.1) reduces to the classical dot-product form bG(u)(y) = ⟨b(u), t(y)⟩,\nwith b(u) ∈Rp and t(y) ∈Rp. This is the standard DeepONet architecture introduced\nin [14].",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 21,
+    "total_chunks": 41,
+    "char_count": 344,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "03751129-0bfe-4997-8c87-407ef3fb0266",
+    "text": "The above definition extends this construction to inputs from general locally\nconvex spaces and to vector-valued outputs, while preserving the explicit branch–trunk\nseparation. For example, when m = 1 and the trunk network is realized by a single-hidden-layer\nneural network, the representation (3.1) can be written explicitly in terms of activation\nfunctions. In particular, if the branch network uses linear measurements fj(u), it takes\nthe form\np n r !\nbG(u)(y) = X X cki σ X ξkijfj(u) −θki σ(ωk · y + ζk) .\nk=1 i=1 j=1 | trunk{z }\n| branch{z } This coincides with the displayed formula in [14] when X is the space of continuous\nfunctions and the functionals fj(u) are taken as point evaluations fj(u) = u(xj). Theorem 2.1 provides approximation capability on the branch network side. On the\ntrunk network side, we rely on the classical density of ridge networks (i.e., single-hiddenlayer neural networks) on compact subsets of Rd. It is well known that if the activation\nσ is a Tauber–Wiener function, then finite linear combinations of ridge functions y 7−→σ(ω · y + ζ), y, ω ∈Rd, ζ ∈R, are dense in C(K) for every compact K ⊂Rd (see, e.g., [12, 17]). For background on\nridge functions, see [5,18]. We now prove a universal approximation theorem for continuous operators G : V →\nC(K; Rm) by finite separable expansions of the form (3.1), where the coefficient maps are\nrealized by branch topological neural networks on X. Let X be a locally convex topological vector space and let V ⊂X be\ncompact. Let K ⊂Rd be compact and let G : V →C(K; Rm) be continuous. Assume\nthat the activation σ ∈C(R) is a Tauber–Wiener function. Then for every ε > 0 there exist an integer N ≥1, ridge functions",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 22,
+    "total_chunks": 41,
+    "char_count": 1692,
+    "word_count": 296,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0ebcef30-5d45-4e5a-8bc1-80b878756ab6",
+    "text": "ϕk(y) = σ(ωk · y + ζk), k = 1, . . . , N, and topological neural networks ak : X →Rm, k = 1, . . . , N, constructed according to Definition 2.1, such that",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 23,
+    "total_chunks": 41,
+    "char_count": 154,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c205420c-100a-41f7-9c2d-c548f9eedf65",
+    "text": "sup sup G(u)(y) − X ak(u) ϕk(y) < ε.\nu∈V y∈K\nk=1 Rm Define\nW := G(V ) ⊂C(K; Rm). Since V is compact and G is continuous, W is compact in C(K; Rm) equipped with the\nuniform norm\n∥h∥K = sup ∥h(y)∥Rm.\ny∈K\nWe equip Rm with the sup-norm ∥x∥Rm = max |xr|.\n1≤r≤m Since Rm is finite-dimensional, all norms on Rm are equivalent; hence this choice does not\naffect compactness or approximation properties, and simplifies componentwise estimates\nbelow.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 24,
+    "total_chunks": 41,
+    "char_count": 440,
+    "word_count": 80,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "716741bc-17f9-4a94-ba3b-b7c3e798e1a4",
+    "text": "Fix an arbitrary ε > 0 and set δ := ε/4. Let h = (h1, . . . , hm) ∈W. For each component r = 1, . . . , m, the density of ridge\nnetworks on K yields a finite ridge expansion N(h,r)\nRh,r(y) = X αh,r,j σ(ωh,r,j · y + ζh,r,j), y ∈K, such that ∥hr −Rh,r∥K < δ.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 25,
+    "total_chunks": 41,
+    "char_count": 256,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ae70f9e-e4e6-4377-8566-bc41183ea7e9",
+    "text": "Define the vector-valued function Rh(y) := (Rh,1(y), . . . , Rh,m(y)), y ∈K. Define an open neighborhood of h in W by Uh := {h′ ∈W : ∥h′ −h∥K < δ}. Then for every h′ ∈Uh, ∥h′ −Rh∥K ≤∥h′ −h∥K + ∥h −Rh∥K < δ + δ = 2δ. (3.2)",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 26,
+    "total_chunks": 41,
+    "char_count": 221,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2dc71f39-153e-4e30-9f1e-14556800b2b8",
+    "text": "Since W is compact, the open cover {Uh : h ∈W} admits a finite subcover. Hence\nthere exist h(1), . . . , h(M) ∈W such that W ⊂ [ Uh(j). (3.3)\nj=1 Now collect all ridge functions appearing in the finitely many approximants Rh(j). Denote the elements of this finite set by ϕk(y) = σ(ωk · y + ζk), k = 1, . . . , N. By adding zero coefficients if necessary, for each j = 1, . . . , M we may write Rh(j)(y) = X Aj,k ϕk(y), y ∈K, (3.4)\nk=1 with vectors Aj,k ∈Rm. Since W is a compact metric space, it is paracompact. By the partition of unity\ntheorem (see Dugundji [4, p. 170, Theorem 4.2]), the finite open cover (3.3) admits a\ncontinuous partition of unity subordinate to it. Hence there exist continuous functions ηj : W →[0, 1], j = 1, . . . , M, 1) PMj=1 ηj(h) = 1 for all h ∈W; Define continuous coefficient maps ck : W →Rm by",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 27,
+    "total_chunks": 41,
+    "char_count": 827,
+    "word_count": 173,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5cd16318-491d-42d9-acd1-39746f304bd2",
+    "text": "ck(h) := X ηj(h) Aj,k, k = 1, . . . , N. Define\nA : W →C(K; Rm), (A(h))(y) := X ck(h) ϕk(y). k=1\nWe claim that\n∥h −A(h)∥K ≤2δ for all h ∈W. (3.5) Indeed, using (3.4) and the definition of ck,",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 28,
+    "total_chunks": 41,
+    "char_count": 191,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ab31773f-d137-4b69-bb44-7af610b1cac2",
+    "text": "A(h)(y) = X ηj(h) Rh(j)(y),\nj=1 hence\nh(y) −A(h)(y) = X ηj(h) h(y) −Rh(j)(y) .\nj=1 If ηj(h) ̸= 0, then h ∈Uh(j), and therefore by (3.2) we have ∥h −Rh(j)∥K < 2δ. ∥h(y) −A(h)(y)∥Rm ≤ X ηj(h) · 2δ = 2δ. Taking the maximum over y ∈K yields (3.5). For each k and r = 1, . . . , m, define bk,r(u) := ck(G(u)) r, u ∈V. Each bk,r is continuous on V . Set\nMk := max |ϕk(y)| < ∞.\ny∈K\nBy Theorem 2.1, for each (k, r) there exists a scalar topological network ak,r : X →R\nsuch that\nsup |bk,r(u) −ak,r(u)| < (3.6) u∈V N(Mk + 1)m. Define\nak(u) = (ak,1(u), . . . , ak,m(u)), k = 1, . . . , N, and set\neG(u)(y) := X ak(u) ϕk(y).\nk=1 ∥G(u)(y) −A(G(u))(y)∥Rm ≤2δ. Moreover,\nA(G(u))(y) −eG(u)(y) = X (ck(G(u)) −ak(u)) ϕk(y).\nk=1\nUsing (3.6) and |ϕk(y)| ≤Mk, we obtain · Mk ≤δ. ∥A(G(u))(y) −eG(u)(y)∥Rm ≤ X N(Mk + 1)m\nk=1 Hence\n∥G(u)(y) −eG(u)(y)∥Rm ≤2δ + δ < ε.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 29,
+    "total_chunks": 41,
+    "char_count": 843,
+    "word_count": 175,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "32fe4669-7c8b-44d8-afa4-265f669f2eec",
+    "text": "Taking supremum over u ∈V and y ∈K completes the proof. We now state an approximation theorem in the style of the dot-product DeepONet\nformulation (compare [14, Theorem 2]). Under the assumptions of Theorem 3.1, for every ε > 0 there exists an\ninteger p ≥1, ridge functions tk(y) = σ(ωk · y + ζk) on K ⊂Rd, and a trunk map T (y) = t1(y), . . . , tp(y) ∈Rp, y ∈K, together with a branch map B : X →Rm×p, whose columns are topological neural networks\non X constructed as in Definition 2.1, such that sup sup ∥G(u)(y) −B(u)T (y)∥Rm < ε.\nu∈V y∈K In other words, the operator G admits an ε–approximation on V × K by a DeepONet in\nthe sense of Definition 3.1. By Theorem 3.1, there exists a separable expansion G(u)(y) ≈ X ak(u) tk(y), tk(y) = σ(ωk · y + ζk). Define T (y) = (t1(y), . . . , tp(y))T and define B(u) as the m × p matrix whose kth column\nis ak(u). Then\nX ak(u) tk(y) = B(u)T (y), k=1\nand the claimed uniform error bound is exactly the estimate obtained in Theorem 3.1.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 30,
+    "total_chunks": 41,
+    "char_count": 976,
+    "word_count": 195,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0478175c-32f1-441c-9d62-abc07eeed651",
+    "text": "When m = 1, the matrix–vector product reduces to a dot product:\nB(u)T (y) = ⟨b(u), t(y)⟩, which is the dot-product formulation of DeepONets in [14]. Theorem 3.2 therefore extends the DeepONet approximation theorem to operators whose\ninput lies in a compact subset of a locally convex space and whose output functions are\nRm-valued. In classical DeepONets, the branch network typically receives measurements of the input function at finitely many sensor locations, that is, values of the form\nu(x1), . . . , u(xr). Such measurements are meaningful because the input belongs to a\nfunction space, where pointwise evaluation is naturally defined. In the present setting, the input u is an element of a locally convex space X and need\nnot be a function. Consequently, pointwise sampling is not available in general.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 31,
+    "total_chunks": 41,
+    "char_count": 810,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a26a14e9-ef7f-400a-a111-9782337547d1",
+    "text": "Instead,\nthe branch encoder accesses u through finitely many continuous linear functionals ℓ(u),\nwhere ℓ∈X∗. These functionals play the role of generalized sensors: each network uses\nfinitely many of them to form a finite measurement vector. When X happens to be a function space, classical sensors are recovered as a special\ncase. For example, if X = C(Ω) is the space of continuous functions on a compact set\nΩendowed with the uniform norm topology, then the point evaluation maps u 7→u(x)\nare continuous linear functionals, hence belong to X∗. Thus continuous linear functionals\nprovide a natural and flexible abstract measurement interface for operator learning in the\nlocally convex setting.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 32,
+    "total_chunks": 41,
+    "char_count": 696,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ada3fcf6-8ae3-4828-94b8-4576d62e975f",
+    "text": "The trunk side in Theorem 3.2 is presented in ridge form because it is\none of the simplest universal approximators on compacts of Rd. In applications, one may\nreplace the ridge trunk by a deep neural network (ResNet, CNN, etc.) provided that\nthe chosen trunk class is universal on K. Likewise, on the branch side one may choose\nshallow or deep topological networks on X constructed as in Definitions 2.1 and 2.2. The\napproximation mechanism requires only density on compact sets, as captured abstractly\nby Theorem 2.1.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 33,
+    "total_chunks": 41,
+    "char_count": 518,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "747d1226-7c20-4334-90bc-03c9b5c0dcf6",
+    "text": "The preceding remarks clarify the interpretation of the branch–trunk construction\nand its relation to classical DeepONets. We now record two direct consequences of Theorem 3.1 showing that, when the input space is a continuous function space and the admissible measurements are chosen accordingly, one recovers the operator-approximation\nresults that form the theoretical foundation of DeepONets. In particular, the classical Chen–Chen operator approximation theorem and the dotproduct DeepONet approximation theorem of Lu et al. appear as special cases of the\npresent locally convex framework. Corollary 3.1 (see Theorem 5 in [3] or Theorem 1 in [14]). Suppose E is a Banach\nspace, K1 ⊂E and K2 ⊂Rd are compact sets in E and Rd, respectively, V ⊂C(K1)\nis compact, and G : V →C(K2) is a continuous nonlinear operator. Assume that the\nactivation σ ∈C(R) is a Tauber–Wiener function. Then for every ε > 0 there exist integers n, p, r ≥1, points x1, . . . , xr ∈K1, parameters cki, θki, ξkij, ζk ∈R, and vectors ωk ∈Rd such that p n r !\nG(u)(y) − X X cki σ X ξkiju(xj) −θki σ(ωk · y + ζk) < ε\nk=1 i=1 j=1 for all u ∈V and y ∈K2. Apply Theorem 3.1 with X = C(K1), compact V ⊂C(K1), K = K2, and m = 1. Then there exist p ≥1, ridge functions ϕk(y) = σ(ωk · y + ζk), and topological neural\nnetworks\nak : C(K1) →R, k = 1, . . . , p, such that\nsup sup G(u)(y) − X ak(u) ϕk(y) < 2. (3.7) u∈V y∈K2 k=1\nSet\nM := max sup |ϕk(y)| < ∞, η := 1≤k≤p y∈K2 2p(M + 1). For each k, apply Theorem 2.2 to the continuous functional ak|V : V →R to obtain an\napproximation of the form n r !\neak(u) = X cki σ X ξkiju(xj) −θki\ni=1 j=1 (with a common choice of r, n after unifying finitely many sensor points and adding zero\ncoefficients if necessary) satisfying",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 34,
+    "total_chunks": 41,
+    "char_count": 1732,
+    "word_count": 332,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "489704ed-4d21-4dc9-bffa-432639dd2321",
+    "text": "sup |ak(u) −eak(u)| < η, k = 1, . . . , p. (3.8) u∈V p p n r !\neG(u)(y) := X eak(u) ϕk(y) = X X cki σ X ξkiju(xj) −θki σ(ωk · y + ζk).\nk=1 k=1 i=1 j=1 Then for u ∈V and y ∈K2, by (3.7)–(3.8), p p\n|G(u)(y) −eG(u)(y)| ≤ G(u)(y) − X ak(u)ϕk(y) + X |ak(u) −eak(u)| |ϕk(y)|\nk=1 k=1\nε + pηM ≤ε + pη(M + 1) = ε. <\n2 2 Taking the supremum over u ∈V and y ∈K2 yields the required uniform estimate. Corollary 3.2 (see Theorem 2 in [14]). Let E be a Banach space, K1 ⊂E and K2 ⊂Rd\ncompact sets, and let V ⊂C(K1) be compact. Assume that G : V →C(K2) is a\ncontinuous nonlinear operator and that the activation σ ∈C(R) is a Tauber–Wiener\nfunction. Then for every ε > 0 there exist integers r, p ≥1, points x1, . . . , xr ∈K1, and\ncontinuous mappings\nB : Rr →Rp, T : Rd →Rp, such that\nG(u)(y) − B u(x1), . . . , u(xr) , T (y) < ε for all u ∈V and y ∈K2.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 35,
+    "total_chunks": 41,
+    "char_count": 838,
+    "word_count": 195,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "09b32c9a-0f23-414b-bd68-c5e298ca4334",
+    "text": "Moreover, the maps B and T may be chosen from any class of neural networks on Rr\nand Rd, respectively, that is dense in the corresponding spaces of continuous functions on\ncompact sets (e.g. fully connected, residual, or convolutional architectures). By the preceding corollary, there exist integers r, n, p ≥1, points\nx1, . . . , xr ∈K1, real parameters cki, θki, ξkij, ζk, and vectors ωk ∈Rd such that p n r !\nsup sup G(u)(y) − X X cki σ X ξkiju(xj) −θki σ(ωk · y + ζk) < ε. (3.9)\nu∈V y∈K2 k=1 i=1 j=1 n r ! n r ! !\nB(z1, . . . , zr) := X c1i σ X ξ1ijzj −θ1i , . . . , X cpi σ X ξpijzj −θpi , and define T : Rd →Rp by T (y) := σ(ω1 · y + ζ1), . . . , σ(ωp · y + ζp) . Both maps are continuous because σ is continuous and they are finite linear combinations\nand compositions of continuous functions. For u ∈V and y ∈K2, substituting z = (u(x1), . . . , u(xr)) gives p n r !\nB(u(x1), . . . , u(xr)), T (y) = X X cki σ X ξkiju(xj) −θki σ(ωk · y + ζk).\nk=1 i=1 j=1 Combining this identity with (3.9) yields sup sup G(u)(y) − B u(x1), . . . , u(xr) , T (y) < ε,\nu∈V y∈K2 The final statement follows by approximating the continuous maps B and T uniformly\non the relevant compact sets by networks from any dense architecture class. Lanthaler et al. [11] establish a universality result for DeepONets in a\nprobabilistic setting: the input space is equipped with a probability measure and the\napproximation is formulated in an L2 metric. Within this framework they obtain approximation results for measurable operators, thereby removing the continuity and compactness assumptions that appear in the classical operator approximation theorem of Chen\nand Chen [3]. Their work also provides quantitative error bounds and complexity estimates for DeepONets, which lie outside the scope of the present approximation-theoretic\nframework.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 36,
+    "total_chunks": 41,
+    "char_count": 1823,
+    "word_count": 352,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "af26b4cd-b7e6-443c-a1a5-2f6dd7779204",
+    "text": "In comparison with the Chen–Chen theorem, the universality result of Lanthaler et al.\ncomes at the expense of considering a weaker distance, namely L2 instead of the uniform\nL∞distance (see [11, Remark 3.1]). Thus, while [11] relaxes continuity and compactness assumptions by working in a probabilistic L2 framework, the present work preserves uniform approximation and extends\noperator approximation theory beyond Banach input domains to general locally convex\nspaces. In particular, the classical Chen–Chen theorem and the DeepONet approximation\ntheorem of Lu et al. appear as special cases of our framework. 4 Examples illustrating Theorem 3.1 In this section we illustrate Theorem 3.1 for several important normed and locally convex\nspaces. In all examples the admissible measurements are continuous linear functionals\nfrom the dual space X∗. By Theorem 3.1, for a compact set V ⊂X and a continuous\noperator\nG : V →C(K; Rm), K ⊂Rd compact, we obtain approximations of the form G(u)(y) ≈ X ak(u) σ(ωk · y + ζk), u ∈V, y ∈K, (4.1) where each coefficient map ak : X →Rm is a topological neural network on X constructed\nas in Definition 2.1. Let X = Rd or, more generally, let",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 37,
+    "total_chunks": 41,
+    "char_count": 1176,
+    "word_count": 194,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ed653f3f-771c-45fb-a836-95c01662e097",
+    "text": "be the vector space of all n×p real matrices equipped with any norm. Then X is a finitedimensional Banach space and every continuous linear functional on X can be written in\nthe form\nA 7−→trace(W TA), A ∈X,\nfor some matrix W ∈Mn×p(R). Let V ⊂X be compact and let G : V →C(K; Rm) be continuous. Applying Theorem 3.1 yields approximations of the form (4.1), where each coefficient map ak : X →Rm\nis a topological neural network on X in the sense of Definition 2.1. More precisely, there\nexist matrices Wk,1, . . . , Wk,rk ∈Mn×p(R), vectors ck,i ∈Rm, and scalars θk,i ∈R such\nthat\nak(A) = X ck,i σ trace(Wk,iA)T −θk,i , A ∈X.\ni=1\nThus the branch part of the network uses finitely many linear measurements of the\ninput matrix A of the form A 7→trace(W TA), while the trunk part consists of ridge\nfunctions on K. Let 1 ≤p < ∞and let X = ℓp, the Banach space of real sequences\nx = (x1, x2, . . . ) with\n∞ !1/p\n∥x∥p = X |xn|p < ∞.\nn=1\nThen the continuous dual is X∗= ℓq, q = p−1,p and every continuous linear functional on\nℓp can be written in the form x 7−→ X wnxn, w = (w1, w2, . . . ) ∈ℓq.\nn=1 Let V ⊂ℓp be compact and let G : V →C(K; Rm) be continuous. Applying Theorem 3.1 yields approximations of the form (4.1), where each coefficient map ak : X →Rm is a topological neural network on X in the sense of Definition 2.1.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 38,
+    "total_chunks": 41,
+    "char_count": 1318,
+    "word_count": 266,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6f9c3582-6c1f-446d-b6ab-8fa99fbe9e1d",
+    "text": "More precisely, there\nexist vectors\nw(k,1), . . . , w(k,rk) ∈ℓq,\nvectors ck,i ∈Rm, and scalars θk,i ∈R such that rk ∞ !\nak(x) = X ck,i σ X w(k,i)n xn −θk,i , x ∈X.\ni=1 n=1 Let X = c0, the Banach space of real sequences converging to zero, equipped\nwith the sup norm. Then the continuous dual is X∗= ℓ1, and every continuous linear\nfunctional on c0 can be written in the form x 7−→ X wnxn, w = (w1, w2, . . . ) ∈ℓ1. n=1\nLet V ⊂c0 be compact and let G : V →C(K; Rm) be continuous. Applying Theorem 3.1 yields approximations of the form (4.1), where each coefficient map ak : X →Rm\nis a topological neural network on X in the sense of Definition 2.1. More precisely, there\nexist vectors\nw(k,1), . . . , w(k,rk) ∈ℓ1,\nvectors ck,i ∈Rm, and scalars θk,i ∈R such that rk ∞ !\nak(x) = X ck,i σ X w(k,i)n xn −θk,i , x ∈X.\ni=1 n=1 Let (Ω, µ) be a measure space and let X = Lp(Ω, µ), 1 ≤p < ∞. If p = 1,\nassume in addition that (Ω, µ) is σ-finite. Then X is Banach and its continuous dual\nis X∗= Lq(Ω, µ), where q = p−1p (with q = ∞if p = 1), and every continuous linear\nfunctional on X has the form f 7−→ f(x)g(x) dµ(x), g ∈Lq(Ω, µ). Let V ⊂Lp(Ω, µ) be compact and let G : V →C(K; Rm) be continuous. Applying\nTheorem 3.1 yields approximations of the form (4.1), where each coefficient map ak :\nX →Rm depends on finitely many integral measurements.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 39,
+    "total_chunks": 41,
+    "char_count": 1336,
+    "word_count": 279,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cacd2857-1dfb-4b78-84d1-e68c8ce0db74",
+    "text": "More precisely, there exist\nfunctions gk,1, . . . , gk,rk ∈Lq(Ω, µ), vectors ck,i ∈Rm, and scalars θk,i ∈R such that ak(f) = X ck,i σ f(x)gk,i(x) dµ(x) −θk,i , f ∈X.\nΩ i=1 Let X = S(Rn), the Schwartz space of rapidly decreasing smooth functions. This is a Fr´echet space whose continuous dual X∗= S′(Rn) consists of tempered\ndistributions. Every continuous linear functional has the form f 7−→⟨T, f⟩, T ∈S′(Rn). Let V ⊂S(Rn) be compact and let G : V →C(K; Rm) be continuous. Applying\nTheorem 3.1 yields approximations of the form (4.1), where each coefficient map ak : X → Rm depends on finitely many distributional measurements. More precisely, there exist\ntempered distributions Tk,1, . . . , Tk,rk ∈S′(Rn), vectors ck,i ∈Rm, and scalars θk,i ∈R\nsuch that\nak(f) = X ck,i σ(⟨Tk,i, f⟩−θk,i) , f ∈X. Let X = D(U), the space of smooth compactly supported functions on\nan open set U ⊂Rn. Its continuous dual X∗= D′(U) is the space of distributions, and\nevery continuous linear functional has the form f 7−→⟨T, f⟩, T ∈D′(U). Let V ⊂D(U) be compact and let G : V →C(K; Rm) be continuous. Applying\nTheorem 3.1 yields approximations of the form (4.1), where each coefficient map ak :\nX →Rm depends on finitely many distributional measurements.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 40,
+    "total_chunks": 41,
+    "char_count": 1236,
+    "word_count": 219,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dacfc26b-19b2-4c08-a1cb-b199c988d75c",
+    "text": "More precisely, there\nexist distributions Tk,1, . . . , Tk,rk ∈D′(U), vectors ck,i ∈Rm, and scalars θk,i ∈R such\nthat\nak(f) = X ck,i σ(⟨Tk,i, f⟩−θk,i) , f ∈X. These examples illustrate that Theorem 3.1 provides a unified approximation principle\nfor continuous operators on compact subsets of finite-dimensional spaces, classical Banach\nspaces of sequences and functions, and important non-normable locally convex spaces\narising in analysis. We present a topological extension of DeepONets in which the operator input lies in an\narbitrary locally convex topological vector space and the network architecture is constructed using continuous linear functionals from the dual space. Under the assumption\nthat the activation function is a Tauber–Wiener function, we prove a universal approximation theorem showing that continuous nonlinear operators can be approximated on\ncompact subsets of the input space by finite separable expansions. The classical Chen–Chen operator approximation theorem and the dot-product DeepONet approximation theorem of Lu et al. arise as special cases of our results. Several\nexamples illustrate that the main theorem applies to a wide range of spaces, including\ninfinite-dimensional Banach spaces and non-normable locally convex spaces.",
+    "paper_id": "2603.11972",
+    "title": "Topological DeepONets and a generalization of the Chen-Chen operator approximation theorem",
+    "authors": [
+      "Vugar Ismailov"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11972v1",
+    "chunk_index": 41,
+    "total_chunks": 41,
+    "char_count": 1262,
+    "word_count": 183,
+    "chunking_strategy": "semantic"
+  }
+]

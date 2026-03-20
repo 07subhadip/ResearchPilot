@@ -1,0 +1,1602 @@
+[
+  {
+    "chunk_id": "43066907-0f27-427a-b4fa-e52e1363a1d1",
+    "text": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference Valentyn Melnychuk 1 Vahid Balazadeh 2 Stefan Feuerriegel 1 Rahul G.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 0,
+    "total_chunks": 80,
+    "char_count": 143,
+    "word_count": 20,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1410021e-990e-4597-9ccd-38b813a0745c",
+    "text": "Abstract & Huber, 2023), public policy (Lechner, 2023; Kuzmanovic\net al., 2024), and medicine (Feuerriegel et al., 2024). A key Foundation models based on prior-data fitted nettarget estimand here is the average treatment effect (ATE), works (PFNs) have shown strong empirical perwhich quantifies the population-level causal effect of an formance in causal inference by framing the task\nintervention. as an in-context learning problem. However, it is\nunclear whether PFN-based causal estimators pro- Foundation models based on prior-data fitted networks2026 vide uncertainty quantification that is consistent (PFNs) have recently shown strong empirical performance\nwith classical frequentist estimators. In this work, in causal inference. Under their paradigm, causal inferwe address this gap by analyzing the frequentist ence is framed as an in-context learning problem (BrownMar consistency of PFN-based estimators for the av- et al., 2020; Dong et al., 2024): the estimator/predictor is\nerage treatment effect (ATE). (1) We show that simply provided by a single forward pass through a large\n12 existing PFNs, when interpreted as Bayesian ATE pretrained network (e. g., a transformer) that takes the whole\nestimators, can exhibit prior-induced confounding observational dataset as an input.\nbias: the prior is not asymptotically overwritten\nAt a high level, PFNs are trained exclusively on synthetic by data, which, in turn, prevents frequentist condatasets sampled from a prior over data-generating pro- sistency. (2) As a remedy, we suggest employcesses, which thus builds upon ideas of amortized varia- ing a calibration procedure based on a one-step\ntional Bayesian methods (Garnelo et al., 2018; Kim et al.,[cs.LG] posterior correction (OSPC). We show that the\n2019; Xie et al., 2022). A prominent example is TabPFN OSPC helps to restore frequentist consistency and\n(Hollmann et al., 2023; 2025) that is tailored to tabular data can yield a semi-parametric Bernstein–von Mises\n(Erickson et al., 2025). Recently, several works adapted the theorem for calibrated PFNs (i.e., both the calPFN paradigm specifically to causal inference (Robertson ibrated PFN-based estimators and the classical\net al., 2025; Balazadeh et al., 2025; Ma et al., 2026) (see semi-parametric efficient estimators converge in\nTable 1). distribution with growing data size). (3) Finally,\nwe implement OSPC through tailoring martingale However, it is unclear whether existing PFNs for causal inposteriors on top of the PFNs. In this way, we ference provide reliable uncertainty quantification. Notably,\nare able to recover functional nuisance posteri- PFN are approximate Bayesian models, which offer total\nors from PFNs, required by the OSPC. In multi- uncertainty quantification \"out-of-the-box\" in the form of\nple (semi-)synthetic experiments, PFNs calibrated the posterior predictive density (PPD). Several works have\nwith our martingale posterior OSPC produce ATE explored how the PPDs can be used for downstream tasks\nuncertainty that (i) asymptotically matches fre- (Jesson et al., 2025; Nagler & R¨ugamer, 2025). This feature\nquentist uncertainty and (ii) is well calibrated in makes PFNs attractive for causal inference (Balazadeh et al.,arXiv:2603.12037v1 finite samples in comparison to other Bayesian 2025; Ma et al., 2026), since PPDs can yield the uncertainty\nATE estimators. for both outcome model and propensity model (i.e., the nuisance functions). Yet, to the best of our knowledge, no work\nhas so far studied PFNs for causal inference in terms of their\n1.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 1,
+    "total_chunks": 80,
+    "char_count": 3551,
+    "word_count": 526,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "78ddf06e-1e82-4724-87ca-f6bde75f0ae4",
+    "text": "Introduction frequentist consistency (i. e., whether PFN-based estimators\nEstimating the effect of treatments from observational data asymptotically converge in distribution to classical semiis widely relevant for decision-making in marketing (Langen parametric frequentist estimators). Our paper aims to fill\nthis gap.\n1LMU Munich & Munich Center for Machine Learning\n(MCML), Munich, Germany 2University of Toronto & Vector In- Here, we study the frequentist consistency of PFNs for ATE\nstitute, Toronto, Canada. Correspondence to: Valentyn Melnychuk estimation. While we focus on the ATE, our results naturally\n<melnychuk@lmu.de>. extend to other finite-dimensional causal estimands. Overall,\nour paper makes the following contributions: Preprint.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 2,
+    "total_chunks": 80,
+    "char_count": 749,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e25f6db3-2161-47d0-9857-1824778b3a22",
+    "text": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference Overview of prior-fitted networks (PFNs) that are suitable for ATE estimation. Posterior distribution, x) Posterior means 2 Viable for 3 Viable PFN POF 1 PICB P(⋄| D, the OSPC for MPs\nY [a] Y [1] −Y [0] µa A µa π τ\nTabPFN (Hollmann et al., 2023) ✓† o ✓ ✗ ✓∗ ✓ ✓ ✓ ✓ ✓ ✓\nDo-PFN (Robertson et al., 2025) ✗ o‡ ✓ ✗ ✗‡ ✗ ✓ ✗ ✓ ✗ ✗‡\nCausalPFN (Balazadeh et al., 2025) ✓ o ✗ ✗ ✓ ✗ ✓ ✗ ✓ ✗ ✗×\nCausalFM (Ma et al., 2026) ✓ o ✗ ✓ ✗ ✗ ✗ ✗ ✓ ✗ ✗×\nPOF: potential outcomes framework; PICB: prior-induced confounding bias; MPs: martingale posteriors; OSPC: one-step posterior correction\n†: when used as a S- or T-learner; ‡: struggles with non-identifiability; ∗: can be recovered trough MPs; ×: do not provide a full PPD. 1 (→Sec. 5.1): First, we show that the existing PFNs consistency of frequentist estimators and (ii) finite-sample(Hollmann et al., 2023; 2025; Balazadeh et al., 2025; Ma uncertainty guided by the prior of Bayesian estimators. Emet al., 2026), when used as Bayesian ATE estimators, are pirically, we show that existing PFNs combined with our\nprone to a so-called prior-induced confounding bias.1 In- MP-OSPC (i) asymptotically match the well-established\nformally, this bias arises because the PFN's implicit prior A-IPTW estimators; and (ii) often achieve superior finite-\n(which is learned from synthetic training distributions) can sample calibration compared to other Bayesian ATE estimasystematically shrink the degree of observed confounding tors.\ntoward zero. As a result, the PFN's posterior is concentrated\nIn sum, our paper is novel in three ways:2 (1) We show that\non nearly unconfounded data-generating processes, so the\nna¨ıve PFN-based Bayesian ATE estimators can be systemATE estimates can be biased even as the sample size grows,\natically biased due to an overly strong implicit prior that\nwhich thus prevents the frequentist consistency.\nis not overwritten by the observed data. (2) We develop a\n2 (→Sec. 5.2): To address the prior-induced confound- novel calibration procedure based on a one-step posterioring bias in PFNs, we employ a novel calibration procedure correction and martingale posteriors, which we call MPbased on the efficient influence functions, namely a one- OSPC. (3) We demonstrate empirically that existing PFNs\nstep posterior correction (OSPC) (Yiu et al., 2025). The with our MP-OSPC on top achieve state-of-the-art uncerOSPC allows us to recalibrate the PFN's uncertainty with- tainty quantification when compared to standard PFN-based\nout full re-training and, under mild assumptions, restores baselines.\nfrequentist consistency. As our main contribution, we show\ntheoretically that a semi-parametric Bernstein–von Mises 2. Related Work\n(BvM) theorem (Ray & van der Vaart, 2020) holds approx-\n2.1. Causal Inference\nimately for the calibrated PFNs. This has the following\nimplications: the OSPC of the PFNs (i) yields ATE posteri- Frequentist estimators. A broad family of estimators has\nors that asymptotically match the normal distribution given been developed for causal inference from observational data,\nby a frequentist augmented inverse probability of treatment including plug-in and inverse probability treatment weighted\nweighted (A-IPTW) estimators, and thereby (ii) restores (IPTW) estimators, which all require the estimation of nuifrequentist consistency. sance functions (Kennedy, 2024). Among these, an A-IPTW\nestimator is particularly attractive: it yields semi-parametric\n3 (→Sec. 5.3): Finally, we implement our OSPC by adapt- √n-consistent, efficient, and asymptotically normal infer-ing the general framework of martingale posteriors (MPs)\nence for finite-dimensional targets (such as ATE) under stan-(Fong et al., 2023) to our setting, which we call MP-OSPC\ndard regularity conditions (Robins, 2000; Newey, 1994);hereafter. This step is necessary because the OSPC requires\nand it is, in some sense, optimal (Jin & Syrgkanis, 2024).not just the PPDs provided by the PFNs but the ability to\nConceptually, the A-IPTW estimator can be viewed as asample posteriors over the nuisance functions.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 3,
+    "total_chunks": 80,
+    "char_count": 4131,
+    "word_count": 640,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "325f8f72-d378-4005-95c5-23716eee128c",
+    "text": "Fortunately,\nfirst-order bias correction of a plug-in estimator using the ef-MPs make it possible to recover posteriors for any paramficient influence function (Bickel et al., 1993; Tsiatis, 2006).eter/function of the underlying data-generating process, as\nThe A-IPTW and other debiased (but asymptotically equiva-long as the PPD can be sequentially updated (that is, it satislent) estimators (van der Laan & Rubin, 2006) have recentlyfies a martingale property).To implement our MP-OSPC, we\nbeen combined with various ML models (e.g., Shi et al.,tailor a copula-based MP framework (Nagler & R¨ugamer,\n2019; Hatt & Feuerriegel, 2021; Chernozhukov et al., 2022;2025) to our causal setting. By calibrating the uncertainty of\nHines & Hines, 2025).the PFNs in a manner targeted specifically at the ATE, our\nMP-OSPC combines the best of both worlds: (i) asymptotic Bayesian estimators. Bayesian approaches to causal inference typically model the nuisance functions using flexible\n1This bias is also referred to as regularization-induced confounding bias and is known to affect Bayesian non-parametric 2Code is available at https://anonymous.4open.\nmodels (Hahn et al., 2018; Linero & Antonelli, 2023). science/r/frequentist-pfns/. Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference nonparametric methods, such as Gaussian processes (Alaa & they are able to model. We provide a detailed comparison\nvan der Schaar, 2017; 2018) and Bayesian regression trees in Table 1.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 4,
+    "total_chunks": 80,
+    "char_count": 1485,
+    "word_count": 212,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5c97b560-a273-4922-831d-f73b468e41df",
+    "text": "We later exclude Do-PFN from our analysis, as\n(Chipman et al., 2010). For broader overviews, we refer it overestimates uncertainty due to the fact that it relies on a\nto Li et al. (2023); Linero & Antonelli (2023). However, non-identifiable formulation (Ma et al., 2026).\nunlike frequentist estimators, Bayesian methods do not have\nUncertainty quantification with PFNs. A key motivation\na notion of (semi-parametric) efficiency. Instead, Bayesian\nfor PFNs is that they can quantify an approximate total unestimators can have a related property, namely, frequentist\ncertainty of the outcome in the form of a PPD,3 which can\nconsistency, which is formalized through the Bernstein–von\nthen be used for downstream tasks (Jesson et al., 2025; NaMises (BvM) theorem (Hartigan, 1983; Bickel & Kleijn,\ngler & R¨ugamer, 2025). However, deriving the uncertainty\n2012).\nof the downstream estimands (such as conditional means\nBernstein–von Mises (BvM) theorem. The BvM theorem or quantiles) is more challenging and requires an additional\nstates that Bayesian credible intervals for a causal estimand layer of inference (Jesson et al., 2025; Nagler & R¨ugamer,\nasymptotically coincide with confidence intervals centered 2025). In particular, one must recover functional posteriat efficient frequentist estimators, such as the A-IPTW (Ray ors using the framework of martingale posteriors (MPs)\n& van der Vaart, 2020). This property can be achieved (Fong et al., 2023). MPs can be constructed either solely\nin several ways. (a) One approach is to adopt tailored ad- based on PFNs (Ng et al., 2025) or by combining a PFN\nhoc parametrizations of Bayesian models; for example, by with an additional copula-based model (Nagler & R¨ugamer,\nplacing priors directly on the conditional average treatment 2025). In our work, we adopt the latter approach to recover\neffect (Chipman et al., 2010), or by incorporating the propen- the nuisance functions posteriors and, methodologically, exsity score as an input to the outcome model (Hahn et al., tend the marginal point-wise MPs of Nagler & R¨ugamer\n2020). (b) A more general approach to obtaining the BvM (2025) to conditional MPs in order to obtain joint functional\nproperty is by using one-step corrections based on efficient posteriors for the nuisance functions.\ninfluence functions. Existing correction approaches for (b)\nResearch gap. To the best of our knowledge, no work has\ninclude prior corrections (Ray & van der Vaart, 2020; Ray &\nstudied frequentist consistency of PFNs for causal inference\nSzab´o, 2019), corrections to Bayesian variational objectives\nor, more generally, semi-parametric estimation.\n(Javurek et al., 2026), and posterior corrections (i.e., OSPC)\n(Yiu et al., 2025). We later employ posterior corrections,\n3. Preliminarieswhich can be implemented without re-training an amortized\nBayesian model.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 5,
+    "total_chunks": 80,
+    "char_count": 2851,
+    "word_count": 431,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "339ff985-1d18-4814-b6f6-fb6d932c8da2",
+    "text": "We use uppercase letters X, A, Y for random\nproperty was not studied for PFNs (M¨uller et al., 2022), or, variables and lowercase x, a, y for their realizations in\ngenerally, for conditional neural processes (Garnelo et al., X, A, Y. For a generic random variable Z, P(Z) denotes2018). its distribution; E(Z) is an expectation; and P(z) refers\nto the corresponding density or probability mass (when\n2.2. Prior-Data Fitted Networks (PFNs) needed, we also specify a random variable Z in a lower\nindex, i. e., PZ(z)). Similarly, we define distributions in the\nPFNs. PFNs were introduced as foundation models that\nfunctional space of the nuisance functions η ∈H. Namely,amortize Bayesian inference by pretraining on synthetic let Π(η) denote a distribution over the nuisance functions\ndatasets sampled from a user-specified prior over dataspace Then, for a dataset = i=1, we denotegenerating processes (M¨uller et al., 2022). A state-of-the-art H. D {zi}nPn the empirical distribution as Pn := n−1 i=1 δzi where\nexample is TabPFN (Hollmann et al., 2023; 2025), which δz is a point mass distribution; and posterior distributions\nwe use as our main backbone in our empirical analysis. In\nfor random variables/functions as P(· | D), re-principle, any PFN such as TabPFN can be used for ATE spectively. For a measurable function f, we write its L2\nestimation together with an S- or T-learner (K¨unzel et al., norm as and we denote the em-2019)). ∥f∥= (E|f(Z)|2)1/2, Pn\ni=1 f(zi) and the pirical mean by Pn{f(Z)} := n−1\nPFNs for causal inference. Recent work has extended mean wrt.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 7,
+    "total_chunks": 80,
+    "char_count": 1572,
+    "word_count": 257,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8d82d70c-f7a9-4330-b27e-90a557fc6bbb",
+    "text": "Bayesian bootstrap process as = Pn BBn{f(Z)}\nthe PFN paradigm to train PFNs directly for causal esti- i=1 Wif(zi) where (W1, . . . , Wn) is a sample from a\nmands by simulating causal structures during pretraining. Dirichlet process Dir(n; 1, . . . , 1). The propensity score\nNotable examples include Do-PFN (Robertson et al., 2025), is π(x) = P(A = 1 | X = x), and we write the condiCausalPFN (Balazadeh et al., 2025), and CausalFM (Ma tional outcome mean as µa(x) = E(Y | X = x, A = a).\net al., 2026). These works differ (i) in their underlying When unambiguous, we use shorthand such as E(Y | x)\ncausal formulations (e. g., whether they adopt the potential and P(Y | x).\noutcomes framework); and (ii) in what posterior predictive\n3CausalPFN (Balazadeh et al., 2025) is a slight exception, as it\ndensities (PPDs) and, consequently, what nuisance functions provides not a PPD but a posterior density of the outcome model. Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference (a) (b) (c) (d)\n7.5 7.5 7.5 7.5 TrainingFunctionaldataposterior\n5.0 x) 5.0 5.0 5.0 Posterior mean\nD,| 2.5 2.5 2.5 2.5 0.0 P(y y 0.0 y 0.0 y 0.0\nPPD, −2.5 −2.5 −2.5 −2.5\n−5.0 −5.0 −5.0 −5.0\n−7.5 0 1 2 −7.5 0 1 2 −7.5 0 1 2 −7.5 0 1 2 −2 −1 −2 −1 −2 −1 −2 −1\nx x x x\nFigure 1. Recovering functional posteriors from TabPFN. In (a), we show a PPD P(y | D, x), where D = {(xi, yi)}50i=1. Then, in (b)-(d),\nwe draw PPD samples from different functional posteriors ˜µ ∼Π(µ | D) (recovered with martingale posteriors), where µ(x) = E(Y | x). Notably, the same PPD P(y |",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 8,
+    "total_chunks": 80,
+    "char_count": 1558,
+    "word_count": 293,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "75087baf-76c1-407d-8bfc-6b7c57ffe2d6",
+    "text": "D, x) (a) can encompass different functional posteriors (in the causal setting, those, in turn, lead to different\nATE posteriors): (b) x-independent posterior, (c) x-parallel posterior, (d) smooth posterior. Problem setup and causal estimand. In our work, we rely The core property of the A-IPTW estimator ˆψ =\non the potential outcomes framework (Rubin, 1974), where ψA-IPTW(ˆη) is that, under mild assumptions on the conY [a] denotes the potential outcome under the intervention vergence of the nuisance functions (namely R2 =\ndo(A = a). We have access to the observational i.i.d. √n ˆπ−1 for a and ∥ˆµa −µa∥ −π−1 →0 ∈{0, 1})dataset = ai, i=1 A, Y ) = P(Z). The proper sample splitting, it serves as a semi-parametric √n- D {(xi, yi)}n ∼P(X,\ncovariates X ∈X ⊆Rdx are measured before treatment consistent and efficient estimator of the ATE with the asympand may be high-dimensional, the treatment A ∈{0, 1} is totically normal distribution (Robins, 2000; Newey, 1994):\nbinary, and the outcome Y ∈Y ⊆R is real-valued. As √n(ˆψ −ψ) d−→N 0; Var[ϕψ(Z; η)] . (4)a concrete example, in oncology studies, Y could represent tumor size, A whether radiotherapy was administered,\nBayesian ATE estimation. Bayesian semi-parametric estiand X patient characteristics such as age and sex. Our tarmators for ATE are conceptually similar to frequentist ones\nget causal estimand is the average treatment effect (ATE)\n(Yiu et al., 2025) in that they also proceed in two stages.\nψ = E(Y [1] −Y [0]). First, they assume some prior distribution for the nuisance\nCausal assumptions and identification. To consistently functions η ∼Π(η) (e. g., Gaussian processes for µa and an\nestimate the ATE, we make standard causal assumptions uninformative Dirichlet process prior for PX). Then, they\n(Rubin, 1974): (i) consistency: Y [A] = Y ; (ii) strong over- infer the posteriors ˜η ∼Π(η | D) (e. g., posterior Gauslap: P(ε < π(X) < 1 −ε) = 1 for some ε > 0, and sian processes for µa and Bayesian bootstrap for PX) and\n(iii) unconfoundedness: (Y [0], Y [1]) ⊥⊥A | Then, push-forward the latter through the mean functional fromunder the assumptions (i)–(iii), the ATE is identified as Eq. (1):\nZ ψPI(˜η) | D = BBn{˜µ1(X)−˜µ0(X)}; ˜µa ∼Π(µa | D), (5)\nψ = ψ(η) = (µ1(x) −µ0(x)) dPX(x), (1)\nX where posterior sampling from Π(µa |",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 9,
+    "total_chunks": 80,
+    "char_count": 2296,
+    "word_count": 384,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ec8a10c-f20a-439f-8bdb-7364cf0cf3f4",
+    "text": "D) and Bayesian\nwhere η = {µ0, µ1, PX} are the ground-truth nuisance bootstrap are done independently (where we assume w.l.o.g.\nfunctions. that the size of D and Bayesian bootstrap sample are both n). The sampling procedure from Eq. (5) then induces a\nFrequentist ATE estimation. A na¨ıve way to estimate the posterior distribution of the ATE, P(ψPI(˜η) which weATE is first (i) to fit the nuisance functions ˆµ0, ˆµ1 with some | D), call a plug-in posterior.\nregression model (e. g., a neural network) and ˆPX = Pn\nand then (ii) to plug them in into the identification formula Frequentist consistency. In the later sections, we are infrom Eq. (1).",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 10,
+    "total_chunks": 80,
+    "char_count": 648,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "903b90a8-9bef-4da9-9226-5f097907c19f",
+    "text": "This yields a plug-in estimator: ψPI(ˆη) = terested in the frequentist consistency of Bayesian ATE\nPn{ˆµ1(X) −ˆµ0(X)}. Yet, this estimator suffers from a estimators. This property is desired, as it ensures asymptoti-plug-in bias (Kennedy, 2024), which can be mitigated by cally that (1) the result is indifferent to prior specification\nthe following bias-correction procedure: and (2) agreement between Bayesian and frequentist estimators. This can be formalized with the following property\nψA-IPTW(ˆη) = ψPI(ˆη) + Pn{ϕψ(Z; ˆη)}, (2)\n(Ray & van der Vaart, 2020; Yiu et al., 2025).\nwhere ψA-IPTW is called an augmented inverse probability Definition 1 (Semi-parametric Bernstein–von Misses (BvM)\nof treatment weighted (A-IPTW) estimator, and ϕψ(Z; ˆη) is theorem). A Bayesian estimator ψ(˜η) | D satisfies a semi-an efficient influence function given by parametric BvM theorem if the posterior distribution of\n√n(ψ(˜η) converges in total variation (TV) to theϕψ(Z; η = (µ0, µ1, π, PX)) (3) −ψ) asymptotic normal distribution of the A-IPTW estimator:\nA −π(X)\n= Y −µA(X) + µ1(X) −µ0(X) −ψ(η). h i π(X)(1 −π(X)) dTV P(√n(ψ(˜η) −ψ) | D); N 0; Var[ϕψ(Z; η)] →0. (6)",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 11,
+    "total_chunks": 80,
+    "char_count": 1159,
+    "word_count": 180,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8426df66-1dda-4913-bd6f-b631002d8116",
+    "text": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference TabPFN CausalPFN CausalFM 0.6 dx 0.6 dx 0.6 dx\n5 5 5\n50 50 50\nDensity 0.4 100 Density 0.4 100 Density 0.4 100 0.0 0.0 0.0\n−4 −2 0 2 4 −4 −2 0 2 4 −4 −2 0 2 4\nAmount of measured confounding, ∆ Amount of measured confounding, ∆ Amount of measured confounding, ∆\nFigure 2. Prior-induced confounding bias of different PFNs. High values of ∆correspond to a high degree of the observed confounding. Thus, when ∆is concentrated around zero, the prior might induce the confounding bias which does not vanish asymptotically with\ngrowing data (as a strong observed confounding is excluded a priori). Here, we sample B = 512 causal datasets with n = 10000 each.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 12,
+    "total_chunks": 80,
+    "char_count": 725,
+    "word_count": 129,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b388c6a-c462-4f91-b2f1-45301792e2ad",
+    "text": "Notably, as we will demonstrate later, the plug-in posteriors in Fig. 1). Still, both the independent and parallel posterigenerally do not satisfy the BvM theorem. ors misrepresent the uncertainty of the nuisance functions:\nthe independent posterior fully discards a potential smooth\n4. How to Turn PFNs into ATE Estimators? structure of the nuisance functions, and the parallel posterior induces a non-existent dependency. Later, we will show\nTo study the frequentist consistency of PFNs when used\nthat it is possible to recover smooth, \"natural\" posteriors of\nas Bayesian ATE estimators, we must first specify how\nnuisance functions from PFNs using an MP framework. PFNs can be turned into ATE estimators. Unlike classical semi-parametric Bayesian models, PFNs do not define Still, a more fundamental issue arises when PFNs are used\nexplicit posteriors over nuisance functions. Instead, they with plug-in posteriors: prior-induced confounding bias,\nprovide only pointwise posterior predictive densities (PPDs), which we discuss next. D, x), for different components of the data-generating\nprocess (see Table 1 and Appendix A.1 for details). Frequentist Consistency of PFNs\nseemingly minor distinction turns out to be crucial: depending on how PPDs are used, PFNs can behave either as (a) In the following, we discuss 1 what is a prior-induced\nstandard frequentist estimators or as (b) Bayesian estimators confounding bias, 2 how to correct it and achieve frequenwith fundamentally different uncertainty properties. tist consistency, and 3 how to recover smooth posteriors\nwhen we want to employ PFNs as Bayesian ATE estima-\n(a) PFNs as frequentist estimators. As a baseline, PFNs\ntors.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 13,
+    "total_chunks": 80,
+    "char_count": 1687,
+    "word_count": 254,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "26e00734-2b6f-4770-a475-85e69b5e243d",
+    "text": "Towards the end, we introduce our main framework of\ncan be used in a purely frequentist manner by extracting\nmartingale posteriors-based one-step posterior corrections\npoint estimates from their posterior predictive densities. For\n(MP-OSPC).\nexample, given the conditional posterior mean estimator R\nˆµa(x) = 5.1. 1 Prior-Induced Confounding Bias y dP(y |R D, x, a) of TabPFN (Hollmann et al., Y\nof CausalPFN =2023) or ˆµa(x) µa dP(µa | D, x) Y(Balazadeh et al., 2025), either posterior mean estimator The plug-in ATE posterior, in general, faces a problem\ncan be used to construct a plug-in ATE estimator. Similarly, of a prior-induced confounding bias (Hahn et al., 2018;\nwe can further infer the posterior mean for the propensity Linero & Antonelli, 2023; Ray & van der Vaart, 2020):\nBayesian non-parametric models (e. g., Gaussian pro-score with TabPFN and use when ˆπ(x) = P(A = 1 | D, x) cesses) are used to define the data-generating process forit inside the A-IPTW estimator (see Eq. (2)). Yet, PFNs\nare inherently Bayesian methods, and we thus prefer fully D, namely, µa and π, their prior can bias the plug-in ATE\nBayesian estimators as shown in (b). posterior even in the asymptotic regime. The intuitive explanation of this phenomenon is that the smooth non-parametric\n(b) PFNs as Bayesian estimators. A na¨ıve way to use PFNs models struggle to describe high degrees of observed conas Bayesian ATE estimators is to sample point-wise from founding, as the nuisance functions µa and π sampled from\nthe PPDs as if they were functional posteriors. For example, the prior, rarely depend on the same subsets of covariate\nwe might sample, independently for each x, the point-wise\nxJ, J ⊆{1, . . . , dx}. Paradoxically, the issue becomesconditional outcome mean posterior from CausalPFN (Bal- worse as we increase the covariate dimensionality dx.\nazadeh et al., 2025) push x) and as ˜µa(x) ∼P(µa | D,it forward with Eq. (5). We call this ATE posterior an x- Interestingly, existing PFNs are also affected by this bias\nindependent PPD plug-in posterior.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 14,
+    "total_chunks": 80,
+    "char_count": 2057,
+    "word_count": 337,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0bd57bbd-f6f0-453b-9bba-1715e9036964",
+    "text": "Alternatively, we might as they are trained on synthetic datasets sampled from a\ndistribution. To show this, we sample the prior causalsort the sampled point-wise wrt. ascending) prior ˜µa(x) Y (e. g., datasets, evaluate = ai, yi[0], i=1, and PPD plug-inand yield posterior. Importantly, an x-parallel Dc {(xi, yi[1])}n the\nthere is not a unique way to recover the nuisance function degree of the observed confounding:\nposteriors Π(η | D) from the PPDs (see visual examples ∆= E(Y [1] −Y [0]) − E(Y | Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference which quantifies how the ATE differs from the difference in and, thus, we do not need its posterior. We nevertheless inmeans.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 15,
+    "total_chunks": 80,
+    "char_count": 701,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "08087203-e84c-4870-9ad5-dbd6d3ffb7d0",
+    "text": "Fig. 2 illustrates the prior-induced confounding bias corporate the propensity score posterior for two fundamental\nfor different PFNs. We observed that, although the amount reasons: (i) to resolve the formerly mentioned prior-induced\nof the observed confounding ∆remains relatively fixed confounding bias as it increases uncertainty of the posterior\nwith increasing covariate dimensionality dx (e. g., unlike the in the regions of low overlap. Furthermore, (ii) by using the\nGaussian processes (Linero & Antonelli, 2023)), ∆is still OSPC, we allow for the frequentist √n-consistency even\nconcentrated around zero for all the PFNs. This means that when posteriors for both µa and π concentrate slower-thanthe PFNs rarely encounter the observed confounding during parametric rates around the ground-truth, which yields a\ntheir training and thus might underestimate the uncertainty Bayesian analogue of double-robustness. Both (i) and (ii)\nof the ATE for datasets with large ∆. are formalized in the following theorem. Importantly, we here distinguish between (i) a (general) con- Theorem 1 (Semi-parametric BvM theorem of the OSPC\nsistency and (ii) a frequentist consistency. While (i) can be ATE posterior).",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 16,
+    "total_chunks": 80,
+    "char_count": 1206,
+    "word_count": 177,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bcb929ff-bcd4-46c4-95e9-fcc032a1b234",
+    "text": "Assume the following holds for the obserachieved by PFN-based plug-in estimators with sufficiently vational data and a Bayesian estimator of the nuisance\nexpressive priors (Balazadeh et al., 2025) so that the de- functions. Specifically, there exists a sequence of measurgree of observed confounding ∆has a wide enough support, able subsets Hn of H for which Π(˜η ∈Hn | D) →1 and\n(ii) is a stronger property and depends on the shape of the for which (a)–(c) hold for a ∈{0, 1}:\nprior distribution of ∆. (a) L2 convergence of ˜µa and ˜π: Takeaway: The prior-induced confounding bias is, therefore, 1 √n sup sup (11)a main obstacle for the frequentist consistency of the PFNs. R2 = ˜π −1π · ∥˜µa −µa∥→0. ˜π∈Hn ˜µa∈HnThat is, we cannot, in general, guarantee the BvM theorem\nas the prior influences the plug-in ATE posterior.4 (b) Uniform bounding: for large n, there exists C, ε > 0\nsuch that, for all ˜µa, ˜π ∈Hn, P(|Y −˜µa(X)| < C) = 15.2. 2 One-step Posterior Corrections and P(ε < ˜π(X) < 1 = 1. −ε) (c) Sample splitting / Donsker condition: Nuisance functionsTo circumvent the prior-induced confounding bias, we sugposteriors are estimated on an independent subsample ofgest employing a one-step posterior correction (OSPC) for\nthe data (separate from the Bayesian bootstrap sample), orthe ATE plug-in posterior (Yiu et al., 2025) (this procedure\na Donsker condition holds for Hn (Yiu et al., 2025).is similar to the bias correction of the frequentist A-IPTW\nThen, the OSPC ATE posterior ψOSPC(˜η) from Eq (9) satis-estimator). The OSPC defines the posterior for the ATE\nfies the BvM theorem (see Definition 1).as the following push-forward of the posterior nuisance\nfunctions:\nProof. This result is an extension of Theorem 4 of Yiu et al.\nψOSPC(˜η) | D = ψPI(˜η) + BBn{ϕψ(Z; ˜η)}; ˜η ∼Π(η | D), (8) (2025) to the ATE.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 17,
+    "total_chunks": 80,
+    "char_count": 1821,
+    "word_count": 306,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b4564526-fb95-434c-92ad-3e1f948c1ad5",
+    "text": "where ψPI(˜η) is the plug-in ATE push-forward from Eq. (5), Intuitively, the OSPC thus recovers the frequentist consisand ϕψ is the efficient influence function of the ATE, see tency of any Bayesian ATE estimator of the nuisance funcEq. (3). The OSPC thus yields an OSPC ATE posterior tions (as long as it satisfies the conditions of Theorem 1):\nP(ψOSPC(˜η) | D) given by the following push-forward: it ensures that Bayesian and frequentist uncertainties are\naligned in large samples so that prior specification does not\nψOSPC(˜η) | D = BBn ξψ(Z; ˜η) ; (9)\ninfluence the posterior asymptotically. A −˜π(X)\nξψ(Z; ˜η) = Y −˜µA(X) + ˜µ1(X) −˜µ0(X); ˜π(X)(1 −˜π(X)) What if the OSPC is applied to an already calibrated model? If a posterior ˜µa is already calibrated (in our frequentist˜η ∼Π(η | D), (10)\nconsistency sense), applying the OSPC essentially has no\nwhere ξψ is an uncentered efficient influence function. No- asymptotic effect, since BBn{ϕψ(Z; ˜η)} = 0. For example, CausalPFN may yield approximately debiased posteriorstably, the Bayesian ATE estimation now requires modeling\nthe functional posterior of the propensity score Π(π |",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 18,
+    "total_chunks": 80,
+    "char_count": 1140,
+    "word_count": 182,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "728bbad2-6bd5-4e27-a100-84b71089f228",
+    "text": "D), in ˜µa for datasets2). Thewithreasonnot toofor thislargeis measuredthat the debiasingconfoundingtermaddition to the outcome regressions. From a purely Bayesian ∆∈(−2, can be upper-bounded:perspective, this may appear unnecessary: the ground-truth\ncausal estimand ψ does not depend on the propensity score,\nA E(ϕψ(Z; ˜η)) ≲ E −π(X) Y = , (12) π(X)(1 −µA |∆| 4Unless the posteriors for the conditional outcome mean −π(X))\nΠ(µa | D) concentrates around the ground-truth at a rate faster\nthan √n, which is impossible for any regular Bayesian estimator where µA = E(Y A) is a treatment-conditional mean, and |(van der Vaart, 2000). ˜η is assumed to contain the ground-truth propensity score Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference Legend\nPropensity ...",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 19,
+    "total_chunks": 80,
+    "char_count": 786,
+    "word_count": 117,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e603728d-df34-4867-a56c-297cace5fb49",
+    "text": "Datasets\nOutcome Inputs /\nPFN ... connections\n... Outputs with\ncorresponding\n... distributions Overview of our MP-OSPC calibration procedure. Here, N is the number of MP steps and B is the number of posterior draws\nfrom the functional posteriors. Our MP-OSPC with PFNs thus yields the OSPC ATE posterior and serves as a Bayesian ATE estimator. Hence, the correction term BBn{ϕψ(Z; ˜η)} is close to D′N−1, X′N, A′N). The functional posterior for the propen-zero, so the OSPC does not alter the resulting estimator. sity score can be obtained from TabPFN analogously by\niteratively updating P(A X′N).",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 20,
+    "total_chunks": 80,
+    "char_count": 598,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c84114b4-296b-4eea-b033-0047b3a563ed",
+    "text": "In principle, anyIn the following, we develop a framework so that the OSPC | D′N−1, other PFN can be used in place of TabPFN with this MP\nATE posterior can also be implemented for the PFNs.\nconstruction. However, none of the existing causal PFNs\nprovide the PPDs for both the outcome and propensity score5.3. 3 Sampling Nuisance Functions with MPs\n(see Table 1).",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 21,
+    "total_chunks": 80,
+    "char_count": 362,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "30a71370-ce76-4009-90fd-02d6e4620dbb",
+    "text": "Hence, we later use TabPFN as the backbone\nIn the following, we aim to recover smooth functional pos- in our experiments.\nteriors ˜η ∼Π(η | D) from a PPD of some PFN, so that they However, the PFN-only MPs are problematic for two rea-can be used in the OSPC ATE posterior from Eq (9). For\nsons. (1) PFNs often violate the so-called martingale propthis, we use a predictive property of the PFNs together with\nerty (i.e., the PPDs may add bias under sequential updating;\nan MP framework (Fong et al., 2023; Ng et al., 2025; Nagler\nsee Nagler & R¨ugamer, 2025; Ng et al., 2025), and, thus,\n& R¨ugamer, 2025). The MPs build on iteratively sampling\ncannot be reliably used in the MP updates. (2) MP upand updating the PPDs:\ndates are time-consuming when large PFNs are used (e. g.,\ntransformer-based PFNs like TabPFN scale quadratically,Step 1 : Z′ ∼P(Z |",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 22,
+    "total_chunks": 80,
+    "char_count": 850,
+    "word_count": 151,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4fc461ee-ac33-419a-bb8c-69d7c9c2d4af",
+    "text": "D); D′ = D ∪{Z′}; (13)\nthat is, are in O(N 2)). To tackle both problems, we adopt a\nStep 2 : Z′′ ∼P(Z | D′); D′′ = D′ ∪{Z′′}; . . . hybrid approach of combining PFNs and copulas (Nagler &\nStep N : Z′N ∼P(Z | D′N−1); D′N = D′N−1 ∪{Z ′N}; . . . Nagler & R¨ugamer (2025) suggested\nand, then, using the random infinite dataset {Z′, Z′′, . . . } combining the PFNs (used at Step 1) and copulas (used atequipped with a random density / probability mass function\nSteps > 1), as originally suggested by Fong et al. (2023). D to infer posteriors of the downstream quanti- Yet, they implemented the MP updates conditionally on x,ties. For example, we can infer the posterior for the mean R R while we want to recover the whole functional posteriors.\nθ(PZ) = z dPZ(z) via P(θ ∈A | D) = Θ 1(θ(PZ) ∈ Thus, we define the PFN+copula MP updates as follows: Z\nA)) dΠ(P∞(z) | We provide further background infor-mation on MPs in Appendix A.2.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 23,
+    "total_chunks": 80,
+    "char_count": 924,
+    "word_count": 179,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "99635fdb-dd66-4ed2-aef5-0c131b5f9b8d",
+    "text": "A direct way to recover the smooth func- V ′N = (X, A)′N ∼Pn(X, A);\nStep N : uN(v, V ′N) = 1 V ′N) + αN(v, V ′N) cρ(qN, rN);tional posteriors for µa and π is to employ PFNs as a poste- −αN(v,\nPN(yrior update model for MPs, as was done by the TabMGP (Ng | D′N, x, a) = uN(x, a, V ′N) PN−1(y | D′N−1, x, a);\net al., 2025). Concretely, for the posterior of µa, we instan- (15)\nwhere P0(y x, a) is the PPD of TabPFN, atiate the generic MP updates from Eq. (13) using TabPFN | D, cρ(·, ·)\nbivariate copula density with correlation ρ 1), αN isas follows: ∈(0,\na learning rate, qN = FN−1(y | D′N−1, x, a), and rN = (where posterior F is a predictive V ′N) FN(Y ((X, A)′N ∼Pn(X, A); ′N | D′N−1, Step N : (14) cumulative distribution function (CDF)). Then, the posterior Y ′N ∼P(Y | D′N−1, X′N, A′N);\nof ˜µa is obtained by the marginalization over y (similarly\nto the PFN-only case). We provide further details on the\nwhere Pn(X, A) is the empirical distribution and P(Y | specification of copulas and learning rates for µa and π in\nD′N−1, X′N, A′N) is given by the PPD of TabPFN. Af- Appendix C.ter N updates, we draw one sample from RΠ(µa | D)\nby marginalizing the random PPD: ˜µa = y dP(y | Choice of functional posteriors. Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 24,
+    "total_chunks": 80,
+    "char_count": 1300,
+    "word_count": 250,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f2227ce-7fc4-4673-b624-eee901a5b304",
+    "text": "Once the L2-convergence condition is satisfied, the BvM\n103 theorem guarantees asymptotic normality. However, different constructions of functional posteriors (variants (a)–(c))\nˆR2 can still induce slightly different second-order contributions\nto the posterior variance. In particular, although all variants\nshare the same leading variance term of order 1/n, they\ndiffer by terms of order oP(1/n). This distinction can be\n102 formalized as follows.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 25,
+    "total_chunks": 80,
+    "char_count": 449,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db95a311-77cb-4b44-b191-06c8a6b97cca",
+    "text": "102 103 104 105 Proposition 1 (Asymptotic variance of MP-based posteri- ntrain\nAssume an MP-based Bayesian estimator ˜η⋄(where MP variant TabPFN+copula (x-parallel; ρ = 0.5) ors). ⋄ TabPFN-only TabPFN+copula (smooth; ρ = 0.25) is either a (a) or (c) smooth x-independent, (b) x-parallel,\nTabPFN+copula (x-independent; ρ = 0.5) TabPFN+copula (smooth; ρ = 0.5) variant of the MP-based posterior) satisfies the conditions of\nFigure 4. L2-convergence check based on the synthetic data with Theorem 1. Then, the asymptotic variance of the MP-based\nvarying size of the train data, ntrain (here: dx = 25). Reported:\nOSPC ATE posterior is approximatelymean ˆR2 ± se over 10 runs (lower is better). Note that both x- and\ny-axes are log-scaled. η)] Var[ψOSPC(˜η⋄) | D] ≈Var[ϕψ(Z; + oP(1/n) + δ⋄n, (16)\nnPFN+copula MPs combination allows to recover the previously mentioned variants of functional posteriors from where\nTabPFN (see Fig. 1). Namely, depending on whether we • δ(a)n = OP(in) = OP Pn{V (Z)}/n and V (Z) =\nsample rN independently from x and y, we can recover Var˜η[ξψ(Z; ˜η(a)) | D];\n(a) x-independent posteriors (i.e., rN and (x, y) are inde- • δ(b)n = OP(pn) = OP P2n{C(b)(Z, Z′)}) ≤OP Pn{V (Z)}\npendent), (b) x-parallel posteriors (i.e., rN and (x, y) are and C(b)(Z, Z′) = Cov˜η[ξψ(Z; ˜η(b)), ξψ(Z′; ˜η(b)) | D] > 0;\ndependent), and (c) smooth posteriors (i.e., rN and only x • δ(c)n = OP sn , 0 ≤sn ≤pn.\nare dependent). We refer to Appendix C for further details Furthermore, δ⋄n = oP(1/n), under the assumption (a) of\non the three variants. Theorem 1 (i.e., L2-convergence). Implementation details. Combining MPs with the one- Proof. We refer to Appendix B.\nstep posterior correction yields our main calibration procedure, which we denote by MP-OSPC. We illustrate MP- Proposition 1 implies that three variants induce OSPC ATE\nOSPC schematically in Fig. 3.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 26,
+    "total_chunks": 80,
+    "char_count": 1863,
+    "word_count": 307,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cca92d4b-6f6f-47e8-a1e8-ce6655935c67",
+    "text": "When instantiated with posteriors with different contributions to the asymptotic variPFN+copula MPs, our MP-OSPC is flexible and compu- ance. Under (a) x-independent coupling, the contribution of\ntationally lightweight by introducing only a single hyper- the nuisance uncertainty to the ATE uncertainty is the lowest\nparameter ρ ∈(0, 1). Empirically, the performance of MP- and decreases with the Bayesian bootstrap (BB) sample size\nOSPC is largely insensitive to the specific choice of ρ and at a rate 1/n. Conversely, under (b) x-parallel coupling, this\nworks equally well across several values for the ATE estima- contribution stays constant wrt. the BB sample size and can\ntion. In all the experiments, we made N = 100 MP steps only be reduced by contracting posteriors with increasing\nand used B = 100 posterior draws.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 27,
+    "total_chunks": 80,
+    "char_count": 823,
+    "word_count": 130,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4a122276-d01a-4f49-bacd-2b600b4f9331",
+    "text": "We refer to Appendix C size of D. Finally, (c) smooth coupling also provides afor other implementation details. constant, yet smaller than (b) contribution to the ATE uncertainty, which also decreases with growing D. BvM Property of MP-OSPC the (c) smooth MP posterior would be the most \"natural\"\nchoice to represent the posterior uncertainty of nuisance\nTo establish the BvM theorem for our MP-OSPC, the key refunctions: (1) it preserves the original smoothness of the unquirement is to show that the L2-convergence property (see derlying PFN, unlike (a) x-independent posteriors; and (2)\nTheorem 1) is satisfied for MP-based posteriors of a PFN.\nit does not introduce additional dependency wrt. x (and thus\nIntuitively, this condition ensures that the posterior concendoes not additionally inflate the variance for ATE posterior),\ntrates sufficiently fast around the true nuisance functions\nunlike (b) x-parallel posteriors.\nso that the second-order remainder term vanishes asymptotically. Because PFNs are only approximately Bayesian,\n6. Experimentsderiving the exact convergence rates for a specific PFN is\nchallenging and depends on many factors (e. g., the underly- Setup. We follow a standard causal benchmarking pracing transformer architecture, the training procedure, and the tice by using semi-synthetic datasets, where both counterspecification of the synthetic priors). Hence, the BvM re- factual outcomes Y [a] are available (and thus the ATE)\nsult should be interpreted as holding up to the second-order (Curth & van der Schaar, 2021). Further, for fully-synthetic\nremainder term R2, whose magnitude reflects how well the datasets, both nuisance functions µa and π are known (and\nPFN approximates the ideal Bayesian posterior in practice. thus is the asymptotic variance of the A-IPTW estimator Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference (a) dx = 25 (b) ntrain = 500\nfrom Eq. (4)).5 For all estimators, we perform a train-test 1.0 1.0\ndata split, so that the nuisance functions are estimated with 0.9 0.9\nPFNs based on the train data, and the final ATE estimator is 0.8 0.8\naveraged/Bayesian-bootstrapped over the test data. 0.7 0.7\nbdTV bdTV\nDatasets. In our experiments, we employ (i) the synthetic 0.6 0.6\ndata generator of Curth & van der Schaar (2021) with vary- 0.5 0.5\ning n and dx but with a fixed, large degree of the observed 0.4 0.4\nconfounding ∆≈−3.4; (ii) IHDP dataset (Hill, 2011; 102 ntrain103 104 15 25 50 dx 100\nShalit et al., 2017) with n = 672 + 75, dx = 25, and\n∆≈−0.2; and (iii) 77 datasets from a ACIC 2016 datasets Na¨ıveCausalPFNCausalPFNplug-in(T(T == 1.0)0.5) MP-OSPCCausalPFNCausalPFN (T(T == 1.0)1.0) && TabPFN-onlyTabPFN+copula (smooth; ρ = 0.25)\ncollection (Dorie et al., 2019) with n = 4802, dx = 82, and CausalPFN (T = 0.1) CausalPFN (T = 1.0) & TabPFN+copula (smooth; ρ = 0.5)\nvarying ∆. Further details are in Appendix D.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 28,
+    "total_chunks": 80,
+    "char_count": 2902,
+    "word_count": 461,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a95398ab-99bc-4965-b8a1-a4bb16c78b22",
+    "text": "MP-plug-inTabPFN-only TabPFN-onlyTabPFN+copula (smooth; ρ = 0.25)\nTabPFN+copula (smooth; ρ = 0.25) TabPFN+copula (smooth; ρ = 0.5)\nTabPFN+copula (smooth; ρ = 0.5)\n6.1. L2-Convergence Check Figure 5. Quality of the asymptotic uncertainty for Bayesian ATE\nestimators based on the synthetic data with (a) varying size of the\nEvaluation metric and MP variants. Our aim is train data, ntrain, and (b) varying dimensionality of covariates, dx.\nto empirically check whether the L2-convergence con- Reported: mean ˆdTV ± se over 40 runs (lower is better).\ndition holds for TabPFN when combined with the\nMPs, that is, whether the posterior concentrates suf- value, and then estimate the Kolmogorov-Smirnov distance\nficiently fast. Hence, we evaluate an empirical ana- ˆdKS between the random CDFs and a uniform distribution.\nlogue of the Bayesian second-order remainder R2 from\nBaselines. In both settings (i) and (ii), we compare differentEq. (11), i.e., ˆR2 = √n maxj=1,...,B ˜π−1jP −π−1 · Bayesian ATE estimators from three categories: (1) na¨ıve\na∈{0,1} maxj=1,...,B ∥˜µa,j −µa∥, where ˜ηj is the j-th plug-ins (namely, CausalPFN w/ different temperature T),posterior draw obtained from a given MP variant. We con-\n(2) MP-plug-ins (= MP w/ the plug-in posterior), andsider several constructions of the MP posteriors: TabPFN-\n(3) MP-OSPC (= MP w/ the OSPC posterior). Note thatonly (1 variant) and TabPFN+copula (4 variants with difTabPFN and CausalFM cannot be used as (1) na¨ıve plug-ferent choices of functional posteriors and ρ).\nins as they provide the total uncertainty and not the uncerSynthetic data results. We show the results in Fig. 4. Also, in the latter two categories (2)–(3), we\nfind that the second-order remainder ˆR2 is decreasing for consider different backbones for modeling µa and π with\nnearly all the variants of the MP posteriors, as desired. Yet, different hyperparameters (e. g., TabPFN or a combination\nwhen the dataset size is large (e. g., ntrain > 5000), ˆR2 starts of CausalPFN and TabPFN). We refer to Appendix A.1 for\nincrease again.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 29,
+    "total_chunks": 80,
+    "char_count": 2061,
+    "word_count": 321,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "48b3a086-93db-45ba-9951-56f7bb4faa64",
+    "text": "This appears to be a limitation of TabPFN further details on the baselines.\nin accurately recovering propensity score posteriors, particSynthetic data results. The results for ATE estimationularly in regions where the true propensity scores are close\nin (i) asymptotic setting are in Fig. 5. Therein, differentto 0 or 1 (see the detailed convergence plots in Appendix E).\nvariants of our MP-OSPC improve over plug-in estimatorsAs a consequence, TabPFN can only approximately satisfy\nbased on TabPFN and CausalPFN, and often achieve thethe BvM theorem. In the subsequent experiments, we thus\nbest asymptotic alignment with the A-IPTW estimator foruse TabPFN+copula (smooth) as a default variant of the MP,\nvarying (a) dimensionality of covariates and (b) train datadue to a better performance.\nsizes. Notably, the slight drop in performance of MP-OSPC\nfor large data sizes (e.g., ntrain > 1000) is expected and can6.2. ATE Estimation\nbe attributed to a growing R2 (see Fig. 4 and Fig. 7). FurEvaluation metrics. We evaluate the uncertainty of the thermore, we report (ii) finite-sample results in Appendix E. ATE estimators in two settings: (i) asymptotic and (ii) finiteIHDP results. The results for the IHDP dataset are in Apsample. For (i), we estimate the empirical analogue of\npendix E, which support the same conclusions from above.the total variation ˆdTV between a Bayesian estimator and\nthe asymptotic distribution of the A-IPTW estimator from ACIC 2016 results. Table 2 shows pooled results across\nEq. (4). For (ii), we assess the calibration of the credible 77 datasets for both (i) and (ii) (we excluded TabPFN-only\nintervals in the frequentist sense using a probability integral MP model from the experiments due to a too-long runtime).\ntransform diagnostic: we repeat the experiment multiple Overall, our MP-OSPC consistently improves upon the cortimes, evaluate the posterior ATE CDF at the ground-truth responding plug-in baselines in terms of both asymptotic\nalignment and finite-sample calibration. Notably, while\n5For semi-synthetic datasets, we employ the estimated with the\nour MP-OSPC does not substantially alter the results forTabPFN propensity score (ˆπ is a posterior mean). CausalPFN, it consistently improves over TabPFN-based",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 30,
+    "total_chunks": 80,
+    "char_count": 2253,
+    "word_count": 341,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6dc87eca-6aea-48a5-9d6f-ba8c31473568",
+    "text": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference (i) %TV (ii) %KS\nµa model π model ATE estimator Acknowledgments. This paper is supported by the DAAD\n— Na¨ıve plug-in 54.16 30.95\nprogram \"Konrad Zuse Schools of Excellence in Artifi- CausalPFN (T = 0.5) 45.24 18.70 TabPFN+copula (smooth; ρ = 0.25) MP-OSPC\nTabPFN+copula (smooth; ρ = 0.5) MP-OSPC 27.14 23.81 cial Intelligence\", sponsored by the Federal Ministry of\n— Na¨ıve plug-in 39.74 31.65 Education and Research. S.F. acknowledges funding via\nCausalPFN (T = 0.1) TabPFN+copula (smooth; ρ = 0.25) MP-OSPC 34.94 49.37 Swiss National Science Foundation Grant 186932. This\nTabPFN+copula (smooth; ρ = 0.5) MP-OSPC 25.32 18.99\n— MP-plug-in 14.81 20.45 work has been supported by the German Federal Ministry\nTabPFN+copula (smooth; ρ = 0.25)\nTabPFN+copula (smooth; ρ = 0.25) MP-OSPC 33.25 34.09 of Education and Research (Grant: 01IS24082). RGK is\n— MP-plug-in 14.29 22.73\nTabPFN+copula (smooth; ρ = 0.5) TabPFN+copula (smooth; ρ = 0.5) MP-OSPC 37.66 22.73 supported by a Canada CIFAR AI Chair and a Canada ReHigher = better (best in bold) search Chair Tier II in Computational Medicine (CRC-2022-\nTable 2. Quality of (i) asymptotic and (ii) finite-sample uncertain- 00049). This research was supported by an NFRF Special\nties of Bayesian ATE estimators based on 77 ACIC-2016 datasets. Call NFRFR2022-00526. Resources used in preparing this\nReported: (i) % of runs with the best performance wrt. bdTV over research were provided, in part, by the Province of Ontario,\n77 datasets times 10 runs each (%TV), and (ii) % of runs with the the Government of Canada through CIFAR, and companies\nbest performance wrt. bdKS over 77 datasets each evaluated with 10 sponsoring the Vector Institute.\nruns (%KS). Both percentages of (i) and (ii) are grouped wrt. the\nunderlying PFN. Referencesplug-in estimators. This can be attributed to (1) the distribution of confounding levels ∆in the ACIC 2016 datasets Alaa, A. M. and van der Schaar, M.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 31,
+    "total_chunks": 80,
+    "char_count": 2002,
+    "word_count": 317,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2370ce1c-bb83-42da-84b0-99caca513995",
+    "text": "Bayesian inference of inaligns well with the implicit PFN prior (cf. Fig. 2), in con- dividualized treatment effects using multi-task Gaussian\ntrast to the synthetic setting; and (2) the fact that CausalPFN processes. In Advances in Neural Information Processing\nwas trained with access to counterfactual data such that it of- Systems, 2017.\ntentimes yields well-calibrated, already corrected posteriors\nAlaa, A. M. and van der Schaar, M.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 32,
+    "total_chunks": 80,
+    "char_count": 438,
+    "word_count": 66,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "081202a5-dec2-47f1-8524-f5c704486e4b",
+    "text": "Limits of estimatingfor µa (we refer to Appendix E for a more detailed overview\nheterogeneous treatment effects: Guidelines for practi-of the ACIC 2016 results). Taken together, the results of\ncal algorithm design. In International Conference onthe ACIC 2016 datasets confirm our theory that the OSPC\nMachine Learning, 2018.does not degrade well-calibrated estimators and provides the\ngreatest gains when the underlying PFN is miscalibrated. Balazadeh, V., Kamkari, H., Thomas, V., Li, B., Ma, J.,\nReal-world case study. In Appendix F, we provide a real- Cresswell, J.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 33,
+    "total_chunks": 80,
+    "char_count": 568,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "353326fd-e2c1-4e22-8012-0910fe4e3d86",
+    "text": "CausalPFN: Amorworld case study where we estimate the ATE of strict lock- tized causal effect estimation via in-context learning.\ndown policies on the incidence rate during the COVID-19 In Advances in Neural Information Processing Systems,\npandemic. Therein, our MP-OSPC Bayesian ATE estima- 2025.\ntors achieve strong alignment with the corresponding ABanholzer, N., Van Weenen, E., Lison, A., Cenedese, A.,\nIPTW estimators, which provides empirical support for the\nSeeliger, A., Kratzwald, B., Tschernutter, D., Salles, J. P.,\nfrequentist consistency of our proposed estimators. Bottrighi, P., Lehtinen, S., Feuerriegel, S., and Vach,\nSummary. Our work is the first to provide a principled W.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 34,
+    "total_chunks": 80,
+    "char_count": 693,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5e2e2386-39fe-4811-9940-65a2f0a2f577",
+    "text": "Estimating the effects of non-pharmaceutical interway to use PFNs as Bayesian ATE estimators so that they ventions on the number of new infections with COVIDachieve the frequentist consistency. 19 during the first epidemic wave. PLOS ONE, 16(6):\ne0252827, 2021. Impact Statement Bickel, P. and Kleijn, B. The semiparametric Bernstein-von\nMises theorem. The Annals of Statistics, pp. 206–237,This paper presents work whose goal is to advance the field\n2012.of machine learning. There are many potential societal\nconsequences of our work, none of which we feel must be Bickel, P. A., Ritov, Y., and Wellner, J. A.\nspecifically highlighted here. Efficient and adaptive estimation for semiparametric models.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 35,
+    "total_chunks": 80,
+    "char_count": 703,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3d1b5e38-6d3d-47f4-85a2-d40e6cc7a8d0",
+    "text": "Springer New York, 1993. Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D.,\nDhariwal, P., Neelakantan, A., Shyam, P., Sastry, G.,\nAskell, A., et al.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 36,
+    "total_chunks": 80,
+    "char_count": 157,
+    "word_count": 27,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "426019ed-3872-4609-b936-4e570ae2f1ae",
+    "text": "Language models are few-shot learners. In Advances in Neural Information Processing Systems,\n2020. Chernozhukov, V., Newey, W., Quintas-Martınez, V. M.,\nand Syrgkanis, V. RieszNet and ForestRiesz: Automatic Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference debiased machine learning with neural nets and random Hartigan, J. Asymptotic normality of posterior distributions.\nforests. In International Conference on Machine Learn- In Bayes theory, pp. 107–118. Springer, 1983.\ning, 2022. Hatt, T. and Feuerriegel, S. Estimating average treatment\nChipman, H. I., and McCulloch, R.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 37,
+    "total_chunks": 80,
+    "char_count": 601,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "36976925-7027-4ead-ba96-f78079590349",
+    "text": "BART: effects via orthogonal regularization. In International\nBayesian additive regression trees. The Annals of Applied Conference on Information and Knowledge Management,\nStatistics, 4(1), 2010. 2021. Curth, A. and van der Schaar, M. Nonparametric estimation Hill, J. Bayesian nonparametric modeling for causal inferof heterogeneous treatment effects: From theory to learn- ence. Journal of Computational and Graphical Statistics,\ning algorithms. In International Conference on Artificial 20(1):217–240, 2011. Intelligence and Statistics, 2021. Automatic debiasing of neural\nCurth, A., Svensson, D., Weatherall, J., and van der Schaar, networks via moment-constrained learning. Really doing great at estimating CATE?",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 38,
+    "total_chunks": 80,
+    "char_count": 717,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e9805165-384d-4d49-b58b-09805bbd7eb0",
+    "text": "A critical ence on Causal Learning and Reasoning, 2025.\nlook at ML benchmarking practices in treatment effect esHollmann, N., M¨uller, S., Eggensperger, K., and Hutter, F.\ntimation. In Advances in Neural Information Processing\nTabPFN: A transformer that solves small tabular classifiSystems, 2021.\ncation problems in a second. In International Conference\non Learning Representations, 2023.Dong, Q., Li, L., Dai, D., Zheng, C., Ma, J., Li, R., Xia, H.,\nXu, J., Wu, Z., Chang, B., et al. A survey on in-context\nHollmann, N., M¨uller, S., Purucker, L., Krishnakumar, A.,\nlearning. In Conference on Empirical Methods in Natural\nK¨orfer, M., Hoo, S. B., Schirrmeister, R. T., and Hutter,\nLanguage Processing, 2024. Accurate predictions on small data with a tabular\nfoundation model.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 39,
+    "total_chunks": 80,
+    "char_count": 777,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "58401869-c3d5-435f-a76c-2c80f32a54bd",
+    "text": "Nature, 637(8045):319–326, 2025.Dorie, V., Hill, J., Shalit, U., Scott, M., and Cervone, D. Automated versus do-it-yourself methods for causal infer- Javurek, E., Frauen, D., Wang, Y., and Feuerriegel, S.\nence: Lessons learned from a data analysis competition. Generalized Bayes for causal inference. arXiv preprint\nStatistical Science, 34(1):43–68, 2019. arXiv:2603.03035, 2026. Erickson, N., Purucker, L., Tschalzev, A., Holzm¨uller, D., Jesson, A., Beltran-Velez, N., and Blei, D. Can generative\nDesai, P. M., Salinas, D., and Hutter, F.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 40,
+    "total_chunks": 80,
+    "char_count": 540,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f775e332-67da-4296-bf79-fd35e8fda241",
+    "text": "TabArena: A AI solve your in-context learning problem? A martingale\nliving benchmark for machine learning on tabular data. perspective. In International Conference on Learning\narXiv preprint arXiv:2506.16791, 2025. Representations, 2025. Feuerriegel, S., Frauen, D., Melnychuk, V., Schweisthal, Jin, J. and Syrgkanis, V. Structure-agnostic optimality of\nJ., Hess, K., Curth, A., Bauer, S., Kilbertus, N., Kohane, doubly robust learning for treatment effect estimation. S., and van der Schaar, M. Causal machine learning for arXiv preprint arXiv:2402.14264, 2024.\npredicting treatment outcomes. Nature Medicine, 2024.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 41,
+    "total_chunks": 80,
+    "char_count": 616,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "acbfaedb-27fa-4f7c-8c53-22525c6deff7",
+    "text": "Semiparametric doubly robust targeted douFong, E., Holmes, C., and Walker, S. Martingale poste- ble machine learning: a review. Handbook of Statistical\nrior distributions. Journal of the Royal Statistical Soci- Methods for Precision Medicine, pp. 207–236, 2024.\nety Series B: Statistical Methodology, 85(5):1357–1391,\n2023. Kim, H., Mnih, A., Schwarz, J., Garnelo, M., Eslami, A.,\nRosenbaum, D., Vinyals, O., and Teh, Y. Attentive\nGarnelo, M., Rosenbaum, D., Maddison, C., Ramalho, T., neural processes. In International Conference on LearnSaxton, D., Shanahan, M., Teh, Y. W., Rezende, D., and ing Representations, 2019. Conditional neural processes. In International Conference on Machine Learning, 2018. Metalearners for estimating heterogeneous treatment effects\nHahn, P. M., Puelz, D., et al. Regularization using machine learning. Proceedings of the National\nand confounding in linear regression for treatment effect Academy of Sciences, 116(10):4156–4165, 2019.\nestimation. Bayesian Analysis, 13(1), 2018.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 42,
+    "total_chunks": 80,
+    "char_count": 1012,
+    "word_count": 137,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "82a31d9c-e61e-4e87-a81d-0efaa4bd3197",
+    "text": "Kuzmanovic, M., Frauen, D., Hatt, T., and Feuerriegel,\nHahn, P. Causal machine learning for cost-effective allocation\ngression tree models for causal inference: Regularization, of development aid. In ACM SIGKDD International\nconfounding, and heterogeneous effects (with discussion). Conference on Knowledge Discovery and Data Mining,\nBayesian Analysis, 15(3):965–1056, 2020. 2024. Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 43,
+    "total_chunks": 80,
+    "char_count": 455,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0a3ad3c1-1d62-4c06-a7e6-b12b40c66270",
+    "text": "Langen, H. and Huber, M. How causal machine learning can Robins, J. Robust estimation in sequentially ignorable\nleverage marketing strategies: Assessing and improving missing data and causal inference models. In Proceedings\nthe performance of a coupon campaign.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 44,
+    "total_chunks": 80,
+    "char_count": 261,
+    "word_count": 37,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c6c885f6-c849-441f-8e92-324cf58cdda0",
+    "text": "PLOS ONE, 18 of the American Statistical Association, 2000.\n(1):e0278937, 2023. Estimating causal effects of treatments in\nLechner, M. Causal machine learning and its use for public randomized and nonrandomized studies. Journal of Edupolicy. Swiss Journal of Economics and Statistics, 159 cational Psychology, 66(5):688, 1974.\n(1):8, 2023.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 45,
+    "total_chunks": 80,
+    "char_count": 339,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d69e0646-f33d-473c-a410-ed5ab6f2c3f3",
+    "text": "Shalit, U., Johansson, F. Estimating\nLi, F., Ding, P., and Mealli, F. Bayesian causal inference: A individual treatment effect: Generalization bounds and\ncritical review. Philosophical Transactions of the Royal algorithms. In International Conference on Machine\nSociety A, 381(2247):20220153, 2023. The how and why of Shi, C., Blei, D., and Veitch, V. Adapting neural networks\nBayesian nonparametric causal inference. Wiley Inter- for the estimation of treatment effects. Advances in Neudisciplinary Reviews: Computational Statistics, 15(1): ral Information Processing Systems, 2019.\ne1583, 2023. Semiparametric theory and missing data. Ma, Y., Frauen, D., Javurek, E., and Feuerriegel, S. Foun- Springer New York, 2006.\ndation models for causal inference via prior-data fitted\nnetworks. In International Conference on Learning Rep- van der Laan, M. Targeted maximum likeliresentations, 2026. hood learning. The International Journal of Biostatistics,\n2(1), 2006.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 46,
+    "total_chunks": 80,
+    "char_count": 963,
+    "word_count": 131,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6ac0fb74-088f-40e0-93a6-46bd35fa2e1b",
+    "text": "Melnychuk, V., Feuerriegel, S., and van der Schaar, M. Quantifying aleatoric uncertainty of the treatment effect: van der Vaart, A. Asymptotic statistics, volume 3. CamA novel orthogonal learner. In Advances in Neural Infor- bridge University Press, Cambridge, United Kingdom,\nmation Processing Systems, 2024. 2000. M¨uller, S., Hollmann, N., Arango, S. P., Grabocka, J., and Xie, S. M., Raghunathan, A., Liang, P., and Ma, T.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 47,
+    "total_chunks": 80,
+    "char_count": 426,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "96768761-5016-413b-8253-dd267101324a",
+    "text": "Transformers can do Bayesian inference. In explanation of in-context learning as implicit Bayesian\nInternational Conference on Learning Representations, inference. In International Conference on Learning Rep-\n2022. resentations, 2022.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 48,
+    "total_chunks": 80,
+    "char_count": 234,
+    "word_count": 28,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "68d39ca3-6c1d-4d6c-bc89-e619b4327c49",
+    "text": "Nagler, T. and R¨ugamer, D. Uncertainty quantification Yiu, A., Fong, E., Holmes, C., and Rousseau, J. Semifor prior-data fitted networks using martingale posteriors. parametric posterior corrections. Journal of the Royal\narXiv preprint arXiv:2505.11325, 2025. Statistical Society Series B: Statistical Methodology, pp. The asymptotic variance of semiparametric qkaf005, 2025.\nestimators. Econometrica, 62(6):1349–1382, 1994. Ng, K., Fong, E., Frazier, D. T., Knoblauch, J., and Wei,\nS. TabMGP: Martingale posterior with TabPFN. arXiv The collaborative perinatal study of the\nNational Institute of Neurological Diseases and Stroke. The Woman and Their Pregnancies, 1972. Ray, K. and Szab´o, B. Debiased Bayesian inference for average treatment effects. In Advances in Neural Information\nProcessing Systems, 2019.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 49,
+    "total_chunks": 80,
+    "char_count": 812,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bd2bc5b9-b796-4eef-a87e-ae7df89eaab5",
+    "text": "Ray, K. and van der Vaart, A. Semiparametric Bayesian\ncausal inference. The Annals of Statistics, 48(5):2999–\n3020, 2020. Robertson, J., Reuter, A., Guo, S., Hollmann, N., Hutter, F.,\nand Sch¨olkopf, B. Do-PFN: In-context learning for causal\neffect estimation. In Advances in Neural Information\nProcessing Systems, 2025. Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference Prior-data Fitted Networks PFNs as amortized Bayesian inference. Prior-data fitted networks (PFNs) are foundation models that amortize Bayesian\ninference by pretraining on synthetic datasets sampled from a user-specified prior over data-generating processes (M¨uller\net al., 2022). Concretely, let Π0 denote the (synthetic) prior over data-generating processes D ∼Π0(D), and let a sampled\nprocess induce a joint distribution for (X, Y ) (or, more generally, for (X, A, Y ) in our causal setting). For a dataset D and aquery input x, Bayesian inference yields a posterior predictive density (PPD)\nP(y | D, x) = P(y | x, θ) dΠ(θ | D), (17)\nwhere θ ∈Θ denotes latent parameters indexing the data-generating process (for the sake of generality, we assume that Θ\ncan be an infinitely-dimensional (functional) space). A PFN is trained to approximate the mapping (D, x) 7→P(· |",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 50,
+    "total_chunks": 80,
+    "char_count": 1266,
+    "word_count": 194,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "53c27203-fa97-4059-8046-e4dce5acb94a",
+    "text": "D, x)\ndirectly with a single forward pass, i. e., it learns a predictor that outputs a distribution Pθ(· | D, x), where θare parameters of the PFN. In practice, PFNs are implemented as conditional neural processes (Garnelo et al., 2018) (often\ntransformer-based) and trained by minimizing the expected negative log-likelihood on synthetic tasks: D, X) . (18) θ⋆∈arg θmin EΠ0 ED E(X,Y",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 51,
+    "total_chunks": 80,
+    "char_count": 383,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8750fd30-ceb1-45e9-abbc-dbecc4a03707",
+    "text": "As a result, the PFN induces an implicit prior for any functional of interest, as it depends on the synthetic pretraining\ndatasets distribution. When this implicit prior differs from the true data-generating process, it can systematically influence\nposterior predictions and downstream inference; in our setting, this distortion takes the form of prior-induced confounding\nbias studied in Sec. 5.1. Pointwise PPDs versus functional posteriors. The defining output of a PFN is a pointwise PPD, P(⋄| D, x), where\n⋄depends on what was used as the prediction target during pretraining.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 52,
+    "total_chunks": 80,
+    "char_count": 581,
+    "word_count": 88,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "80349db2-605e-4647-b274-d2116f93f553",
+    "text": "This is fundamentally different from classical\nBayesian semi-parametric models, which define explicit functional posteriors Π(η | D) over nuisance functions η. Given aPPD, we can always extract posterior means pointwise; for instance, for a regression-type PPD, we have\nˆµ(x) = y dP(y | D, x), (19)\nand, for a binary target, we obtain posterior mean probabilities analogously. However, the OSPC posterior from Sec. 5.2\nrequires sampling entire nuisance functions ˜η ∼Π(η | Importantly, PFNs do not provide Π(η | D) directly, and there isnot a unique way to reconstruct a functional posterior from the same collection of pointwise PPDs (see Fig. 1 for illustrative\nexamples). This motivates our use of martingale posteriors in Appendix A.2. PFNs for causal inference and the outputs in Table 1. Recent work trains PFNs directly for causal estimands by simulating\ncausal structures during pretraining, including Do-PFN (Robertson et al., 2025), CausalPFN (Balazadeh et al., 2025), and\nCausalFM (Ma et al., 2026). These methods differ in what posterior distribution they output in the sense of Table 1: TabPFN (Hollmann et al., 2023; 2025) is a general-purpose PFN for tabular prediction. When used as a\nnuisance learner in causal inference settings (marked by † in Table 1), we treat (X, A) as inputs and Y as the label, so\nthe PFN provides an outcome PPD\nP(y | D, x, a), (20)\nwhich we interpret as a pointwise predictive distribution for Y [a] given (x, a). Its posterior mean yields ˆµa(x) = R\ny dP(y |",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 53,
+    "total_chunks": 80,
+    "char_count": 1502,
+    "word_count": 248,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6eeb06a0-58d3-40b4-a140-2a556ddb8fd5",
+    "text": "D, x, a) and the plug-in CATE mean ˆτ(x) = ˆµ1(x) −ˆµ0(x). In addition, by running TabPFN in Y\nclassification mode with label A and features X, we obtain a pointwise treatment PPD, P(A = a | D, x), and hence\nˆπ(x) = P(A = 1 | Do-PFN (Robertson et al., 2025) provides a PPD for counterfactual outcomes Y [a] (Table 1) but does not\nprovide a propensity-score PPD but relies on a formulation that can be non-identifiable (marked by ‡). Following Ma\net al. (2026), we thus exclude Do-PFN from our analysis. CausalPFN (Balazadeh et al., 2025) departs from label-level PPDs and instead outputs a posterior\ndistribution over conditional outcome mean, in particular, a pointwise density P(µa | D, x) (and thus also for τ through Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 54,
+    "total_chunks": 80,
+    "char_count": 795,
+    "word_count": 136,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8caa5c77-79c9-429c-96d1-121e6bb7640a",
+    "text": "Because it does not provide a label-level PPD P(Y [a] | D, x) (nor a propensity-score PPD), it can not be used with the MP constructions studied here (Table 1). CausalFM (Ma et al., 2026) outputs a pointwise PPD for the treatment effect itself, i. e., the PPD of a\ndistribution P(∆= Y [1] −Y [0] | While this is useful for effect prediction, it does not provide the joint set of nuisance-function posteriors needed for our OSPC-based ATE inference. Furthermore, it also\ncan not be combined with the MPs, as the outputs Y [1] −Y [0] are not the part of the input dataset D (thus, a pointwise\nposterior density of CATE, P(τ | D, x), cannot be recovered).",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 55,
+    "total_chunks": 80,
+    "char_count": 652,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fc9ffa42-7c27-49a9-bb72-94e8058c73b3",
+    "text": "Therefore, CausalFM can not even be used as a na¨ıve Bayesian plug-in estimator of the ATE. Table 1 summarizes which PPDs and posterior means are available from each PFN \"out of the box.\"\nIn our work, TabPFN and CausalPFN are only two baselines that can correctly provide the uncertainty of the outcome\nmodel, µa – and, thus, the Bayesian uncertainty of the ATE. Yet, TabPFN is the only model that provides PPDs for both the\noutcome and the propensity models and is therefore viable for the OSPC; we then recover functional posteriors from these\npointwise PPDs using martingale posteriors (Appendix A.2). For the overview of connections between different PFNs and\nthe estimators they yield, we refer to Fig. 6. Treatment effect\nOutcome model Propensity model\nConditioning on TabPFN Conditioning on CausalFM model TabPFN treatment effect PPD outcome PPD Conditional MP outcome density posterior treatment PPD Conditional MP propensity score posterior\n(our work) (our work) Marginal point-wise MP\n(Nagler & Rügamer, 2025) Averaging over CausalPFN posterior density of CATE posterior density of conditional outcome mean conditional outcome mean posterior Bayesian bootstrap wrt. Bayesian bootstrap wrt. Bayesian bootstrap wrt. Bayesian bootstrap wrt. Eq. (5) Eq. (5) Eq. (5) Eq. (9)\nATE\nestimators naїve plug-in posterior MP-plug-in posterior MP-OSPC posterior Overview of connections between different posterior distributions, PPDs, and the underlying PFNs.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 56,
+    "total_chunks": 80,
+    "char_count": 1455,
+    "word_count": 219,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5f6ac86b-3cec-41d0-a2d3-bc08d2824161",
+    "text": "Martingale Posteriors Martingale posteriors (MPs) provide a general way to construct posterior distributions for parameters and functionals using\nonly a posterior predictive density (PPD) that can be sequentially updated, but without requiring an explicit likelihood or\nprior (Fong et al., 2023). In our setting, this is useful because PFNs naturally provide PPDs, while our OSPC construction\nrequires draws from posteriors over nuisance functions.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 57,
+    "total_chunks": 80,
+    "char_count": 448,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b1012c60-f892-44a0-ae6e-ab9034b65736",
+    "text": "Let Z be a generic random variable with distribution P(Z) and density / probability mass function P(z). We observe\nan i.i.d. dataset D = {zi}ni=1. Assume we have access to a PPD P(z | D) that can be updated after augmenting the datasetwith additional observations. MP updates and the random limit law. MPs iteratively sample pseudo-observations from the current PPD and update the\ndataset, as in Eq. (13).",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 58,
+    "total_chunks": 80,
+    "char_count": 405,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "844f995b-83a7-4343-8111-f4da7c11d263",
+    "text": "Concretely, define D′0 = D and, for N ≥1,\nZ′N ∼P(Z | D′N−1), D′N = D′N−1 ∪{Z′N}. (21)\nLet FN = σ(D′N) be the induced filtration and define the sequence of predictive laws PN(·) = P(Z ∈· | A key\ncondition is the martingale property: for every measurable set B ⊆Z,\nE[PN+1(B) | FN] = PN(B). (22)\nWhen Eq. (22) holds, {PN(B)}N≥0 is a bounded martingale and therefore converges almost surely with N →∞to a\nrandom limit P∞(B). Collecting these limits over measurable B yields a random probability measure P∞(·) | D, whichcan be viewed as an (implicit) posterior draw over the data-generating distribution. Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference Induced posteriors for functionals. MPs induce posteriors for any R downstream functional θ(PZ) ∈Θ by pushforward\nthrough the random limit law P∞(·) | For example, for θ(PZ) = Z z dPZ(z), the MP posterior satisfies\nP(θ ∈A | D) = 1(θ(P∞) ∈A) dΠ(P∞| D) denotes the distribution of the random measure P∞(·) | D induced by the MP updates. Connection to Bayes posteriors. D) is itself the posterior predictive density of some Bayesian model with\nprior Π(PZ), then the MP construction recovers the corresponding Bayes posterior over PZ in the sense that P∞(·) |",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 59,
+    "total_chunks": 80,
+    "char_count": 1230,
+    "word_count": 207,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "24d03dad-95a6-4e11-b379-1b252a85dfc4",
+    "text": "D has\nthe same distribution as a draw from Π(PZ | D) (Fong et al., 2023). More generally, MPs remain well-defined whenever thesequential updates satisfy the martingale property, even if the underlying likelihood/prior are not available in closed form. Nuisance-function posteriors as MP functionals. In the potential outcomes setup, the nuisance functions are functionals\nof the joint law PZ:\nπ(x) = P(A = 1 | X = x), µa(x) = E(Y | D immediately induces draws ˜π and ˜µa by evaluating these functionals at P∞. In practice, we\napproximate Π(P∞| D) by running Eq. (21) for a finite number of MP steps N and repeating the procedure to obtainmultiple posterior draws, as used by our MP-OSPC implementation (cf. Finally, when the base predictor violates\nEq. (22) (as may happen for PFNs under repeated updating), sequential MP updates can accumulate bias (Ng et al., 2025;\nNagler & R¨ugamer, 2025), motivating the hybrid MP constructions we employ in the main text. Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference Theoretical Results\nProposition 1 (Asymptotic variance of MP-based posteriors). Assume an MP-based Bayesian estimator ˜η⋄(where ⋄iseither a (a) x-independent, (b) x-parallel, or (c) smooth variant of the MP-based posterior) satisfies the conditions of\nTheorem 1. Then, the asymptotic variance of the MP-based OSPC ATE posterior is approximately η)] 1\nVar[ψOSPC(˜η⋄) |",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 60,
+    "total_chunks": 80,
+    "char_count": 1403,
+    "word_count": 219,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0cc6c76e-422c-42e7-8b9d-41e275ec4283",
+    "text": "D] ≈Var[ϕψ(Z;n + oP n + δ⋄n, (24) • δ(a)n = OP(in) = OP Pn{V (Z)}/n and V (Z) = Var˜η[ξψ(Z; ˜η(a)) | D];\n• δ(b)n = OP(pn) = OP P2n{C(b)(Z, Z′)}) ≤OP Pn{V (Z)} and C(b)(Z, Z′) = Cov˜η[ξψ(Z; ˜η(b)), ξψ(Z′; ˜η(b)) | D] > 0;\n• δ(c)n = OP sn , 0 ≤sn ≤pn. Furthermore, δ⋄n = oP(1/n), under the assumption (a) of Theorem 1 (i.e., L2-convergence). By definition in Eq. (9), the OSPC posterior is D = BBn ξψ(Z; ˜η⋄) = Wi ξψ(Zi; ˜η⋄) = WT Ξ⋄, (25)\ni=1 D) is a functional nuisance posterior, W = (W1, . . . , Wn)T ∼Dir(n; 1, . . . , 1) independently of ˜η⋄and Z, and Ξ⋄= (ξψ(Z1; ˜η⋄), . . . , ξψ(Zn; ˜η⋄))T . Then, by the law of total variance:\nh i h i\nVar[ψOSPC(˜η⋄) | D . (26)\nBecause W is independent of Ξ⋄given D:\n• E˜η WT Ξ⋄| D, W = WT m, where mi = M(Zi) := E˜η[ξψ(Zi; ˜η⋄) | D], and M(Zi) does not depend on how the\nposterior ˜η is coupled and, thus, on a variant ⋄;\nii = • Var˜η WT Ξ⋄| D, W = WT C⋄W, where C⋄ ij = C⋄(Zi, Zj) = Cov˜η[ξψ(Zi; ˜η⋄), ξψ(Zj; ˜η⋄) | D], C⋄\nV (Zi) = Var˜η[ξψ(Zi; ˜η⋄) | D], and V (Zi) does not depend on how the posterior ˜η is coupled and, thus, on a variant ⋄.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 61,
+    "total_chunks": 80,
+    "char_count": 1086,
+    "word_count": 238,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "564bd44f-757b-4b2b-aa1a-de42c69d6616",
+    "text": "D} . (27)\n(i) BB-weight variability (ii) nuisance-posterior variability Now, under the assumptions of Theorem 1, we can easily show that the second term (ii) matches the variance of the efficient\ninfluence function. That is, by properties of the Dirichlet distribution:\nn i=1 m2i i=1 mi)2 1 VarW WT m = −(Pn = Pn (M(Z) (28) | D n2(n + 1) n + 1 −Pn{M(Z)})2\nVar[ϕψ(Z; η)] + oP . (29) ≈1n n\nHowever, the term (i) differs for different variants ⋄(here we use the properties of the Dirichlet distribution again):\nXn Xn 2 1\nδ⋄n = EW WT C⋄W | D = n(n + 1) V (Zi) + n(n + 1) C⋄(Zi, Zj). (30)\ni=1 i,j=1;i̸=j",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 63,
+    "total_chunks": 80,
+    "char_count": 598,
+    "word_count": 117,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "757fe61a-6a99-4b2c-a983-aeeba8ae327a",
+    "text": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference For ⋄= (a) x-independent coupling, all the off-diagonal covariance terms are zero (i. e., C(a)(Zi, Zj) = 0), as the values\nξψ(Zi; ˜η(a)) and ξψ(Zj; ˜η(a)) are independent for i.i.d. Hence, for ⋄=(a) x-independent coupling, the term (i) is\nδ(a)n = EW WT C(a)W | D = n + 1Pn{V (Z)} = OP(Pn{V (Z)}/n). (31)\nFor ⋄= (b) x-parallel coupling, the following holds:\n1 n\nδ(b)n = EW WT C(b)W | D = n + 1Pn{V (Z)} + n + 1 P2n{C(b)(Z, Z′)} = OP(P2n{C(b)(Z, Z′)), (32)\nand, given our construction of x-parallel coupling (= co-monotonicity of ξψ(Z; ˜η(b)) wrt. ˜η), C(b)(Z, Z′) > 0 for any\nZ, Z′ ∈Z. Furthermore, by Cauchy-Schwarz, we can upper-bound the last term of Eq. (32) as\nP2n{C(b)(Z, Z′)} ≤1n2 n V (Zi) = Pn{V (Z)}. (33)\ni=1\nEq. (32) also applies to ⋄= (c) smooth coupling:\nδ(c)n = OP(P2n{C(c)(Z, Z′)). (34)\nHere, however, the terms C(b)(Z, Z′) > 0 for Z and Z′ specially close to each other, and C(b)(Z, Z′) ≈0 for far awaypoints. Therefore, the following inequality holds:\n0 ≤P2n{C(c)(Z, Z′)} ≤P2n{C(b)(Z, Z′)}. (35)\nFinally, we show that δ⋄n = oP(1/n) under the assumption (a) of Theorem 1 (i.e., L2-convergence). As shown previously,\nwe have\nXn Xn 2 1\nδ⋄n = V (Zi) + C⋄(Zi, Zj) (36)\nn(n + 1) n(n + 1)\ni=1 i,j=1;i̸=j\nXn Xn 1 1\n= V (Zi) + C⋄(Zi, Zj) (37)\nn(n + 1) n(n + 1)\ni=1 i,j=1\nX 1 1\n= + Var˜η ξψ(Zi; ˜η⋄) (38) n + 1Pn{V (Z)} n(n + 1) | D\ni=1\n1 n\n= + (39) n + 1Pn{V (Z)} n + 1 Var˜η[Pn{ξψ(Zi; ˜η⋄)} | Here, the first term, n+1Pn{V1 (Z)} = oP(1/n), given the uniform bounding assumption of Theorem 1. The latter term canbe upper-bounded by\nVar˜η[Pn{ξψ(Zi; ˜η⋄)} | D] = Var˜η[Pn{ξψ(Zi; ˜η⋄) −ξψ(Zi; η)} | D] (40)\n≤E˜η 1{˜η⋄∈Hn} · Pn 2 2 ξψ(Z; ˜η⋄) −ξψ(Z; η) | D + E˜η 1{˜η⋄/∈Hn} · Pn ξψ(Z; ˜η⋄) −ξψ(Z; η) | D , (41)\nThen, by using a standard second-order remainder expansion + empirical-process term for ATE for ˜η⋄∈Hn, we yield\n1 ˜η⋄) ≲max sup sup a oP(1/√n), (42) |Pn{ξψ(Z; −ξψ(Z; η)}| ∥˜µ⋄ −µa∥= ˜π⋄−1π · ˜µ⋄a∈Hn a∈{0,1} ˜π⋄∈Hn\nand, by using the law of iterated expectations, we can further update the inequality in Eq. (40):\nVar˜η[Pn{ξψ(Zi; ˜η⋄)} |",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 64,
+    "total_chunks": 80,
+    "char_count": 2125,
+    "word_count": 400,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eafa04e5-3685-4c23-ab23-dd545a7b036b",
+    "text": "D] = Π(˜η⋄∈Hn) · oP(1/n) + OP(Π(˜η⋄/∈Hn)). (43)\nFinally, we can choose such concentration sets Hn such that Π(˜η⋄/∈Hn) = oP(1/n) (e. g., a contraction ball withexponentially small posterior tails), so the following holds:\nVar˜η[Pn{ξψ(Zi; ˜η⋄)} | Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 65,
+    "total_chunks": 80,
+    "char_count": 320,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a765861d-d3a7-40cd-b7bd-e7c3a4d31ef8",
+    "text": "Implementation Details Copula-based MPs Details This section provides additional definitions for Eq. (15), especially for the Gaussian copula density cρ and the weighting\nsequence αN used in the copula-based MP updates (Fong et al., 2023). Gaussian copula density cρ (conditional outcome mean). In Eq. (15), cρ(u, v) denotes the bivariate Gaussian copula\ndensity with correlation parameter ρ ∈(0, 1). Writing Φ and ϕ for the standard normal CDF and density, and ϕ2(·, ·; ρ) forthe standard bivariate normal density with correlation ρ, the Gaussian copula density is ϕ2 Φ−1(u), Φ−1(v); ρ\ncρ(u, v) = , (u, v) ∈(0, 1)2. (45) ϕ Φ−1(u) ϕ Φ−1(v) Intuitively, cρ interpolates between an independent update (when ρ →0) and a sharply data-adaptive kernel (when ρ →1),with larger ρ producing less smoothing (Fong et al., 2023). Beta–Bernoulli mixture copula (propensity score). For the propensity model, we used the following beta–Bernoulli\nmixture copula (instead of cρ(u, v)):\n1 + ρ min{u,v}uv , if a = A′N, dρ(u, v) = −ρ (46)\n1 −ρ + ρ u−min{u,1−v} uv , if a ̸= A′N. The update weight αN. The scalar αN ∈(0, 1) in Eq. (15) controls the contribution of the copula term relative to theprevious predictive, and it is also the primary driver of posterior uncertainty under predictive resampling (Fong et al., 2023). A sufficient condition for the resulting predictive sequence to stabilize is αN = O(N −1). Following Fong et al. (2023), we\nuse the sequence Qdv\nαN j=1 cρ(Φ(vj), Φ(Vj′N )) 1\nαN(v, V ′N) = Qdv , αN = 2 N (47) −1N N + 1, ≥1, 1 + αN j=1 cρ(Φ(vj), Φ(Vj′N )) −αN\nwhich decays as O(N −1) but more slowly than the commonly used αN = (N + 1)−1.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 66,
+    "total_chunks": 80,
+    "char_count": 1640,
+    "word_count": 288,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eddbd0af-5e7d-4907-b883-5f6fdbc87111",
+    "text": "Empirically, this choice yields\nsubstantially better uncertainty calibration under predictive resampling (Fong et al., 2023). Replacing rN by a uniform draw (conditional outcome mean). In Eq. (15), the term rN is a probability integral transform\n(PIT) quantity of the form rN = FN(Y ′N | In the continuous outcome case, if Y ′N ∼P(Y | D′N−1, V ′N),then\nrN = FN(Y ′N | D′N−1, V ′N) ∼Unif(0, 1). (48)\nTherefore, for the outcome posterior, we may equivalently draw rN ∼Unif(0, 1), avoiding an explicit draw of Y ′N and anysubsequent evaluation of the predictive CDF (cf. Eq. (4.7) in Fong et al. (2023)). Coupling pointwise posteriors into a functional posterior. Different choices of how we sample rN lead to different\nfunctional posteriors while yielding the same pointwise marginal PN(y | i.i.d.\n• (a) x-independent posteriors. For evaluation points (x1, . . . , xM) and (y1, . . . , yK), draw rN,1,1, . . . , rN,M,K ∼\nUnif(0, 1) independently of both (x1, . . . , xM) and (y1, . . . , yK). i.i.d.\n• (b) x-parallel posteriors. For evaluation points (x1, . . . , xM) and (y1, . . . , yK), draw a single rN ∼Unif(0, 1).",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 67,
+    "total_chunks": 80,
+    "char_count": 1117,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "de776545-a3f7-49e5-b261-5c946bdc7a78",
+    "text": "i.i.d.\n• (c) smooth posteriors. For evaluation points (x1, . . . , xM) and (y1, . . . , yK), draw rN,1, . . . , rN,K ∼Unif(0, 1)\nindependently of (y1, . . . , yK). All three constructions share the same pointwise posteriors PN(y | D′N, x, a); they differ only in how uncertainty is coupledacross x and y. Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 68,
+    "total_chunks": 80,
+    "char_count": 379,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "477790c7-1037-448b-86f7-36bf46ab0885",
+    "text": "Other Implementation Details We implement our MP-OSPC in NumPy and PyTorch. To stabilize the ATE estimation, we truncate too low propensity\nscores π(x) < 0.05 in both the ground-truth asymptotic variance of the A-IPTW estimator from Eq. (4) and the OSPC ATE\nposterior from Eq. (9). Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference We use the simulation design from Curth & van der Schaar (2021) (Appendix D.1), where we focus on setting (ii), which\ncombines confounding with a non-trivial, nonlinear treatment effect. Covariates are generated as X ∈Rdx with independent\nstandard normal components and are partitioned into disjoint subsets, including confounders XC and outcome-only\ncovariates XO (each of dimension 5), as well as treatment-effect covariates Xτ (dimension 5). The conditional average\npotential outcome (CAPO) of the control is defined as a quadratic form, and treatment is assigned according to a nonlinear\npropensity score. In setting (ii), the treated CAPO adds a quadratic treatment-effect component, µ1(x) = µ0(x) + 1⊤x2τ,\nso that τ(x) = µ1(x) −µ0(x) = 1⊤x2τ, and observed outcomes are generated as Y = Aµ1(X) + (1 −A)µ0(X) + ε with\nε ∼N(0, 1). To study higher-dimensional regimes beyond the original design (which uses dx = 25), we augment the covariates by\nappending additional independent noise features, sampled via Xaug ∼N(0, 1), and define the final covariate vector asX = [Xorig, Xaug]. These added covariates do not enter π(x), µ0(x), or µ1(x), and therefore increase dx without changing\nthe underlying treatment assignment mechanism or outcome-generating mechanism. The Infant Health and Development Program (IHDP) benchmark (Hill, 2011; Shalit et al., 2017) is a widely used semisynthetic dataset for evaluating treatment effect estimation methods. It provides 100 fixed train–test splits with ntrain = 672\ntraining units and ntest = 75 test units, each described by dx = 25 covariates. In the data-generating mechanism, the\nground-truth CAPOs take the form of an exponential outcome model under control, µ0(x), and a linear outcome model under\ntreatment, µ1(x).",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 69,
+    "total_chunks": 80,
+    "char_count": 2118,
+    "word_count": 326,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7f6d7624-cfde-49cb-9b46-38b61463055b",
+    "text": "A known limitation of IHDP is its pronounced lack of overlap, which can make propensity-score-based\nmethods (e. g., the A-IPTW estimator) numerically unstable (Curth & van der Schaar, 2021; Curth et al., 2021). The ACIC 2016 benchmark (Dorie et al., 2019) constructs covariates from the large-scale Collaborative Perinatal Project on\ndevelopmental disorders (Niswander, 1972). The resulting datasets vary along several dimensions, including (i) the number\nof true confounders, (ii) the degree of overlap, and (iii) the smoothness and functional form of the ground-truth CAPOs.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 70,
+    "total_chunks": 80,
+    "char_count": 576,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "addd893e-e6fc-4cf6-84ae-d21b43d83b79",
+    "text": "Overall, ACIC 2016 comprises 77 distinct data-generating processes, and for each process it provides 100 samples of equal\nsize. After one-hot encoding categorical variables, each sample contains n = 4802 units with dx = 82 covariates. Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference Additional Experiments",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 71,
+    "total_chunks": 80,
+    "char_count": 332,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "445a7f8f-657f-4f8e-8261-3f2895ea2dde",
+    "text": "Detailed L2-Convergence Check In Fig. 7, we demonstrate the posterior concentration rates (L2-convergence) of TabPFN with different MP variants for\nevery nuisance function based on the synthetic data. Here, the nuisance specific errors ˆE (that contribute to the second\norder remainder ˆR2) reach their lowest value when ntrain = 5000 for conditional outcome mean posteriors (˜µa), or already\nwhen ntrain = 1000 for inverse propensity score posterior (˜π−1). These results indicate that performance improves with\nsample size up to a moderate regime, consistent with the L2-convergence condition required for the BvM theorem. However,\nbeyond this regime, the concentration of the propensity score posterior deteriorates, which reflects a difficulty of accurately\nrecovering propensity scores close to zero and one with TabPFN. Together, this confirms that, in practice, the contraction\nrates are sufficient to yield stable and well-aligned uncertainty estimates, yet only for medium-sized datasets.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 72,
+    "total_chunks": 80,
+    "char_count": 997,
+    "word_count": 143,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fb2f059a-0391-4bff-a6b0-daa9ca30907a",
+    "text": "j −π−1|| (a) ˆEµ0 = n−1/4 maxj=1,...,B ||˜µ0,j −µ0|| 45 (b) ˆEµ1 = n−1/4 maxj=1,...,B ||˜µ1,j −µ1|| (c) ˆEπ−1 = n−1/4 maxj=1,...,B ||˜π−1\n40 22.5 35 20.0 MP variant\nTabPFN-only\n80 30 17.5 TabPFN+copula (x-independent; ρ = 0.5) 15.0\nTabPFN+copula (smooth; ρ = 0.25) ˆEµ0 60 ˆEµ1 25 ˆEπ−1 TabPFN+copula (x-parallel; ρ = 0.5)\n12.5 TabPFN+copula (smooth; ρ = 0.5)\n10.0 0 5.0\n102 103 104 105 102 103 104 105 102 103 104 105\nntrain ntrain ntrain\nFigure 7. L2-convergence check for every nuisance function based on the synthetic data with varying size of the train data, ntrain (here\ndx = 25). Reported: mean L2 error ˆE⋄± se over 10 runs (lower is better), where ⋄corresponds to different nuisance functions:\n(a) ⋄= µ0, (b) ⋄= µ1, and (c) ⋄= π−1. Synthetic Dataset Results Tables 3 and 4 report the (ii) finite-sample ATE estimation results with varying amounts of train data and covariate\ndimensionality, respectively. Here, our MP-OSPC always improves over na¨ıve or MP-based plug-ins, as long as the data\nsize is ntrain ≤5000 (which is expected as TabPFN struggles with consistent estimation of the nuisance functions for largen, as discovered in Sec. 6.1). Overall, we discovered that good asymptotic performance of our MP-OSPC also translated\ninto a well-calibrated finite sample uncertainty. ntrain 100 500 1000 5000 10000\nµa model π model ATE estimator — Na¨ıve plug-in 0.965 1.000 1.000 1.000 1.000 CausalPFN (T = 1.0) TabPFN-only MP-OSPC 0.685 0.485 0.585 0.890 0.980 TabPFN+copula (smooth; ρ = 0.25) MP-OSPC 0.735 0.520 0.610 0.865 0.970 TabPFN+copula (smooth; ρ = 0.5) MP-OSPC 0.695 0.510 0.600 0.865 0.970",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 73,
+    "total_chunks": 80,
+    "char_count": 1611,
+    "word_count": 265,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "af4ca188-d05a-46c0-b056-4ecbec6a9eb7",
+    "text": "CausalPFN (T = 0.5) — Na¨ıve plug-in 1.000 1.000 1.000 1.000 1.000 CausalPFN (T = 0.1) — Na¨ıve plug-in 1.000 1.000 1.000 1.000 1.000 — MP-plug-in 0.875 0.855 0.755 0.560 0.305\nTabPFN-only\nTabPFN-only MP-OSPC 0.865 0.340 0.330 0.820 0.870 — MP-plug-in 0.920 0.680 0.690 0.455 0.255\nTabPFN+copula (smooth; ρ = 0.25)\nTabPFN+copula (smooth; ρ = 0.25) MP-OSPC 0.895 0.355 0.370 0.810 0.845 — MP-plug-in 0.920 0.590 0.550 0.390 0.335\nTabPFN+copula (smooth; ρ = 0.5)\nTabPFN+copula (smooth; ρ = 0.5) MP-OSPC 0.860 0.350 0.340 0.825 0.830\nLower = better (best in bold, second best underlined) Quality of the (ii) finite-sample uncertainty for Bayesian ATE estimators based on the synthetic data with (a) varying size of the\ntrain data, ntrain. Reported: mean bdKS evaluated with 40 runs, grouped wrt. the underlying PFN. Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 74,
+    "total_chunks": 80,
+    "char_count": 887,
+    "word_count": 139,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f7818f7e-6121-4a56-aaf1-d60b07286a2a",
+    "text": "dx 15 25 50 100\nµa model π model ATE estimator — Na¨ıve plug-in 0.990 1.000 1.000 1.000 CausalPFN (T = 1.0) TabPFN-only MP-OSPC 0.500 0.485 0.560 0.575 TabPFN+copula (smooth; ρ = 0.25) MP-OSPC 0.540 0.520 0.575 0.585 TabPFN+copula (smooth; ρ = 0.5) MP-OSPC 0.555 0.510 0.560 0.585 CausalPFN (T = 0.5) — Na¨ıve plug-in 1.000 1.000 1.000 1.000 CausalPFN (T = 0.1) — Na¨ıve plug-in 1.000 1.000 1.000 1.000 — MP-plug-in 0.955 0.855 0.880 0.690\nTabPFN-only\nTabPFN-only MP-OSPC 0.495 0.340 0.540 0.345 — MP-plug-in 0.760 0.680 0.820 0.695\nTabPFN+copula (smooth; ρ = 0.25)\nTabPFN+copula (smooth; ρ = 0.25) MP-OSPC 0.570 0.355 0.535 0.375 — MP-plug-in 0.685 0.590 0.835 0.745\nTabPFN+copula (smooth; ρ = 0.5)\nTabPFN+copula (smooth; ρ = 0.5) MP-OSPC 0.525 0.350 0.525 0.375\nLower = better (best in bold, second best underlined) Quality of the (ii) finite-sample uncertainty for Bayesian ATE estimators based on the synthetic data with (b) varying\ndimensionality of covariates, dx.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 75,
+    "total_chunks": 80,
+    "char_count": 970,
+    "word_count": 156,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4ffd64d3-dfbb-4ea3-958e-991701a280fe",
+    "text": "Reported: mean bdKS evaluated with 40 runs, grouped wrt. the underlying PFN. In Table 5, we demonstrate the results in settings (i)–(ii) for the IHDP dataset. The IHDP dataset is known to have\nlow overlap issues, and, thus, (i) asymptotic properties of the debiased estimators cannot be guaranteed (including our\nMP-OSPC). Still, our MP-OSPC in combination with TabPFN achieves very good finite-sample calibration. (i) bdTV (ii) bdKS\nµa model π model ATE estimator\n— Na¨ıve plug-in 0.239 ± 0.140 0.14\nCausalPFN (T = 1.0) TabPFN-only MP-OSPC 0.319 ± 0.151 0.09\nTabPFN+copula (smooth; ρ = 0.25) MP-OSPC 0.303 ± 0.133 0.13\nTabPFN+copula (smooth; ρ = 0.5) MP-OSPC 0.311 ± 0.133 0.14\nCausalPFN (T = 0.5) — Na¨ıve plug-in 0.271 ± 0.150 0.10\nCausalPFN (T = 0.1) — Na¨ıve plug-in 0.359 ± 0.174 0.06\n— MP-plug-in 0.332 0.186 0.08 TabPFN-only ±\nTabPFN-only MP-OSPC 0.430 ± 0.208 0.09\n— MP-plug-in 0.279 0.143 0.08 TabPFN+copula (smooth; ρ = 0.25) ±\nTabPFN+copula (smooth; ρ = 0.25) MP-OSPC 0.271 ± 0.144 0.06\n— MP-plug-in 0.281 0.142 0.04 TabPFN+copula (smooth; ρ = 0.5) ±\nTabPFN+copula (smooth; ρ = 0.5) MP-OSPC 0.314 ± 0.137 0.07\nLower = better (best in bold, second best underlined) Quality of the (i) asymptotic and (ii) finite-sample uncertainties of ATE estimators based on the IHDP dataset.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 76,
+    "total_chunks": 80,
+    "char_count": 1287,
+    "word_count": 213,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "85887898-cbd5-4b78-be04-3406b2b36a48",
+    "text": "Reported: (i) mean\nbdTV ± std over 100 splits, and (ii) mean bdKS evaluated with 100 splits. Both (i) and (ii) are grouped wrt. the underlying PFN. Fig. 8 (TabPFN-based estimators) and Fig. 9 (CausalPFN-based/combined estimators) show detailed (i) asymptotic and\n(ii) finite-sample ATE estimation results for each of 77 datasets from the ACIC 2016 datasets collection. Therein, we\nadditionally provided information on the absolute degree of observed confounding for each dataset |∆| and the median\ninverse propensity score. We observed that the majority of the datasets, |∆| is below 2, which coincides with the priors for\nTabPFN/CausalPFN (see Fig. 2). Yet, for datasets with |∆| ≳2, our MP-OSPC posterior almost always improved overna¨ıve/MP-based plugins for both CausalPFN and TabPFN. Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference Degree of observed confounding & degree of overlap Absolute degree of observed confounding, |∆| Median inverse propensity score, Med(ˆπ(X)−1) (i) Quality of asymptotic uncertainty (ii) Quality of finite-sample uncertainty 297653149.csv46976133.csv74339461.csv103742774.csv262933260.csv283645672.csv93510289.csv207685059.csv170631108.csv80148713.csv129048260.csv34127908.csv238974649.csv7693621.csv9256039.csv310780972.csv174570990.csv201870256.csv271787298.csv39529979.csv178541573.csv349098715.csv36796048.csv313668696.csv66096714.csv279971358.csv126207042.csv298036285.csv211300829.csv58126234.csv32472771.csv259543770.csv96847423.csv76039753.csv312245601.csv323803854.csv142307479.csv48977235.csv78747024.csv187767828.csv47360868.csv272163561.csv186625088.csv171703928.csv336720379.csv73068755.csv303833897.csv224612511.csv213344131.csv39000213.csv69816059.csv166227859.csv200561702.csv259040773.csv250368854.csv57390631.csv86739305.csv48813636.csv114529266.csv134157592.csv48450540.csv323744148.csv247513359.csv171980973.csv270968850.csv95121668.csv235427943.csv34296078.csv347023904.csv146384837.csv56895733.csv325079976.csv53430236.csv58515705.csv206102672.csv349833705.csv103565436.csv\nDataset ID MP-plug-in MP-OSPC\nTabPFN+copula (smooth; ρ = 0.25) TabPFN+copula (smooth; ρ = 0.25) TabPFN+copula (smooth; ρ = 0.5) TabPFN+copula (smooth; ρ = 0.5)",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 77,
+    "total_chunks": 80,
+    "char_count": 2216,
+    "word_count": 183,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d005abc7-f980-4be8-a013-ca994d2a6b74",
+    "text": "Full (i) asymptotic and (ii) finite-sample results of ATE estimation with TabPFN-based estimators for 77 semi-synthetic ACIC\n2016 datasets. Datasets are sorted wrt. the absolute degree of measured confounding, |∆|; and the median inverse propensity score is\nprovided for reference. Reported: (i) mean ˆdTV and (ii) ˆdKS over 10 runs (lower is better).",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 78,
+    "total_chunks": 80,
+    "char_count": 351,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "34afb527-ebe3-4c51-ae2d-a7c3793979f3",
+    "text": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference Degree of observed confounding & degree of overlap Absolute degree of observed confounding, |∆| Median inverse propensity score, Med(ˆπ(X)−1) (i) Quality of asymptotic uncertainty (ii) Quality of finite-sample uncertainty 297653149.csv46976133.csv74339461.csv103742774.csv262933260.csv283645672.csv93510289.csv207685059.csv170631108.csv80148713.csv129048260.csv34127908.csv238974649.csv7693621.csv9256039.csv310780972.csv174570990.csv201870256.csv271787298.csv39529979.csv178541573.csv349098715.csv36796048.csv313668696.csv66096714.csv279971358.csv126207042.csv298036285.csv211300829.csv58126234.csv32472771.csv259543770.csv96847423.csv76039753.csv312245601.csv323803854.csv142307479.csv48977235.csv78747024.csv187767828.csv47360868.csv272163561.csv186625088.csv171703928.csv336720379.csv73068755.csv303833897.csv224612511.csv213344131.csv39000213.csv69816059.csv166227859.csv200561702.csv259040773.csv250368854.csv57390631.csv86739305.csv48813636.csv114529266.csv134157592.csv48450540.csv323744148.csv247513359.csv171980973.csv270968850.csv95121668.csv235427943.csv34296078.csv347023904.csv146384837.csv56895733.csv325079976.csv53430236.csv58515705.csv206102672.csv349833705.csv103565436.csv\nDataset ID Na¨ıve plug-in MP-OSPC CausalPFN (T = 0.1) & TabPFN+copula (smooth; ρ = 0.5)\nCausalPFN (T = 1.0) CausalPFN (T = 0.5) & TabPFN+copula (smooth; ρ = 0.5) CausalPFN (T = 0.1) & TabPFN+copula (smooth; ρ = 0.25)\nCausalPFN (T = 0.1) CausalPFN (T = 0.5) & TabPFN+copula (smooth; ρ = 0.25) Full (i) asymptotic and (ii) finite-sample results of ATE estimation with TabPFN-based estimators for 77 semi-synthetic ACIC\n2016 datasets. Datasets are sorted wrt. the absolute degree of measured confounding, |∆|; and the median inverse propensity score is\nprovided for reference. Reported: (i) mean ˆdTV and (ii) ˆdKS over 10 runs (lower is better). Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference Real-world Case Study In the following, we provide a case study, where we apply our MP-OSPC to a real-world problem. Here, we want to study\nthe effectiveness of lockdowns during the COVID-19 pandemic by using the observational data collected in the first half\nof 2020 (Banholzer et al., 2021).",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 79,
+    "total_chunks": 80,
+    "char_count": 2280,
+    "word_count": 203,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e81dfa04-71e2-45e0-90b9-50c50fa225bc",
+    "text": "We use the multi-county dataset from Banholzer et al. (2021) and the pre-processing pipeline similar to Melnychuk et al.\n(2024).6 The outcome Y ∈[−7, 0] is the weekly relative case growth on the log scale, defined as the ratio of new cases to\ncumulative cases. The treatment A ∈{0, 1} indicates whether a strict lockdown was implemented one week earlier. For the\npre-treatment covariates X, we select three variables (dx = 4): the relative case growth in the previous week, the relative\ncase growth two weeks earlier, the relative case growth three weeks earlier, and the strict-lockdown indicator from two\nweeks earlier. We assume the observations are i.i.d. and that the causal assumptions (1)–(3) hold. We exclude observations\nwith fewer than 20 cumulative cases. This leaves a total sample size of n = n0 + n1 = 152 + 112, corresponding to treated\nand untreated observations, respectively. We show the results of ATE estimation in Fig. 10. Therein, we compared the uncertainties of frequentist and Bayesian\nATE estimators based on different PFNs. Interestingly, while almost all estimators predict the negative ATE with high\ncertainty/credibility (meaning a strict lockdown should reduce the incidence), the estimated ATEs differ among different\nPFNs: the location and spread vary for (a) TabPFN-based and (b) CausalPFN-based/combined estimators. Importantly, the\nvariants of our MP-OSPC Bayesian ATE estimator match the frequentist A-IPTW estimators the best, suggesting the best\nalignment between the two classes of estimators. (a) Estimators based on TabPFN 10 A-IPTW\nTabPFN\n8 MP-plug-in\nTabPFN-only\n6 TabPFN+copula (smooth; ρ = 0.25)\nTabPFN+copula (smooth; ρ = 0.5) Density\n4 MP-OSPC\nTabPFN-only\nTabPFN+copula (smooth; ρ = 0.25)\nTabPFN+copula (smooth; ρ = 0.5) −1.0 −0.8 −0.6 −0.4 −0.2 0.0 0.2 0.4\nEstimated ATE (b) Estimators based on CausalPFN / combination of CausalPFN and TabPFN A-IPTW\nCausalPFN (T = 1.0) & TabPFN\n8 Na¨ıve plug-in\nCausalPFN (T = 1.0)\n6 CausalPFN (T = 0.5) Density CausalPFN (T = 0.1)\n4 MP-OSPC\nCausalPFN (T = 1.0) & TabPFN-only\n2 CausalPFN (T = 1.0) & TabPFN+copula (smooth; ρ = 0.25)",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 81,
+    "total_chunks": 80,
+    "char_count": 2115,
+    "word_count": 337,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7497c4a9-a204-496b-9a7b-5fb8c4e0f2e1",
+    "text": "CausalPFN (T = 1.0) & TabPFN+copula (smooth; ρ = 0.5)\n−1.0 −0.8 −0.6 −0.4 −0.2 0.0 0.2 0.4\nEstimated ATE Uncertainty of frequentist and Bayesian ATE estimators based on different PFNs: (a) TabPFN-based and (b) CausalPFNbased/combined estimators. Reported: (i) density of an A-IPTW-based asymptotic normal distribution for frequentist estimators (in\nblack); and (ii) posterior densities for Bayesian estimators (in colors). Both (i) and (ii) are based on 5-fold cross-fitting. 6The data is available at https://github.com/nbanho/npi_effectiveness_first_wave/blob/master/data/\ndata_preprocessed.csv.",
+    "paper_id": "2603.12037",
+    "title": "Frequentist Consistency of Prior-Data Fitted Networks for Causal Inference",
+    "authors": [
+      "Valentyn Melnychuk",
+      "Vahid Balazadeh",
+      "Stefan Feuerriegel",
+      "Rahul G. Krishnan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12037v1",
+    "chunk_index": 82,
+    "total_chunks": 80,
+    "char_count": 597,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  }
+]

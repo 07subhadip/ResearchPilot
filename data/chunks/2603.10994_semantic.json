@@ -1,0 +1,1118 @@
+[
+  {
+    "chunk_id": "52470587-d9f0-43cc-ac1f-d0337134f4bb",
+    "text": "Carlos Alberto Fernández-y-Fernández, Universidad Tecnológica de la Mixteca Oaxaca, México; Jorge R. Aguilar\nCisneros, Secretaría de Ciencia, Humanidades, Tecnología e Innovación (SECIHTI-Puebla) & UPAEP University,\nPuebla, Pue., México. Abstract—The rapid evolution and inherent complexity of I. INTRODUCTION\nmodern software requirements demand highly flexible and\nresponsive development methodologies. While Agile frameworks\nN today's fast-paced digital world, softwarehave become the industry standard for prioritizing iteration,\ncollaboration, and adaptability, software development teams engineering is at the heart of technological innovation,\ncontinue to face persistent challenges in managing constantly driving progress across industries. However, the\nevolving requirements and maintaining product quality under complexity and constant change of software\ntight deadlines. This article explores the intersection of Artificial I requirements have made it increasingly difficult for\nIntelligence (AI) and Software Engineering (SE), to analyze how traditional, rigid development methodologies to keep\nAI serves as a powerful catalyst for enhancing agility and pace. This growing need for flexibility and\nfostering innovation. The research combines a comprehensive responsiveness gave rise to the concept of \"agility\" in\nreview of existing literature with an empirical study, utilizing a\nsoftware development –Agility is a team's ability tosurvey directed at Software Engineering professionals to assess\nrapidly and reliably respond to change–. Agilethe perception, adoption, and impact of AI-driven tools. Key\nfindings reveal that the integration of AI (specifically through methodologies, which prioritize iterative progress,\nMachine Learning (ML) and Natural Language Processing collaboration, and adaptability, have become essential\n(NLP) )facilitates the automation of tedious tasks, from in addressing the ever-shifting demands of modern\nrequirement management to code generation and testing . This software systems. Despite the widespread adoption of\npaper demonstrates that AI not only optimizes current Agile agile frameworks, software development teams still\npractices but also introduces new capabilities essential for face significant challenges, such as managing evolving\nsustaining quality, speed, and innovation in the future landscape requirements, integrating diverse teams, and ensuring\nof software development.\nproduct quality under tight deadlines. Enter Artificial Intelligence (AI), a transformativeIndex Terms—Agile Development; Artificial Intelligence (AI),\ntechnology poised to redefine the landscape of softwareMachine Learning (ML), Software Automation, Software\nEngineering (SE). engineering. AI's ability to automate tasks, process vast\namounts of data, and make informed decisions in real time\noffers a unique opportunity to enhance agility in software\ndevelopment.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 1,
+    "total_chunks": 62,
+    "char_count": 2899,
+    "word_count": 374,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "22d9bd27-bb3c-4a05-95d8-1ceff99c18d8",
+    "text": "By leveraging AI-driven tools, teams can\nstreamline workflows, improve accuracy, and innovate at an\nunprecedented rate. This article delves into the intersection of\nAI and agile software engineering, exploring how AI not only\n1This paragraph of the first footnote will contain the date on which you addresses the traditional challenges of agility but also acts as a\nsubmitted your paper for review, which is populated by IEEE. It is IEEE style\nto display support information, including sponsor and financial support catalyst for innovation, enabling more dynamic, efficient, and\nacknowledgment, here and not in an acknowledgment section at the end of the creative software solutions.\narticle. For example, \"This work was supported in part by the U.S.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 2,
+    "total_chunks": 62,
+    "char_count": 750,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c31dfdd4-635b-4cd4-aeb3-941afff60e7b",
+    "text": "In software engineering, the shift toward agility in\nDepartment of Commerce under Grant 123456.\" The name of the development has been a critical response to longstanding\ncorresponding author appears after the financial information, e.g.\n(Corresponding author: Second B. Here you may also indicate if challenges such as meeting tight deadlines, changing\nauthors contributed equally or if there are co-first authors. requirements, and maintaining quality. Traditional, plan-based\nThe next few paragraphs should contain the authors' current affiliations, methods (characterized by structured and linear processes)\nincluding current address and e-mail. For example, First A.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 3,
+    "total_chunks": 62,
+    "char_count": 670,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5add7c31-5b3a-482a-b977-c14be4f147ea",
+    "text": "Author is with the often struggled to adapt to the dynamic nature of software\nNational Institute of Standards and Technology, Boulder, CO 80305 USA\n(e-mail: author@ boulder.nist.gov). projects, leading to delays, budget overruns, and the inability\nSecond B. Author Jr. was with Rice University, Houston, TX 77005 USA. to address customer needs adequately [1]. This difficulty, often\nHe is now with the Department of Physics, Colorado State University, Fort referred to as the \"software crisis,\" prompted the development\nCollins, CO 80523 USA (e-mail: author@lamar.colostate.edu). of agile methodologies, which emphasize flexibility,\nThird C. Author is with the Electrical Engineering Department, University\nof Colorado, Boulder, CO 80309 USA, on leave from the National Research collaboration, and responsiveness to change [2]. Institute for Metals, Tsukuba 305-0047, Japan (e-mail: author@nrim.go.jp).",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 4,
+    "total_chunks": 62,
+    "char_count": 902,
+    "word_count": 126,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "be552a63-2587-4f97-a35a-e4f116e5dcf4",
+    "text": "However, the adoption of agility introduces its own set of\nMentions of supplemental materials and animal/human rights statements challenges. For instance, while agile methodologies facilitate\ncan be included here. faster development cycles and adaptability, they may also face\nColor versions of one or more of the figures in this article are available issues such as integrating multidisciplinary teams and aligningonline at http://ieeexplore.ieee.org project management processes in large-scale projects [3]. RELATED WORK\nMoreover, organizations often struggle with balancing the\nA. Previous research on Agile methodologies and theirformal structure of traditional methods with the iterative,\nevolution.flexible nature of agile development, leading to partial\nimplementations and inconsistent results [4]. The evolution of Agile methodologies has been driven by\nAI plays a transformative role in modern technology, the need to improve software development processes and\nimpacting various sectors including healthcare, finance, address limitations in traditional approaches. Agile emerged in\neducation, and manufacturing. AI's ability to mimic human the 1990s as a response to the rigidity of plan-driven models\ncognition, such as learning, reasoning, and decision-making, like Waterfall, which often struggled to accommodate\nallows for unprecedented advancements across industries. For changing requirements and rapid development cycles. The\ninstance, in healthcare, AI facilitates more accurate Agile Manifesto, published in 2001, emphasized key values\ndiagnostics and treatment recommendations, while in finance, such as individuals and interactions, customer collaboration,\nit enhances fraud detection and predictive analytics [5]. and adaptability over processes and tools [17]. The advent of machine learning and deep learning has Since its introduction, Agile methodologies such as\npushed AI beyond traditional automation, enabling systems to Scrum, XP, and Kanban have been widely adopted and\nprocess large volumes of data, recognize complex patterns, adapted across industries. Research highlights that Agile's\nand make real-time decisions with remarkable accuracy. These flexibility makes it well-suited for dynamic environments,\ntechnologies, such as neural networks, underpin many of where customer needs and project scope often evolve during\ntoday's AI applications, including self-driving cars, virtual the development process [18]. Over time, Agile has evolved\nassistants, and advanced robotics [6]. Moreover, AI's into hybrid models like DevOps and Continuous\nintegration into the Internet of Things (IoT) and cloud Integration/Continuous Deployment (CI/CD), which further\ncomputing has amplified its reach, allowing for enhanced streamline the development cycle by integrating testing,\nconnectivity and intelligence in various devices and systems deployment, and operations into the Agile framework [19].\n[7].",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 5,
+    "total_chunks": 62,
+    "char_count": 2926,
+    "word_count": 392,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "edaa6bc6-6b12-4567-885c-6c612c43341d",
+    "text": "Agile's adaptability has made it a key methodology in\nDespite its benefits, AI also presents challenges, modern software development, but its implementation comes\nincluding issues related to privacy, bias, and transparency. with challenges, especially in large-scale projects and\nThese challenges need to be addressed to fully harness AI's distributed teams. Studies have identified factors like\npotential and ensure its ethical application [8]. organizational culture, team structure, and customer\nThe objective of this article is to explore how AI involvement as critical for the success of Agile projects [20].\nenhances agility and fosters innovation within Software The evolution of Agile continues as organizations experiment\nEngineering (SE). AI has the potential to optimize various with and refine its methodologies to better fit their specific\nstages of the software development lifecycle by automating contexts.\nrepetitive tasks, such as coding, bug detection, and testing, This body of research highlights Agile's significant impact on\nallowing developers to focus on higher-level problem-solving software engineering, illustrating both its strengths in\nand creativity [9]. Moreover, AI-driven tools can streamline promoting flexibility and its evolving challenges in complex\nagile development processes by enabling more efficient environments.\nproject management, real-time collaboration, and predictive\nanalytics, which enhance the team's ability to adapt to B. The intersection of AI and software engineering.\nchanging requirements [10]. The intersection of AI and software engineering has\nAI can also act as a catalyst for innovation by facilitating gained traction as AI technologies are increasingly integrated\nthe development of more sophisticated software products. By into the software development lifecycle.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 6,
+    "total_chunks": 62,
+    "char_count": 1828,
+    "word_count": 253,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d2da0941-a14f-4a2a-b62f-efc4f35a2b6d",
+    "text": "Recent research\nleveraging machine learning and data-driven insights, AI helps highlights how AI-driven techniques, such as machine\nto identify patterns in user behavior, predict market needs, and learning (ML), natural language processing (NLP), and deep\naccelerate the release of innovative solutions that are more learning (DL), contribute to more efficient software\ntailored to end-user demands [11]. Furthermore, AI engineering practices. AI has been applied to automate\ncontributes to strategic agility in the face of market turbulence, repetitive tasks, improve testing processes, and enhance\nhelping firms to innovate and stay competitive by providing decision-making capabilities within software development\nreal-time data insights and optimizing decision-making teams [13].\nprocesses [12]. Several studies have explored the transformative\nIn summary, this article aims to highlight the significant potential of AI in software engineering, noting that AI-based\nrole of AI in enhancing agility and fostering innovation in tools can streamline processes such as debugging, testing, and\nsoftware engineering by transforming workflows, enabling documentation, leading to significant reductions in time and\npredictive insights, and automating processes, ultimately cost [11]. By automating traditionally labor-intensive\nallowing teams to build more adaptive and creative solutions. processes, AI empowers developers to focus on more\nThe next section details the related work; section III explains complex, creative tasks, further accelerating innovation in\nhow AI is driving agility in SE; section IVdescribes the survey software products. Moreover, research indicates that AI\nwe applied of the use of AI on SE; section V discusses the enables better analysis of large datasets, identifying patterns\nresults of the study; based on the survey; section VI addresses that can lead to more adaptive and responsive software\nthe challenges and limitations associated with using AI in SE; systems [14].\nand finally, sections VII suggests areas for future work. As AI continues to evolve, it is expected to further",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 7,
+    "total_chunks": 62,
+    "char_count": 2110,
+    "word_count": 300,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7650557d-2faf-4a88-af1a-6343d7d1f92f",
+    "text": "reshape software engineering methodologies, with studies predictive insights. By automating repetitive tasks and\nadvocating for the development of AI-specific frameworks optimizing resource allocation, AI fosters responsiveness and\nand tools to fully leverage its potential in solving complex flexibility throughout the software development life cycle\nsoftware challenges [15], [16]. However, challenges such as (SDLC). The integration of ML models and LLMs has further\nmodel interpretability, ethical concerns, and integration strengthened this agility by accelerating software delivery,\ncomplexities remain areas for further research and enhancing quality assurance, and improving project\nimprovement [11]. management. This growing body of literature underscores the critical\nA.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 8,
+    "total_chunks": 62,
+    "char_count": 780,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "99450266-1be0-4e6e-ae74-b59f06ab6f11",
+    "text": "AI in Requirements Engineeringrole AI plays in enhancing the agility and innovation potential\nof software engineering, laying the foundation for future AI techniques, particularly NLP and ML, are reshaping\nadvancements in both fields. how requirements are elicited, analyzed, and managed. NLP-based tools assist in clarifying vague requirements,\nextracting structured information from natural language input,\nC. AI tools and frameworks used in software development. and converting it into Agile-aligned user stories, thereby\nstreamlining backlog grooming and sprint planning [25]. In recent years, AI tools and frameworks, particularly Recent work has explored AI for improving user story\nLarge Language Models (LLMs), have made significant quality evaluation [26], automatic generation of user stories\ncontributions to software development by automating various [27], and intelligent support for requirement engineering [28].\ntasks, improving efficiency, and enhancing coding practices. Furthermore, ML-based approaches have been applied to\nOne prominent example is Copilot (developed by GitHub and improve requirement engineering practices by detecting\nOpenAI), which assists developers by generating code inconsistencies and estimating change impact [29].\nsuggestions, debugging, and even proposing entire code These advances make requirement processes more\nblocks during development. Studies have shown that tools like consistent, traceable, and adaptive to changing user\nCopilot are becoming widely used in the industry, with needs—key characteristics of agile methodologies.\ndevelopers adopting these AI-powered solutions to expedite B. AI in Design and Planning\ncoding processes and improve code quality [21]. AI-driven predictive analytics enable software teams to LLMs such as GPT-4 have also demonstrated capabilities\nanticipate risks such as technical debt, performancein automating more complex software development tasks,\nbottlenecks, and project delays. By analyzing historical projectincluding embedded system development and debugging.\ndata, ML models can forecast potential issues before theyResearch on GPT-4 shows its capacity to generate functional\nmanifest, allowing proactive mitigation strategies that improveprograms for tasks requiring a combination of hardware and\ndelivery timelines and project outcomes [16], [30].software knowledge. This has paved the way for integrating\nIn Agile contexts, predictive analytics support sprintLLMs into workflows, enabling more efficient and accurate\nplanning and backlog prioritization by identifying high-valuesoftware development in specialized areas like embedded\nfeatures and resource constraints [31], [32]. Bayesian modelssystems [22].\nhave even been applied to automate backlog sorting based on Moreover, LangChain, an open-source framework, has\nfeature usage data and success rates, enhancingfacilitated the rapid development of LLM-based applications\ndecision-making and reducing bias [33].by providing modular abstractions that allow seamless\nAI-based decision support systems also help projectinteraction with various data sources and programming\nmanagers balance trade-offs between cost, scope, and time,environments. This tool has made it easier for developers to\nensuring optimal resource allocation and reduced risk [34].integrate AI-driven functionalities into their software, further\nThese contributions reinforce agility through informed,enhancing productivity and creativity in development\ndata-driven planning.workflows [23]. Additionally, AI tools such as CodeCompose, an\nAI-assisted code authoring tool developed at Meta, leverage C. AI & Coding\nLLMs to improve the speed and accuracy of code generation Software construction is among the most transformed\nacross multiple programming languages. CodeCompose has areas by AI.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 9,
+    "total_chunks": 62,
+    "char_count": 3808,
+    "word_count": 497,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aedc03e3-0762-4ab3-a5ef-552f664a91b7",
+    "text": "LLMs such as Codex, AlphaCode, and GitHub\nbeen deployed at scale, demonstrating significant Copilot assist developers by generating boilerplate code,\nimprovements in code suggestion acceptance rates and overall refactoring functions, completing code, and creating\ndevelopment efficiency [24]. LLMs and AI frameworks such documentation [35], [36], [37]. These tools reduce\nas Copilot, GPT-4, LangChain, and CodeCompose are development time and human error while enabling developers\ntransforming the software development landscape by to focus on high-impact architectural and design decisions.\nautomating repetitive tasks, generating code, and enhancing Other AI-based systems, such as CodeWhisperer [38],\nproductivity, signaling a new era of AI-supported software extend these capabilities by providing secure code suggestions\nengineering. and context-aware assistance. AI-powered pair programming\nsolutions further increase productivity and collaboration\nIII. AI-DRIVEN AGILITY IN SOFTWARE ENGINEERING between human developers and intelligent agents [39]. AI has emerged as a transformative force in software\nengineering, significantly enhancing agility by streamlining\nprocesses, improving decision-making, and enabling AI in Testing and Quality Assurance industry professionals. The primary goal was to capture\nTesting and quality assurance (QA) have seen significant current experiences with AI tools, their perceived impact on\nimprovements through AI-driven automation. ML-based agility and innovation, and expectations for future\npredictive models identify defect-prone areas, prioritize test developments in AI-assisted software engineering.\ncases, and detect performance issues early [40], [41], [42]. The survey was structured into five main sections: (1)\nAI frameworks automate test case generation, anomaly demographics and professional background, (2) current AI\ndetection, and defect prediction using historical data [43]. This adoption in development, (3) impact on agility and\nreduces manual testing effort and enables continuous development processes, (4) innovation and creativity, and (5)\nintegration and delivery [44]. challenges, concerns, and future perspectives. A set of\nAdditionally, AI automates code reviews and bug optional open-ended questions was also included to gather\ndetection with accuracy levels reaching up to 95%, improving qualitative insights. The full list of survey questions is\nconsistency and allowing developers to focus on provided in Appendix A.\nproblem-solving rather than repetitive tasks [35], [45]. These The instrument was distributed via email to over 1,000\ncapabilities directly support agile practices by shortening addresses of researchers, practitioners, and professionals in the\nfeedback loops and enabling faster, more reliable releases. field of software engineering. Participation was voluntary,\nanonymous, and no identifying information was collected.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 10,
+    "total_chunks": 62,
+    "char_count": 2911,
+    "word_count": 383,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "33ae8a04-0b9c-43d8-9eaa-73f5832bd252",
+    "text": "AI in Maintenance and Operations\nfor research purposes. AI also supports agility beyond deployment by A total of 64 complete responses were collected. While\nimproving software maintenance and operational monitoring. the response rate was modest, the data provides valuable\nDeep learning–based tools can detect, classify, and repair exploratory insights into the state of AI adoption and its\ndefects automatically, significantly reducing maintenance influence on agility and innovation in software engineering\ncosts [46]. practices. Given the scope of this research, the results are\nAnomaly detection systems proactively monitor interpreted in a descriptive and exploratory manner rather than\nperformance and identify irregularities in production aiming for statistical generalization.\nenvironments, alerting teams before failures occur [40]. Data Analysis\nAI-driven automation also assists in continuous deployment The responses were analyzed using both quantitative and\nand bug fixing, ensuring system stability and reliability qualitative approaches.\nthroughout its lifecycle [47]. ●​ Quantitative analysis: Closed-ended questions were\nF.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 12,
+    "total_chunks": 62,
+    "char_count": 1140,
+    "word_count": 151,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6025055c-5435-47fd-a90f-01d8539a8dc4",
+    "text": "AI in Project Management and Team Collaboration summarized using descriptive statistics, including\nIn project management, AI facilitates data-driven frequency distributions and percentages. These\ndecision-making and continuous improvement. By analyzing measures provide an overview of respondents' roles,\nlarge volumes of project data, AI models forecast delivery years of experience, development methodologies, AI\ntimes, detect resource constraints, and recommend optimal adoption rates, and perceptions of impact on agility,\nschedules [30]. productivity, and innovation.​\nNLP and LLM-based assistants such as GPT models\nenhance team collaboration by summarizing documentation, ●​ Qualitative analysis: Open-ended responses were\nsuggesting improvements, and supporting natural language reviewed and coded thematically to identify recurring\ninteraction [37], [48]. These tools also help automate patterns, concerns, and perspectives. This analysis\ncommunication tasks and documentation updates, maintaining highlights nuanced insights into specific use cases of\nalignment between teams and stakeholders.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 13,
+    "total_chunks": 62,
+    "char_count": 1103,
+    "word_count": 137,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6804d88d-e11e-45e7-9a2f-6835a9155edf",
+    "text": "AI in software engineering, perceived limitations, and\nAcross all phases of the software life cycle anticipated future capabilities.\n(requirements, design, development, testing, maintenance, and\nproject management), AI acts as a catalyst for agility. It The combination of descriptive statistics and thematic\naccelerates coding, improves decision-making, reduces coding provides a balanced view of how AI is currently being\ndefects, and enables proactive maintenance. The integration of integrated into software engineering practices and how it is\nML and LLM technologies transforms software engineering expected to evolve.\ninto a more adaptive, efficient, and innovation-driven\ndiscipline [49], [50], [51]. These AI-enabled advancements B. Instrument Validation\nredefine agility not merely as faster delivery, but as an\nintelligent, data-informed process capable of continuous In this paper, a survey was applied, and to evaluate its\nlearning and improvement. reliability, an Exploratory Factor Analysis was conducted. In\nthis sense, some constructs were defined.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 14,
+    "total_chunks": 62,
+    "char_count": 1064,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "851fe10c-2727-4bb7-8478-f59501380eef",
+    "text": "SURVEY OF AI IN SE Construct 1 (C1): AI usage & adoption readiness. Methodology construct measures how embedded AI is in daily work and\norganizational preparedness. Q5 and Q15 were included: Q5Survey Design and Distribution\nHow frequently do you use AI tools in your daily development\nTo investigate perceptions of AI in SE, we designed and\ndistributed an online survey, targeting both academics and Q15 Rate your organization's readiness to adopt that these aspects are central to the construct being measured.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 15,
+    "total_chunks": 62,
+    "char_count": 511,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1d85b77e-7ab2-4203-b306-614fae95027c",
+    "text": "AI-driven development practices. Items reflecting Frequency of AI usage (Q5), organizational\nConstruct 2 (C2): Perceived impact of AI on Agility & readiness (Q15), future impact (Q13), and creative\nProductivity. This construct measures operational benefits.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 16,
+    "total_chunks": 62,
+    "char_count": 257,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aac848a3-fb66-4454-9c7b-008e3de17042",
+    "text": "Q6 problem-solving (Q9) also showed meaningful contributions\nand Q8 were included: Q6 To what extent has AI improved to the factor (See Table 2). All items loaded positively and\nyour team's agility in responding to changing requirements? substantially on the extracted factor, with standardized\nQ8. How has AI affected your development speed and loadings ranging from 0.58 to 0.86, exceeding the\nproductivity?\nrecommended minimum threshold of 0.50.Construct 3 (C3): Perceived impact of AI on Creativity &\nInnovation.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 17,
+    "total_chunks": 62,
+    "char_count": 516,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8a7dbb03-c31c-439c-b566-0256d4c69d7a",
+    "text": "This construct measures higher-order cognitive Table 2. Factor loadings.\nimpact. Q9 and Q10 were included: Q9 Do you believe AI\nItems Factortools enhance or limit creative problem-solving in software\nQ10 Has AI helped your team develop more innovative software\ndevelopment? Q10 Has AI helped your team develop more solutions? 0.855\ninnovative software solutions? Q8 How has AI affected your development speed and productivity? 0.800 0.774Before EFA was applied, the adequacy of the data for factor Q6respondingTo what toextentchanginghas AIrequirements?improved your team's agility in\nanalysis was assessed. In order to do that, the\nQ5.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 18,
+    "total_chunks": 62,
+    "char_count": 636,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d3d2fca5-bf58-43b3-a81a-75a29eccbc88",
+    "text": "How frequently do you use AI tools in your development work? 0.663\nKaiser–Meyer–Olkin (KMO) index was computed. This index\nwas 0.870, indicating a very good level of shared variance Q15 Rate your organization's readiness to adopt AI-driven 0.639 development practices:\namong the items ( Q5, Q6, Q8, Q9, Q10, Q13, and Q15), see Q13 In the next 5 years, how do you expect AI to transform\nTable 1. software engineering? 0.633 Q9 Do you believe AI tools enhance or limit creative\nTable 1. Kaiser-Meyer-Olkin Test problem-solving in software development? 0.582 Varimax was the rotation method applied.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 19,
+    "total_chunks": 62,
+    "char_count": 596,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "193fb093-d8d3-48d6-9bc2-45c29b55ec3a",
+    "text": "Q10 Has AI helped your team develop more innovative software\n0.857\nsolutions? Q13 In the next 5 years, how do you expect AI to transform 0.848 The results support a unidimensional structure for the scale. software engineering? Q15 Rate your organization's readiness to adopt AI-driven The purpose of applying EFA was to explore the latent\n0.889 development practices: structure underlying perceptions of AI adoption and impact in\nQ5. How frequently do you use AI tools in your 6 development 0.833 software engineering.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 20,
+    "total_chunks": 62,
+    "char_count": 518,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "19cde594-8b63-4a04-98ca-031bc5df4bfb",
+    "text": "The findings provide strong empirical\nwork? Q6 To what extent has AI improved your team's agility in support for a single latent construct, which can be interpreted\n0.882\nresponding to changing requirements? as perceived impact and readiness of AI in software\nQ8 How has AI affected your development speed and productivity? 0.909 engineering practices. This study shows that respondents\nQ9 Do you believe AI tools enhance or limit creative perceive AI adoption not as a set of isolated dimensions, but\n0.862\nproblem-solving in software development? rather as a holistic phenomenon encompassing operational,\nOverall MSA 0.870 strategic, and cognitive aspects. The high loadings associated\nwith productivity, agility, and innovation indicate that\npractitioners primarily associate AI value with tangible\nperformance improvements and adaptive capacity. ModerateFurthermore, Bartlett's Test of Sphericity was computed to\nloadings for items related to frequency of AI use (Q5) anddetermine if the dataset's correlation matrix significantly\norganizational readiness (Q15) suggest that behavioraldiffers from an identity matrix. The result is statistically\nadoption and strategic preparedness are important, thoughsignificant (χ² = 197.802, df = 21, p < .001), confirming that\nsecondary. Perceptions of creative problem-solving (Q9)the correlation matrix is not an identity matrix.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 21,
+    "total_chunks": 62,
+    "char_count": 1374,
+    "word_count": 192,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e163fca6-9c3b-43e8-b171-2999404b1a31",
+    "text": "These results\nindicate that AI is viewed not only as an automation tool butdemonstrate that the data are suitable for factor analysis. At\nalso as a cognitive aid in software development activities.this point, an Exploratory Factor Analysis (EFA) was\nconducted to examine data from Q5, Q6, Q8, Q9, Q10, Q13, The results demonstrate satisfactory construct validity at the\nand Q15 to evaluate perceptions of Artificial Intelligence (AI) exploratory level and support the use of a single composite\nuse and impact in software engineering. score in subsequent analysis. Factor extraction using principal axis factoring with Varimax An additional test was applied in order to assess the internal\nrotation revealed a single-factor solution. The adequacy of this consistency and reliability of the proposed scale measuring\nsolution was supported by a non-significant model chi-square ( perceptions of AI impact and adoption in software\n𝑋 = 18. 688, 𝑑𝑓= 14, 𝑝= 0. 177 ) indicating that the engineering. An unidimensional reliability analysis was\none-factor model adequately fits the observed data. conducted through McDonald's Omega (ω) and Cronbach's\nAlpha (α). Both coefficients were computed, ω was 0.882,\nItems related to innovation (Q10), productivity (Q8), and whit 95% confidence interval ranging from 0.837 to 0.926,\nAgility (Q6). Demonstrated the strongest loadings, suggesting suggesting strong reliability of the latent construct; α was 0.872, whit 95% confidence interval ranging from 0.807 to Demographics & Background\n0.937, showing the same situation, a strong reliability, see\nTable 3. These results indicate high internal consistency. Primary Role of Respondents:\nThe survey participants represented a mix of professional\nTable 3. Reliability Statistics. and academic backgrounds, with a clear predominance of\n95% CI research-oriented roles.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 22,
+    "total_chunks": 62,
+    "char_count": 1848,
+    "word_count": 272,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c82586a7-832d-42fd-92f6-24e67a719d0b",
+    "text": "Out of the 64 respondents,\nCoefficient Estimate Std. Error Lower Upper approximately two-thirds identified as Research Scientists or\nAcademic Researchers, reflecting strong engagement from the\nCoefficient ω 0.882 0.023 0.837 0.926 academic community. The second largest group consisted of Software\nCoefficient α 0.872 0.033 0.807 0.937 Engineers/Developers, who accounted for a significant share\nof the responses and provided insights from an industry\nIn other words, the outcomes confirm that the items practice perspective. Smaller groups were represented by\nconsistently measure the same underlying construct. Engineering Managers/Team Leads, Quality Assurance\nAdditionally, each item was examined using item-rest Engineers, Product Managers, and teaching professionals (e.g.,\ncorrelation. As a result, all items exhibited positive and professors or instructors).\nsubstantial item-rest correlations, ranging from 0.538 to This distribution indicates that the results primarily\n0.791.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 23,
+    "total_chunks": 62,
+    "char_count": 986,
+    "word_count": 130,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a4d9dfce-a2fc-49d9-a4ac-a1b904886ac9",
+    "text": "See Table 4. reflect perspectives from academia, complemented by\ncontributions from practitioners in software engineering and\nTable 4. Item-Rest Correlation and 95% Confidence related roles. The combination of both viewpoints enriches the\nIntervals for Survey Items. analysis by integrating theoretical and practical experiences\nItem-rest correlation with AI in software engineering, see Fig. 1. Estimat Lower Upper\nItem\ne 95% CI 95% CI\nQ6 To what extent has AI improved your\nteam's agility in responding to changing 0.722 0.579 0.822\nrequirements? Q8 How has AI affected your development\n0.738 0.601 0.833\nspeed and productivity? Q9 Do you believe AI tools enhance or limit\ncreative problem-solving in software 0.538 0.336 0.692\ndevelopment? Q10 Has AI helped your team develop more\n0.791 0.676 0.868\ninnovative software solutions? Q13 In the next 5 years, how do you expect AI\n0.594 0.408 0.733\nto transform software engineering? Primary Role of Respondents. Q15 Rate your organization's readiness to\n0.592 0.405 0.731\nadopt AI-driven development practices:\nQ5. How frequently do you use AI tools in your Years of Experience in Software Development:\n0.619 0.44 0.75\ndevelopment work? The respondents reported a wide range of\nThe outcomes indicate that each item contributes meaningfully professional experience, with a notable concentration among\nto the overall construct and that none of them show highly experienced professionals. The largest group consisted\nproblematic misalignment. of participants with more than 16 years of experience,\nrepresenting nearly half of all responses. This indicates that\nC. Results of the survey the survey captured the perspectives of individuals with\nlong-standing involvement in software engineering practices\nThis section presents the survey findings regarding and their evolution over time.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 24,
+    "total_chunks": 62,
+    "char_count": 1831,
+    "word_count": 270,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eca8000c-8b21-4157-a345-eaf24b720917",
+    "text": "The\nanalysis is based on responses from 64 participants\nrepresenting both academic and industry perspectives. Results\nare organized according to the structure of the survey:\ndemographics and professional background, current AI\nadoption, impact on agility and development processes,\ncontributions to innovation and creativity, as well as\nchallenges, concerns, and expectations for the future. The aim of this section is not only to provide descriptive\nstatistics of the responses but also to highlight patterns and\ninsights that may inform a broader understanding of how AI is\ncurrently influencing software engineering practices. Years of Experience in Software Development. The second most represented categories were methodologies, often complemented by hybridization with\nprofessionals with 6–10 years and 11–15 years of experience, DevOps, Kanban, or legacy models such as Waterfall and\nboth of which together accounted for a substantial portion of RUP. This reflects a trend toward flexibility and\nthe sample. These groups provide insights from mid-career methodological integration rather than strict adherence to a\npractitioners and researchers actively engaged in current single process model, see Fig. 32.\ndevelopment practices. Smaller groups were reported at the\n3–5 years and 0–2 years levels, showing that while Current AI Adoption in Development\nearly-career voices were present, they were less prominent in\nthe dataset.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 26,
+    "total_chunks": 62,
+    "char_count": 1434,
+    "word_count": 206,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "61e49d9d-9128-4816-bc53-535d7ab1e208",
+    "text": "AI-Powered Tools in Development Workflows:\nOverall, the distribution suggests that the findings reflect\nthe perspectives of a predominantly experienced population, The responses indicate that the most widely adopted\nwhich may influence how AI adoption, agility, and innovation AI-powered tools are GitHub Copilot and\nare perceived in the context of software engineering, see Fig. ChatGPT/Gemini/GPT-based coding assistants, with the\n2. majority of participants reporting the use of one or both in\ntheir development activities. These tools appear to dominate\nDevelopment Methodologies in Use: current AI adoption in software engineering, reflecting their\nThe survey responses show a strong prevalence of accessibility, integration into coding workflows, and\nAgile/Scrum practices among participants. A clear majority immediate impact on productivity.\nreported using Agile/Scrum either as their primary\nmethodology or in combination with other approaches. This\nreflects a widespread adoption of agile methods as a standard\nin both academic and industrial contexts of software\nengineering. In addition to Agile/Scrum, many respondents indicated\nthe use of hybrid approaches, combining agile practices with\nmore traditional methodologies such as Waterfall or Rational\nUnified Process (RUP). This suggests that while agile\ndominates, organizations often adapt methodologies to fit\nspecific project or organizational needs rather than applying a\nsingle model uniformly.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 27,
+    "total_chunks": 62,
+    "char_count": 1463,
+    "word_count": 200,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c07c039b-f93c-480c-8e17-e0723aa250eb",
+    "text": "AI-Powered Tools in Development Workflows. Beyond these two leading categories, several respondents\nreported the use of machine learning model development\nplatforms, AI-powered testing tools, and automated code\nreview tools. These applications suggest that AI is being\nintegrated not only in code generation but also in quality\nassurance and specialized areas such as debugging and project\nmanagement. A few participants mentioned the use of\nemerging tools like Cursor AI and intelligent agents,\nhighlighting experimentation with newer platforms.Fig. 3. Development Methodologies in Use. A small proportion of respondents indicated no current\nuse of AI tools, suggesting that while adoption is widespread, DevOps also appeared as a frequently mentioned\nit is not yet universal.methodology, typically in combination with Agile/Scrum. This\nIn general, the data demonstrates that AI integration inpairing highlights the growing importance of continuous\nsoftware engineering is strongly concentrated around codeintegration, delivery, and operations as integral parts of\nassistance and review tools, with gradual but growingsoftware development. Kanban was reported less frequently\nadoption of AI in complementary areas such as testing,but was present in several responses, often combined with\ndebugging, and project management. This pattern suggestsScrum or Waterfall.\nthat AI's most immediate value is perceived in coding-related A smaller number of participants identified Waterfall or\ntasks, while its application in broader lifecycle activities is stillRUP as standalone or dominant methodologies, although these\ndeveloping, see Fig. 4.were generally reported as part of mixed or hybrid models. This indicates that while traditional models are not entirely\nFrequency of AI Tool Usage:absent, they are less prominent compared to agile-oriented\nframeworks. The results suggest that agile practices—especially 2 Note: As participants could select multiple options for some\nScrum—serve as the foundation of most teams' development questions, the total percentage exceeds 100%. The results reveal that AI tools have already become part\nof the regular workflow for most respondents. A large\nproportion reported using them daily or several times per\nweek, together representing the majority of the sample. This\nindicates that for many professionals and researchers, AI has\nmoved beyond experimental use and has been integrated into\nroutine development practices. Impact of AI on Teams' Agility in Responding to\nChanging Requirements.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 28,
+    "total_chunks": 62,
+    "char_count": 2526,
+    "word_count": 354,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b4b76322-abf0-40c3-b72e-ca7438f08464",
+    "text": "Together, these findings suggest that AI is generally\nperceived as a facilitator of adaptability, with most teams\nexperiencing tangible gains in flexibility, speed, and\nresponsiveness to evolving requirements. However, the mixed\nFig. 5.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 29,
+    "total_chunks": 62,
+    "char_count": 236,
+    "word_count": 33,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a7867e0f-7cbe-41ad-ba1c-c5d04b8e7b0f",
+    "text": "Frequency of AI Tool Usage. responses also underline that the degree of improvement\ndepends on how extensively AI is integrated into workflows\nA smaller group reported using AI tools on a weekly or and supported by organizational practices.\nmonthly basis, suggesting more occasional adoption, often for\nspecific tasks rather than continuous support. Finally, only a Stages of the Development Lifecycle Where AI Is Most\nlimited number of participants indicated using AI tools rarely, Beneficial:\nhighlighting that outright non-use is relatively uncommon\namong respondents, see Fig. 5. The survey results show that AI is perceived as most\nThe findings suggest that AI is not only widely adopted beneficial in the coding/implementation stage. A large\nbut also frequently used, particularly for day-to-day coding, majority of respondents identified this phase as the primary\ndebugging, and related activities. This level of regular area where AI tools add value, reflecting their growing use in\nengagement underscores the growing reliance on AI-powered code generation, refactoring, and error detection.\ntools in software engineering practice. Impact on Agility & Development Process Impact of AI on Teams' Agility in Responding to Changing\nRequirements: The survey responses indicate that AI has had a\npredominantly positive impact on teams' agility when\nadapting to changing requirements. A substantial portion of\nparticipants reported that AI significantly improved their\nability to respond, highlighting a strong perception of value in\nthis area. Another large segment indicated that agility was\nmoderately improved, suggesting that while benefits are Fig. 7. Stages of the Development Lifecycle Where AI Is\nnoticeable, they may vary depending on context, adoption Most Beneficial.\nlevel, or integration with existing practices.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 30,
+    "total_chunks": 62,
+    "char_count": 1828,
+    "word_count": 267,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e96a7761-02e3-45b9-9d72-a7f146de8f7d",
+    "text": "A smaller group\nnoted only slight improvements or no change, pointing to The second most frequently cited stage was testing and\npossible limitations in applicability or effectiveness. Finally, a quality assurance, where AI supports activities such as\nminority of respondents stated that the question was not automated test generation, bug detection, and performance\napplicable to them, as they do not currently use AI tools in validation. This finding highlights the role of AI in enhancing\ntheir development process, see Fig. 6. software reliability and reducing the effort required in manual\ntesting. Other lifecycle stages received fewer mentions but still\ndemonstrated meaningful adoption. These included\nmaintenance and bug fixing, and documentation, both of\nwhich benefit from AI-assisted error resolution and the\nautomation of repetitive documentation tasks.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 31,
+    "total_chunks": 62,
+    "char_count": 865,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "68703687-c856-46c1-b6b5-5b99da6f3e38",
+    "text": "A smaller but\nnotable share of participants pointed to requirements analysis\nand design and architecture, suggesting an emerging role for AI in upstream activities such as requirement validation, early practitioners view AI as a catalyst for generating innovative\nmodeling, and system design support. Less frequently, AI was solutions, exploring alternatives, and overcoming technical\nassociated with project management and deployment/DevOps, challenges.\nindicating more limited yet developing areas of application,\nsee Fig. 7. Generally speaking, the data reveals a clear trend: AI is\nmost valued in stages involving code production and\nvalidation, while its use in earlier and managerial phases of the\nlifecycle remains exploratory but promising. This suggests\nthat adoption is currently concentrated in technically intensive\nactivities, with potential expansion toward more strategic\nstages as tools mature. Impact of AI on Development Speed and Productivity:\nFig. 9. AI and Creative Problem-Solving in Software The survey results indicate that AI has had a substantial\nDevelopmentimpact on developers' speed and productivity. The most\ncommon response was \"increased significantly (>30%)\",\nAt the same time, a considerable portion of participantsreported by a large proportion of participants.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 32,
+    "total_chunks": 62,
+    "char_count": 1296,
+    "word_count": 181,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "626cd3e4-5cc8-4c00-bbec-6f4356ea11f4",
+    "text": "This suggests\nselected \"moderately enhance creativity,\" reflecting a morethat, for many teams, AI adoption translates into marked\nbalanced perspective in which AI is seen as supportive, thoughefficiency gains in daily development tasks.\nnot transformative, in fostering creativity. On the other hand, a smaller but notable group reported\nthat AI tools somewhat or significantly limit creativity. These\nresponses highlight concerns that reliance on AI could\ndiscourage original thinking or lead to over-dependence on\nautomated suggestions. A minority of respondents considered\nthat AI had no impact on creativity, indicating neutrality or\nnegligible influence in their workflow. Taken together, the findings suggest that developers\npredominantly regard AI as an enabler of creative\nproblem-solving, though a non-negligible segment perceives\npotential risks of limitation. This divergence underscores the\nFig. 8.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 33,
+    "total_chunks": 62,
+    "char_count": 910,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "876fb2ab-a81b-4d84-8c24-56e7c314f415",
+    "text": "Impact of AI on Development Speed and Productivity. dual role of AI: while it can amplify ideation and\nexperimentation, it may also constrain originality if used\nThe second most frequent response was \"increased uncritically, see Fig. 9.\nmoderately (15–30%)\", also widely reported. Taken together,\nthese two categories show that the majority of respondents\nAI and the Development of Innovative Software Solutions:experienced measurable productivity improvements, ranging\nfrom moderate to significant. The majority of respondents reported that AI has had a\nA smaller number of participants noted slight increases positive impact on their team's ability to develop innovative\n(5–15%), while a minority reported no significant change in software solutions. A large share selected \"Yes, definitely\",\ntheir productivity. Additionally, some respondents selected indicating strong confidence in AI's contribution to fostering\n\"too early to tell,\" reflecting uncertainty or limited exposure to new approaches, features, and solution designs. Many others\nAI tools, see Fig. 8. chose \"Yes, to some extent,\" reflecting that AI supports\nThe findings show that AI is perceived primarily as a innovation, though its impact may be more incremental or\nproductivity accelerator, with most developers identifying context-dependent.\nmoderate to substantial gains. Cases of no change or\nuncertainty are exceptions rather than the norm, underscoring\nthe strong positive association between AI adoption and\nenhanced development performance. Innovation & Creativity AI and Creative Problem-Solving in Software Development:\nThe results reveal a predominantly positive perception of\nAI's role in creative problem-solving. Most respondents\nindicated that AI enhances creativity, either moderately or\nFig. 10. AI and the Development of Innovative Softwaresignificantly.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 34,
+    "total_chunks": 62,
+    "char_count": 1841,
+    "word_count": 255,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "926e7efd-1e59-4bb0-9070-2d9846d9e7d8",
+    "text": "In particular, \"significantly enhance creativity\"\nSolutions.was one of the most frequent responses, suggesting that many In contrast, a smaller group of participants indicated \"No Barriers to Wider AI Adoption in Software Development:\nsignificant impact\" or \"No, it hasn't helped,\" suggesting that The survey revealed a variety of barriers that hinder the\nAI adoption has not yet translated into greater innovation in broader adoption of AI in software development processes.\ntheir experience. Additionally, some respondents answered Among the most frequently cited challenges were lack of\n\"Too early to determine,\" pointing to the ongoing and budget and resources, technical integration difficulties, and\nexploratory nature of AI integration in development security and compliance concerns. These findings suggest that\nworkflows, see Fig. 10. both financial and infrastructural constraints remain critical\nOverall, these results suggest that AI is widely perceived bottlenecks for many organizations.\nas an enabler of innovation in software engineering, though its Another recurring theme was the lack of expertise and\neffects are not uniform. While many teams already report training, indicating that teams often feel underprepared to\ntangible benefits, others remain cautious, either due to limited work effectively with AI technologies. This skills gap appears\nadoption or uncertainty about long-term outcomes. to compound the challenge of integration, making adoption\nChallenges & Concerns both technically and organizationally demanding. Team\nresistance to change and the need for management buy-in were\nConcerns About AI Integration in Software Development: also noted, reflecting cultural and organizational hurdles\nThe survey highlights a range of concerns regarding AI beyond purely technical aspects, see Fig. 12.\nadoption in software development, with several recurring\nthemes across respondents. The most frequently mentioned\nissues were code quality and reliability, security\nvulnerabilities, and over-dependence on AI tools, underscoring\napprehension that automation may introduce undetected\nerrors, weaken security practices, or reduce human oversight. Privacy and data protection, and the lack of transparency\nin AI decisions, also emerged as significant points of tension,\nreflecting worries about compliance, accountability, and the\ninterpretability of AI-generated outputs. Many respondents\nadditionally expressed concern about job displacement, the\ncost of implementation, and training and skill gaps, signaling\nbroader organizational and workforce challenges beyond the Fig. 12. Barriers to Wider AI Adoption in Software\ntechnical dimension. Participants further expressed uncertainty about the\nreturn on investment (ROI) and cited tool reliability issues,\nsuggesting that the perceived benefits of AI tools are not\nalways clear or consistent in practice. A smaller but notable\nsubset of respondents indicated that they faced no significant\nbarriers, implying that some teams have already developed the\nstructures and confidence necessary for effective AI\nintegration. Therefore, the findings show that AI adoption is not\nsolely a question of technical capability but also of resources,\nexpertise, trust, and organizational alignment. Addressing\nthese issues will be essential for fostering wider and more\nFig. 11.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 35,
+    "total_chunks": 62,
+    "char_count": 3336,
+    "word_count": 462,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cdba295b-43fe-4873-8ae5-0c14a63ba210",
+    "text": "Concerns About AI Integration in Software sustainable integration of AI in software engineering practices. Development\nFuture Perspectives\nA smaller set of participants raised issues around\nintegration complexity, pointing to the difficulties of Expected Transformation of Software Engineering Through\nembedding AI systems into existing workflows and AI:\ntoolchains. Notably, only a very limited number indicated\nhaving no significant concerns, suggesting that while AI tools When asked how AI is expected to transform software\nare widely used, most practitioners remain cautious about their engineering in the next five years, respondents expressed high\nimplications, see Fig. 11. expectations of change, though with varying degrees of\nThese results indicate that while AI adoption is intensity. The majority anticipated either a significant\nadvancing, developers and teams remain highly attentive to evolution or a revolutionary transformation.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 36,
+    "total_chunks": 62,
+    "char_count": 946,
+    "word_count": 130,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aa9b5cd6-c03e-40c6-98f0-b9a1f763882f",
+    "text": "This reflects a\nthe risks and trade-offs associated with integration. The strong belief that AI will play a central role in reshaping\nfindings emphasize the need for governance frameworks, practices, processes, and tools within the discipline.\ntraining programs, and transparency measures to ensure that A smaller group of participants predicted gradual\nAI tools are deployed responsibly and effectively. improvement, suggesting a more incremental trajectory in which AI enhances existing practices rather than Another highly valued set of capabilities included\nfundamentally altering them. Only a minimal number of real-time code optimization and automated documentation.\nrespondents expected little to no change, reflecting skepticism These were seen as complementary to code generation and\nabout AI's disruptive potential. Additionally, a few testing, offering efficiency gains in both system performance\nparticipants expressed uncertainty, highlighting the and maintainability.\nunpredictability that still surrounds the pace and direction of Additional capabilities such as bug prediction and\nAI adoption, see Fig. 13. prevention, requirements analysis automation, predictive\nproject management, and performance optimization were also\nfrequently mentioned. While these were not ranked as highly\nas code generation and testing, their repeated appearance\nindicates that teams view AI as a potential enabler across the\nentire software engineering pipeline, from early requirements\nto maintenance. The results point to a strong expectation that AI will\nprimarily enhance core engineering tasks—coding, testing,\nand optimization—while also offering secondary benefits in\ndocumentation, project management, and predictive analytics. This suggests a dual emphasis: immediate productivity gains\nand long-term improvements in software quality andFig. 13. Expected Transformation of Software Engineering\nsustainability.Through AI. The findings show a clear consensus that AI will be Organizational Readiness for AI Adoption:\ntransformative for software engineering, though opinions When assessing their organizations' readiness to adopt\ndiverge on whether this change will be evolutionary or AI-driven development practices, responses showed a mixed\nrevolutionary. This distribution suggests both optimism and but telling distribution across different levels of maturity.\ncaution: while most foresee AI as a catalyst for major As we can see in Fig. 15, the majority of participants\nprogress, there is still recognition of possible constraints and reported being \"somewhat ready, exploring options.\" This\nuncertainties in its practical realization. indicates that many organizations are in an exploratory\nstage—aware of AI's potential but still evaluating tools,\nValuable AI Capabilities for Development Teams: strategies, and feasibility before committing to concrete\nadoption. When asked which AI capabilities would be most\nA significant proportion identified as \"mostly ready,valuable for their development teams, respondents consistently\nplanning implementation.\" These organizations have movedhighlighted a set of core functionalities that they believe could\nbeyond exploration and are actively preparing structured plansprovide the greatest impact, see Fig. 14.\nto integrate AI into their development workflows, signaling a\nnear-term transition to practical deployment. Valuable AI Capabilities for Development Teams. Organizational Readiness for AI Adoption\nAutomated code generation emerged as the most\nAt the more advanced end, a smaller but notable group\nfrequently mentioned capability. Many participants identified\nreported being \"fully ready and actively implementing\"\nit as a way to accelerate development cycles, reduce repetitive\nAI-driven practices.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 37,
+    "total_chunks": 62,
+    "char_count": 3759,
+    "word_count": 502,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a0c91a71-d488-4020-94a5-3a89d2a79671",
+    "text": "This demonstrates that while adoption\ncoding tasks, and allow developers to focus on higher-level\nremains uneven, some organizations have already taken\ndesign and problem-solving.\ndecisive steps toward operationalizing AI in software\nClosely following, intelligent testing and quality\nengineering.\nassurance (QA) were regarded as essential. Respondents saw\nConversely, a minority described themselves as \"not very\nthis capability as critical for improving software reliability,\nready, early research phase\" or \"not ready at all.\" These cases\nidentifying issues earlier in the lifecycle, and reducing the\nreflect organizations still at the starting line, either conducting\noverall cost of defect management.\ninitial investigations or lacking the foundational resources and strategy to engage with AI adoption meaningfully. When asked what AI features or capabilities they wished\nIn general, the data suggest a readiness landscape skewed existed but are not currently available, participants provided a\ntoward early- to mid-stage adoption. While enthusiasm and wide range of responses that highlight unmet needs and future\nexploration dominate, only a smaller subset has reached active opportunities.\nimplementation, highlighting both the momentum of interest A central theme was the desire for AI to bridge the gap\nand the challenges that still slow down full integration. between requirements and implementation. Several\nrespondents envisioned tools capable of fully understanding\nOpen-Ended Questions natural language business requirements and automatically\ngenerating high-quality, maintainable code, complete with\ntests, documentation, and traceability. Others emphasized theExamples of AI Impact on Development and Team Agility:\nneed for AI to handle requirements modeling and evaluation,\nParticipants provided diverse examples of how AI has including automated requirement analysis, verification, and\nimproved their development processes and team agility. A even future modeling based on diverse user profiles.\nrecurring theme was the use of AI-powered code generation. Another frequent request concerned system-level\nDevelopers reported that AI tools help produce boilerplate reasoning and architecture support. Participants noted that\ncode, accelerate the implementation of specific functions, and current AI excels at localized code generation but lacks the\neven create full-stack applications despite limited knowledge ability to reason about software architecture holistically.\nof certain programming languages. This has led to substantial Desired features included AI that could proactively suggest\ntime savings, enabling teams to reallocate effort toward refactors, manage technical debt, generate software\nhigher-level design and analysis tasks. architecture designs, or recommend appropriate design\nAnother frequently mentioned area was AI-driven code patterns (e.g., SOLID, DDD, CQRS) at the right stage of\nreview and debugging. Several respondents described development.\nintegrating AI assistants into CI/CD pipelines to detect On the operational side, developers called for AI\nvulnerabilities, flag logic errors, or generate unit tests. These integration into DevOps and CI/CD pipelines, with seamless\ntools reduced review cycles by 30–40% in some cases and compatibility with tools such as Jenkins and Octopus Deploy.\nsignificantly cut debugging times, improving sprint velocity This included features like real-time build support, test\nand overall agility. AI-based bug detection and optimization automation, deployment optimization, and technical debt\nsuggestions were also seen as valuable for enhancing code prediction across the software lifecycle.\nquality and maintainability. Testing and quality assurance also surfaced as a priority.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 38,
+    "total_chunks": 62,
+    "char_count": 3759,
+    "word_count": 508,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ff5d454-7561-4bda-a05c-18ae033e3356",
+    "text": "Testing and quality assurance also emerged as a Participants expressed interest in deterministic testing tools,\nsignificant domain of impact. Respondents highlighted AI's more reliable test automation, error autocorrection, bug\nability to automatically generate test cases—including edge prevention, and features that would allow AI to generate only\ncases often overlooked by humans—and to support test the part of the code being modified rather than regenerating\nautomation and continuous deployment. This has strengthened entire files.\ndefect detection while reducing manual effort. Beyond technical functions, developers voiced concerns\nAI has further contributed to documentation and about AI usability and trustworthiness. Desired improvements\nrequirements activities. Teams noted that AI tools accelerate included transparency in responses, consistent code style\ndocumentation tasks, improve clarity in requirement enforcement, unified context awareness across sessions,\nspecifications, and assist with knowledge reuse. Some explainability of recommendations, and privacy assurances for\nparticipants also emphasized AI's role in problem proprietary code. Some also wished for accuracy indicators,\nunderstanding and solution exploration, such as identifying confidence levels, or trust scores to better assess AI outputs.\nalternative architectures, resolving configuration issues, or Finally, several respondents suggested innovative or\nproposing optimizations. forward-looking applications. These included model-driven UI\nBeyond technical coding support, some respondents generation that integrates usability heuristics, AI-based project\npointed out broader benefits, such as AI aiding in learning new management, cost and risk estimation, end-user\nlanguages, reducing time spent on troubleshooting, or self-programming, ecological optimizations to reduce carbon\nsuggesting new tools and libraries that expand team footprint, and even applications in embedded systems.\ncapabilities. Notably, some participants indicated they were satisfied\nIt is worth noting that not all participants reported with current tools or lacked enough experience to identify\npositive experiences—several indicated having no significant missing features, underscoring differences in maturity and\nexamples yet, reflecting uneven adoption and maturity across adoption levels across organizations.\norganizations. In sum, while current AI tools already provide value in\nThe examples illustrate AI's versatility: from automating code generation and automation, participants expressed a clear\nroutine coding and testing tasks to enhancing reviews, desire for more advanced, explainable, and integrated\ndocumentation, and architectural decisions. The consistent capabilities that extend across the full software engineering\nbenefits cited—time savings, improved code quality, and lifecycle, from requirements to deployment and long-term\ngreater agility—indicate that AI is already reshaping practical maintenance.\naspects of software development workflows. Perspectives on AI's Role in Enhancing Agility and\nDesired but Currently Missing AI Capabilities: Innovation: findings in light of the broader research objectives. First, the demographic profile of respondents (dominated Responses to the open-ended question about AI's role in\nby academics and highly experienced professionals) suggestsagility and innovation in software engineering revealed a\nthat perspectives captured here are grounded in both long-termspectrum of views, ranging from enthusiasm and optimism to\nexpertise and research-oriented observation.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 39,
+    "total_chunks": 62,
+    "char_count": 3592,
+    "word_count": 458,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7ebebca0-b4b2-4c37-9096-7f9ce9db7f2c",
+    "text": "This lends weightcaution and skepticism.\nto the results, though it also introduces a possible bias toward A large group of participants highlighted the automation\ntheoretical or experimental viewpoints rather than widespreadof repetitive tasks—such as testing, bug detection, code\nindustry adoption.generation, and documentation—as a primary benefit. By\nSecond, the findings confirm that AI integration inreducing time spent on routine activities, AI is seen as\nsoftware engineering is already substantial, with tools such asenabling developers to focus more on creative\nGitHub Copilot and GPT-based assistants embedded in dailyproblem-solving, innovation, and decision-making. This aligns with recent reports of acceleratedresponses framed AI as a true assistant or catalyst for\nadoption of AI for code generation and debugging.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 40,
+    "total_chunks": 62,
+    "char_count": 829,
+    "word_count": 113,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "762442b7-5755-4b0f-8c16-a33271ce47c6",
+    "text": "However,productivity, accelerating development cycles and supporting\nadoption remains uneven, with some respondents stillagile practices through faster context switching, continuous\nreporting limited or no use. This reflects a dual landscape: onexperimentation, and intelligent insights for project\none side, early adopters incorporating AI extensively intomanagement and risk anticipation.\ncoding, testing, and quality assurance; on the other, cautious or Another recurring theme was the transformative or\nresource-limited teams still in exploratory phases.disruptive nature of AI. Some respondents described it as a\nThird, the reported impact on agility, productivity, and\"new paradigm\" or a \"disruptive change\" in software\ninnovation is broadly positive. Most participants identifiedengineering, potentially reshaping how teams build software.\nmeasurable gains in speed, responsiveness, and creativeA few extended this view to predict that AI could eventually\nproblem-solving. Importantly, these benefits were not limitedgenerate complete, error-free solutions independently,\nto coding tasks but extended to documentation, testing, and, inalthough most recognized that in the near term, human\nsome cases, requirements engineering. At the same time,creativity, reasoning, and lateral thinking remain essential.\nconcerns about creativity being limited by over-reliance on AI Concerns were also evident. Participants pointed to\nillustrate the nuanced role of automation: while AI canlimitations of current AI systems, including their probabilistic\nstimulate ideation, it may also constrain originality if usednature, lack of transparency, inconsistent outputs, and potential\nuncritically.to introduce security or privacy risks. Several highlighted the\nFourth, challenges and barriers identified highlight thatdanger of overreliance on AI, particularly in educational\nAI adoption is not merely a technical question. Issues such ascontexts, where dependence could undermine the development\nsecurity, code reliability, skill gaps, and unclear return onof critical thinking and foundational knowledge among\ninvestment reveal the organizational and cultural dimensionsstudents and junior developers. Issues of trust, accuracy, and\nof AI integration.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 41,
+    "total_chunks": 62,
+    "char_count": 2244,
+    "word_count": 287,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d89fb05d-5a3c-4760-8f9b-fb6029890460",
+    "text": "This indicates that sustainable adoptionregulation were raised, with some suggesting the need for\nrequires not only technical maturity but also governanceclearer standards and safeguards.\nframeworks, training, and organizational readiness. Other contributions emphasized integration challenges. Finally, future perspectives point toward optimism. TheRespondents noted that AI is not yet well embedded in\nmajority of respondents expect AI to transform softwareexisting software engineering methodologies and that further\nengineering significantly, either gradually or in a revolutionaryeffort is required to harmonize AI capabilities with human\nmanner. The desired capabilities reported (such asexpertise across different phases of development. Calls were\nrequirements-to-code automation, system-level reasoning, andmade for team education, adaptation of curricula, and\nmore reliable integration with DevOps) indicate thatdevelopment of methodologies that integrate generative AI\npractitioners envision AI not only as a coding assistant butmore systematically into agile processes.\nalso as a strategic partner across the entire lifecycle. This Finally, some participants offered forward-looking ideas,\nexpectation highlights the gap between current AIsuch as AI support for requirements analysis, sprint backlog\nfunctionality and the aspirational role envisioned bytracking, adaptive planning based on historical team data, and\nprofessionals.user experience testing. These responses underline the\nTaken together, the discussion suggests three overarchingpotential of AI to extend its role beyond coding into project\ninsights. First, AI is already delivering tangible benefits inmanagement and process optimization.\nsoftware engineering, especially in coding and testing. To summarize, while many respondents see AI as a\nSecond, adoption remains constrained by technical,powerful tool for enhancing agility and innovation, there is\norganizational, and cultural barriers that must be addressed forbroad recognition of its current limitations, the need for\nbroader uptake. Third, practitioners and researchers alike seecautious integration, and the importance of preserving the\nAI as a transformative force, though its long-term role willuniquely human aspects of creativity and reasoning in\ndepend on bridging current limitations with the aspirationalsoftware engineering.\nfeatures identified by respondents. Limitations of the survey The survey results provide an exploratory yet informative\npicture of how AI is currently reshaping software engineering Some limitations of this study should be acknowledged.\npractices. Several key themes emerge when interpreting the The modest sample size constrains the generalizability of findings and means the results should be interpreted as VII. FUTURE DIRECTIONS\nexploratory rather than representative of the entire software The findings of our study indicate that AI is emerging as\nengineering community.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 42,
+    "total_chunks": 62,
+    "char_count": 2945,
+    "word_count": 385,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1b9fc73b-e591-4e7d-b4a9-6964392bce4f",
+    "text": "The respondent pool was heavily a transformative force in SE, yet its full potential remains only\nskewed toward academics and highly experienced partially realized.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 43,
+    "total_chunks": 62,
+    "char_count": 164,
+    "word_count": 24,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ae30bbe-13bd-4ffc-84f5-b6ff5a5237aa",
+    "text": "Future work should focus on developing\nprofessionals, which may bias the findings toward integrated AI-driven frameworks that span the entire software\nresearch-oriented perspectives and underrepresent the views of development lifecycle. Rather than applying AI in isolated\njunior practitioners or industry-only teams. Furthermore, the tasks (such as coding, testing, or documentation), we think\nsurvey design emphasized descriptive rather than inferential research should aim to create cohesive architectures that\nanalysis, limiting the ability to draw causal conclusions about support intelligent collaboration, traceability, and continuous\nthe relationship between AI adoption and agility or innovation improvement across all development phases.\noutcomes. Finally, self-reported data may be subject to Another critical direction involves advancing\noverstatement of benefits or understatement of challenges, explainability and trust in AI-assisted development. The\ngiven the novelty and visibility of AI in the current opacity of current AI models limits their reliability in\ntechnological discourse. professional and safety-critical contexts. Future systems\nshould incorporate explainable AI (XAI) [52] capabilities VI. CHALLENGES AND LIMITATIONS\ncapable of clarifying reasoning processes, indicating\nThe integration of AI into software engineering presents confidence levels, and supporting reproducibility. Such\nboth opportunities and constraints that must be critically transparency would foster greater confidence among\nacknowledged.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 44,
+    "total_chunks": 62,
+    "char_count": 1539,
+    "word_count": 196,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b7b615b9-c2a1-4538-88dd-cf3d259f68bc",
+    "text": "While AI demonstrates clear potential to developers and facilitate ethical deployment in industrial\nenhance agility, productivity, and innovation, several environments.\nchallenges remain that could limit its widespread adoption and\nsustainable impact: The evolving relationship between humans and AI also\nrequires deeper exploration. Research should investigate how\n●​ Technical limitations. Current AI systems, intelligent agents can participate as collaborators within agile\nparticularly LLMs, are prone to inaccuracies, teams, assisting in planning, retrospectives, and\nhallucinations, and inconsistent outputs. These issues decision-making. This shift from automation to augmentation\nraise concerns about the reliability of AI-generated redefines agility as a joint cognitive process, where human\ncode, test cases, and documentation. Moreover, many creativity and AI intelligence complement each other. AI tools still lack the ability to reason about software Equally important is the establishment of ethical and\narchitecture at a systemic level, restricting their governance frameworks for responsible AI use. As AI systems\nusefulness to localized coding tasks rather than generate more code and design artifacts, questions of\nend-to-end engineering processes. authorship, accountability, data privacy, and bias mitigation\n●​ Trust, transparency, and accountability. A must be addressed systematically. The software engineering\nrecurring challenge is the opacity of AI community will need shared standards to ensure that\ndecision-making. Developers often lack insight into AI-augmented practices remain transparent, fair, and\nhow outputs are generated, making it difficult to compliant with regulatory expectations.\nassess correctness, trace errors, or ensure compliance Education will play a decisive role in enabling this\nwith security and regulatory standards. This \"black transition. Curricula in SE should incorporate AI literacy,\nbox\" effect undermines trust and complicates prompt design, ethics, and collaboration strategies to prepare\nintegration in high-stakes environments where professionals who can critically integrate AI tools without\naccountability is critical. sacrificing creativity or foundational skills.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 45,
+    "total_chunks": 62,
+    "char_count": 2230,
+    "word_count": 292,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d611216a-f421-46f6-89ee-f6d5bf6dac88",
+    "text": "Finally, empirical\n●​ Organizational and human factors. Effective and longitudinal research is needed to measure the long-term\nadoption of AI requires more than technical effects of AI adoption on productivity, quality, and innovation.\nreadiness. Teams often face resistance to change, skill Systematic experimentation and industrial case studies will\ngaps, and uncertainty about return on investment. provide the evidence base required to formalize best practices\nOver-dependence on AI tools also raises concerns in AI-supported software engineering.\nabout the erosion of human expertise, especially in We believe that the future of SE lies in harmonizing\ntraining contexts where critical thinking and human expertise with machine intelligence. By building\nfoundational software engineering skills are still transparent, ethical, and integrated systems, AI can move\nessential. beyond automation to become a genuine catalyst for creativity,\n●​ Ethical and security concerns. The introduction of agility, and sustainable innovation in the digital era. AI raises risks related to privacy, intellectual\nproperty, and potential bias in generated outputs. ACKNOWLEDGMENT\nAutomated code suggestions may inadvertently\nTx. replicate insecure practices, introduce vulnerabilities,\nor reuse copyrighted material. These risks demand\nREFERENCES stronger governance and validation mechanisms\nbefore AI-generated artifacts can be deployed at [1]​ S. Paul,\nscale. \"Examining perceptions of agility in software development practice,\" ACM, vol. 53, no. 6, pp. 126–130, June 2010, doi: [20]​ S. Kumar, \"Identifying some important\n10.1145/1743546.1743580. success factors in adopting agile software development practices,\" J.\n[2]​ B. Hanks, \"Becoming agile using service learning in the software Syst. Softw., vol. 82, no. 11, pp. 1869–1890, 2009.\nengineering course,\" in Agile 2007 (AGILE 2007), IEEE, 2007, pp. [21]​ R. Ernst, \"From Copilot to Pilot: Towards AI\n121–127.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 46,
+    "total_chunks": 62,
+    "char_count": 1953,
+    "word_count": 270,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8292e11a-0eda-4cbb-a970-7f344aef2360",
+    "text": "Accessed: Oct. 17, 2024. [Online]. Available: Supported Software Development,\" Mar. 07, 2023, arXiv:\nhttps://ieeexplore.ieee.org/abstract/document/4293583/ arXiv:2303.04142. Accessed: Oct. 18, 2024. [Online]. Dubinsky, \"Agility in a large-scale http://arxiv.org/abs/2303.04142\nsystem engineering project: A case-study of an advanced [22]​ Z. Englhardt et al., \"Exploring and Characterizing Large Language\ncommunication system project,\" in 2010 IEEE International Models for Embedded System Development and Debugging,\" in\nConference on Software Science, Technology & Engineering, IEEE, Extended Abstracts of the CHI Conference on Human Factors in\n2010, pp. 47–54. Accessed: Oct. 17, 2024. [Online]. Available: Computing Systems, Honolulu HI USA: ACM, May 2024, pp. 1–9.\nhttps://ieeexplore.ieee.org/abstract/document/5532560/ doi: 10.1145/3613905.3650764.\n[4]​ P. Kettunen, \"Extending Software Project Agility with New Product [23]​ O. Akinci, \"Creating large language model\nDevelopment Enterprise Agility,\" Softw. Pract., vol. applications utilizing langchain: A primer on developing llm apps\n12, no. 6, pp. 541–548, Nov. 2007, doi: 10.1002/spip.342. fast,\" in International Conference on Applied Engineering and\n[5]​ F. Jiang et al., \"Artificial intelligence in healthcare: past, present and Natural Sciences, 2023, pp. 1050–1056. Accessed: Oct. 18, 2024.\nfuture,\" Stroke Vasc. Neurol., vol. 2, no. 4, 2017, Accessed: Oct. 17, [Online]. Available:\n2024. [Online]. Available: https://www.researchgate.net/profile/Oguzhan-Topsakal/publication/3\nhttps://svn.bmj.com/content/2/4/230.abstract 72669736_Creating_Large_Language_Model_Applications_Utilizing\n[6]​ J.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 47,
+    "total_chunks": 62,
+    "char_count": 1657,
+    "word_count": 191,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "14e9512e-c35d-4284-9b94-6f7f6a1e0453",
+    "text": "Anwer, \"Artificial Intelligence and its Role in Near _LangChain_A_Primer_on_Developing_LLM_Apps_Fast/links/64d1\nFuture,\" Apr. 01, 2018, arXiv: arXiv:1804.01396. Accessed: Oct. 17, 14a840a524707ba4a419/Creating-Large-Language-Model-Applicatio\n2024. [Online]. Available: http://arxiv.org/abs/1804.01396 ns-Utilizing-LangChain-A-Primer-on-Developing-LLM-Apps-Fast.pd\n[7]​ P. Manickam et al., \"Artificial intelligence (AI) and internet of f\nmedical things (IoMT) assisted biomedical systems for intelligent [24]​ V. Murali et al., \"CodeCompose: A large-scale industrial deployment\nhealthcare,\" Biosensors, vol. 12, no. 8, p. 562, 2022. of AI-assisted code authoring,\" ArXiv Prepr. ArXiv230512050, 2023.\n[8]​ Y. Dwivedi et al., \"Artificial Intelligence (AI): Multidisciplinary [25]​ M. Mohan, \"Automatic Test Case\nperspectives on emerging challenges, opportunities, and agenda for Generation For Safety-Critical Software Using Genetic Algorithm,\" in\nresearch, practice and policy,\" Int.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 48,
+    "total_chunks": 62,
+    "char_count": 981,
+    "word_count": 107,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1a92a9c1-3062-4832-b94b-f3bd24abb348",
+    "text": "Manag., vol. 57, p. 101994, 2024 15th International Conference on Computing Communication\n2021. and Networking Technologies (ICCCNT), IEEE, 2024, pp. 1–7.\n[9]​ V. Pavlič, \"The potential of ai-driven assistants in Accessed: May 14, 2025. [Online]. Available:\nscaled agile software development,\" Appl. Sci., vol. 14, no. 1, p. 319, https://ieeexplore.ieee.org/abstract/document/10725786/\n2023. [26]​ K. Cabrero-Daniel, and C.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 49,
+    "total_chunks": 62,
+    "char_count": 423,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "910ef2fe-5e48-4009-ac4c-85488057c9d8",
+    "text": "Berger, \"ChatGPT as a Tool\n[10]​ D. Russo, \"Navigating the Complexity of Generative AI Adoption in for User Story Quality Evaluation: Trustworthy Out of the Box?,\" in\nSoftware Engineering,\" ACM Trans. Methodol., vol. 33, Agile Processes in Software Engineering and Extreme Programming –\nno. 5, pp. 1–50, June 2024, doi: 10.1145/3652154. Workshops, vol. 489, P. Gregory, Eds., in Lecture\n[11]​ J. Ali, \"Ai-driven software engineering,\" Adv. Innov., vol. 3, Notes in Business Information Processing, vol. 489. , Cham: Springer\npp. 17–21, 2023. Nature Switzerland, 2024, pp. 173–181. doi:\n[12]​ O.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 50,
+    "total_chunks": 62,
+    "char_count": 594,
+    "word_count": 90,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "936c5f6a-7e76-4ba8-9e02-c5ba92bea8df",
+    "text": "Agag, \"Boosting innovation performance 10.1007/978-3-031-48550-3_17.\nthrough big data analytics powered by artificial intelligence use: An [27]​ C. Minetto Napoleão, \"Automatic\nempirical exploration of the role of strategic agility and market user story generation: a comprehensive systematic literature review,\"\nturbulence,\" Sustainability, vol. 15, no. 19, p. 14296, 2023. Anal., vol. 20, no. 1, pp. 1–24, June 2025, doi:\n[13]​ M. Thomas, \"Applications of AI in 10.1007/s41060-024-00567-0.\nclassical software engineering,\" AI Perspect., vol. 2, no. 1, p. 1, Dec. [28]​ A. Rosado da Cruz and E.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 51,
+    "total_chunks": 62,
+    "char_count": 595,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "39c91c09-f1f4-40b9-be05-2f9d851705df",
+    "text": "Cruz, \"Machine Learning Techniques\n2020, doi: 10.1186/s42467-020-00005-4. for Requirements Engineering: A Comprehensive Literature Review,\"\n[14]​ M. Harman, \"The role of artificial intelligence in software Software, vol. 4, no. 3, p. 14, 2025.\nengineering,\" in 2012 First International Workshop on Realizing AI [29]​ T. Dong, \"Machine\nSynergies in Software Engineering (RAISE), IEEE, 2012, pp. 1–6. learning for requirements engineering (ML4RE): A systematic\nAccessed: Oct. 18, 2024. [Online]. Available: literature review complemented by practitioners' voices from Stack\nhttps://ieeexplore.ieee.org/abstract/document/6227961/ Overflow,\" Inf. Technol., vol. 172, p. 107477, 2024.\n[15]​ D. Partridge, \"Artificial Intelligence in Software Engineering,\" in [30]​ O. Williams,\nEncyclopedia of Software Engineering, John Wiley & Sons, Ltd, 2002. \"AI-driven business analytics and decision making,\" World J.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 52,
+    "total_chunks": 62,
+    "char_count": 901,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e448684f-57bf-4323-9ed8-4390b77c7357",
+    "text": "Adv.\ndoi: 10.1002/0471028959.sof013. Rev., vol. 24, no. 1, pp. 616–633, 2024.\n[16]​ H. Ahmad, \"Systematic mapping: [31]​ M. Nabeel, \"AI-Enhanced Project Management Systems for\nArtificial intelligence techniques in software engineering,\" IEEE Optimizing Resource Allocation and Risk Mitigation: Leveraging Big\nAccess, vol. 10, pp. 51021–51040, 2022. Data Analysis to Predict Project Outcomes and Improve\n[17]​ T. Moe, \"A decade of Decision-Making Processes in Complex Projects,\" Asian J.\nagile methodologies: Towards explaining agile software Multidsciplinary Res. Rev., vol. 5, no. 5, pp. 53–91, 2024.\ndevelopment,\" Journal of systems and software, vol. 85, no. 6. [32]​ H. Rahman, \"A Systematic Short Review of Machine\nElsevier, pp. 1213–1221, 2012. Accessed: Oct. 18, 2024. [Online]. Learning and Artificial Intelligence Integration in Current Project\nAvailable: Management Techniques,\" in 2024 IEEE 4th International Conference\nhttps://www.sciencedirect.com/science/article/pii/S016412121200053 on Software Engineering and Artificial Intelligence (SEAI), IEEE,\n2 2024, pp. 262–270. Accessed: June 23, 2025. [Online]. Mathew, \"Choice of agile methodologies in https://ieeexplore.ieee.org/abstract/document/10674089/\nsoftware development: a vendor perspective,\" J. Aluvaka, \"Bayesian Prioritization in Product Strategy: Embedding\nManag., vol. 25, no. 1, p. 3, 2016. Predictive Analytics into Agile Decision-Making,\" Comput. Summers, \"Recommended methods supporting Secur., pp. 1294–1300, June 2025, doi: 10.52710/cfs.687.\nadoption of the agile philosophy for hardware development,\" in [34]​ S.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 53,
+    "total_chunks": 62,
+    "char_count": 1594,
+    "word_count": 201,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "389bcdb8-3ba5-4369-8d23-69e6e47268ba",
+    "text": "Almalki, \"AI-Driven Decision Support Systems in Agile\nInternational Design Engineering Technical Conferences and Software Project Management: Enhancing Risk Mitigation and\nComputers and Information in Engineering Conference, American Resource Allocation,\" Systems, vol. 13, no. 3, p. 208, 2025. Society of Mechanical Engineers, 2021, p. Ezeigweneme,\nOct. 18, 2024. [Online].",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 54,
+    "total_chunks": 62,
+    "char_count": 374,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bc5afdc6-d2a6-486c-ac47-77a90119b03e",
+    "text": "Available: \"Enhancing software development practices with AI insights in\nhttps://asmedigitalcollection.asme.org/IDETC-CIE/proceedings-abstra high-tech companies,\" IEEE Softw. Rep.\nct/IDETC-CIE2021/85420/1128550 TR-2024-003, 2024, Accessed: June 23, 2025. [Online]. Available:\nhttps://www.researchgate.net/profile/Daniel-Ajiga/publication/383410\n449_Enhancing_software_development_practices_with_AI_insights_i n_high-_tech_companies/links/66cb63b4920e05672e50416d/Enhanci Impacts on code quality and maintenance,\" Int. Arch., vol.\nng-software-development-practices-with-AI-insights-in-high-tech-co 13, no. 1, pp. 1952–1960, 2024.\nmpanies.pdf [52]​ M. Prather, \"Explainable artificial intelligence: A survey of needs, techniques,\nand E. Santos, \"Programming Is Hard - Or at Least It Used to Be: applications, and future direction,\" Neurocomputing, vol. 599, p. Educational Opportunities and Challenges of AI Code Generation,\" in 128111, Sept. 2024, doi: 10.1016/j.neucom.2024.128111. Science Education V. 1, Toronto ON Canada: ACM, Mar. 2023, pp. Carlos Alberto Fernández-y-Fernández\n500–506. doi: 10.1145/3545945.3569759.\n[37]​ O. Cico, \"AI-assisted Software Engineering: a received received the B.S. degree from the\ntertiary study,\" in 2023 12th Mediterranean conference on embedded Universidad Veracruzana, Mexico, the\ncomputing (MECO), IEEE, 2023, pp. 1–6. Accessed: June 23, 2025.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 55,
+    "total_chunks": 62,
+    "char_count": 1383,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ebc51db-e147-44f0-bace-e65c5346a7f5",
+    "text": "M.S. degree in computer science from the\n[Online]. Available: Fundación Arturo Rosenblueth, Mexico,\nhttps://ieeexplore.ieee.org/abstract/document/10154972/\n[38]​ G. Hayajneh, \"Protecting the Whisper: A Security and the Ph.D. degree in computer science\nAssessment of Amazon CodeWhisperer's Generated Code,\" in Data from The University of Sheffield, U.K.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 56,
+    "total_chunks": 62,
+    "char_count": 352,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88c14385-cd93-49dc-93ed-a35150f21afc",
+    "text": "His\nScience, vol. 2253, R. Arabnia, Eds., in major field of study is software\nCommunications in Computer and Information Science, vol. 2253. , engineering. Cham: Springer Nature Switzerland, 2025, pp. 494–507. doi:\n10.1007/978-3-031-85856-7_36.\n[39]​ G. Bavota, \"AI-based Code Generation: Achievements and Open He is currently a Full-time Professor and Researcher with the\nProblems,\" in Proceedings of the 28th International Conference on Instituto de Computación, Universidad Tecnológica de la\nEvaluation and Assessment in Software Engineering, Salerno Italy: Mixteca (UTM), Oaxaca, Mexico. He served as the Director\nACM, June 2024, pp. 1–1. doi: 10.1145/3661167.3661267.\n[40]​ A. Hossain, \"The evolving role of of the Instituto de Computación, UTM, from 2017 to 2025. Artificial Intelligence in software testing: Prospects and challenges,\" Previously, he has coordinated several graduate programs in\nInt. Res., vol. 6, no. 2, pp. 1–16, 2024. distributed systems and applied computing. His research\n[41]​ S.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 57,
+    "total_chunks": 62,
+    "char_count": 1008,
+    "word_count": 143,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7aaa3b17-9527-4e96-aa0f-f9d7c6e088f3",
+    "text": "Hote, \"A Survey Paper Review on Advancements in AI Driven interests include visual modeling, agile and traditional\nUser Interface Testing,\" Int. Technol., vol. 12,\nno. 2, pp. 674–679, Feb. 2024, doi: 10.22214/ijraset.2024.57902. development methods, and formal software specification.\n[42]​ I. Essien, \"Leveraging Artificial\nIntelligence for Automated Testing and Quality Assurance in Software Dr. Fernández y Fernández is a member of the Sistema\nDevelopment Lifecycles,\" Int. Rev., vol. 5, no. 12, pp.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 58,
+    "total_chunks": 62,
+    "char_count": 502,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "11845a1d-7751-4ff6-992f-0a43e572057c",
+    "text": "Nacional de Investigadoras e Investigadores (SNII) and the\n4386–4401, 2024.\n[43]​ S. Alam, \"Role of Artificial Intelligence Academia Mexicana de Computación (AMEXCOMP). He is a\nin Software Quality Assurance,\" in Intelligent Systems and founding member of the Red Temática Mexicana de Ingeniería\nApplications, vol. 295, K.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 59,
+    "total_chunks": 62,
+    "char_count": 321,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "03923b1c-780e-4b86-96f8-ee446e7e66a9",
+    "text": "Arai, Ed., in Lecture Notes in Networks and de Software (REDMIS). Systems, vol. 295. , Cham: Springer International Publishing, 2022,\npp. 125–136. doi: 10.1007/978-3-030-82196-8_10.\n[44]​ V. Değirmenci, E. Özdemir, and R. Zarringhalami, \"AI-powered test automation tools: A systematic\nreview and empirical evaluation,\" Feb. 26, 2025, arXiv: Jorge Rafael Aguilar Cisneros was\narXiv:2409.00411. doi: 10.48550/arXiv.2409.00411. born in México. Aguilar earned his\n[45]​ S.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 60,
+    "total_chunks": 62,
+    "char_count": 468,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ec48b93b-f9ff-4d39-a14f-d1226e50c8d5",
+    "text": "Ahmed, \"Integrating AI-Driven Automated Code Review in Agile\nDevelopment: Benefits, Challenges, and Best Practices,\" Int. PhD in Software Engineering at UPAEP. Sci., vol. 11, no. 2, pp. 1–10, 2025. He studied a Master's degree in Systems\n[46]​ A. Bajaj, \"A Comprehensive Engineering at UDALAP, and a\nSurvey of AI-Driven Advancements and Techniques in Automated Bachelor's degree in Computer Science at\nProgram Repair and Code Generation,\" Nov. 12, 2024, arXiv:\narXiv:2411.07586. doi: 10.48550/arXiv.2411.07586. He is currently a member of the\n[47]​ A.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 61,
+    "total_chunks": 62,
+    "char_count": 551,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "02a963ec-b032-432a-9340-82157a270611",
+    "text": "SNII (Mexican National System Researchers). Naruka, \"AI-Driven continuous integration and continuous\ndeployment in software engineering,\" in 2024 2nd International\nConference on Disruptive Technologies (ICDT), IEEE, 2024, pp.\n531–536. Accessed: Oct. 01, 2025. [Online]. Available: His research interests focus on the area of Software\nhttps://ieeexplore.ieee.org/abstract/document/10489475/ Engineering. He has written articles for national and\n[48]​ Z.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 62,
+    "total_chunks": 62,
+    "char_count": 452,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4b62ad11-593c-48de-8da5-69523550d86e",
+    "text": "Rasheed et al., \"Autonomous agents in software development: A international conferences, journals, and book chapters. Dr.\nvision paper,\" in International Conference on Agile Software Aguilar has been a member of the IEEE, AMEXCOMP Development, Springer Nature Switzerland Cham, 2024, pp. 15–23. Accessed: Oct. 01, 2025. [Online]. Available: (Computing Mexican Academy), and RedMIS. Currently, Dr.\nhttps://library.oapen.org/bitstream/handle/20.500.12657/96991/1/9783 Aguilar teaches undergraduate and graduate courses at\n031727818.pdf#page=28 University UPAEP in México.\n[49]​ W.",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 63,
+    "total_chunks": 62,
+    "char_count": 578,
+    "word_count": 69,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e0fadf6b-5627-4c76-97e2-05845f75b34e",
+    "text": "Altarawneh, \"A Roadmap for Artificial Intelligence Augmented\nSoftware Development Life Cycle: Aspects of Knowledge\nVaporization,\" in 2023 International Conference on Information\nTechnology (ICIT), IEEE, 2023, pp. 794–799. Accessed: Oct. 01,\n2025. [Online]. Available:\nhttps://ieeexplore.ieee.org/abstract/document/10226133/\n[50]​ A. Imam, \"INTEGRATING AI INTO SOFTWARE DEVELOPMENT\nLIFE CYCLE,\" 2024, Accessed: Oct. 01, 2025. [Online]. Available:\nhttps://trepo.tuni.fi/bitstream/handle/10024/161914/ImamAhmad.pdf?\nsequence=2\n[51]​ A. Mehra,\n\"Integrating generative ai into the software development lifecycle:",
+    "paper_id": "2603.10994",
+    "title": "Artificial Intelligence as a Catalyst for Innovation in Software Engineering",
+    "authors": [
+      "Carlos Alberto FernÃ¡ndez-y-FernÃ¡ndez",
+      "Jorge R. Aguilar-Cisneros"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10994v1",
+    "chunk_index": 64,
+    "total_chunks": 62,
+    "char_count": 607,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  }
+]

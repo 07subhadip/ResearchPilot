@@ -1,0 +1,1568 @@
+[
+  {
+    "chunk_id": "da5d6d0e-8eca-493d-9182-76d5cd4d158f",
+    "text": "Accepted at ICLR 2026 CUPID: A PLUG-IN FRAMEWORK FOR JOINT\nALEATORIC AND EPISTEMIC UNCERTAINTY ESTIMATION WITH A SINGLE MODEL Xinran Xu1, Xiuyi Fan1,2,3 ∗\n1Lee Kong Chian School of Medicine, Nanyang Technological University, Singapore\n2College of Computing and Data Science, Nanyang Technological University, Singapore\n3Centre for Medical Technologies & Innovations, National Health Group, Singapore\nxinran007@e.ntu.edu.sg, xyfan@ntu.edu.sg Accurate estimation of uncertainty in deep learning is critical for deploying models in high-stakes domains such as medical diagnosis and autonomous decision-Mar making, where overconfident predictions can lead to harmful outcomes. In prac-\n11 tice,certaintyunderstandingit representsthecanreasonsupportbehindrisk-awarea model'sdecisions,uncertaintyenhanceand theusertypetrust,of andunguide additional data collection. However, many existing methods only address\na single type of uncertainty or require modifications and retraining of the base\nmodel, making them difficult to adopt in real-world systems. We introduce CUPID (Comprehensive Uncertainty Plug-in estImation moDel), a general-purpose\nmodule that jointly estimates aleatoric and epistemic uncertainty without modifying or retraining the base model. CUPID can be flexibly inserted into any layer of[cs.LG] a pretrained network.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 0,
+    "total_chunks": 87,
+    "char_count": 1328,
+    "word_count": 163,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d39f1e47-cdaf-4914-9d71-9bc0634d1487",
+    "text": "It models aleatoric uncertainty through a learned Bayesian\nidentity mapping and captures epistemic uncertainty by analyzing the model's internal responses to structured perturbations. We evaluate CUPID across a range of\ntasks, including classification, regression, and out-of-distribution detection. The\nresults show that it consistently delivers competitive performance while offering\nlayer-wise insights into the origins of uncertainty. By making uncertainty estimation modular, interpretable, and model-agnostic, CUPID supports more transparent and trustworthy AI. Related code and data are available at https://github.com/aFomalhaut-a/CUPID. Deep neural networks have achieved impressive performance across many domains, yet they often lack reliable mechanisms for expressing uncertainty, leading to overconfident predictions andarXiv:2603.10745v1 reduced trustworthiness (Li et al., 2023; Gawlikowski et al., 2023). Robust uncertainty estimation\nis essential for identifying misclassifications, detecting out-of-distribution inputs, and facilitating\nhuman involvement in decision making within safety critical environments (Yu et al., 2024). Uncertainty in deep learning is generally divided into two types: aleatoric uncertainty, which arises\nfrom inherent noise or ambiguity in the data, and epistemic uncertainty, which reflects limitations\nin the model or training data (Der Kiureghian & Ditlevsen, 2009; Zou et al., 2023). Some studies\nfurther refine epistemic uncertainty into distributional uncertainty, caused by domain shifts, and\nmodel uncertainty, due to insufficient training or architectural constraints (Ulmer, 2021). Numerous methods have been proposed to estimate uncertainty in deep learning models (Franchi\net al., 2022; Zhang et al., 2024), but most focus on only one type or fail to clearly distinguish between aleatoric and epistemic components. This distinction is essential for decision-making in highstakes domains like medical imaging (H¨ullermeier & Waegeman, 2021). For instance, in diabetic\nretinopathy screening, high aleatoric uncertainty may signal poor image quality due to noise or blur,",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 1,
+    "total_chunks": 87,
+    "char_count": 2125,
+    "word_count": 278,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "93468ca4-8d8b-4ee1-82ee-10212d120a4e",
+    "text": "∗Corresponding author. Accepted at ICLR 2026 Figure 1: CUPID uncertainty estimation on a 1D regression toy problem. CUPID is inserted into an\nMLP-based predictive model. CUPID captures both aleatoric (blue) and epistemic (red) uncertainty. while high epistemic uncertainty suggests the model is unfamiliar with certain pathological patterns. Disentangling these sources guides appropriate actions such as image reacquisition, expert review,\nor model refinement, ultimately improving system reliability. While some joint estimation methods\nexist, they often rely on specialized architectures such as Bayesian neural networks (Kendall & Gal,\n2017) or diffusion models (Chan et al., 2024), and typically require retraining from scratch. This\nresults in high computational cost and limits compatibility with existing systems. In this work, we propose CUPID (Comprehensive Uncertainty Plug-in estImation moDel), a\nlightweight and versatile module that estimates both aleatoric and epistemic uncertainty with a\nsingle model, without requiring any alterations to model structure or retraining. Much like how\nCupid's arrows unveil hidden affections, our CUPID model disentangles uncertainties within predictive models. Specifically, CUPID estimates aleatoric uncertainty by learning a Bayesian identity\nmapping while quantifying epistemic uncertainty by analyzing the model's internal responses under\nstructured perturbations. Consider the simple 1D regression task shown in Figure 1. The model is\ntrained on noisy samples with varying density and continuity. Based on the CUPID results, regions\nwith high observation noise yield higher aleatoric uncertainty, while regions with little or no training\ncoverage, such as edges and discontinuities, exhibit high epistemic uncertainty.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 2,
+    "total_chunks": 87,
+    "char_count": 1773,
+    "word_count": 241,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b2fc1a1c-a06a-4ffd-8740-99b3b9d99926",
+    "text": "This demonstrates\nthe good uncertainty discouple performance of CUPID and the value of distinguishing between\nuncertainty types—not only for identifying prediction confidence, but also for understanding the\nunderlying causes of model doubt. By inserting CUPID at various intermediate layers, we are able to analyze how uncertainty evolves\nthroughout the network, offering insight into where and how different types of uncertainty emerge\nduring inference. Our experiments reveal that epistemic uncertainty tends to accumulate in the\ndeeper parts of the network, where the model's representations become more abstract and taskspecific. While integrating information from multiple layers can refine the estimates, the final layers\nare particularly informative for identifying epistemic uncertainty. In parallel, aleatoric uncertainty\nis more effectively captured from deeper feature representations, where variability in the input data\nis more prominently encoded. Beyond its simplicity, CUPID is broadly applicable to both classification and regression tasks. In summary, our key contributions are:",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 3,
+    "total_chunks": 87,
+    "char_count": 1096,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f035d3ad-8573-4da7-a809-def38fbfbc24",
+    "text": "• Propose CUPID, a plug-in uncertainty estimation module capable of jointly estimating\naleatoric and epistemic uncertainty without retraining the base model. • Demonstrate CUPID's effectiveness across misclassification detection, out-of-distribution\n(OOD) detection, and regression tasks, achieving state-of-the-art performance on established uncertainty-aware benchmarks. • Investigate how uncertainty evolves through network layers by inserting CUPID at different\ndepths, offering a new perspective on the dynamics of uncertainty propagation. Uncertainty estimation plays a critical role in enhancing the reliability, safety, and interpretability\nof deep learning systems (Abdar et al., 2021; Liang et al., 2022). Broadly, existing methods can be\ngrouped into two categories based on whether they require modifications to the predictive model's Accepted at ICLR 2026 parameters: model-preserving approaches, which estimate uncertainty without altering or retraining the base model, and model-redefining approaches, which involve architectural changes or full\nretraining to capture uncertainty within a new probabilistic framework. Model-redefining approaches These methods require modifying or retraining the predictive\nmodel to integrate uncertainty estimation. Bayesian Neural Networks (BNNs) treat model weights\nas distributions, capturing both aleatoric and epistemic uncertainty, but are computationally intensive due to the need for retraining and posterior sampling (Blundell et al., 2015; Kendall & Gal,\n2017; Maddox et al., 2019). Evidential Deep Learning (EDL) models predictive distributions via\na Dirichlet framework, interpreting output logits as evidence and distinguishes uncertainty types\nusing distributional properties (Sensoy et al., 2018; Ye et al., 2024). Deep ensembles aggregate\npredictions from multiple independently trained models to estimate uncertainty through predictive\nvariance (Lakshminarayanan et al., 2017; Durasov et al., 2021; Wen et al., 2020). While effective,\nthese approaches incur high training overhead and are less practical for large-scale applications. To address these challenges, HyperDM (Chan et al., 2024) integrates Bayesian hyper-networks with\nconditional diffusion models. It approximates the benefits of deep ensembles at a fraction of the\ncomputational cost. HyperDM highlights the potential of model-redefining approaches for extending uncertainty estimation to complex, high-dimensional problems, though its reliance on diffusion\narchitectures may limit applicability where other model families are preferred.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 4,
+    "total_chunks": 87,
+    "char_count": 2567,
+    "word_count": 332,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3310f25e-3d1e-47e9-a2d6-1c0f93284bcd",
+    "text": "Model-preserving approaches These methods estimate uncertainty without altering the original\nmodel architecture. Test-time augmentation strategies estimate uncertainty by measuring prediction\nvariability across transformed inputs (input rotation or noise perturbation) (Wang et al., 2018a; Mi\net al., 2022). MC Dropout applies dropout at inference to approximate Bayesian sampling, but suffers from increased inference time due to multiple forward passes (Gal & Ghahramani, 2016; Leibig\net al., 2017). Gradient-based methods have proven effective in approximating epistemic uncertainty\nby using gradient norms as a proxy (Riedlinger et al., 2023; Wang & Ji, 2024). More recently, uncertainty has also been estimated by designing auxiliary loss functions that enable gradient computation\nwithout requiring ground truth labels (Hornauer et al., 2025). Alternatively, training an additional model offers a practical solution. BayesCap (Upadhyay et al.,\n2022) learns to estimate uncertainty on top of frozen pre-trained outputs, enabling efficient uncertainty quantification. Rate-In Zeevi et al. (2025) extends MC Dropout by adding dropout layers\nand treating dropout as a tunable component at inference time. By quantifying information loss in\nfeature maps, it adaptively adjusts dropout rates per layer and per input, making dropout behave like\na trainable model rather than a fixed regularizer. RUE (Wang et al., 2023) estimates distributional\nshift via reconstruction error, while other works (Yu et al., 2024) explicitly separate aleatoric and\nepistemic uncertainty estimation with two dedicated modules.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 5,
+    "total_chunks": 87,
+    "char_count": 1606,
+    "word_count": 223,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a4d572bf-77f7-42dd-bb7e-2d9667ed6d6b",
+    "text": "These approaches balance efficiency\nand flexibility, making them suitable for deployment in real-world settings. 3.1 PROBLEM FORMULATION We consider a supervised learning setting in which a neural network model M : X →Y is trained\nto map input data x ∈X to corresponding targets y ∈Y. The training dataset is defined as a finite\nset of N labeled examples:\nD = {(xn, yn)}Nn=1 ⊆X × Y. (1)\nGiven a new input sample x∗∈X, the predictive model M, parameterized by weights θ, produces\na prediction ˆy∗= M(x∗; θ). In a Bayesian formulation, the predictive distribution over the target\noutput is given by marginalizing over the posterior distribution of model parameters: p(y∗| x∗, D) = p(y∗| x∗, θ) p(θ | Aleatoric{z } |Epistemic{z } This decomposition reveals two sources of uncertainty: aleatoric uncertainty, which arises from\ninherent noise in the data, and epistemic uncertainty, which reflects the model's uncertainty about\nits own parameters. Our goal is to estimate both types of uncertainty using a unified framework. Accepted at ICLR 2026 Figure 2: The CUPID pipeline. Aleatoric uncertainty is estimated using a dedicated Uncertainty\nBranch, while epistemic uncertainty is captured by measuring the variance between the original\nmodel output ˆy and the perturbed output ˆy′. To this end, we introduce CUPID, a plug-in uncertainty estimation module that can be flexibly\ninserted at any intermediate layer l of the predictive model M. CUPID consists of three main\ncomponents: a Feature Extractor, a Reconstruction Branch, and an Uncertainty Branch. It operates\non the intermediate feature representation at a selected layer and outputs both a perturbed feature\nand uncertainty estimates.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 6,
+    "total_chunks": 87,
+    "char_count": 1688,
+    "word_count": 264,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f17fd7e0-005e-4dbf-a793-8eb27c09d622",
+    "text": "Formally, consider a predictive model M decomposed as a composition\nof two sub-networks:\nM(x) = Fl(Bl(x)), (3)\nwhere Bl : X →Rd extracts the intermediate feature ml,n = Bl(xn) at layer l with d dimension,\nand Fl : Rd →Y maps it to the final prediction. The CUPID module C : Rd →Rd × Rk, parameterized by ω, operates on ml,n and outputs a\nreconstructed feature m′l,n ∈Rd and an aleatoric uncertainty estimate ˆσn ∈Rk:\n(m′l,n, ˆσn) = C(ml,n; ω). (4) The reconstructed feature m′l,n is forwarded through the remainder of the network to produce a\nperturbed prediction:\nˆy′ = Fl(m′l,n). (5)\nEpistemic uncertainty is quantified as the discrepancy between the original prediction ˆyn =\nFl(ml,n) and the perturbed prediction ˆy′n:\nUepis(x) := ∥ˆyn −ˆy′n∥1. (6) By explicitly modeling both the reconstruction of features and predictive variation, CUPID enables\ninterpretable estimation of both aleatoric and epistemic uncertainties at any specified internal layer\nof the model. 3.2 ALEATORIC UNCERTAINTY ESTIMATION WITH CUPID Aleatoric uncertainty refers to the inherent noise present in the data, arising from factors such as\nmeasurement error, sensor limitations, or ambiguous inputs. This type of uncertainty is irreducible\nand persists even with unlimited training data. A common strategy to model aleatoric uncertainty is\nto assume that the network's output is corrupted by observation noise, which follows a heteroscedastic Gaussian distribution with input-dependent variance (Upadhyay et al., 2022). Specifically, for each input xn, the predictive distribution over the target yn is modeled as:\np(yn | xn, θ, ω) = N(ˆy′n, ˆσ2n), (7)\nwhere ˆσ2n ∈Rk is the predicted data-dependent variance output by the Uncertainty Branch of\nCUPID. k equals the output dimension. Accepted at ICLR 2026 Under this probabilistic modeling assumption, the optimal parameters of the Uncertainty Branch, ω,\nare obtained by maximizing the log-likelihood over the dataset: ω∗= arg max X log p(yn | xn, θ, ω)\nn=1\nN −∥ˆy′ = arg max X n −yn∥22 −1 log(ˆσ2n) . (8)\nω n=1 2ˆσ2n 2\nThe predicted variance ˆσ2n then serves as an estimate of the aleatoric uncertainty for sample n:\nUalea(xn) := ˆσ2n. (9) To improve numerical stability during optimization, we follow the standard approach of predicting\nthe log-variance sn = log(ˆσ2n) rather than the variance itself (Kendall & Gal, 2017). The resulting\nloss function for the Uncertainty Branch becomes: 1 1 1\nLalea = X exp(−sn)∥yn −ˆy′n∥22 + . (10) N 2 2sn\nn=1",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 7,
+    "total_chunks": 87,
+    "char_count": 2474,
+    "word_count": 397,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fc517c52-2638-4fa1-8012-bcf45767226c",
+    "text": "While the formulation above is presented in a regression setting, the same likelihood principle extends naturally to classification. In this case, the model produces logits ˆz′n, which represent unnormalized evidence for each class; applying the Softmax yields the predictive probability vector\nˆy′n = Softmax(ˆz′n). Both ˆy′n and the one-hot label yn can be viewed as continuous distributions. This allows defining a Brier-style heteroscedastic objective over ∥yn −ˆy′n∥22. 3.3 EPISTEMIC UNCERTAINTY ESTIMATION WITH CUPID Epistemic uncertainty captures the model's lack of knowledge, often attributed to limited training\ndata or uncertainty in model parameters. This type of uncertainty can be reduced with more data and\ntypically increases in regions of the input space that are underrepresented during training. Additionally, epistemic uncertainty is closely associated with distributional shifts, arising when test samples\ndeviate from the training distribution. CUPID estimates epistemic uncertainty by encouraging the\nReconstruction Branch to produce a feature perturbation that is maximally different from the original intermediate feature ml,n, while maintaining the same output prediction. Formally, we seek to\nfind a reconstructed feature m′l,n that satisfies:\nmaximize ∥m′l,n −ml,n∥1 and minimize ∥ˆy′n −ˆyn∥1. (11)\nm′l,n m′l,n The loss function to train the Reconstruction Branch therefore balances a differential feature term\nthat promotes large deviations with a prediction consistency constraint: Lepis = X ∥ˆyn −ˆy′n∥1 −λ1∥m′l,n −ml,n∥1 , (12)\nn=1\nwhere λ1 > 0 is a hyperparameter that controls the trade-off between prediction invariance and\nfeature perturbation magnitude. To avoid trivial solutions where the perturbation grows arbitrarily,\nwe initialize CUPID close to the identity mapping. The epistemic uncertainty is then quantified by:\nUepis(x) := ∥Fl(ml,n) −Fl(m′l,n)∥1. (13) To further interpret this measure, we consider a first-order Taylor expansion of Fl around ml,n,\nassuming local differentiability, then we obtain the approximation:\nUepis(x) ≈∥∇ml,nFl(ml,n) · (m′l,n −ml,n)∥1. (14)",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 8,
+    "total_chunks": 87,
+    "char_count": 2114,
+    "word_count": 294,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "85236393-a055-4b0a-acac-d7973f5cd89c",
+    "text": "This formulation reveals two key components that jointly determine the magnitude of epistemic\nuncertainty:\nUepis(x) ∝Sensitivity × Deviation, (15)\nwhere the Jacobian ∇ml,nFl(ml,n) reflects the local sensitivity of the model's output to perturbations in feature space. The perturbation ∥m′l,n −ml,n∥1 captures the extent to which the input Accepted at ICLR 2026 deviates from the training manifold. In-distribution misclassified samples often exhibit high sensitivity, while OOD samples induce abnormally large deviation. CUPID therefore provides a unified\nestimate of epistemic uncertainty that responds to both failure modes. For classification tasks where\nsoftmax activation is used to produce probability distributions over discrete classes, the output discrepancy is computed in the softmax space. To jointly estimate epistemic and aleatoric uncertainty, the total loss is defined as:",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 9,
+    "total_chunks": 87,
+    "char_count": 888,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e03cea7a-f8c1-4858-8737-0251450b2310",
+    "text": "LCUPID = Lepis + λ2 Lalea, (16) where λ2 is a weighting hyperparameter balancing the aleatoric loss Lalea against the epistemic loss\nLepis. Both the epistemic and aleatoric estimation are optimized simultaneously under this unified\nloss, ensuring that CUPID learns both uncertainty types within a single model. In this section, we systematically evaluate CUPID's effectiveness in estimating both aleatoric and\nepistemic uncertainty across three distinct tasks: medical image misclassification detection, out-ofdistribution detection, and image super-resolution. These tasks are selected to highlight the generalizability of CUPID across classification and regression problems, as well as across high-stakes and\ngeneral-purpose domains. We also perform an ablation study to assess the impact of placing CUPID\nat different locations within the model architecture and to analyze the influence of internal hyperparameters on its performance. Each experiment was repeated three times, and we report the mean\nand standard deviation for all evaluation metrics. The detailed model architectures, implementation\nspecifics, and main task performance metrics for all experiments are provided in the appendix.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 10,
+    "total_chunks": 87,
+    "char_count": 1197,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ec0a89e3-a6e8-4796-802b-eec4c1971bd4",
+    "text": "4.1 MEDICAL IMAGE MISCLASSIFICATION DETECTION Table 1: Performance of misclassification detection (misclassified samples as positive). The best\nmodel for each metric is in bold, and the second best is underlined. CUPID Aleatoric achieved the\nbest performance on GLV2, while CUPID Epistemic performed best on HAM10000, suggesting\ndifferent dominant sources of uncertainty across datasets. GLV2 HAM10000\nMethod\nAUC (↑) AURC (↓) Spearman (↑) AUC (↑) AURC (↓) Spearman (↑) CUPID Alea. 0.870 ± 0.002 0.018 ± 0.001 0.941 ± 0.004 0.769 ± 0.023 0.067 ± 0.007 0.722 ± 0.014\nCUPID Epis. 0.769 ± 0.015 0.034 ± 0.002 0.701 ± 0.051 0.855 ± 0.006 0.047 ± 0.001 0.907 ± 0.001 MC Dropout 0.768 ± 0.006 0.027 ± 0.001 0.888 ± 0.005 0.829 ± 0.001 0.076 ± 0.001 0.861 ± 0.002\nRate-in 0.815 ± 0.006 0.024 ± 0.001 0.816 ± 0.004 0.846 ± 0.001 0.048 ± 0.000 0.915 ± 0.000\nIGRUE 0.642 ± 0.007 0.058 ± 0.002 0.199 ± 0.004 0.548 ± 0.004 0.157 ± 0.002 0.027 ± 0.018\nPostNet Alea. 0.671 ± 0.006 0.182 ± 0.004 0.641 ± 0.011 0.793 ± 0.007 0.142 ± 0.003 0.764 ± 0.006\nPostNet Epis. 0.559 ± 0.031 0.238 ± 0.019 0.284 ± 0.054 0.751 ± 0.017 0.158 ± 0.010 0.698 ± 0.033\nBNN 0.829 ± 0.018 0.025 ± 0.003 0.954 ± 0.007 0.793 ± 0.006 0.096 ± 0.004 0.821 ± 0.009\nDEC 0.503 ± 0.012 0.192 ± 0.006 0.803 ± 0.139 0.837 ± 0.017 0.082 ± 0.004 0.874 ± 0.007",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 11,
+    "total_chunks": 87,
+    "char_count": 1309,
+    "word_count": 244,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c436bb0d-128e-4c4f-b270-00f89becc005",
+    "text": "Experiment setting We begin our evaluation with medical image classification, a domain where\nreliability, interpretability, and calibrated uncertainty are critical for deployment. In clinical settings,\na model's ability to identify its mispredictions can directly impact diagnostic decisions and patient\nsafety. To this end, we evaluate CUPID on misclassification detection using two medical imaging\nbenchmarks: GLV2 (glaucoma detection) (Gulshan et al., 2016; Kiefer et al., 2022) and HAM10000\n(skin lesion classification) (Tschandl et al., 2018). Baselines include Rate-in (Zeevi et al., 2025), MC Dropout (Folgoc et al., 2021), PostNet (Charpentier et al., 2020), IGRUE (Korte et al., 2024), DEC (Sensoy et al., 2018), and BNN (Kendall &\nGal, 2017), all implemented with ResNet18 (He et al., 2016) for consistency. CUPID is integrated\nafter the final residual block of ResNet18. We report AUC, AURC (Ding et al., 2020), and Spearman's rank correlation (Rasmussen et al., 2023). AUC measures the ability to separate correct from Accepted at ICLR 2026 incorrect predictions for misclassification detection; AURC assesses the confidence-error trade-off;\nand Spearman quantifies the correlation between uncertainty and error. Results The results of misclassification detection on the GLV2 and HAM10000 datasets are presented in Table 1. CUPID Aleatoric achieves the highest AUC (0.870) and lowest AURC (0.018) on\nGLV2. Its Spearman score (0.941) is also competitive with BNN (0.954).",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 12,
+    "total_chunks": 87,
+    "char_count": 1482,
+    "word_count": 215,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "14af0156-989c-4074-a3ff-3676998a3e36",
+    "text": "These results suggest that\ndata-driven noise is the dominant uncertainty source in the GLV2-trained model. On HAM10000, CUPID Epistemic achieves the best performance (AUC: 0.855, AURC: 0.047,\nSpearman: 0.907), highlighting the significance of model-based uncertainty in more diverse skin\nlesion data. Rate-in, DEC and MC Dropout also perform better on HAM1000, reflecting their sensitivity to epistemic uncertainty. These results confirm CUPID's ability to disentangle and capture\ndifferent uncertainty sources, with the dominant type varying by dataset. This underscores the need\nfor clear uncertainty modeling in domain-specific applications. Table 2: Performance of OOD detection (OOD samples as positive). PAPILA and ACRIMA share\nthe same research problem (glaucoma detection) with the ID dataset while CIFAR10 is a general\nclassification dataset. PAPILA ACRIMA CIFAR10\nMethod\nAUC(↑) AUPR(↑) AUC(↑) AUPR(↑) AUC(↑) AUPR(↑) CUPID Alea. 0.379 ± 0.027 0.333 ± 0.007 0.717 ± 0.029 0.661 ± 0.027 0.983 ± 0.005 0.998 ± 0.001\nCUPID Epis. 0.877 ± 0.032 0.854 ± 0.027 0.978 ± 0.010 0.984 ± 0.007 0.898 ± 0.054 0.991 ± 0.005 MC Dropout 0.733 ± 0.002 0.586 ± 0.007 0.869 ± 0.003 0.816 ± 0.009 0.887 ± 0.004 0.986 ± 0.001\nRate-in 0.328 ± 0.005 0.329 ± 0.008 0.363 ± 0.003 0.390 ± 0.003 0.620 ± 0.001 0.927 ± 0.002\nIGRUE 0.636 ± 0.114 0.486 ± 0.097 0.941 ± 0.008 0.944 ± 0.008 0.978 ± 0.005 0.998 ± 0.001\nPostNet Alea. 0.638 ± 0.060 0.487 ± 0.067 0.549 ± 0.040 0.487 ± 0.040 0.657 ± 0.032 0.952 ± 0.005\nPostNet Epis. 0.577 ± 0.097 0.425 ± 0.088 0.685 ± 0.154 0.654 ± 0.151 0.773 ± 0.082 0.976 ± 0.011\nBNN 0.707 ± 0.040 0.612 ± 0.050 0.708 ± 0.073 0.699 ± 0.042 0.643 ± 0.108 0.959 ± 0.013\nDEC 0.515 ± 0.024 0.457 ± 0.024 0.680 ± 0.003 0.685 ± 0.012 0.660 ± 0.015 0.963 ± 0.003 Experiment setting We evaluate OOD detection using GLV2 as the in-distribution (ID) dataset\nwith ACRIMA (Diaz-Pinto et al., 2019), PAPILA (Kovalyk et al., 2022), and CIFAR-10 (Krizhevsky\n& Hinton, 2009) as out-of-distribution (OOD) datasets. ACRIMA and PAPILA, though also related\nto glaucoma detection, differ in image quality and focus: PAPILA has lower contrast and reddish\ntones, while ACRIMA highlights optic disc regions through cropping.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 13,
+    "total_chunks": 87,
+    "char_count": 2211,
+    "word_count": 368,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c7f63ef9-9bc9-4438-a7d3-213043679ee7",
+    "text": "CIFAR-10 serves as a general\nOOD benchmark due to domain dissimilarity. Baselines follow those in misclassification detection. AUC and AUPR are used to measure performance, treating OOD samples as positive (Techapanurak\n& Okatani, 2021). AUPR highlights robustness under class imbalance. Results The results are summarized in Table 2.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 14,
+    "total_chunks": 87,
+    "char_count": 334,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "10e5e9d7-e86d-4281-9af2-f71fc76e0d7a",
+    "text": "Our proposed CUPID model demonstrates strong\nOOD detection performance across all datasets. CUPID Epistemic achieves the best AUPR and\nAUC on ACRIMA and PAPILA, highlighting its sensitivity to subtle distribution shifts within the\nsame clinical task. Interestingly, CUPID Aleatoric performs best on CIFAR-10 (AUC 0.983, AUPR\n0.998). CUPID Aleatoric models input-dependent (heteroscedastic) uncertainty through a learned\nvariance term. It assigns high uncertainty when the input lies in feature space regions that are both\nunderrepresented and unpredictable. This enables CUPID Aleatoric to respond robustly to extreme\ndomain mismatches, explaining its superior performance on CIFAR-10. Among baselines, IGRUE perform well on CIFAR-10 and ACRIMA but struggle with PAPILA. Rate-in and MC Dropout, despite strong misclassification detection results, underperform in OOD\ndetection, likely due to overconfidence. Overall, CUPID adapts effectively to both in-task and crosstask shifts, with aleatoric and epistemic branches complementing each other across OOD types. Accepted at ICLR 2026 4.3 IMAGE SUPER-RESOLUTION AS REGRESSION TASK Experiment setting We evaluate uncertainty estimation in super-resolution (SR) using a pretrained ESRGAN model (Wang et al., 2018b) trained on DIV2K (Agustsson & Timofte, 2017). CUPID is integrated before the upsampling module of ESRGAN. For testing, we utilize three standard benchmarks: Set5 (Bevilacqua et al., 2012), Set14 (Zeyde et al., 2010), and BSDS100 (Martin\net al., 2001). To assess generalization across modalities, we additionally include the IXI dataset\n(Biomedical Image Analysis Group, Imperial College London, 2022), a brain MRI dataset that differs substantially in appearance and domain.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 15,
+    "total_chunks": 87,
+    "char_count": 1735,
+    "word_count": 241,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cbafc043-da2a-4fae-9ab1-038e7047b00b",
+    "text": "Specifically, we use T1-weighted MRI scans, which\nare grayscale and structurally different from the natural images in DIV2K.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 16,
+    "total_chunks": 87,
+    "char_count": 124,
+    "word_count": 18,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5192e4d0-0dd2-43b7-a073-19db77f89532",
+    "text": "We compare CUPID with\nfive baselines: BayesCap (Upadhyay et al., 2022), which reconstructs output distributions and learns\na Bayesian identity mapping; in-rotate and in-noise, which measure output variation from input perturbations (Mi et al., 2022; Wang et al., 2019); and med-noise and med-dropout (Mi et al., 2022),\nwhich inject randomness into intermediate features. Table 3: Performance on natural image datasets (Set5, Set14, BSDS100) and medical imaging\ndataset IXI (MRI scans). CUPID Aleatoric achieves the best results on the natural image benchmarks, while CUPID Epistemic performs best on the IXI dataset.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 17,
+    "total_chunks": 87,
+    "char_count": 616,
+    "word_count": 90,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7b77301a-48b5-4611-b86c-a414948d3d0d",
+    "text": "Set5 Set14\nMethod\nPearson (↑) AUSE (↓) UCE (↓) Pearson (↑) AUSE (↓) UCE (↓) CUPID Alea. 0.528 ± 0.006 0.010 ± 0.000 0.045 ± 0.018 0.527 ± 0.002 0.012 ± 0.000 0.049 ± 0.005\nCUPID Epis. 0.416 ± 0.004 0.018 ± 0.001 0.266 ± 0.007 0.449 ± 0.005 0.019 ± 0.000 0.226 ± 0.003 BayesCap 0.485 ± 0.038 0.010 ± 0.000 0.098 ± 0.001 0.422 ± 0.064 0.012 ± 0.000 0.100 ± 0.000\nin-rotate 0.493 ± 0.000 0.010 ± 0.000 0.071 ± 0.000 0.490 ± 0.000 0.013 ± 0.000 0.072 ± 0.000\nin-noise 0.370 ± 0.006 0.019 ± 0.000 0.051 ± 0.035 0.354 ± 0.001 0.022 ± 0.000 0.826 ± 0.006\nmed-dropout 0.219 ± 0.023 0.030 ± 0.001 0.680 ± 0.043 0.271 ± 0.012 0.024 ± 0.000 0.292 ± 0.022\nmed-noise 0.312 ± 0.003 0.022 ± 0.000 0.826 ± 0.006 0.293 ± 0.002 0.022 ± 0.000 0.826 ± 0.006 BSDS100 IXI\nMethod\nPearson (↑) AUSE (↓) UCE (↓) Pearson (↑) AUSE (↓) UCE (↓) CUPID Alea. 0.536 ± 0.001 0.012 ± 0.000 0.042 ± 0.012 0.677 ± 0.008 0.004 ± 0.000 0.021 ± 0.004\nCUPID Epis. 0.464 ± 0.007 0.018 ± 0.000 0.185 ± 0.007 0.734 ± 0.018 0.004 ± 0.000 0.298 ± 0.013 BayesCap 0.427 ± 0.034 0.011 ± 0.000 0.100 ± 0.000 0.447 ± 0.034 0.004 ± 0.000 0.100 ± 0.000\nin-rotate 0.465 ± 0.000 0.012 ± 0.000 0.077 ± 0.000 0.598 ± 0.000 0.004 ± 0.000 0.093 ± 0.000\nin-noise 0.353 ± 0.001 0.022 ± 0.000 0.826 ± 0.006 0.461 ± 0.001 0.005 ± 0.000 0.091 ± 0.002\nmed-dropout 0.397 ± 0.002 0.020 ± 0.000 0.136 ± 0.008 0.570 ± 0.001 0.007 ± 0.000 0.337 ± 0.026\nmed-noise 0.293 ± 0.000 0.024 ± 0.000 0.700 ± 0.002 0.439 ± 0.000 0.006 ± 0.000 0.859 ± 0.002 Figure 3: Comparison of visual results between error and uncertainty maps. CUPID Aleatoric shows\nthe best texture alignment and highest correlation with error maps. To evaluate the quality of uncertainty estimation in the regression problem, we adopt three complementary metrics. Pearson's correlation coefficient measures the linear relationship between predicted uncertainty and error. The Area Under the Sparsification Error Curve (AUSE) (Ilg et al.,\n2018) quantifies how well uncertainty identifies inaccurate predictions by evaluating deviation from\nan ideal sparsification curve. Finally, Uncertainty Calibration Error (UCE) (Laves et al., 2020) assesses alignment between predicted uncertainty and error across confidence intervals, reflecting how\nwell the estimates are calibrated. The L1 loss map is used as error to compute these metrics.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 18,
+    "total_chunks": 87,
+    "char_count": 2325,
+    "word_count": 417,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0a793feb-d360-4371-9271-8b2c84280651",
+    "text": "Accepted at ICLR 2026 Results Table 3 reports quantitative results. CUPID Aleatoric achieves superior performance\nacross all natural image datasets (Pearson > 0.52, AUSE < 0.13, UCE < 0.05). BayesCap and\nin-rotate show moderate performance, while CUPID Epistemic and med-dropout perform poorly on\nthe first three datasets. Methods relying on noise injection degrade performance, likely due to perturbation sensitivity. These results suggest aleatoric uncertainty is the dominant contributor to overall\nuncertainty in super-resolution tasks, rather than model uncertainty. On the IXI dataset, which differs\nsignificantly from the training distribution, CUPID Epistemic outperforms its aleatoric counterpart\non Pearson, showing that epistemic uncertainty becomes more informative under domain shifts and\nhighlighting CUPID's capacity to adapt to unfamiliar distributions. Figure 3 provides a visual comparison of uncertainty maps generated by different methods. CUPID's maps exhibit clearer structure\nand better alignment with actual error regions, reinforcing its advantage in uncertainty estimation. 4.4 HYPERPARAMETER EXPERIMENTS CUPID location To investigate how uncertainty evolves and originates during forward propagation, we conducted experiments by inserting CUPID at different intermediate layers of the predictive\nmodel, as summarized in Figure 4. Figure 4: Performance of CUPID inserted at varying locations: misclassification detection (Left)\nand super-resolution (Right). Aleatoric uncertainty estimation improves when CUPID is placed\ncloser to the output, while epistemic uncertainty benefits from earlier insertion points. For the medical image classification task, CUPID was integrated after the 2nd, 3rd, and 4th stages of\nresidual blocks in the ResNet-18 model. The results demonstrate a clear trend: aleatoric uncertainty\nis more accurately estimated when CUPID is placed closer to the output layer, while epistemic\nuncertainty benefits from earlier placements within the network.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 19,
+    "total_chunks": 87,
+    "char_count": 1998,
+    "word_count": 270,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "23c11176-700d-49b7-818b-1ffd12e77b2c",
+    "text": "This observation aligns with the\nconceptual distinction between the two types of uncertainty. Aleatoric uncertainty, which originates\nfrom inherent noise in the input data, tends to manifest more prominently in high-level features near\nthe prediction layer, where semantic decisions are made. The results show that estimating aleatoric\nuncertainty directly from input features is insufficient, whereas using deeper activations, especially\nthose near the output, provides a more reliable signal. Conversely, epistemic uncertainty reflects the\nmodel's internal representation and parameter uncertainty. Placing CUPID in earlier layers enables\nit to better observe how uncertain representations propagate and interact throughout the model's\ndepth. Notably, the strong epistemic performance observed with CUPID positioned near the output\nhighlights that model uncertainty predominantly accumulates in the final layers. A similar trend\nis observed in the super-resolution setting. Specifically, when CUPID is inserted before (B) and\nafter (A) the upsampling module in the ESRGAN, we observe that epistemic uncertainty is better\ncaptured in earlier layers, while aleatoric uncertainty estimation improves post-upsampling. Table 4: Performance of differential feature loss on OOD task. \"No max\" means remove −∥ml,n −\nm′l,n∥1 in the loss function. Best-performing results for each metric are highlighted in bold. PAPILA ACRIMA CIFAR10\nMethod\nAUC(↑) AUPR(↑) AUC(↑) AUPR(↑) AUC(↑) AUPR(↑) Max Alea. 0.379 ± 0.027 0.333 ± 0.007 0.717 ± 0.029 0.661 ± 0.027 0.983 ± 0.005 0.998 ± 0.001\nNo max Alea. 0.389 ± 0.026 0.338 ± 0.009 0.739 ± 0.042 0.696 ± 0.055 0.988 ± 0.003 0.999 ± 0.000\nMax Epis. 0.877 ± 0.032 0.854 ± 0.027 0.978 ± 0.010 0.984 ± 0.007 0.898 ± 0.054 0.991 ± 0.005\nNo max Epis. 0.839 ± 0.017 0.790 ± 0.054 0.977 ± 0.006 0.982 ± 0.005 0.875 ± 0.024 0.989 ± 0.002",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 20,
+    "total_chunks": 87,
+    "char_count": 1860,
+    "word_count": 285,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3db9c1cd-9f98-46da-9ed6-2439312a2d98",
+    "text": "Loss function We further conduct an ablation study on the loss function. On the HAM10000\ndataset, incorporating the differential feature loss (−∥ml,n −m′l,n∥1) yields a slight improvement\nin aleatoric uncertainty estimation (Spearman ↑0.004) while maintaining comparable performance Accepted at ICLR 2026 for epistemic uncertainty.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 21,
+    "total_chunks": 87,
+    "char_count": 331,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b16c7d43-7f99-4f18-b760-4b1e76123eb1",
+    "text": "The benefits of this loss term become more evident in the OOD detection as shown in Table 4. On the PAPILA dataset, the addition of the differential feature loss\nleads to a substantial improvement in CUPID Epistemic's performance (AUC: 0.839-0.877, AUPR:\n0.790-0.854). These results suggest that the differential feature loss enhances CUPID's sensitivity\nto distributional shifts and improves its ability under OOD conditions. Details and further studies\nare provided in the appendix.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 22,
+    "total_chunks": 87,
+    "char_count": 484,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bd6ea603-7c58-4ba2-b532-063b95303500",
+    "text": "Both the reconstruction branch (epistemic) and the uncertainty\nbranch (aleatoric) in CUPID are present and jointly optimized. To evaluate whether this two-branch\narchitecture provides mutual benefit, we conduct an ablation study in which we remove one branch\nentirely and train the remaining branch in isolation. Specifically, (1) Alea. separate denotes a model\nwhere the epistemic branch is removed and only the aleatoric branch is trained, and (2) Epis. separate denotes a model where the aleatoric branch is removed and only the epistemic branch is trained. On the GLV2 misclassification detection task (Table 5), the fully joint model outperforms both\nsingle-branch variants across all metrics, indicating that each type of uncertainty estimation benefits from the presence of the other branch during training. In OOD detection (Table 6), the epistemic uncertainty from the joint model also achieves substantially higher AUC and AUPR than the\nepistemic-only variant (PAPILA AUC: 0.877-0.771), demonstrating that the joint formulation yields\na more distribution-aware and robust representation. This improvement arises from the complementary objectives of the two branches.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 23,
+    "total_chunks": 87,
+    "char_count": 1176,
+    "word_count": 170,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "677b3e63-d657-4e34-8168-948e3cb2847a",
+    "text": "For aleatoric\nuncertainty, the prediction-consistency constraint used in the epistemic loss, minm′l,n ∥ˆy′n −ˆyn∥1,\nregularizes the shared feature extractor by discouraging perturbation-sensitive or unstable representations. This yields better-conditioned intermediate features for variance regression. Conversely, the\naleatoric branch's calibrated modeling of data-dependent variability provides an additional normalization signal to the backbone, helping the epistemic branch distinguish meaningful distributional\ndeviations from sample-specific noise. Overall, these results confirm that CUPID's two-branch design forms a synergistic training mechanism, with the joint model consistently producing more reliable and discriminative uncertainty estimates than either branch trained in isolation. Table 5: Misclassification detection performance on GLV2 (Joint vs. separate branches). Aleatoric Epistemic\nModel\nAUC (↑) AURC (↓) Spearman (↑) AUC (↑) AURC (↓) Spearman (↑)",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 24,
+    "total_chunks": 87,
+    "char_count": 970,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bab95b7f-da42-4f87-aea8-1658f17c9b22",
+    "text": "Joint 0.870 ± 0.002 0.018 ± 0.001 0.941 ± 0.004 0.769 ± 0.015 0.034 ± 0.002 0.701 ± 0.051 Seperate 0.863 ± 0.003 0.019 ± 0.001 0.899 ± 0.035 0.744 ± 0.017 0.043 ± 0.005 0.699 ± 0.014 Table 6: OOD detection performance (Joint vs. separate branches). PAPILA ACRIMA CIFAR10\nModel\nAUC(↑) AUPR(↑) AUC(↑) AUPR(↑) AUC(↑) AUPR(↑) Joint 0.379 ± 0.027 0.333 ± 0.007 0.717 ± 0.029 0.661 ± 0.027 0.983 ± 0.005 0.998 ± 0.001\nAlea. Seperate 0.508 ± 0.097 0.385 ± 0.052 0.739 ± 0.071 0.661 ± 0.066 0.969 ± 0.027 0.995 ± 0.005 Joint 0.877 ± 0.032 0.854 ± 0.027 0.978 ± 0.010 0.984 ± 0.007 0.898 ± 0.054 0.991 ± 0.005\nEpis. Seperate 0.771 ± 0.051 0.707 ± 0.073 0.972 ± 0.010 0.978 ± 0.009 0.844 ± 0.049 0.986 ± 0.005",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 25,
+    "total_chunks": 87,
+    "char_count": 699,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b0fc51bf-0514-401e-843f-7f3dc57cefae",
+    "text": "CUPID acts as a versatile and lightweight plug-in module for joint aleatoric and epistemic uncertainty estimation. Without modifying or retraining the base model, CUPID can be inserted at any intermediate layer to reveal\nhidden sources of uncertainty across a wide range of tasks and datasets. Through comprehensive experiments\non image classification and super-resolution, we show that CUPID consistently produces reliable uncertainty\nestimates. Beyond performance, our analysis of uncertainty propagation offers new insights into the internal\nbehavior of neural networks. CUPID thus contributes both a practical tool for trustworthy AI and a conceptual\nlens for understanding model confidence. Accepted at ICLR 2026 This research is supported by the Ministry of Education, Singapore (Grant IDs: RG15/23 and LKCMedicine\nStart up Grant) and the Centre of AI in Medicine (C-AIM), Nanyang Technological University. Moloud Abdar, Farhad Pourpanah, Sadiq Hussain, Dana Rezazadegan, Li Liu, Mohammad\nGhavamzadeh, Paul Fieguth, Xiaochun Cao, Abbas Khosravi, U. Rajendra Acharya, et al. A\nreview of uncertainty quantification in deep learning: Techniques, applications and challenges. Information Fusion, 76:243–297, 2021. Eirikur Agustsson and Radu Timofte. Ntire 2017 challenge on single image super-resolution:\nDataset and study. In Proceedings of the IEEE Conference on Computer Vision and Pattern\nRecognition Workshops, pp. 126–135, 2017. Marco Bevilacqua, Aline Roumy, Christine Guillemot, and Marie Line Alberi-Morel.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 26,
+    "total_chunks": 87,
+    "char_count": 1517,
+    "word_count": 210,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "98abe0d0-1925-4255-adbf-9a1ba8c54810",
+    "text": "Lowcomplexity single-image super-resolution based on nonnegative neighbor embedding. In Proceedings of the 23rd British Machine Vision Conference (BMVC), pp. 135.1–135.10, 2012. Biomedical Image Analysis Group, Imperial College London. Ixi dataset – information extraction from images. http://brain-development.org/ixi-dataset/, 2022. RRID:SCR 005839; CC BY-SA 3.0 license; Approximately 600 brain MRI subjects (T1, T2,\nPD, MRA, DTI). UCI Machine Learning Repository, 1998. DOI:\nhttps://doi.org/10.24432/C50K5N. Charles Blundell, Julien Cornebise, Koray Kavukcuoglu, and Daan Wierstra. Weight uncertainty\nin neural network. In Proceedings of the 32nd International Conference on Machine Learning\n(ICML), pp. 1613–1622, 2015. Matthew Chan, Maria Molina, and Chris Metzler. Estimating epistemic and aleatoric uncertainty\nwith a single model. In Advances in Neural Information Processing Systems, volume 37, pp.\n109845–109870, 2024. Bertrand Charpentier, Daniel Z¨ugner, and Stephan G¨unnemann. Posterior network: Uncertainty estimation without ood samples via density-based pseudo-counts.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 27,
+    "total_chunks": 87,
+    "char_count": 1086,
+    "word_count": 133,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bd63f842-977f-4b69-96ba-666047ea3c70",
+    "text": "In Advances in Neural Information\nProcessing Systems, volume 33, pp. 1356–1367, 2020. Armen Der Kiureghian and Ove Ditlevsen. Aleatory or epistemic? does it matter? Structural Safety,\n31(2):105–112, 2009. Andres Diaz-Pinto, Sandra Morales, Valery Naranjo, Thomas K¨ohler, Jose M. Mossi, and Amparo\nNavea. Cnns for automatic glaucoma assessment using fundus images: An extensive validation. Biomedical Engineering Online, 18:1–19, 2019. Yukun Ding, Jinglan Liu, Jinjun Xiong, and Yiyu Shi. Revisiting the evaluation of uncertainty\nestimation and its application to explore model complexity-uncertainty trade-off. In Proceedings\nof the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops, pp. 4–5,\n2020. Nikita Durasov, Timur Bagautdinov, Pierre Baque, and Pascal Fua. Masksembles for uncertainty\nestimation. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 13539–13548, 2021. Loic Le Folgoc, Vasileios Baltatzis, Sujal Desai, Anand Devaraj, Sam Ellis, Octavio E Martinez\nManzanera, Arjun Nair, Huaqi Qiu, Julia Schnabel, and Ben Glocker.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 28,
+    "total_chunks": 87,
+    "char_count": 1098,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "10859da6-15fa-4ca8-876c-d8c10c130c45",
+    "text": "Is MC dropout bayesian? Gianni Franchi, Xuanlong Yu, Andrei Bursuc, Emanuel Aldea, Severine Dubuisson, and David\nFilliat.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 29,
+    "total_chunks": 87,
+    "char_count": 121,
+    "word_count": 17,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "510188bf-9b67-4fb2-b69b-78be628e0fbc",
+    "text": "Latent discriminant deterministic uncertainty. In Proceedings of the European Conference\non Computer Vision (ECCV), pp. 243–260, 2022. Accepted at ICLR 2026 Yarin Gal and Zoubin Ghahramani.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 30,
+    "total_chunks": 87,
+    "char_count": 189,
+    "word_count": 26,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "10ac3ca1-7763-4ff8-bb62-a9a765f908d1",
+    "text": "Dropout as a bayesian approximation: Representing model\nuncertainty in deep learning. In Proceedings of the 33rd International Conference on Machine\nLearning, pp. 1050–1059, 2016. Jakob Gawlikowski, Cedrique Rovile Njieutcheu Tassi, Mohsin Ali, Jongseok Lee, Matthias Humt,\nJianxiang Feng, Anna Kruspe, Rudolph Triebel, Peter Jung, Ribana Roscher, et al.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 31,
+    "total_chunks": 87,
+    "char_count": 354,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "407696a0-50ef-4380-b73c-fc918b92b95a",
+    "text": "A survey\nof uncertainty in deep neural networks. Artificial Intelligence Review, 56(Suppl 1):1513–1589,\n2023. Varun Gulshan, Lily Peng, Marc Coram, Martin C. Stumpe, Derek Wu, Arunachalam\nNarayanaswamy, Subhashini Venugopalan, Kasumi Widner, Tom Madams, Jorge Cuadros, et al. Development and validation of a deep learning algorithm for detection of diabetic retinopathy in\nretinal fundus photographs. JAMA, 316(22):2402–2410, 2016. Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp.\n770–778, 2016. Julia Hornauer, Amir El-Ghoussani, and Vasileios Belagiannis. Revisiting gradient-based uncertainty for monocular depth estimation. IEEE Transactions on Pattern Analysis and Machine\nIntelligence, 2025. Eyke H¨ullermeier and Willem Waegeman. Aleatoric and epistemic uncertainty in machine learning:\nAn introduction to concepts and methods. Machine Learning, 110(3):457–506, 2021.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 32,
+    "total_chunks": 87,
+    "char_count": 1012,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4d195c92-f723-4c2d-84a6-4472428e9a01",
+    "text": "Eddy Ilg, Ozgun Cicek, Silvio Galesso, Aaron Klein, Osama Makansi, Frank Hutter, and Thomas\nBrox. Uncertainty estimates and multi-hypotheses networks for optical flow. In Proceedings of\nthe European Conference on Computer Vision (ECCV), pp. 652–667, 2018. Alex Kendall and Yarin Gal. What uncertainties do we need in bayesian deep learning for computer\nvision? In Advances in Neural Information Processing Systems, volume 30, pp. 5580–5590,\n2017. Riley Kiefer, Jessica Steen, Muhammad Abid, Mahsa R. Ardali, and Ehsan Amjadian.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 33,
+    "total_chunks": 87,
+    "char_count": 527,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c609ddf5-8009-475c-a65e-b23729a2be0e",
+    "text": "A survey of\nglaucoma detection algorithms using fundus and oct images. In Proceedings of the IEEE 13th\nAnnual Information Technology, Electronics and Mobile Communication Conference (IEMCON),\npp. 191–196, 2022. Lennard Korte, Li Rong Wang, and Xiuyi Fan. Confidence estimation in analyzing intravascular\noptical coherence tomography images with deep neural networks. In Proceedings of the IEEE\nConference on Artificial Intelligence (CAI), pp. 358–364, 2024. Oleksandr Kovalyk, Juan Morales-S´anchez, Rafael Verd´u-Monedero, Inmaculada Sell´es-Navarro,\nAna Palaz´on-Cabanes, and Jos´e-Luis Sancho-G´omez. Papila: Dataset with fundus images and\nclinical data of both eyes of the same patient for glaucoma assessment. Scientific Data, 9(1):291,\n2022. Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. Technical report, University of Toronto, 2009. Balaji Lakshminarayanan, Alexander Pritzel, and Charles Blundell. Simple and scalable predictive\nuncertainty estimation using deep ensembles. In Advances in Neural Information Processing\nSystems, volume 30, pp. 6405–6416, 2017. Max-Heinrich Laves, Sontje Ihler, Karl-Philipp Kortmann, and Tobias Ortmaier.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 34,
+    "total_chunks": 87,
+    "char_count": 1192,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cdf79d5d-ab5c-48df-92b5-74c7778684ef",
+    "text": "Calibration of\nmodel uncertainty for dropout variational inference. arXiv preprint arXiv:2006.11584, 2020. Christian Leibig, Vaneeda Allken, Murat Sec¸kin Ayhan, Philipp Berens, and Siegfried Wahl. Leveraging uncertainty information from deep neural networks for disease detection. Scientific Reports,\n7(1):1–14, 2017. Bo Li, Peng Qi, Bo Liu, Shuai Di, Jingen Liu, Jiquan Pei, Jinfeng Yi, and Bowen Zhou.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 35,
+    "total_chunks": 87,
+    "char_count": 404,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "08f97a2c-f766-461d-ab95-c6f46f76514c",
+    "text": "Trustworthy\nai: From principles to practices. ACM Computing Surveys, 55(9):1–46, 2023. Accepted at ICLR 2026 Weixin Liang, Girmaw Abebe Tadesse, Daniel Ho, Li Fei-Fei, Matei Zaharia, Ce Zhang, and James\nZou. Advances, challenges and opportunities in creating data for trustworthy ai. Nature Machine\nIntelligence, 4(8):669–677, 2022. Maddox, Pavel Izmailov, Timur Garipov, Dmitry P. Vetrov, and Andrew Gordon Wilson. A simple baseline for bayesian uncertainty in deep learning. In Advances in Neural Information\nProcessing Systems, volume 32, 2019. David Martin, Charless Fowlkes, Doron Tal, and Jitendra Malik.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 36,
+    "total_chunks": 87,
+    "char_count": 610,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5b3f573d-4a45-4448-b97c-b00688acbb37",
+    "text": "A database of human segmented\nnatural images and its application to evaluating segmentation algorithms and measuring ecological statistics. In Proceedings of the Eighth IEEE International Conference on Computer Vision\n(ICCV), volume 2, pp. 416–423, 2001. Lu Mi, Hao Wang, Yonglong Tian, Hao He, and Nir N.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 37,
+    "total_chunks": 87,
+    "char_count": 305,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "13bc3bdc-9572-4194-9356-f6632f474019",
+    "text": "Training-free uncertainty estimation for dense regression: Sensitivity as a surrogate. In Proceedings of the AAAI Conference on\nArtificial Intelligence, volume 36, pp. 10042–10050, 2022. Rasmussen, Chenru Duan, Heather J. Uncertain of uncertainties?\na comparison of uncertainty quantification metrics for chemical data sets. Journal of Cheminformatics, 15(1):121, 2023. Tobias Riedlinger, Matthias Rottmann, Marius Schubert, and Hanno Gottschalk. Gradient-based\nquantification of epistemic uncertainty for deep object detectors. In Proceedings of the IEEE/CVF\nWinter Conference on Applications of Computer Vision, pp. 3921–3931, 2023. Subham Sahoo, Huai Wang, and Frede Blaabjerg. Uncertainty-aware artificial intelligence for gear\nfault diagnosis in motor drives. In 2025 IEEE Applied Power Electronics Conference and Exposition (APEC), pp. 912–918. Murat Sensoy, Lance Kaplan, and Melih Kandemir. Evidential deep learning to quantify classification uncertainty. In Advances in Neural Information Processing Systems, volume 31, pp.\n3183–3193, 2018. Engkarat Techapanurak and Takayuki Okatani.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 38,
+    "total_chunks": 87,
+    "char_count": 1093,
+    "word_count": 140,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a8c1b7ee-280f-4cac-ba95-5738f91e08d1",
+    "text": "Practical evaluation of out-of-distribution detection\nmethods for image classification. arXiv Preprint arXiv:2101.02447, 2021. Philipp Tschandl, Cliff Rosendahl, and Harald Kittler.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 39,
+    "total_chunks": 87,
+    "char_count": 181,
+    "word_count": 20,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5225799c-a90f-44b5-b5c4-6fb92526c08a",
+    "text": "The ham10000 dataset, a large collection\nof multi-source dermatoscopic images of common pigmented skin lesions. Scientific Data, 5(1):\n1–9, 2018. A survey on evidential deep learning for single-pass uncertainty estimation. Uddeshya Upadhyay, Shyamgopal Karthik, Yanbei Chen, Massimiliano Mancini, and Zeynep\nAkata.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 40,
+    "total_chunks": 87,
+    "char_count": 314,
+    "word_count": 41,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a2664803-b477-4dcf-86a9-a1ad8b8e4050",
+    "text": "Bayescap: Bayesian identity cap for calibrated uncertainty in frozen neural networks. In Proceedings of the European Conference on Computer Vision, pp. 299–317, 2022. Guotai Wang, Wenqi Li, Michael Aertsen, Jan Deprest, Sebastien Ourselin, and Tom Vercauteren. Test-time augmentation with uncertainty estimation for deep learning-based medical image segmentation, 2018a. URL https://openreview.net/forum?id=Byxv9aioz. Guotai Wang, Wenqi Li, Michael Aertsen, Jan Deprest, S´ebastien Ourselin, and Tom Vercauteren.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 41,
+    "total_chunks": 87,
+    "char_count": 512,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e696f937-3e4b-42c1-a5e9-34cb5f08c897",
+    "text": "Aleatoric uncertainty estimation with test-time augmentation for medical image segmentation\nwith convolutional neural networks. Neurocomputing, 338:34–45, 2019. Hanjing Wang and Qiang Ji.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 42,
+    "total_chunks": 87,
+    "char_count": 187,
+    "word_count": 22,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "33c65b0e-89f4-4d43-9e7f-cf46c0dc2898",
+    "text": "Epistemic uncertainty quantification for pre-trained neural networks. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp.\n11052–11061, 2024. Li Rong Wang, Thomas C. Henderson, and Xiuyi Fan.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 43,
+    "total_chunks": 87,
+    "char_count": 228,
+    "word_count": 31,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7318e77a-4ba0-4037-a0e6-251929caef69",
+    "text": "An uncertainty estimation model for algorithmic trading agent. In Proceedings of the International Conference on Intelligent Autonomous\nSystems, pp. 459–465, 2023. Accepted at ICLR 2026 Xintao Wang, Ke Yu, Shixiang Wu, Jinjin Gu, Yihao Liu, Chao Dong, Yu Qiao, and Chen Change\nLoy. Esrgan: Enhanced super-resolution generative adversarial networks. In Proceedings of the\nEuropean Conference on Computer Vision (ECCV) Workshops, pp. 0–0, 2018b. Yeming Wen, Dustin Tran, and Jimmy Ba. Batchensemble: An alternative approach to efficient\nensemble and lifelong learning. arXiv preprint arXiv:2002.06715, 2020. Kai Ye, Tiejin Chen, Hua Wei, and Liang Zhan. Uncertainty regularized evidential regression. In\nProceedings of the AAAI Conference on Artificial Intelligence, volume 38, pp. 16460–16468,\n2024. Xuanlong Yu, Gianni Franchi, Jindong Gu, and Emanuel Aldea.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 44,
+    "total_chunks": 87,
+    "char_count": 858,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb20cc5d-b5ad-48ce-9c38-d5a5e627f8d8",
+    "text": "Discretization-induced dirichlet\nposterior for robust uncertainty quantification on regression. In Proceedings of the AAAI Conference on Artificial Intelligence, volume 38, pp. 6835–6843, 2024. Tal Zeevi, Ravid Shwartz-Ziv, Yann LeCun, Lawrence H Staib, and John A Onofrey. Rate-in:\nInformation-driven adaptive dropout rates for improved inference-time uncertainty estimation. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp.\n20757–20766, 2025. Roman Zeyde, Michael Elad, and Matan Protter.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 45,
+    "total_chunks": 87,
+    "char_count": 531,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fd3aa7ba-66b5-4410-95fb-99314f9cf199",
+    "text": "On single image scale-up using sparserepresentations. In Proceedings of the International Conference on Curves and Surfaces, pp.\n711–730, 2010. Wang Zhang, Ziwen Martin Ma, Subhro Das, Tsui-Wei Lily Weng, Alexandre Megretski, Luca\nDaniel, and Lam M. One step closer to unbiased aleatoric uncertainty estimation. In\nProceedings of the AAAI Conference on Artificial Intelligence, volume 38, pp. 16857–16864,\n2024. Ke Zou, Zhihao Chen, Xuedong Yuan, Xiaojing Shen, Meng Wang, and Huazhu Fu.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 46,
+    "total_chunks": 87,
+    "char_count": 487,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a66d9dc5-b6de-48df-8b08-c00f8ded7bb1",
+    "text": "A review\nof uncertainty estimation and its application in medical imaging. Meta-Radiology, pp. 100003,\n2023. Accepted at ICLR 2026 A THE USE OF LARGE LANGUAGE MODELS (LLMS) We used large language models to aid in polishing the manuscript. Specifically, an LLM was employed to refine grammar when necessary. All conceptual contributions, experiment design, data\nanalysis, and interpretation were performed by the authors, with LLM support limited to language\nrefinement as described in the paper.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 47,
+    "total_chunks": 87,
+    "char_count": 495,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "44eee73c-8c51-46c3-b700-99db0ed9ecf5",
+    "text": "B THEORETICAL ANALYSIS OF CUPID EPISTEMIC UNCERTAINTY In this section, we provide a theoretical analysis of the CUPID Epistemic Uncertainty, focusing on\nits sensitivity to perturbations and the magnitude of deviation. We begin by reviewing the relevant\nnotation and definitions.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 48,
+    "total_chunks": 87,
+    "char_count": 278,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7e012a7e-b6e6-40cf-90e2-e93914c3644f",
+    "text": "Let ml = Bl(x) ∈Rd be the feature representation at the l-th layer of a sample x, and let Fl :\nRd →Y denote the downstream sub-network from this layer. The CUPID Reconstruction Branch\nproduces a perturbed feature m′l = C(ml), constrained to leave the final output nearly unchanged:\n∥Fl(m′l) −Fl(ml)∥≤ϵ. The epistemic uncertainty is defined as the output deviation induced by\nthis transformation:\nUepis(x) := ∥Fl(m′l) −Fl(ml)∥. (17)\nTheorem 1 (Sensitivity & Deviation Driven Approximation of Epistemic Uncertainty). Assume that\nFl is locally differentiable at ml, and let ∆ml = m′l−ml be the reconstruction perturbation. Then,\nunder a first-order Taylor approximation: Uepis(x) ≈∥JFl(ml) · ∆ml∥, (18)\nwhere JFl(ml) is the Jacobian of Fl evaluated at ml. This result implies that the epistemic uncertainty estimated by CUPID is determined by two critical factors: the local sensitivity of the network (captured by the Jacobian) and the feature-space\ndeviation introduced by the reconstruction: Uepis(x) ∝Sensitivity × Deviation. (19) In the following sections, we further analyze the reliability of CUPID's epistemic uncertainty estimation, with a detailed discussion on the roles of sensitivity and deviation. B.1 DEVIATION-BASED ESTIMATION OF EPISTEMIC UNCERTAINTY Epistemic uncertainty arises from a model's incomplete knowledge of its parameters, typically due\nto limited or insufficient training data. A common approach to quantifying this type of uncertainty\nis to approximate the posterior distribution over model parameters and evaluate the variability in\npredictions induced by sampling from this distribution. Proposition 3.1 in Wang & Ji (2024) formalizes this idea by showing that, under regularity conditions and in the large-data limit, the posterior\ndistribution p(θ | D) converges to a multivariate Gaussian centered at the maximum a posteriori\nestimate θ∗:\np(θ | This Gaussian approximation justifies modeling epistemic uncertainty through perturbations around\nmodel's parameter θ∗.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 49,
+    "total_chunks": 87,
+    "char_count": 1997,
+    "word_count": 291,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cef51b26-9b7a-4d4d-92d3-be27ebdd8e5f",
+    "text": "Building upon this idea, we propose an alternative formulation that characterizes epistemic uncertainty through structured deviations in the input space. Rather than introducing\nrandomness in the parameter space, we identify directions in the input domain along which the\nmodel output remains stable under the current parameterization. This provides a deterministic and\ngeometrically interpretable estimate of epistemic uncertainty, formalized in the following proposition:\nProposition 1. Let f(x, θ∗) be a neural network with fixed parameters θ∗. Define the deviation\n∆x∗as the solution to the following optimization problem:\n∆x∗= arg max ∥∆x∥\nsubject to ∥f(x + ∆x, θ∗) −f(x, θ∗)∥≤δ, (21)",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 50,
+    "total_chunks": 87,
+    "char_count": 689,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "97a34b13-94d9-4e89-a61f-b88dd75721b9",
+    "text": "Accepted at ICLR 2026 for a small tolerance δ > 0. Then, there exists a parameter perturbation ∆θ such that:\nf(x + ∆x∗, θ∗) = f(x, θ∗+ ∆θ). (22) This result shows that the deviation ∆x∗, which is constrained to preserve the output, can approximate the effect of a parameter perturbation. Hence, the deviation acts as a proxy for epistemic\nuncertainty, enabling its deterministic and input-dependent estimation.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 51,
+    "total_chunks": 87,
+    "char_count": 410,
+    "word_count": 67,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a50c6df7-e625-46c5-9d3a-d84ecfc16c38",
+    "text": "Proof of Proposition 1. To justify the equivalence, we consider first-order Taylor approximations\nof the model with respect to both the input and the parameters:\nf(x + ∆x∗, θ∗) ≈f(x, θ∗) + Jx · ∆x∗,\nf(x, θ∗+ ∆θ) ≈f(x, θ∗) + Jθ · ∆θ, (23) ∂f(x,θ∗) ∂f(x,θ∗)\nwhere Jx = ∂x and Jθ = ∂θ . Since ∆x∗is chosen such that f(x + ∆x∗, θ∗) ≈f(x, θ∗), we have:\nJx · ∆x∗≈0. (24) We now seek a ∆θ such that:\nf(x, θ∗+ ∆θ) = f(x + ∆x∗, θ∗) ≈f(x, θ∗)\n⇒ Jθ · ∆θ ≈0. (25) Thus, any ∆θ in the null space of Jθ satisfies this condition. In particular, we can construct such a\n∆θ by perturbing the first-layer weights. Let θ1 denote the weights of the first layer, and consider the linear transformation:\nf (1)(x, θ1) = σ(θ⊤1 x), (26)\nwhere σ is the activation function. To preserve the first-layer output under the input deviation ∆x∗,\nwe require:\n(θ1 + ∆θ1)⊤x = θ⊤1 (x + ∆x∗) ⇒ ∆θ⊤1 x = θ⊤1 ∆x∗. (27)\nAssuming xk ̸= 0, this condition is satisfied by:\n∆x∗k ∆θ1,kj = θ1,kj · . (28)\nThis construction ensures that:\nf (1)(x + ∆x∗, θ1) = f (1)(x, θ1 + ∆θ1), (29) and under mild smoothness conditions on σ and subsequent layers, this local equivalence propagates\nto the full network output. Extension to Intermediate Features. Although the preceding formulation is derived based on\ninput-level perturbations, the underlying reasoning naturally extends to internal feature representations within the network. Specifically, consider an intermediate feature vector ml = Bl(x) ∈Rd at\nlayer l, where Bl denotes the sub-network up to layer l, and let Fl : Rd →Y be the sub-network\nfrom layer l to the output. We define the deviation ∆m∗l in the feature space as the solution to the following optimization\nproblem:\n∆m∗l = arg max ∥∆ml∥\n∆ml\nsubject to ∥Fl(ml + ∆ml) −Fl(ml)∥≤δ, (30) for a small tolerance δ > 0.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 52,
+    "total_chunks": 87,
+    "char_count": 1776,
+    "word_count": 326,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aa421912-ada1-4363-935f-6d4f67cb55ea",
+    "text": "This formulation mirrors the input-level case and enables direct manipulation of internal activations while preserving output consistency. By optimizing deviations in intermediate layers, our method generalizes naturally to feature-based or\nmodular architectures. It is particularly useful in scenarios where inputs are fixed or uninterpretable,\nbut internal representations can be explicitly perturbed and interpreted. This makes our epistemic\nuncertainty estimation applicable across a broader range of neural architectures and analysis settings. Accepted at ICLR 2026 B.2 SENSITIVITY AS AN INDICATOR OF EPISTEMIC UNCERTAINTY While the previous subsection establishes a connection between input perturbations and equivalent\nparameter shifts, this section explores how sensitivity (quantified via gradients) can serve as a direct\nand meaningful indicator of epistemic uncertainty. Specifically, we argue that the magnitude of the\ngradient of the model output with respect to its parameters reflects the model's familiarity with a\ngiven input. Proposition 3.4 in Wang & Ji (2024) shows that, for inputs close to the training distribution, a\nsufficiently trained model exhibits vanishing gradients with respect to its parameters. More precisely,\nin a neighborhood N(x0) around an in-distribution point x0, the gradient satisfies:\n∇θf(x, θ∗) = 0, ∀x ∈N(x0). (31)\nThis result motivates the use of the gradient norm as a proxy for epistemic uncertainty: for inputs the\nmodel is confident about, small or vanishing gradients imply stability under parameter perturbations;\nconversely, large gradients indicate potential epistemic mismatch. Building on this, we propose an alternative formulation in which the perturbation ∆x∗is not sampled randomly but is instead optimized under a constraint that the output remains stable. Rather\nthan exploring the entire local input neighborhood indiscriminately, we restrict the perturbation to\ndirections that preserve the output, leading to a boundary-aware sensitivity measure. This motivates\nthe following proposition:\nProposition 2.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 53,
+    "total_chunks": 87,
+    "char_count": 2069,
+    "word_count": 288,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4622b0c9-8bbf-4806-9da3-f8e6e66666b3",
+    "text": "Let f(x, θ) be a neural network with fixed parameters θ∗, and define the perturbation ∆x = ∥C(x) −x∥by:\n∆x∗= arg max ∥∆x∥\nsubject to ∥f(x + ∆x, θ∗) −f(x, θ∗)∥≤δ, (32)\nfor a small tolerance δ > 0. Then, if x is in-distribution and the model is well-trained, we have:\n∇θf(x, θ∗) = 0, and ∥∇θf(x + ∆x∗, θ∗)∥→0. (33) This result can be interpreted as an extension of Proposition 3.4 from Wang & Ji (2024). While\nthe original proposition attributes vanishing parameter gradients to the convergence of the posterior\naround in-distribution inputs, our formulation adds an output-preservation constraint. This constraint\nrestricts the perturbation to lie within a local iso-response surface—i.e., the subspace where the\noutput remains stable under the fixed model parameters. If a large perturbation ∆x∗still maintains\nthe output within δ, the model is considered epistemically confident around x. For in-distribution\ndata x, a well-trained model satisfies the first-order optimality condition:\n∇θf(x, θ∗) = 0. (34)\nNow, consider the perturbation ∆x∗that maximizes ∥∆x∥while ensuring f(x + ∆x, θ∗) ≈\nf(x, θ∗). Since the output does not significantly change, we infer that the model's prediction remains on the same confidence surface. Assuming smoothness of f, we can expand f(x + ∆x, θ) in\na Taylor series around x, and observe that for sufficiently small δ, the leading-order change in the\nparameter gradient at x + ∆x∗is also small:\n∇θf(x + ∆x∗, θ∗) →0 as δ →0. (35)\nThis implies that the model remains insensitive to parameter perturbations in the vicinity of x+∆x∗,\nconfirming the epistemic confidence around that region. Dataset We evaluate our method on the Covertype dataset, a classical structured-data benchmark\nprovided by the UCI Machine Learning Repository (Blackard, 1998). The dataset contains 581012\nsamples with 54 continuous and binary features, representing cartographic variables such as elevation, slope, and soil type. Each sample corresponds to a 30m × 30m cell of forest cover in the\nRoosevelt National Forest of northern Colorado. The classification task is to predict the forest cover\ntype, which falls into one of seven possible categories (multi-class setting). We randomly split the\ndataset into 80% training and 20% testing sets. Since this dataset is tabular rather than image-based,\nit provides a complementary evaluation to the image-centric experiments in the main paper, highlighting the generality of our proposed uncertainty estimation framework.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 54,
+    "total_chunks": 87,
+    "char_count": 2475,
+    "word_count": 386,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e3b4bbc6-7520-4db8-a143-0dc8a07ad6e9",
+    "text": "Accepted at ICLR 2026 Table 7: Hyperparameters for tabular examples. Hyperparameters Predicted Model CUPID Epoch 50 50\nBatch size 256 256\nLearning rate 0.001 0.0001\nλ1 / 0.001\nλ2 / 0.01 Table 8: Performance of tabular examples. AUC(↑) 0.965 ± 0.000 - -\nAccuracy(↑) 0.837 ± 0.000 - - AUC (↑) 0.769 ± 0.006 0.688 ± 0.005 0.563 ± 0.001\nAURC (↓) 0.060 ± 0.001 0.088 ± 0.002 0.138 ± 0.000\nSpearman (↑) 0.812 ± 0.017 0.627 ± 0.012 0.365 ± 0.001",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 55,
+    "total_chunks": 87,
+    "char_count": 438,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fc1ef125-a39f-4be3-88b4-16d01887d2b8",
+    "text": "Model For the classification task, we adopt a Multi-Layer Perceptron (MLP) consisting of four\nfully connected layers. Each layer is followed by a Sigmoid activation function, and dropout layers\nare applied between hidden layers to prevent overfitting. The CUPID model follows the MLP architecture as the base classifier and is placed before the final Linear layer. The hyperparameters of the\nclassification model and CUPID model on toy examples are shown in Table 7. Results We conduct misclassification detection experiments on the dataset and compare the performance of CUPID with MC Dropout, using the same MLP baseline model. The results are presented in Table 8. As shown, CUPID achieves significantly better uncertainty estimation performance across all metrics. In particular, CUPID's aleatoric uncertainty yields an AUC of 0.769 and\nSpearman correlation of 0.812, indicating a strong correlation between uncertainty and prediction\nerrors. In contrast, MC Dropout achieves lower AUC (0.563) and Spearman (0.365), reflecting less\neffective uncertainty estimates. Moreover, CUPID's epistemic uncertainty also outperforms MC\nDropout, achieving a Spearman correlation of 0.627 versus 0.365 and demonstrating its ability to\ncapture model uncertainty. These results validate the effectiveness of CUPID in estimating both\naleatoric and epistemic uncertainties for misclassification detection in tabular data. D SUPPLEMENTS FOR THE EXPERIMENTAL SETTING All experiments are conducted on a workstation equipped with an NVIDIA GeForce RTX 4090\nGPU. The software environment includes Python 3.9 and PyTorch 2.0.1. D.1 DETAILS OF THE TOY EXAMPLES",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 56,
+    "total_chunks": 87,
+    "char_count": 1640,
+    "word_count": 236,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4cfc6b34-3ff5-43d6-8f37-6669e743d126",
+    "text": "Datasets We constructed two synthetic datasets to evaluate our method under controlled settings. The dataset depicted in Fig. 1 (Left) of the main paper was generated using the following formulation\nfor the target variable y:",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 57,
+    "total_chunks": 87,
+    "char_count": 225,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "66a25cf3-a97d-491c-bb44-8cc09b839d7b",
+    "text": " 3 sin(0.8x) + 5.3 + ϵ,\nwhere ϵ ∼N(0, 0.7), x ∈[5, 8) ∪[12, 14)  (36)\n 3wheresin(0.8x)ϵ ∼N(0,+ 5.70.3).+ ϵ, x ∈[8, 12) Accepted at ICLR 2026 Table 9: Hyperparameters for toy examples. Hyperparameters Predicted Model CUPID Max epoch 50 50\nBatch size 16 8\nLearning rate 0.001 0.001\nλ1 / 0.001\nλ2 / 0.01 And the dataset demonstrated in Fig. 1 (Right) is formulated as:\n 3 sin(0.8x) + sin(2x) + 1.3 + ϵ,\nwhere ϵ ∼N(0, 0.7), x ∈[5, 9)  (37)\n 3wheresin(0.8x)ϵ ∼N(0,+ sin(2x)0.2). + x1.8∈[11,+ ϵ, 13) Model The regression model used in the toy experiments is a three-layer MLP with sigmoid activation functions. To align with the structure of the predictive model, the CUPID model employed in\nthis setting is also implemented as an MLP, following a similar yet simplified architecture compared\nto the version used in our main experiments. Specifically, the feature extractor component in this\nvariant consists of only two blocks, reducing complexity while preserving core functionality.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 58,
+    "total_chunks": 87,
+    "char_count": 1005,
+    "word_count": 168,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5ef44599-deb8-44da-b2ea-fac10a38e08f",
+    "text": "The\nCUPID model is integrated into the regression network by inserting it immediately before the final\nlinear layer. The hyperparameters of the regression and CUPID model on toy examples are shown in Table 9. D.2 DETAILS OF MEDICAL IMAGE CLASSIFICATION EXPERIMENTS Datasets We evaluate our method on two widely used medical imaging datasets designed for\nclassification tasks involving different modalities and diseases: Glaucoma-Light V2 (GLV2) and\nHAM10000. Visual examples are shown in Figure 5. GLV2 (Gulshan et al., 2016; Kiefer et al., 2022) is a large-scale fundus image dataset comprising\n4,770 referable glaucoma (RG) and 4,770 non-referable glaucoma (NRG) images. The data is divided into training, validation, and test sets, each containing 4,000, 385, and 385 samples per class,\nrespectively. This structure ensures a well-controlled evaluation setting with equal representation of\nboth classes.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 59,
+    "total_chunks": 87,
+    "char_count": 906,
+    "word_count": 133,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a9eec844-4169-4408-b5b3-b4b179c27585",
+    "text": "HAM10000 (Tschandl et al., 2018) is a dermoscopic image dataset developed for the classification\nof pigmented skin lesions. It includes a diverse range of skin conditions and imaging settings. For\nthis study, we follow the official split: 10,015 images for training, 193 for validation, and 1,512 for\ntesting. Each image is centered on a lesion and captured under standardized lighting to minimize\nacquisition bias. We quantify acquisition-related randomness using dataset-level pixel variance (\"Noise\") and signalto-noise ratio (SNR), computed from the first- and second-order moments of all images (Sahoo\net al., 2025). Higher noise and lower SNR indicate stronger imaging variability, which is a typical driver of aleatoric uncertainty. As shown in Table 10, GLV2 exhibits higher Noise (0.024 vs.\n0.022) and markedly lower SNR (5.44 dB vs. 12.78 dB) than HAM10000, confirming that GLV2\ncontains more acquisition-induced variability and is therefore more AU-dominant. EU arises from\nlimited or uneven data coverage. HAM10000 contains 7 diagnostic classes with substantial imbalance (142–6705 samples), forming a heterogeneous and sparsely supported feature space. In\ncontrast, GLV2 consists of only 2 well-balanced classes. This structural difference implies that\nmodels trained on HAM10000 must learn more complex and uneven decision boundaries, resulting\nin higher epistemic uncertainty, while GLV2's simpler and balanced distribution yields lower EU.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 60,
+    "total_chunks": 87,
+    "char_count": 1455,
+    "word_count": 209,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "687ef71b-c6ef-43b6-a614-c58c74cccd58",
+    "text": "Predictive Base Model M The predictive model M is implemented as a ResNet18 (He et al.,\n2016) architecture, a widely-used convolutional neural network known for its residual learning ca- Accepted at ICLR 2026 Figure 5: Data samples from GLV2 and HAM10000. Table 10: Dataset characteristics indicating different sources of uncertainty. Dataset Noise (↑) SNR (↓) Classes Class balanced GLV2 0.024 5.44 dB 2 True\nHAM10000 0.022 12.78 dB 7 False",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 61,
+    "total_chunks": 87,
+    "char_count": 441,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "46177051-71be-4a14-87a5-ce29d3f9b91f",
+    "text": "The network consists of 18 layers, including a 7 × 7 convolutional layer and max-pooling\nat the input, followed by four stages of residual blocks with increasing filter dimensions (64, 128,\n256, and 512). Each residual block contains two 3 × 3 convolutions with batch normalization and\nReLU activation, facilitating stable gradient flow in deeper networks. The model concludes with a\nglobal average pooling layer and a fully connected layer to output classification logits. Figure 6: The structure of CUPID used in ResNet18 for the classification problem. CUPID Model C The architecture of CUPID used in these experiments is illustrated in Figure 6. The CUPID model consists of three functional components designed to estimate uncertainty and\nperturb latent representations in a structured way: Feature Extractor: This module processes the intermediate feature map ml using a series of trunk\nblocks, which adopt the Residual-in-Residual Dense Block (RRDB) structure (Wang et al., 2018b). A batch normalization layer follows the trunk blocks, yielding a refined latent representation that\nserves as a shared input to the subsequent branches. Uncertainty Branch: This branch estimates aleatoric uncertainty by learning an uncertainty score. It\nbegins with convolutional and PReLU layers to maintain spatial structure and introduce nonlinearity,\nfollowed by fully connected layers and ReLU activations to project the features into uncertainty\nvalue. This score captures the noise-related variability in the data that affects model predictions. Linear layer is chosen as the last layer because we model the log-variance sn = log(ˆσ2n) instead of\nvariance directly. Accepted at ICLR 2026 Table 11: Hyperparameters for medical image classification experiments. GLV2 HAM10000\nHyperparameters\nPredicted CUPID Predicted CUPID",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 62,
+    "total_chunks": 87,
+    "char_count": 1816,
+    "word_count": 267,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "02486793-a83e-4525-8802-fa79dfd6f330",
+    "text": "Max epoch 10 15 10 15\nBatch size 4 4 8 4\nLearning rate 0.00001 0.00001 0.0001 0.00001\nDecay step size 1 1 4.5 1\nDecay γ 0.8 0.9 0.75 0.9\nλ1 / 0.01 / 0.01\nλ2 / 0.009 / 0.009 Table 12: Mean accuracy and AUC for each classification model on GLV2 and HAM10000 datasets. GLV2 HAM10000\nMethod\nAUC(↑) Acc(↑) AUC(↑) Acc(↑) CUPID/IGRUE/Rate-in 0.970 ± 0.000 0.909 ± 0.000 0.952 ± 0.000 0.821 ± 0.000\nMC Dropout 0.979 ± 0.000 0.921 ± 0.000 0.946 ± 0.000 0.765 ± 0.002\nPostNet 0.789 ± 0.004 0.718 ± 0.010 0.865 ± 0.002 0.664 ± 0.008\nBNN 0.966 ± 0.005 0.914 ± 0.004 0.929 ± 0.004 0.742 ± 0.011\nDEC 0.875 ± 0.002 0.878 ± 0.003 0.922 ± 0.014 0.768 ± 0.009",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 63,
+    "total_chunks": 87,
+    "char_count": 641,
+    "word_count": 129,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9fc20e1b-d97b-4367-999d-bbe6e6814361",
+    "text": "Reconstruction Branch: This module reconstructs a perturbed version m′l of the original intermediate feature map. It consists of two convolutional layers and ReLU activations, aiming to modify the\nfeature representation while preserving its overall structure. The reconstructed feature is then fed\nback into the remaining layers of the predictive model M to measure epistemic uncertainty through\noutput deviation. Empirically, we observe that the number of layers in each component has a limited impact on overall\nperformance.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 64,
+    "total_chunks": 87,
+    "char_count": 526,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "942551f1-6ac7-40de-a9a4-79a3fea140a5",
+    "text": "CUPID is inserted between residual blocks of ResNet18. Since ResNet employs ReLU\nactivations after each residual block, it is critical that the final layer of CUPID's Reconstruction\nBranch also uses a compatible activation. Failing to match activation functions can hinder training\ndue to mismatched feature distributions. Training and Classification Results The hyperparameters for both the predictive model and the\nCUPID module were optimized through random search and are detailed in Table 11. We benchmark our approach against several widely adopted uncertainty estimation techniques:\nRate-in (Zeevi et al., 2025), Monte Carlo Dropout (MC Dropout) (Gal & Ghahramani, 2016), Posterior Network (PostNet) (Charpentier et al., 2020), Deep Evidential Classification (DEC) (Sensoy\net al., 2018), Bayesian Neural Network (BNN), and IGRUE (Wang et al., 2023). All models are\ntrained under identical data splits for GLV2 and HAM10000 to enable robust comparisons. All\nexperiments were conducted using ResNet18 as the backbone to ensure a fair and consistent comparison across all methods. Table 12 reports the AUC and accuracy results.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 65,
+    "total_chunks": 87,
+    "char_count": 1130,
+    "word_count": 165,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb81a6fd-9e3b-4da3-a156-4a5beb02c736",
+    "text": "All models were trained with early stopping based\non the validation loss to ensure optimal generalization performance. CUPID, Rate-in and IGRUE are\napplied on the same base model. They both operate on the intermediate features of the pretrained\nmodel without modifying the parameters of the original classifier. This design ensures that high\nclassification performance can be maintained while gaining reliable uncertainty estimates. MC Dropout was implemented by adding a dropout layer with a drop rate of 0.03 at the end of\nthe ResNet18 model. During inference, uncertainty was estimated using ten stochastic forward\npasses.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 66,
+    "total_chunks": 87,
+    "char_count": 625,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7827112e-14f0-4ae7-abc8-7d19a1358d5c",
+    "text": "PostNet, BNN, and DEC required training from scratch and were implemented using the\nResNet18 backbone for consistency. These models were trained for up to 200 epochs with early\nstopping (patience of 10 epochs), and hyperparameters were tuned to achieve optimal classification\nperformance. Accepted at ICLR 2026 Figure 7: Data samples of ID and OOD datasets. D.3 DETAILS OF THE OOD DETECTION EXPERIMENTS Datasets We employ four datasets to evaluate the performance of out-of-distribution (OOD) detection. GLV2 serves as the in-distribution (ID) dataset, selected for its large scale, high quality,\nand balanced class distribution. Its diversity and size make it well-suited for learning the target\ndistribution in a supervised setting. The remaining three datasets (ACRIMA (Kovalyk et al., 2022),\nPAPILA (Kovalyk et al., 2022), and CIFAR-10 (Krizhevsky & Hinton, 2009)) are treated as OOD\ndatasets. These datasets differ from GLV2 in varying degrees, allowing us to assess how well each\nmodel estimates uncertainty under different levels of domain shift. The data samples of ID and OOD\ndatasets are shown in Figure 7. A detailed description of each dataset is provided below: This dataset contains high-resolution (2,576 × 1,934) fundus images from both eyes of\n244 subjects, totaling 488 images. It includes three categories: healthy, glaucoma, and suspicious. Compared to GLV2, PAPILA images tend to be darker, redder, and lower in contrast.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 67,
+    "total_chunks": 87,
+    "char_count": 1442,
+    "word_count": 220,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "43b64eb1-04f3-4e7e-aaf3-0ffbba3e6ec7",
+    "text": "Furthermore,\ndue to the fixed input size requirement (512 × 512), the images undergo deformation during resizing,\nadding an additional distributional shift. ACRIMA includes 705 labeled fundus images (396 glaucomatous and 309 normal). Unlike GLV2, the images in ACRIMA are preprocessed by cropping around the optic disc to emphasize\nclinically relevant features. This alteration introduces a distributional shift focused on spatial and\ncontextual features. CIFAR-10 is a natural image dataset designed for object classification across 10 distinct\ncategories: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck. It contains 50,000\ntraining images and 10,000 test images with a resolution of 32 × 32. Its unrelated domain makes it\na strong test for extreme OOD scenarios.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 68,
+    "total_chunks": 87,
+    "char_count": 790,
+    "word_count": 117,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0817f0fd-20a8-40e9-9c0c-e9dceece407f",
+    "text": "Model and Testing Protocol The models evaluated in this experiment are the same as those used\nin the misclassification detection task, including our proposed CUPID, Rate-in, MC Dropout, PostNet, BNN, DEC, and IGRUE. All models were trained exclusively on the GLV2 dataset and then\ntested on the ID (GLV2) and three OOD datasets (PAPILA, ACRIMA, and CIFAR-10). To ensure\nconsistency, all input images were resized to 512 × 512 pixels. For CIFAR-10, we retained their\noriginal training, validation, and test splits. Since PAPILA and ACRIMA lack predefined splits and\nare relatively small in size, the entire datasets were used for testing. D.4 DETAILS OF THE SINGLE IMAGE SUPER RESOLUTION EXPERIMENTS Datasets for Super-Resolution We trained the ESRGAN and CUPID on DIV2K and evaluated\nour method on four widely-used benchmark datasets for single image super-resolution under a ×4\nscale setting with bicubic downsampling. DIV2K (Agustsson & Timofte, 2017) serves as the primary training dataset and consists of 800\nhigh-resolution (2K) images across diverse scenes, offering rich textures and fine details suitable for\nlearning robust SR models. Accepted at ICLR 2026 Table 13: Hyperparameters for super-resolution. Hyperparameters Predicted Model CUPID Max iteration 300000 300000\nBatch size 16 16\nLearning rate 0.0001 0.00001\nλ1 / 0.0001\nλ2 / 0.01 Set5 (Bevilacqua et al., 2012) includes 5 classical natural images commonly used for SR benchmarking. The dataset covers various object categories such as animals, architecture, and people,\nallowing for controlled evaluation in small-scale settings. Set14 (Zeyde et al., 2010) comprises 14 images with greater diversity in scene content and degradation types compared to Set5, including urban structures, facial portraits, and natural landscapes.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 69,
+    "total_chunks": 87,
+    "char_count": 1794,
+    "word_count": 268,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a465b60-2555-4a83-b8e8-20045a4c205d",
+    "text": "BSDS100 (Martin et al., 2001), a subset of the Berkeley Segmentation Dataset, contains 100 test images with a wide variety of textures and fine structures. It is widely adopted to assess generalization\nand edge reconstruction quality in SR tasks. IXI (Biomedical Image Analysis Group, Imperial College London, 2022) is a publicly available\nbrain MRI dataset collected from three hospitals in London: Guy's Hospital, Hammersmith Hospital, and the Institute of Psychiatry. It contains over 600 subjects and includes various imaging\nmodalities such as T1-weighted, T2-weighted, proton density (PD), and diffusion-weighted images. The dataset covers a broad age range and provides valuable anatomical diversity, making it a widely\nused resource for developing and evaluating medical image processing and machine learning algorithms, particularly in brain structure analysis and image reconstruction tasks. ESRGAN Backbone The Enhanced Super-Resolution Generative Adversarial Network (ESRGAN) is a widely adopted architecture for perceptual single-image super-resolution, known for its\nability to produce high-fidelity reconstructions with visually realistic textures. It builds upon the\noriginal SRGAN framework by incorporating several architectural improvements aimed at enhancing perceptual quality and training stability. ESRGAN comprises three primary components: a generator, a discriminator, and a perceptual loss\nmodule. The generator is constructed using a deep convolutional architecture based on Residualin-Residual Dense Blocks (RRDBs), which synergize the advantages of residual learning and dense\nconnectivity. Unlike traditional residual blocks, RRDBs omit batch normalization layers to avoid\nartifacts and enable more stable training. These blocks allow for efficient feature propagation and\nbetter gradient flow, enabling the network to preserve fine-grained textures across deep layers. Multiple RRDBs are stacked to form the feature extraction backbone, followed by a series of upsampling\nblocks that progressively increase the spatial resolution of the image. These upsampling layers are\nplaced toward the end of the network to reduce computational cost during earlier stages. A final\nconvolutional layer refines the output to produce the high-resolution image. In our experiments, we evaluate the placement of the CUPID module by inserting it either before or\nafter the upsampling blocks.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 70,
+    "total_chunks": 87,
+    "char_count": 2405,
+    "word_count": 332,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "52723330-274a-4927-974d-e44f0ea85b21",
+    "text": "This setup allows us to study how the model's uncertainty estimation\ncapabilities vary depending on its position relative to the reconstruction pipeline. CUPID Model C for Super-Resolution The CUPID architecture for image super-resolution\nlargely follows the classification variant but adapts to the demands of pixel-level precision. Batch\nnormalization is omitted in the feature extractor to preserve local image statistics, while the Uncertainty Branch incorporates convolutional layers with Leaky ReLU and a multi-stage upsampling\nmodule, producing a spatial uncertainty map aligned with the super-resolved image for aleatoric uncertainty estimation. In parallel, the Reconstruction Branch employs convolution and Leaky ReLU\nto reconstruct intermediate features, enhancing compatibility with the ESRGAN backbone and supporting epistemic uncertainty estimation. Accepted at ICLR 2026 Table 14: PSNR and SSIM for ESRGAN model. Dataset SSIM(↑) PSNR(↑) Set5 0.828 28.533\nSet14 0.684 24.865\nBSDS100 0.631 23.539\nIXI 0.806 33.142 Training and Super-Resolution Results The hyperparameters for both the predictive model and\nthe proposed CUPID module were optimized using random search and are summarized in Table 13. All models were trained using an early stopping strategy based on validation loss to prevent overfitting and ensure optimal generalization. We compare CUPID against five representative uncertainty\nestimation baselines. BayesCap (Upadhyay et al., 2022) explicitly models the uncertainty by reconstructing an output distribution. It shares the same training protocol and predictive backbone\n(ESRGAN) as CUPID, allowing for a fair comparison.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 71,
+    "total_chunks": 87,
+    "char_count": 1651,
+    "word_count": 227,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bf4d4b1f-cb58-46a5-a99b-394d2e353522",
+    "text": "In-rotate and in-noise estimate uncertainty by analyzing output variation under input transformations. In-rotate (Mi et al., 2022) applies four 90-degree rotations to the input image and computes\nthe output variance as an uncertainty measure. In-noise injects 0.005% Gaussian noise into the input\nimage and repeats the inference ten times to estimate uncertainty based on output variation (Wang\net al., 2018a). Med-noise and med-dropout (Mi et al., 2022) assess uncertainty through perturbations in the latent\nspace. Med-noise adds 0.005% Gaussian noise to the intermediate feature map and repeats inference\nten times. Med-dropout introduces an additional dropout layer with a drop probability of 0.3, also\nusing ten repeated forward passes during testing.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 72,
+    "total_chunks": 87,
+    "char_count": 756,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8b9546ee-48d0-4208-a1ee-edd67702550c",
+    "text": "The super-resolution performance of the baseline ESRGAN modelare reported in Table 14. E OTHER EXPERIMENTS RESULTS E.1 HYPERPARAMETER EXPERIMENTS ON CUPID LOCATION Table 15 shows the results of inserting CUPID at different intermediate layers. The results demonstrate a clear trend: aleatoric uncertainty is more accurately estimated when CUPID is placed closer\nto the output layer, while epistemic uncertainty benefits from earlier placements within the network. Table 15: Results of inserting CUPID at different intermediate layers. Best-performing results for\neach metric are highlighted in bold.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 73,
+    "total_chunks": 87,
+    "char_count": 599,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3e8c93e4-ccfb-450b-83e5-6613b914d9d3",
+    "text": "GLV2 HAM10000\nClass Position\nAUC (↑) AURC (↓) Spearman (↑) AUC (↑) AURC (↓) Spearman (↑) Aleatoric (4) 0.870 ± 0.002 0.018 ± 0.001 0.941 ± 0.004 0.769 ± 0.023 0.067 ± 0.007 0.722 ± 0.014\nAleatoric (3) 0.843 ± 0.008 0.022 ± 0.001 0.851 ± 0.006 0.751 ± 0.004 0.072 ± 0.003 0.624 ± 0.024\nAleatoric (2) 0.805 ± 0.014 0.026 ± 0.001 0.772 ± 0.019 0.749 ± 0.011 0.103 ± 0.006 0.675 ± 0.021 Epistemic (4) 0.769 ± 0.015 0.034 ± 0.002 0.701 ± 0.051 0.855 ± 0.006 0.047 ± 0.001 0.907 ± 0.001\nEpistemic (3) 0.786 ± 0.003 0.033 ± 0.004 0.696 ± 0.015 0.869 ± 0.005 0.045 ± 0.000 0.898 ± 0.004\nEpistemic (2) 0.789 ± 0.017 0.031 ± 0.001 0.717 ± 0.006 0.901 ± 0.004 0.058 ± 0.001 0.888 ± 0.005\nSet5 Set14\nSR Position\nPearson (↑) AUSE (↓) UCE (↓) Pearson (↑) AUSE (↓) UCE (↓) Aleatoric (A) 0.560 ± 0.001 0.009 ± 0.000 0.034 ± 0.007 0.569 ± 0.001 0.011 ± 0.000 0.017 ± 0.008\nAleatoric (B) 0.528 ± 0.006 0.010 ± 0.000 0.045 ± 0.018 0.527 ± 0.002 0.012 ± 0.000 0.049 ± 0.005 Epistemic (A) 0.258 ± 0.005 0.026 ± 0.000 0.320 ± 0.004 0.327 ± 0.005 0.026 ± 0.000 0.231 ± 0.005\nEpistemic (B) 0.416 ± 0.004 0.018 ± 0.001 0.266 ± 0.007 0.449 ± 0.005 0.019 ± 0.000 0.226 ± 0.003 Accepted at ICLR 2026 Table 16: Uncertainty calibration results for misclassification (GLV2) and OOD detection (PAPILA,\nACRIMA, CIFAR-10) GLV2 PAPILA ACRIMA CIFAR10\nMethod\nrAULC (↑) UCE (↓) OOD-UCE (↓) CUPID Alea. 0.840 ± 0.003 0.042 ± 0.004 0.308 ± 0.026 0.226 ± 0.079 0.273 ± 0.004\nCUPID Epis. 0.649 ± 0.031 0.033 ± 0.008 0.115 ± 0.016 0.240 ± 0.006 0.633 ± 0.017 MC Dropout 0.682 ± 0.009 0.052 ± 0.019 0.257 ± 0.001 0.307 ± 0.045 0.699 ± 0.021\nRate-in 0.762 ± 0.011 0.038 ± 0.009 0.309 ± 0.009 0.411 ± 0.008 0.826 ± 0.019\nIGRUE 0.375 ± 0.024 0.145 ± 0.012 0.154 ± 0.046 0.252 ± 0.016 0.596 ± 0.010\nPostNet Alea. 0.419 ± 0.019 0.166 ± 0.031 0.179 ± 0.025 0.285 ± 0.036 0.500 ± 0.125\nPostNet Epis. 0.184 ± 0.066 0.254 ± 0.013 0.182 ± 0.104 0.289 ± 0.089 0.726 ± 0.082\nBNN 0.747 ± 0.017 0.050 ± 0.007 0.268 ± 0.010 0.332 ± 0.012 0.705 ± 0.008\nDEC -0.627 ± 0.056 0.417 ± 0.039 0.256 ± 0.027 0.198 ± 0.010 0.248 ± 0.008 E.2 UNCERTAINTY CALIBRATION RESULTS FOR MISCLASSIFICATION AND OOD Table 16 summarizes uncertainty calibration performance for both misclassification and OOD settings. CUPID consistently ranks first or second across all metrics, demonstrating strong uncertainty–error correlation and stable calibration. On GLV2, CUPID Aleatoric achieves the highest\nrAULC (0.840), while CUPID Epistemic obtains the best UCE (0.033), indicating excellent uncertainty ranking and calibration. For OOD detection, CUPID achieves the lowest OOD-UCE on\nPAPILA (0.115) and competitive results on ACRIMA (0.226 and 0.240).",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 74,
+    "total_chunks": 87,
+    "char_count": 2665,
+    "word_count": 488,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa728358-0365-4b41-a3d6-279c070443e2",
+    "text": "Notably, DEC attains the\nbest OOD-UCE on ACRIMA (0.198), but this comes at the cost of severely degraded misclassification calibration (rAULC = –0.627, UCE = 0.417), suggesting that DEC improves OOD calibration\nonly by sacrificing its ability to reflect in-distribution prediction errors. This contrast highlights\nCUPID's balanced and reliable uncertainty modeling across both ID and OOD scenarios. E.3 ABLATION AND HYPERPARAMETER EXPERIMENTS ON CUPID FOR CLASSIFICATION\nMODEL Table 17: Performance of trunk block depth variants on CUPID for the classification task on\nHAM10000 dataset. Best-performing results for each metric are highlighted in bold. Aleatoric Epistemic\nMethod\nAUC (↑) AURC (↓) Spearman (↑) AUC (↑) AURC (↓) Spearman (↑) 12 0.725 ± 0.028 0.098 ± 0.010 0.614 ± 0.027 0.890 ± 0.003 0.052 ± 0.001 0.889 ± 0.004\n14 0.725 ± 0.013 0.107 ± 0.003 0.604 ± 0.035 0.902 ± 0.004 0.055 ± 0.003 0.886 ± 0.001\nBlock\n16 0.749 ± 0.011 0.103 ± 0.006 0.675 ± 0.021 0.901 ± 0.004 0.058 ± 0.001 0.888 ± 0.005\n18 0.735 ± 0.024 0.100 ± 0.010 0.628 ± 0.049 0.895 ± 0.004 0.054 ± 0.002 0.886 ± 0.001 Table 18: Performance of loss function on CUPID for the classification task on HAM10000 dataset. Best-performing results for each metric are highlighted in bold. Aleatoric Epistemic\nLoss\nAUC (↑) AURC (↓) Spearman (↑) AUC (↑) AURC (↓) Spearman (↑) Max 0.749 ± 0.011 0.103 ± 0.006 0.675 ± 0.021 0.901 ± 0.004 0.058 ± 0.001 0.888 ± 0.005 No max 0.748 ± 0.005 0.098 ± 0.006 0.671 ± 0.025 0.898 ± 0.002 0.056 ± 0.003 0.888 ± 0.002",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 75,
+    "total_chunks": 87,
+    "char_count": 1518,
+    "word_count": 263,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6d585809-bcdb-4efa-a281-6e2dafe73597",
+    "text": "Effect of Trunk Block Depth Table 17 presents the impact of varying the number of Trunk Blocks\nin the Feature Extractor module of CUPID on HAM10000 dataset. CUPID is placed after the 2nd\nstage of residual blocks. For aleatoric uncertainty estimation, CUPID shows sensitivity to the depth\nof the trunk. The best performance is achieved when using 16 blocks, yielding the highest AUC\nof 0.749 and the highest Spearman correlation of 0.675.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 76,
+    "total_chunks": 87,
+    "char_count": 437,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9dbf029b-2d54-413e-90c0-564e10e4f749",
+    "text": "In contrast, the performance of epistemic\nuncertainty estimation is relatively stable across different depths, with only minor fluctuations in Accepted at ICLR 2026 This suggests that the epistemic branch reaches its representational capacity with\nfewer blocks, while aleatoric estimation benefits more from deeper feature extraction. Effect of Differential Feature Loss We conduct an ablation study to evaluate the contribution of\nthe differential feature loss term −∥ml −m′l∥1, which enforces the difference between the intermediate feature ml and the CUPID-generated reconstruction m′l. Table 18 summarizes the results\nfor the misclassification detection task on the HAM10000 dataset. Including the differential feature\nloss slightly improves aleatoric performance in terms of AUC (from 0.748 to 0.749) and Spearman\ncorrelation (from 0.671 to 0.675), while maintaining comparable epistemic uncertainty performance. For the out-of-distribution (OOD) detection task, the impact of the differential feature loss is more\npronounced, particularly for epistemic uncertainty. As shown in Table 4, adding the loss substantially improves the performance of CUPID Epistemic on the PAPILA dataset, with AUC increasing\nfrom 0.839 to 0.877 and AUPR from 0.790 to 0.854. This indicates that the differential feature\nloss strengthens CUPID's sensitivity to distributional shifts. A similar trend is observed across the\nACRIMA and CIFAR10 datasets, reinforcing the importance of this component for robust epistemic\nuncertainty estimation in OOD scenarios. Effect of λ1 choice The results in Table 19 and 20 show that CUPID is generally robust to the\nchoice of λ1. For misclassification detection, performance remains stable across all tested values. For OOD detection, λ1 = 0.01 consistently provides the best balance between stability and\naccuracy, and is therefore used as the default throughout the paper. Table 19: Performance of λ1 choice on CUPID for the classification task on GLV2 dataset. Aleatoric Epistemic\nMethod\nAUC (↑) AURC (↓) Spearman (↑) AUC (↑) AURC (↓) Spearman (↑)",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 77,
+    "total_chunks": 87,
+    "char_count": 2071,
+    "word_count": 302,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5847cf9a-3f11-4e1e-a821-2432ef42b4d9",
+    "text": "0.02 0.868 ± 0.001 0.018 ± 0.000 0.929 ± 0.019 0.743 ± 0.044 0.045 ± 0.013 0.676 ± 0.021\nλ1 0.01 0.870 ± 0.002 0.018 ± 0.001 0.941 ± 0.004 0.769 ± 0.015 0.034 ± 0.002 0.701 ± 0.051\n0.001 0.868 ± 0.005 0.018 ± 0.001 0.936 ± 0.010 0.754 ± 0.014 0.042 ± 0.005 0.674 ± 0.031 Table 20: Performance of λ1 choice on CUPID for the OOD task. PAPILA ACRIMA CIFAR10\nMethod and λ1 AUC(↑) AUPR(↑) AUC(↑) AUPR(↑) AUC(↑) AUPR(↑) 0.02 0.457 ± 0.087 0.362 ± 0.043 0.727 ± 0.124 0.651 ± 0.149 0.973 ± 0.017 0.996 ± 0.003\nAlea. 0.01 0.379 ± 0.027 0.333 ± 0.007 0.717 ± 0.029 0.661 ± 0.027 0.983 ± 0.005 0.998 ± 0.001\n0.001 0.389 ± 0.030 0.342 ± 0.016 0.718 ± 0.046 0.669 ± 0.062 0.984 ± 0.006 0.999 ± 0.001 0.02 0.802 ± 0.039 0.743 ± 0.058 0.904 ± 0.058 0.921 ± 0.046 0.528 ± 0.293 0.923 ± 0.063\nEpis. 0.01 0.877 ± 0.032 0.854 ± 0.027 0.978 ± 0.010 0.984 ± 0.007 0.898 ± 0.054 0.991 ± 0.005\n0.001 0.836 ± 0.038 0.796 ± 0.051 0.975 ± 0.003 0.980 ± 0.002 0.896 ± 0.052 0.991 ± 0.005 E.4 ABLATION AND HYPERPARAMETER EXPERIMENTS ON CUPID FOR\nSUPER-RESOLUTION Table 21: Performance of trunk block depth variants on CUPID for the super-resolution task. Bestperforming results for each metric are highlighted in bold.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 78,
+    "total_chunks": 87,
+    "char_count": 1191,
+    "word_count": 230,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f05d0fcb-142a-4ee8-9f3e-9019eb35dcf6",
+    "text": "Set5 Set14\nTrunk Num\nPearson (↑) AUSE (↓) UCE (↓) Pearson (↑) AUSE (↓) UCE (↓) 3 0.525 ± 0.002 0.010 ± 0.000 0.017 ± 0.007 0.527 ± 0.002 0.012 ± 0.000 0.049 ± 0.014\n4 0.528 ± 0.006 0.010 ± 0.000 0.045 ± 0.018 0.527 ± 0.002 0.012 ± 0.000 0.049 ± 0.005\nAleatoric\n5 0.527 ± 0.007 0.010 ± 0.000 0.041 ± 0.019 0.527 ± 0.001 0.012 ± 0.000 0.047 ± 0.015\n6 0.528 ± 0.003 0.010 ± 0.000 0.045 ± 0.020 0.524 ± 0.003 0.012 ± 0.000 0.039 ± 0.006\n3 0.416 ± 0.004 0.020 ± 0.000 0.254 ± 0.024 0.428 ± 0.005 0.020 ± 0.000 0.217 ± 0.003\n4 0.416 ± 0.005 0.018 ± 0.001 0.266 ± 0.007 0.449 ± 0.005 0.019 ± 0.000 0.226 ± 0.003\nEpistemic\n5 0.420 ± 0.005 0.018 ± 0.000 0.256 ± 0.012 0.455 ± 0.004 0.019 ± 0.000 0.217 ± 0.011\n6 0.421 ± 0.005 0.018 ± 0.001 0.257 ± 0.014 0.459 ± 0.008 0.019 ± 0.000 0.211 ± 0.006 Accepted at ICLR 2026 Effect of Trunk Block Number Table 21 reports the performance of CUPID when varying the\nnumber of Trunk Blocks in the Feature Extractor on the Set5 and Set14 datasets. Overall, both\naleatoric and epistemic uncertainty estimations remain relatively stable across different block depths. For aleatoric uncertainty, increasing the trunk number from 3 to 4 leads to a consistent improvement\nin Pearson correlation. While using 6 blocks achieves the best UCE on Set14 (0.039), the gains\nbeyond 4 blocks are marginal. For epistemic uncertainty, deeper trunk configurations (especially 6\nblocks) slightly improve the Pearson correlation, particularly on Set14 (from 0.428 to 0.459), and\nreduce UCE values modestly. These results suggest that while increasing the trunk depth can lead\nto minor performance gains, the CUPID framework remains robust even with fewer blocks.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 79,
+    "total_chunks": 87,
+    "char_count": 1672,
+    "word_count": 304,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b9a1e53f-2a03-4c09-861e-dd405000481c",
+    "text": "Effect of Perceptual Loss ESRGAN incorporates a perceptual loss derived from high-level feature representations extracted by a pre-trained VGG network, encouraging the model to generate\noutputs that are perceptually closer to the ground truth rather than strictly minimizing pixel-wise\ndifferences. Motivated by this, we investigate the effect of incorporating a perceptual loss into the\nCUPID training process. Specifically, we augment the original CUPID loss function with a perceptual term, resulting in the\nfollowing objective:\nLCUPID = LEpis + λ2LAlea + LLpips, (38)\nwhere LLpips denotes the perceptual loss computed using the LPIPS metric. Table 22 presents the evaluation results on Set5 and Set14. While adding the perceptual loss decreases the Pearson correlation for both aleatoric and epistemic uncertainty (from 0.528 to 0.512 on\nSet5 for aleatoric), the calibration metrics AUSE and UCE remain largely unchanged or are slightly\ndegraded. These findings suggest that although the perceptual loss enhances visual fidelity, it may\nintroduce noise into the uncertainty estimation process, potentially due to the less pixel-aligned\nnature of perceptual features. As a result, we chose not to use perceptual loss. Table 22: Performance of λ1 choice on CUPID for the super-resolution task. Best-performing results\nfor each metric are highlighted in bold.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 80,
+    "total_chunks": 87,
+    "char_count": 1360,
+    "word_count": 200,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5173fc48-60cb-4d47-ae13-9d53d1fc9bc5",
+    "text": "Set5 Set14\nLoss\nPearson (↑) AUSE (↓) UCE (↓) Pearson (↑) AUSE (↓) UCE (↓) Raw 0.528 ± 0.006 0.010 ± 0.000 0.045 ± 0.018 0.527 ± 0.002 0.012 ± 0.000 0.049 ± 0.005\nAleatoric\nAdd Lipis 0.512 ± 0.006 0.010 ± 0.001 0.031 ± 0.010 0.518 ± 0.009 0.013 ± 0.001 0.051 ± 0.015\nRaw 0.416 ± 0.005 0.018 ± 0.001 0.266 ± 0.007 0.449 ± 0.005 0.019 ± 0.000 0.226 ± 0.003\nEpistemic\nAdd Lipis 0.389 ± 0.007 0.019 ± 0.000 0.253 ± 0.035 0.399 ± 0.003 0.021 ± 0.000 0.230 ± 0.016 Effect of λ1 choice As shown in Table 23, for super-resolution, the Pearson, AUSE, and UCE\ncurves are nearly identical across the full range of λ1 values, and λ1 = 0.001 serves as a reliable\ndefault. Table 23: Performance of λ1 choice on CUPID for the super-resolution task. Set5 Set14\nλ1 Pearson (↑) AUSE (↓) UCE (↓) Pearson (↑) AUSE (↓) UCE (↓) 0.001 0.527 ± 0.002 0.010 ± 0.000 0.034 ± 0.014 0.528 ± 0.001 0.012 ± 0.000 0.064 ± 0.016\nAleatoric 0.0001 0.528 ± 0.006 0.010 ± 0.000 0.045 ± 0.018 0.527 ± 0.002 0.012 ± 0.000 0.049 ± 0.005\n0.00001 0.529 ± 0.002 0.010 ± 0.000 0.037 ± 0.017 0.529 ± 0.002 0.012 ± 0.000 0.076 ± 0.011\n0.001 0.423 ± 0.004 0.018 ± 0.000 0.264 ± 0.012 0.455 ± 0.010 0.018 ± 0.000 0.205 ± 0.009\nEpistemic 0.0001 0.416 ± 0.005 0.018 ± 0.001 0.266 ± 0.007 0.449 ± 0.005 0.019 ± 0.000 0.226 ± 0.003\n0.00001 0.421 ± 0.004 0.018 ± 0.001 0.262 ± 0.014 0.455 ± 0.011 0.019 ± 0.000 0.205 ± 0.005 E.5 EFFECT OF ERROR MAP SELECTION In regression-based tasks such as super-resolution, uncertainty metrics like Spearman correlation,\nAUSE, and UCE require comparison with an error map. We conduct experiments to evaluate how\nthe choice of error map—L1 or L2—affects the alignment between the CUPID uncertainty map and\nthe ground-truth error. Accepted at ICLR 2026 Table 25 presents the results for AUSE and UCE. We observe that using the L2 error map generally\nleads to lower AUSE values, indicating better alignment with the overall uncertainty ranking. Conversely, the L1 error map yields lower UCE scores, suggesting improved calibration of uncertainty\nmagnitude. This reflects the distinct sensitivities of these metrics: AUSE focuses on ranking quality,\nwhile UCE measures calibration.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 81,
+    "total_chunks": 87,
+    "char_count": 2160,
+    "word_count": 391,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ad271bfd-d591-449b-a4cf-d81d5f0f104e",
+    "text": "In addition, Table 24 shows the Spearman and Pearson correlations between the uncertainty maps\nand the L1/L2 error maps. Across both Set5 and Set14 datasets, L1-based correlations are consistently higher than those computed with L2, especially for Pearson correlation. Furthermore, Spearman values tend to exceed Pearson values, highlighting that CUPID uncertainty is more consistent\nwith the rank ordering rather than the exact error values. These findings suggest that L1 error maps\nmay be more appropriate for evaluating uncertainty estimates in super-resolution tasks, particularly\nwhen ranking-based metrics are emphasized. Table 24: Effect of error map selection on Pearson and Spearman metrics. Set5 Set14\nUncertainty Error\nSpearman (↑) Pearson (↑) Spearman (↑) Pearson (↑) L1 0.643 ± 0.002 0.560 ± 0.001 0.607 ± 0.002 0.569 ± 0.001 Aleatoric\nL2 0.647 ± 0.002 0.487 ± 0.003 0.611 ± 0.002 0.514 ± 0.004\nL1 0.229 ± 0.007 0.258 ± 0.005 0.312 ± 0.006 0.327 ± 0.005 Epistemic\nL2 0.229 ± 0.008 0.209 ± 0.005 0.312 ± 0.006 0.254 ± 0.003 Table 25: Effect of error map selection on AUSE and UCE metrics. Set5 Set14\nUncertainty Error\nAUSE (↓) UCE (↓) AUSE (↓) UCE (↓) L1 0.009 ± 0.000 0.034 ± 0.007 0.011 ± 0.000 0.017 ± 0.008 Aleatoric\nL2 0.002 ± 0.000 0.358 ± 0.004 0.002 ± 0.000 0.269 ± 0.021\nL1 0.026 ± 0.000 0.320 ± 0.004 0.023 ± 0.000 0.231 ± 0.005 Epistemic\nL2 0.005 ± 0.000 0.420 ± 0.001 0.004 ± 0.000 0.411 ± 0.001 E.6 MORE VISUAL RESULTS Figure 8 presents the visual results of the proposed CUPID framework on single-image superresolution. As illustrated in the second row, the uncertainty maps produced by CUPID closely\nalign with the pixel-wise L1 and L2 error maps. This consistency suggests that CUPID accurately\ncaptures regions of high reconstruction error, reflecting its ability to localize uncertainty. Additionally, the difference between the original intermediate feature and the reconstructed feature generated\nby CUPID indicates that the Reconstruction Branch tends to enhance fine-grained image details,\nparticularly in high-frequency regions such as edges and textures.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 82,
+    "total_chunks": 87,
+    "char_count": 2091,
+    "word_count": 337,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a966d847-a6a9-4da8-a712-7f4c319a19e0",
+    "text": "Figure 9 presents the visual results of the proposed CUPID framework and comparison methods. E.7 COMPARISON OF RUNTIME ACROSS DIFFERENT UNCERTAINTY ESTIMATES. Table 26 and Table 27 presents the runtime for training and prediction across all models evaluated in\nthis study. The training time reflects the total duration required to train each model on the EyePACS\ntraining dataset, while the prediction time indicates the time taken to generate predictions for the\nEyePACS test dataset.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 83,
+    "total_chunks": 87,
+    "char_count": 485,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cba6b84e-1ff8-40b8-a30f-7e20abe707ee",
+    "text": "Accepted at ICLR 2026 Table 26: Runtime comparison between training and testing phases in classification model uncertainty estimation. Operation Training Time (s) Testing Time (s)",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 84,
+    "total_chunks": 87,
+    "char_count": 179,
+    "word_count": 25,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8889c0c7-a89c-4937-be43-57f271683451",
+    "text": "MC Dropout / 49.57\nRate-in 2.85 48.46\nIGRUE 5292.41 11.26\nPostNet 49932.08 51.04\nBNN 54974.84 217.06\nDEC 1615.58 6.46 Table 27: Runtime comparison between training and testing phases in regression model uncertainty\nestimation. Operation Training Time (s) Testing Time (s)",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 85,
+    "total_chunks": 87,
+    "char_count": 271,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "73d84fc6-a34e-4c34-a988-6a84fc779255",
+    "text": "BayesCap 81158.45 0.79\nin-rotate / 2.03\nin-noise / 2.86\nmed-dropout / 2.28\nmed-noise / 2.47 Accepted at ICLR 2026 Figure 8: More visual results of the uncertainty feature map of CUPID towards super-resolution\nmodel. Accepted at ICLR 2026 Figure 9: More visual results of the uncertainty feature map of all the methods.",
+    "paper_id": "2603.10745",
+    "title": "CUPID: A Plug-in Framework for Joint Aleatoric and Epistemic Uncertainty Estimation with a Single Model",
+    "authors": [
+      "Xinran Xu",
+      "Xiuyi Fan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10745v1",
+    "chunk_index": 86,
+    "total_chunks": 87,
+    "char_count": 318,
+    "word_count": 52,
+    "chunking_strategy": "semantic"
+  }
+]

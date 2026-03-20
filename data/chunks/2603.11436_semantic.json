@@ -1,0 +1,848 @@
+[
+  {
+    "chunk_id": "aa04c87c-90a5-4493-bbff-80a2343ef090",
+    "text": "ZTab: Domain-based Zero-shot Annotation for\nTable Columns Ehsan Hoseinzade Ke Wang\nSchool of Computing Science School of Computing Science\nSimon Fraser University Simon Fraser University\nBurnaby, Canada Burnaby, Canada\nehoseinz@sfu.ca wangk@cs.sfu.ca Abstract—This study addresses the challenge of automatically is automatically tagging sensitive columns in a table, such as\ndetecting semantic column types in relational tables, a key task personal information, before deciding what information can be\nin many real-world applications.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 0,
+    "total_chunks": 47,
+    "char_count": 534,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "50c1a66e-ee62-4fc5-a6c3-9871acaa158b",
+    "text": "Zero-shot modeling eliminates released. Supervised learning-based methods [11]–[16] have2026 the need for user-provided labeled training data, making it shown promising results when the test data belong to the ideal for scenarios where data collection is costly or restricted\ndue to issues such as privacy concerns. However, existing zero- same domain and distribution as the training data, a setting reshot models suffer from poor performance in the case of ferred to as In-Domain Generalization. These models primarilyMar a large number of semantic column types or classes, poor leverage BERT's pre-training on large-scale textual corpora,\nunderstanding of tabular structures, and privacy risks arising fine-tuning it for labeled tabular training data by adding taskfrom dependency on high-performance closed-source LLMs. We12 specific output layers to classify each column into a predefined introduce ZTab, a domain-based zero-shot framework, to address\nboth performance and zero-shot requirements. ZTab considers set of semantic types. However, these models face significant\na domain configuration given by a set of predefined semantic limitations due to their dependency on user-provided labeled\ntypes, plus sample table schemas based on such types, fine-tunes tabular training data in the following scenarios:\nan annotation LLM using pseudo-tables generated for sample Data Availability: Collecting high-quality labeled tabular\ntable schemas. ZTab is domain-based zero-shot in that it does\ntraining data is a resource-intensive and time-consuming pro- not depend on user-specific labeled training data; therefore, no[cs.LG] retraining is needed for a test table coming from a similar cess. In many cases, such data might not exist in the required\ndomain. We describe three cases for domain-based zero-shot. format, or it could be confidential since privacy concerns and\nThe domain configuration of ZTab provides a trade-off between regulations such as HIPAA and GDPR impose restrictions on\nthe extent of zero-shot and the annotation performance: for a sharing sensitive data, making it nearly impossible to collect\n\"universal domain\" that contains all semantic types, domainand use training data in such applications. based zero-shot will approach \"pure\" zero-shot; on the other\nhand, a \"specialized domain\" that contains semantic types for Cross-Domain Generalization: Supervised models often\na specific application will enable better zero-shot performance suffer from domain bias, i.e., perform poorly on datasets from\nwithin that domain. The source code and datasets are available different but related domains. For example, models like HNN\nat https://github.com/hoseinzadeehsan/ZTab. [17] and ColNet [18] trained on the T2D [19] from Webtables\nIndex Terms—large language models, column type annotation,\nshow weak performance on Limaye [5] and Efthymiou [20] zero-shot learning, web tables\nfrom Wikipedia, despite shared classes [17]. INTRODUCTION as domain shift, arises from differences in data distributions. Cross-Ontology Generalization: These models are inher- In real-world scenarios, column headers of tables are often\nently designed for a fixed set of class labels, limiting their missing, or generic (e.g., \"Value\"), or auto-generated (e.g.,\nability to handle scenarios involving labels from a different \"col1\"), especially in user-generated spreadsheets, web tables,arXiv:2603.11436v1 ontology. For example, a model trained on datasets anno- and automated ETL pipelines [1]–[3].",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 1,
+    "total_chunks": 47,
+    "char_count": 3498,
+    "word_count": 492,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b7b57652-3bb1-4020-ac91-afa75b92d428",
+    "text": "Column type annotation\ntated with Schema.org's \"Person\" type would fail to classify aims to automatically identify or tag the semantic types or\ncolumns annotated with DBpedia's \"Human\" type in a health- classes of the columns for such tables1, which is crucial\ncare integration task. This mismatch arises because the model for different information retrieval tasks like data integration\ncannot adapt to new ontologies without retraining, making it [4], data cleaning [5], [6], schema matching [7], and data\nineffective for cross-ontology column type annotation. discovery [8], [9]. In particular, table discovery in data lakes\nLarge Language Models (LLMs) have been proposed as a often relies on semantic signals such as column types to\nsolution to these challenges through their ability to perform support search and integration [10]. One emerging application\nzero-shot column type annotation without the need for specific,\nPublished in the Proceedings of the IEEE 42nd International Conference labeled tabular datasets [21]–[26] (Figure 1(a)). However, deon Data Engineering (ICDE 2026) spite their potential, current LLM-based zero-shot models for\n1Semantic types such as Person Name are different from atomic types\nsuch as String. Identifying atomic types given values is trivial, but identifying column type annotation suffer from the following limitations:\nsemantic types given values is challenging Performance: The performance of LLMs in zero-shot clas- Input: Class List Input: Table Schema ? ?\n{Hotel, StreetAddress, {{Hotel, StreetAddress} ,\nPearl River No.1 Qinren Road PostalAddress, …} {Movie, Review}, …} Pearl River No.1 Qinren Road\nHotel Hotel GreenTree No.132 North Fenghua Road GreenTree No.132 North Fenghua Road\nHotel Hotel\nAzumi 2205 Market Street, Prototype LLM Azumi 2205 Market Street,\nBoutique Hotel Madrigal Business Park Pseudo-table Boutique Hotel Madrigal Business Park Input: Class List {Hotel,\nStreetAddress, PostalAddress, …} Hotel StreetAddress\nClass Prototypes:\nHotel = {Fairmont Hotel Four Seasons 405 Hilgard Ave\n, …} Hotel Annotation LLM\nStreetAddress={770 Fairmont Pacific 1 Rocket Road Fine-tuning\nBroadway, …} Rim\nPre-trained LLM … Redmont Hotel 770 Broadway\nColumn 1: Hotel\nColumn 2: StreetAddress Class prototype generation 2. Pseudo-table generation 3. Fine-tuning\nColumn 2: PostalAddress (a): Pure zero-shot column\ntype annotation (b): ZTab: data generation-based zero-shot column type annotation. Comparison between (a) pure zero-shot column type annotation and (b) domain-based zero-shot ZTab. ZTab takes a class list and table schema\ncollection as inputs, generates class prototypes (1) and pseudo-tables based on class prototypes (2), and fine-tunes an annotation LLM (3).",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 2,
+    "total_chunks": 47,
+    "char_count": 2721,
+    "word_count": 390,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5c0783fe-6f52-4cfe-9671-66a9c8f2d87a",
+    "text": "sification often falls short, particularly when dealing with tion LLM for column annotation using pseudo-tables generated\nclosely related classes like \"addressRegion,\" \"addressLocal- from table schemas and class prototypes. Supervised fineity,\" \"streetAddress,\" and \"PostalAddress\" [23] as they strug- tuning addresses the above Performance and Structure issues.\ngle to learn the fine differences between them. The issue Privacy issue is addressed since no user-specific training data\nbecomes worse as the number of classes increases [27].",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 3,
+    "total_chunks": 47,
+    "char_count": 539,
+    "word_count": 73,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2fed9451-80c2-436c-ad9a-ff72a50805df",
+    "text": "The beyond table schemas and classes is needed.\nother difficult case is semantic types that are numeric, such We consider two variants of ZTab. ZTab-privacy, used\nas rank and position [11], where numeric values provide little when user privacy is a concern, denotes ZTab that uses openinformation about their semantic types. source prototype LLM and annotation LLM; therefore, fineStructure: LLMs, being primarily pre-trained on unstruc- tuning and inference can be performed locally, exposing no\ntured textual data, struggle to learn the structural relationships real user data to a third party. ZTab-performance, used when\nbetween columns within tables [28], [29]. Consequently, zero- performance outweighs privacy, denotes ZTab that utilizes\nshot models based on LLMs are less effective at capturing more powerful closed-source LLMs (like GPT models). Figure\ntable-specific details like values in the same column or rows, 1(b) shows how ZTab-performance works, where pseudounlike supervised models, which directly learn them from tables are generated before fine-tuning a closed-source antabular training data. notation LLM. For ZTab-privacy, pseudo-tables are generated\nPrivacy: current LLM-based zero-shot models depend on adaptively at each epoch of fine-tuning for more diversity of\npowerful closed-source LLMs like GPT for good performance, data. See more details in Section IV.\nposing privacy risks because such LLMs require sensitive table\nThe key contributions of ZTab are as follows:\ninformation to be sent to the third party owning the LLM at\ninference time. • Domain-based zero-shot framework: ZTab is domainThe question is how to balance between the zero-shot based zero-shot in that no retraining (i.e., fine-tuning) is\nrequirement and the performance requirement for table column needed for test data coming from a similar domain. This\nannotation, and additionally, the data privacy requirement.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 4,
+    "total_chunks": 47,
+    "char_count": 1912,
+    "word_count": 279,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dd353a35-d30e-4972-b3a0-2e7e44bc63c2",
+    "text": "We includes three important cases: (1) In-Domain generalpropose a novel domain-based zero-shot framework, ZTab, ization, where the test table comes from the same class\nas a solution to this question. ZTab considers a \"domain\" list (but not necessarily the same data distribution) on\ndefined by a set of pre-defined semantic types or classes (e.g., which ZTab is trained, (2) Cross-Domain generalization\nCountry, Capital, GDP), plus sample table schemas based on where the test table comes from a more restricted class\nsuch classes. The class set provides the domain information list than that on which ZTab is trained, and (3) Crossabout the application, and table schemas provide sample table Ontology generalization where the test table comes from\nstructures, both at the schema level without involving actual the same class list but the classes are derived from a\ndata. ZTab uses a prototype LLM to generate representative different ontology.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 5,
+    "total_chunks": 47,
+    "char_count": 945,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e916f05-7cdb-4a76-9583-2bd701ed11c5",
+    "text": "Meanwhile, fine-tuning step helps advalues for each class, called class prototypes (e.g., Canada, dressing the performance issue of pure zero-shot learning. UK, France for the class Country), and fine-tunes an annota- • Robust zero-shot performance: For the In-Domain setting, ZTab-performance achieves the highest results, maintaining high accuracy across table understanding tasks.\noutperforming the strongest GPT-4o baseline by 4.5%. ArcheType [23] offers a broader framework for zero-shot\nZTab-privacy, using open-source models with 7–8 bil- annotation by using prompt serialization and label remapping,\nlion parameters, improves over the strongest open-source while also allowing fine-tuning of LLMs for better perforbaseline by 23.5% and is comparable to GPT-4o base- mance. Other models like Table-GPT [28], TableLlama [25],\nlines while fully preserving data privacy. For Cross- and Jellyfish [24] fine-tune LLMs on table-related tasks to imDomain and Cross-Ontology settings, ZTab-performance prove their alignment with tabular data. However, approaches\nimproves existing zero-shot baselines by at least 2.7% using closed-source LLMs like GPT-3.5 raise privacy concerns\nand 3.8%, respectively, and ZTab-privacy improves over due to data sharing with third-party GPT providers.\nthe strongest open-source baselines by 1.4% and 9.5%, In summary, supervised learning models are unsuitable\nrespectively, and shows performance comparable to the when training data is not easily available due to privacy\nstrongest GPT-4o-based model while fully preserving concerns, or when train and test sets come from different data\nprivacy. These results are reported in Table III. distributions, or when syntactically different sets of labels are\n• A trade-off between the extent of zero-shot and used, whereas zero-shot learning models' performance lags\nannotation performance: for a \"universal domain\" that behind supervised models [23]. Our ZTab bridges this gap,\ncontains all semantic types, domain-based zero-shot will i.e., eliminates the need for user-provided tabular training data\napproach \"pure\" zero-shot where no retraining is needed while addressing the performance and privacy concerns.\nbecause every test table comes from a more restricted Data generation-based zero-shot learning: [34]–[39]\nclass list (i.e., the Cross-Domain setting); on the other leverages LLMs to directly generate synthetic data for text\nhand, a \"specialized domain\" that contains the semantic classification, and TabGen [40] prompts an LLM with a list\ntypes for a specific scenario will enable better annotation of column headers to generate entire tables. These works do\nwithin that domain. The user can obtain a desired trade- not consider column type annotation. Instead of prompting\noff between the extent of zero-shot and the annotation LLMs to generate entire tables, our ZTab prompts LLMs to\nperformance by choosing a proper domain configuration. generate only class prototypes (i.e., class-specific values) and\nbuilds pseudo-tables using table schemas and class prototypes\nII.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 6,
+    "total_chunks": 47,
+    "char_count": 3061,
+    "word_count": 433,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa53a379-28c4-42a5-8ca5-e1c9e3e82e7e",
+    "text": "RELATED WORKS\nadaptively in each epoch of fine-tuning. This approach is more\nRecent column type annotation methods are typically efficient, easier to control in table size, and generates diverse\ngrounded in two categories, i.e., supervised learning and zero- tables on the same table schema.\nshot learning. The former requires labeled tabular training\ndata, while the latter can perform annotation without this need III. PROBLEM STATEMENT\nfor tabular training data. Supervised learning: These methods heavily relies on We study the problem of column-based zero-shot column\ntabular training data [30]. They train/fine-tune either a deep type annotation. The task is to predict the semantic type of\nlearning model or a language model, usually BERT [31], for each column in a given table without column headers. In\ncolumn type annotation. In the deep learning category, ColNet particular, we want to assign semantic types (c1, c2, . . . , cn)\n[18] uses DBpedia cell value lookups to create examples to the columns of a given table T = (t1, t2, . . . , tn) where\nand trains a CNN; HNN [17] models intra-column semantics, each semantic type (or class) ci is selected from a pre-defined\nenhancing Colnet. Sherlock [11] employs statistical and textual set Cpred. (While open-ended type prediction where the class\nfeatures of a column using a neural network; SATO [12] set is not pre-defined is interesting, it is outside the scope of\nbuilds on Sherlock by modeling column dependencies using standard column type annotation and our work.) The solution\na CRF. In the language model category, TURL [32] is pre- to this problem has the learning phase that learns a model,\ntrained for table understanding and then fine-tuned for column and the deployment phase that applies the learned model to\ntype annotation; Doduo [14] predicts all the columns of a predict column semantic types for a given table.\ntable together by feeding the whole table to BERT; RECA Learning: This phase has the following input: (1) A set\n[15] incorporates inter-table context information; GAIT [16] of semantic types Clearn = {c1, c2, . . . , cm} to learn, such\nimproves RECA by including intra-table information through as Name, Date, or Condition. (2) A set of table schemas\na graph neural network. KGLink [33] combines a knowledge S = {S1, S2, . . . , Sk}, where each Si = {h1, h2, . . . , hn}\ngraph with BERT to improve prediction. represents the headers of the columns in a table and each\nZero-shot learning: LLMs like GPT have been applied to hi specifies the semantic type of a column and is from Clearn.\ncolumn type annotation without the need for tabular training For example, Si = {\"Country\", \"Locality\"} represents a table\ndata [21]–[23]. Korini et al. [22] proposed converting tables having two columns of the semantic types \"Country\" and\ninto natural language and use ChatGPT for column annotation. \"Locality\". Clearn, called the learning domain, describes all\nChorus [21] leverages GPT-3.5 for column type annotation by semantic types for an application and S provides training\nquerying the entire table, but its applicability is limited to samples for table structures, both at the schema level without\nDBpedia properties. CENTS [26] reduces inference cost by involving actual column data.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 7,
+    "total_chunks": 47,
+    "char_count": 3268,
+    "word_count": 538,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "04e188a6-46fb-4086-8169-759ec0e25675",
+    "text": "The learning phase aims to\nselecting representative table cells under a token budget while produce a model for predicting the semantic types of columns in a new header-less table that comes from a \"related domain\", Algorithm 1 Learning Phase of ZTab-privacy\ndetailed below. Input: Set of classes Clearn, Table schema collection S, (opensource) Annotation LLM Ma, (open-source) Prototype LLM Mp, Deployment: At the deployment phase, the learned model\nSchema sampling ratio r, Class prototype size e, row size k\nis provided with a new table T containing n columns without Output: Fine-tuned LLM Ma\nheaders and a candidate set of semantic types Cpred, called the {step 1: class prototypes generation}\ntest domain. The task is to annotate each column in T with 1: P ←empty list\na type from Cpred. We consider three scenarios of the test 2: for each class ci in Clearn do\n3: p ←ClassPrototypeGeneration(ci, e, Mp)domain Cpred where no retraining is needed (thus, zero-shot).\n4: Add p to P\n• In-Domain Generalization: In this case, Cpred = Clearn, 5: end for\nthat is, the table T comes from the same domain as Clearn {Step 2: handling missing classes}\non which the model is trained, for example, both are from 6: Cmissing ←Clearn \\ {SSi∈S Si}\nWikipedia2. This is the traditional scenario addressed by 7: Smanual ←{{ci} : ci ∈Cmissing}\n8: S ←S ∪Smanual\nsupervised learning. Note that the schema of T is not {Step 3: fine-tuning}\nrequired to be in S. 9: for each epoch do\n• Cross-Domain Generalization: Unlike the previous sce- 10: Srand ←randomly select r percent of S\nnario, the table T originates from a domain that is a subset 11: Prompts, Labels ←∅\n12: for each Si = {h1, ..., hn} in Srand do of Clearn, i.e., Cpred ⊂Clearn. For example, Clearn and\n13: Tablei(t1, ..., tn) ←PseudoTableGeneration(Si, P, k)\nS are from WebTables3, whereas T is from Wikipedia1, 14: prompti ←PromptConstruction(Tablei, Clearn)\nwhich is a structured subset of WebTables. 15: Add prompti to Prompts\n• Cross-Ontology Generalization: The table T comes from 16: Add labeli = (h1, ..., hn) to Labels\nthe same domain as Clearn, but the semantic types 17: end for\n18: for each batch (Promptsbatch, Labelsbatch) do in Cpred and Clearn are derived from different on-\n19: Outputs ←Ma(Promptsbatch)\ntologies. For example, Schema.org4 uses Clearn = { 20: Loss ←Loss(Outputs, Labelsbatch)\n\"Person\", \"Place\", \"Organization\"}, whereas DBpedia5 21: Ma ←UpdateWeights(Ma, Loss)\nuses Cpred = {\"Human\", \"Location\", \"Company\"}. This 22: end for\nscenario requires the model to handle shifts in ontologies. 23: end for\n24: return Ma\nIn the above three cases, this learning framework is domainbased zero-shot in the sense that no retraining is needed for\nany test table T. This is because the learning phase depends\nare performed at the LLMs' owner sites. This variant is\nonly on Clearn and S, which are independent of actual training\nused when performance outweighs privacy concerns.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 8,
+    "total_chunks": 47,
+    "char_count": 2937,
+    "word_count": 485,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "711d4551-767c-4927-82a9-6a80c6500d33",
+    "text": "In fact, no retraining is needed even for a changed test\nvariants differ in generating fine-tuning pseudo-tables due to\ndomain Cpred, provided that it falls into one of these cases.\ndifferent access levels to LLMs. We describe their learning\nprocedures in Sections ZTab-privacy and ZTab-performance, IV. ZTAB\nthen the prediction procedure in Section Prediction. In Learning Phase, ZTab fine-tunes an annotation LLM Ma\nusing structured fine-tuning pseudo-tables constructed based A. ZTab-privacy\non the class prototypes of the classes in Clearn and the table The learning phase, Algorithm 1, has three main steps:\nschemas in S. For each class c in Clearn, the class prototype Class prototype generation: For each semantic type ci ∈\nof c is a set of representative instances of c generated using Clearn, it queries the LLM Mp, the prototype LLM, to\na prototype LLM Mp. The pseudo-tables serve as the training generate up to e examples of ci serving as its class prototype.\ndata to familiarize the annotation LLM with structured tabular The detail is captured by the function ClassPrototypeGendata. By generating fine-tuning pseudo-data from leveraging eration(ci, e, Mp) explained shortly. These class prototypes,\nthe LLM Mp pre-trained on the world corpus, ZTab addresses denoted by P, are used to generate fine-tuning pseudo-tables\nthe data availability challenge and robustness across related during the fine-tuning step.\ndomains and ontologies without retraining. In Prediction Handling missing classes: This step creates one table\nPhase, fine-tuned LLM Ma is used to predict semantic types schema for each class in Clearn not contained in any table\nof columns in new tables. schema Si ∈S and add these schemas to S, to ensure that all\nWe consider two variants of ZTab. ZTab-privacy uses open- semantic types/classes in Clearn are represented in the finesource LLMs, avoiding privacy concerns related to sharing tuning process.\nsensitive data with third parties. ZTab-performance uses more Fine-tuning: This step fine-tunes the annotation LLM Ma\npowerful closed-source LLMs, but learning and deployment in multiple epochs.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 9,
+    "total_chunks": 47,
+    "char_count": 2124,
+    "word_count": 326,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c173a9ec-2a8b-42af-b772-d746741f1504",
+    "text": "During each epoch, it randomly selects\nr percent of the table schemas from S, denoted Srand, and\n2https://www.wikipedia.org/\nconstructs a pseudo-table Tablei of k rows for each schema Si 3https://webdatacommons.org/\n4https://schema.org/ in Srand, done by the function PseudoTableGeneration(Si,\n5https://www.dbpedia.org/ P, k). Note that the pseudo-table for Si is constructed \"on These are values of columns in a table. Each column starts with Algorithm 2 Prediction Phase of ZTab\nColumn: followed by the values of that column. First, look at all Input: New Table T = (t1, t2, . . . , tn), set of semantic types/classes\nthe columns to understand the context of the table. Cpred, Fine-tuned Model Ma from Algorithm 1\nColumn 1: t11, t12, . . . , t1k Output: Predicted Class for Each Column in T\nColumn 2: t21, t22, . . . , t2k 1: Prompts ←PromptConstruction(T, Cpred)\n... 2: for each prompti in Prompts corresponding to column ti do\nColumn n: tn1, tn2, . . . , tnk 3: Outputi ←Ma(prompti)\nYour task is to annotate the Target Column using one semantic {label remapping}\ntype that matches the values of the Target Column and the context 4: hi ←arg max cosine sim(E(Ma, Outputi), E(Ma, cj)) cj∈Cpred\nof the table from the following list: c1, c2, . . . , cm. 5: end for\nTarget Column: ti1, ti2, . . . , tik 6: return (h1, ..., hn)\nSemantic Type: Prompt for target column ti in a table with n columns and k rows.\nthe semantic type. While each prompt focuses on prediction\nthe fly\" during each epoch; thus, it could be different for the for one target column, the entire table data is presented in the\nsame schema Si in a different epoch, increasing data diversity. prompt to help infer the target column's semantic type in the\nIt then represents Tablei by creating one prompt for each context of other columns in the table. This prompt design is\ncolumn in the table, done by the function PromptConstruc- one of four alternative designs, i.e., column-by-column table\ntion(Tablei, Clearn), and stores the prompts in prompti. The presentation and single column prediction, which allows the\nprompts Prompt and the table headers Labels for the schemas annotation LLM to benefit from the coherence within each\nin Srand are used to fine-tune Ma (i.e., lines 18-22), on a column and focus on the prediction for one column at a time.\nbatch basis as in [41]. The fine-tuning cost is determined by Alternatively, the table can be presented row-by-row and the\nthe schema sampling ratio r and the row size k. A small value prediction can be made for all columns together, a common\nof k is often sufficient for good performance of ZTab. More practice in the literature [22], [42]. We will study the effect\ndetails are given in Section V-F. of different prompt designs in Section V-F. ClassPrototypeGeneration(ci, e, Mp): For the class ci, the\nprototype LLM Mp is provided with the prompt \"Generate e B.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 10,
+    "total_chunks": 47,
+    "char_count": 2881,
+    "word_count": 497,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "01c15568-a5b6-419f-876b-7d717a6843c7",
+    "text": "ZTab-performance\nreal-world examples of the semantic type ci commonly found in ZTab-performance follows the same overall design as ZTabweb tables.\", where e is the class prototype size.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 11,
+    "total_chunks": 47,
+    "char_count": 185,
+    "word_count": 27,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "82e19f4f-d01e-45e2-8028-c9f550431920",
+    "text": "In response, privacy but adapts its learning procedure to comply with\nMp generates up to e instances for the class ci. For example, the closed-source fine-tuning policy (e.g., OpenAI fine-tuning\nwith ci being the class 'City' and e = 50, Mp will generate policy), which requires providing a fixed training dataset in\nup to 50 city names to form the class prototype for the class advance of fine-tuning, rather than generating new samples\nCity. Note that Mp can be replaced with any knowledge base, during fine-tuning like Algorithm 1. Accordingly, all pseudosuch as DBpedia or Wikidata; we choose an LLM pre-trained tables are pre-generated prior to submission for fine-tuning,\non the world corpus for better generalization. as illustrated in Figure 1(b). While this setup allows ZTabPseudoTableGeneration(Si, P, k): This function populates performance to leverage large closed-source models for higher\nthe table schema Si by randomly selecting k values from the accuracy, it limits the diversity of training data compared\ncorresponding class prototype in P for each semantic type in to ZTab-privacy, where pseudo-tables are dynamically conSi. Thanks to the random selection of values from the class structed in each epoch. In essence, ZTab-performance trades\nprototype, for the same schema Si selected in different epochs, off some data diversity for compatibility with managed Opethe table generated for Si could be very different, allowing the nAI fine-tuning and the performance advantages of larger\nfine-tuning to encounter a diverse range of training examples, proprietary models.\nwhich is essential for better model generalization. An alternative is to generate tables (one table at a time) using LLMs C. Prediction\ndirectly, but it produces low-quality tables as discussed in [40]. The fine-tuned model Ma produced by Algorithm 1 is\nOur fine-tuning benefits from a large number of diverse tables applied to annotate the columns in a test table T without\nthat are generated efficiently from class prototypes. headers using the semantic types in Cpred. Algorithm 2\nPromptConstruction (Table, C): For a given Table = presents this phase. First, PromptConstruction (T, Cpred) is\n(t1, t2, . . . , tn) with n columns and k rows and a collection of used to generate the prompts for the columns in T but using\nsemantic types C = {c1, c2, . . . , cm}, this function generates the classes Cpred instead of Clearn. Ma(prompti) denotes\nn prompts, one for each column in Table. Figure 2 shows the the tokens generated by Ma for prompti, which may not be a\nprompt generated for a column ti ∈Table, which has four class in Cpred. label remapping is used to map the generated\nparts: (1) Introduction: The general instruction about the table token to the most similar class in Cpred, i.e., hi, where\nstructure. (2) Table Presentation: The table data presented similarity is measured based on the embeddings E(Ma, ·)\ncolumn-by-column. (3) Task Description: The instruction for extracted from Ma. Finally, (h1, · · · , hn) are returned as the\nthe LLM to annotate the target column. (4) Target Column: predicted semantic types for the columns (t1, · · · , tn).",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 12,
+    "total_chunks": 47,
+    "char_count": 3148,
+    "word_count": 512,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "10eac4a3-c02e-48c0-97e0-bb3b015b6fb4",
+    "text": "The\nThe target column for which the model is expected to predict distinction of In-Domain, Cross-Domain, and Cross-Ontology Generalizations lies in the class composition in Cpred and the In-Domain Generalization: For each dataset, S is extracted\nvalue composition in T; no additional change is needed. by including table header of each training table with duplicates\npreserved. Clearn and Cpred are set to class list of dataset. Extensibility to Complex Table Structures\nCross-Domain Generalization: Following the settings in\nZTab focuses on simple relational tables. There are two [17], Limaye and Efthymiou are annotated using a subset\nways to extend ZTab to deal with more complex tables, of the classes from T2D, making them ideal for the Crosse.g., merged cells, multi-level headers, or nested JSON. (1) Domain Generalization. We extract S and Clearn from T2D\nPreprocessing. We can first convert the input into the standard as the learning domain and evaluate the fine-tuned model on\nrelational format that ZTab expects. For tables in templated Limaye and Efthymiou as two test datasets. We set Cpred to\ndocuments (e.g., invoices/forms), we can extract relational the classes of the test dataset involved.\ntables using a document-to-structure system such as TWIX Cross-Ontology Generalization: SOTABdbp, SOTABsch, and\n[43]. For nested JSON, we can flatten nested fields into SOTABsch-s datasets are derived from the general web domain\ncolumns using key paths (e.g., \"Address\": {\"City\": but represent two distinct ontologies: Schema.org (denoted by\n...} →column Address.City) [44], [45]. For merged sch, sch-s) and DBpedia (denoted by dbp). This dual-ontology\ncells (rowspan/colspan), we can copy the merged value design makes them suitable for evaluating the Cross-Ontology\ninto all cells it covers [46], [47]. (2) Framework adapta- Generalization scenario. For this scenario, we extract S and\ntion.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 13,
+    "total_chunks": 47,
+    "char_count": 1904,
+    "word_count": 286,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a90a4982-655c-47c7-89cc-d2b8d49d3b50",
+    "text": "The second way is to modify ZTab to handle complex Clearn from SOTABsch and SOTABsch-s as two domains for\ntables directly. In particular, this requires modifying Pseu- fine-tuning and evaluate the fine-tuned models on the test data\ndoTableGeneration to generate complex tables and modifying SOTABdbp. Cpred is set to the classes of the test dataset. PromptConstruction to serialize such tables for the LLM. 2) Metrics and Algorithms Evaluated: We measure the\nThe first approach is preferred as it requires no change to micro F1-score collected on test tables, following previous\nZTab. works [22], [23], [42], [50]. All F1-score values are multiplied\nby 100 (e.g., 80% is written as 80). We evaluate ZTab against V. EVALUATION\nbaseline and reference algorithms detailed as follows:\nWe evaluate the performance of ZTab in the three sceZTab-privacy, denoted by ZTab-pri(Mp, Ma): We use the\nnarios of In-Domain, Cross-Domain, and Cross-Ontology\nopen-source Llama3.1-70B [51] as the prototype LLM Mp\nGeneralization.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 14,
+    "total_chunks": 47,
+    "char_count": 1010,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f3b49ef5-35fc-4213-bfd5-2a470cd67ed4",
+    "text": "All experiments were conducted with 4\nand use the open-source Qwen2.5-Coder-1.5B [52], Llama-7B\nNVIDIA RTX 6000 Ada. The source code is available at\n[53], Mistral-7B [54], and Qwen2.5-7B [55] as the annotation\nhttps://github.com/hoseinzadeehsan/ZTab. Fine-tuning of Qwen2.5-7B is done with LoRA\nA. Evaluation Method [56] (rank = 256) using transformers and peft libraries, batch\nsize of 1, gradient accumulation of 8 for memory efficiency,\nTABLE I\nSUMMARY OF DATASETS learning rate of 1 × 10−5. The epoch number is set to 20.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 15,
+    "total_chunks": 47,
+    "char_count": 525,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa275d7f-bbcb-4039-9fb6-9a34a14c7865",
+    "text": "Dataset # Class # Training Tables # Test Tables For datasets with validation data (SOTAB), we evaluate the\nWikiTable 255 397098 4764 best model on validation performance and for datasets without\nSOTABsch 82 44769 609 validation data (T2D, Limaye, and Efthymiou) we evaluate the\nSOTABsch-s 82 10631 609\nSOTABdbp 46 37631 279 model after the final epoch. The class prototype size e is set\nT2D 37 160 109 to 500, and the schema sampling rate r is set to 2.5% for the\nEfthymiou 31 - 614 SOTAB datasets, 0.5% for WikiTable, and to 100% for T2D\nLimaye 8 - 114\ndue to its small size. Row size k is set to 3. Unless otherwise\n1) Datasets: We evaluate ZTab on seven datasets: Wik- stated, these settings remain consistent for ZTab-privacy.\niTable [32], T2D, Limaye, Efthymiou [17], and three datasets ZTab-performance, denoted by ZTab-per(Mp, Ma): Both\nfrom SOTAB-V2, i.e., SOTABsch, SOTABsch-s, and SOTABdbp prototype LLM (Mp) and annotation LLM (Ma) are from the\n[48], summarized in Table I. Limaye and Efthymiou have same GPT models: GPT-3.5, GPT-4o-mini, GPT-4o, and GPTonly test tables.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 16,
+    "total_chunks": 47,
+    "char_count": 1082,
+    "word_count": 181,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c18632d1-4706-460d-87dd-6bb084687001",
+    "text": "Instead of the older SOTAB-91 and SOTAB- 4.1-mini. A schema sampling ratio r of 2.5% is used for the\n27 benchmarks used in [23], we adopt the updated SOTAB- SOTAB datasets, 0.5% for WikiTable, and 100% T2D due to\nV2 suite, which includes manually verified validation and test its small size. Row size k is set to 3.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 17,
+    "total_chunks": 47,
+    "char_count": 315,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fd3fc325-dc98-42eb-b7c5-157f167b660d",
+    "text": "Unless otherwise stated,\nsplits and provides both schema.org and DBpedia annotations, these settings remain consistent for ZTab-performance.\noffering a more robust benchmark for LLM-based models. Baselines and Reference Upper Bounds. Table II groups\nWikitable is a multi-label dataset and we select the first prior methods into (i) baselines that satisfy our deployment\navailable label when multiple labels are present. VizNet [12], constraint, no access to user-specific labeled tables, and (ii)\n[14] is excluded due to significant label overlap and noise [49]. reference that do train on user-provided labeled tables. ZTab\nFirst, we discuss the construction of the input components belongs to the first group: it is fine-tuned only from schemaS, Clearn, and Cpred for the domain-based zero-shot column level configuration (a class list and schemas) and does not use\nannotation problem. Note that these input components do not any user labeled tables from the target deployment. Therefore,\nutilize the actual tabular content in these datasets, as required we treat all methods that operate under the same no user\nby the zero-shot requirement. labeled table constraint as baselines. We additionally report TABLE II\nZTAB, BASELINES, AND REFERENCE ALGORITHMS. YES/NO INDICATES models.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 18,
+    "total_chunks": 47,
+    "char_count": 1282,
+    "word_count": 190,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8818e2f0-9574-44c4-84e8-94e618b3fd22",
+    "text": "ZTab-privacy outperforms the best zero-shot model,\nWHETHER A MODEL USES TRAINING DATA AND WHETHER USER TableLlama, by 23.5% and ZTab-performance outperforms the\nINFORMATION IS DISCLOSED AT INFERENCE TIME.\nbest zero-shot model, CENTS (GPT-4o), by 4.5%. Category Model Data Disclosure Cross-Domain Generalization: ZTab-privacy outperforms\nZTab-pri (Llama3.1-70B,Qwen-1.5B) No No the best open-source zero-shot model, LLM-ZeroShot\nOurs\nZTab-pri (Llama3.1-70B,Llama-7B) No No (Llama3.1-70B), by 1.4%, and ZTab-performance outperforms(Privacy)\nZTab-pri (Llama3.1-70B,Mistral-7B) No No the best closed-source zero-shot model, CENTS (GPT-4o), by ZTab-pri (Llama3.1-70B,Qwen2.5-7B) No No\n2.7%, thanks to the fine-tuning of ZTab. ZTab-per (GPT-4.1-mini,GPT-4.1-mini) No Yes\nOurs ZTab-per (GPT-4o-mini,GPT-4o-mini) No Yes Cross-Ontology Generalization: The results demonstrate\n(Performance) ZTab-per (GPT-4o,GPT-4o) No Yes ZTab's robustness of generalizing across different ontoloZTab-per (GPT-3.5,GPT-3.5) No Yes\ngies. ZTab-privacy outperforms the best open-source zeroTableLlama (Llama-7B) [25] No No shot baseline, LLM-ZeroShot (Llama3.1-70B), by 9.5% and\nJellyfish (Mistral-7B) [24] No No\nBaseline ArcheTypeZS (T5) [23] No No ZTab-performance outperforms the best closed-source zero-\n(Privacy) GPT-20B-based [22] No No shot model, CENTS(GPT-4o), by 3.8%. GPT-120B-based [22] No No\nLlama3.1-70B-based [22] No No Besides the above comparison with the baselines, we would\nlike to highlight several other properties of ZTab below. GPT-3.5-based [22] No Yes\nChorus (GPT-3.5) [21] No Yes Privacy vs Performance: Closed-source models achieve\nBaseline CENTS (GPT-3.5) [26] No Yes higher accuracy but require data sharing, limiting their use\n(Performance) CENTS (GPT-4o-mini) [26] No Yes\nCENTS (GPT-4.1-mini) [26] No Yes in privacy-sensitive settings. Open-source models ensure full\nCENTS (GPT-4o) [26] No Yes privacy but perform worse overall. ZTab-privacy bridges this\nReference Doduo (BERT) [14] Yes No gap, offering competitive results while preserving privacy,\n(Supervised) ArcheTypeFT (Llama-7B) [23] Yes No whereas ZTab-performance achieves the best accuracy when\nsupervised reference models to quantify the remaining gap- privacy is not a concern.\nto-supervised when user-provided labeled tables are available; Deployment Effectiveness: ZTab-privacy with the comthese numbers should be interpreted as upper bounds rather pact Qwen-1.5B achieves strong performance in computethan directly comparable competitors. constrained settings. Despite being ∼47× smaller than the\nFor all baseline and reference models, the default settings strongest open-source zero-shot baseline (Llama3.1-70B), it\nreported in their papers are applied. We did not include outperforms it in In-Domain (+18.7%) and Cross-Ontology\nsupervised models like Sherlock [11], SATO [12], TURL [32], (+3.9%) settings. Compared with ZTab-privacy using the\nKGLink [33], TCN [57], RECA [15], GAIT [16], TABBIE larger Qwen2.5-7B annotator, the 1.5B variant incurs a modest\n[58], ColNet [18], HNN [17] because Doduo and ArcheType drop of 6.7% (In-Domain), 9.0% (Cross-Domain), and 5.6%\nare two of the best performing supervised models [14], [23]. (Cross-Ontology) micro-F1, indicating that ZTab remains efThe columns \"Train data\" and \"Inf. Disclosure\" in Table II fective with a small deployable annotation model.\nindicate whether user-specific training data is used (like all ZTab vs Supervised (reference) models: In In-Domain\nsupervised models) and whether user data is sent to a third Generalization, supervised models naturally outperform ZTab\nparty at inference time (like all models relying on a closed- due to their access to complete user-provided training data,\nsource LLM). Data privacy can be at risk when either is Yes. exceeding ZTab-performance by margins of 7.1% (Doduo) and\nZTab-privacy and zero-shot baselines based on open-source 6.6% (ArcheType). However, we should mention that superLLMs, marked by (Privacy), address this privacy concern. vised models are not an option under our zero-shot constraint,\nwhere no user-specific labeled training data is available; they\nB.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 19,
+    "total_chunks": 47,
+    "char_count": 4141,
+    "word_count": 557,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "991a6562-b69f-4053-893d-233911f88322",
+    "text": "Main Results are included only to measure the performance gap of ZTab\nTable III summarizes the comparison results on micro-F1 due to meeting this constraint. In Cross-Domain Generalizascore, averaged over applicable datasets, under In-Domain, tion, ZTab-privacy and ZTab-performance outperform the best\nCross-Domain, and Cross-Ontology Generalization. The re- supervised model, Doduo, by 26.8% and 30.5%, respectively.\nsults are grouped separately for ZTab-privacy and ZTab- By leveraging class prototypes from a pre-trained LLM, ZTab\nperformance. The former considers the baselines that use open- learns from pseudo-tables that are free from domain-specific\nsource LLMs and the latter considers the baselines that use biases, enhancing generalization on Efthymiou and Limaye.\nclosed-source LLMs. For a fair comparison with baselines In contrast, supervised models trained on T2D perform poorly\nbuilt on different GPT versions, we include corresponding on these datasets due to over-fitting on domain-specific data. ZTab-performance with annotation LLMs based on the same Finally, supervised models are inapplicable in Cross-Ontology\nGPT models. The winners are highlighted in boldface.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 20,
+    "total_chunks": 47,
+    "char_count": 1186,
+    "word_count": 163,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "54daa016-7453-4cec-903e-309667105d22",
+    "text": "Below, Generalization as they rely on fixed label sets and cannot adapt\nwe explain the key findings here and provide the detailed to new ontologies without retraining.\nanalysis in Sections V-C and V-D. ZTab-privacy In-Domain Generalization: The average performance is\nreported using all datasets except for Limaye and Efthymiou, This section provides the data-specific comparison for the\nwhich do not have the training data required for supervised summary results for ZTab-privacy in Table III. TABLE III\nMAIN RESULTS: WE COMPARE ZTAB-PRIVACY WITH ZERO-SHOT BASELINES THAT USE OPEN-SOURCE LLMS, AND COMPARE ZTAB-PERFORMANCE\nWITH ZERO-SHOT BASELINES THAT USE CLOSED-SOURCE LLMS. Category Model In-Domain Cross-Domain Cross-Ontology",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 21,
+    "total_chunks": 47,
+    "char_count": 730,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c94f1abf-aae6-425f-97d7-a30ea8fb4082",
+    "text": "Comparing ZTab-privacy TableLlama (Llama-7B) 48.2 77.5 38.1\nwith zero-shot baselines ZTab-pri (Llama3.1-70B,Llama-7B) 65.7 82.0 67.1\nthat use open-source LLMs\nJellyfish (Mistral-7B) 24.0 68.5 26.7\nZTab-pri (Llama3.1-70B,Mistral-7B) 69.1 87.4 72.1 ArcheTypeZS (T5) 43.3 73.0 48.3\nGPT-20B-based 21.9 80.0 26.6\nGPT-120B-based 8.0 47.6 15.3\nLlama3.1-70B-based 46.3 89.3 64.2\nZTab-pri (Llama3.1-70B,Qwen-1.5B) 65.0 81.7 68.1\nZTab-pri (Llama3.1-70B,Qwen2.5-7B) 71.7 90.7 73.7 Comparing Chorus (GPT-3.5) 56.8 85.0 64.8\nZTab-performance GPT-3.5-based 63.1 86.6 70.0\nwith zero-shot baselines CENTS (GPT-3.5) 53.3 88.7 53.7\nthat use closed-source ZTab-per (GPT-3.5,GPT-3.5) 74.0 91.9 76.9\nLLMs\nCENTS (GPT-4o-mini) 61.2 86.2 61.1\nZTab-per (GPT-4o-mini,GPT-4o-mini) 74.6 93.4 77.2 CENTS (GPT-4o) 72.2 91.7 74.5\nZTab-per (GPT-4o,GPT-4o) 76.6 94.4 78.3 CENTS (GPT-4.1-mini) 72.1 83.0 73.6\nZTab-per (GPT-4.1-mini,GPT-4.1-mini) 76.7 94.3 78.3 Supervised Doduo (BERT) 83.8 63.9 —\n(Reference) ArcheTypeFT (Llama-7B) 83.3 55.3 — used here are fully open-source and can be run locally without these supervised models of Doduo and ArcheType by 5.1%,\nsharing data with third parties. For a fair comparison with 8.2% correspondingly.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 22,
+    "total_chunks": 47,
+    "char_count": 1210,
+    "word_count": 158,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "23454744-2b2f-4af8-a703-c4c0cde195ac",
+    "text": "Last but not least, supervised models\nTableLlama (Llama-7B) and Jellyfish (Mistral-7B), which use are not an option when labeled training data is not available\nLLMs of similar size, we consider ZTab-privacy with the or providing such data raises privacy concerns. In such cases,\nannotation LLMs based on Llama-7B and Mistral-7B. ZTab bridges the performance gap between zero-shot and\n1) In-Domain Generalization: Table IV details the com- supervised learning models while addressing data availability\nparison on individual datasets. Note that supervised learning and privacy challenges.\nmodels cannot be applied to Limaye and Efthymiou datasets 2) Cross-Domain Generalization: Table V (left) shows the\nthat do not have training data. TableLlama performs best results for Cross-Domain generalization, where models are\non the WikiTable dataset because it was fine-tuned on this trained on the domain of T2D and tested on T2D, Limaye, and\ndataset's training data. For datasets in the left to right order Efthymiou. Two supervised models, HNN [17] and ColNet\nin the table, ZTab (Llama3.1-70B,Qwen2.5-7B) outperforms [18], are included due to their relevance to these datasets.\nthe best zero-shot baseline by 26.6%, 44.3%, 42.5%, 12%, The zero-shot baseline models rely solely on the test dataset\n1.5%, 4% and 1.3%, respectively. TableLlama was fine-tuned without fine-tuning, resulting in identical performance across\nusing the training data of WikiTable, so we don't consider all three generalization scenarios. TableLlama as a zero-shot model for the WikiTable dataset. ZTab performs consistently well on both test datasets LiRoughly, the improvement increases as the number of classes maye and Efthymiou, demonstrating robustness to domain\nin the dataset increases, highlighting a common difficulty shifts. The use of class prototypes in ZTab allows the fineof existing LLM based zero-shot models in dealing with a tuning to be free of the biases present in the learning domain,\nlarge number of classes where semantically similar classes contributing to ZTab's strong performance on the test datasets.\ncan confuse the model. ZTab addresses this ambiguity by In contrast, supervised models, which are specifically trained\nproviding a few examples of each class via class prototypes, on the learning dataset T2D, perform less effectively on the\nimproving accuracy. test datasets Limaye and Efthymiou. Supervised models achieve the highest micro-F1 due to 3) Cross-Ontology Generalization: Table V (right) shows\ntheir access to user-provided training data. Prior research has results on Cross-Ontology Generalization where SOTABdbp,\nshown a significant overlap between the training and test data SOTABsch, and SOTABsch-s are the learning domains and\nin the SOTAB datasets [49], which further enhances their SOTABdbp is the test domain. Zero-shot baselines rely solely\nresults.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 23,
+    "total_chunks": 47,
+    "char_count": 2872,
+    "word_count": 423,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a03b64cb-ff93-4528-ae9d-5d40d60be5a1",
+    "text": "However, these models are sensitive to the size of on the test dataset without any fine-tuning on the learning\navailable data, as shown by the performance decline in the domain, resulting in the same performance as In-Domain\nsmaller SOTABsch-s.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 24,
+    "total_chunks": 47,
+    "char_count": 244,
+    "word_count": 39,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e6ed1b8c-86b3-4ccf-9578-bb51fedbb081",
+    "text": "In the small T2D, ZTab even surpasses Generalization for SOTABdbp. TABLE IV\nDETAILS OF COMPARING ZTAB-PRIVACY WITH OPEN-SOURCE BASED MODELS FOR IN-DOMAIN GENERALIZATION. Category Model WikiTable SOTABsch SOTABsch-s SOTABdbp T2D Efthymiou Limaye TableLlama (Llama-7B) 59.6 32.6 32.6 38.1 78.2 68.9 86.0\nZTab-pri (Llama3.1-70B,Llama-7B) 24.7 73.1 71.9 69.6 90.4 82.5 85.9 Jellyfish (Mistral-7B) 0.0 8.4 8.4 26.7 76.7 58.9 78.0\nZTab-pri (Llama3.1-70B,Mistral-7B) 30.6 74.6 73.5 73.2 93.5 87.0 91.1\nZero-shot\nArcheTypeZS (T5) 6.3 40.1 40.1 48.3 81.6 67.7 78.3\nGPT-20B-based 3.4 7.8 7.8 26.6 64.0 73.1 86.8\nGPT-120B-based 1.2 4.2 4.2 15.3 15.1 19.7 75.4\nLlama3.1-70B-based 7.5 32.6 32.6 64.2 94.7 87.3 91.2\nZTab-pri (Llama3.1-70B,Qwen-1.5B) 19.8 73.6 69.3 70.1 92.0 76.8 85.9\nZTab-pri (Llama3.1-70B,Qwen2.5-7B) 34.1 76.9 75.1 76.2 96.2 91.3 92.5 Supervised Doduo (BERT) 75.2 86.3 81.1 85.2 91.1 - -\n(Reference) ArcheTypeFT (Llama-7B) 76.7 85.1 83.0 83.6 88.0 - -",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 25,
+    "total_chunks": 47,
+    "char_count": 957,
+    "word_count": 140,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9cc4322a-f487-4a06-be02-f9be35a398c2",
+    "text": "TABLE V\nDETAILS OF COMPARING ZTAB-PRIVACY WITH OPEN-SOURCE BASED MODELS FOR CROSS-DOMAIN (LEFT) AND CROSS-ONTOLOGY GENERALIZATION\n(RIGHT). SUPERVISED MODELS ARE NOT APPLICABLE IN CROSS-ONTOLOGY GENERALIZATION. Cross-Domain (Test Datasets) Cross-Ontology (Learning Datasets) Category Model T2D Efthymiou Limaye SOTABdbp SOTABsch SOTABsch-s TableLlama (Llama-7B) 78.2 68.9 86.0 38.1 38.1 38.1\nZTab-pri (Llama3.1-70B,Llama-7B) 90.4 80.3 83.6 69.6 67.4 66.7 Jellyfish (Mistral-7B) 76.7 58.9 78.0 26.7 26.7 26.7\nZero-shot ZTab-pri (Llama3.1-70B,Mistral-7B) 93.5 85.4 89.3 73.2 72.5 71.6 ArcheTypeZS (T5) 81.6 67.7 78.3 48.3 48.3 48.3\nGPT-20B-based 64.0 73.1 86.6 26.6 26.6 26.6\nGPT-120B-based 15.1 19.7 75.4 15.3 15.3 15.3\nLlama3.1-70B-based 94.7 87.3 91.2 64.2 64.2 64.2\nZTab-pri (Llama3.1-70B,Qwen-1.5B) 92.0 78.6 84.7 70.1 68.7 67.5\nZTab-pri (Llama3.1-70B,Qwen2.5-7B) 96.2 88.9 92.4 76.2 74.2 73.1 Doduo (BERT) 91.1 63.2 64.5 – – –\nSupervised ArcheTypeFT (Llama-7B) 88.0 53.0 57.6 – – –\n(Reference) ColNet (Deep learning) 94.7 61.9 59.7 – – –\nHNN (Deep learning) 96.6 65.0 74.6 – – – ZTab (LLama3.1-70B,Qwen2.5-7B) significantly outper- diverse set of semantic types among all benchmarks. Figure 3\nforms zero-shot models, thanks to leveraging a small number shows the F1-scores for top-50 classes ranked by the improveof examples per class to distinguish between similar classes. ment of ZTab-performance (GPT-4.1-mini,GPT-4.1-mini) over\nAdditionally, ZTab's adaptability to the test ontology is at- the strongest baseline, CENTS (GPT-4.1-mini), on this dataset.\ntributed to (1) incorporating Cpred into the prompt to guide We observe two main groups of classes where\nthe LLM toward correct predictions and (2) applying the label ZTab-performance shows substantial improvement.\nremapping to address syntactic mismatches between predicted The first group are rare or domain-specific classes\nclasses and classes from the test domain. Comparing the ZTab such as meteorology.tropical cyclone season and\nfine-tuned on SOTABsch and SOTABsch-s with the ZTab fine- fictional universe.fictional character, for which CENTS often\ntuned on the test SOTABdbp, all being tested on SOTABdbp, fails with near-zero F1-scores. By fine-tuning annotation LLM\nthe former suffers only a slightly lower performance, showing with pseudo-tables that include examples of these classes,\nZTab's robustness to ontology shifts. ZTab exposes model to rare types and improves recognition. ZTab-performance The second group includes semantically similar classes\nThis section provides the data-specific comparison for the such as music.genre vs. cvg.cvg genre, and film.film genre\nsummary results for ZTab-performance in Table III. Table vs. cvg.cvg genre.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 26,
+    "total_chunks": 47,
+    "char_count": 2720,
+    "word_count": 380,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aef210e3-b596-4e93-a01c-ffdd70a861c4",
+    "text": "ZTab's structured fine-tuning helps the\nVI details the comparison for In-Domain generalization, and model better distinguish between related but distinct semanTable VII details the comparison for Cross-Domain and Cross- tic domains by learning subtle contextual differences from\nOntology Generalizations. In general, ZTab-performance out- generated examples. For instance, test columns labeled as\nperforms corresponding baselines across all datasets. music.genre contain values like {Techno, Electronica, Rave,\nDance, Garage Mix, ...}, while cvg.cvg genre columns inE. Class-specific Analysis clude {Action-Adventure, Action RPG, Platformer, Survival\nWe dive into the performance comparison on individual Horror, First-person shooter, ...}, and film.film genre columns\nclasses using the WikiTable dataset that has largest and most include {Comedy, Teen, Animated film, Romantic comedy, TABLE VI\nDETAILS OF COMPARING ZTAB-PERFORMANCE WITH CLOSED-SOURCE BASED MODELS FOR IN-DOMAIN GENERALIZATIONS. Category Model WikiTable SOTABsch SOTABsch-s SOTABdbp T2D Efthymiou Limaye",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 27,
+    "total_chunks": 47,
+    "char_count": 1070,
+    "word_count": 136,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cc747942-331e-4e06-af32-593984e05c5e",
+    "text": "Chorus (GPT-3.5) 15.3 60.3 60.3 64.8 83.4 82.5 87.4\nGPT-3.5-based 28.3 64.0 64.0 70.0 89.4 82.7 90.4\nCENTS (GPT-3.5) 25.6 49.7 49.7 53.7 88.0 87.9 89.5\nZTab-per (GPT-3.5,GPT-3.5) 42.3 77.3 77.0 77.4 96.2 92.4 92.5\nZero-shot\nCENTS (GPT-4o-mini) 33.0 59.8 59.8 61.1 92.4 85.6 86.8\nZTab-per (GPT-4o-mini,GPT-4o-mini) 44.2 77.6 77.1 77.6 96.2 93.4 93.9 CENTS (GPT-4o) 35.7 78.1 78.1 74.5 94.7 91.3 92.1\nZTab-per (GPT-4o,GPT-4o) 48.8 78.6 78.9 78.9 97.7 95.3 93.9 CENTS (GPT-4.1-mini) 38.9 76.0 76.0 73.6 96.2 85.3 80.7\nZTab-per (GPT-4.1-mini,GPT-4.1-mini) 48.9 79.2 78.2 79.3 97.7 94.7 93.9 Supervised Doduo (BERT) 75.2 86.3 81.1 85.2 91.1 - -\n(Reference) ArcheTypeFT (Llama-7B) 76.7 85.1 83.0 83.6 88.0 - - TABLE VII\nDETAILS OF COMPARING ZTAB-PERFORMANCE WITH CLOSED-SOURCE BASED MODELS FOR CROSS-DOMAIN (LEFT) AND CROSS-ONTOLOGY (RIGHT)\nGENERALIZATION. Cross-Domain (Test Datasets) Cross-Ontology (Learning Datasets) Category Model T2D Efthymiou Limaye SOTABdbp SOTABsch SOTABsch-s",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 28,
+    "total_chunks": 47,
+    "char_count": 979,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5bcf6b44-9f96-4190-a315-272846577e7a",
+    "text": "Chorus (GPT-3.5) 83.4 82.5 87.4 64.8 64.8 64.8\nGPT-3.5-based 89.4 82.7 90.4 70.0 70.0 70.0\nCENTS (GPT-3.5) 88.0 87.9 89.5 53.7 53.7 53.7\nZTab-per (GPT-3.5,GPT-3.5) 96.2 91.7 92.1 77.4 77.1 76.7\nZero-shot\nCENTS (GPT-4o-mini) 92.4 85.6 86.8 61.1 61.1 61.1\nZTab-per (GPT-4o-mini,GPT-4o-mini) 96.2 92.8 93.9 77.6 77.0 77.3 CENTS (GPT-4o) 94.7 91.3 92.1 74.5 74.5 74.5\nZTab-per (GPT-4o,GPT-4o) 97.7 94.8 93.9 78.9 78.1 78.5 CENTS (GPT-4.1-mini) 96.2 85.3 80.7 73.6 73.6 73.6\nZTab-per (GPT-4.1-mini,GPT-4.1-mini) 97.7 94.7 93.9 79.3 78.8 77.7 Doduo (BERT) 91.1 63.2 64.5 – – –\nSupervised ArcheTypeFT (Llama-7B) 88.0 53.0 57.6 – – –\n(Reference) ColNet (Deep learning) 94.7 61.9 59.7 – – –\nHNN (Deep learning) 96.6 65.0 74.6 – – –",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 29,
+    "total_chunks": 47,
+    "char_count": 722,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ef39ba7-b434-4b47-9fbe-0fcfca1630fb",
+    "text": "CENTS incorrectly predicts cvg.cvg work for nearly all clearly performs better on all datasets, showing the better genmusic.genre columns and for about 40% of film.film genre eralization power of the pseudo-tables dynamically constructed\ncolumns, indicating confusion across domains. In contrast, using class prototypes. ZTab better distinguishes these categories by leveraging TABLE VIII\npseudo-tables that capture both intra-class consistency and EFFECT OF TABLE GENERATION ON MICRO-F1 SCORE.\ninter-class distinctions. Dataset ZTab ZTab with pseudo-tables generated by TabGen [40]\nWikiTable 34.1 12.9\nF. Ablation Analysis SOTABsch 76.9 39.5\nSOTABsch-s 75.1 35.7\nIn this section, we analyze the effect of different compo- SOTABdbp 76.2 50.3\nnents of ZTab, namely, table generation, pseudo-tables, class T2D 96.2 91.9\nprototype size e, schema sampling rating r, prompt design, Pseudo-table Settings: We examine three settings of inrow size k, and fine-tuning cost. Our analysis focuses on In- corporating class prototypes (P) and table schemas (S) for\nDomain Generalization. We also study ontology alignment for fine-tuning the annotation model Ma: ZTabw/o P : No class\nCross-Ontology generalization to evaluate the effect of prompt prototype P is used in fine-tuning, therefore, the original LLM\ndesign and label-remapping when the class list at inference Ma is applied in Algorithm 2 to predict semantic types.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 30,
+    "total_chunks": 47,
+    "char_count": 1412,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "44e21251-98b7-401a-99f5-173e1a08b1f1",
+    "text": "This\ndiffers from training. We use open-source models (Llama3.1- setting is similar to traditional zero-shot learning. ZTabw/o S:\n70B,Qwen2.5-7B) as the prototype LLM and annotation LLM Only class prototypes P, not the table schemas S, are used in\nfor ZTab-privacy, which offers the flexibility of control. fine-tuning. Consequently, for each semantic type a pseudoTable Generation: Table VIII compares two ways of table with a single column is created at step 2 of Algorithm 1.\ngenerating pseudo-tables for fine-tuning of ZTab. One uses Under this setting, learning does not leverage the multi-column\nclass prototypes to construct pseudo-tables dynamically, as for context as in multi-column pseudo-tables. ZTab: Both class\nZTab-privacy. The other generates full tables using Llama3.1- prototypes P and table schema collection S are used, which\n70B prior to fine-tuning, as suggested in TabGen [40]. ZTab is the default ZTab in Algorithm 1. 1.0 ZTAB F1-score\nCENTS F1-score\n0.8 0.0\nmeteorology.tropical_cyclone_season tv.tv_series_season music.genre cvg.cvg_genre book.periodical award.award_ceremony education.fraternity_sorority fictional_universe.fictional_character sports.sports_league_season sports.sports_position sports.pro_athlete military.military_person sports.sports_league basketball.basketball_coach book.written_work education.educational_institution award.award_category tv.tv_program olympics.olympic_event_competition government.u_s_congressperson religion.religious_leader government.legislative_session book.author people.ethnicity ice_hockey.hockey_team tv.tv_writer automotive.company media_common.media_genre royalty.monarch ice_hockey.hockey_position location.administrative_division broadcast.tv_station tv.tv_personality geography.body_of_water military.rank location.location time.event organization.organization government.politician cricket.cricket_team sports.sports_league_draft tv.tv_actor music.media_format aviation.airline sports.tournament_event_competition religion.religion aviation.aircraft_model tv.tv_network astronomy.constellation medicine.disease\nClass",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 31,
+    "total_chunks": 47,
+    "char_count": 2097,
+    "word_count": 200,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a8232ff2-4925-4b7b-9f87-dada7c41c7b6",
+    "text": "Top 50 classes in WikiTable dataset ranked by improvement of ZTab-performance (GPT-4.1-mini,GPT-4.1-mini) over baseline CENTS (GPT-4.1-mini) Table IX compares the micro-F1 scores under these settings. TABLE X\nEFFECT OF CLASS PROTOTYPE SIZE e ON MICRO-F1 SCORE. ZTabw/o P has the poorest performance due to the lack of a\nClass Prototype Size\nlearning phase. ZTabw/o S has a significant improvement by Dataset All 50 25 12 6\nincluding the learning phase.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 32,
+    "total_chunks": 47,
+    "char_count": 452,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "efc454a1-4a61-4947-81e3-a0f3bbfece46",
+    "text": "The absence of table schema WikiTable 34.1 32.8 32.4 31.2 30.9\ncollection S means that the learning cannot leverage multi- SOTABsch 76.9 75.9 75.4 74.7 73.6\nSOTABsch-s 75.1 74.2 73.3 72.5 72.8\ncolumn relationships, but it still benefits from single-column SOTABdbp 76.2 74.4 74.2 73.3 72.1\npseudo-tables created from class prototypes during the learn- T2D 96.2 95.9 95.4 95.6 95.2\ning process. ZTab performs best as it utilizes both class pro- Efthymiou 91.3 90.0 89.6 88.7 87.0\nLimaye 92.5 91.9 90.8 91.5 90.9\ntotypes and table schema collection to take the full advantage\nof the table's global context provided by all its columns for\nrow-by-row, and prediction method can be either predictingpredicting the type of the target column. Note that, due to\nall columns together or predicting one target column at athe absence of training data in Limaye and Efthymiou, table\ntime. Table XI compares the performance of ZTab with theseschema collection S is unavailable, so the performance of\nalternatives. Efthymiou and Limaye datasets are excluded from\nZTab is the same as ZTabw/o S.\nthis analysis since they only have tables with a single column. TABLE IX\nEFFECT OF PSEUDO-TABLE SETTINGS ON MICRO-F1 SCORE. The best performance is observed with the columnDataset ZTab ZTabw/o S ZTabw/o P by-column presentation and target column prediction. The\nWikiTable 34.1 28.4 3.9 column-by-column presentation allows ZTab to focus on the\nSOTABsch 76.9 71.1 18.6 context of each column individually, which simplifies the\nSOTABsch-s 75.1 71.1 18.6\nlearning because the values within each column present exam- SOTABdbp 76.2 72.7 31.3\nT2D 96.2 93.9 67.4 ples of the same semantic type. In contrast, the row-by-row\nEfthymiou 91.3 91.3 51.5 presentation introduces values of different semantic types on\nLimaye 92.5 92.5 76.0\neach row, which makes it harder for the row-based reading to\ncapture the relationships between columns. When predicting Class Prototype Size e: Table X presents the performance\nall columns together, ZTab's performance tends to decrease,of ZTab under varying class prototype sizes e (i.e., 500 (i.e.,\nparticularly when using a smaller annotation LLM Ma likeAll), 50, 25, 12, and 6). The best performance is achieved with\nQwen, because the model may generate an incorrect number ofthe full size, as more examples of classes lead to more diverse\nsemantic types for a table (e.g., predicting four or six types forpseudo-training tables, which improve the model's ability to\na table with five columns).",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 33,
+    "total_chunks": 47,
+    "char_count": 2502,
+    "word_count": 395,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "686897c9-07f5-495f-adb5-d3f812de4124",
+    "text": "Furthermore, even if ZTab detectsgeneralize. However, ZTab demonstrates robust performance\nthe correct semantic types, it may not align them correctlyeven with as few as 6 examples per class, by leveraging the\nwith the corresponding columns.extensive knowledge encoded in LLM's pre-training on large\ntextual corpora. For the best performance, we recommend the\nTABLE XI\nfull class prototype size e = 500 for more example diversity. EFFECT OF PROMPT DESIGN ON MICRO-F1 SCORE. Note that the large prototype size does not necessarily lead Presentation col-by-col col-by-col row-by-row row-by-row\nto a longer fine-tuning time because the pseudo-table size is Prediction target all target all\ndetermined by the row size k, which is 3 in our experiments. WikiTable 34.1 31.3 32.2 28.8\nPrompt Design: We explore alternative prompt designs and SOTABsch 76.9 74.0 74.3 71.5\nSOTABsch-s 75.1 73.5 74.1 71.1prediction methods of the PromptConstruction function. The\nSOTABdbp 76.2 75.2 74.3 72.0\ntable can be presented in prompt either column-by-column or T2D 96.2 94.4 95.1 92.4 Schema Sampling Ratio r: Table XIII shows how ZTab 85 ZTab-pri (Llama3.1-70B,Qwen2.5-7B)\nperforms with different schema sampling ratios r. We con- Llama3.1-70B\nsider WikiTable and three SOTAB datasets that have a large F1-scoretable schema collection S. The worst performance (SOTAB 75\ndatasets) occurs at the small sampling ratio of 1% due to too Micro\nfew schemas used in each epoch. Increasing to 2.5% improves 70\nresults, but a further increase provides little additional benefit.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 34,
+    "total_chunks": 47,
+    "char_count": 1550,
+    "word_count": 235,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fee18340-826f-4869-9c99-12dee67304a8",
+    "text": "Average 65 Llama3.1-70B\nThis is because many schemas in S are redundant (see Table\nXII), sampling all of them is unnecessary, and a 2.5% sampling 60 1 5 10 15 20\nratio captures enough variety of schemas over the specified Epoch Number\nnumber of epochs and provides wide and most likely all class Fig. 4. Effect of fine-tuning epochs on micro F1 score (avg. over datasets).\ncoverage. For WikiTable, which contains more schemas and tuning time (hours), and I is the location-based grid carbon\nhigher redundancy, a smaller 0.5% ratio is enough. intensity (kgCO2e/kWh). Since Ptot and I vary by hardware\nand location, we report fine-tuning time as a proxy and provide TABLE XII\nNUMBER OF TOTAL AND UNIQUE SCHEMAS IN DATASETS. the above formula for deployment-specific CO2 accounting. Dataset #Schemas #Unique Schemas Ontology Alignment: For cross-ontology generalization,\nWikiTable 397,098 9,849 Algorithm 2 deals with aligning ontology shift (from Clearn\nSOTABsch 44,769 4,189 to Cpred) at inference time by the prompt construction (line\nSOTABsch-s 10,631 1,643\n1) and the label remapping (line 4). To better understand the SOTABdbp 37,631 1,780\nT2D 160 64 contribution of these components, we compare two variants of\nZTab as follows: ZTab: The default configuration as in AlgoTABLE XIII rithm 2 where prompts are constructed using Cpred, as in line\nEFFECT OF SCHEMA SAMPLING RATIOS r ON MICRO-F1 SCORE. 1, and remapping is applied, as in line 4. ZTabonly-remapping:\nSchema sampling ratio\nthe prompts are constructed using Clearn, i.e., replacing Cpred Dataset 10% 7.5% 5% 2.5% 1% 0.5%\nWikiTable 34.8 33.6 34.5 32.9 33.8 34.1 with Clearn on line 1, and the remapping on line 4 is\nSOTABsch 76.7 77.3 76.9 76.9 74.6 73.6 used to align predictions with Cpred. Table XIV shows that\nSOTABsch-s 75.4 74.8 75.3 75.1 73.4 72.8 ZTabonly-remapping performs poorly, indicating that relying solely\nSOTABdbp 76.6 75.9 76.3 76.2 74.3 73.7\non post-processing mapping from Clearn to Cpred fails to\nRow Size k: All our experiments for ZTab are based on handle differences in ontology definitions. ZTab, combining\nk = 3, i.e., all pseudo-tables have 3 rows.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 35,
+    "total_chunks": 47,
+    "char_count": 2136,
+    "word_count": 345,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "33ac406d-21b1-4f54-b6c2-316cf865425e",
+    "text": "Larger k values add both prompting and remapping, achieves a high accuracy.\nlittle benefit in performance but increases computational cost. TABLE XIV\nFine-tuning Cost: Compared to zero-shot baselines, ZTab EFFECT OF LABEL REMAPPING ON MICRO-F1 UNDER ONTOLOGY SHIFT.\npays in fine-tuning cost, 20 epochs in our experiments: approx- Learning Dataset ZTab ZTabonly-remapping\nimately a few minutes for T2D, Limaye, and Efthymiou, and SOTABsch 75.2 55.6\napproximately 2, 3, 5, and 7 hours for SOTABsch-s, SOTABdbp, SOTABsch-s 74.4 54.9\nSOTABsch, and WikiTable, respectively. CONCLUSION\ncritical applications, this cost is justified by the performance We presented ZTab, a novel domain-based zero-shot framegain over zero-shot baselines (i.e., average improvement of work for column type annotation to overcome the limitations\n23.5%, 1.4%, 9.5% at in-domain, cross-domain, and cross- of existing zero-shot and supervised models. ZTab eliminates\nontology over the strongest baseline).",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 36,
+    "total_chunks": 47,
+    "char_count": 976,
+    "word_count": 137,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "86227a51-1e89-4f6d-a458-f262b7d2be39",
+    "text": "Figure 4 plots average the need for user-labeled training data while learning tabular\nF1-score (across all datasets) against number of epochs (In- structures and distinguishing between similar classes. This is\ndomain Generalization). ZTab outperforms the strongest open- achieved by incorporating domain information at schema level\nsource baseline (Llama3.1-70B) after one epoch and achieves (i.e., class list and table schemas) to generate pseudo-tables for\nmost of its performance gain by the fifth epoch.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 37,
+    "total_chunks": 47,
+    "char_count": 507,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9cab1dcd-c013-48e4-b1f7-4ab92ad5daa6",
+    "text": "This suggests fine-tuning a pre-trained LLM. Pseudo-tables are constructed\nthat the fine-tuning time of ZTab can be substantially reduced using LLM-generated class prototypes, independently of data\nby a brief fine-tuning cycle while providing a substantial distribution, allowing fine-tuned model to be zero-shot because\nimprovement on performance. In addition, this fine-tuning cost no retraining is needed when test data or test domain has\nis amortized over time because no retraining is needed as long changed for three generalization scenarios (i.e., In-Domain,\nas test domain Cpred falls into three generalization scenarios, Cross-Domain, and Cross-Ontology). Our domain-based zeroeven when test data distribution or test domain has changed. shot ZTab provides a trade-off between performance and zeroThe environmental impact can be determined from fine- shot through domain configuration.\ntuning runtime and local electricity mix. According to [59],\nVII. ACKNOWLEDGMENTfor a fixed hardware setup and similar utilization, electricity\nuse is proportional to runtime and CO2 can be estimated The work of Ke Wang is supported in part by a discovery\nas CO2e ≈(Ptot × T) × I, where Ptot is the average total grant from Natural Sciences and Engineering Research Counpower draw during fine-tuning (kW), T is the wall-clock fine- cil of Canada.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 38,
+    "total_chunks": 47,
+    "char_count": 1341,
+    "word_count": 198,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a771b7e7-d5fa-457a-9f3c-744df4fa5aac",
+    "text": "AI-GENERATED CONTENT ACKNOWLEDGMENT [22] K. Bizer, \"Column type annotation using chatgpt,\" arXiv\nLLMs have been used to lightly edit the entire manuscript. [23] B. Freire, \"Archetype: A novel framework\nfor open-source column type annotation using large language models,\"\nREFERENCES Proceedings of the VLDB Endowment, vol. 17, no. 9, pp. 2279 – 2292,\n[1] J. Naughton, \"On schema matching with opaque column 2024.\nnames and data values,\" in Proceedings of the 2003 ACM SIGMOD [24] H. Oyamada, \"Jellyfish: Instructioninternational conference on Management of data, 2003, pp. 205–216. tuning local large language models for data preprocessing,\" in Proceed-\n[2] M. Heflin, \"Semantic labeling using a deep ings of the 2024 Conference on Empirical Methods in Natural Language\ncontextualized language model,\" arXiv preprint arXiv:2010.16037, 2020. Processing, 2024, pp. 8754–8782.\n[3] A. Parnin, \"Tabular [25] T. Sun, \"Tablellama: Towards open large\nrepresentation, noisy operators, and impacts on table structure under- generalist models for tables,\" in Proceedings of the 2024 Conference\nstanding tasks in llms,\" arXiv preprint arXiv:2310.10358, 2023. of the North American Chapter of the Association for Computational\n[4] R. Jarke, \"Data lakes: A survey of Linguistics: Human Language Technologies (Volume 1: Long Papers),\nfunctions and systems,\" IEEE Transactions on Knowledge and Data 2024, pp. 6024–6044. Engineering, vol. 35, no. 12, pp. 12 571–12 590, 2023. [26] G. Balazinska, \"Cents: A flexible and cost-\n[5] G. Chakrabarti, \"Annotating and searching effective framework for llm-based table understanding,\" Proceedings of\nweb tables using entities, types and relationships,\" Proceedings of the the VLDB Endowment, vol. 18, no. 11, pp. 4574–4587, 2025. VLDB Endowment, vol. 3, no. 1-2, pp. 1338–1347, 2010. [27] N. Heer, \"Wrangler: Interactive \"From haystack to needle: Label space reduction for zero-shot classifivisual specification of data transformation scripts,\" in Proceedings of the cation,\" arXiv preprint arXiv:2502.08436, 2025.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 39,
+    "total_chunks": 47,
+    "char_count": 2038,
+    "word_count": 292,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "133ded4b-6605-4ed4-a56e-613491509af7",
+    "text": "SIGCHI Conference on Human Factors in Computing Systems, 2011, pp. [28] P. Rifinski Fainman,\n3363–3372.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 40,
+    "total_chunks": 47,
+    "char_count": 103,
+    "word_count": 15,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6b2eaa25-e8dd-48f1-bf82-e8493deb951c",
+    "text": "Chaudhuri, \"Table-gpt: Table fine-tuned gpt for diverse\n[7] E. Bernstein, \"A survey of approaches to automatic table tasks,\" Proceedings of the ACM on Management of Data, vol. 2,\nschema matching,\" the VLDB Journal, vol. 10, no. 4, pp. 334–350, 2001. no. 3, pp. 1–28, 2024.\n[8] R. Zhang, \"Table meets llm: Can\nS. Tang, \"Seeping se- large language models understand structured table data? a benchmark\nmantics: Linking datasets using word embeddings for data discovery,\" in and empirical study,\" in Proceedings of the 17th ACM International\n2018 IEEE 34th International Conference on Data Engineering (ICDE). Conference on Web Search and Data Mining, 2024, pp. 645–654. IEEE, 2018, pp. 989–1000. [30] Z.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 41,
+    "total_chunks": 47,
+    "char_count": 700,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5fbb6d19-95fe-4e65-a479-7f6a95f931ed",
+    "text": "Wang, \"Watchog: A light-weight contrastive learning\n[9] R. Madden, and based framework for column annotation,\" Proceedings of the ACM on\nM. Stonebraker, \"Aurum: A data discovery system,\" in 2018 IEEE 34th Management of Data, vol. 1, no. 4, pp. 1–24, 2023. International Conference on Data Engineering (ICDE). Toutanova, \"Bert: Pre-training\npp. 1001–1012. of deep bidirectional transformers for language understanding,\" arXiv\n[10] G. Miller, \"Table discovery in data preprint arXiv:1810.04805, 2018.\nlakes: State-of-the-art and future directions,\" in Companion of the 2023 [32] X. Yu, \"Turl: Table understandInternational Conference on Management of Data, 2023, pp. 69–75. ing through representation learning,\" arXiv preprint arXiv:2006.14806,\n[11] M. Hidalgo, \"Sherlock: A deep learning [33] Y. Chen, \" KGLink: A Column Type\napproach to semantic data type detection,\" in Proceedings of the 25th Annotation Method that Combines Knowledge Graph and Pre-Trained\nACM SIGKDD International Conference on Knowledge Discovery &\nLanguage Model ,\" in 2024 IEEE 40th International Conference\nData Mining, 2019, pp. 1500–1508. on Data Engineering (ICDE). Los Alamitos, CA, USA: IEEE\n[12] D. Tan, Computer Society, May 2024, pp. 1023–1035. [Online]. Available:\n\"Sato: Contextual semantic type detection in tables,\" arXiv preprint https://doi.ieeecomputersociety.org/10.1109/ICDE60146.2024.00083\n[34] Z. Yin, \"Synthetic data generation with large\n[13] X. Yu, \"Turl: Table understanding\nlanguage models for text classification: Potential and limitations,\" in\nthrough representation learning,\" ACM SIGMOD Record, vol. 51, no. 1,\nProceedings of the 2023 Conference on Empirical Methods in Natural\npp. 33–40, 2022. Language Processing, 2023, pp. 10 443–10 461.\n[14] Y.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 42,
+    "total_chunks": 47,
+    "char_count": 1750,
+    "word_count": 242,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b009a2f8-812a-433e-b8a8-a3a9aff610bb",
+    "text": "Kong, \"Zero- \"Annotating columns with pre-trained language models,\" in Proceedings\ngen: Efficient zero-shot learning via dataset generation,\" in Proceedings of the 2022 International Conference on Management of Data, 2022, pp.\nof the 2022 Conference on Empirical Methods in Natural Language 1493–1503. Processing, 2022, pp. 11 653–11 669.[15] Y. Chen, \"Reca: Related tables enhanced column\n[36] Z. Cao, \"Towards zero-label language semantic type annotation framework,\" Proceedings of the VLDB Endowlearning,\" arXiv preprint arXiv:2109.09193, 2021. ment, vol. 16, no. 6, pp. 1319–1331, 2023.\n[16] E. Wang, \"Graph neural network approach to seman- [37] R. Hu, \"Does synthetic data generation\ntic type detection in tables,\" in Pacific-Asia Conference on Knowledge of llms help clinical text mining?\" arXiv preprint arXiv:2303.04360,\nDiscovery and Data Mining. Springer, 2024, pp. 121–133. 2023.\n[17] J. Sutton, \"Learning seman- [38] J.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 43,
+    "total_chunks": 47,
+    "char_count": 932,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a9fbbb35-6f8b-4b78-b713-b7960b2ff6b7",
+    "text": "Li,\ntic annotations for tabular data,\" in Proceedings of the 28th International and L. Kong, \"Self-guided noise-free data generation for efficient zeroJoint Conference on Artificial Intelligence, 2019, pp. 2088–2094. shot learning,\" in International Conference on Learning Representations\n[18] ——, \"Colnet: Embedding the semantics of web tables for column (ICLR 2023), 2023.\ntype prediction,\" in Proceedings of the AAAI Conference on Artificial [39] T. Zhang, \"Fusegen:\nIntelligence, vol. 33, no. 01, 2019, pp. 29–36. Plm fusion for data-generation based zero-shot learning,\" in Proceedings\n[19] \"T2dv2 dataset,\" 2017. [Online]. Available: http://webdatacommons. of the 2024 Conference on Empirical Methods in Natural Language\norg/webtables/goldstandardV2.html Processing, 2024, pp. 2172–2190.\n[20] V. Rodriguez-Muro, and [40] Y. Wolfson, \"Generating taV.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 44,
+    "total_chunks": 47,
+    "char_count": 855,
+    "word_count": 113,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4b77e04b-7337-4f0a-ba66-bc028ecf2964",
+    "text": "Christophides, \"Matching web tables with knowledge base bles from the parametric knowledge of language models,\" in Proceedings\nentities: from entity lookups to entity embeddings,\" in International of the 4th International Workshop on Knowledge-Augmented Methods\nSemantic Web Conference. Springer, 2017, pp. 260–277. for Natural Language Processing, 2025, pp. 50–65.\n[21] M. Suciu, \"Chorus: Foundation models for unified data discovery and A. Askell et al., \"Language modexploration,\" Proceedings of the VLDB Endowment, vol. 17, no. 8, pp. els are few-shot learners,\" Advances in neural information processing\n2104–2114, 2024. systems, vol. 33, pp. 1877–1901, 2020. Bizer, \"Column property annotation using large\nlanguage models,\" Crete, Greece, 2024.\n[43] Y. Parameswaran,\n\"Twix: Automatically reconstructing structured data from templatized\ndocuments,\" arXiv preprint arXiv:2501.06659, 2025.\n[44] M. Abadi, \"Automatic generation of normalized\nrelational schemas from nested key-value data,\" in Proceedings of the\n2016 International Conference on Management of Data, 2016, pp. 295–\n310.\n[45] R. Atay, \"Translating json data into relational data\nusing schema-oblivious approaches,\" in Proceedings of the 2019 ACM\nSoutheast Conference, 2019, pp. 233–236.\n[46] H.-H. Tsai, \"Mining tables from large\nscale html texts,\" in COLING 2000 Volume 1: The 18th International\nConference on Computational Linguistics, 2000.\n[47] M. Samet, \"Schema extraction for tabular data on the\nweb,\" Proceedings of the VLDB Endowment, vol. 6, no. 6, pp. 421–432,\n2013.\n[48] \"Sotab dataset,\" 2023. [Online]. Available: https://webdatacommons.\norg/structureddata/sotab/v2/\n[49] A. Nascimento, \"Evaluating\ncolumn type annotation models and benchmarks,\" in Companion Proceedings of the ACM on Web Conference 2025, 2025, pp. 854–858.\n[50] E. Wang, \"Efficient table generation for zero-shot\ncolumn type annotation,\" in 1st ICML Workshop on Foundation Models\nfor Structured Data, 2025.\n[51] A. Fan et al., \"The llama 3 herd of\nmodels,\" arXiv e-prints, pp. arXiv–2407, 2024.\n[52] B. Lu et al., \"Qwen2. 5-coder technical report,\" arXiv preprint\n[53] H.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 45,
+    "total_chunks": 47,
+    "char_count": 2117,
+    "word_count": 297,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7de0ae57-4bd0-4cb4-adc4-5742596dfa85",
+    "text": "Bhosale et al., \"Llama\n2: Open foundation and fine-tuned chat models,\" arXiv preprint\n[54] A. Saulnier et al.,\n\"Mistral 7b,\" arXiv preprint arXiv:2310.06825, 2023.\n[55] A. Lv et al., \"Qwen3 technical report,\" arXiv preprint\n[56] E. Chen\net al., \"Lora: Low-rank adaptation of large language models,\" in International Conference on Learning Representations, 2022.\n[57] D. Jiang,\n\"Tcn: Table convolutional network for web table interpretation,\" in\nProceedings of the Web Conference 2021, 2021, pp. 4020–4032.\n[58] H. Iyyer, \"Tabbie: Pretrained\nrepresentations of tabular data,\" arXiv preprint arXiv:2105.02584, 2021.\n[59] L. Inouye, \"Green algorithms: quantifying the carbon footprint of computation,\" Advanced science, vol. 8,\nno. 12, p. 2100707, 2021.",
+    "paper_id": "2603.11436",
+    "title": "ZTab: Domain-based Zero-shot Annotation for Table Columns",
+    "authors": [
+      "Ehsan Hoseinzade",
+      "Ke Wang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11436v1",
+    "chunk_index": 46,
+    "total_chunks": 47,
+    "char_count": 750,
+    "word_count": 107,
+    "chunking_strategy": "semantic"
+  }
+]

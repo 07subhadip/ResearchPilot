@@ -1,0 +1,1362 @@
+[
+  {
+    "chunk_id": "22bf66eb-6203-4c50-8bfc-deb969e87a5f",
+    "text": "MCMC Informed Neural Emulators for Uncertainty Quantification\nin Dynamical Systems Heikki Haarioa, Zhi-Song Liua, Martin Simonb and Hendrik Weichelb,c,∗ aLappeenranta-Lahti University of Technology LUT, Lahti, Finland\nbFrankfurt University of Applied Sciences, Frankfurt am Main, Germany\ncUniversity of Huddersfield, Huddersfield, United Kingdom A R T I C L E I N F O A B S T R A C T",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 0,
+    "total_chunks": 68,
+    "char_count": 383,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "af578451-6cae-4832-b0aa-b902a0a82253",
+    "text": "Keywords: Neural networks are a commonly used approach to replace physical models with computationally\nNeural Emulators cheap surrogates. Parametric uncertainty quantification can be included in training, assuming\nMCMC that an accurate prior distribution of the model parameters is available. Here we study the2026 AutoEncoders common opposite situation, where direct screening or random sampling of model parameters\nUncertainty Quantification leads to exhaustive training times and evaluations at unphysical parameter values. Our solution\nNeural ODE is to decouple uncertainty quantification from network architecture. Instead of sampling network\nAttention Mechanism weights, we introduce the model-parameter distribution as an input to network training via\nMarkov chain Monte Carlo (MCMC). In this way, the surrogate achieves the same uncertaintyMar\nquantification as the underlying physical model, but with substantially reduced computation\n11 time.we presentThe approacha quantileis fullyemulatoragnosticfor withpredictionrespectandto thea novelneuralautoencoder-basednetwork choice. In ODEour examples,network\nemulator that can flexibly estimate different trajectory paths corresponding to different ODE\nmodel parameters. Moreover, we present a mathematical analysis that provides a transparent\nway to relate potential performance loss to measurable distribution mismatch.\n[cs.LG]\n1. Neural networks are increasingly used as emulators, i.e., surrogates for computationally intensive simulation\nmodels in physics and chemistry. Beyond accelerating simulations, they can also incorporate complex features that are\ndifficult to encode in traditional solvers. A prominent example is Physics-Informed Neural Networks (PINNs), which\nembed physical laws into the training objective and can serve as fast surrogates using precomputed data [33, 42, 18, 2]. PINNs have been applied to forward and inverse problems in chemical kinetics [15, 1, 46, 6], physics [19, 26, 23],\nand finance [12, 8, 16, 30]. Despite these successes, integrating principled uncertainty quantification (UQ) into neural\nemulators remains challenging. A standard approach to UQ is via Bayesian Neural Networks (BNNs) [29, 27], which\ntreat network weights as random variables and approximate posterior uncertainty using methods such as MCMC,\nvariational inference, or Monte Carlo dropout. While powerful, BNNs can be difficult to scale: the weight space\nis high-dimensional, selecting informative priors is non-trivial, and approximate posteriors may yield miscalibrated\nuncertainty, especially in regimes with limited data or model misspecification.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 1,
+    "total_chunks": 68,
+    "char_count": 2617,
+    "word_count": 346,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bc5f7675-9713-43cd-89fa-6760fea548ce",
+    "text": "In this work, we propose an alternative, modular approach to Bayesian UQ for neural emulation: the MCMC\nInformed Neural Emulator (MINE). The key idea is to decouple Bayesian inference from function approximation.arXiv:2603.10987v1 We first perform posterior inference offline using MCMC on the original simulator (or any black-box/legacy model) to\nobtain samples from the parameter posterior 𝑝(𝜽∣𝒚). We then train deterministic neural surrogates on posteriorinformed data, i.e., input–output pairs concentrated in regions of parameter space consistent with the observed\ndata. This approach, related to recent work on training-distribution selection [10], directly targets the quantity of\ninterest in Bayesian prediction, without requiring Bayesian architectures at inference time. Concretely, we provide two\ncomplementary surrogate components: a quantile (interval) emulator and a forward emulator for operator learning. The two components serve different deployment needs: the quantile emulator provides immediate interval estimates\nwhich is particularly useful when deterministic, low-latency uncertainty summaries suffice, while the forward emulator\nenables fast posterior predictive sampling which is useful for downstream stochastic pipelines.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 2,
+    "total_chunks": 68,
+    "char_count": 1248,
+    "word_count": 163,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "759b0a1f-97ab-4203-a24b-a701239163e6",
+    "text": "∗Corresponding author\nhendrik.weichel@fra-uas.com (H. MCMC Informed Neural Emulators This paradigm exploits a practical advantage of Bayesian posterior sampling: MCMC concentrates computation on\nplausible parameter regions instead of exhaustively covering the full parameter space. To illustrate the scale, consider\na simulator with a runtime of one second and 20 parameters, each discretized into 10 values. A brute-force grid would\nrequire 1020 simulator evaluations, i.e., 1020 seconds, which is approximately 3 × 1012 years. In contrast, a posterior\nchain with 105 simulator evaluations takes on the order of a day (about 28 hours at one second per evaluation).",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 3,
+    "total_chunks": 68,
+    "char_count": 665,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88c4f8cb-ec1a-4632-84ab-b2d270cc2f6b",
+    "text": "The\nMINE paradigm leverages such posterior samples to reduce the data-generation burden dramatically, while focusing\nlearning on the statistically relevant regions. The MINE paradigm is conceptually distinct from embedding uncertainty\ndirectly into the neural network. Unlike BNNs, which attempt to represent uncertainty through probabilistic weight\ndistributions and require posterior approximation in weight space, MINE externalizes uncertainty through Bayesian\nparameter inference performed offline. Where, e.g., Bayesian PINNs [44] place Bayesian inference inside the surrogate\nby treating network weights probabilistically and estimating their posterior, we instead run MCMC offline on the\nsimulator's physical parameters and then train deterministic emulators on posterior-informed data, thus avoiding\nweight-space sampling at inference time. This approach is complementary to surrogate-assisted inference methods\nsuch as using surrogates to accelerate MCMC (assuming that draws from a prior are possible): here, we assume\nposterior sampling can be performed offline, with minimal prior knowledge such as positivity constraints only, and then\namortize Bayesian prediction through deterministic surrogates trained on posterior-informed data. The MINE paradigm\ncan be understood independently from architectural families such as Neural Ordinary Differential Equations (Neural\nODEs) [7, 28, 22, 45, 48, 21], even though it may utilize these architectures in its realizations. Neural ODEs model\ncontinuous-time dynamics via neural-parameterized vector fields and have been used, for example, to emulate chemical\nreaction systems [39, 24]. However, standard Neural ODE formulations do not provide Bayesian UQ natively; Bayesian\nextensions (e.g., Bayesian Neural ODEs or neural SDE variants) incorporate uncertainty internally but typically require\nsampling at inference time and can introduce additional computational overhead. In contrast, the MINE framework\nachieves UQ through offline posterior sampling and trains deterministic emulators on posterior-informed data. The\nforward emulator realization may use a Neural ODE/neural operator backbone, but the UQ mechanism is architectureagnostic and lives outside the network. Relative to PINNs, the MINE framework is generally equation-free in training\nand is particularly suitable when governing equations are unknown, non-differentiable, or when one must interface\nwith black-box simulators. Nevertheless, physics-informed loss terms can be incorporated when available. Finally,\ncompared to Statistics-Informed Neural Networks (SINNs) [17, 47], which aim to reproduce full statistical properties\nof stochastic trajectories, the MINE paradigm targets Bayesian predictive uncertainty for quantities of interest via\nposterior-informed training data and produces deterministic outputs at inference time (either conditional on sampled\n𝜽for posterior draws, or directly as quantiles for intervals). A central modeling consideration is what uncertainty is represented. The MINE framework directly captures\nposterior/parameter uncertainty through 𝑝(𝜽∣𝒚) and its propagation to predictions.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 4,
+    "total_chunks": 68,
+    "char_count": 3134,
+    "word_count": 408,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8cb9d081-42ed-452e-ad65-0ea0724e7be4",
+    "text": "In addition, any observation noise\nand stochasticity encoded in the likelihood 𝑝(𝒚∣𝜽) can be reflected in the posterior predictive distribution. Like any\nsurrogate approach, MINE also introduces emulator error; throughout the paper we therefore evaluate both predictive\naccuracy and uncertainty calibration to assess how closely the emulators match the offline Bayesian reference. The main contributions of this work are:\n1.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 5,
+    "total_chunks": 68,
+    "char_count": 424,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1090beab-2ad6-4ed8-a50a-4861d53a212b",
+    "text": "We formalize the MCMC Informed Neural Emulator (MINE) paradigm, which decouples Bayesian posterior\ninference (via MCMC on a simulator) from deterministic function approximation (via neural networks trained\non posterior-informed data). We provide a Wasserstein-based stability analysis showing that the deployment\nrisk of any Lipschitz-bounded emulator is controlled by its training risk plus an explicit penalty proportional to\nthe distribution relative to the deployment distribution, with constants depending only on Lipschitz moduli and\nsecond moments. This yields a principled justification that MCMC-informed training, training on (or near) the\ndeployment/posterior law is bound-optimal, and it quantifies how finite-chain posterior approximations degrade\nperformance.\n2. We present two complementary MINE realizations: a quantile (interval) emulator that directly learns predictive\nquantiles to avoid sampling at inference time and a forward emulator trained on posterior-informed input–output\npairs that enables efficient posterior predictive draws without additional simulator calls.\n3. For the forward emulator component, we instantiate the paradigm with a concrete, high-performing architecture:\nan AutoEncoder-based ODE neural network (AEODE) with time embeddings and attention. We emphasize, however, that MINE is architecture-agnostic and can employ alternative neural ODE/neural\noperator backbones. We evaluate the proposed framework on two representative examples: (a) a chemical kinetics ODE MCMC Informed Neural Emulators model with six chemical species and (b) the FaIR simple climate model, which simulates global temperature response\nto greenhouse gas (GHG) emissions.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 6,
+    "total_chunks": 68,
+    "char_count": 1688,
+    "word_count": 222,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e5261b76-462e-4da0-9f84-85f01d8d81d1",
+    "text": "In addition, we provide experiments comparing AEODE against alternative ODEstyle surrogate architectures to motivate our design choices. The remainder of this paper is structured as follows: Section 2 introduces preliminaries on Bayesian UQ with\nMCMC and presents two running examples. Section 3 introduces MCMC-informed training for neural emulators\nincluding a rigorous mathematical foundation for this framework, and Section 4 details the two MINE realizations. Section 5 describes experimental settings, and Section 6 presents results on predictive fidelity, calibration, and\nefficiency.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 7,
+    "total_chunks": 68,
+    "char_count": 591,
+    "word_count": 80,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c5f1fa1-2593-48ed-898f-9c749a197485",
+    "text": "Uncertainty quantification via Markov chain Monte Carlo\nMarkov chain Monte Carlo sampling is a standard workhorse when it comes to quantifying and propagating both\nparametric and input uncertainties in mathematical models. We begin with a standard Bayesian inverse problem setup:\nLet 𝜽∈Θ ⊂ℝ𝑑denote the physical parameters of a model, 𝒚∈ℝ𝑛the observed data, and 𝐹∶× Θ →ℝ𝑛\nthe forward model mapping the (controlled) input factors 𝒙∈given the parameters 𝜽∈Θ to observables. We\nformulate the inverse parameter calibration problem in a statistical setting, applying Bayes' Theorem to obtain a\nmathematical expression for the posterior probability density of the model parameters. This posterior density can\nbe explored numerically to receive the uncertainties. Let us formally write our model as",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 8,
+    "total_chunks": 68,
+    "char_count": 792,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db5b0e89-4c4a-45db-8feb-7cf6289ab73a",
+    "text": "where 𝜺presents the measurement noise. The posterior distribution of 𝜽- that is, those values of 𝜽that agree with data - is given by the Bayes' formula 𝑝(𝒚∣𝜽)𝑝(𝜽)\n𝑝(𝜽∣𝒚) = , (1)\n∫𝑝(𝒚∣𝜽)𝑝(𝜽)𝑑𝜽 where 𝑝(𝜽∣𝒚) denotes the posterior of 𝜽for given data 𝒚, 𝑝(𝒚∣𝜽) gives the likelihood of 𝒚for given 𝜽, and 𝑝(𝜽)\ndenotes the prior distribution of 𝜽. The Bayes' formula gives a framework to solve the inverse parameter calibration\nproblem. The key benefit is that instead of a single optimal fit for the parameter 𝜽it provides the posterior distribution,\nall parameter values that agree with given data. Consequently, any model prediction can be performed as an ensemble,\nusing various parameters 𝜽sampled from the posterior. In this way, the uncertainty of parameter values for model\npredictions is quantified. However, a direct evaluation of the Bayes' formula is only possible in some trivial cases. Therefore, we generate a representative set of samples {𝜽(𝑖)}𝑁 from the posterior using a Markov Chain Monte 𝑖=1\nCarlo (MCMC) algorithm. MCMC methods provide a way to computationally implement the Bayes Theorem, i.e.,\nto approximate the posterior distribution of the parameters, without explicitly evaluating the formula. Especially, the\ndirect computation of the multidimensional integral is avoided. Instead of trying to sample directly from the unknown\nposterior distribution, a known proposal distribution is used, and the samples from it are either accepted or rejected\ndepending on the values of the current and proposed (non-normalized) likelihood values 𝑝(𝒚∣𝜽)𝑝(𝜽). Also, setting\n𝑝(𝜽), possible prior knowledge of the parameters may require expert knowledge. In our cases, we rely on either\nobvious physical constraints such as positivity or employ the assumptions used in literature.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 9,
+    "total_chunks": 68,
+    "char_count": 1784,
+    "word_count": 272,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b818865c-d6d8-4a0a-a544-5b2c9330cde5",
+    "text": "By iteratively repeating\nthe MCMC steps – propose, accept/reject – a chain of the values 𝜽is created, that can be proven to converge towards\nthe true parameter posterior. However, the convergence may be impractically slow if the size and shape of the proposal\ndistribution do not align with the underlying true distribution. This issue can be avoided by using adaptive methods\nthat learn how to improve the proposal on the fly. We use the Delayed Rejection Adaptive Metropolis (DRAM), [11]\nthat employs several multidimensional Gaussian proposal distributions, and updates the covariances of them based on\nthe earlier sampled members in the chain. Once we have calibrated the model using input-output pairs, such as, e.g., historical inputs 𝒙hist and outputs 𝒚hist\nin our climate model example,to obtain an MCMC chain {𝜽(𝑖)}𝑁𝑖=1, we are interested in propagating the corresponding\nparametric uncertainty into the future. That is, for each sample 𝜽(𝑖) in the chain, we evaluate the forward model\n𝐹(𝒙∣𝜽(𝑖)) for potentially new data points 𝒙, obtaining the corresponding outputs {𝐹(𝒙∣𝜽(𝑖))}𝑁𝑖=1. This corresponds\nto drawing from the posterior predictive distribution 𝑝(𝒚∣𝒚hist, 𝒙hist; 𝒙) = ∫𝑝(𝒚∣𝒙, 𝜽)𝑝(𝜽∣𝒚hist, 𝒙hist)𝑑𝜽. (2)",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 10,
+    "total_chunks": 68,
+    "char_count": 1221,
+    "word_count": 185,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "33acf047-32ee-4abb-a0ec-d542e304bdce",
+    "text": "MCMC Informed Neural Emulators In some practical applications, one is interested in drawing from this posterior predictive distribution directly, in\nothers, statistics such as relevant point estimates (e.g., means or medians) and measures of uncertainty (e.g., variances\nor credible intervals) suffice. Therefore, our framework offers two approaches to emulate: (1) the forward operator\n𝐹(𝒙∣𝜽) combined with (2) relevant quantiles of the posterior predictive distribution. Both emulators are fully\ndeterministic for given 𝜽, whose values can be randomly drawn from the sampled MCMC chain. Running Examples\nWe will use two examples to clarify the use of MCMC sampling as a tool within the MINE framework for physical\nmodels: a low-dimensional system from chemical kinetics, and a moderately high-dimensional simple climate model. While the former is a standard test example, the latter is a nice example for practically relevant high-dimensional\nsettings while still being tractable on a standard computer. Chemical Kinetics Model\nConsider the kinetic system between six chemical species 𝐴, 𝐵, 𝐶, 𝐷, 𝐸, 𝐹: 𝐴+ 𝐵→𝐶+ 𝐹 (3)\n𝐴+ 𝐶→𝐷+ 𝐹 (4)\n𝐴+ 𝐷→𝐸+ 𝐹 (5) where the reaction rates of the three reactions have to be estimated by the concentration data available of the component\n𝐴. This example, called 'Himmel' in the following, is taken from [14], also available as a demo example of the MCMC\nlibrary package in Matlab 1. By denoting the three reaction constants as named 𝜃1, 𝜃2, 𝜃3, we can write the respective ODE system as 𝑑𝑡= −𝜃1𝐴𝐵−𝜃2𝐴𝐶−𝜃3𝐴𝐷 (6)\n𝑑𝑡= −𝜃1𝐴𝐵 (7)\n𝑑𝑡= 𝜃1𝐴𝐵−𝜃2𝐴𝐶 (8)\n𝑑𝑡= 𝜃2𝐴𝐶−𝜃3𝐴𝐷 (9)\n𝑑𝑡= 𝜃3𝐴𝐷 (10)",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 11,
+    "total_chunks": 68,
+    "char_count": 1605,
+    "word_count": 256,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "56790f21-02b7-4c7e-a881-c78c4eea5f48",
+    "text": "Figure 1 shows how the model fits the data. In addition to the standard least squares fit it also shows the model\nsolutions accepted by the MCMC sampling. The measurement noise is assumed to be i.i.d. Gaussian, with the noise\nvariance estimated by the residuals of the fit. We see how the accepted model solutions agree with noise, i.e., they\nroughly just cover the measured concentration values.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 12,
+    "total_chunks": 68,
+    "char_count": 396,
+    "word_count": 67,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d3494432-b520-4110-a65e-bd467e329122",
+    "text": "Figure 2 presents the pairwise 2D scatter plots of the parameters,\nas obtained by running an MCMC chain of length 5000 samples. In the context of our Bayesian inverse problem setup 𝐹(𝒙∣𝜽) is the forward operator corresponding to the ODE\nwhich returns the concentration of chemicals 𝐴through 𝐹in time 𝑡, namely 𝒚. This forward operator 𝐹(𝒙∣𝜽) has the\ninput parameters 𝒙that contain the initial concentrations of the six chemical species 𝐴through 𝐹, and 𝜽which holds\nthe reaction constants 𝜃1, 𝜃2, 𝜃3.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 13,
+    "total_chunks": 68,
+    "char_count": 499,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "602268af-0a46-446c-a4c0-8450919145a0",
+    "text": "The FaIR Simple Climate Model\nThe Finite Amplitude Impulse Response (FaIR) model, see [37, 20], is a surrogate-type so-called simple climate\nmodel, which aims to imitate the key features of more complicated earth system models. More precisely, the increase in\ntemperature due to greenhouse gas emissions is modeled via a simplified carbon cycle in four main carbon reservoirs,\nnamely geological, deep ocean, biosphere, and ocean mixed layer. We focus in this work on the FaIR version 1.6,\ncf. [37], where the model dynamics are driven by annual greenhouse gas emissions as the primary input. For each\nyear, the atmospheric concentrations of greenhouse gases are computed by accounting for their accumulation or decay,",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 14,
+    "total_chunks": 68,
+    "char_count": 717,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4db29075-ae0d-4680-9fc0-75bb3c069336",
+    "text": "1https://github.com/mjlaine/mcmcstat MCMC Informed Neural Emulators A Data\n0.020 A\n0.015 E 0.000\n0 100 200 300 400 500 600\nTimestep Figure 1: Himmel data fitting. 1.4\n12 13 14 15 16 17\n0.34 0.34 1 0.30 0.30\n0.28 0.28 0.24 0.24\n12 13 14 15 16 17 1.40 1.45 1.50 1.55 1.60 1.65 1.70\n3 3 Figure 2: 2D scatter of Himmel parameters.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 15,
+    "total_chunks": 68,
+    "char_count": 326,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1d62cb66-f3f6-42f6-91a3-f24f3a1cb87a",
+    "text": "which results from exchanges with the aforementioned carbon cycle reservoirs, acting either as sinks or sources. These\nprocesses unfold over different timescales, depending on the specific reservoir involved and the prevailing temperature. The governing equations for the amounts 𝑅𝑖of a certain greenhouse gas (GHG) in each reservoir are given by d𝑅𝑖 𝑅𝑖\nd𝑡= 𝑎𝑖𝐸GHG(𝑡) − 𝛼(𝑇(𝑡))𝜏𝑖 , 𝑖= 1, ..., 4, MCMC Informed Neural Emulators 0.50 Temperature[°C]\n0.25 1900 1920 1940 1960 1980 2000 2020\nYears Figure 3: FaIR calibration results (until 2005) and sampling from posterior predictive distribution (from 2005). With\nhistorical temperature measurements in red, to the median, 90% credible interval and 99% credible interval in blue.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 16,
+    "total_chunks": 68,
+    "char_count": 727,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8afac5ba-e02e-4586-8663-ea8bd6282fb9",
+    "text": "where 𝐸GHG(𝑡) depicts the emission at time 𝑡, which are the core input factors to the model; 𝑎𝑖contains the reservoir\nfractions (∑4 𝑖=1 𝑎𝑖= 1); 𝜏𝑖represents the lifespan of GHG in reservoir 𝑖; and 𝛼(⋅) regulates the timescale adjustment\nthrough accounting for the temperature dependence of lifespan in each reservoir. FaIR also calculates non-CO2 greenhouse gas concentrations from emissions, aerosol forcing from aerosol\nprecursor emissions, tropospheric and stratospheric ozone forcing from precursor emissions, and forcings from black\ncarbon on snow, stratospheric methane oxidation to water vapor, contrails, and change in land use. Forcings from\nvolcanic eruptions and solar irradiance fluctuations are supplied externally. These forcings are then converted to a\ntemperature change. The model comprises a total of 20 physical parameters, each controlling specific aspects of the carbon cycle,\nradiative forcing, and climate response processes. In order to generate reliable climate projections, the FaIR model must\nbe calibrated against historical data, including atmospheric greenhouse gas concentrations and global mean surface\ntemperatures. The calibration process involves estimating the values of the model parameters such that the model output\nbest fits the observed data over a historical time span. A key challenge in this process is the quantification of parameter\nuncertainty. If uncertainties in parameter estimates are ignored or underestimated, the model may exhibit a systematic\nbias toward higher or lower temperature responses, commonly referred to as \"hot\" or \"cold\" biases, respectively. Such\nbiases can distort projections and misinform policy decisions. To address this critical issue, a Bayesian parameter\ncalibration framework has been proposed in [43]. It incorporates prior knowledge and enables rigorous quantification\nof uncertainty in the parameter estimates. In the context of our Bayesian inverse problem setup 𝜽∈ℝ20 is the vector of the physical FaIR parameters to be\nestimated, 𝐹(𝒙∣𝜽) is the forward model with the output 𝒚∈ℝ𝑛which denotes the vector of observed temperature\nanomalies at discrete time points 𝑡1, … , 𝑡𝑛in the future, given the emission vector 𝒙∈ℝ𝑛at these time points. Parameterizing the emission pathway for scenario predictions In this work we are interested in quantifying both\nthe parameter and input emission uncertainty. Therefore, we parametrize the emission input through two parameters,\nnamely 𝐸0, the absolute amount of GHG emissions in the base year, and 𝑠, the emission pathway for the following",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 17,
+    "total_chunks": 68,
+    "char_count": 2560,
+    "word_count": 374,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "69da9c38-440f-4e9a-ad9f-21f360ceb450",
+    "text": "MCMC Informed Neural Emulators years. 𝑠could be one of the SSP-RCP scenarios, which are a comprehensive set of plausible emission scenarios based\non several socioeconomic narratives for the future [31]. In practical applications, we are interested in drawing from the\ncorresponding posterior predictive distribution, cf. Equation (2) given by 𝑝(𝑦∣𝒚hist, 𝒙hist; 𝒙= 𝑔(𝑠, 𝐸0)) = ∫𝑝(𝑦∣𝒙, 𝜽) 𝑝(𝜽∣𝒚hist, 𝒙hist) 𝑑𝜽 (11)",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 18,
+    "total_chunks": 68,
+    "char_count": 412,
+    "word_count": 61,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "86ece965-b6a5-4bc3-9fab-dc13e0a8f7cf",
+    "text": "where 𝒚hist are the historical temperature observations, 𝒙hist the historical emissions, and 𝑔(𝑠, 𝐸0) is a known function,\nwhich parameterizes the emission vector 𝒙into scenario 𝑠and the base-year emissions 𝐸0. As we will use separable\nHilbert spaces later on, we embed the categorical variable 𝑠into ℝ𝑘, e.g. via one-hot or scalar encoding. Let us illustrate this setting, which is practically relevant, e.g., in financial climate risk management, see [4, 43],\nusing Figure 3 below: To determine the posterior distribution of the FaIR parameters, 𝑝(𝜽∣𝒚ℎ𝑖𝑠𝑡, 𝒙ℎ𝑖𝑠𝑡), a DRAM\nMCMC calibration as described in Section 2 has been applied. The Figure 3 shows the median, the 90% credible\ninterval, and the 99% interval of the posterior predictive distribution and the data points the parameters were fitted\nto. The chains of the calibration can be seen in Figure 11 in Appendix B. For some use cases, one is interested in\ngenerating temperature pathways for given input parameters, whereas in other cases, one is merely interested in the\nspread of the distribution at a discrete point in the future, say, in the year 2100 in accordance with the Paris agreement.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 19,
+    "total_chunks": 68,
+    "char_count": 1156,
+    "word_count": 186,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0d7ee0e5-be05-436b-8296-eefb9ba9a559",
+    "text": "MCMC Informed Training Our aim is to construct surrogate models that (i) emulate the underlying physical forward model and (ii) reproduce\nthe uncertainty summaries induced by the Bayesian posterior over parameters. In the simple chemical kinetics example\nwith fixed initial conditions shown in Figure 1, the first task is particularly transparent: we draw parameter samples\n{𝜽(𝑠)} from the posterior, evaluate the simulator to obtain concentration values (𝐴𝑡, … , 𝐸𝑡) at time points of interest 𝑡,\nand fit a regression model that maps the parameters to concentrations, i.e., 𝜽↦(𝐴𝑡, … , 𝐸𝑡) (independently for each 𝑡in\nFigure 1). Since this example has only three input parameters, even a second-degree polynomial provides an excellent\nfit (with 𝑅2 ≈0.99) across all positive concentrations. In addition to forward emulation, we also consider learning\nposterior-informed point estimates, such as conditional means, as a function of the initial state. Here, the input is the\nvector of initial concentrations (𝐴0, … , 𝐸0), and the target is the concentration of a selected chemical species at time 𝑡. Training pairs {(𝒙(𝑖), 𝑦(𝑖))}𝑛 are generated by sampling initial conditions 𝒙(𝑖) independently from relevant intervals, 𝑖=1\nsampling 𝜽independently from the posterior distribution, and running the ODE system to obtain the corresponding\noutput 𝑦(𝑖) at time 𝑡. This yields a direct mapping from initial concentrations to posterior-informed predictions at time\n𝑡, which again can be captured by simple regression using MSE loss in this low-dimensional example. Thus, in lowdimensional settings, a simple regressor can already serve as an MCMC Informed forward surrogate, whereas more\nelaborate methods are required as the input dimension increases. The FaIR model is our running example for such a moderately high-dimensional setting: When training an emulator\nof the forward model, taking 𝜽and 𝒙as inputs, we aim to reproduce how the model behaves under uncertainty in both\ninput emissions and model parameters. As we have already discussed, these uncertainties come from two sources:\ninput uncertainty, i.e., different initial values for the base-year emissions 𝐸0 and plausible future emission pathways\n𝑠. Together, these define the input distribution 𝑝(𝒙), describing which parts of the emission space we consider likely\nor relevant. The second source of uncertainty is parameter uncertainty, encoded into the distribution 𝑝(𝜽∣𝒚hist, 𝒙hist)\nof model parameters and obtained from MCMC calibration against historical temperature and emission data.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 20,
+    "total_chunks": 68,
+    "char_count": 2544,
+    "word_count": 380,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7fd701b2-1268-4704-ad19-a857588ad3c5",
+    "text": "The\nmost favorable case is when the statistical conditions used to generate training data closely match those encountered\nat deployment. When we have a credible target distribution for the inputs and parameters the emulator will face in\npractice—which we refer to as the deployment law 𝜈dep—it is natural to use this information to guide training-data\ngeneration. In the FaIR setting, conditional on a fixed emissions scenario, the uncertainty in future model outputs\ninduced by parameter uncertainty is naturally represented by the posterior predictive distribution. Accordingly, drawing\ntraining samples from the calibrated posterior (or an approximation thereof) concentrates training on high-probability\nregions of the intended predictive setting and reduces reliance on extrapolation at prediction time. In this sense, the\nMCMC posterior obtained from calibration provides a practical proxy for the deployment environment. In practice,\nhowever, we only approximate the true posterior using a finite MCMC chain, and the distribution of emissions scenarios\nat prediction time may be uncertain or application-dependent. As a result, the training distribution may differ from\nthe true deployment distribution (e.g., due to incomplete MCMC mixing or unbalanced scenario coverage), and\nperformance can degrade under distribution shift. To quantify this effect, we provide a Wasserstein-based stability MCMC Informed Neural Emulators bound under standard regularity assumptions (Lipschitz continuity and finite second moments). The Lipschitz theory\nfor out-of-distribution error bounds has been studied recently in [10] and the theory provided in this section is inspired\nby this work.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 21,
+    "total_chunks": 68,
+    "char_count": 1683,
+    "word_count": 238,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5c64ac9a-95bc-4fc5-880a-c398baafd9ff",
+    "text": "The proofs for all of the results stated in the remainder of this section can be found in the A. Let\n(, ⟨⋅, ⋅⟩), (Θ, ⟨⋅, ⋅⟩Θ), (, ⟨⋅, ⋅⟩) be separable Hilbert spaces and set ∶= × Θ, ‖(𝒙, 𝜽)‖2= ‖𝒙‖2+ ‖𝜽‖2Θ. Assume the (true) forward model 𝐹∶→is Lipschitz, ‖𝐹(𝑢) −𝐹(𝑣)‖≤𝐿‖𝑢−𝑣‖ for all 𝑢, 𝑣∈, ‖𝐹(0)‖< ∞, and that the hypothesis class satisfies, for every emulator ∈,",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 22,
+    "total_chunks": 68,
+    "char_count": 380,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0b9de29f-770f-4247-96cb-5db4c4faac3a",
+    "text": "Lip() ≤𝑅, ‖(0)‖≤𝐵. For 𝜈∈2() (the set of probability measures on with finite second moment), define the squared-error risk\n𝜈() ∶= 𝔼𝑢∼𝜈‖𝐹(𝑢) −(𝑢)‖2. Let 𝑊2 denote the 2–Wasserstein distance on equipped with the metric ‖⋅‖; see Villani [41] or Santambrogio [36]\nfor definitions and properties. 𝐶1 ∶= 𝐿+ 𝑅, 𝐶2 ∶= ‖𝐹(0)‖+ 𝐵,\nand for 𝜈, 𝜈′ ∈2() define\n√ ) 𝑐(𝜈, 𝜈′) ∶= 𝐶2 + 2𝐶1𝐶2. 1 2(𝔼𝜈‖𝑢‖2+ 𝔼𝜈′‖𝑢‖2 Finally, for a prescribed deployment law 𝜈dep ∈2() define the bound objective\n𝐽(𝜈) ∶= ∈𝜈()inf + 𝑐(𝜈, 𝜈dep) 𝑊2(𝜈, 𝜈dep). For any 𝜈, 𝜈′ ∈2() and any ∈,\n𝜈′() ≤𝜈() + 𝑐(𝜈, 𝜈′) 𝑊2(𝜈, 𝜈′). (12)",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 23,
+    "total_chunks": 68,
+    "char_count": 612,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "662ac820-7ddb-42f6-b5dd-1b199bdb55b5",
+    "text": "By Lemma 1, a smaller Wasserstein distance implies a smaller upper bound on the increase in expected risk\nattributable to distribution mismatch. Note, however, that although the bound scales linearly with 𝑊2(𝜈, 𝜈dep), the\nprefactor 𝑐(𝜈, 𝜈dep) depends on the second moments of 𝜈and 𝜈dep, so the risk-shift guarantee is most informative when\nthese moments are uniformly controlled (e.g., on a bounded operating domain). The following Proposition upperbounds the best achievable deployment risk: Proposition 1 (Bound-optimality at the deployment law).",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 24,
+    "total_chunks": 68,
+    "char_count": 548,
+    "word_count": 80,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "32c015c1-220f-460c-bf56-019b27688af5",
+    "text": "For any 𝜈∈2(),\n𝐽(𝜈) ≥𝐽(𝜈dep) = ∈𝜈dep(),inf (13) with equality at 𝜈= 𝜈dep. Moreover,\n0 ≤𝐽(𝜈) −𝐽(𝜈dep) ≤2 𝑐(𝜈, 𝜈dep) 𝑊2(𝜈, 𝜈dep). (14) So, if we know or can approximate 𝜈dep, then training distribution matching is bound-optimal. In the multi-scenario\nsetting where the deployment environment selects scenario laws {𝜈𝑘}𝐾𝑘=1 with probabilities {𝑤𝑘}𝐾𝑘=1, the resulting ∑\ndeployment law is the mixture 𝜈mix = 𝑘𝑤𝑘𝜈𝑘, and the same analysis motivates training on 𝜈mix:\nCorollary 1. Over all 𝜈∈2(), 𝜈mix is a minimizer of 𝐽(𝜈), and\ninf𝜈𝐽(𝜈) = ∈𝜈mix(),inf 0 ≤𝐽(𝜈) −𝐽(𝜈mix) ≤2𝑐(𝜈, 𝜈mix)𝑊2(𝜈, 𝜈mix). (15) MCMC Informed Neural Emulators Finally, when the posterior is approximated by an empirical MCMC measure ̂𝜋𝑁, we obtain an explicit bound\non the degradation in 𝐽in terms of 𝑊2(̂𝜋𝑁, 𝜋), which vanishes as the empirical chain converges in Wasserstein\ndistance under standard conditions: The posterior distribution 𝜋(𝜽∣𝒚hist, 𝒙hist) cannot be represented exactly but\nis approximated by a finite empirical measure obtained from an MCMC simulation. Consequently, the joint training\ndistribution 𝜈= 𝜌(𝒙) ⊗𝜋(𝜽∣𝒚hist, 𝒙hist) is replaced by its empirical counterpart 1 ∑𝑁\n̂𝜈𝑁(𝒙, 𝜽) = 𝜌(𝒙) ⊗̂𝜋𝑁(𝜽), ̂𝜋𝑁(𝜽) = 𝛿𝜽(𝑖), (16) 𝑁\n𝑖=1 where {𝜽(𝑖)}𝑁 are the posterior samples generated by the chain. This substitution raises a natural question: how close 𝑖=1\nis the finite-chain training law ̂𝜈𝑁to the ideal deployment law 𝜈dep and how much does this discrepancy affect the\nbound 𝐽(𝜈)? To answer this, we next derive a quantitative extension of the previous results, showing that training on\na finite MCMC chain remains asymptotically optimal, that is, with an approximation error that vanishes as the chain\nconverges to the true posterior in Wasserstein distance. This analysis formalizes the intuition that the quality of MINE\ntraining depends primarily on how well the MCMC samples represent the underlying posterior distribution. In the finite-chain analysis below, we take as deployment law the ideal (infinite-chain) joint law",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 25,
+    "total_chunks": 68,
+    "char_count": 2014,
+    "word_count": 308,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a8ade94-8524-4e17-871b-2a573e121fe1",
+    "text": "𝜈∶= 𝜌⊗𝜋∈2(), i.e. 𝜈dep ∶= 𝜈, (17) so that 𝐽𝜈(𝜈) = inf∈𝜈() (since 𝑊2(𝜈, 𝜈) = 0). Lemma 2 (Reduction of 𝑊2 for product measures with a common marginal). Let 𝜌∈2() and 𝜋, ̂𝜋∈2(Θ). Equip\n= × Θ with the product norm ‖(𝒙, 𝜽)‖2= ‖𝒙‖2+ ‖𝜽‖2Θ. 𝑊2(𝜌⊗𝜋, 𝜌⊗̂𝜋) = 𝑊2(𝜋, ̂𝜋). (18) Now we can state our main result:",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 26,
+    "total_chunks": 68,
+    "char_count": 313,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c1621c57-541f-4639-88bb-5f456002a68c",
+    "text": "Theorem 1 (Finite-chain approximation of the bound objective). Let 𝜋∈2(Θ) and define the ideal joint law\n𝜈∶= 𝜌⊗𝜋∈2(). Given posterior samples {𝜽(𝑖)}𝑁𝑖=1, define the empirical posterior 1 ∑𝑁\n̂𝜋𝑁∶= 𝛿𝜽(𝑖), ̂𝜈𝑁∶= 𝜌⊗̂𝜋𝑁. (19) 𝑁\n𝑖=1 Consider the objective with deployment law set to the ideal law, i.e., 𝐽𝜈(⋅) with 𝜈given by (17). 0 ≤𝐽𝜈(̂𝜈𝑁) −𝐽𝜈(𝜈) ≤2 𝑐(̂𝜈𝑁, 𝜈) 𝑊2(̂𝜋𝑁, 𝜋). (20) Moreover, assume {𝜽(𝑖)}𝑖≥1 is a (Harris) ergodic Markov chain with invariant distribution 𝜋such that (i) the ergodic\ntheorem applies to every bounded continuous 𝜑∶Θ →ℝ, and (ii) the ergodic theorem applies to the (unbounded)\nfunction 𝜑(𝜽) = ‖𝜽‖2Θ, i.e.\n1 ∑ 𝑎.𝑠.\n𝜋(𝑑𝜽). (21) Θ 𝑁 ‖𝜽(𝑖)‖2Θ ←←←←←←←←←←←←←→𝑁→∞ ∫Θ ‖𝜽‖2 𝑖=1 Then, almost surely, 𝑊2(̂𝜋𝑁, 𝜋) →0 and 𝑐(̂𝜈𝑁, 𝜈) →𝑐(𝜈, 𝜈). Consequently, 𝐽𝜈(̂𝜈𝑁) →𝐽𝜈(𝜈) almost surely. If one keeps a fixed external deployment law 𝜈dep ≠𝜈, then controlling 𝐽𝜈dep(̂𝜈𝑁) −𝐽𝜈dep(𝜈) requires, in\naddition to 𝑊2(̂𝜈𝑁, 𝜈), a control of the penalty mismatch 𝑊2(̂𝜈𝑁, 𝜈dep) −𝑊2(𝜈, 𝜈dep) (e.g. via the triangle inequality)\nand any variability of 𝑐(⋅, 𝜈dep) with respect to its first argument.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 27,
+    "total_chunks": 68,
+    "char_count": 1090,
+    "word_count": 175,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "876ea315-c928-466d-ba46-a371be5d2d2e",
+    "text": "MCMC Informed Neural Emulators The proposed MCMC Informed Neural Emulator (MINE) framework enables scalable and task-specific uncertainty\nquantification without embedding stochasticity directly into the network architecture by decomposing the task of\nBayesian uncertainty quantification into two modular steps: Step 1 consists of sampling from the posterior distribution\nof physical parameters using MCMC, and Step 2, training a deterministic neural network emulator using posterior\ninformed training data as described in Section 3. To explore the posterior predictive distribution given the dataset generated in Step 1, we present two emulators\ntailored for different use cases:\n1. A quantile (interval) emulator: We directly train the neural network 𝝎′ ∶→ℝ𝑚with learnable parameters\n𝝎′ to learn the summary statistics of the posterior predictive distribution, specifically the quantile interval.\n2. A forward emulator: We train a surrogate neural network 𝝎∶×Θ →ℝ𝑛with learnable parameters 𝝎using\nposterior samples 𝜽to emulate the forward operator 𝐹(𝒙∣𝜽) in the sampling. This enables a fast approximate\nsampling of the entire posterior predictive distribution. Importantly, the MINE framework does not require a\nspecific architecture here: 𝝎can be implemented by any suitable neural ODE / neural operator surrogate. In both cases, the neural network is trained in a supervised manner and can be tailored to the specific task. In the\nfollowing subsections, we elaborate on the particular architectures for 𝝎and 𝝎′ used in this work.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 28,
+    "total_chunks": 68,
+    "char_count": 1540,
+    "word_count": 221,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "955751fb-87c9-4b9b-b212-b134fa7607e8",
+    "text": "Quantile Emulator\nDirect computation of the posterior predictive distribution using Monte Carlo simulations involves repeated\nevaluations of the forward model, which can be prohibitively expensive when applied to large ensembles or in timesensitive decision-making contexts - even when using a neural emulator for the forward model. While our forward\nODE emulator can be used to accelerate the forward model evaluations within the Monte Carlo sampling, the second,\ncomplementary, part of the MINE framework, the quantile emulator, can be applied when sampling full paths obtained\nfrom the full posterior predictive distribution is not required; instead, the focus lies on quantiles of this distribution as\nmeasures of uncertainty. We utilize the neural network 𝝎′ ∶→ℝ𝑚with learnable parameters 𝝎′ to generate\nposterior interval estimates without the computational burden of traditional sampling methods for each new data\ninstance.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 29,
+    "total_chunks": 68,
+    "char_count": 932,
+    "word_count": 134,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ea2f4bbb-9f53-445f-8fcc-f0b03ae82c9a",
+    "text": "Such an approach is particularly advantageous in applications like financial climate risk management, see,\ne.g., [9, 43], where timely estimates are crucial. Let us first formalize the problem setup and key concepts: Throughout, we assume a data model in which we have\nrandom examples 𝒁= (𝑿, 𝑌) that were created using our forward model 𝐹(𝒙∣𝜽). It consists of features 𝑿∈and a\nresponse 𝑌∈⊆ℝ. The features are chosen with respect to the considered model, and the respective response is then\ncreated using the forward model and a random sample of the chain from the MCMC calibration, i.e., 𝑌= 𝐹(𝒙= 𝑿∣̃𝜽)\nand ̃𝜽∼𝑝(𝜽∣𝒚). We are given a finite training set = {𝒁(1), 𝒁(2), … , 𝒁(𝑛)} and will make predictions about a new\ntest example 𝒁(𝑛+1). We predict ̂𝑞0.05(𝒙) and ̂𝑞0.95(𝒙) with a ReLU feed-forward net (two hidden layers, 20 units each) using a pinball-loss\nobjective with a non-crossing regularization term\n∑ = [𝐿0.05(̂𝑞0.05(𝑿(𝑖)), 𝑌(𝑖)) + 𝐿0.95(̂𝑞0.95(𝑿(𝑖)), 𝑌(𝑖))]\n(22) 𝑖 ∑ + 𝜆 max{0, ̂𝑞0.05(𝑿(𝑖)) −̂𝑞0.95(𝑿(𝑖))}, where 𝐿𝜏is the so-called pinball loss:",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 30,
+    "total_chunks": 68,
+    "char_count": 1057,
+    "word_count": 170,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "00d77da3-fe8a-4ef6-98db-6d4ded61fa18",
+    "text": "⎧ 𝜏(𝑦−̂𝑞𝜏(𝒙)), if 𝑦≥̂𝑞𝜏(𝒙), ( ⎪ 𝐿𝜏 ̂𝑞𝜏(𝒙), 𝑦) = (23) ⎨(𝜏−1)(𝑦−̂𝑞𝜏(𝒙)), if 𝑦< ̂𝑞𝜏(𝒙). ⎪⎩ Let 𝜏1, 𝜏2, … , 𝜏𝑚∈(0, 1) be a set of quantile levels of interest (e.g., 0.05 and 0.95 for a 90% prediction interval). The\ncorresponding quantile neural network 𝝎′(𝒙) is parametrized by weights 𝝎′, which for given features 𝒙outputs 𝑚 MCMC Informed Neural Emulators values (̂𝑞𝜏1(𝒙), … , ̂𝑞𝜏𝑚(𝒙)), which are estimates of the conditional quantiles: Let 𝜋(𝑑𝜽) denote the calibrated parameter\nposterior, e.g. 𝜋(𝑑𝜽) = 𝑝(𝜽∣𝒚hist, 𝒙hist) 𝑑𝜽. For a fixed input 𝒙∈, define the posterior predictive conditional CDF",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 31,
+    "total_chunks": 68,
+    "char_count": 593,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "832f5976-1b03-4f2a-9139-8850041ac9e4",
+    "text": "𝐹𝑌∣𝑿(𝑦∣𝒙) ∶= ℙ(𝑌≤𝑦∣𝑿= 𝒙) = ℙ(𝑌≤𝑦∣𝑿= 𝒙, 𝜽) 𝜋(𝑑𝜽). (24) ∫Θ For 𝜏∈(0, 1), the conditional 𝜏-quantile of 𝑌given 𝑿= 𝒙is defined by 𝑞𝜏(𝒙) ∶= inf{𝑦∈ℝ∶𝐹𝑌∣𝑿(𝑦∣𝒙) ≥𝜏}. (25) Let us emphasize again that the key idea here is that the training data is generated from the MCMC Informed training\ndistribution obtained in Step 1 of the framework.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 32,
+    "total_chunks": 68,
+    "char_count": 329,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2a3215d8-2114-411d-aab5-570ecd2cdb0a",
+    "text": "ODE Forward Emulator: AEODE Neural Network\nClassical neural ODE approaches learn a parameterized vector field and generate trajectories through sequential\ntime integration. In contrast, the proposed AEODE adopts a neural operator perspective and directly maps model\nparameters and initial conditions to full solution trajectories on a fixed time grid in a single forward evaluation. Inspired by recent advances in deep learning for scientific modeling, we propose a deep neural network capable\nof learning regression mappings from MCMC-sampled data. Unlike existing neural ODE emulators [5, 7, 28, 35], our\nmethod focuses on parameterized ODEs, aiming to learn the correlations between ODE trajectories and their hidden\nparameters (e.g., rate coefficients in chemical reactions). Instead of relying on explicit ODE solvers as in [5], we design\na time-dependent neural network that jointly learns the dependencies between time steps and hidden parameters under\nfixed initial conditions. Our main novelties are as follows:",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 33,
+    "total_chunks": 68,
+    "char_count": 1020,
+    "word_count": 148,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4aa84bf5-6cb3-433b-b8b3-016067cef7ca",
+    "text": "Neural operator design: rather than modeling time evolution step by step as in Neural ODEs (e.g., Torchdiffeq [5]\nor ChemiODE [39]), we integrate an attention mechanism [40] to model temporal correlations in the latent domain. Furthermore, different from other neural operator methods [13, 38] purely utilizing attention mechanisms\nfor operator learning, we propose a learnable time embedding that provides a continuous feature representation\nthat enhances the network's ability to model ODE dynamics.\n2. Physics-informed supervision: we incorporate derivative-based losses on both first- and second-order temporal\ngradients and total mass conservation to enforce physical consistency during training. The resulting AutoEncoder-based ODE network (AEODE) can flexibly estimate different trajectory paths corresponding to various ODE parameters 𝜽. Thanks to its end-to-end differentiable architecture optimized for GPUs,\nAEODE achieves an approximate 10× speedup compared to conventional numerical solvers. The additional physical\nlosses ensure physically consistent and accurate ODE trajectory generation. Overall structure The overall structure is shown in Figure 4.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 34,
+    "total_chunks": 68,
+    "char_count": 1166,
+    "word_count": 156,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "73d6516c-f3c7-402d-955f-cf3cd1b07f15",
+    "text": "Let us denote the initial ODE value as 𝒙0 ∈ℝ𝑁, where\n𝑁is the number of input elements, and the ODE parameters as 𝜽∈ℝ𝑑, where 𝑑is the number of model parameters. Figure 4: The structure of the proposed AEODE . MCMC Informed Neural Emulators Mathematically, given the time steps 𝑡𝑖= 0, 1, ..., 𝑇, the proposed AEODE learns a neural ODE function that predicts\ntime-dependent output values 𝒙𝑡∈ℝ𝑁based on different ODE parameters 𝜽as,\n( 𝑡 )\n𝒙(𝑡, 𝜽) = 𝜓 𝜑(𝒙0, 𝜽) + ∫ 𝑓(𝑧(𝑠, 𝜽), 𝑠; 𝜽) 𝑑𝑠 , 𝑡∈[𝑡0, 𝑡𝑇], (26) where 𝜑(⋅, ⋅) is the encoder producing the latent initial condition, 𝑓is the latent vector field, and 𝜓is the decoder\nmapping the latent trajectory back to the observed state space. The dynamics of the ODE process are characterized as\n𝒙(𝑡, 𝜽). Given initial values 𝒙0, we have the initial state of the latent space 𝒛0 = 𝜑(𝒙0, 𝜽), which serves as the initial\ncondition for the latent ODE process.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 35,
+    "total_chunks": 68,
+    "char_count": 895,
+    "word_count": 161,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c3d4c7a4-0a3c-4097-806f-e02fdde1aad3",
+    "text": "The encoder and decoder are made of multiple layers of MLP for fully connected\ncomputation. In order to improve the long-term predictions. We propose two techniques for the latent ODE operation:\n1) time embedding, and 2) attention for more accurate space-time evolution. Time embedding We observe that some physical phenomena oscillate over time, like chemical reactions. This\nbehavior can be injected into the neural network as prior knowledge that predetermines the tendency of time evolution. Based on this observation, we propose to utilize frequency time encoding. Mathematically, given the time steps\n𝑡𝑖= 0, 1, ..., 𝑇, we project them onto a higher dimensional space ℝ2𝐿as follows,\n( )\n𝜆(𝑡) = sin(2𝜋𝜔1𝑡), cos(2𝜋𝜔1𝑡), … , sin(2𝜋𝜔𝐿𝑡), cos(2𝜋𝜔𝐿𝑡) ∈ℝ2𝐿, (27) where 𝜔= (𝜔1, … , 𝜔𝐿) ∈ℝ𝐿are learnable frequency parameters (initialized, e.g., on a log-spaced grid). We represent\nthe time as a combination of sine and cosine operators so that the network can learn to adjust the reaction frequency. Attention for nonlocal feature extraction Attention [40] is commonly used in natural language [25, 32] and image\nprocessing [34] because of its high efficiency in learning nonlocal data correlations. Similarly, we could use the same\ntechnology for ODE modeling. The motivation comes from the aforementioned time encoding, that we can project\nthe time code to a higher dimension. Meanwhile, the latent values form a time-conditioned latent representation by\n𝒛0 = 𝜙(𝒙0, 𝜽) and 𝒛𝜆(𝑡) = 𝒛0 + 𝜆(𝑡). In other words, given the value at the initial time 𝑡0, we construct a time-aware\nrepresentation by embedding multiple future time steps, e.g., 𝑡1.𝑡2, … , using the aforementioned time embedding. Each\nof these time steps is mapped to a high-dimensional vector using sine and cosine functions to preserve temporal order\nand periodicity.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 36,
+    "total_chunks": 68,
+    "char_count": 1825,
+    "word_count": 288,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2295bf35-b9ea-4c41-84ea-ef3558c685f2",
+    "text": "We then concatenate the initial value with each time embedding to create a set of 2D latent vectors that\nencode both the ODE element states and temporal context. Therefore, we can implement the time-dependent attention\nmodule for nonlocal computation as,\n( )\n𝑄𝑧𝐾⊤𝑧\n𝒛out𝜆(𝑡) = 𝒛in𝜆(𝑡) + 𝜎 √ 𝑉𝒛, 𝑄𝒛= 𝒛in𝜆(𝑡)𝑊𝑄, 𝐾𝒛= 𝒛in𝜆(𝑡)𝑊𝐾, 𝑉𝒛= 𝒛in𝜆(𝑡)𝑊𝑉. (28)\nThe 𝑊∗is the learnable parameters, 𝑑is the dimension of the feature maps. 𝜎is the softmax function to normalize the\nauto-correlation matrix. Losses for optimization To train the whole AEODE , not only do we utilize the commonly used Mean Squared Errors\n(MSE) between prediction and ground truth, but we also propose to utilize the first- and second-order derivatives, and\ntotal mass conservation loss. Mathematically, we can define the overall losses as 𝐿𝑜𝑠𝑠= 𝛼1𝐿𝑟𝑒𝑐𝑜𝑛+ 𝛼2𝐿𝑑1 + 𝛼3𝐿𝑑2 + 𝛼4𝐿𝑖𝑑𝑛+ 𝛼5𝐿𝑚𝑎𝑠𝑠 (29)\nIn equation (29), 𝛼1 to 𝛼5 are the weighting parameters that balance all five loss terms.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 37,
+    "total_chunks": 68,
+    "char_count": 940,
+    "word_count": 153,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f34a86ee-bac3-4211-963c-5a420138a593",
+    "text": "For 𝐿𝑟𝑒𝑐𝑜𝑛is the reconstruction\nloss that measures the discrepancy between the prediction and ground truth as 𝐿𝑟𝑒𝑐𝑜𝑛= ‖𝒙(𝑡)−𝒙′(𝑡)‖2. The first-order\ngradient loss enforces the predicted trajectories to closely follow the ground truth over time as 𝐿𝑑1 = ‖ 𝑑𝒙(𝑡)𝑑𝑡−𝑑𝒙′(𝑡)𝑑𝑡‖2.\n𝑑𝒙2(𝑡) −𝑑𝒙′2(𝑡)Similarly, we can define the second-order gradient loss as 𝐿𝑑2 = ‖ 𝑑𝑡2 𝑑𝑡2 ‖2. Meanwhile, we can also\nenforce that the AEODE should preserve the initial condition unchanged during the training process. Hence we\ncan define the identity loss as 𝐿𝑖𝑑𝑛= ‖𝒙0 −𝜓(𝜑(𝒙0, 𝜽)‖2. Finally, we define the total mass conservation loss,\nensuring that the mass of the predicted trajectory aligns with the mass of the ground truth at each time step. We\nhave 𝐿𝑚𝑎𝑠𝑠= ‖(𝒙(𝑡)) −(𝒙′(𝑡))‖2, where is the summation of all ODE elements. MCMC Informed Neural Emulators Let us interpret the design of the proposed AEODE in detail.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 38,
+    "total_chunks": 68,
+    "char_count": 895,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5ecdc1a4-da3d-42f9-995d-830e0416d049",
+    "text": "Note that the latent integral in Eq. (26) equals the\nlatent state,\n𝒛(𝑡, 𝜽) = 𝜑(𝒙0, 𝜽) + ∫ 𝑓(𝒛(𝑠, 𝜽), 𝑠; 𝜽) d𝑠. (30)\nAlthough it may not hold exactly here, consider for a moment the latent flow expressed in Duhamel/variation-ofconstants form:\n𝒛(𝑡, 𝜽) = Φ𝜽(𝑡, 𝑡0) 𝜑(𝒙0, 𝜽) + ∫ Φ𝜽(𝑡, 𝑠) 𝑢𝜽(𝑠) d𝑠, (31)\nwhich defines the latent propagator (operator-valued kernel) 𝜽(𝑡, 𝑠) ∶= Φ𝜽(𝑡, 𝑠). On a discrete time grid the integral\nterm is approximated by the quadrature 𝑡𝑖 ∑\n∫ 𝜽(𝑡𝑖, 𝑠) 𝑢𝜽(𝑠) d𝑠≈ Δ𝑠𝑗𝜽(𝑡𝑖, 𝑠𝑗) 𝑢𝜽(𝑠𝑗).\n𝑡0 𝑗\nAEODE's[𝜑(𝒙0, 𝜽); 𝜆(𝑡)]time-awareand valuesattention𝑉𝑗fromimplementsthe localthisdrivers,quadrature:the learnedby formingattentionqueries/keysweights 𝑤𝑖𝑗actfrom theas time-conditionedparameter-conditionedlatent\nquadrature weights that approximate 𝜽(𝑡𝑖, 𝑠𝑗) (up to a calibrating readout). Consequently the decoder receives the ∑\nencoder output 𝜑(𝒙0, 𝜽) plus an attention-produced integral increment 𝑗𝑤𝑖𝑗𝑉𝑗, yielding a consistent operator-level\ninterpretation of Eq. (26) in terms of 𝜽. Equation (31) should be read with care. The representation is the classical variation-of-constants\n(Duhamel) formula and holds exactly for linear (possibly time-varying) latent dynamics ̇𝒛(𝑡) = 𝐴𝜽(𝑡) 𝒛(𝑡) + 𝒖𝜽(𝑡),\nwhere Φ𝜽(𝑡, 𝑠) is the state-transition operator generated by 𝐴𝜽(⋅). In our architecture the latent dynamics are in\ngeneral nonlinear, ̇𝒛(𝑡) = 𝑓𝜽(𝒛(𝑡), 𝑡), for which no global linear propagator Φ𝜽(𝑡, 𝑠) exists in general. Accordingly,\nwe interpret (31) as an operator-inspired analogy: the attention mechanism produces weights 𝐾𝜽(𝑡, 𝑠) that act as\na data-driven influence kernel describing how information at time 𝑠contributes to the latent state at time 𝑡. More\nprecisely, along a given trajectory 𝒛(⋅) we may linearize the dynamics, 𝛿̇𝒛(𝑡) = 𝐽𝜽(𝑡) 𝛿𝒛(𝑡) + 𝛿𝒖(𝑡), 𝐽𝜃(𝑡) ∶= ∇𝒛𝑓𝜽(𝒛(𝑡), 𝑡), so that the corresponding perturbations satisfy a Duhamel formula with a trajectory-dependent transition operator\n(or to aΦ(𝒛)𝜽(𝑡, 𝑠) generated by 𝐽𝜽(⋅). In this sense, 𝐾𝜽(𝑡, 𝑠) can be viewed as a learned approximation to Φ(𝑧)𝜽(𝑡, 𝑠)\ntruncated Volterra-type expansion) along the data manifold, rather than as an exact propagator for the full nonlinear\nsystem.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 39,
+    "total_chunks": 68,
+    "char_count": 2160,
+    "word_count": 319,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c5ad7976-de31-43d4-a542-76594b2fd51f",
+    "text": "This section presents the experimental setup of the proposed methodology to evaluate the effectiveness of the MINE\nparadigm. We distinguish two experimental goals: (i) evaluating the end-to-end MINE framework for uncertaintyaware prediction (forward-emulator sampling and quantile/interval prediction), and (ii) motivating our concrete choice\nof forward-emulator backbone. While the MINE framework is architecture-agnostic and the forward emulator can in\nprinciple be any neural ODE / neural operator surrogate, in this paper we instantiate it with AEODE due to its accuracy\nand efficiency on the studied dynamical systems. Accordingly, some experiments focus specifically on AEODE design\nchoices and comparisons, while the remaining experiments focus on the end-to-end UQ performance enabled by the\nMINE pipeline.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 40,
+    "total_chunks": 68,
+    "char_count": 814,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fd78cf75-7f4a-4423-8a88-265d1a1f5283",
+    "text": "We apply the ODE forward emulator to both the FaIR climate model and the chemical kinetics model,\nand the quantile emulator to the FaIR climate model only, since the posterior predictive distribution of the simple\nchemical kinetics is very narrow and does not require a neural network for emulation. Evaluation Metrics\nQuantile Emulator To assess the performance of the quantile emulator, we first compute the pinball loss, which is\nalso utilized during the model training phase. Additionally, we perform tests using empirical quantile data. Specifically,\nfor given inputs 𝒙, we calculate the conditional quantile values 𝑞𝜏𝑗(𝒙) by numerically approximating the posterior\npredictive distribution, represented by Monte Carlo draws {̂𝑦(𝑚)}𝑀 from the posterior predictive law (obtained by 𝑚=1 MCMC Informed Neural Emulators sampling 𝐸0 ∼𝑝(𝐸0 ∣𝜂) and 𝜽∼𝑝(𝜽∣𝒚hist, 𝒙hist) and evaluating the simulator). Next, we evaluate the mean squared\nerror (MSE) between the empirical quantiles and those generated by the emulator. We also compare the average size of\nthe credible intervals for both the empirical data and the predictions made by the neural network. Finally, we determine\nthe mean 90%-coverage, which is the average proportion of test sample elements in {̂𝑦(𝑚)}𝑀 that fall within the 90% 𝑚=1\ncredible interval predicted by the emulator. Forward Emulator To evaluate the ODE forward emulator, we compare emulator outputs against the corresponding\nphysical-model outputs using mean squared error (MSE), mean absolute error (MAE), root mean squared error\n(RMSE), and mean bias error (MBE). Furthermore, we report wall-clock runtime to quantify computational efficiency\nrelative to direct numerical simulation and to assess feasibility for large-scale use. Emulating FaIR with the Quantile Emulator\nWith the MINE Posterior Interval Predictor, we estimate the measures of uncertainty in the posterior predictive\ndistribution. Specifically for the FaIR model we want to show how to model additional uncertainties in the input\nfactors 𝒙. This is motivated by the real-world need to account for both the parameter uncertainty and the uncertainty\nin future emissions. Direct evaluation of the corresponding posterior predictive distribution requires high-dimensional\nintegration over both the model parameter space and future emission trajectories.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 41,
+    "total_chunks": 68,
+    "char_count": 2337,
+    "word_count": 342,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "418e9bc4-3d59-437d-993e-3a773d38f9f9",
+    "text": "Our neural network emulator is well\nsuited for this approach, since it scales with this high-dimensional integration. Parameter uncertainty is reflected in the posterior distribution as described in Equation 1. The uncertainties in\nthe input factors 𝒙are modeled by treating the base year emissions 𝐸0 as a random variable, reflecting the fact\nthat estimates of global emissions are inherently uncertain and may even be significantly biased, for example due to\nunreported methane leakages. Therefore, we introduce a set of probability distributions parameterized by distribution\nhyperparameters 𝜼∈. The hyperparameter 𝜼1 serves as a binary flag indicating the choice of distribution: 𝜼1 = 0\ncorresponds to a normal distribution, while 𝜼1 = 1 specifies a lognormal distribution. The lognormal case is used\nto model situations in which global emissions are systematically underestimated. The hyperparameter 𝜼2 defines\nthe location parameter of the distribution, representing a horizontal shift along the x-axis.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 42,
+    "total_chunks": 68,
+    "char_count": 1010,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4eba7fd5-3808-4af4-aed7-7f7150a74be3",
+    "text": "This is the expected\nvalue for global emissions 𝐸𝑔𝑙𝑜𝑏𝑎𝑙. The hyperparameter 𝜼3 specifies the distribution's scale and allows the user to\nexpress uncertainty in the global emission. For the normal distribution, this corresponds to the standard deviation. In the lognormal case, 𝜼3 controls the spread of the distribution via the standard deviation of the underlying normal\ndistribution. Figure 5a illustrates three example distributions corresponding to different hyperparameter vectors 𝜼,\nwhile Figure 5b shows the emission pathways for three distinct SSP-RCP scenarios. = [0,12,0.2] SSP1-RCP1.9\n2.0 = [0,15,1] 25 SSP4-RCP3.4\n= [1,10,0.3] SSP5-RCP8.5\nDensity1.5 20 Emission\n1.0 15\nGlobal Probability\n10 0.5 5 0.0\n10 12 14 16 18 2025 2030 2035 2040 2045 2050\nE0 Year (a) Example distributions of 𝐸0 with normal distribution and (b) 90% credible interval and median of the emission pathsmall sd. (blue), normal distribution and large sd. (orange), ways for normally distributed 𝐸0 with loc. 15 and sd. 1 for\nand lognormal distribution and small sd. (red). several SSP-RCP scenarios. Figure 5: Comparison of example 𝐸0 distributions and resulting emission pathways. MCMC Informed Neural Emulators Ultimately, the input to the MINE is the vector of hyperparameters of the distribution of base-year emissions, 𝜼, and\nthe socio-economic scenario 𝑠∈𝑆. Hence, the distribution of temperature predictions that includes both parameter\nand emission uncertainty is denoted by",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 43,
+    "total_chunks": 68,
+    "char_count": 1463,
+    "word_count": 219,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "065c6669-2a2f-413d-a28b-3cd23e29e810",
+    "text": "𝑝(𝑦∣𝒚hist, 𝒙hist; 𝜼, 𝑠) = ∫∫𝑝(𝑦∣𝒙= 𝑔(𝑠, 𝐸0), 𝜽) 𝑝(𝐸0 ∣𝜼) 𝑝(𝜽∣𝒚ℎ𝑖𝑠𝑡, 𝒙ℎ𝑖𝑠𝑡) 𝑑𝐸0 𝑑𝜽, where 𝑔(𝑠, 𝐸0) generates an emission vector based on the scenario 𝑠and the base-year emissions 𝐸0. Drawing samples\nfrom this predictive posterior via nested Monte Carlo would require sampling from 𝑝(𝐸0 ∣𝜼) and 𝑝(𝜽∣𝒚ℎ𝑖𝑠𝑡, 𝒙ℎ𝑖𝑠𝑡) for\na substantial number of samples and running FaIR for each sample draw. Dataset We generate data with the inputs 𝑿∈𝑆× by sampling uniformly from 𝑆, and from {0, 1} for\nthe distribution type 𝜼1 and within plausible bounds for the location and scale parameters of the initial emission\ndistribution, 𝜼2 and 𝜼3 respectively. We randomly split the data into non-overlapping training, validation, and testing\ndata in the ratio of 6:2:2. The training and validation data are created using a nested Monte Carlo approach and\ncontain single-time projections based on 𝑠and the realizations of 𝐸0 and 𝜽. That is, we sample 𝐸0 ∼𝑝(𝐸0 ∣𝜼)\nand 𝜽∼𝑝(𝜽∣𝒙ℎ𝑖𝑠𝑡, 𝒚ℎ𝑖𝑠𝑡), compute the resulting emission pathway 𝒙based on 𝐸0 and 𝑠and then call the FaIR model\nto generate the horizon-T prediction 𝑦∼𝑝(𝑦∣𝒚hist, 𝒙hist; 𝜼, 𝑠), which corresponds to the global mean temperature in\nthe final year. For the empirical test data, we create a large sample ̂𝒚(1), … , ̂𝒚(𝑀) for each input 𝒙(𝑖), 𝑖= 1, ..., 𝑁and\nthen calculate the resulting 5% and 95% quantiles.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 44,
+    "total_chunks": 68,
+    "char_count": 1340,
+    "word_count": 222,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a532140f-32f8-4205-b4b3-a4f379f21fda",
+    "text": "Parameter Setting We again train our network using the Adam optimizer with the learning rate of 1×10−3 over 1000\nepochs. Since this neural network is very shallow, it can be trained in seconds on an ordinary computer. Only generating\ntrain and especially test data is time-consuming; the training dataset had a size of 350,000, and the validation and test\ndatasets had a size of 75,000 each.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 45,
+    "total_chunks": 68,
+    "char_count": 391,
+    "word_count": 66,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "860e46c2-b587-4289-aa9b-7a55c42a1d33",
+    "text": "Emulating the Chemical Kinetics Model with the ODE Forward Emulator\nThe ODE forward emulator for the chemical kinetics has the inputs of the initial concentration of 𝐴, 𝐵, 𝐶, 𝐷and\n𝐸and the output of concentration values for all chemicals at discrete time points 𝑡𝑖= 0, 1, … , 𝑇. Datasets We collected data based on the chemical data from the chemical system introduced in Section 2. We\nrandomly split the data into non-overlapped training, validation and testing datasets. To standardize the data for neural\nnetwork training, we normalize all data by dividing the maximum value, by approximately 6.45. For the chemical\nreaction parameters, we take the maximum and minimum values to normalize them to [-1, 1].",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 46,
+    "total_chunks": 68,
+    "char_count": 708,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "320c2db0-d367-48b3-b83a-2b79551e2e01",
+    "text": "To further increase the\ndata variety, we apply data augmentation to the training set. Specifically, we randomly roll the time evolution of the\nobservation as ̂𝑦𝑡𝑖= 𝑦𝑡+𝜏𝑖 , 𝑖= 1, 2, ..., 100, 𝑡= 1, 2, ..., 11, where\n𝑦𝑡+𝜏𝑖 for 𝜏< 11 −𝑡\n̂𝑦𝑡𝑖= where 𝑖= 1, 2, … , 100, 𝑡= 1, 2, … , 11 (32)\n𝑦𝑡+𝜏−11𝑖 for 𝜏> 11 −𝑡 Parameter setting We train AEODE using Adam optimizer with the learning rate of 1 × 10−3. The batch size is set\nto 4096 and AEODE is trained for 50k iterations (about 2 hours) on a PC with one NVIDIA V100 GPU using PyTorch\ndeep learning platform. The weighting factors in the total loss are defined empirically as: 𝛼1 = 1, 𝛼2 = 10, 𝛼3 =\n10, 𝛼4 = 1, 𝛼5 = 0.001. Emulating the FaIR Model with the ODE Forward Emulator\nThe ODE forward emulator for the FaIR model has the inputs of 𝐸0 and 𝑠, which are the inputs of the\nparametrization 𝑔(𝐸0, 𝑠) for the input emission 𝐸𝐺𝐻𝐺(𝑡) as described in Section 2.2.2, and the model parameters\n𝜽. The output of the forward operator is the pathway of annual global mean temperatures 𝑇(𝑡). We created the training data of size 50,000 by randomly selecting initial emissions 𝐸0 from a plausible\ninterval, randomly selecting an SSP-RCP scenario 𝑠, and then selecting a random parameter 𝜽(𝑖) from the MCMC\nchain. Then, we created the temperature prediction 𝑦using the FaIR model. Again, we split it with the ratio 6:2:2. Parameter Setting We train AEODE using the same parameter setting as done in the chemical kinetics example. MCMC Informed Neural Emulators",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 47,
+    "total_chunks": 68,
+    "char_count": 1495,
+    "word_count": 273,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1b2ff3de-890f-41de-8e1b-7edc30cc344c",
+    "text": "This section provides an explanation of the experiment results. The first part describes the experiments done on\nthe FaIR climate model with the Quantile Emulator, with a focus on validating empirical quantiles. The second part\nbenchmarks the novel AEODE against two state-of-the-art methods and conducts ablation studies on its key modules,\nboth is done on the chemical kinetics example. To show that AEODE is also applicable for more complex physical\nmodels, we show the results of applying it to the FaIR climate model. Results for the FaIR Climate Model Quantile Emulator\nIn Figure 6, one can see the empirical and the trained credible intervals as well as the empirical mean on the sampled\ntemperature distribution for varying values of the expected global emission 𝐸global on the x-axis. The two plots on the\nleft side show a positive emission scenario leading to lower temperatures than the right-hand side plots. The two plots\non the top show a lower scale and therefore less uncertainty in the emission, leading to smaller credible intervals than\nthe two plots on the bottom. We can see that the empirical results align very well with those produced by the quantile\nemulator. The evaluation metrics showed that the MSE for the upper bound of the credible interval was 0.0049, and the\nlower bound was 0.0023. The pinball loss of test data was 0.0238 and 0.0199, respectively.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 48,
+    "total_chunks": 68,
+    "char_count": 1383,
+    "word_count": 228,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7831e0ee-c6e8-4b4e-bf08-caeb21873aa5",
+    "text": "The mean 90% coverage,\ni.e., the average proportion of elements in the set of Monte Carlo predictive draws {̂𝑦(𝑚)}𝑀 that lie within the bounds 𝑚=1\npredicted by the quantile emulator, was 90.04%. The average interval size of the empirical test data was 1.2907, and\nthe average interval size of the Neural Network was 1.3024, scoring an absolute difference of 0.0117. Comparing the\nrun time of both approaches, we can see the actual benefits of a surrogate model: the feed-forward network quantile\nemulator has a run time of 0.0006 seconds; the empirical sampling and evaluation has an effective run time of roughly\n20 seconds for a sample size of 5,000. Scenario SSP1 RCP1.9, Normal Dist., Scale 0.1 Scenario SSP5 RCP8.5, Normal Dist., Scale 0.1 (°C) 3.5 (°C) 3.5\n2050 2050 3.0 3.0\nin in 2.5 2.5\nTemperature 2.0 Temperature 2.0 40 50 60 70 40 50 60 70\nEglobal in 2025 (GtCO2e) Eglobal in 2025 (GtCO2e)\nScenario SSP1 RCP1.9, Normal Dist., Scale 8 Scenario SSP5 RCP8.5, Normal Dist., Scale 8 (°C) 3.5 (°C) 3.5\n2050 2050 3.0 3.0\nin in 2.5 2.5\nEmpirical 90% CI Temperature 2.0 Temperature 2.0 Empirical Mean\nOutput by Nested MC\n1.5 1.5 ML Output Lower Bound 40 50 60 70 40 50 60 70\nEglobal in 2025 (GtCO2e) Eglobal in 2025 (GtCO2e)",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 49,
+    "total_chunks": 68,
+    "char_count": 1226,
+    "word_count": 216,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0fcb548c-ae12-445d-9ff3-80aea0069cf3",
+    "text": "Figure 6: Visualization of the fit of the empirical and trained 90% credible interval to the temperature projection. MCMC Informed Neural Emulators Results for the Chemical Kinetics Model AEODE Forward Emulator\n6.2.1. Overall comparison with state of the art\nTo demonstrate the efficiency of our proposed AEODE , we compare it with two state-of-the-art methods:\nChemiODE [39], and Torchdiffeq [5]. The results are depicted in Table 1. We can see that using our approach achieves\nthe lowest scores in all metrics.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 50,
+    "total_chunks": 68,
+    "char_count": 512,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f7b6d139-516a-4ed1-b270-4ebd025001ff",
+    "text": "Torchdiffeq uses the least running time but also achieves the worst MSE value. On the\nother hand, our approach uses 15% extra computation overhead but can significantly reduce the MSE and MBE scores\nby 5% and 25%, respectively. Evaluation\nModules\nMSE(10−5) RMSE (10−3) MAE (10−3) MBE (10−4) Running time (10−5 s) Torchdiffeq 3.231 5.426 3.552 -7.539 5.1\nChemiODE 2.582 5.085 3.356 -1.759 8.2\nOurs 2.450 4.950 3.064 -1.316 9.5 Table 1\nTesting data comparison among Torchdiffeq, ChemiODE, and ours. We report the results on the testing dataset using\ndifferent methods. For all metrics, the smaller the values, the better the performance we get.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 51,
+    "total_chunks": 68,
+    "char_count": 642,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "31993086-bb74-433b-93fc-dae401d6c2ea",
+    "text": "neuralode A 0.007 neuralode B 0.020\nneuralode C neuralode D\nExact solution 0.006 neuralode E\nExact solution\n0.015 0.005 0.004\n0.010 mole/liter mole/liter 0.003 0.000 0.000\n0 100 200 300 400 500 600 0 100 200 300 400 500 600\nTimestep Timestep Figure 7: The proposed AEODE for chemical prediction. We show all 3000 testing data samples using different chemical\nreaction parameters in gray lines. The five lines with different colors represent the chemical compounds predicted by the\nproposed network. Figure 7 shows the results of using our proposed AEODE for chemical ODE prediction. Taken different chemical\nreaction parameters 𝜃1, 𝜃2, 𝜃3 with the same initial concentration values, our model is able to estimate the uncertainty\nof the chemical ODE system for different chemical compounds. For comparison, we show the ground truth chemical\nvalues in gray color. We can see that our model can accurately estimate the distribution of chemical changes. For\nexample, at further time steps, the range of concentration distributions becomes wider, and the proposed AEODE can\ncapture the trend with similar distribution changes. To better visualize the model performance, we slice the chemical\nconcentration values at the last time step and visualize the data distributions. In Figure 8, we can see that ours can\nestimate the lower and upper bound of the concentration values and align well with the ground truth data. Figure 9 shows the distribution differences between ground truth and our model prediction. Similar to Figure 8,\nwe clip the last time step (t=600) across all 3000 testing data samples, and visualize the distribution with the bin size\nof 256.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 52,
+    "total_chunks": 68,
+    "char_count": 1653,
+    "word_count": 265,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a0491c15-29d0-4d5d-a490-62b0147bf7e4",
+    "text": "We can see that the proposed model estimates similar mean and variance as the ground truth. There is a spike\nfor chemical compound C, which our model cannot reproduce. This remains a challenge that would be resolved in the\nnext step.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 53,
+    "total_chunks": 68,
+    "char_count": 233,
+    "word_count": 41,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "499d72b3-7184-40d1-a92a-b4bf5e5d44f3",
+    "text": "MCMC Informed Neural Emulators 0.0040\n0.0035\n0.0030\n0.0025\nExact solution\n0.0020 neuralode A mole/liter neuralode B\n0.0015 neuralode C\n0.0010 neuralode D neuralode E\n0.0005\n0.0000\n0 100 200 300 400 500 600\n# sample Figure 8: The distribution comparison between the proposed model and the ground truth data. We show all 3000 testing\ndata samples at the last time step (600) using different chemical reaction parameters in gray lines. The model predictions\nare shown in different colour, which indicate different chemical compounds. Ablation Studies on the Key Modules\nIn the Section 4.2, we propose to use time embedding, self-attention, and physical losses to optimize our network. In order to demonstrate their effects on the overall chemical prediction, we conduct the ablation studies and report\nthe results in Table 2.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 54,
+    "total_chunks": 68,
+    "char_count": 822,
+    "word_count": 130,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "557ca469-ec56-4198-ac5a-b856cecc18ae",
+    "text": "NeuralODE is the baseline model for comparison. We add three novel modules one by one to\nthe network and evaluate their performance on the testing dataset. We can see that Time embedding has a significant\nimpact on the performance, approximately 5 × 10−6 in MSE. Attention improves the MSE by 1 × 10−5 NeuralODE Time encoding Attn Physical loss MSE(10−5) RMSE (10−3) MAE (10−3) MBE (10−4) ✓ 3.101 5.569 3.565 -8.190\n✓ ✓ 2.593 5.092 3.209 -0.951\n✓ ✓ ✓ 2.466 4.966 3.076 -1.273\n✓ ✓ ✓ ✓ 2.450 4.950 3.064 -1.316 Table 2\nAblation studies of using proposed modules in the chemical kinetics example. We report the results on the testing dataset\nusing different key modules and loss terms. Results for the FaIR Climate Model AEODE Forward Emulator\nThe proposed AEODE can also be modified for the FaIR climate model. Different from the chemical kinetics\nmodel, the only change is to fit the network to output a 1-D time sequence to estimate the temperature values.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 55,
+    "total_chunks": 68,
+    "char_count": 956,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1a7b5a5f-2581-417e-ac91-8436131e3beb",
+    "text": "In Table 3, we repeat the same ablation comparison done in Table 2. We compare the models with and without\nthe proposed key modules and evaluate their performance on the FaIR example. We can see that combining time\nembedding, attention, and physical losses can improve the MSE loss by 21%.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 56,
+    "total_chunks": 68,
+    "char_count": 289,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7897fdef-b1e2-4132-920c-bb3d70eac724",
+    "text": "To visualize the ODE trajectories of the temperature changes, we show the results in Figure 10a and 10b. As can\nbe seen from Figure 10a, the model predictions (dotted lines) align well with the ground truth (straight lines), which\nindicates that the model can approximate the temperature trend with given conditional input information. In Figure 10b,\nwe visualize the overall statistics of all testing samples via mean and variance in every time step. Note that the credible\ninterval is larger than in Figure 3 uncertainty since this is a future prediction which naturally contains more uncertainty. MCMC Informed Neural Emulators",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 57,
+    "total_chunks": 68,
+    "char_count": 630,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ffba1d6e-bea6-44ad-9229-8bf5ce3344a4",
+    "text": "Chemical A Chemical B Chemical C Chemical D Chemical E\n80 50 140 160 50 70\n120 140 40 40 60 100 120 50 100 30 30 40 80 80 60 20 20 Frequency 30 60\n20 40 40 10 10 10 20 20\n0 0 0 0 0\n0.700.680.66 1.151.101.051.00 1.041.021.00 0.720.700.680.66 0.660.640.62\nmole/liter mole/liter mole/liter mole/liter mole/liter Figure 9: Visualization of the histogram of chemical concentration at time step 600. We use the histogram to statistically\ncompute the distribution of all 3000 testing data samples at the last time step. The gray curve is the ground truth, and\ncolored lines are model predictions. NeuralODE Time encoding Attn Physical loss MSE(10−5) RMSE (10−3) MAE (10−3) MBE (10−4) ✓ 3.200 1.859 1.596 -0.166\n✓ ✓ 3.010 1.768 1.446 -0.016\n✓ ✓ ✓ 3.002 1.751 1.423 -0.015\n✓ ✓ ✓ ✓ 2.949 1.718 1.389 -0.007 Table 3\nAblation studies of using proposed modules in the FaIR example. We report the results on the testing dataset using\ndifferent key modules and loss terms.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 58,
+    "total_chunks": 68,
+    "char_count": 957,
+    "word_count": 171,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "557e1149-ad96-4b55-a75a-fc9f1cbef7d7",
+    "text": "3.2 3.25\nSSP1 RCP1.9 Prediction with random\nSSP3 RCP7.0 90% Credible Interval 3.0 3.00 SSP4 RCP6.0\nSSP5 RCP8.5 2.75 2.8 Ground Truth (°C) (°C) Prediction 2.50 2.6\n2.25\n2.4 Temperature Temperature\n2.00\n2.2\n1.75\n2.0\n1.50\n2025 2030 2035 2040 2045 2050 2025 2030 2035 2040 2045 2050\nYear Year (a) Ground Truth and Prediction of the ODE forward oper- (b) Emulation of 400 FaIR runs by the ODE forward operaator for FaIR for different scenarios. tor with random 𝜽in each iteration (blue) and 90% credible\ninterval (red) for the SSP3 RCP7.0 Scenario. Figure 10: Comparison of forward operator simulations. MCMC Informed Neural Emulators We introduced the MCMC Informed Neural Emulator (MINE) paradigm for uncertainty quantification in dynamical\nsystems. The key idea is to decouple Bayesian inference from surrogate modeling: MCMC is used offline to infer a\nposterior over physical model parameters, and deterministic neural emulators are then trained on posterior-informed\ninput–output pairs. This strategy concentrates training effort on statistically relevant regions of parameter space and\navoids expensive simulator evaluations at implausible parameter values. We presented two complementary MINE\nrealizations.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 59,
+    "total_chunks": 68,
+    "char_count": 1208,
+    "word_count": 180,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8352da6f-b76b-4acf-a654-d90677b98b20",
+    "text": "First, a quantile (interval) emulator learns posterior predictive quantiles directly, enabling low-latency\nuncertainty intervals without sampling at inference time. Second, a forward emulator learns the simulator mapping\nand enables efficient posterior predictive sampling by reusing stored posterior draws of parameters. For the forward\nemulator, we instantiated MINE using an AutoEncoder-based ODE neural network (AEODE) with time embeddings\nand attention, and we evaluated performance using both accuracy and calibration-oriented metrics. Empirically, the proposed approach yields accurate and computationally efficient uncertainty-aware predictions\non both a chemical kinetics ODE system and the FaIR simple climate model. In particular, the quantile emulator\nclosely matches empirical credible intervals for FaIR temperature projections, while the AEODE forward emulator\nachieves favorable accuracy-runtime trade-offs compared with existing neural-ODE baselines and benefits from the\nproposed architectural components in ablation studies.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 60,
+    "total_chunks": 68,
+    "char_count": 1043,
+    "word_count": 131,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1bcb1d9d-7725-4ec1-b8d8-b7b56680c6bd",
+    "text": "Several limitations and directions for future work remain. MINE assumes that offline MCMC sampling is feasible; extending the framework to settings with extremely expensive\nsimulators may require multi-fidelity strategies and/or surrogate-assisted sampling. Finally, beyond methodological\nextensions, we envision MINE serving as a practical uncertainty-aware surrogate for scientific simulators in climate\nscience, atmospheric chemistry, and energy systems, enabling faster hypothesis testing, scenario exploration, and data\nassimilation in computationally intensive modeling pipelines. MCMC Informed Neural Emulators",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 61,
+    "total_chunks": 68,
+    "char_count": 617,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c6abaf3d-46e5-4f66-adf1-6f8899c6bf05",
+    "text": "Proofs of the results in Section 3\nProof of Lemma 1. Let Δ(𝑢) ∶= 𝐹(𝑢) −(𝑢) ∈and ℎ(𝑢) ∶= ‖Δ(𝑢)‖2. For arbitrary 𝑢, 𝑣∈,\n) |ℎ(𝑢) −ℎ(𝑣)| = |⟨Δ(𝑢) + Δ(𝑣), Δ(𝑢) −Δ(𝑣)⟩| ≤(‖Δ(𝑢)‖+ ‖Δ(𝑣)‖ ‖Δ(𝑢) −Δ(𝑣)‖. By Lipschitz continuity of 𝐹and we have ‖Δ(𝑢) −Δ(𝑣)‖≤‖𝐹(𝑢) −𝐹(𝑣)‖+ ‖(𝑢) −(𝑣)‖≤(𝐿+ 𝑅) ‖𝑢−𝑣‖= 𝐶1 ‖𝑢−𝑣‖. ‖Δ(𝑤)‖≤‖𝐹(𝑤) −𝐹(0)‖+ ‖(𝑤) −(0)‖+ ‖𝐹(0)‖+ ‖(0)‖≤𝐶1‖𝑤‖+ 𝐶2. Hence, ) (33) |ℎ(𝑢) −ℎ(𝑣)| ≤(𝐶1(‖𝑢‖+ ‖𝑣‖) + 2𝐶2 𝐶1 ‖𝑢−𝑣‖. Let Γ(𝜈, 𝜈′) denote the set of couplings of 𝜈and 𝜈′. For any 𝛾∈Γ(𝜈, 𝜈′),\n= (ℎ(𝑣) −ℎ(𝑢)) 𝑑𝛾(𝑢, 𝑑𝛾(𝑢, 𝑣). ≤∫ |||𝔼𝜈′ℎ−𝔼𝜈ℎ||| ||| ∫× 𝑣)||| |||ℎ(𝑣) −ℎ(𝑢)||| Using (33), Cauchy–Schwarz, and the elementary bound (𝑎+ 𝑏)2 ≤2(𝑎2 + 𝑏2), 𝑑𝛾≤𝐶2 ∫ 1 ∫(‖𝑢‖+ ‖𝑣‖) ‖𝑢−𝑣‖𝑑𝛾+ 2𝐶1𝐶2 ∫‖𝑢−𝑣‖𝑑𝛾 |||ℎ(𝑣) −ℎ(𝑢)|||\n( )1∕2( )1∕2\n≤𝐶2 1 ∫(‖𝑢‖+ ‖𝑣‖)2𝑑𝛾 ∫‖𝑢−𝑣‖2𝑑𝛾\n( )1∕2\n+ 2𝐶1𝐶2 ∫‖𝑢−𝑣‖2𝑑𝛾\n√ ( )1∕2 ( )\n≤𝐶2 1 2 𝔼𝜈‖𝑢‖2+ 𝔼𝜈′‖𝑢‖2 ∫‖𝑢−𝑣‖2𝑑𝛾\n( )1∕2\n+ 2𝐶1𝐶2 ∫‖𝑢−𝑣‖2𝑑𝛾 . Now take the infimum over 𝛾∈Γ(𝜈, 𝜈′). By the Kantorovich formulation of 𝑊2 (see, e.g., Villani [41]),\n( )1∕2\ninf ∫‖𝑢−𝑣‖2𝑑𝛾 = 𝑊2(𝜈, 𝜈′). 𝛾∈Γ(𝜈,𝜈′) Therefore,\n( √ )\n≤ 𝐶2 + 2𝐶1𝐶2 𝑊2(𝜈, 𝜈′) = 𝑐(𝜈, 𝜈′) 𝑊2(𝜈, 𝜈′). 1 2(𝔼𝜈‖𝑢‖2+ 𝔼𝜈′‖𝑢‖2 ) |||𝔼𝜈′ℎ−𝔼𝜈ℎ||| Recalling ℎ(𝑢) = ‖𝐹(𝑢) −(𝑢)‖2yields the claim:",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 62,
+    "total_chunks": 68,
+    "char_count": 1182,
+    "word_count": 203,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e0f0cbc0-5742-4344-a978-f7f587bc0544",
+    "text": "𝜈′() −𝜈() = 𝔼𝜈′ℎ−𝔼𝜈ℎ≤𝑐(𝜈, 𝜈′) 𝑊2(𝜈, 𝜈′). Remark 3. (i) The proof of Lemma 1 is a standard \"coupling + Cauchy–Schwarz\" argument; see also Santambrogio [36] for the 𝑊1–version with Lipschitz test functions and Bolley–Villani [3] for related inequalities with linear\ngrowth. (ii) The constants enter only through Lipschitz moduli and the second moments of (𝜈, 𝜈′), hence the restriction\nto 2(). MCMC Informed Neural Emulators",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 63,
+    "total_chunks": 68,
+    "char_count": 428,
+    "word_count": 66,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fbcfa3c6-8490-41c7-aaa5-c2a83868ce59",
+    "text": "Proof of Proposition 1. Apply Lemma 1 with (𝜈, 𝜈′) = (𝜈, 𝜈dep): For any  ∈ , 𝜈dep() ≤ 𝜈() +\n𝑐(𝜈, 𝜈dep)𝑊2(𝜈, 𝜈dep). Taking infon the right and adding the same penalty gives 𝐽(𝜈) ≥inf𝜈dep() = 𝐽(𝜈dep),\nwith equality at 𝜈= 𝜈dep since 𝑊2(𝜈dep, 𝜈dep) = 0. For the quantitative upper bound, let † ∈arg inf𝜈dep() and\nuse Lemma 1 in both directions to obtain 𝐽(𝜈) ≤𝜈(†) + 𝑐(𝜈, 𝜈dep)𝑊2(𝜈, 𝜈dep) ≤ 𝜈dep(†) + 2 𝑐(𝜈, 𝜈dep)𝑊2(𝜈, 𝜈dep)\n= 𝐽(𝜈dep) + 2 𝑐(𝜈, 𝜈dep)𝑊2(𝜈, 𝜈dep). Let 𝛾Θ ∈Γ(𝜋, ̂𝜋) be optimal for 𝑊2(𝜋, ̂𝜋) and let 𝛾𝑋be the diagonal coupling of 𝜌with itself, i.e.,\n𝛾𝑋(𝑑𝒙, 𝑑𝒙′) = 𝜌(𝑑𝒙) 𝛿𝒙(𝑑𝒙′). Then 𝛾∶= 𝛾𝑋⊗𝛾Θ lies in Γ(𝜌⊗𝜋, 𝜌⊗̂𝜋) and ‖(𝒙, 𝜽) −(𝒙′, 𝜽′)‖2𝑑𝛾= ‖𝜽−𝜽′‖2Θ 𝑑𝛾Θ, ∫× ∫Θ×Θ\nso 𝑊2(𝜌⊗𝜋, 𝜌⊗̂𝜋) ≤𝑊2(𝜋, ̂𝜋). Conversely, take any 𝛾∈Γ(𝜌⊗𝜋, 𝜌⊗̂𝜋) and let 𝛾Θ be its (𝜽, 𝜽′)-marginal. Then 𝛾Θ ∈Γ(𝜋, ̂𝜋) and, since the\n𝑥-term in the product cost is nonnegative, ‖(𝒙, 𝜽) −(𝒙′, 𝜽′)‖2 ‖𝜽−𝜽′‖2Θ 𝑑𝛾Θ ≥𝑊2(𝜋, ̂𝜋)2. ∫× 𝑑𝛾≥∫Θ×Θ Taking the infimum over 𝛾gives the reverse inequality, hence equality. Step 1: Finite 𝑁bound and the 𝑊2 reduction. Apply Proposition 1 with deployment law 𝜈dep ∶= 𝜈\nand training law ̂𝜈𝑁:\n0 ≤𝐽𝜈(̂𝜈𝑁) −𝐽𝜈(𝜈) ≤2 𝑐(̂𝜈𝑁, 𝜈) 𝑊2(̂𝜈𝑁, 𝜈). Lemma 2 yields 𝑊2(̂𝜈𝑁, 𝜈) = 𝑊2(̂𝜋𝑁, 𝜋), proving (20).",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 64,
+    "total_chunks": 68,
+    "char_count": 1213,
+    "word_count": 217,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "84bdc52e-9a38-43d3-b4cc-c95e30c619bd",
+    "text": "Step 2: 𝑊2(̂𝜋𝑁, 𝜋) →0. Since Θ is a separable Hilbert space, it is Polish. Let ⊂𝐶𝑏(Θ) be a countable\nconvergence-determining class (e.g. a countable dense subset of bounded Lipschitz test functions). By the assumed\nergodic theorem, for each 𝑔∈, 1 ∑𝑁\n∫𝑔𝑑̂𝜋𝑁= 𝑔(𝜽(𝑖)) ⟶∫𝑔𝑑𝜋 a.s. 𝑁\n𝑖=1 By countability, these convergences hold simultaneously a.s. for all 𝑔∈, which implies ̂𝜋𝑁⇒𝜋weakly. By\nassumption (ii), the empirical second moment converges almost surely: 1 ∑𝑁\n∫‖𝜽‖2Θ 𝑑̂𝜋𝑁(𝜽) = ‖𝜽(𝑖)‖2Θ ⟶∫‖𝜽‖2Θ 𝑑𝜋(𝜽) a.s. 𝑁\n𝑖=1 On Polish spaces, weak convergence plus convergence of second moments is equivalent to convergence in 𝑊2 (see,\ne.g., Villani [41]). Step 3: Boundedness and convergence of 𝑐(̂𝜈𝑁, 𝜈). 𝔼̂𝜈𝑁‖𝒖‖2= 𝔼𝜌‖𝒙‖2+ ∫‖𝜽‖2Θ 𝑑̂𝜋𝑁(𝜽), so the second-moment convergence above implies 𝔼̂𝜈𝑁‖𝒖‖2→𝔼𝜈‖𝒖‖2a.s. Therefore 𝑐(̂𝜈𝑁, 𝜈) →𝑐(𝜈, 𝜈) and is\neventually bounded almost surely.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 65,
+    "total_chunks": 68,
+    "char_count": 871,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c97095fa-074b-4d22-9bec-e099bc64d6b8",
+    "text": "MCMC Informed Neural Emulators MCMC Chains of the FaIR Parameter Calibration Figure 11 shows the chains of the MCMC simulations for the FaIR model. It was created for 300,000 samples. The\nburn in phase is 50,000 samples which are not used in the posterior sampling.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 66,
+    "total_chunks": 68,
+    "char_count": 265,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa6d1213-c647-4b2a-a61c-fda0c35955d0",
+    "text": "r0 rc rt TCR\n45 5.5\n0.024 2.0\n5.0 40 0.022\n1.8\n0.020 4.5\nValue 35 Value Value 4.0 Value 1.6 0.018\n30 0.016 3.5 1.4\n0.014 3.0 25\n0 100000 200000 300000 0 100000 200000 300000 0 100000 200000 300000 0 100000 200000 300000\nSample Sample Sample Sample\nECS d1 d2 F0\n5.0 4.5 400 1.2\n4.5\n4.0\n300 4.0 1.0\nValue 3.5 Value Value 3.5 Value\n3.0 200 0.8\n3.0\n2.5 100 2.5 0.6 0 100000 200000 300000 0 100000 200000 300000 0 100000 200000 300000 0 100000 200000 300000\nSample Sample Sample Sample\nF1 F2 F3 F4\n1.75 1.4 1.4 2.0\n1.50\n1.2 1.2 1.5\n1.25\nValue 1.00 Value 1.0 Value 1.0 Value 1.0\n0.75 0.8 0.8 0.5\n0.50 0.6 0.6 0.0\n0 100000 200000 300000 0 100000 200000 300000 0 100000 200000 300000 0 100000 200000 300000\nSample Sample Sample Sample\nF5 F6 F7 F8\n4 1.4\n2 1.2 2\n15 1.0\nValue 0 Value 1 Value 10 Value 0.8\n0.6\n2 5 0.4 0\n4 0 0.2\n0 100000 200000 300000 0 100000 200000 300000 0 100000 200000 300000 0 100000 200000 300000\nSample Sample Sample Sample\nF9 F10 F11 F12\n5 2.0 1.4 3.0\n4 1.8 2.5 1.2\n3 1.6\n2.0 1.0\n2 Value 1.4 Value Value 1.5 Value 0.8\n1 1.2\n1.0 0.6\n0 1.0 0.5\n1 0.8 0.4\n0 100000 200000 300000 0 100000 200000 300000 0 100000 200000 300000 0 100000 200000 300000\nSample Sample Sample Sample Figure 11: Chains of the MCMC experiments for the FaIR climate model. MCMC Informed Neural Emulators Declaration on the Use of Generative AI in Scientific Writing The authors used ChatGPT to assist with language editing. All resulting content was critically reviewed, edited,\nand approved by the authors. The authors remain fully responsible for the accuracy, originality, and overall integrity\nof the manuscript.",
+    "paper_id": "2603.10987",
+    "title": "MCMC Informed Neural Emulators for Uncertainty Quantification in Dynamical Systems",
+    "authors": [
+      "Heikki Haario",
+      "Zhi-Song Liu",
+      "Martin Simon",
+      "Hendrik Weichel"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10987v1",
+    "chunk_index": 67,
+    "total_chunks": 68,
+    "char_count": 1599,
+    "word_count": 308,
+    "chunking_strategy": "semantic"
+  }
+]

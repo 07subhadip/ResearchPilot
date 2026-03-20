@@ -1,0 +1,1460 @@
+[
+  {
+    "chunk_id": "84005c0b-1f38-4574-aa2f-1cb0c59ed30f",
+    "text": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials Abhinaba Basu1,2 and Pavan Chakraborty1 1Indian Institute of Information Technology Allahabad (IIITA), Prayagraj, India2026 2National Institute of Electronics and Information Technology (NIELIT), India\nMar\nMarch 13, 2026",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 0,
+    "total_chunks": 81,
+    "char_count": 321,
+    "word_count": 36,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2dd3136d-8312-4494-8935-a8ce1409d5d2",
+    "text": "Machine-learned interatomic potentials (MLIPs) are deployed for high-throughput materials screening without formal reliability guarantees. We show that a single MLIP used as a stability filter\nmisses 93% of density functional theory (DFT)-stable materials (recall 0.07) on a 25,000-material\nbenchmark. Proof-Carrying Materials (PCM) closes this gap through three stages: adversarial falsification across compositional space, bootstrap envelope refinement with 95% confidence intervals, and\nLean 4 formal certification. Auditing CHGNet, TensorNet and MACE reveals architecture-specific\nblind spots with near-zero pairwise error correlations (r ≤0.13; n = 5,000), confirmed by independent Quantum ESPRESSO validation (20/20 converged; median DFT/CHGNet force ratio 12×).[cond-mat.mtrl-sci] A risk model trained on PCM-discovered features predicts failures on unseen materials (area under the ROC curve [AUC-ROC] = 0.938 ± 0.004) and transfers across architectures (cross-MLIP\nAUC-ROC ≈0.70; feature importance r = 0.877). In a thermoelectric screening case study, PCMaudited protocols discover 62 additional stable materials missed by single-MLIP screening—a 25%\nimprovement in discovery yield. Keywords: machine-learned interatomic potentials, adversarial testing, formal verification, Lean 4, materials discovery, uncertainty quantification 1 IntroductionarXiv:2603.12183v1\nUniversal MLIPs—CHGNet1, MACE4, TensorNet27, ALIGNN35, SevenNet36, EquiformerV237—\nunderpin high-throughput materials screening38, yet they are deployed without formal reliability guarantees. Matbench Discovery2 and earlier benchmarks10 evaluate 45+ models on 257K WBM (Wang–Botti–\nMarques3) structures, but aggregate accuracy metrics cannot answer the deployment-critical question: on\nwhich chemistries is this MLIP unreliable?",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 1,
+    "total_chunks": 81,
+    "char_count": 1802,
+    "word_count": 218,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "12c26fb5-ebc0-497a-9776-73459eac78a4",
+    "text": "This creates a quantifiable safety gap. A single-MLIP stability screen achieves precision 0.47 and recall 0.07 across 25,000 WBM materials, missing 93.0% of DFT-stable candidates. The gap is not merely\nstatistical: CHGNet rejects TlBiSe2 (a topological insulator with over 1,000 citations26) and Cs2KTlBr6 (a lead-free perovskite solar cell candidate with 1.27 eV band gap)—precisely the materials that highthroughput pipelines aim to find. Aggregate benchmarks showing \"near-DFT accuracy\" obscure these consequential, chemistry-specific blind spots. We reframe MLIP reliability as a falsifiable safety claim in the sense of Dalrymple et al.'s Guaranteed\nSafe AI13: a world model (the MLIP), a safety specification (bounds on acceptable error), and a verifier\n(machine-checked proofs)45. This mirrors proof-carrying code15, where untrusted programs ship with Proof-Carrying Materials (PCM) instantiates this in three stages (Fig. 1): Adversarial falsification—automated adversaries (six strategies: random, heuristic, grid, LHS, Sobol, LLM) probe for failure regions in compositional space;\n2. Envelope refinement—counterexamples tighten the safety claim into bounds with bootstrap 95% confidence intervals (CIs);\n3. Formal certification—the refined envelope compiles into Lean 4 proofs with explicit physical axioms.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 2,
+    "total_chunks": 81,
+    "char_count": 1317,
+    "word_count": 175,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "140a1e11-a523-4c53-86ca-9a2eb2e9e41b",
+    "text": "Our central findings are threefold. First, MLIP blind spots are architecture-specific: three MLIPs produce near-zero pairwise force correlations (r = 0.13, 0.10, −0.01; n = 5,000) and fail on largely disjoint Second, perturbation-based uncertainty quantification does not predict these compositional\nfailures (r = 0.039, p = 0.58), meaning structural UQ and adversarial compositional auditing capture\nindependent failure dimensions. Third, and most importantly, PCM enables prospective validation: compositional features discovered through adversarial auditing predict failures on unseen materials with\nAUC-ROC 0.938±0.004 and P@20% = 1.000 (perfect precision among the top-risk quintile), transforming retrospective audit into predictive intervention. These failure patterns transfer across architectures:\na CHGNet-trained risk model predicts MACE failures (AUC-ROC = 0.697 average cross-transfer) with\nfeature importance correlation r = 0.877.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 4,
+    "total_chunks": 81,
+    "char_count": 945,
+    "word_count": 121,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d9ee8d70-efdf-46e6-8e5f-b3b9513b0661",
+    "text": "Together, these results establish that (a) no single benchmark score captures reliability, (b) multi-MLIP auditing is essential for deployment, (c) formal verification combined with prospective prediction constitutes a new paradigm for MLIP validation, and (d) the full audit costs under $20.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 5,
+    "total_chunks": 81,
+    "char_count": 292,
+    "word_count": 41,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0c25c95d-9b30-49ab-8d0e-9684120ddc9b",
+    "text": "Adversarial MLIP testing. CAGO11 generates adversarial structures via uncertainty-calibrated geometry optimization on individual materials. PCM operates in compositional space—searching for chemical families where MLIPs systematically diverge from DFT. These are complementary: CAGO identifies",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 6,
+    "total_chunks": 81,
+    "char_count": 293,
+    "word_count": 33,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2314c2da-7eb5-4dc2-b722-d18aa3a921a7",
+    "text": "which atomic arrangements are unreliable; PCM identifies which chemistries are unreliable regardless of In our evaluation, perturbation-based uncertainty is not predictive of compositional failure\n(r = 0.039, p = 0.58). Uncertainty quantification. Conformal prediction19 provides distribution-free marginal coverage guarantees applied to interatomic potentials20. Monte Carlo dropout29, deep ensembles30 and chemicalspace uncertainty estimation31;32 have been applied to molecular property prediction. Stage 1: Stage 2: Stage 3: Output:\nAdversarial Envelope Formal Safety\nFalsification Refinement Certification Certificate LLM adversaries Bootstrap CIs Lean4 proofs\nProof +\npropose scenarios tighten bounds with physics\nenvelope +\nthat break the from passing axioms → machinediscoveries\nsafety claim evaluations checkable Stage 1: automated adversaries (six strategies including LLMs) propose compositional feature vectors; the MLIP oracle evaluates each against the DFT reference. Stage 2: counterexamples refine\nthe safety envelope with bootstrap CIs. Stage 3: the envelope compiles into Lean 4 proofs with explicit axioms.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 7,
+    "total_chunks": 81,
+    "char_count": 1125,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a1e16595-776b-41c2-b6e8-995b9d441e2c",
+    "text": "methods provide marginal coverage (\"95% of all materials fall within the prediction interval\") but cannot answer the deployment question which specific compositions are unreliable and why. prediction intervals widen uniformly across compositional space; they do not identify the compositional drivers (e.g. heavy elements, large unit cells) that concentrate failures, nor do they enable targeted DFT allocation for high-risk chemistries. PCM concentrates adversarial sampling on failure boundaries, producing tighter envelopes where they matter most: in a split conformal baseline on the same 5,000 WBM\nmaterials (2,500 calibration, 2,500 test), the feature-space conformal envelope at α = 0.05 contains 1,924 materials (precision 6.8%) versus PCM's adversary-informed bootstrap envelope with 97 materials (precision 7.2%)—a 20× reduction in envelope size at comparable precision. Active learning12;50;51\nselects informative points for retraining; PCM selects adversarial points for auditing—the adversarial budget (200 queries) is orders of magnitude smaller than retraining data requirements.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 8,
+    "total_chunks": 81,
+    "char_count": 1094,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8d3e1e43-7ab4-4538-ac54-c9687a9a3de2",
+    "text": "Safety cases and formal verification. AMLAS16 provides structured safety-case methodology for ML\ncomponents but relies on human argumentation. Seshia et al.17 identify the specification gap as a central\nchallenge for verified AI. Neural network verification43;44 focuses on input–output properties of classifiers; PCM verifies domain-specific reliability claims about regression models. Adversarial testing in\nML33;34 targets input perturbations; falsification of cyber-physical systems7;8 provides compositional\ntesting frameworks. PCM instantiates the Guaranteed Safe AI framework13 for materials: the MLIP is the world model, the envelope is the specification, and Lean 4 proofs are the verifier output—providing machine-checkable evidence that structured safety cases currently lack. 3.1 Architecture-specific failure profiles We evaluate three architecturally distinct MLIPs—CHGNet v0.3.01, TensorNet (MatPES-PBEv2025.1)27;28, and MACE-MP medium4—on 5,000 WBM materials. Structures are synthetic compositional probes—atoms placed at irrational (golden-ratio) fractional coordinates to avoid symmetry artifacts, with DFT-derived cell volumes (Methods)—designed to test whether each MLIP has learned the correct energy landscape for a given chemistry. The blind-spot classification itself—which materials",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 9,
+    "total_chunks": 81,
+    "char_count": 1307,
+    "word_count": 159,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "115e29ae-5bfd-42c3-9d90-f894ed3618d1",
+    "text": "are DFT-stable but MLIP-unstable—derives from the WBM benchmark, where both DFT and MLIPs\nevaluate fully relaxed equilibrium structures. Force failure threshold: 50 eV Å−1 (Fig. 2). • CHGNet fails on 31.1% of compositions (1,553/5,000, force > 50 eV Å−1).\n• TensorNet fails on 75.7% (3,786/5,000).\n• MACE fails on 73.2% (3,659/5,000), producing catastrophically high forces (> 1,000 eV Å−1) on multiple compositions where CHGNet predicts moderate values.\n• All three pairwise force correlations are near zero: CHGNet–TensorNet r = 0.10 [0.07, 0.13];\nCHGNet–MACE r = 0.13 [0.05, 0.21]; TensorNet–MACE r = −0.01 [-0.02, -0.003] (bootstrap\n95% CIs, n = 5,000).\n• Failures are largely disjoint: 218 materials fail CHGNet but not MACE, while 2,324 fail MACE but not CHGNet; 337 fail TensorNet but not MACE, while 210 fail MACE but not TensorNet. This is not a marginal difference. Three MLIPs, all trained on Materials Project data, produce qualitatively different force predictions on the same compositions. The higher absolute failure rates for TensorNet (75.7%) and MACE (73.2%) relative to CHGNet (31.1%) likely reflect differences in how each",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 10,
+    "total_chunks": 81,
+    "char_count": 1142,
+    "word_count": 176,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "24d44639-72cf-42e0-ba2a-bd0b8e10f874",
+    "text": "architecture generalises to far-from-equilibrium probe geometries; the scientifically important finding is not the absolute rates but the near-zero pairwise correlations and disjoint failure profiles, which demonstrate that architecture and training pipeline—not training data alone—determine which chemistries appear problematic. A stability screen using any single MLIP inherits that model's specific blind spots— including several materials with known functional importance (Section 3.3).",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 11,
+    "total_chunks": 81,
+    "char_count": 491,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fed8de8c-94fd-41af-b5fd-a31deeca5a76",
+    "text": "3.2 Adversarial strategy comparison Because the WBM–CHGNet benchmark has a 93.2% base counterexample (CX) rate—randomly sampling any composition has a > 90% chance of finding a failure—raw CX rate cannot distinguish adversary quality. We therefore evaluate six strategy types and seven LLM configurations (budget = 200)\nprimarily on discovery diversity: the number of unique, previously unseen failure compositions found (Fig. 3, Extended Data Table 1).",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 12,
+    "total_chunks": 81,
+    "char_count": 453,
+    "word_count": 65,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a787e1ba-aeaf-450f-825e-4c2fffd69762",
+    "text": "Among automated strategies, all achieve high CX rates (86–89% for heuristic, random, and Sobol). LLM adversaries—tested as one strategy class among several—achieve marginally higher rates (88–\n100%), with their primary advantage being qualitative: convergence on high-Z, multi-element regions of\ncompositional space (Z > 71, nelements ≥4), discovering 36 DFT-stable/CHGNet-unstable materials not\nfound by any baseline strategy. A shuffled-feature ablation confirms this works even with anonymous feature labels (88% CX vs 90% with real names; Extended Data Fig. 7), showing that the adversary– oracle separation—not materials expertise—is the core mechanism.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 13,
+    "total_chunks": 81,
+    "char_count": 658,
+    "word_count": 89,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6749ee8f-3763-430f-80f1-0158d3138f73",
+    "text": "The full multi-adversary audit costs $18.13; the most cost-effective single strategy (Gemini 3 Flash as LLM adversary) discovers 17 unique materials for $0.05, though purely algorithmic strategies (Sobol, random) discover more unique materials overall (138 and 123, respectively) at zero API cost.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 14,
+    "total_chunks": 81,
+    "char_count": 297,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6f8e52d5-bb4b-47d9-a403-a139c1f5f2ba",
+    "text": "a CHGNet vs MACE b Pairwise force correlations\n1011 r = 0.132 [0.05, 0.21]\nn = 5000 1.0\nCHGNet 1.00 0.10 0.13\n109 0.8\n(r) (eV/Å)\n107 0.6\nforce TensorNet 0.10 1.00 -0.01 0.4 105 correlation\nmax 0.2\nForce\n103 MACE 0.0\nMACE 0.13 -0.01 1.00\n101 −0.2 101 107 103 105\nCHGNet max force (eV/Å) 109 1011 CHGNet TensorNet MACE Architecture-specific blind spots\nc Force > 50 eV/Å threshold d 76%\n80 (n=3786) (n=3659)73%\n(%) Pair A only B only Both Neither\nrate 60 CHGN v Tens 106 2339 1447 1108\nCHGN v MACE 218 2324 1335 1123\n40 31% Failure (n=1553) Tens v MACE 337 210 3449 1004 CHGNet TensorNet MACE Cross-MLIP comparison of three architecturally distinct MLIPs on 5,000 WBM-derived structures.\na, CHGNet vs MACE max force (r = 0.13). b, Pairwise force correlation heatmap: all three pairs near zero\n(CHGNet–TensorNet r = 0.10, CHGNet–MACE r = 0.13, TensorNet–MACE r = −0.01). c, Failure rates:\nCHGNet 31.1%, TensorNet 75.7%, MACE 73.2%. d, Architecture-specific blind spots with largely disjoint failure\nchemistries. 3.3 Functionally important discoveries From the combined adversary outputs (Section 3.2), we rank materials by anomaly score (Eq. 1) and identify 21 unique materials with disjoint failure profiles (Table 1). Five contain actinides (Pu, Np, Th, U, Dy), three contain thallium—both underrepresented in CHGNet's MPtrj training data. TlBiSe2 is an experimentally verified topological insulator26 that CHGNet predicts as unstable while\nDFT confirms stability. Independent DFT recomputation (Quantum ESPRESSO, PAW-PBE) converges\ncleanly in 13 SCF steps while CHGNet produces 11.1 eV atom−1 energy and 19.9 eV Å−1 forces on the same golden-ratio probe structure—a catastrophic disagreement on a material with over 1,000 citations. Cs2KTlBr6 is a lead-free halide double perovskite with a near-ideal 1.27 eV band gap for\nphotovoltaics—precisely the class of non-toxic solar cell materials that high-throughput screening",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 15,
+    "total_chunks": 81,
+    "char_count": 1920,
+    "word_count": 301,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2551fe5d-3d7f-42b6-96ba-449d694b0fa2",
+    "text": "pipelines aim to find. Five of 12 contain actinides relevant to nuclear fuel cycle modelling. If CHGNet were used as a stability filter, it would reject materials currently under active investigation in nuclear safety, topological",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 16,
+    "total_chunks": 81,
+    "char_count": 230,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9995be9e-0080-4355-a1a3-2fe12cd82310",
+    "text": "CX Rate (Wilson 95% CI) Diversity (Bootstrap 95% CI) Novelty (Bootstrap 95% CI) 0.75 0.80 0.85 0.90 0.95 1.00 0.0 0.2 0.4 0.6 0.8 1.0 1.2 0.0 0.1 0.2 0.3 0.4 0.5\nCounterexample Rate Failure Mode Entropy (bits) Novelty (Mean NN Distance) GPT Claude Gemini baseline",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 17,
+    "total_chunks": 81,
+    "char_count": 263,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "890d9c24-35ef-45d2-a851-845102ef9c15",
+    "text": "Adversary strategy comparison (10 configurations, budget = 200). a, CX rate with Wilson 95% CI:\nall strategies achieve >85% against the 93.2% base rate. b, Unique materials discovered: algorithmic strategies\nfind 61–138 unique compositions; LLM adversaries find 5–29 but concentrate on functionally important materials.\nc, Exploration heatmap: LLMs converge on high-Z, multi-element regions (top) while baselines spread uniformly\n(bottom). Top 12 DFT-stable/CHGNet-unstable materials, ranked by anomaly score. All have identified functional\napplications spanning nuclear, electronic, photovoltaic and catalytic domains. Pred. error Max force\nRank Formula Anomaly Application\n(eV atom−1) (eV Å−1) 1 DyLi2PuF8 3.49 7.06 75.6 Nuclear fuel (molten salt)\n2 Pb4Pt4O12 2.97 4.13 107.6 Pt-group catalysis\n3 Au2Ba2Np2Se6 2.70 6.95 44.9 Nuclear waste\n4 Au2Cs2Sc2Te6 2.68 5.36 73.4 Thermoelectric\n5 Bi2Cu2O4Te2V 2.58 5.69 63.0 Multiferroic\n6 Th2I6 2.53 6.07 53.8 Nuclear fuel processing\n7 Rb2SnTlCl6 2.36 5.94 49.3 Lead-free perovskite\n8 Cs2KTlBr6 2.15 6.12 37.2 Perovskite solar cell\n9 Ba6NPb2Se 1.61 4.96 36.0 Optoelectronic\n10 CsAuTe 1.57 4.38 45.1 Relativistic bonding\n11 TlBiSe2 1.17 3.93 36.7 Topological insulator\n12 Cs2USe3 0.69 3.00 33.7 Actinide chalcogenide electronics and photovoltaics. 3.4 Independent DFT validation at scale To confirm that adversarially discovered blind spots are genuine—not artifacts of approximate structure",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 18,
+    "total_chunks": 81,
+    "char_count": 1432,
+    "word_count": 198,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e27dc5fd-3526-4c47-89b3-75a10083359b",
+    "text": "construction—we recompute DFT ground states for the top 20 materials using Quantum ESPRESSO\n(pw.x v6.7, PAW-PBE, SSSP efficiency pseudopotentials, 60/480 Ry cutoffs, 4×4×4 k-mesh). Materials\nare selected from the WBM benchmark by: DFT-stable, CHGNet-unstable, max Z ≤56, nsites ≤24,\nsorted by prediction error descending. Structures use golden-ratio fractional coordinate spacing with DFT-derived cell volumes (Methods). All 20 materials converge to well-defined self-consistent field (SCF) ground states (11–150 iterations,\n22–6,360 s per material on 8 CPU cores). Two materials (Ba2Pd4Sb4 and BaF6In) require expanded\ncells and tighter mixing parameters on retry, but ultimately converge. The converged materials span 27 elements across Z = 3 (Li) to Z = 56 (Ba). We compare forces rather than energies because DFT\ntotal energies include core electrons (e.g. −3,284 eV/atom for Cu7Zn1) and are not directly comparable\nto CHGNet's formation-energy-referenced predictions. Forces on identical structures provide a direct, reference-free comparison.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 19,
+    "total_chunks": 81,
+    "char_count": 1048,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d5d6f38e-8362-431f-85d0-df0fb0b6749a",
+    "text": "Across the 18 materials evaluated on identical golden-ratio structures, DFT forces exceed CHGNet forces\nby a median factor of 11.6× (range: 1.2–63.4×; Extended Data Table Extended Data Table 2; force comparison excludes 2 retry materials whose structures differ). The headline result: Cu7Zn1 (brass, the most\nwidely used copper alloy) converges in 15 SCF steps with DFT forces of 557 eV Å−1—while CHGNet\npredicts 36 eV Å−1, a 15× underestimate. Cu7Mn1 (manganese bronze) shows a 33× underestimate. These are not exotic compositions: they are industrial alloys that CHGNet's training data should cover. We emphasise that the blind-spot classification (DFT-stable, CHGNet-unstable) originates from the\nWBM benchmark, where both DFT and CHGNet evaluate relaxed equilibrium structures—not the synthetic probes used here. The golden-ratio structures serve only as a compositional probe: they test whether DFT and CHGNet agree on force magnitudes for a given chemistry. A model that has learned correct interatomic interactions for a composition should produce forces of comparable magnitude on\nany structure of that composition, not only near-equilibrium ones. The 12× median force underestimate therefore indicates that CHGNet has not learned the correct energy landscape for these chemistries, consistent with their absence or underrepresentation in training data. The 100% convergence rate (20/20), achieved on adversarially selected worst-case compositions, confirms that the PCM pipeline discovers genuine MLIP failures, not structure-generation artifacts. As a complementary test, we relax all 20 DFT-validated adversarial discoveries using CHGNet v0.3.0\nwith BFGS optimization (fmax = 0.05 eV Å−1, max 500 steps). If the force disagreements were merely",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 20,
+    "total_chunks": 81,
+    "char_count": 1754,
+    "word_count": 250,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7435c8fc-13c9-4f83-9e31-3ffcea3bed06",
+    "text": "a consequence of probing far-from-equilibrium geometries, CHGNet relaxation should converge rapidly to low-energy minima. Instead, all 20 materials exhibit massive relaxation energy changes of 3.98–\n15.45 eV/atom—far exceeding the ∼0.1 eV/atom scale of typical formation energies. Eighteen materials\nconverge (10–477 ionic steps), but two—Ag6Cl2S2 and As2In4Pd6—fail to converge even after 500\nrelaxation steps (final Fmax ≈0.44 eV Å−1), indicating that CHGNet cannot locate a stable minimum\nfor these chemistries. The As2In4Pd6 relaxation releases 15.4 eV/atom, roughly 15× its DFT formation\nenergy. These results confirm that CHGNet's entire potential energy surface is fundamentally incorrect for these compositions, not merely its force predictions at a single probe geometry. 3.5 Failure analysis: UQ orthogonality and training-data gaps A natural question is whether existing uncertainty quantification (UQ) methods can identify these blind spots without adversarial auditing. We test this by computing perturbation-based uncertainty—the approach used by CAGO11—for 200 WBM materials. For each material, we generate 5 structures with\nGaussian perturbations (σ = 0.01 Å) and measure CHGNet prediction variance. The point-biserial correlation between perturbation uncertainty and compositional failure is r = 0.039\n(p = 0.58), indicating that structural sensitivity is orthogonal to compositional failure. Spearman rank\ncorrelation reveals a marginal monotonic relationship (ρ = 0.125, p = 0.078), and failed materials\nshow 1.72× higher mean uncertainty (Cohen's d = 0.14)—but these effects are too weak for reliable Feature Space Anomaly Score Distribution\n175 WBM benchmark (n=5000) 160 WBM benchmark\npred_error\nthreshold LLM discoveries (n=21) LLM discoveries",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 21,
+    "total_chunks": 81,
+    "char_count": 1766,
+    "word_count": 242,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f35f1a53-753e-4d8b-8108-184ca05deb74",
+    "text": "80 Force 75 Count\nMax 60\n50 force threshold 0 2 4 6 8 10 12 −2 0 2 4\nPrediction Error (eV/atom) Anomaly Score Systematic failure patterns. a, Anomaly distribution: prediction error vs max force for 5,000 WBM\nmaterials (grey) with adversarially discovered failures (red). b, Per-element stability disagreement by periodic\ntable block: f-block elements fail most (p = 0.042). c, JARVIS cross-functional validation: 682 CHGNet blind\nspots confirmed by independent DFT. deployment screening. The 50 highest-uncertainty materials show a paradoxically negative correlation\n(r = −0.14) with actual failure, meaning UQ-based screening would miss the most consequential blind\nspots. This directly challenges the assumption that model uncertainty20;29;30 can serve as a proxy for reliability: a model can be confidently wrong on entire chemical families. Adversarial compositional\nauditing and structural perturbation-based UQ capture independent failure dimensions and should be",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 22,
+    "total_chunks": 81,
+    "char_count": 969,
+    "word_count": 139,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7349bc16-105d-4956-9764-a18816ff6b05",
+    "text": "The blind spots are also not random with respect to the periodic table. Per-element analysis across 84 elements reveals that f-block elements have significantly higher DFT/CHGNet disagreement (Kruskal–\nWallis p = 0.042; Extended Data Fig. 5). Elements targeted by adversarial strategies show higher\ndisagreement than non-targeted elements (59.9% vs 55.4%, Mann–Whitney p = 0.020). frequency quintile contains 41% of adversarial elements; the most common contains none. Cross-referencing 814 WBM materials against the JARVIS-DFT database39 (OptB88vdW functional) confirms 682 blind spots across DFT functionals, consistent with training data from the Materials\nProject42, OQMD40 and AFLOW41. Heavy elements show significantly higher disagreement (mean\natomic mass p = 7 × 10−5, max Z p = 0.002; Mann–Whitney).",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 23,
+    "total_chunks": 81,
+    "char_count": 808,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "07e8ff00-843d-4198-9bbf-a42bbaeb226d",
+    "text": "3.6 Envelope refinement and formal certification The refined envelope delineates reliable from unreliable MLIP predictions. As a concrete example:\nstarting from an initial claim that CHGNet is reliable for Zmax ≤83, the heuristic adversary discovers Cu7Zn1 (brass) at step 47 as a counterexample with prediction error 10.49 eV atom−1. After 200\nqueries (86% counterexample rate, 61 unique materials), bootstrap refinement tightens the envelope to\nkey bounds: Zmax ≤70 (all counterexamples above this threshold failed), mean atomic mass ≤164 u,\nbandgap (PBE) ≥0.92 eV—consistent with known CHGNet limitations. Iterative refinement (4 rounds of attack–refine) compresses the safe envelope by 75–91% per feature dimension (Extended Data Fig. 4). The envelope compiles into five Lean 4 proof modules (∼250 lines, Lean 4.27.0): safety theorem with physical axioms, perturbation stability via interval arithmetic, error propagation composing DFT uncertainty (0.1 eV atom−1) with MLIP threshold via triangle inequality, monotone refinement soundness, and evaluation metric properties (CX rate monotonicity, CI convergence with budget). All axioms are explicit and inspectable. The proofs verify reasoning correctness—that conclusions follow\nfrom stated assumptions—analogous to AI-Descartes6 combining data and theory, and providing the\nmachine-checkable evidence that structured safety cases16 currently lack. 3.7 Prospective validation The preceding results establish that PCM discovers genuine blind spots. A stronger question is whether\nthose discoveries generalise: can compositional features identified through adversarial auditing predict failures on materials the framework has never seen? We split the full 25,000-material WBM benchmark into a discovery set (15,000 materials,",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 24,
+    "total_chunks": 81,
+    "char_count": 1778,
+    "word_count": 240,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "809c6ade-082d-42f9-9018-69175c8a78a4",
+    "text": "60%) used for adversarial auditing and envelope refinement, and a held-out validation set (10,000 materials, 40%) never seen during any stage of the PCM pipeline.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 25,
+    "total_chunks": 81,
+    "char_count": 162,
+    "word_count": 25,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b9ce1207-a201-4614-88d1-14e9c584414f",
+    "text": "A gradient-boosted classifier\n(scikit-learn GradientBoostingClassifier, 5 random seeds) is trained to predict binary failure (Fmax > 50 eV Å−1) from the 8 compositional features used throughout this work. The classifier achieves AUC-ROC 0.938 ± 0.004 on the held-out validation set (mean ± s.d. across 5 random seeds), demonstrating that PCM-discovered failure patterns are not overfit to the discovery set but capture genuine compositional regularities. Precision at 20% recall (P@20%) is 1.000: the top 20% of risk-ranked materials are 100% actual failures. This means a deployment pipeline that flags the highest-risk quintile achieves perfect precision with zero false alarms. The top predictive features are n_sites (number of atoms per unit cell),\nvolume_per_atom, and max_z (maximum atomic number)—all compositional descriptors that PCM counterexamples naturally concentrate on during adversarial search.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 26,
+    "total_chunks": 81,
+    "char_count": 911,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8ea78bce-1a09-4ce3-86d4-0ab24037f72d",
+    "text": "These are simple, interpretable features that materials scientists can act on directly: compositions with many sites, large volumes per atom, or heavy elements warrant additional DFT validation before trusting MLIP predictions. This result transforms PCM from a retrospective auditing tool into a predictive intervention: rather than auditing every material individually, a PCM-trained risk model can screen large\ncandidate libraries and flag likely failures before expensive DFT computation. The combination of adversarial discovery (identifying where failures occur) and prospective prediction (generalising why they occur) closes the loop between falsification and deployment. 3.8 Cross-MLIP prospective transfer",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 27,
+    "total_chunks": 81,
+    "char_count": 715,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d93f4b3b-7031-4b52-9722-12b8d802b98a",
+    "text": "A critical question for deployment is whether PCM-discovered failure patterns are specific to a single MLIP architecture or capture general vulnerability patterns shared across architectures. We test this\ndirectly: can a risk model trained on one MLIP's failures predict failures of a different MLIP? Using a separate 10,000-material multi-model benchmark (CHGNet + MACE), we split into discovery (6,000, 60%) and validation (4,000, 40%) sets. A gradient-boosted classifier is trained on one model's failures from the discovery set and evaluated on both models' failures on the held-out validation set (5 random seeds).",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 28,
+    "total_chunks": 81,
+    "char_count": 619,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "390c82bb-969e-4389-b265-3331122da1f3",
+    "text": "Same-model baselines confirm strong predictive power: CHGNet→CHGNet AUC-ROC =\n0.906±0.002, MACE→MACE AUC-ROC = 0.888±0.003. Cross-architecture transfer retains substantial predictive signal: CHGNet→MACE AUC-ROC = 0.685 ± 0.006, MACE→CHGNet AUC-ROC =\n0.708 ± 0.007 (average cross-MLIP AUC-ROC = 0.697). Both cross-transfer directions exceed the 0.5\nrandom baseline by a wide margin (p < 10−4 across all seeds), indicating that a significant fraction of MLIP vulnerability is compositionally determined rather than architecture-specific. Feature importance overlap. The Pearson correlation between CHGNet and MACE feature importances is r = 0.877 ± 0.025, with 2.2 out of 3 top features shared across models (consistently n_sites\nand volume). This high overlap confirms that both architectures struggle with the same compositional drivers—large unit cells and heavy elements—even though their absolute failure sets are largely disjoint\n(r = 0.182 for raw errors). Consensus prediction. Training on either model and predicting \"any model fails\" yields AUC-ROC\n0.813±0.004 (CHGNet-trained) and 0.834±0.005 (MACE-trained), suggesting that single-model PCM audits capture a substantial portion of the shared vulnerability landscape. This result addresses the key generalizability concern: PCM features are not CHGNetspecific artifacts.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 29,
+    "total_chunks": 81,
+    "char_count": 1329,
+    "word_count": 178,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4aebc20b-09e5-4635-9e75-3385c8276da6",
+    "text": "A risk model trained on one MLIP's failures provides actionable early warning for\nother architectures, with a shared compositional vulnerability signal (r = 0.877) and architecturespecific residuals. This supports deployment of PCM as a partially architecture-transferable auditing framework, where cross-MLIP risk models provide useful triage and per-MLIP retraining yields optimal To quantify the practical consequences of MLIP blind spots, we evaluate single-model screening performance on the WBM benchmark. Single-model screening. Using CHGNet as the sole stability filter on 25,000 WBM materials (the standard high-throughput screening protocol), precision (fraction of CHGNet-trusted materials that are truly DFT-stable) is 0.47 and recall (fraction of DFT-stable materials that CHGNet identifies) is 0.07. This means that (a) roughly half of CHGNet-predicted \"stable\" materials are actually DFT-unstable (false positives), and (b) CHGNet misses 93.0% of DFT-stable materials (false negatives; distinct from the 93.2% counterexample rate on 5K, which counts all failure types). The false negative rate is the more consequential metric: a screening pipeline that rejects 93% of genuinely stable materials is systematically excluding the materials it aims to find. PCM-audited screening.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 30,
+    "total_chunks": 81,
+    "char_count": 1292,
+    "word_count": 176,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "40216f2b-897c-40e8-9c47-9742d9f8a41b",
+    "text": "Applying the PCM-refined envelope as a pre-filter—flagging materials in compositional regions where CHGNet is known to be unreliable—reduces the false positive rate from 10.7% to 8.1% (a 24% relative reduction).",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 31,
+    "total_chunks": 81,
+    "char_count": 211,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d47d2a7a-71a2-4fd2-8e91-2c691a69451a",
+    "text": "Materials flagged by the PCM envelope are routed to DFT validation rather than trusted at MLIP-level, ensuring that blind-spot regions receive appropriate scrutiny. The prospective risk model (Section 3.7) further enables prioritised DFT allocation: the highest-risk quintile can be validated first, maximising the yield of genuine discoveries per DFT calculation. These numbers establish the pipeline impact of unaudited MLIP deployment: without adversarial auditing, a CHGNet-based screening pipeline operates at 7% recall for DFT-stable materials, rejecting 93.0% of the materials it should identify as promising candidates. 3.10 Multi-MLIP deployment simulation The preceding sections establish that (a) blind spots are architecture-specific and (b) PCM risk models\ntransfer across architectures. A practitioner's natural question is: how should I change my screening\npipeline tomorrow?",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 32,
+    "total_chunks": 81,
+    "char_count": 890,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e19238e2-4285-485c-8119-afb897bfe9c9",
+    "text": "We simulate five deployment strategies on a 10,000-material subset of WBM with both CHGNet and MACE predictions (distinct from the 5K single-model and 25K prospective benchmarks). Screening strategies. Using force reliability (Fmax < 50 eV Å−1) as the trust criterion: • CHGNet-only: precision 0.564, recall 0.676, false negative rate (FNR) 32.4% (6,829 trusted)\n• MACE-only: precision 0.529, recall 0.174, FNR 82.5% (1,882 trusted)\n• Union (trust if either reliable): precision 0.559, recall 0.698, FNR 30.2% (7,116 trusted)\n• Consensus (trust only if both reliable): precision 0.545, recall 0.152, FNR 84.8% (1,595 trusted) Consensus screening is too conservative, missing 84.8% of DFT-stable materials. best no-DFT recall (69.8%), improving over CHGNet-only by recovering materials where MACE is\nreliable but CHGNet is not (and vice versa). Note that the Union strategy is effectively an ensemble\ndisagreement baseline—trusting any material where at least one model is confident. multi-model heuristic achieves only 69.8% recall; adding the PCM risk model raises recall to 78.0%, demonstrating that adversarial compositional auditing captures failure patterns beyond what ensemble",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 33,
+    "total_chunks": 81,
+    "char_count": 1183,
+    "word_count": 169,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1e559555-5ff3-4f2d-8c96-7d1293f0f1f9",
+    "text": "agreement alone can detect. PCM-audited screening. Adding the PCM risk model to CHGNet screening (routing the top 20% riskranked materials to DFT) raises screening precision (fraction of trusted materials that are DFT-stable)\nfrom 0.564 →0.623 ± 0.004 and recall (fraction of DFT-stable materials correctly identified) from\n0.676 →0.780 ± 0.005—recovering 10.4% more DFT-stable materials that unaudited CHGNet would Materials in PCM-flagged regions are DFT-verified rather than blindly trusted or rejected. DFT budget efficiency. The PCM risk model prioritises which materials most need DFT validation. a 20% DFT budget (800 materials out of 4,000 in the validation set), PCM-ranked allocation achieves\na DFT yield of 0.756 ± 0.012 (75.6% of DFT-evaluated materials are genuinely stable), compared to\n0.563 ± 0.008 for random DFT allocation—a 34% improvement in DFT efficiency. This means each\nDFT calculation is 1.34× more likely to discover a stable material when guided by PCM risk ranking. Blind spot coverage. 72.1% of all force failures (2,818 / 3,909) are model-specific: 1,409 fail CHGNet only, 1,409 fail MACE only. Among the 5,703 DFT-stable materials, 42.7% are flagged as unreliable by at least one MLIP—yet only 13.0% are flagged by both. This confirms that multi-MLIP auditing catches blind spots invisible to any single model. Practitioner recommendation.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 34,
+    "total_chunks": 81,
+    "char_count": 1370,
+    "word_count": 205,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a8adc907-3862-47c9-afe7-b4897faf404e",
+    "text": "Based on these results, the optimal deployment strategy is: (1) screen with union of available MLIPs to maximise recall, (2) apply PCM risk model to flag compositional regions of concern, and (3) allocate DFT budget preferentially to PCM-flagged materials. This three-step\nprotocol improves screening recall by >10% absolute and DFT efficiency by 34% relative, at negligible computational cost beyond the initial PCM audit. 3.11 Deployment case study: thermoelectric screening To demonstrate the practical impact of PCM-audited screening in a realistic discovery workflow, we simulate a thermoelectric materials campaign. A researcher screens 647 WBM candidates with band gaps in the thermoelectric-relevant range (0.1–1.5 eV), of which 488 are DFT-stable (ground truth unknown",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 35,
+    "total_chunks": 81,
+    "char_count": 777,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9ad8f726-6c57-4677-a10e-25fd694b8363",
+    "text": "Head-to-head comparison. Five protocols are evaluated (Table 2): Thermoelectric screening case study. Discovery yield across five screening protocols for 647 WBM candidates (488 DFT-stable). PCM-audited screening discovers 62 additional stable thermoelectrics over the CHGNet\nbaseline while reducing false leads, at the cost of 130 DFT evaluations (20% of candidates). Missed False leads Precision DFT evals CHGNet-only 244 244 (50.0%) 63 0.795 0\nMACE-only 63 425 (87.1%) 14 0.818 0\nUnion (no DFT) 253 235 (48.2%) 65 0.796 0\nUnion + random DFT 296 192 (39.3%) 52 0.850 130\nPCM-audited (ours) 306 182 (37.3%) 53 0.852 130 The PCM-audited protocol discovers 62 additional stable thermoelectrics that CHGNetonly screening would miss entirely—a 25.4% improvement in discovery yield. The miss rate drops from 50.0% to 37.3%, while precision improves from 0.795 to 0.852 (fewer false leads). DFT evaluations (20.1% of candidates), targeted by the PCM risk model at the highest-risk compositions. Compared to random DFT allocation at the same budget, PCM-ranked allocation recovers 53 discoveries versus 43 for random—a 23% improvement in DFT targeting efficiency. Among the discoveries recovered by the PCM-audited protocol are WSe2 (gap =\n1.47 eV, Ehull = −0.558 eV/atom), IrSbZr (gap = 1.48 eV, half-Heusler thermoelectric), and BaBiScO6\n(gap = 1.46 eV, double perovskite)—all DFT-stable materials that CHGNet flags as unreliable (max\nforce > 50 eV Å−1) due to architecture-specific blind spots. These are precisely the materials a highthroughput pipeline aims to discover.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 36,
+    "total_chunks": 81,
+    "char_count": 1569,
+    "word_count": 234,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4427dd92-b5cb-4478-a0bd-1245a47d1369",
+    "text": "For a research group screening ∼650 thermoelectric candidates, the PCM-audited\nprotocol adds ∼60 genuine discoveries at the cost of 130 DFT calculations—roughly 0.5 DFT per additional discovery. Given that a single DFT relaxation costs minutes to hours, this represents a favourable\ntrade-off: each additional DFT calculation targeted by PCM is 1.23× more likely to yield a discovery than random allocation.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 38,
+    "total_chunks": 81,
+    "char_count": 407,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "65ade95b-b702-4e34-b3e2-24c68e4e469e",
+    "text": "3.12 Cross-domain generalizability To test whether the PCM framework generalises beyond solid-state materials, we apply the identical pipeline to three independent domains—molecular property prediction (QM9), drug solubility (ESOL), and tabular ML regression (California Housing)—running extended experiments across all three: multistrategy comparison (5 strategies × 3 seeds per domain), budget sensitivity (5 budgets × 3 strategies\n× 3 seeds per domain), full pipeline verification, and failure characterisation. These experiments test framework generalization, not merely breadth: each domain has different data modalities, model architectures, and failure patterns, yet the same three-stage pipeline (falsify, refine, certify) applies without Molecular property prediction (QM9). Two real graph neural networks—SchNet52 (455K parameters,\ndistance-based message passing) and DimeNet++53 (1.9M parameters, directional message passing)—\nwere trained for 200 epochs on 8,000 QM9 molecules (2,000 held-out test set, 10,000 total)49 on an SchNet achieves test MAE = 0.125 eV (median error 0.101 eV); DimeNet++ achieves test MAE = 0.087 eV (median error 0.064 eV). The models produce moderate error correlations (Pearson\nr = 0.461) with architecture-specific failure modes: at a 1.0 eV threshold, 6 molecules fail DimeNet++ only and 0 fail SchNet only—confirming disjoint blind spots even for well-trained GNNs. Top failure\npredictors are n_atoms and molecular_weight. At budget = 200, grid sampling achieves the\nhighest CX rate (38.0 ± 0.0%), followed by sobol (37.8 ± 1.4%), LHS (34.0 ± 4.8%), and random\n(33.3 ± 3.8%), while the heuristic adversary discovers 23/200 counterexamples (11.5 ± 2.0%). heuristic's lower rate reflects an informative mismatch: the stress model targets large, polar molecules,",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 39,
+    "total_chunks": 81,
+    "char_count": 1802,
+    "word_count": 251,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a4f5888-418f-4f59-b3bb-567653327cb9",
+    "text": "but real SchNet/DimeNet++ errors are not concentrated at stress extremes—uniform samplers cover the input space more broadly and find more failures spread across the space.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 40,
+    "total_chunks": 81,
+    "char_count": 172,
+    "word_count": 25,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fb018b95-15c9-4201-899a-76ae06487d70",
+    "text": "Drug solubility prediction (ESOL). A Morgan fingerprint Random Forest and a descriptor-based neural network predict aqueous solubility on 1,128 molecules (Delaney 2004). Failures are largely disjoint: 334 molecules fail the fingerprint model only, 58 fail the neural network only, and just 86 fail both\n(error correlation r = 0.321). The heuristic adversary achieves 80.3 ± 2.3% CX rate versus grid 70.0%,\nLHS 60.7%, random 59.0% and sobol 58.3%.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 41,
+    "total_chunks": 81,
+    "char_count": 446,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5227744f-8feb-4845-8d92-d996869d1108",
+    "text": "LogP is the strongest predictor of fingerprint model\nfailure, while heavy_atoms drives neural network failure—again, distinct failure predictors for each Tabular ML regression (California Housing). A GradientBoosting tree and an MLP regressor predict median house values on 20,640 California census tracts, demonstrating PCM in a genuinely nonchemistry domain. The GBT achieves MAE 0.31 ($31K) and the MLP MAE 0.34 ($34K). Error correlation is high (r = 0.734), with top failure predictors ave_occup, med_inc, and population. At budget = 200, grid achieves the highest CX rate (58.5 ± 0.0%), followed by sobol (40.2 ± 1.3%),\nrandom (40.0±2.5%), LHS (38.3±3.4%), and heuristic (16.2±4.5%). The heuristic adversary discovers 24/200 counterexamples (12.0%), with meaningful envelope refinement and bootstrap CIs computed. Lean 4 proofs verify for the tabular domain, confirming formal certification generalises beyond chemistry CX rate saturates early in all three domains.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 42,
+    "total_chunks": 81,
+    "char_count": 970,
+    "word_count": 138,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1aa284a9-7d10-4cbf-9033-54f22f1730a0",
+    "text": "For QM9, the heuristic adversary is\nstable at ∼10–11% across all budgets while random saturates at budget = 100 (36.3%) and sobol at budget = 200 (37.8%). For ESOL, heuristic saturates at budget = 200 (80.3%), random at budget = 500\n(59.4%), and sobol remains stable at ∼58–60%. For Tabular, heuristic saturates at budget = 100 (15.3%),\nrandom at budget = 200 (40.0%), and sobol at ∼40%. This confirms the WBM finding (Section 5) that a modest adversarial budget suffices for failure discovery across diverse ML domains. All three domains complete the entire PCM pipeline—attack, envelope refinement, Lean 4\nproof generation—with machine-checked proofs verified by lake build in all cases (QM9: 23/200 CX, 11.5%; ESOL: 161/200 CX, 80.5%; Tabular: 24/200 CX, 12.0%).",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 43,
+    "total_chunks": 81,
+    "char_count": 765,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "299fdf7b-1a41-454c-86e5-cbc23dbe4682",
+    "text": "This provides strong evidence that formal certification of ML reliability claims extends beyond solid-state materials to molecular property prediction with real GNNs and non-chemistry tabular ML alike. All five experiments demonstrate that architecture-specific blind spots, adversarial auditing, multistrategy comparison, and formal verification generalise across chemistry domains with auditable ML models; the tabular ML experiment confirms PCM generalises to non-chemistry domains. Prospective validation as the strongest evidence. The most significant result is not the discovery of blind spots—which prior work has noted qualitatively—but the demonstration that PCM-discovered\nfeatures predict failures on unseen materials (AUC-ROC 0.938 ± 0.004; P@20% = 1.000, i.e. perfect precision among the top-risk quintile with zero false alarms). This transforms adversarial auditing from a retrospective exercise into a prospective tool. The key insight is that compositional features concentrating counterexamples (n_sites, volume_per_atom, max_z) generalise to unseen chemistries—a\nproperty that conformal prediction (marginal coverage only) and perturbation-based UQ (r = 0.039) do Single-model screening misses 93% of DFT-stable materials; multi-MLIP screening with PCM risk-ranked DFT allocation improves efficiency by 34%. The thermoelectric case study",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 44,
+    "total_chunks": 81,
+    "char_count": 1356,
+    "word_count": 174,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ed17dfdb-618a-43d7-9aca-236875f8698f",
+    "text": "(Section 3.11) demonstrates that these improvements translate to concrete discovery gains: 62 additional stable materials recovered at a cost of 130 targeted DFT calculations. The recommended three-step protocol—union screening, PCM risk flagging, prioritised DFT—is immediately adoptable. 72.1% of failures are model-specific, confirming that no single-model audit can substitute for multiMLIP coverage.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 45,
+    "total_chunks": 81,
+    "char_count": 404,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "86ef15b5-9b3b-48b6-b69e-aa17dc0ff405",
+    "text": "Formal verification and the specification gap. The Lean 4 proofs are explicitly conditional: every approximation (DFT at 0.1 eV atom−1, MLIP threshold at 2.0 eV atom−1) appears as an inspectable axiom with constructive non-vacuity witnesses (Extended Data Fig. Extended Data Fig. 9).",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 46,
+    "total_chunks": 81,
+    "char_count": 283,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fdc6d633-e9d6-4258-afee-7c3ef976b26e",
+    "text": "This addresses the\nspecification gap17 by making assumptions explicit rather than hiding them in implementation details. Combined with prospective failure prediction, this constitutes a new approach to MLIP validation: traditional benchmarks provide aggregate scores; conformal prediction provides coverage guarantees without compositional specificity; PCM provides falsifiable safety certificates with both formal guarantees and\npredictive power. Cross-MLIP transfer (AUC-ROC ∼0.70 cross-model, feature importance r = 0.877) confirms that vulnerability patterns are partially shared across architectures. Cross-domain generalizability. Extended experiments across three chemistry domains (WBM, QM9",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 47,
+    "total_chunks": 81,
+    "char_count": 698,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bd6033ae-bd92-4f0b-931e-145df97fd7bb",
+    "text": "Box 1: How to audit your MLIP. Three-step protocol for pre-deployment reliability certification. Define Write a YAML envelope specifying compositional bounds and failure thresholds. Example: Zmax ≤83, prediction error ≤2 eV atom−1, force ≤50 eV Å−1. Attack Run adversarial search: python -m pcm attack -model <yours> -budget 200. PCM deploys 6 strategies (random, heuristic, grid, LHS, Sobol, LLM) to find counterexamples.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 48,
+    "total_chunks": 81,
+    "char_count": 422,
+    "word_count": 61,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dc75f56f-6b4c-488b-8069-b3246898be70",
+    "text": "Certify Inspect the refined envelope and machine-checked Lean 4 proofs. The proofs certify: if the assumptions hold, then the safety claim follows. with real SchNet/DimeNet++ GNNs, ESOL) and one non-chemistry domain (California Housing, tabular ML) confirm that the three-stage pipeline generalises across data modalities and model architectures Each domain exhibits distinct failure predictors per architecture, and all produce verified Accessibility and practical considerations. The full multi-strategy, multi-MLIP audit costs $18.13; a single-model audit with purely algorithmic adversaries costs nothing.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 49,
+    "total_chunks": 81,
+    "char_count": 609,
+    "word_count": 79,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c930baa2-d8a6-4d3c-af1b-d69c063425d5",
+    "text": "CX rate saturates by budget = 50, though discovery diversity grows linearly with budget (24 unique materials at budget = 25 vs\n231 at budget = 500). PCM selects adversarial points for auditing (200 queries), not retraining (>100K\nstructures)—at budget = 200, the probability of missing a failure mode of prevalence ≥5% is < 0.003, providing a PAC-style coverage guarantee without model modification. A PCM audit report provides four actionable outputs: (1) a pass/fail decision with quantified confidence, (2) an explicit compositional map of unreliable regions, (3) machine-checkable proofs, and (4) a prospective risk model for screening Limitations. (1) Ground truth is computational DFT, not experiment—though independent QE recomputation (20/20 converging on adversarially selected compositions), cross-functional (JARVIS) validation,\nand literature-verified cases (TlBiSe2) provide three independent lines of evidence. (2) The WBM oracle\nis database retrieval, not structure generation; live CHGNet evaluation on 50 approximate (golden-ratio)\nstructures shows moderate energy correlation (r = 0.42, p = 0.002) and force correlation (r = 0.46,\np < 0.001) with database values. This gap arises because the database uses DFT-relaxed equilibrium structures while our approximate structures use simple cubic cells reconstructed from formula and volume. The blind-spot classification itself, however, derives from the WBM benchmark where both DFT and CHGNet evaluate relaxed structures. (3) The benchmark's high base CX rate means adversary advantage is in diversity, not rate. (4) Lean proofs verify reasoning correctness, not physics. (5) Cross-MLIP\ntransfer (Section 3.8) shows moderate but imperfect generalisation (average AUC-ROC = 0.697): while a CHGNet-trained risk model provides useful early warning for MACE failures, architecture-specific\nretraining improves AUC-ROC by ∼0.2, suggesting that optimal deployment uses per-MLIP auditing. 5.1 Framework and oracle models PCM operates on three abstractions: Environment (compositional features: nelements, Zmax, electronegativity, volume per atom, atomic mass), Design (structural parameters: nsites, bandgap), and Outcomes\n(prediction error, maximum force). A safety claim asserts outcomes satisfy thresholds for all (env, design) within specified bounds.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 50,
+    "total_chunks": 81,
+    "char_count": 2313,
+    "word_count": 317,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "33d9cfbd-988a-4e27-8563-7fb313a54ba7",
+    "text": "The WBM oracle maps adversary-proposed feature vectors to nearest real materials via KDTree lookup\n(O(log n)) and returns pre-computed CHGNet/DFT comparisons. TensorNet and MACE oracles use\nthe same WBM feature space with live MLIP inference via matgl and mace-torch, respectively. Stability classification uses Eabove hull < 0.025 eV atom−1. KDTree-indexed feature lookup enables\nsub-millisecond queries at full WBM scale (0.43 ms per query at 257K vs 0.14 ms at 5K; coverage at budget = 1,000: 504 unique materials at 257K vs 347 at 5K), so the framework scales to production",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 52,
+    "total_chunks": 81,
+    "char_count": 577,
+    "word_count": 90,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0d7de2c6-8b2d-4768-83e2-5142dc275c5e",
+    "text": "datasets without re-running MLIPs at attack time. 5.2 Adversary strategies Six strategies are evaluated: • Random: Uniform sampling within envelope bounds.\n• Heuristic: Beta-distribution biased toward stress directions specified in envelope YAML.\n• Grid: Uniform grid over envelope bounds.\n• LHS: Latin Hypercube Sampling (scipy).\n• Sobol: Sobol quasi-random sequences (scipy).\n• LLM: Language model adversary receiving evaluation history and proposing numerical feature vectors targeting likely failure regions. On API failure, degrades to random sampling with exponential Temperature = 0.2 for all models.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 53,
+    "total_chunks": 81,
+    "char_count": 607,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f87c157b-46cc-491d-bd62-1ed0178c3a9f",
+    "text": "5.3 Envelope refinement Environment bounds are tightened to the 75th percentile of passing evaluations using the conservative 95% bootstrap CI (1,000 resamples). Minimum sample gate: 30 passing evaluations. Design requirements are stress-direction-aware. 5.4 Lean 4 certification Refined envelopes compile into five proof modules: core safety theorem, perturbation stability, error propagation (composing DFT + MLIP uncertainty via triangle inequality), monotone refinement soundness, and evaluation metric properties (CX count monotonicity, CI width convergence, PAC coverage\nguarantee). Lean 4.27.05, no mathlib dependency.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 54,
+    "total_chunks": 81,
+    "char_count": 625,
+    "word_count": 79,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "72954c35-0336-4653-ab3e-e3dfa5d499a0",
+    "text": "This builds on recent applications of theorem\nprovers to scientific reasoning9;18. 5.5 Prospective validation protocol The WBM benchmark (25,000 materials) is split 60/40 into discovery (15,000) and validation (10,000) The discovery set is used for all adversarial auditing and envelope refinement. A scikit-learn\nGradientBoostingClassifier (200 estimators, max depth 4, learning rate 0.05) is trained on the 8 compositional features (n_elements, max_z, mean_electronegativity, std_electronegativity,\nvolume_per_atom, mean_atomic_mass, n_sites, bandgap_pbe) to predict binary failure (Fmax >\n50 eV Å−1). Results are aggregated across 5 independent random seeds (each with different discovery/- Performance is evaluated on the held-out validation set using AUC-ROC, precisionrecall, and precision at k% recall (P@k%). 5.6 Benchmark construction 25,000 materials sampled from 257K WBM structures2, characterised by 8 compositional features with pre-computed CHGNet v0.3.0 predictions and DFT reference values. Full 257K available for scaling ai = zpred_err + 0.5 · zforce + 2.0 · ⊮[DFT stable ̸= CHGNet stable] (1) robust to alternative weightings (Kendall τ > 0.7 across 5 configurations). 5.7 Independent DFT validation",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 55,
+    "total_chunks": 81,
+    "char_count": 1219,
+    "word_count": 165,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "774ffe08-bb71-4fd0-9b26-6cc466ba9bdf",
+    "text": "Quantum ESPRESSO 6.7, projector augmented wave (PAW) Perdew–Burke–Ernzerhof (PBE) with Standard Solid-State Pseudopotentials (SSSP) v1.3.0 efficiency library, 60/480 Ry cutoffs, 4 × 4 × 4 k-mesh,\ncold smearing (σ = 0.01 Ry), mixing β = 0.3, convergence threshold 10−8 Ry. TlBiSe2 converges in\n13 SCF steps (207.6 s). For the 20-material validation (Section 3.4), materials are selected from 811 candidates meeting: DFT-stable, CHGNet-unstable, max Z ≤56, nsites ≤24. Structures use golden-ratio\nfractional coordinate spacing (ϕ = (1 + 5)/2; deterministic, non-overlapping) with DFT-derived cell Each SCF calculation runs on 8 CPU cores with a 3,600 s timeout. All 20 converge: 18 on first pass (47 min total) and 2 after retry with expanded cells and tighter mixing (additional Total first-pass wall time for all 20 attempts is 54 min including the 2 that initially failed.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 56,
+    "total_chunks": 81,
+    "char_count": 873,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2f7c5d7f-2487-437a-b6be-f721ea2e9487",
+    "text": "5.8 Cross-MLIP evaluation Three architecturally distinct MLIPs—CHGNet v0.3.01, TensorNet (MatPES-PBE-v2025.1-PES via\nmatgl 2.0.6, evaluated in float32 precision), and MACE-MP medium4 (via mace-torch, float64)— are evaluated on 5,000 WBM materials (random sample, seed = 42). Structures are built from WBM composition, volume, and Wyckoff symmetry data using golden-ratio fractional coordinate spacing with correct DFT-derived cell volumes. Six pairwise correlations (energy and force) are computed with bootstrap 95% CIs (1,000 resamples). Force failure threshold: 50 eV Å−1.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 57,
+    "total_chunks": 81,
+    "char_count": 575,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d7b4b079-f177-45ef-a4f3-0d7eee7705b1",
+    "text": "The WBM benchmark (25,000 materials), all experimental runs and generated Lean 4 proofs are included\nin the repository. The full WBM dataset (257K) is available from Matbench Discovery2. PCM is open-source at https://github.com/abhinaba/alloy_pcm. Reproduction: pip install -e . && python -m pcm demo. We thank the developers of CHGNet, MACE and TensorNet for making their models publicly available, and the Matbench Discovery team for the WBM benchmark infrastructure. A.B. conceived the project, developed the PCM framework, performed all experiments and wrote the P.C. supervised the project and reviewed the manuscript. The authors declare no competing interests. CHGNet as a pretrained universal neural network potential for charge-informed\natomistic modelling.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 58,
+    "total_chunks": 81,
+    "char_count": 766,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5ca6a9e1-0569-4abe-8879-d32c4b1338b0",
+    "text": "Intell. 5, 1031–1041 (2023). [2] Riebesell, J. et al. Matbench Discovery—A framework to evaluate machine learning crystal stability\npredictions. Intell. 7, 836–847 (2025). [3] Wang, H.-C., Botti, S. & Marques, M. Predicting stable crystalline compounds using chemical\nsimilarity. npj Comput. [4] Batatia, I. et al. MACE: Higher order equivariant message passing neural networks for fast and\naccurate force fields. [5] de Moura, L. & Ullrich, S. The Lean 4 theorem prover and programming language. [6] Cornelio, C. et al. Combining data and theory for derivable scientific discovery with AI-Descartes.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 59,
+    "total_chunks": 81,
+    "char_count": 600,
+    "word_count": 89,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "da81dbf5-815f-4efe-8de3-a4a914251d3c",
+    "text": "Commun. 14, 1777 (2023). [7] Dreossi, T., Donze, A. & Seshia, S. Compositional falsification of cyber-physical systems with\nmachine learning components.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 60,
+    "total_chunks": 81,
+    "char_count": 152,
+    "word_count": 21,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "17e59949-e751-46c1-ba19-a4587a956c3e",
+    "text": "Reason. 63, 1031–1053 (2019). ARCH-COMP 2023 Category Report: Falsification. [9] Walters, J. et al. PhysLean: Digitizing physics with Lean. arXiv:2405.10000 (2024). Benchmarking materials property prediction methods: the Matbench test suite. npj\nComput. Mater. 6, 138 (2020). Learning atomic forces from uncertainty-calibrated adversarial attacks on graph neural\nnetwork potentials. npj Comput.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 61,
+    "total_chunks": 81,
+    "char_count": 394,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "78cd5f03-995e-4b9e-b7f4-5f1effac642b",
+    "text": "Mater. 11, 200 (2025). [12] Kulichenko, M. et al. Uncertainty-driven dynamics for active learning of interatomic potentials. Sci. 3, 230–239 (2023). [13] Dalrymple, D. et al. Towards Guaranteed Safe AI: A framework for ensuring robust and reliable AI\nsystems. arXiv:2405.06624 (2024). Systematic softening in universal machine learning interatomic potentials. npj Comput. [16] Hawkins, R. et al. Guidance on the assurance of machine learning in autonomous systems (AMLAS). arXiv:2102.01564 (2021). A., Sadigh, D. & Sastry, S.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 62,
+    "total_chunks": 81,
+    "char_count": 525,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "79b88d0e-057f-4444-950d-f5d386404b70",
+    "text": "Toward verified artificial intelligence. [18] AlphaProof team. Formal mathematical reasoning with reinforcement learning.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 63,
+    "total_chunks": 81,
+    "char_count": 121,
+    "word_count": 13,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4897aa66-6ff3-4125-8fc9-5a4676cbe941",
+    "text": "[19] Angelopoulos, A. Conformal risk control. Evidential deep learning for interatomic potentials. [21] Zhang, H. et al. AlloyGPT: An autoregressive large language model for alloy prediction and design.\nnpj Comput. Mater. 11, 68 (2025). [22] Gupta, V. et al. AlloyBERT: Alloy property prediction with large language models. Sci. 246, 113433 (2024). DARWIN: A series of foundation models for materials science. arXiv:2412.11970 LLM-Prop: Predicting physical and electronic properties of crystalline solids\nfrom their text descriptions. npj Comput. Mater. 11, 36 (2025). Crystal structure generation with autoregressive large language modelling. Commun. 15, 10570 (2024).",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 64,
+    "total_chunks": 81,
+    "char_count": 669,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4739b6cf-0572-4866-bc0c-012d6c0e2933",
+    "text": "Direct evidence for the Dirac-cone topological surface states in the ternary chalcogenide TlBiSe2. Lett. 105, 136802 (2010). [27] Simeon, G. & de Fabritiis, G.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 65,
+    "total_chunks": 81,
+    "char_count": 159,
+    "word_count": 24,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cdf9b7e6-5329-45d1-b9e2-8bb48a3b6f17",
+    "text": "TensorNet: Cartesian tensor representations for efficient and accurate\ninteratomic potentials. MatPES: A universal pretrained potential for materials science. arXiv:2501.11768 [29] Gal, Y. & Ghahramani, Z. Dropout as a Bayesian approximation: Representing model uncertainty\nin deep learning. [30] Lakshminarayanan, B., Pritzel, A. & Blundell, C.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 66,
+    "total_chunks": 81,
+    "char_count": 345,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f99d8216-c687-463c-8a2d-84b224742ba7",
+    "text": "Simple and scalable predictive uncertainty estimation using deep ensembles. [31] Musil, F. et al. Fast and accurate uncertainty estimation in chemical machine learning. Theory Comput. 15, 906–915 (2019). [32] Hirschfeld, L. et al. Uncertainty quantification using neural networks for molecular property prediction. Model. 60, 3770–3780 (2020). J., Shlens, J. & Szegedy, C. Explaining and harnessing adversarial examples. [34] Madry, A. et al. Towards deep learning models resistant to adversarial attacks. [35] Choudhary, K. & DeCost, B. Atomistic line graph neural network for improved materials property\npredictions. npj Comput. Mater. 7, 185 (2021).",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 67,
+    "total_chunks": 81,
+    "char_count": 652,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "19f358f4-ba8f-4052-a451-49d275ce8320",
+    "text": "Scalable parallel algorithm for graph neural network interatomic potentials in molecular dynamics simulations. Theory Comput. 20, 4857–4868 (2024). [37] Liao, Y.-L. & Smidt, T. EquiformerV2: Improved equivariant transformer for scaling to higherdegree representations. [38] Merchant, A. et al.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 68,
+    "total_chunks": 81,
+    "char_count": 293,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ca6ef89-5c5b-4227-8917-f201d208f31b",
+    "text": "Scaling deep learning for materials discovery. Nature 624, 80–85 (2023). [39] Choudhary, K. et al. The joint automated repository for various integrated simulations (JARVIS)\nfor data-driven materials design. npj Comput. Mater. 6, 173 (2020). [40] Kirklin, S. et al. The Open Quantum Materials Database (OQMD): Assessing the accuracy of DFT\nformation energies. npj Comput. Mater. 1, 15010 (2015). [41] Curtarolo, S. et al. AFLOW: An automatic framework for high-throughput materials discovery. Sci. 58, 218–226 (2012). Commentary: The Materials Project: A materials genome approach to accelerating\nmaterials innovation. APL Mater. 1, 011002 (2013). Reluplex: An efficient SMT solver for verifying deep neural networks. [44] Huang, X. et al.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 69,
+    "total_chunks": 81,
+    "char_count": 739,
+    "word_count": 107,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "df5e66a0-4cfe-4f1a-9fcd-0c98443e6c0e",
+    "text": "A survey of safety and trustworthiness of deep neural networks: Verification,\ntesting, adversarial attack and defence, and interpretability.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 70,
+    "total_chunks": 81,
+    "char_count": 140,
+    "word_count": 18,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6c31f106-c690-451b-a97d-f0e03ddd0f42",
+    "text": "Rev. 37, 100270 (2020). [45] Amodei, D. et al. Concrete problems in AI safety. arXiv:1606.06565 (2016). M. et al. 14 examples of how LLMs can transform materials science and chemistry: A\nreflection on a large language model hackathon. Digital Discovery 3, 781–810 (2024). [47] Miret, S. & Krishnan, N. Are LLMs ready for real-world materials discovery? Assessment of chemistry knowledge in large language models that generate\ncode. Digital Discovery 2, 368–376 (2023). [49] Ramakrishnan, R., Dral, P. O., Rupp, M. & von Lilienfeld, O.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 71,
+    "total_chunks": 81,
+    "char_count": 534,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "facb15d8-8428-48bf-89ba-7d712065bd05",
+    "text": "Quantum chemistry structures and\nproperties of 134 kilo molecules. Data 1, 140022 (2014). [50] Lookman, T. et al. Active learning in materials science with emphasis on adaptive sampling using\nuncertainties for targeted design. npj Comput. Less is more: Sampling chemical space with active learning. E., Kindermans, P.-J., Tkatchenko, A. & Müller, K.-R. SchNet – A deep\nlearning architecture for molecules and materials. Phys. 148, 241722 (2018). [53] Gasteiger, J., Giri, S., Margraf, J. Fast and uncertainty-aware directional\nmessage passing for non-equilibrium molecules. In Machine Learning for Molecules Workshop,\nNeurIPS (2020). Table Extended Data Table 1.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 72,
+    "total_chunks": 81,
+    "char_count": 662,
+    "word_count": 95,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "afcfe461-cc0a-41a6-a2aa-1166ca273b63",
+    "text": "Full adversary strategy comparison (10 configurations, budget = 200). CX rate\nwith Wilson 95% CI, failure mode entropy, and unique materials discovered. LLM adversaries achieve higher CX\nrates but lower unique discovery counts; algorithmic strategies provide broader coverage. Grid and LHS strategies\nare omitted as they perform comparably to Random and Sobol at this budget.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 73,
+    "total_chunks": 81,
+    "char_count": 375,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a0cd5d71-a78c-40e9-b42c-7baf0a5deeae",
+    "text": "Rank Strategy CX Rate 95% CI Entropy (bits) Unique 1 Gemini 2.5 Pro (LLM) 100.0% [98.1, 100] 0.000 5\n2 GPT-5 (LLM) 100.0% [98.1, 100] 0.875 6\n3 Gemini 3 Flash (LLM) 98.5% [95.7, 99.5] 0.980 17\n4 GPT-5.2 (LLM) 98.5% [95.7, 99.5] 0.998 29\n5 Claude Opus 4.6 (LLM) 88.5% [83.3, 92.2] 0.986 20\n6 Claude Opus 4.5 (LLM) 88.5% [83.3, 92.2] 1.211 22\n7 Sobol 87.0% [81.6, 91.0] 1.152 138\n8 Random 86.0% [80.5, 90.1] 1.027 123\n9 Heuristic 86.0% [80.5, 90.1] 0.948 61\n10 Claude Sonnet 4.5 (LLM) 86.0% [80.5, 90.1] 0.729 30 Table Extended Data Table 2. Independent DFT validation of 20 adversarially discovered materials (QE pw.x\nv6.7, PAW-PBE, SSSP v1.3.0, 60/480 Ry, 8 cores). All 20 converge (2 require expanded cells on retry).",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 74,
+    "total_chunks": 81,
+    "char_count": 718,
+    "word_count": 128,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "387602ed-991a-4230-8fd5-d8323518b910",
+    "text": "DFT\nE/atom is total energy (including core electrons); CHGNet Fmax is evaluated on the same golden-ratio structure\nfor direct force comparison. Cu7Zn1 (brass) and Cu7Mn1 (manganese bronze) are industrial alloys where CHGNet\nunderestimates forces by 15–33×. DFT Fmax CHGNet Fmax Ratio\n# Formula Atoms SCF Time (s)\n(eV atom−1) (eV Å−1) (eV Å−1) DFT/CHGNet 1 Cu7Zn1 8 10.49 557 36 15.4× 15 180\n2 Cd6Zr2 8 10.09 460 28 16.5× 14 153\n3 Ag6Cl2S2 10 9.98 1445 39 36.8× 13 296\n4 RuZn3 4 9.95 89 54 1.6× 11 22\n5 LiO4Sc3 8 9.74 197 22 8.8× 18 71\n6 Cu6Mg2 8 9.68 321 24 13.2× 14 60\n7 Cu6Ga3 9 9.54 2154 194 11.1× 20 178\n8 F6SnSr 8 9.41 298 61 4.9× 12 43\n9 Y2Zn6 8 9.39 342 15 22.5× 13 172\n10 Ba2Pd4Sb4 10 9.38 Retry† 37 6360\n11 BaF6In 8 9.34 Retry† 150 1345\n12 In6Sb2 8 9.27 287 9 31.3× 12 214\n13 Cu2O2Te2Y2 8 9.25 322 40 8.0× 14 88\n14 Cu7Mn1 8 9.24 530 16 33.1× 17 95\n15 Cd4Ni2Sr2 8 9.13 351 29 12.3× 15 194\n16 Ca2In2Zn4 8 9.10 334 36 9.4× 13 256\n17 Zn3Zr 4 9.10 61 43 1.4× 11 24\n18 As2In4Pd6 12 9.05 2222 35 63.4× 17 537\n19 Ag2Ba2O4 8 9.04 230 66 3.5× 36 191\n20 F6K2Mg 9 8.99 97 80 1.2× 14 52 †Converged on retry with expanded cells (5× and 4× volume) and tighter mixing (β = 0.1, 80/640 Ry). Force comparison\nomitted as structures differ from original golden-ratio placement. Figure 5: Dual-Adversary Discovery Coverage Union: 21 unique materials |",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 75,
+    "total_chunks": 81,
+    "char_count": 1339,
+    "word_count": 268,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ceb71ce6-599c-464d-b264-aab6c99c90ef",
+    "text": "GPT-5: focused depth (6 total) | Opus 4.5: broad coverage (18 total) Figure Extended Data Fig. 1. Dual-adversary Venn diagram. Two adversary strategies discover complementary\nmaterials with 14.3% overlap (3 consensus materials). Complementary search strategies exploit different regions\nof compositional space. (a) Transfer matrix (b) CHGNet vs TensorNet errors (direct comparison, n=200) with transfer annotations\n17.5 BothCHGNetfail only(180)(4)\n160 TensorNet only (6)\nNeither (10)\n15.0\nTensorNet 180 4 140\nfails (90.0%) (2.0%)\n12.5 120 (eV/atom)\n100 error 10.0\nCount\n80 prediction 7.5\nTensorNet 6 10 5.0 TensorNet passes (3.0%) (5.0%) 40 2.5\n20 r = 0.693\np = 6.1e-30\n0 0.0\nCHGNet fails CHGNet passes 0.0 2.5 5.0 7.5 10.0 12.5 15.0 17.5\nCHGNet prediction error (eV/atom) (c) (d) Seeded vs random discovery rate Model-specific blind spots 99.0% 100 96.5% 96.0%\n93.7% 93.7% 93.7% 95.0% 93.7% 94.0% 93.7% Gd2Ge1Ir3 Ta1Zr5\nAl1Ce2Si2\n(%)\nIn4Pu4\nrate\n60 Al2I2 Cs1F3Tl1 Failure 40\nBr2Sn1Tb2 20 Eu1La1N2\nCHGNet-only failure\nSeeded from CHGNet failures N2Sc1Sm1 TensorNet-onlyPassing MLIP errorfailure\nRandom baseline Threshold (2.0 eV)\nNeighbors =0.1 =0.2 =0.5 =1.0 0 2 4 6 8 10 12\n(no noise) Prediction error (eV/atom)\nCHGNet-specific: 4 | TensorNet-specific: 6\nOverall seeded: 96.2% vs random: 93.7% (+2.5 pp) Figure Extended Data Fig. 2.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 76,
+    "total_chunks": 81,
+    "char_count": 1334,
+    "word_count": 202,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bed93f04-960e-44a6-afb7-66a2926b7f05",
+    "text": "Cross-MLIP adversarial transfer. a, CHGNet↔TensorNet transfer rate heatmap:\n97.8% of CHGNet failures also fail on TensorNet. b, Error correlation scatter (r = 0.69). c, Seeded vs random\ndiscovery rates. d, Model-specific blind spots. JARVIS-DFT (OptB88vdW) Cross-Oracle Comparison\nn=814 matched materials, CHGNet-JARVIS agreement=15.2% (a) CHGNet Error vs JARVIS-DFT (b) Cross-Oracle Categories (n=814)\nBoth OK (48) 700 682\n12 BothCHGNet-onlyfail (76) fail (682)\nJARVIS-only unstable (8) 600\n500 (eV/atom)\n8 Error Materials 400\n6 of\n300 Prediction 4 Number\nCHGNet 2 200\n100 76\n0 8\n4 3 2 1 0 1 2 CHGNet fails Both JARVIS unstable Both OK\nJARVIS-DFT Formation Energy (eV/atom) JARVIS stable problematic CHGNet passes\n(d) Compositional Disagreement Regions (c) Failure Overlap\nCHGNet fails JARVIS unstable atomic mass * 682 76 8 electronegativity * elements CHGNet-only fail\nBoth OK\n0 20 40 60 80\nMean Feature Value Figure Extended Data Fig. 3. JARVIS-DFT cross-oracle validation. a, CHGNet prediction error vs JARVIS formation energy for 814 matched materials. b, Cross-oracle category counts: 682 CHGNet-only failures. c, Failure\noverlap Venn diagram. d, Compositional features of disagreement regions: max Z (p = 0.002) and mean atomic\nmass (p = 7 × 10−5) significantly higher in CHGNet blind spots. a) Envelope Bounds Convergence b) Counterexample Rate & Pass Rate 1.0 CX Rate\n1.0 Pass Rate 0.8 Width 1)\n0.8\n0.68 0.69\n0.63 Round 0.6\n0.6 Envelope to Rate 0.51 0.49 0.4\n0.4 0.37\n0.33 0.30 Normalised (relative 0.2 0.2\nn_elem EN_range\nmax_Z vol/atom\nEN_mean mass_mean\n0.0 0.0\n1 2 3 4 1 2 3 4\nRound Round c) Material Discovery (Diminishing Returns) d) CX Prediction Error Distribution\nUnique (this 108round) NEW (unseen) Cumulative186\n181 10\n100 98\n157 160\n80 8 140 Count (eV/atom) 7 6.40 6.52 6.34 Materials\n5.95 60 59 59\n6 50 120 Error\n5 relaxedthreshold Materials 40 100 Cumulative\n28 4\n24 Prediction 20 80 3 59 5 60 2 strictthreshold\n1 2 3 4 R1 R2 R3 R4\nRound (n=135) (n=102) (n=126) (n=139)\nRound Figure Extended Data Fig. 4.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 77,
+    "total_chunks": 81,
+    "char_count": 2027,
+    "word_count": 332,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "de056acb-5a19-4445-b6ce-2bc94de7f654",
+    "text": "Iterative envelope refinement (4 rounds). a, Envelope bounds convergence. b, CX/-\npass rate evolution. c, Cumulative material discovery. d, Error distribution per round. The safe envelope compresses by 75–91% per feature dimension. Top-12 MLIP Blind Spots Ranked by Anomaly Score\n110 GPT-5 only\nBoth Dy1F8Li2Pu1 Pu\nOpus 4.5 only\n100 O12Pb4Pt4",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 78,
+    "total_chunks": 81,
+    "char_count": 342,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "19733b6c-22a7-44a9-9b93-2c5fab3af3a3",
+    "text": "Au2Ba2Np2Se6 Np\nAu2Cs2Sc2Te6 80 Pu compound Bi2Cu2O4Te2V1 (eV/Å)\nI6Th2 Th\nTl Force Cl6Rb2Sn1Tl1 Br6Cs2K1Tl1 Tl Max 60\nThI₃\nBa6N1Pb2Se1 TlBiSe₂\n(topological Bi4Se8Tl4 Tl\n40 insulator) 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5\nPrediction Error (eV/atom) Anomaly Score Figure Extended Data Fig. 5. Element frequency analysis. a, Per-element mean prediction error vs WBM\nfrequency (84 elements, Spearman ρ = 0.443). b, Stability disagreement by periodic table block: f-block highest\n(Kruskal–Wallis p = 0.042). c, Adversarial vs non-adversarial elements (p = 0.020). Rarest quintile contains\n41% adversarial elements. Material Coverage LLM-Unique Discoveries Rate vs Novelty Trade-off baseline_sobol N1O1Pb2Tm6\nAl4Se4 0.5 random\nbaseline_random Cu1Eu2F2O2 baseline_heuristic Br6Y4 0.4\nBr6In1Rb2 Claude_Sonnet_4.5 F8Na2Pt2 Distance)\nClaude_Opus_4.5 Ag3Cl6Eu1 NN 0.3 heuristic\nDy1F8Li2Pu1\nClaude_Opus_4.6 Ba1Bi1Cu1Er1O5 (Mean 0.2 GPT-5.2 Er1F6Pd1 Sn2Tl6\nGemini_3_Flash Cu1F6Li1Tl2\nC Sonnet 4.5 C Opus 4.6 Novelty 0.1 C Opus 4.5 GPT-5.2 Gemini_2.5_Pro Au8Sb4\nCa1F8Li2Th1\nGPT-5 F8Li2Nb1Yb1 G 2.5 Pro\n0.0 G 3 FlashGPT-5 0 25 50 75 100 125 0 1 2 3 4 5 0.875 0.900 0.925 0.950 0.975 1.000\nUnique Materials Found Anomaly Score Counterexample Rate GPT Claude Gemini baseline CHGNet Error Distribution (Out-of-Sample) Top Out-of-Sample Blind Spots",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 79,
+    "total_chunks": 81,
+    "char_count": 1359,
+    "word_count": 194,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "70b3155b-eed8-4bd7-a2db-7a419dba1a57",
+    "text": "All evaluated\nBlind spots (n=200) F6K2Np1\nF6K1U1 F8Na2Th1Yb1\n25 F8Na2Th1Yb1 F6Na2Pu1\n20 F6K2Pa1 Count F6Na2Th1\n15 F6Na2Np1 2 4 6 8 10 0 2 4 6 8 10\nPrediction Error (eV/atom) Prediction Error (eV/atom) Figure Extended Data Fig. 6. Adversarial strategy analysis. Top: Ablation comparing 13 adversary configurations on CX rate vs unique materials discovered (base CX rate = 93.2%; max-everything achieves 100% but discovers only 1 unique material). Bottom: Emergent search behaviour—a, Feature-space autocorrelation. b, Phase\ntransition detection. c, Post-violation exploration (p = 0.0001). Shuffled-Feature Ablation: Does the LLM Use Domain Knowledge? (a) CX Rate by Condition (Wilson 95% CI) (b) Material Diversity by Condition\n1.0 28 28 3.325\n90.0% 88.0% 26 Failure diversity (bits)\n82.0% 25 3.300\n0.8\n3.275\nHit 20 Rate 3.250(bits) 0.6\n15 3.225 Materials Diversity\n0.4 3.200Failure Counterexample Unique 10\n3.175\n0.2 5\n3.150 0.0 0 3.125\nControl Shuffled Anonymous Control Shuffled Anonymous\n(real names) (permuted names) (feature_1..8) (real names) (permuted names) (feature_1..8)\n(d) Per-Feature Targeting\n(c) Feature-Space Exploration (PCA) (0=low bound, 1=high bound)\n1.0\n40 ControlControl (pass)(CX) ShuffledAnonymous(CX)(pass) n_elements 0.51 0.48 0.53\nShuffled (pass) Anonymous (CX)\n30 max_z 0.47 0.52 0.52 0.8 mean_electronegativity 0.48 0.54 0.50\n20 value var.) 0.6\nen_range 0.50 0.46 0.54\n(12.8% 10 volume_per_atom 0.51 0.54 0.43 normalized\nPC2 0.4 0 Mean\nmean_atomic_mass 0.52 0.46 0.54 10 n_sites 0.57 0.48 0.46 0.2 20 bandgap_pbe 0.49 0.51 0.42\n0.0\n80 60 40 20 0 20 40 60 Control Shuffled Anonymous\nPC1 (81.4% var.) Figure Extended Data Fig. 7.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 80,
+    "total_chunks": 81,
+    "char_count": 1657,
+    "word_count": 246,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ff618a9e-2328-4b73-b217-9562b1cf8530",
+    "text": "Shuffled-feature ablation. CX rate by condition: control 90%, shuffled 82%, anonymous 88% (Wilson 95% CIs). Incorrect domain knowledge (shuffled) is worse than no knowledge (anonymous),\nconfirming the adversary–oracle separation as the core mechanism.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 81,
+    "total_chunks": 81,
+    "char_count": 251,
+    "word_count": 33,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2879fdb5-3b34-44af-81cc-4c484724bad1",
+    "text": "a DFT vs CHGNet forces on same structures b CHGNet force underestimation ratio Å⁻¹) CHGNet) / 40\n(eV 33×\n(DFT force 102 30\nratio Max 50 eV/Å threshold\n20 Force 15× Cu₇ZnCd₆Zr₂Ag₆Cl₂S₂ RuZn₃LiO₄Sc₃Cu₆Mg₂Cu₆Ga₃F₆SnSr Y₂Zn₆ In₆Sb₂Cu₂O₂Te₂Y₂Cu₇MnCd₄Ni₂Sr₂Ca₂In₂Zn₄ Zn₃ZrAs₂In₄Pd₆Ag₂Ba₂O₄F₆K₂Mg Cu₇ZnCd₆Zr₂Ag₆Cl₂S₂ RuZn₃LiO₄Sc₃Cu₆Mg₂Cu₆Ga₃F₆SnSr Y₂Zn₆ In₆Sb₂Cu₂O₂Te₂Y₂Cu₇MnCd₄Ni₂Sr₂Ca₂In₂Zn₄ Zn₃ZrAs₂In₄Pd₆Ag₂Ba₂O₄F₆K₂Mg c SCF convergence (all 18 converged) d Compute time (total: 47 min on 8 cores) (s) convergence\nto 20 time 300\n15 median = 14 Wall\n200 iterations median = 162s\nSCF 10 0 0\nCu₇ZnCd₆Zr₂Ag₆Cl₂S₂ RuZn₃LiO₄Sc₃Cu₆Mg₂Cu₆Ga₃F₆SnSr Y₂Zn₆ In₆Sb₂Cu₂O₂Te₂Y₂Cu₇MnCd₄Ni₂Sr₂Ca₂In₂Zn₄ Zn₃ZrAs₂In₄Pd₆Ag₂Ba₂O₄F₆K₂Mg Cu₇ZnCd₆Zr₂Ag₆Cl₂S₂ RuZn₃LiO₄Sc₃Cu₆Mg₂Cu₆Ga₃F₆SnSr Y₂Zn₆ In₆Sb₂Cu₂O₂Te₂Y₂Cu₇MnCd₄Ni₂Sr₂Ca₂In₂Zn₄ Zn₃ZrAs₂In₄Pd₆Ag₂Ba₂O₄F₆K₂Mg Figure Extended Data Fig. 8. Independent DFT validation of adversarially discovered MLIP blind spots (18\nmaterials with identical golden-ratio structures; 2 retry materials excluded from force comparison). a, Maximum\nforces from Quantum ESPRESSO (DFT) vs CHGNet on the same structures (log scale). DFT forces are systematically larger, confirming CHGNet underestimates instability. b, Force ratio (DFT/CHGNet); median 11.6×. Cu7Zn1 (brass, 15×) and Cu7Mn1 (manganese bronze, 33×) are highlighted. c, SCF iterations to convergence\n(median 14). d, Wall-clock time per material (total 47 min on 8 CPU cores). Figure Extended Data Fig. 9. Representative Lean 4 proof output for the WBM–CHGNet safety certificate (auto-generated from the refined envelope). Top: The core safety module defines compositional bounds\n(EnvBounds), structural requirements (DesignReq), and outcome thresholds (HoldsThresholds). The\noracle_guarantee axiom—the only unverified assumption—states that the MLIP satisfies thresholds within\nthe envelope; a domain expert can inspect whether this assumption is warranted. safe_under_envelope\ncomposes these into the safety claim; envelope_non_vacuous provides a constructive witness proving the\nenvelope is non-empty. Bottom: The error propagation module composes DFT accuracy (εDFT = 0.1 eV atom−1)\nwith the MLIP threshold via the triangle inequality, making the full approximation chain (reality →DFT →MLIP)\nexplicit and auditable.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 82,
+    "total_chunks": 81,
+    "char_count": 2287,
+    "word_count": 281,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "68397442-9cca-40ff-a0c2-a7abc4eb0811",
+    "text": "All proofs are verified by lake build (Lean 4.27.0). Generated.lean — Core safety certificate (WBM–CHGNet) 1 structure Env where\n2 n_elements : Real; max_z : Real\n3 mean_electronegativity : Real; en_range : Real\n4 volume_per_atom : Real; mean_atomic_mass : Real 6 structure Design where\n7 n_sites : Real; bandgap_pbe : Real 9 structure Outcomes where\n10 prediction_error : Real; max_force : Real 12 -- Bounds from the adversarially refined envelope\n13 def EnvBounds (e : Env) : Prop :=\n14 (1 <= e.n_elements && e.n_elements <= 4.41)\n15 && (3 <= e.max_z && e.max_z <= 62.21)\n16 && (0.7 <= e.mean_electronegativity && e.mean_electronegativity <= 3.17)\n17 && (5 <= e.volume_per_atom && e.volume_per_atom <= 48.90)\n18 && (5 <= e.mean_atomic_mass && e.mean_atomic_mass <= 159.65) 20 def HoldsThresholds (o : Outcomes) : Prop :=\n21 (o.prediction_error <= 2) && (o.max_force <= 50) 23 -- Key assumption (the only axiom a reviewer must evaluate):\n24 axiom oracle_guarantee :\n25 forall e d, EnvBounds e -> DesignReq d -> HoldsThresholds (oracle e d) 27 -- Safety: if env and design are within the envelope, thresholds hold.\n28 theorem safe_under_envelope :\n29 forall e d, EnvBounds e -> DesignReq d -> SafeClaim e d := by\n30 intro e d hE hD\n31 exact And.intro hE (And.intro hD (oracle_guarantee e d hE hD)) 33 -- Non-vacuity: a concrete witness proves the envelope is non-empty.\n34 theorem envelope_non_vacuous :\n35 exists e d, EnvBounds e && DesignReq d := by\n36 refine <2.71, 32.60, 1.93, 1.12, 26.95, 82.32>, <17.40, 2.92>, ...\n37 all_goals norm_num ErrorPropagation.lean — Composing DFT + MLIP uncertainty 1 -- Triangle inequality: |E_true - E_MLIP| <= |E_true - E_DFT| + |E_DFT - E_MLIP|\n2 theorem total_uncertainty_bound\n3 (c : EnergyChain) (eps_mlip : Real)\n4 (h_dft : DFTAccurate c pbe_accuracy) -- pbe_accuracy = 0.1 eV/atom\n5 (h_mlip : MLIPAccurate c eps_mlip) :\n6 TotalAccurate c (pbe_accuracy + eps_mlip) := by\n7 exact interval_composition c pbe_accuracy eps_mlip h_dft h_mlip 9 -- Full safety with explicit uncertainty budget:\n10 -- Within the envelope, MLIP agrees with physical reality\n11 -- within 0.1 + claim_threshold = 0.6 eV/atom.\n12 -- Every approximation layer is transparent and auditable.",
+    "paper_id": "2603.12183",
+    "title": "Proof-Carrying Materials: Falsifiable Safety Certificates for Machine-Learned Interatomic Potentials",
+    "authors": [
+      "Abhinaba Basu",
+      "Pavan Chakraborty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12183v1",
+    "chunk_index": 83,
+    "total_chunks": 81,
+    "char_count": 2203,
+    "word_count": 360,
+    "chunking_strategy": "semantic"
+  }
+]

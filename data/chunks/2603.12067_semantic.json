@@ -1,0 +1,495 @@
+[
+  {
+    "chunk_id": "dc57b6f8-3c3f-4d69-a72a-8d80d37b7b62",
+    "text": "Beyond Convolution: A Taxonomy of\nStructured Operators for Learning-Based\nImage Processing CNR-IMATI, Via De Marini 6, Genova, Italy\nsimone.cammarasana@ge.imati.cnr.it2026",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 0,
+    "total_chunks": 29,
+    "char_count": 171,
+    "word_count": 19,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e5c3798c-0efc-4eec-934f-edd2cf839095",
+    "text": "AbstractMar The convolution operator is the fundamental building block of\n12 modernity, translationalconvolutionalequivariance,neural networksand efficient(CNNs),implementation.owing to itsHowever,simplicits structure as a fixed, linear, locally-averaging operator limits its\nability to capture structured signal properties such as low-rank decompositions, adaptive basis representations, and non-uniform spatial\ndependencies. This paper presents a systematic taxonomy of opera-[cs.CV] tors that extend or replace the standard convolution in learning-based\nimage processing pipelines. We organise the landscape of alternative\noperators into five families: (i) decomposition-based operators, which\nseparate structural and noise components through singular value or\ntensor decompositions; (ii) adaptive weighted operators, which modulate kernel contributions as a function of spatial position or signal content; (iii) basis-adaptive operators, which optimise the analysis bases\ntogether with the network weights; (iv) integral and kernel operators,\nwhich generalise the convolution to position-dependent and non-linear\nkernels; and (v) attention-based operators, which relax the locality assumption entirely. For each family, we provide a formal definition, a\ndiscussion of its structural properties with respect to the convolution,\nand a critical analysis of the tasks for which the operator is most ap-arXiv:2603.12067v1 propriate. We further provide a comparative analysis of all families\nacross relevant dimensions—linearity, locality, equivariance, computational cost, and suitability for image-to-image and image-to-label\ntasks—and outline the open challenges and future directions of this\nresearch area. Keywords: Convolutional neural networks, Alternative operators, Singular value decomposition, Weighted convolution, F-transform, Attention\nmechanism, Image processing, Taxonomy. Deep learning has established itself as the dominant paradigm for signal and\nimage processing, achieving state-of-the-art performance on tasks ranging\nfrom image restoration [ZZC+17, DFKE06] and super-resolution [DLHT16]\nto semantic segmentation and medical image analysis [CP26]. At the heart\nof nearly every successful architecture lies the convolution operator, which\nextracts local features by sliding a fixed, learned kernel over the input signal. Despite its success, the convolution operator is fundamentally a weighted\nlocal average: it applies a fixed linear combination to each neighbourhood of\npixels, sharing the same weights across all spatial positions.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 1,
+    "total_chunks": 29,
+    "char_count": 2554,
+    "word_count": 321,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5602d00a-87d0-4da3-b026-2a1928d492c0",
+    "text": "This structural simplicity, while computationally advantageous, has wellknown limitations. First, the convolution treats all spatial positions uniformly, making it insensitive to local signal structure such as edges, textures,\nor noise patterns. Second, its linear nature prevents it from performing operations that are inherently structural, such as separating a signal into low-rank\nand high-rank components, or projecting onto an application-specific basis. Third, the fixed kernel size imposes a rigid locality prior that is inappropriate\nfor tasks requiring global context or multi-scale reasoning. A growing body of work addresses these limitations by proposing operators that enrich or replace the convolution while remaining compatible\nwith the back-propagation training framework. These contributions are distributed across multiple communities—signal processing, numerical linear\nalgebra, fuzzy mathematics, and deep learning—making it difficult to obtain\na unified view of the design space. Our work fills this gap by providing a\nsystematic taxonomy of structured operators as alternatives or enhancements\nto convolution in learning-based image processing. Motivating examples The limitations of standard convolution are well\nillustrated by concrete tasks. In image denoising, applying the singular value\ndecomposition (SVD) to local patches explicitly separates the structured\n(low-rank) signal component from the unstructured noise component [GZZF14,\nCP22, HLL18]. In image super-resolution, interpolating bases such as Bsplines encode smoothness priors that a fixed kernel cannot capture efficiently [DLHT16, SCH+16]. In classification, optimising the density function\napplied to the convolution kernel yields a spatially non-uniform weighting\nthat improves convergence and accuracy [CP25c, CP25b]. In fuzzy signal processing, the F-transform with adaptive membership functions defines a pro- jection operator whose bases are data-driven rather than fixed [CP24, Per06]. These examples suggest that the choice of operator is not merely an implementation detail but a fundamental modelling decision that encodes prior\nknowledge about the signal and the task. Contributions The main contributions of this paper are the following.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 2,
+    "total_chunks": 29,
+    "char_count": 2241,
+    "word_count": 302,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "11d2cce2-8c50-4216-9db1-546042636926",
+    "text": "• We introduce a principled taxonomy of five families of structured operators that extend or replace the convolution in learning-based image\nprocessing, covering decomposition-based, adaptive weighted, basisadaptive, integral and kernel, and attention-based operators. • For each family, we provide a unified formal treatment, identifying the\nstructural property of the convolution that each operator relaxes or\nreplaces. • We present a comparative analysis of all families across multiple dimensions relevant to practitioners, including linearity, locality, equivariance, computational cost, and task suitability. • We discuss the open challenges in the area and highlight directions\nfor future work, with particular attention to biomedical imaging and\nvolumetric data. Relation to own previous work Several contributions in this taxonomy\nbuild upon and contextualise our own prior work.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 3,
+    "total_chunks": 29,
+    "char_count": 888,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eaed7ae6-3cde-44e0-af47-5508c56726fc",
+    "text": "The decomposition-based\nfamily is grounded in our learning-based low-rank denoising approach [CP22],\nwhere a network predicts the optimal SVD thresholds for local image patches. The adaptive weighted family extends the framework of our weighted convolution with optimal density functions [CP25c, CP25b]. The basis-adaptive\nfamily encompasses our work on adaptive membership functions for the Ftransform [CP24]. The computational aspects of operator optimisation are\ninformed by our study of high-performance solvers for signal processing minimisation problems [CP25a]. Applications to medical imaging throughout the\npaper are motivated by our survey on ultrasound image processing [CP26]. 2 Background: The Convolution Operator We recall the definition and properties of the discrete convolution operator as\nit is used in CNNs, which serves as the common reference point throughout\nthe taxonomy. 2.1 Definition\nGiven a 2D input signal I ∈RR×C and a kernel w ∈RKa×Kb, the discrete\nconvolution is defined as Ka Kb\n(I ∗w)ij := X X wab · Ii+a−⌊Ka/2⌋, j+b−⌊Kb/2⌋, (1)\na=1 b=1 for i = 1, . . . , R and j = 1, . . . , C.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 4,
+    "total_chunks": 29,
+    "char_count": 1113,
+    "word_count": 176,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d1a27610-6b66-4e9e-98d3-7a9a633abc3b",
+    "text": "In a CNN with F output channels and D\ninput channels, a tensor of kernels W ∈RKa×Kb×D×F is applied to produce\nthe feature map I ∗W . The kernel weights are the trainable parameters\nof the layer, optimised by minimising a task-specific loss function via backpropagation [LBD+89, Rud16]. 2.2 Structural Properties The convolution operator has four structural properties that collectively define its expressive power and its limitations. Linearity The map I 7→I ∗w is linear in both I and w. This enables\nefficient gradient computation but prevents the operator from modelling nonlinear local interactions.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 5,
+    "total_chunks": 29,
+    "char_count": 603,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e2fa99ca-c294-4707-b966-5002b667ac0f",
+    "text": "Translational equivariance The same kernel w is applied at every spatial\nposition, so that shifting the input produces a correspondingly shifted output:\nTδ(I) ∗w = Tδ(I ∗w), where Tδ denotes a spatial shift by δ. This inductive\nbias is appropriate for natural images but may be suboptimal for structured\ndata with position-dependent statistics, such as medical images with fixed\nanatomical priors. Locality The output at position (i, j) depends only on the Ka × Kb neighbourhood N(Iij). This limits the receptive field of each layer and requires\ndeep stacking of layers to capture long-range dependencies. Table 1: Structural properties of the standard convolution operator, used as\na reference point for the taxonomy. Property Convolution Implication Linearity Yes Efficient gradient; no local non-linearity\nTransl. equivariance Yes Position-independent feature extraction\nLocality Yes (fixed K) Limited receptive field per layer\nUniform weighting Yes Content-agnostic neighbourhood averaging Uniform weighting The kernel applies the same learned weight to each\nrelative position in the neighbourhood, irrespective of the local content of\nthe signal. In particular, the kernel does not distinguish between positions\nthat carry structural information (e.g., edges) and positions that carry noise.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 6,
+    "total_chunks": 29,
+    "char_count": 1296,
+    "word_count": 187,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "428e50d2-c703-451c-97ba-233e002bae20",
+    "text": "2.3 Computational Cost For an input of size R × C, F output channels, and kernel size K × K,\nthe computational cost of evaluating Eq. (1) is O(RCFK2). Practical implementations exploit FFT-based convolution [MHL13], the Winograd algorithm [LG16], and GEMM-based unrolling [C+14] to reduce the constant\nfactor, while maintaining the same asymptotic complexity. 2.4 The Convolution as a Reference Point",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 7,
+    "total_chunks": 29,
+    "char_count": 400,
+    "word_count": 61,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c871320a-f205-4528-acb2-e3e9a039228e",
+    "text": "Table 1 summarises the four structural properties discussed above. Each\noperator family introduced in Sections 3–7 relaxes or replaces one or more\nof these properties in a principled way, motivated by the structure of the\nsignal and the requirements of the task. This framing provides the organising\nprinciple of the taxonomy.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 8,
+    "total_chunks": 29,
+    "char_count": 326,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5bdeab8b-233a-4f1c-996d-c55da7c3f230",
+    "text": "3 Decomposition-Based Operators Decomposition-based operators replace the convolution's uniform averaging\nwith a factorisation that explicitly separates the signal into structural components. The canonical example is the Singular Value Decomposition (SVD), which decomposes a matrix into orthogonal bases weighted by singular values, providing a natural separation between high-energy (structural) and\nlow-energy (noise) components. 3.1 Local SVD Operators\nGiven a patch P ∈Rm×n extracted from the neighbourhood of a pixel, the\nthin SVD is P = USV ⊤, where U ∈Rm×r, S = diag(s1, . . . , sr), V ∈Rn×r,\nand r = min(m, n). A denoised approximation is obtained by applying a\nthreshold τ to the singular values: ˆP = U diag(τ(s)) V ⊤, (2) where τ(s) = max(s −λ, 0) for a vector of thresholds λ. This operation is\nnon-linear (the threshold is a non-linear function of the singular values) and\nstructure-aware (it explicitly separates the low-rank signal from the residual\nnoise component). The Weighted Nuclear Norm Minimisation (WNNM) [GZZF14] applies\nthis principle by combining SVD thresholding with block-matching to aggregate similar patches into a 3D stack, a strategy also used in BM3D [DFKE06]. Our learning-based extension [CP22] replaces the hand-crafted threshold selection with a network that predicts the optimal thresholds λ from the singular values of each block, trained to minimise the reconstruction error with\nrespect to the ground-truth image. Algorithm 1 summarises this approach.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 9,
+    "total_chunks": 29,
+    "char_count": 1495,
+    "word_count": 227,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "65cd0db8-660b-44d8-a673-43709d28e484",
+    "text": "3.2 Tensor Decomposition Operators For volumetric data and multi-channel images, the Higher-Order SVD (HOSVD) [KB09]\ngeneralises the matrix SVD to tensors X ∈Rn1×···×nd via the Tucker decomposition X ≈G ×1 U (1) ×2 U (2) · · · ×d U (d), where G is the core tensor and\nU (k) are mode-k factor matrices. Applied locally to image patches, HOSVD\nsimultaneously exploits spatial, channel, and depth correlations, making it\nparticularly effective for hyperspectral and volumetric data [ZYL+19] . 3.3 Low-Rank Layer Approximations Decomposition principles can also be applied at the layer level rather than\nthe patch level.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 10,
+    "total_chunks": 29,
+    "char_count": 616,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4232e4d8-59c9-4ee1-87f7-049eb61c7dbf",
+    "text": "Low-rank approximations of the weight tensor [SKS+13, Algorithm 1 Learning-based SVD denoising [CP22]\nRequire: Noisy image Y , trained network N, number of iterations T\nˆEnsure: Denoised image X\n1: X(0)ˆ ←Y\n2: for t = 1, . . . , T do\n3: Extract 3D blocks {Bk} via block matching on X(t−1)ˆ\n4: for each block Bk do\n5: Compute Uk, Sk, Vk ←SVD(Bk)\n6: Predict thresholds ˆλk ←N(diag(Sk))\n7: ˆBk ←Uk diag(Sk −ˆλk) Vk⊤\n8: end for\n9: X(t)ˆ ←Aggregate({ˆBk})\n10: end for\n11: return X(T)ˆ LGR+15] factorise W ≈W1W2 to reduce the number of parameters and\nthe computational cost. While this is primarily a compression technique, it\nencodes a structural prior (low-rank kernel) that can improve generalisation\nin data-scarce regimes.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 11,
+    "total_chunks": 29,
+    "char_count": 721,
+    "word_count": 123,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "63b5563e-6216-4b6b-a53d-429b4aae34af",
+    "text": "3.4 Properties and Task Suitability Decomposition-based operators break the uniform weighting property of the\nconvolution by assigning different contributions to different spectral components. They are non-linear (due to thresholding) and content-adaptive\n(the decomposition depends on the local patch structure). They are most\nnaturally suited to image-to-image tasks where noise removal, compression,\nor structured feature extraction is required [HLL18]. Their main limitation\nis computational cost: computing the SVD of each patch at every layer is\nsignificantly more expensive than a standard convolution. 4 Adaptive Weighted Operators Adaptive weighted operators retain the local neighbourhood structure of the\nconvolution but modulate the kernel weights as a function of spatial position,\nsignal content, or an externally optimised density function. uniform weighting and, in some cases, the translational equivariance property. 4.1 Convolution with Density Functions\nA density function Φ ∈RK×K scales the kernel weights element-wise before\napplying the convolution. Given the standard kernel w and the density\nfunction Φ, the weighted convolution is defined as [CP25c] (I ∗wΦ)ij := X(Φab wab) Ii+a−⌊K/2⌋, j+b−⌊K/2⌋. (3)\na,b",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 12,
+    "total_chunks": 29,
+    "char_count": 1230,
+    "word_count": 170,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "706a4054-6d3d-4c13-a573-85758d4640b9",
+    "text": "The density function encodes a prior about the relative importance of pixels\nat different distances from the reference pixel. When Φ = 1, Eq. (3) reduces\nto the standard convolution. The optimal density function is computed by solving an outer optimisation problem [CP25c]: given a learning model MΦ that minimises the loss\nfunction L with respect to the kernel weights W for a fixed Φ, the optimal\ndensity function Φ∗is found by minimising the value of this minimised loss\nover all admissible density functions:\nΦ∗= arg min min L(T , ˆT (WΦ)). (4)\nΦ W Crucially, this formulation separates the optimisation of the kernel weights\n(solved by stochastic gradient descent) from the optimisation of the density function (solved by a global derivative-free method such as DIRECTL [CP25a, GK01]). Algorithm 2 outlines the procedure. 4.2 Dynamic Convolution Dynamic convolution [CDL+20] aggregates multiple parallel kernels {w(k)}Kk=1\nwith input-dependent attention weights πk(I): K !\nI ∗wdyn := I ∗ X πk(I) w(k) . (5)\nk=1 The attention weights πk are produced by a small auxiliary network conditioned on a global average-pooled representation of the input. This makes the\neffective kernel content-dependent while preserving the local structure and\ntranslational equivariance of the convolution. Omni-dimensional dynamic\nconvolution [LZY22] extends this idea to multi-dimensional attention over\nspatial, channel, and filter dimensions simultaneously. Algorithm 2 Optimal density function computation [CP25c] Require: Dataset (I, T ), kernel size K, bounds [αmin, αmax]\nEnsure: Optimal density function Φ∗\n1: Initialise α = [1, . . . , 1]\n2: repeat\n3: Φ ←αα⊤\n4: W ∗←arg minW L(T , ˆT (WΦ)) (SGD)\n5: Evaluate f(α) ←L(T , ˆT (WΦ))∗\n6: Update α via DIRECT-L using f(α)\n7: until convergence\n8: return Φ∗←α∗(α∗)⊤ 4.3 Deformable Convolution Deformable convolution [DQX+17] learns a set of spatial offsets {∆pk} that\nshift the sampling locations of the kernel:",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 13,
+    "total_chunks": 29,
+    "char_count": 1945,
+    "word_count": 304,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb31e0d6-d147-4b84-9108-90b759760af3",
+    "text": "(I ∗def w)ij := X wk · I(pij + pk + ∆pk), (6) where bilinear interpolation is used for non-integer sampling positions. Deformable convolution relaxes both the uniform weighting and the locality\nproperty: the receptive field adapts to the geometric structure of the signal. 4.4 Properties and Task Suitability Adaptive weighted operators are particularly effective in scenarios where the\nrelative importance of neighbouring pixels varies across the image, such as\ntasks involving structured textures, edges, or anisotropic noise. Density function optimisation [CP25c, CP25b] improves convergence speed and final accuracy for both image-to-image (denoising, PSNR improvement of 6–7%) and\nimage-to-label (classification, accuracy improvement of 7 percentage points)\ntasks, without increasing the number of trainable parameters. The computational overhead is modest (≈7% on GPU).",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 14,
+    "total_chunks": 29,
+    "char_count": 875,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c86f5410-e307-4a45-827b-cfd83cd3fee5",
+    "text": "Algorithm 3 Adaptive F-transform layer [CP24]\nRequire: Input signal f, initialised membership functions {A(0)k }, loss L\nEnsure: Adapted membership functions {A∗k}, output components {Fk}\n1: repeat\n2: for each k do\n3: Fk ←Px f(x) Ak(x)/ Px Ak(x)\n4: end for\n5: Compute L; backpropagate gradients w.r.t. {Ak} and network weights\n6: Update {Ak} and network weights via SGD\n7: until convergence\n8: return {A∗k}, {Fk} 5 Basis-Adaptive Operators Basis-adaptive operators define the analysis and synthesis bases as learnable\nor data-dependent objects, replacing the fixed Fourier-like bases implicit in\nthe standard convolution. 5.1 F-Transform with Adaptive Membership Functions The fuzzy transform (F-transform) [Per06] projects a signal f onto a set of\nfuzzy partition functions {Ak}nk=1 defined over the signal domain. The k-th\nF-transform component is: Px∈Ωf(x) Ak(x)\nFk := . (7)\nPx∈ΩAk(x) The standard F-transform uses fixed, regularly spaced membership functions. Our extension [CP24] optimises the membership functions {Ak} jointly with\nthe network weights, making the projection bases adaptive to the signal statistics. Algorithm 3 summarises the adaptive F-transform layer. The F-transform provides a natural connection between fuzzy set theory\nand signal processing, allowing the incorporation of domain knowledge into\nthe choice and shape of the partition functions. Unlike the convolution,\nwhich applies the same kernel at every position, the F-transform aggregates\ninformation over the entire domain with position-dependent weights, relaxing\nboth the locality and the translational equivariance constraints. 5.2 Learnable Wavelet Transforms Wavelets provide a multi-scale decomposition of the signal, capturing features\nat different resolutions. Learnable wavelet layers [LZLZ19] parameterise the\nwavelet filters and optimise them end-to-end, combining the interpretability of wavelet theory with the flexibility of learned representations [RV17].",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 15,
+    "total_chunks": 29,
+    "char_count": 1954,
+    "word_count": 272,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "23d1a9f1-8d9b-4e2e-be50-4041ba135c21",
+    "text": "The shearlet transform [KLR16] extends wavelets with directional sensitivity,\nproviding a richer basis for capturing anisotropic features such as edges and\nridges. Applied to denoising, shearlets are particularly effective for images\nwith strong directional structures.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 16,
+    "total_chunks": 29,
+    "char_count": 269,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7f095f2f-f68f-4d46-805b-aa418cb7a00c",
+    "text": "5.3 Sparse Dictionary Learning\nAn over-complete dictionary D ∈Rn×M (M ≫n) represents the signal as\na sparse linear combination of atoms: y ≈Da, ∥a∥0 ≤s. The K-SVD\nalgorithm [AEB06] alternates between sparse coding (finding a given D)\nand dictionary update (refining each atom via SVD of the representation\nerror). Dictionary learning can be embedded into a CNN as a learnable\nlayer, replacing the convolution with a pursuit-and-synthesis operation.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 17,
+    "total_chunks": 29,
+    "char_count": 448,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cb5148d1-f52c-465c-94aa-74170449f7dd",
+    "text": "5.4 Properties and Task Suitability Basis-adaptive operators relax the translational equivariance and uniform\nweighting properties. Their strength lies in tasks where the signal has a\nknown or learnable structure in a transformed domain (e.g., sparsity in a\nwavelet basis, smoothness in a fuzzy partition). They are particularly useful in medical imaging, where physical acquisition models (e.g., ultrasound\nspeckle, MRI k-space sampling) motivate specific choices of basis [CP26].",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 18,
+    "total_chunks": 29,
+    "char_count": 481,
+    "word_count": 67,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d7a752ec-3b4f-48c6-b301-60f696167d4e",
+    "text": "6 Integral and Kernel Operators Integral and kernel operators generalise the convolution by allowing the kernel to depend on the absolute or relative position of the pixels, rather than\nonly on their relative offset. This relaxes the translational equivariance property. 6.1 Non-Local Means and Non-Local Neural Networks The Non-Local Means (NLM) filter [BCM05] computes the output at position\ni as a weighted average over all positions j:\n1 −Pj∥2 ! ˆf(i) = X w(i, j) f(j), w(i, j) = exp −∥Pi , (8)\nZ(i) j h2 where Pk is the patch at position k and h is a bandwidth parameter. The\nweight w(i, j) depends on the similarity between patches at i and j, making the operator content-adaptive and non-local. Non-Local Neural Networks [WGGH18] embed this idea into a differentiable layer, computing pairwise affinities between all feature map positions. 6.2 Radial Basis Function Networks Radial Basis Function (RBF) networks [BL88] define the output as a linear\ncombination of radially symmetric basis functions: y(x) = X ck ϕ(∥x −µk∥), (9)\nk=1 where ϕ is a radially symmetric function (e.g., Gaussian, multiquadric), µk\nare the centres, and ck are the coefficients. Adaptive kernel-based sampling [CP21] optimises the centres, widths, and coefficients of Gaussian kernels to approximate arbitrary signals, including 2D images and vector fields,\nproviding a structured alternative to fixed-grid convolution. Applied to image\nsuper-resolution, RBF interpolation with data-dependent centres provides a\nstructured alternative to pixel-shuffle upsampling, encoding smoothness priors that are not available to a standard transposed convolution [DLHT16]. 6.3 Convolutional Kernel Networks",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 19,
+    "total_chunks": 29,
+    "char_count": 1676,
+    "word_count": 252,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "94c0b804-33c8-417f-b2a1-b6d9d0d1e1a6",
+    "text": "Convolutional Kernel Networks (CKNs) [MKHS14] replace the dot product\nin the convolution with a positive definite kernel function k(·, ·): (I ∗k w)ij := X k(N(Iij), wab), (10)\na,b where the kernel k is typically a Gaussian or polynomial function over patch\nspace. CKNs provide a principled connection between deep learning and kernel methods [SS02], and can be extended to graph-structured signals [CLL+20].",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 20,
+    "total_chunks": 29,
+    "char_count": 407,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "839beb33-5a94-4efa-b485-c6df37d4b3bc",
+    "text": "6.4 Position-Encoding Operators Coordinate convolution (CoordConv) [LLM+18] augments the input feature\nmap with explicit coordinate channels, allowing the network to break translational equivariance in a controlled way. This is particularly useful for tasks\nwhere the absolute position of features is informative, such as object detection and localisation. 6.5 Properties and Task Suitability Integral and kernel operators are the most general family in the taxonomy.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 21,
+    "total_chunks": 29,
+    "char_count": 467,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1e38a01a-c296-4318-9eec-270250ff2bed",
+    "text": "They can model arbitrary dependencies between input positions, at the cost\nof increased computational complexity (NLM requires O(N 2) operations per\npixel for a full non-local search window) and reduced inductive bias. They\nare most effective in tasks requiring long-range context [WGGH18] or tasks\nwhere the translational equivariance prior is inappropriate. A key challenge\nis efficient implementation on large inputs [CP25a]. 7 Attention-Based Operators Attention-based operators can be viewed as the extreme case of the integral operator family, where the kernel is entirely learned from the data and\ndepends on the global content of the input. They relax all four structural\nproperties of the convolution and have become the dominant operator in\nlarge-scale vision models [DBK+21, V+17]. The scaled dot-product self-attention mechanism [V+17] computes: QK⊤ !\nAttention(Q, K, V ) = softmax √dk V , (11) where the query Q, key K, and value V matrices are linear projections of\nthe input features. Each output position attends to all input positions, with\nweights determined by the similarity between query and key vectors.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 22,
+    "total_chunks": 29,
+    "char_count": 1125,
+    "word_count": 172,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2517fd27-2c65-4554-ab71-4696305e8f10",
+    "text": "Selfattention is not translational equivariant, not local, and not linear in the\ninput (due to the softmax). 7.2 Spatial and Channel Attention Spatial attention [WPLK18] learns a weight map over the spatial dimensions of the feature map, emphasising task-relevant regions. Channel attention [WWZ+20] learns weights over the channel dimension, selecting the\nmost informative feature channels. Both can be applied as lightweight modules that augment a standard convolutional backbone without replacing it\nentirely. 7.3 Vision Transformers Vision Transformers (ViT) [DBK+21] replace convolutional layers entirely\nwith multi-head self-attention applied to non-overlapping patches (tokens). This architecture achieves state-of-the-art performance on large datasets but\nrequires substantially more training data than CNNs due to its weaker inductive biases. NAFNet [CCZS22] and similar architectures apply simplified\nattention mechanisms that reduce the computational cost of the softmax\noperation for image restoration tasks. While attention mechanisms achieve remarkable performance, their success\ncomes with the cost of weak structural priors and high computational cost\n(O(N 2) in sequence length). In contrast, the structured operators discussed\nin Sections 3–6 embed domain knowledge into the operator design, which\ncan be beneficial in data-scarce regimes such as medical imaging, or when\ninterpretability is required [CP26]. Importantly, attention and structured\noperators are not mutually exclusive: hybrid architectures that combine local\nstructured operators with global attention modules represent a promising\nresearch direction.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 23,
+    "total_chunks": 29,
+    "char_count": 1635,
+    "word_count": 218,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ca41f13c-7217-41de-a74f-bbdbebe67621",
+    "text": "8 Comparative Analysis 8.1 Structural Properties Table 2 summarises the structural properties of all five operator families with\nrespect to the four reference properties of the standard convolution. Table 2: Comparison of operator families across structural properties and\ntask suitability. I2I: image-to-image tasks (denoising, super-resolution). I2L: image-to-label tasks (classification, detection). ◦: partial; ✓: yes; ×:\nno. Operator family Linear Transl. equiv. Adapt. to content Comp. cost I2I I2L Key ref. Standard convolution ✓ ✓ ✓ ✓ × O(K2) ✓ ✓ [LBD+89]\nDecomp.-based (SVD) × × ✓ × ✓ O(K3) ✓ ◦ [GZZF14, CP22]\nAdapt. weighted (density) ✓ ◦ ✓ × ◦ O(K2) ✓ ✓ [CP25c]\nAdapt. weighted (dynamic) ✓ ✓ ✓ × ✓ O(K2) ✓ ✓ [CDL+20]\nBasis-adaptive (F-transform) ✓ × × × ✓ O(n · |Ω|) ✓ ◦ [CP24, Per06]\nBasis-adaptive (wavelet) ✓ × ◦ × ◦ O(N log N) ✓ ◦ [KLR16]\nIntegral (NLM / non-local) ✓ × × × ✓ O(N 2) ✓ ◦ [BCM05, WGGH18]\nIntegral (RBF / kernel) ✓ × × × ✓ O(M · N) ✓ ✓ [MKHS14]\nAttention (self-attention) × × × × ✓ O(N 2) ✓ ✓ [V+17]",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 24,
+    "total_chunks": 29,
+    "char_count": 1028,
+    "word_count": 186,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9dad66a5-fd50-4a35-943f-4fc18f999742",
+    "text": "8.2 Design Principle Perspective Viewing the operators through the lens of the four structural properties reveals a clear design trade-off. Moving from the standard convolution toward\nattention-based operators, each property is progressively relaxed: uniform\nweighting first (adaptive weighted operators), then translational equivariance\n(basis-adaptive and integral operators), then locality (attention-based operators). This relaxation is accompanied by an increase in expressive power and\na corresponding increase in computational cost and reduction in inductive\nbias. The role of inductive bias Strong inductive biases—such as locality,\ntranslational equivariance, and uniform weighting—reduce the number of\nparameters required to learn a good representation and improve generalisation in data-scarce regimes. Weak inductive biases, conversely, allow the\nmodel to learn arbitrary dependencies from large datasets. The appropriate\nchoice of operator therefore depends on the availability of training data, the\nstructural properties of the signal, and the requirements of the task. Computational cost As shown in Table 2, operators that relax the locality property (integral operators, attention) have a significantly higher\ncomputational cost than local operators. For practical deployment on large\nimages or volumetric data, the efficiency of the operator is a critical consideration [CP25a]. Optimised GPU implementations and approximations\n(e.g., linear attention [KVPF20]) can reduce this cost, but at the expense of\nexpressive power. 8.3 Task Suitability Summary",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 25,
+    "total_chunks": 29,
+    "char_count": 1570,
+    "word_count": 210,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2af11f52-e19c-4bf3-afc3-943cd8464a93",
+    "text": "For image-to-image tasks, decomposition-based and basis-adaptive operators\nare particularly well-suited because they explicitly encode structural properties of natural images (low-rank structure, multi-scale sparsity) that are\nrelevant to denoising and super-resolution. For image-to-label tasks, adaptive weighted and attention-based operators are more appropriate, as they\ncan capture global contextual information that is relevant for recognition\nand classification [CP25b]. In both cases, the optimal choice of operator depends on the specific signal statistics, the available training data, and the\ncomputational budget. 9 Open Challenges and Future Directions",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 26,
+    "total_chunks": 29,
+    "char_count": 665,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "75e74fc9-273f-4f01-a24a-f408ab524420",
+    "text": "Combination of operators Most existing work considers operators in\nisolation. A promising direction is the design of architectures that combine\nmultiple operator families, exploiting their complementary strengths. For\nexample, a decomposition-based layer at the input could remove noise before\na standard convolutional backbone extracts features, or an attention module\ncould complement local structured operators with global context. Operator selection as a meta-learning problem Given the diversity of\noperators and the task-dependence of their performance, a natural question\nis whether the choice of operator can itself be automated. Neural architecture\nsearch (NAS) [ZL16] techniques could be extended to search over operator\nfamilies, not just architectural hyperparameters. Extension to 3D and volumetric data All operators discussed in this\npaper are presented in 2D for clarity, but most have natural 3D extensions. For volumetric medical data (CT, MRI, ultrasound), structured operators\nthat exploit the anisotropy of the acquisition process (e.g., different in-plane\nvs. through-plane resolution) could provide significant advantages [CP26]. Preliminary work on 3D weighted convolution is available at [CP25c]. Interpretability and theoretical analysis While the empirical performance of many operators has been demonstrated, their theoretical properties—\napproximation power, convergence of optimisation, generalisation bounds— are less well understood.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 27,
+    "total_chunks": 29,
+    "char_count": 1465,
+    "word_count": 195,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e6400e7d-f349-4856-bb54-5ab4b3322cf4",
+    "text": "Formal analysis of the optimisation landscape of the\ndensity function optimisation problem [CP25c] and the convergence of adaptive F-transform layers [CP24] are examples of the type of theoretical grounding that is needed across all operator families. Efficient solver design for the\nrelated minimisation problems also remains an open challenge [CP25a]. Biomedical and real-world applications Medical imaging represents a\nparticularly important application domain for structured operators, due to\nthe structured noise models (speckle in ultrasound, Rician noise in MRI),\nthe anisotropic acquisition geometry, and the frequent data scarcity [CP26]. The operator families discussed in this survey, particularly decompositionbased and basis-adaptive operators, are well aligned with these challenges\nand deserve further investigation in this context. Hardware-aware operator design The theoretical 50% overhead of the\nweighted convolution is reduced to approximately 7% on modern GPU hardware due to memory-level parallelism [CP25c]. More broadly, the computational properties of operators are increasingly architecture-dependent, motivating the design of operators that are co-optimised with the underlying\nhardware. We have presented a systematic taxonomy of structured operators that extend or replace the standard convolution in learning-based image processing. The five families—decomposition-based, adaptive weighted, basis-adaptive,\nintegral and kernel, and attention-based operators—differ in which structural properties of the convolution they relax, and are consequently suited\nto different signal types, task requirements, and computational constraints. The central message of this survey is that the convolution, while highly\neffective in many settings, is not the only or always the optimal choice of\noperator for learning-based image processing. A principled selection of the\noperator family, guided by the structural properties of the signal and the requirements of the task, can lead to significant improvements in both accuracy\nand efficiency. We hope that this taxonomy provides a useful reference for\nresearchers and practitioners in the field, and motivates further work on the\ndesign, analysis, and application of structured operators for deep learning. Acknowledgements SC is part of RAISE Innovation Ecosystem, funded\nby the European Union – NextGenerationEU and by the Ministry of University and Research (MUR), National Recovery and Resilience Plan, Mission\n4, Component 2, Investment 1.5, project \"RAISE – Robotics and AI for\nSocio-economic Empowerment\" (ECS00000035). Competing interests The author declares no competing interests. Availability of data and materials No datasets were generated or analysed during the current study.",
+    "paper_id": "2603.12067",
+    "title": "Beyond Convolution: A Taxonomy of Structured Operators for Learning-Based Image Processing",
+    "authors": [
+      "Simone Cammarasana"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12067v1",
+    "chunk_index": 28,
+    "total_chunks": 29,
+    "char_count": 2755,
+    "word_count": 376,
+    "chunking_strategy": "semantic"
+  }
+]

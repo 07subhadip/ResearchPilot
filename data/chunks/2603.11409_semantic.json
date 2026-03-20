@@ -1,0 +1,562 @@
+[
+  {
+    "chunk_id": "638f6d94-acb1-47d6-bffc-544fe05263ef",
+    "text": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue Kratika Bhagtani1, Mrinal Anand2, Yu Chen Xu2, Amit Kumar Singh Yadav2 1 School of Electrical and Computer Engineering, Purdue University, United States\n2 Ishiki Labs Inc.\nkbhagtan@purdue.edu, mrinal@ishikilabs.ai, robert@ishikilabs.ai, amit@ishikilabs.ai",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 0,
+    "total_chunks": 28,
+    "char_count": 327,
+    "word_count": 39,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a4cfd8cf-b1b2-44b1-97c2-a4b3a75145c6",
+    "text": "Existing voice AI assistants treat every detected pause as an invitation to speak. This works in dyadic dialogue, but in multiparty settings, where an AI assistant participates alongside mul-2026 tiple speakers, pauses are abundant and ambiguous. An assistant that speaks on every pause becomes disruptive rather than\nuseful. In this work, we formulate context-aware turn-taking:\nat every detected pause, given the full conversation context,Mar\nour method decides whether the assistant should speak or stay\nsilent.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 1,
+    "total_chunks": 28,
+    "char_count": 514,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1cd6ae8e-8ecf-419f-837e-60a197246438",
+    "text": "We introduce a benchmark of over 120K labeled con-12 versations spanning three multi-party corpora. Evaluating eight\nrecent large language models, we find that they consistently fail Figure 1: Traditional (a) vs. context-aware turn-taking (b) in\nat context-aware turn-taking under zero-shot prompting. We Conversational AI.\nthen propose a supervised fine-tuning approach with reasoning traces, improving balanced accuracy by up to 23 percentage In this work, we address this gap by formulating contextpoints. Our findings suggest that context-aware turn-taking is aware turn-taking as a supervised prediction task at every conversational pause. Our three major contributions are: (1) A[cs.AI] not an emergent capability; it must be explicitly trained.\nbenchmark containing more than 120K labeled decision points\nIndex Terms: Multi-Party Conversation, Turn-Taking, Voice in conversations drawn from three multi-party corpora spanning\nAgents, LLMs, Fine-Tuning workplace meetings [20, 21], social dialogue [22], and financial\nconversations [23]. The decision points in the conversations\n1. Introduction are organized into four categories that capture explicit address,\ncontextual intervention, and two forms of silence. (2) A largeLarge Language Models (LLMs) have rapidly advanced in in- scale evaluation of eight recent LLMs - including both closedstruction following, reasoning, and response generation [1, 2, 3, source [1, 24, 25, 26] and open-source [27, 28, 2] models, and\n4], enabling their deployment as conversational Artificial In- demonstrating that context-aware turn-taking fails under zerotelligence (AI) assistants [5, 6, 7]. However, most dialogue shot prompting. (3) A supervised fine-tuning approach that uses\nsystems and related evaluation benchmarks assume dyadic in- distilled reasoning traces that improves balanced accuracy by up\nteractions between one user and one assistant [8]. Real-world to 23 percentage points. 1\nconversations are rarely dyadic.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 2,
+    "total_chunks": 28,
+    "char_count": 1972,
+    "word_count": 273,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b2b80463-e02d-40b5-b606-fe22863294b2",
+    "text": "In meetings and group conversations, an AI assistant participates alongside multiple speak- 2. Related Work\ners [9, 10]. In such settings the challenge shifts from what to\nTurn-taking has been widely studied in dyadic spoken dialogue. say to whether and when to speak [11, 6]. An AI assistant in\nPrior work predicts turn boundaries from text [14] or near-arXiv:2603.11409v1 a Zoom meeting that responds at every pause becomes disrupfuture voice activity from audio using Voice Activity Projec- tive, while one that stays silent when addressed fails its role (see\ntion (VAP) [29]. Recent studies also show that LLMs struggle Figure 1) [12, 13].\nwith identifying Transition Relevance Places (TRPs) within a\nPrior research on turn-taking has been largely focused on turn [15]. These approaches focus on signal-level turn shifts in\ndyadic spoken dialogue - predicting turn boundaries from lin- two-party interaction. In multi-speaker interaction, prior work\nguistic cues [14] or identifying when an LLM should respond to has addressed sub-problems in isolation, such as speaker-aware\na single user [15]. Recent full-duplex speech models extend this discourse parsing [19], addressee recognition [18, 30], and reto handle barge-in and backchannels, but remain grounded in sponse selection under multi-party structure [3]. Social intellitwo-party, signal-level turn-taking [16, 17]. Research in multi- gence benchmarks such as SocialEval [31] and AgentSense [32]\nparty dialogue has been focused on structural sub-problems evaluate role consistency, goal completion, and interpersonal\nsuch as addressee recognition [18] and speaker-aware discourse reasoning in multi-agent scenarios, but treat participation as a\nparsing [19]. None of these works address the integrated deci- given rather than as a decision to be made at each conversational\nsion that a multi-party assistant must make at every pause, that\nis, given the full conversational context, should it speak or stay 1Code is available at\nsilent and not interrupt the conversation? https://github.com/ishikilabsinc/context aware modeling",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 3,
+    "total_chunks": 28,
+    "char_count": 2087,
+    "word_count": 305,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ffec25f7-8329-4b76-af7e-c6259a34c629",
+    "text": "Dataset Total I1 I2 S1 S2 AMI 11,900 1,598 4,407 4,127 1,768 <|reasoning_g|> ... <|/reasoning_g|> <|decision_g|> SPEAK <|/decision_g|>\nFriends 8,970 1,114 2,632 639 4,585 Ground Truth Ground Truth\nSPGI 99,290 21,595 28,050 17,441 32,204 Reasoning Next-token Cross Entropy Loss Decision Total 120,160 24,307 35,089 22,207 38,557\nCoT mode Decision-only mode\nTable 1: Distribution of datasets in our benchmark.\n<|decision|> SPEAK <|/decision|> Gemini Teacher\njuncture.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 4,
+    "total_chunks": 28,
+    "char_count": 465,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0ed33ff3-ec36-45f0-ba80-b29d678f420c",
+    "text": "Wei et al. [9] highlight the importance of participation <|reasoning|> ... <|/reasoning|> <|confidence|> ... <|/confidence|>\ndecisions in multi-party agents and introduce the MultiLIGHT Base Weights\ndataset in a role-playing environment [9]. However, because the Instruction-tuned Large Language Model LoRA (Rank 32)\ndataset is derived from a fantasy role-playing game environment masked, no-gradient\nwith assigned characters, it does not capture the dynamics of <|system|> ... <|/system|> <|context|> ... <|/context|>\nnatural spoken conversations. Moreover, the evaluation [9] fo- Input <|instruction|> ... <|/instruction|> <|current|> ... <|/current|>\ncuses on earlier conversational models such as BlenderBot [5]. Hilgert and Niehues [33] and MuPaS [34] address next-speaker\nFigure 2: Overview of the proposed framework.prediction in multi-party dialogue. Our work improves in three\nkey respects. First, we formulate the task as a per-participant\nance boundary. The ground-truth label is derived directly from\nbinary decision rather than predicting which speaker talks next,\nthe transcript: if speaker k produced the next utterance, the lasince an AI assistant deployed in a group conversation conbel is SPEAK; otherwise, SILENT. While the prediction task is\ntrols only its own participation. Second, our benchmark is built\nbinary, we assign each decision point a fine-grained category.\nfrom naturalistic multi-party corpora across three domains, with\nThe four categories capture qualitatively distinct situations:\nfine-grained labels distinguishing explicit and implicit contexExplicit Address (I1): The target speaker is directly addressed\ntual intervention or silence. Third, we evaluate recent LLMs\nby name or role, and is unambiguously expected to respond,\nto demonstrate that structured fine-tuning with added reasonmaking these the easiest cases for speaking (SPEAK).\ning distillation yields substantial gains, a training paradigm not\nContextual Intervention (I2): The target is not referenced but\nexplored in prior work on this problem.\nis an active participant and a response is expected (SPEAK). No Reference (S1): The ongoing exchange involves other\n3.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 5,
+    "total_chunks": 28,
+    "char_count": 2166,
+    "word_count": 300,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c27f3b24-7363-44e4-8733-848fc0b1d2ed",
+    "text": "Benchmark speakers and the target remains a bystander (SILENT). Referenced but not addressed (S2): The target is mentionedIn this section, we formulate the problem and benchmark.\n(e.g., in third person) but is not expected to respond (SILENT). This category captures an important distinction that being talked3.1. Problem Formulation\nabout is not the same as being talked to. We define context-aware turn-taking as follows. Given a multi- We remove filler-only utterances (e.g., \"um\", \"uh-huh\") and\nparty conversation with N speakers, let Ct = (u1, u2, ..., ut) very short turns (fewer than 3 characters after removing punctudenote the sequence of utterances up to time t, where each ation), apply exact de-duplication to remove duplicate contexts.\nutterance ui is produced by some speaker si ∈{1, ..., N}. All datasets are split into train/validation/test with an 80/10/10\nAfter utterance ut, a pause is detected. For a designated tar- ratio per-category.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 6,
+    "total_chunks": 28,
+    "char_count": 956,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6c94969c-de74-4be6-84b1-9499ff852690",
+    "text": "Samples with no context turns are filtered\nget speaker k ̸= st, the goal is to predict a binary decision out. For SPGISpeech, which is substantially larger than the\ndk ∈{SPEAK, SILENT} based on the conversational context other corpora, we apply stratified subsampling to approximately\nCt. This formulation is general in the sense that any participant 11K training samples while preserving class and category procan serve as the target speaker. During training, this allows us portions. Table 1 shows the distribution for the datasets after\nto derive supervision from naturally occurring human conversa- processing. Examples from the dataset are presented in Aptions since every speaker's behavior provides labeled examples. pendix A. 2\nDuring inference, the target speaker is the AI assistant.\n4. Datasets and Benchmark Construction\nThis section describes the proposed framework. We construct the benchmark from three publicly available\nmulti-party corpora spanning distinct conversational settings.\n4.1.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 7,
+    "total_chunks": 28,
+    "char_count": 1004,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0d59d31e-f8ba-4b69-a3ae-84e76b689490",
+    "text": "Zero-Shot Prompting\nThese are described as follows. AMI Meeting Corpus [20, 21]\ncontains approximately 100 hours of four-person design meet- We evaluate LLMs under zero-shot prompting. Each model reings with manual transcriptions and addressee annotations, cov- ceives a system prompt describing the task.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 8,
+    "total_chunks": 28,
+    "char_count": 305,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "47ae35c4-9c4f-4a89-93cf-19efc05cb364",
+    "text": "We evaluate two\nering questions and group discussions. We leverage the conver- closed-source models (gpt-5.2 [1, 25] and gemini 3.1-pro [24,\nsational annotations to infer addressee relationships and derive 26]) and six open-source ones (gpt-oss-20b [1], LLaMA3.1-8bground-truth for category assignment. Friends [22] provides instruct [27], Mistral-7b-instruct [28], Qwen2.5-7b [2], Qwen3-\ntranscripts from the television series, of scripted multi-party so- 4b-instruct [2], and Qwen3-8b [2]) at temperature 0.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 9,
+    "total_chunks": 28,
+    "char_count": 509,
+    "word_count": 67,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a367b5f8-8a42-48fc-95ab-1648e0afa018",
+    "text": "All modcial dialogue typically involving 3–6 speakers. SPGISpeech els receive identical prompts and are evaluated on the test splits.\n2.0 [23] contains transcribed earnings calls and financial pre- We evaluate model performance using both category-wise and\nsentations with multiple participants. Together these datasets aggregate metrics. Each decision point corresponds to a binary\ncapture meeting-style interaction, informal social conversation, prediction ˆdk ∈{SPEAK, SILENT} for the target speaker k,\nand domain-specific spoken dialogue. For each corpus, we\nsegment transcripts into time-ordered sequences and generate 2Dataset is available at\none decision point per non-speaking participant at each utter- https://huggingface.co/datasets/ishiki-labs/multi-party-dialogue Category-wise Accuracy (%) Overall (%)\nModel Dataset\nI1 I2 S1 S2 Acc F1avg Bal Acc\nAMI 52.53 (-0.63) 39.27 (-0.46) 88.63 (+1.65) 54.14 (+2.55) 60.77 (+0.68) 59.55 (+0.52) 61.03 (+0.70) gemini-3.1\nFriends 82.52 (-1.94) 80.62 (-0.78) 86.67 (+0.00) 34.10 (+0.41) 56.43 (-0.22) 56.11 (-0.17) 60.54 (-0.36)\n-pro SPGI 79.35 (+0.14) 30.31 (-1.58) 91.32 (-0.17) 69.07 (-0.13) 64.57 (-0.48) 63.93 (-0.53) 64.45 (-0.50) AMI 75.95 (-1.27) 55.71 (-0.69) 66.59 (-1.66) 32.48 (-1.91) 59.23 (-0.93) 59.20 (-0.95) 59.21 (-0.95)\ngpt-5.2 Friends 94.17 (+2.92) 84.88 (+1.17) 60.00 (+10.00) 18.71 (-3.12) 49.00 (-0.33) 46.63 (-0.76) 55.41 (+0.00)\nSPGI 85.30 (+0.00) 31.54 (-0.90) 75.48 (-0.71) 49.45 (+0.28) 56.96 (-0.29) 56.93 (-0.29) 56.94 (-0.29) AMI 74.05 (+0.63) 45.89 (+3.43) 65.40 (+2.37) 31.21 (+5.10) 54.72 (+2.90) 54.72 (+2.89) 54.74 (+2.90) gpt-oss\nFriends 98.06 (-1.94) 81.40 (+1.93) 58.33 (-1.66) 21.62 (-0.62) 49.89 (-0.11) 48.00 (-0.28) 55.92 (+0.05)\n-20b SPGI 68.63 (+8.62) 22.84 (+9.21) 70.18 (-9.72) 48.35 (-9.62) 49.62 (-0.46) 49.35 (-0.21) 49.54 (-0.35) AMI 92.41 (+1.89) 69.86 (-1.14) 30.57 (-2.61) 9.55 (+0.64) 50.72 (-1.02) 47.09 (-1.31) 50.35 (-1.03) LLaMA3.1\nFriends 97.09 (-2.92) 85.27 (-0.39) 50.00 (-1.67) 16.01 (-2.29) 47.34 (-1.77) 44.23 (-2.14) 54.21 (-1.66)\n-8b-instruct SPGI 96.86 (-0.98) 65.32 (-3.54) 20.75 (+1.59) 4.58 (+1.59) 44.36 (-0.39) 37.20 (+0.48) 44.76 (-0.41) AMI 89.24 (+1.27) 83.33 (+2.51) 14.69 (+3.08) 8.28 (+3.18) 49.45 (+2.64) 41.59 (+3.24) 48.93 (+2.64) Mistral-7b\nFriends 89.32 (+6.80) 84.88 (+1.55) 26.67 (+1.66) 18.71 (+0.42) 46.23 (+1.55) 43.30 (+1.40) 52.87 (+1.80)\n-instruct SPGI 84.60 (+3.23) 72.03 (+2.56) 24.03 (-3.06) 19.52 (-2.19) 49.01 (+0.14) 44.80 (-0.78) 49.33 (+0.18) AMI 88.61 (-2.53) 70.09 (-2.74) 28.20 (+8.77) 19.11 (+5.09) 50.72 (+2.47) 47.34 (+3.87) 50.37 (+2.54) Qwen2.5\nFriends 92.23 (+3.89) 77.52 (-4.26) 55.00 (+0.00) 24.95 (+1.04) 49.67 (-0.22) 48.39 (-0.02) 55.00 (-0.51)\n-7b SPGI 89.28 (-1.45) 67.95 (+0.69) 25.72 (+0.06) 16.30 (+0.34) 48.15 (+0.00) 43.68 (+0.08) 48.48 (+0.00) AMI 92.41 (+1.26) 77.63 (+0.68) 39.81 (+2.84) 7.64 (-0.63) 56.68 (+1.36) 53.53 (+1.59) 56.32 (+1.37) Qwen3\nFriends 100.00 (+0.00) 90.70 (-0.78) 38.33 (+0.00) 6.03 (+1.45) 43.13 (+0.55) 36.82 (+1.04) 51.48 (+0.37)\n-4b-instruct SPGI 94.94 (-0.09) 55.07 (-3.18) 16.99 (-0.33) 10.34 (-0.37) 42.25 (-1.09) 36.81 (-0.89) 42.60 (-1.10) AMI 90.51 (+0.63) 68.95 (+0.68) 48.82 (+0.00) 6.37 (-0.64) 56.26 (+0.25) 54.53 (+0.18) 55.99 (+0.24) Qwen3\nFriends 100.00 (+0.00) 87.21 (+1.55) 43.33 (-3.33) 6.44 (+1.25) 42.68 (+0.89) 37.00 (+0.97) 50.70 (+0.92)\n-8b SPGI 94.94 (-0.93) 43.70 (-3.06) 33.70 (-0.44) 11.28 (+1.35) 42.46 (-0.70) 39.31 (-0.34) 42.73 (-0.72)\nTable 2: Zero-shot performance of evaluated LLMs on the context-aware turn-taking benchmark. Values in parentheses denote the\nchange when the system prompt is repeated twice in the input; the base value uses a single system prompt. Bold indicates the best\noverall model, while bold+italic indicates the best open-source model.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 10,
+    "total_chunks": 28,
+    "char_count": 3791,
+    "word_count": 535,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c7b728d4-9bde-41fc-afc8-edef2c5e6089",
+    "text": "where the ground-truth decision is dk. Let D denote the set of should SPEAK or stay SILENT. To obtain reasoning traces for\ndecision points in the dataset. We report three metrics: training, we use label-conditioned distillation: a teacher model\n(1) Accuracy (Acc) = |D|1 Pi∈D 1[ˆdi = di] (Gemini 2.5 Flash) [37] receives each training sample (system\n1 prompt, instruction prompt, context history and current turn)\n(2) Class-averaged F1 (F1avg) = 2(F1SPEAK + F1SILENT), where\n2PcRc along with its ground-truth label and generates a one-sentence for class c.F1c = Pc+Rc with precision Pc and recall Rc justification. This conditioning ensures reasoning traces are 1\n(3) Balanced Accuracy (BalAcc) = 2(TPRSPEAK + consistent with the correct label while grounding explanations\nTPRSILENT), where TPRc denotes the True Positive Rate (re- in observable dialogue context. To prevent class and category\ncall) for class c.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 11,
+    "total_chunks": 28,
+    "char_count": 912,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9d2e45a7-b923-4573-b7e5-9780f82df511",
+    "text": "For diagnostic analysis, we additionally report imbalance from dominating training, we use a four-way balaccuracy separately for the four benchmark categories. anced batch sampler that draws 25% of each batch from each of\nthe four categories (I1, I2, S1, S2). Figure 2 shows an overview\n4.2. Supervised Fine-Tuning (SFT) of our proposed framework. The prompts used in Section 4 are\nprovided in the Appendix B. 3\nWe further propose supervised fine-tuning for the task. We\nfine-tune all open-source models using Low-Rank Adaptation 5. Experimental Results\n(LoRA) [35] (rank=32, α = 64, dropout=0.05) on attention\nand Multilayer Perceptron (MLP) projection layers. Training Experiment-1 Zero-shot Prompting & SFT: Table 2 reports\nuses AdamW optimizer with a learning rate 10−4, cosine sched- zero-shot performance and shows that all models struggle. The\nule, batch size 32 (16 ×2 steps of gradient accumulation), and best-performing model, gemini-3.1-pro, achieves only 64.45%\n16-bit floating point precision for 3 epochs with 10 warmup balanced accuracy on SPGI, while open-source models hover\nsteps, selecting the checkpoint with the best validation F1avg. near random performance on all three datasets. Most models\nDuring training, inputs are truncated to a maximum context exhibit a strong SPEAK bias, producing unacceptably low aclength of 2048 tokens (most examples fit within this cap) for curacies for S1 and S2. This confirms that context-aware turnall models due to memory constraints except for gpt-oss-20b, taking is not an inherent capability of instruction-tuned LLMs.\nwhich uses a limit of 1536 tokens due to the larger size and com- Repeating the system prompt twice [38] yields marginal gains\nputational resource requirements of the model. When sequences (≤3 points, Table 2), confirming the failure reflects a fundamenexceed the limit, the most recent turns are retained. Fine-tuning tal lack of turn-taking capability, not instruction neglect.\nuses 1–8 A100 80GB GPUs depending on model size (train- Table 3 reports results after supervised fine-tuning with\ning completes in a few hours per dataset), with FSDP [36] for Decision-only mode. Except for gpt-oss-20b, SFT yields sublarger runs. We train in two modes. In Decision-only mode, stantial improvements across all models and datasets, with balthe model outputs only the binary decision.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 12,
+    "total_chunks": 28,
+    "char_count": 2358,
+    "word_count": 356,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "70f48b62-f848-427e-beb5-aa141d2c948b",
+    "text": "In Reasoning with\nDecision mode, the model first generates a one-sentence reason- 3Model checkpoints are available at\ning trace before the decision explaining why the target speaker https://huggingface.co/ishiki-labs/models",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 13,
+    "total_chunks": 28,
+    "char_count": 223,
+    "word_count": 28,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e94d04af-0384-465c-9dc3-642cce9aa10f",
+    "text": "Category-wise Accuracy (%) Overall (%)\nModel Dataset\nI1 I2 S1 S2 Acc F1avg Bal Acc\nAMI 70.89 50.00 62.56 22.93 (↓12.69) 53.70 58.72 58.74 gpt-oss\nFriends 93.20 84.11 65.00 20.37 49.89 49.10 56.84\n-20b SPGI 76.50 26.34 56.80 (↓13.38) 29.43 (↓18.93) 43.74 (↓11.85) 49.63 49.66\nAMI 81.01 58.90 (↓24.43) 86.49 (↑71.80) 61.78 (↑53.50) 72.17 (↑22.72) 72.05 (↑30.47) 72.28 (↑23.35) Mistral-7b\nFriends 98.06 52.33 (↓32.56) 76.67 (↑50.00) 77.75 (↑59.04) 72.73 (↑26.50) 71.54 (↑28.24) 71.50 (↑18.63)\n-instruct SPGI 59.22 (↓25.38) 47.28 (↓24.75) 71.27 (↑47.24) 60.11 (↑40.59) 58.39 58.22 (↑13.42) 58.33\nAMI 80.38 (↓12.03) 63.24 80.81 (↑50.24) 63.69 (↑54.14) 71.91 (↑21.19) 71.89 (↑24.80) 71.98 (↑21.62) LLaMA3.1\nFriends 100.00 63.18 (↓22.09) 86.67 (↑36.67) 69.44 (↑53.43) 72.28 (↑24.94) 71.78 (↑27.56) 72.52 (↑18.31)\n-8b-instruct SPGI 91.90 73.04 70.50 (↑49.75) 38.17 (↑33.59) 65.42 (↑20.85) 64.64 (↑27.44) 65.61 (↑20.85)\nAMI 91.14 68.72 74.64 (↑46.45) 52.87 (↑33.76) 71.74 (↑21.02) 71.70 (↑24.36) 71.70 (↑21.33) Qwen2.5\nFriends 100.00 74.03 88.33 (↑33.33) 47.19 (↑22.25) 63.64 (↑13.97) 63.63 (↑15.24) 66.60 (↑11.60)\n-7b SPGI 97.10 81.16 (↑13.21) 62.86 (↑37.14) 32.50 (↑16.20) 65.58 (↑17.43) 63.91 (↑20.23) 65.83 (↑17.35)\nAMI 84.18 63.93 (↓13.70) 79.62 (↑39.81) 60.51 (↑52.87) 71.83 (↑15.15) 71.82 (↑18.29) 71.87 (↑15.55) Qwen3-4b\nFriends 100.00 57.75 (↓32.95) 96.67 (↑58.33) 55.93 (↑49.90) 64.19 (↑21.06) 63.94 (↑27.12) 65.12 (↑13.64)\n-instruct SPGI 80.10 (↑17.85) 69.54 (↑14.47) 69.63 (↑39.82) 61.45 (↑52.87) 69.23 (↑26.98) 69.18 (↑32.37) 69.29 (↑26.69)\nAMI 74.68 (↓15.82) 58.90 (↓10.05) 83.89 (↑35.07) 69.43 (↑63.06) 71.40 (↑15.15) 71.25 (↑16.72) 71.53 (↑15.54) Qwen3-8b\nFriends 100.00 47.67 (↓39.53) 91.67 (↑48.33) 74.01 (↑67.57) 70.62 (↑27.94) 69.33 (↑32.33) 69.29 (↑18.59)\n-instruct SPGI 73.31 (↓21.63) 64.89 (↑21.19) 57.89 (↑24.19) 48.39 (↑37.11) 60.11 (↑17.65) 59.87 (↑20.56) 60.20 (↑17.47)\nTable 3: Performance after supervised fine-tuning. Numbers in parentheses indicate the absolute change in percentage points relative\nto the zero-shot baseline in Table 2. Arrows are shown when the change exceeds ±10 points. Bold indicates improved performance. anced accuracy gains of up to 23 percentage points. Mistral- els (Table 3) match or exceed human-level balanced accuracy.\n7B-Instruct improves from 41.59% F1avg in baseline to 72.05% Experiment-3 Ablation Study: We ablate three deon AMI. Gpt-oss-20b, a reasoning-oriented model, shows min- sign choices using Qwen2.5-7B, the most stable open-source\nimal gains from SFT. We attribute this to a conflict between its model after SFT. Table 5 (top) compares Decision-only traininternalized chain-of-thought behavior and the LoRA-adapted ing against the Reasoning with Decision mode on the Friends\noutput format. In effect, the adapter learns to produce the target dataset. Adding reasoning traces improves accuracy by 7.2 performat but cannot redirect the model's internal reasoning toward centage points (63.64% to 70.84%) and F1avg by 5.2 points,\nthe task-specific pragmatic cues that drive gains in the other confirming that generating an explicit justification before the\nmodels. Per-category analysis reveals that the largest gains decision helps the model. Table 5 (middle) varies the LoRA\ncome from S2 and S1, the two categories that require pragmatic rank for the Reasoning with Decision mode on Friends dataset.\nreasoning to remain SILENT.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 14,
+    "total_chunks": 28,
+    "char_count": 3393,
+    "word_count": 486,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c5ba9e04-7463-4753-9bf2-37704cd7c801",
+    "text": "Models maintain performance on Rank 32 (α=64) achieves the best performance across all three\nI1 (explicit address), which was already closer to near-perfect metrics. Rank 16 underperforms by approximately 3 points,\nperformance in Table 2. likely due to insufficient capacity to capture the reasoning patExperiment-2 Human Evaluation: To contextualize terns. Rank 64 shows no further gain, suggesting diminishing\nmodel performance, we conduct a human evaluation on a ran- returns beyond rank 32 for this task. Finally, we train a sindomly selected subset of 360 samples from test subset of the gle model on the merged training splits of all three datasets\nFriends dataset (100 samples from all categories, except for S1 to test cross-domain generalization. Table 5 (bottom) shows\nwhich only had 60).",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 15,
+    "total_chunks": 28,
+    "char_count": 798,
+    "word_count": 123,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "929de210-d20d-45e1-8e4b-a814c234c27a",
+    "text": "We selected Friends for human evaluation that pooled training achieves 71.73% average balanced accuas its social dialogue is most accessible to non-expert annotators. Three annotators H1, H2, and H3 independently labeled Training Mode Comparison\neach sample as SPEAK or SILENT given the same conversation\ncontext and target speaker information provided to the models. Dataset Mode Acc F1avg Bal Acc\nTable 4 summarizes per-annotator results. Human annotators Friends Decision-only 63.64 63.63 66.60\nachieve 60–66% balanced accuracy, with strong performance Friends Reasoning with Decision 70.84 68.80 68.46\non I1 (explicit address) and S1 (no reference) but notably low\naccuracy on S2 (referenced but not addressed), the category re- LoRA Rank Comparison (Reasoning Mode)\nquiring the finest pragmatic distinction. Inter-annotator agree- Dataset Rank/Alpha Acc F1avg Bal Acc\nment was moderate with the pairwise agreement scores measured by Cohen's κ [39], as κ (H1-H2) = 0.57, κ (H1-H3) = Friends r=16, α = 32 67.74 65.47 65.23\n0.38, and κ (H2-H3) = 0.53, yielding (Avg Cohen's κ = 0.492), Friends r=32, α = 64 70.84 68.80 68.46\nFriends r=64, α = 128 69.96 68.29 68.09reflecting the inherent subjectivity of turn-taking decisions in\nmulti-party settings. These results establish that this task is\nCombined-Dataset Training, Decision-only Mode\nparticularly challenging; even humans disagree on whether to\nspeak in ambiguous situations. Notably, our best trained mod- Test Dataset I1 I2 S1 S2 Acc F1avg Bal Acc AMI 67.58 82.91 85.78 47.77 73.53 73.53 73.56\nHuman I1 I2 S1 S2 Acc F1avg Bal Acc\nFriends 43.02 93.20 73.33 86.90 74.17 71.92 71.37\nH1 84.00 74.00 86.67 29.00 66.39 64.78 64.81 SPGI 63.84 81.88 78.15 63.46 70.24 70.24 70.26\nH2 80.00 75.00 65.00 30.00 62.22 59.94 60.31\nH3 84.00 88.00 83.33 24.00 68.33 65.80 66.13 Average 58.15 86.00 79.09 66.04 72.65 71.90 71.73\nAverage 82.67 79.00 78.33 27.67 65.65 63.51 63.75 Table 5: Ablation analysis: training mode, LoRA rank, and\nTable 4: Human evaluation with performance metrics (in %). combined-dataset generalization. racy without per-domain adaptation, competitive with dataset- [12] M. Harte, \"Multimodal Conspecific fine-tuning (Table 3). This suggests the learned turn- tinuous Turn-Taking Prediction Using Multiscale RNNs,\"\ntaking representations transfer across conversational settings. arXiv:1808.10785, 08 2018.\n[13] H. Brennan, \"Grounding in Communication,\" Per-\n6. Conclusion & Future Work spectives on Socially Shared Cognition, pp. 127–149, 1991.\n[14] E. Skantze, \"TurnGPT: a Transformer-based LanWe formulated context-aware turn-taking as a binary predic- guage Model for Predicting Turn-taking in Spoken Dialog,\" Findtion task for multi-party settings and introduced a 120K-sample ings of the Association for Computational Linguistics: EMNLP,\nbenchmark spanning three domains. All evaluated LLMs fail pp. 2981–2990, 11 2020, Online.\nunder zero-shot prompting; supervised fine-tuning with rea- [15] M.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 16,
+    "total_chunks": 28,
+    "char_count": 2967,
+    "word_count": 437,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "051fb1f4-54e1-4da0-ab96-4eed9b5fe3ec",
+    "text": "Ruiter, \"Large Language Models\nsoning distillation improves balanced accuracy by up to 23 Know What To Say But Not When To Speak,\" Findings of the\npoints. Future work will incorporate multimodal cues and Association for Computational Linguistics: EMNLP, pp. 15 503–\n15 514, 11 2024, Miami, Florida, USA.\ncross-domain generalization for real-time deployment.\n[16] A. Zeghidour, \"Moshi: A Speech-Text Foundation\n7. Acknowledgments Model for Real-Time Dialogue,\" arXiv:2410.00037, 10 2024. We thank Busi Reddy Karnati for his generous support and con- [17] D.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 17,
+    "total_chunks": 28,
+    "char_count": 556,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "67bddc5f-0c58-4931-bd2e-58e7aa7f5883",
+    "text": "Qiu,\ntributions to the infrastructure supporting this work, and for en- \"SpeechGPT: Empowering Large Language Models with Intrinsic Cross-Modal Conversational Abilities,\" arXiv:2305.11000, 05abling the data annotation used in this study.\n2023.\n8. References [18] R.\"WhoLe, IsW.SpeakingHu, M. Yan,Ad-\n[1] OpenAI, J. Achiam, and et al., \"GPT-4 Technical Report,\" dressee in Multi-Party Conversations,\" Proceedings of the ConferarXiv:2303.08774, 03 2024. ence on Empirical Methods in Natural Language Processing, pp.\n1909–1919, 11 2019, Hong Kong, China.\n[2] Q. Team, \"Qwen2.5 Technical Report,\" arXiv:2412.15115, 12\n[19] N. Zhang, \"Speaker-Aware Discourse Parsing 2025.\non Multi-Party Dialogues,\" Proceedings of the International Con-\n[3] N. Guerini, ference on Computational Linguistics, pp. 5372–5382, 10 2022,\n\"Do LLMs suffer from Multi-Party Hangover? A Diagnostic Ap- Gyeongju, Republic of Korea.\nproach to Addressee Recognition and Response Selection in Con-\n[20] J. Guillemot,\nversations,\" Proceedings of the Conference on Empirical Methods\nT. Kronenthal et al.,\nin Natural Language Processing, pp. 11 210–11 233, 11 2024, Mi-\n\"The AMI Meeting Corpus: A Pre-Announcement,\" Proceedings\nami, Florida, USA.\nof the Machine Learning for Multimodal Interaction, pp. 28–39,\n[4] Y. Zhao, \"EM Pre-training for Multi-party Dialogue 2005. Response Generation,\" Proceedings of the Annual Meeting of the [21] J. Carletta, \"Unleashing the Killer Corpus: Experiences in CreAssociation for Computational Linguistics, pp. 92–103, 07 2023, ating the Multi-Everything AMI Meeting Corpus,\" Language ReToronto, Canada. sources and Evaluation, vol. 41, pp. 181–190, 10 2007.\n[5] K. Ngan, \"Friends-MMC: A Dataset for Multi-modal Multi-party ConverS. Kambadur, and sation Understanding,\" arXiv:2412.17295, 12 2024.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 18,
+    "total_chunks": 28,
+    "char_count": 1795,
+    "word_count": 244,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6786709f-9f99-4262-a004-565a4f9a3c5d",
+    "text": "Weston, \"BlenderBot 3: A Deployed Conversational Agent that\nContinually Learns to Responsibly Engage,\" arXiv:2208.03188, [23] R. Ginsburg, \"SPGISpeech 2.0: Transcribed Multi-Speaker Financial Audio for\n[6] Y. Speaker-Tagged Transcription,\" arXiv:2508.05554, 08 2025. Chua, \"Prompting and Evaluating Large Language Models for\n[24] G. Alayrac et al., \"GemProactive Dialogues: Clarification, Target-guided, and Nonini: A Family of Highly Capable Multimodal Models,\" collaboration,\" Findings of the Association for Computational\narXiv:2312.11805, 12 2023. Linguistics: EMNLP, p. 10602–10621, 12 2023, Singapore.\n[25] OpenAI, \"Introducing GPT-5.2,\" https://openai.com/index/\n[7] Y. Gao,\nintroducing-gpt-5-2/, 12 2025.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 19,
+    "total_chunks": 28,
+    "char_count": 712,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "30413a87-9136-4096-8ab8-12cf0a6f1bf4",
+    "text": "Dolan, \"DialoGPT: Large-Scale Generative\nPre-training for Conversational Response Generation,\" Proceed- [26] G. DeepMind, \"Gemini 3.1 Pro Best for complex tasks and bringings of the Annual Meeting of the Association for Computational ing creative concepts to life,\" https://deepmind.google/models/\nLinguistics: System Demonstrations, pp. 270–278, 07 2020, On- gemini/pro/, 12 2024.\nline. [27] H. RoSurvey on Recent Advances in LLM-Based Multi-turn Dialogue driguez, A. Lample, \"LLaMA: Open\nSystems,\" ACM Computing Surveys, vol. 58, pp. 1–38, 12 2025. and Efficient Foundation Language Models,\" arXiv:2302.13971,\n02 2023.\n[9] J. Komeili, \"Multi-Party Chat: Conversational Agents in Group\nChaplot, D. de las Casas, F. Lample, Settings with Humans and Models,\" arXiv:2304.13835, 04 2023. Tsuboi, \"Addressee and Response Selection for T. Sayed, \"Mistral 7B,\"\nMulti-Party Conversation,\" Proceedings of the Conference on Em- arXiv:2310.06825, 10 2023.\npirical Methods in Natural Language Processing, pp. 2133–2143,\n[29] E. Skantze, \"How Much Does Prosody Help Turn-\n11 2016, Austin, Texas.\ntaking? Investigations using Voice Activity Projection Models,\"\n[11] G. Skantze, \"Turn-taking in Conversational Systems and Human- Proceedings of the Annual Meeting of the Special Interest Group\nRobot Interaction: A Review,\" Computer Speech & Language, on Discourse and Dialogue, pp. 541–551, 09 2022, Edinburgh,\nvol. 67, p. 101178, 05 2021. Kawahara,\n\"An LLM Benchmark for Addressee Recognition in Multi-modal\nMulti-party Dialogue,\" Proceedings of the International Workshop on Spoken Dialogue Systems Technology, pp. 330–334, 05\n2025, Bilbao, Spain. Huang, \"SocialEval: Evaluating Social Intelligence of Large Language Models,\" arXiv:2506.00900, 06 2025. Pl¨otz, \"AgentSense: Virtual Sensor Data Generation Using LLM Agents in Simulated Home Environments,\" Niehues, \"Next Speaker Prediction for MultiSpeaker Dialogue with Large Language Models,\" Proceedings of\nthe International Conference on Natural Language and Speech\nProcessing, pp. 60–71, 08 2025, Southern Denmark University,\nOdense, Denmark.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 20,
+    "total_chunks": 28,
+    "char_count": 2084,
+    "word_count": 280,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "63a57781-1cc5-47ed-ad10-c5b0623320ba",
+    "text": "Ji, \"Multi-Party Supervised Finetuning of Language Models for Multi-Party Dialogue Generation,\" arXiv:2412.05342, 12 2024. Chen, \"LoRA: Low-Rank Adaptation of Large\nLanguage Models,\" arXiv:2106.09685, 06 2022. Li, \"Pytorch fsdp: Experiences on scaling\nfully sharded data parallel,\" arXiv:2304.11277, 04 2023. Cloud, \"Gemini 2.5 Flash,\" https://docs.cloud.google.com/\nvertex-ai/generative-ai/docs/models/gemini/2-5-flash, 04 2025. Matias, \"Prompt Repetition Improves Non-Reasoning LLMs,\" arXiv:2512.14982, 12 2025. Cohen, \"A Coefficient of Agreement for Nominal Scales,\" Educational and Psychological Measurement, vol. 20, no. 1, pp. 37–\n46, 1960.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 21,
+    "total_chunks": 28,
+    "char_count": 646,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a6f6f20-f911-419a-8f92-ba4c0e62af95",
+    "text": "Appendix Example of No Reference (S1): The target speaker\nis not addressed and remains silent. Context:\nPhoebe: Okay, cancel backup! Cancel backup!\nA. Dataset Examples Rachel: Ross, didn't you say that there was an elevator\nin here? Ross: Uhh, yes I did but there isn't. Left! Left!In this section we show examples that demonstrate all four deRachel: Okay, you know what? There is no more left!cision categories defined in Section 3.2: explicit address (I1),\ncontextual intervention (I2), no reference (S1), and referenced Current Turn:\nbut not addressed (S2).",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 22,
+    "total_chunks": 28,
+    "char_count": 560,
+    "word_count": 88,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7671f83f-ef6d-46b9-bdd9-518596401270",
+    "text": "Rachel: Any chance you think the couch looks good\nthere? Target Speaker: Phoebe\nDecision: SILENT\nReasoning: Phoebe is a bystander in this exchange. Rachel's question is directed toward Ross, who is acExample of Explicit Address (I1): The target tively moving the couch with her, and Phoebe has not\nspeaker is directly invited to respond. been involved in the recent interaction. Context:\nChandler: Uh, if I were omnipotent for a day, I'd.. Rachel: See, there's always one guy. (Mocking) Example of Referenced but not addressed (S2): The\ntarget speaker is part of the interaction but does not Current Turn:\ntake the next turn. Monica: Hey, Joey, what would you do if you were\nTarget Speaker: Joey Context:\nDecision: SPEAK Chandler: No, no, no, no, no, NO! No, no... we're not\nReasoning: Monica directly addresses Joey and asks a together. We're definitely not a\nquestion, inviting his response to the hypothetical sce- couple.\nnario. Joey: Well, you seem pretty insulted by that. I'm not good enough for you? Chandler: We're not gonna have this conversation\nagain... Why am I so intimidated\nby this guy? Pretentious art, this huge macho couch. When we know all he does is sit around all day crying\nabout losing Monica to a real man! (laughs) You don't\nExample of Contextual Intervention (I2): The tar- think he's here, do you?\nget speaker continues the interaction without being Joey: You know what it is? It's a nice place but I gotta\ndirectly addressed. say I don't know if I see myself living here. Oh, oh,\noh, let me see... (Joey sits down on the couch, mimes\nContext: opening a can and puts his hand down his pants) Yeah,\nJoey: A date?! No, no Pheebs you-you must be mis- I could see it.\ntaken, because I know you wouldn't schedule a date on Chandler: Look at these videos.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 23,
+    "total_chunks": 28,
+    "char_count": 1777,
+    "word_count": 308,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "70e89618-1755-4229-b32e-c1318cd07f8b",
+    "text": "Magnum Force, Dirty Harry,\nPhoebe: Come on Joey, don't make me feel badly about Cool Hand Luke... Chandler: There's a tape here with Monica's name on\nJoey: No, I'm gonna!! That's right! Yeah, you made it.\nme feel really guilty about goin' out with that girl! Joey: Ooh! A tape with a girl's name on it. It's probably\nPhoebe: This is different! This is with David! Remem- a sex tape... And\nber David, the scientist guy? this is Richard's apartment...",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 25,
+    "total_chunks": 28,
+    "char_count": 449,
+    "word_count": 80,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "21a7c989-0bca-42c2-86e5-fb66fdf524a9",
+    "text": "Joey: Okay, well my girl from the other night was speCurrent Turn:\ncial. She was a scientist too!\nChandler: Get there faster Joey! (Joey gasps and finally\nCurrent Turn: understands.)\nPhoebe: Okay, whatever. I don't have time to convince\nTarget Speaker: Joey\nyou because he's only here for four hours, and I'm goDecision: SILENT ing to see him!\nReasoning: Joey is an active participant in the con- Target Speaker: Joey\nversation and Chandler's remark is directed at him to\nDecision: SPEAK\nprompt realization about the situation. Joey reacts nonReasoning: Joey is actively engaged in the argument verbally (gasping), indicating understanding, but he\nwith Phoebe. Her final statement dismisses the un- does not take the next spoken turn, allowing Chandler\nresolved conflict and prompts Joey to respond even to continue speaking.\nthough he was not explicitly addressed.",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 26,
+    "total_chunks": 28,
+    "char_count": 865,
+    "word_count": 136,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1ec81893-4502-466c-bdad-f367f38e6bab",
+    "text": "You are playing the role of Speaker {target speaker}. The conversation history above shows all utterances including\nthe most recent one (marked as [MOST RECENT]). After that most recent utterance, there was a pause. Decide if you\n(Speaker {target speaker}) should START TALKING or STAY SILENT now. You are a helpful, concise assistant. You are a turn-taking decision model in a multi-party conversation where\nmultiple people are talking. You are roleplaying the role of the target speaker you are given. Your job is to decide\nwhether the target speaker should START TALKING or STAY SILENT after a detected pause in conversation. An instruction telling you the target speaker role (e.g., \"Speaker C\", \"Speaker X\", or \"Nova\")\n2. The previous conversation context with speaker-labeled transcript\n3. Most recent utterance: the most recent utterance said in the conversation, after which you have to make a decision\nFirst, determine the target speaker's ROLE in the current exchange:\n- ACTIVE PARTICIPANT: The target speaker has been speaking, was addressed, or is part of an ongoing back-and-forth\nin the current topic.\n- BYSTANDER: The target speaker has not been involved in the current exchange and is passively listening. RULES FOR DECIDING:\nOutput SILENT when:\n- The target speaker is a BYSTANDER and the recent utterance is directed at someone else\n- The target speaker has not been referenced, addressed, or involved\n- The recent utterance is clearly incomplete\n- Someone mentions the target speaker in third person without expecting a response Output SPEAK when:\n- The recent utterance directly addresses the target speaker with a question or request\n- The recent utterance asked the target speaker something and this is a clear follow-up\n- The context makes it unambiguous the speaker is waiting for the target speaker\n- The speaker redirects the conversation to the target speaker\n- The recent utterance is a group-directed question and the target speaker is part of the group\n- The target speaker is an ACTIVE PARTICIPANT and the utterance completes a thought requiring response\n- The target speaker previously asked a question and the recent utterance answers it\n- Staying silent would unnaturally drop them from the conversation\n- A natural backchannel or reaction is expected IMPORTANT NUANCES:\n- The key distinction is ACTIVE PARTICIPANT vs BYSTANDER.\n- When uncertain and the target speaker is a BYSTANDER →prefer SILENT.\n- When uncertain and the target speaker is ACTIVE →check if the utterance is directed elsewhere.\n- False interruptions are bad, but failing to respond when involved also breaks the interaction. Output format:\n<reasoning>One sentence explaining whether the target speaker is an ACTIVE PARTICIPANT or BYSTANDER and whether\nthey should respond.</reasoning>\n<decision>SPEAK</decision> or <decision>SILENT</decision>\n<confidence>high, medium, or low</confidence>",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 27,
+    "total_chunks": 28,
+    "char_count": 2891,
+    "word_count": 448,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4b3ff817-6a6b-4be6-950b-fa32a1b51887",
+    "text": "CRITICAL: The decision tag must contain only SPEAK or SILENT. EXAMPLES:\nExample 1 Target speaker: Alex\nSpeakers: Alex, Sam\nRecent utterance (Sam): \"Wait, you actually told her?\"\n<reasoning>Alex is an ACTIVE PARTICIPANT and Sam directly asks Alex a question.</reasoning>\n<decision>SPEAK</decision>\n<confidence>high</confidence> Example 2 Target speaker: Jordan\nSpeakers: Alex, Jordan, Sam\nRecent utterance (Alex): \"Yeah, it was rough. I didn't sleep at all last night.\"\n<reasoning>Jordan is a BYSTANDER and Alex is narrating to the group.</reasoning>\n<decision>SILENT</decision>\n<confidence>high</confidence>",
+    "paper_id": "2603.11409",
+    "title": "Speak or Stay Silent: Context-Aware Turn-Taking in Multi-Party Dialogue",
+    "authors": [
+      "Kratika Bhagtani",
+      "Mrinal Anand",
+      "Yu Chen Xu",
+      "Amit Kumar Singh Yadav"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11409v1",
+    "chunk_index": 28,
+    "total_chunks": 28,
+    "char_count": 607,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  }
+]

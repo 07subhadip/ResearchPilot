@@ -1,0 +1,496 @@
+[
+  {
+    "chunk_id": "b26846ac-11d6-4c3b-8671-90db2644fdac",
+    "text": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory Xiaojie Gu, Dmitry Ignatov, Radu Timofte\nComputer Vision Lab, CAIDAS & IFI, University of W¨urzburg, Germany Abstract Code candidate\ncode Validator &\nGenerator\nEvaluator\nNeural Architecture Search (NAS) automates network (LLM)\ndesign, but conventional methods demand substantial com- accuracy history +\nor error2026 putational resources. We propose a closed-loop pipeline best code\nleveraging large language models (LLMs) to iteratively\ngenerate, evaluate, and refine convolutional neural network Historical Prompt\nFeedback ImproverMar architectures for image classification on a single consumer- suggestions\ngrade GPU without LLM fine-tuning. Central to our ap- Memory (LLM)\nproach is a historical feedback memory inspired by Markov12\nchains: a sliding window of K=5 recent improvement at- Figure 1. Overview of the iterative NAS pipeline. The Code Generator produces a candidate architecture as executable PyTorch tempts keeps context size constant while providing sufficode. The Evaluator validates and trains it using one-epoch proxy\ncient signal for iterative learning. Unlike prior LLM optievaluation. The Prompt Improver analyzes results with historical\nmizers that discard failure trajectories, each history entry feedback memory to generate targeted improvement suggestions\nis a structured diagnostic triple—recording the identified for the next iteration.\nproblem, suggested modification, and resulting outcome—[cs.LG]\ntreating code execution failures as first-class learning signals. A dual-LLM specialization reduces per-call cognitoriously resource-intensive: early reinforcement learning tive load: a Code Generator produces executable PyTorch\napproaches required up to 22,400 GPU-days [39], evolu- architectures while a Prompt Improver handles diagnostic\ntionary algorithms demanded thousands of GPU-days [24], reasoning. Since both the LLM and architecture training\nand even efficient differentiable relaxations [20] depend on share limited VRAM, the search implicitly favors compact,\nheavy supernet training. This severe computational cost has hardware-efficient models suited to edge deployment. We\nmotivated data-efficient and training-free approaches that evaluate three frozen instruction-tuned LLMs (≤7B paramuse proxy metrics to rank architectures without full train- eters) across up to 2000 iterations in an unconstrained open\ning [18, 21], yet these methods still operate within con- code space, using one-epoch proxy accuracy on CIFARstrained, predefined search spaces (e.g., cell-based struc- 10, CIFAR-100, and ImageNette as a fast ranking signal.\ntures). On CIFAR-10, DeepSeek-Coder-6.7B improves from 28.2%\nto 69.2%, Qwen2.5-7B from 50.0% to 71.5%, and GLM-5 Recent advances in large language models (LLMs) have\nfrom 43.2% to 62.0%.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 0,
+    "total_chunks": 26,
+    "char_count": 2827,
+    "word_count": 377,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "66f5a831-c0ae-4eb7-ad23-3c197259331b",
+    "text": "A full 2000-iteration search com- opened a fundamentally different avenue: using LLMs asarXiv:2603.12091v1 pletes in ≈18 GPU hours on a single RTX 4090, estab- architecture generators that produce executable neural netlishing a low-budget, reproducible, and hardware-aware work code directly [14, 16, 31]. Unlike traditional NAS,\nparadigm for LLM-driven NAS without cloud infrastruc- LLM-based approaches operate in the unconstrained open\nture. code space of object-oriented programs rather than fixed\ncell-based encodings, enabling more flexible and expressive architectural invention. This efficiency-oriented per-\n1.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 1,
+    "total_chunks": 26,
+    "char_count": 619,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bf2bc620-c435-4dc5-b482-f10c939c8b7a",
+    "text": "Introduction spective is central to our work: by operating on a single\nconsumer-grade GPU with frozen ≤7B LLMs and no fineNeural Architecture Search (NAS) has emerged as a pow- tuning, our pipeline makes architecture search accessible\nerful paradigm for automating the design of deep neural in resource-constrained environments and implicitly favors\nnetworks, achieving competitive or superior performance compact models suited to deployment on hardware-limited\nto hand-crafted architectures across diverse tasks [20, 24, devices. Prior work within the NNGPT framework [16] and\n39]. However, early conventional NAS methods are no- related efforts [12, 22, 29] have demonstrated that LLMs",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 2,
+    "total_chunks": 26,
+    "char_count": 687,
+    "word_count": 98,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "08699b07-bbe9-4910-a8c5-09e227655316",
+    "text": "DeepSeek-Coder-6.7B-Instruct Qwen2.5-7B-Instruct 0.6 0.6 0.7 0.5\nAccuracy\n0.6 Accuracy Accuracy Accuracy 0.4 SmoothedAccuracy 0.4 Smoothed Smoothed Accuracy Best So Far\nBest So Far 0.5 Best So Far 0.3\n0.2 0 300 600 900 1200 1500 1800 0 300 600 900 1200 1500 1800 0 15 30 45 60 75 90\nIteration Iteration Iteration (a) DeepSeek-Coder (CIFAR-10) (b) Qwen2.5 (CIFAR-10) (c) GLM-5 (CIFAR-10) DeepSeek-Coder-6.7B-Instruct Qwen2.5-7B-Instruct GLM-5\n0.3 0.3\n0.2\n0.2 0.2\nAccuracy Accuracy 0.1 AccuracyAccuracy 0.1 Smoothed Smoothed Accuracy 0.1 Smoothed Accuracy\nBest So Far Best So Far Best So Far\n0.0 0.0 0.0\n0 300 600 900 1200 1500 1800 0 300 600 900 1200 1500 1800 0 15 30 45 60 75 90\nIteration Iteration Iteration (d) DeepSeek-Coder (CIFAR-100) (e) Qwen2.5 (CIFAR-100) (f) GLM-5 (CIFAR-100) GLM-5\n0.6\nDeepSeek-Coder-6.7B-Instruct Qwen2.5-7B-Instruct\n0.5\n0.6\n0.5\n0.5 0.4\n0.4 Accuracy Accuracy 0.4 Accuracy 0.3 Smoothed 0.3 AccuracyAccuracy Smoothed Accuracy Smoothed Best So Far 0.3\nBest So Far 0.2 Best So Far 0.2\n0.2 0 4 8 12 16 20 24 28 0 300 600 900 1200 1500 1800 0 15 30 45 60 75 90\nIteration Iteration Iteration (g) DeepSeek-Coder (ImageNette) (h) Qwen2.5 (ImageNette) (i) GLM-5 (ImageNette) One-epoch proxy accuracy on CIFAR-10 (top row, a–c), CIFAR-100 (middle row, d–f), and ImageNette (bottom row, g–i)\nacross all iterations. Light curves show per-iteration accuracy (the accuracy of iterations with errors fall back to previous value), dashed\nlines show the smoothed trend (window w=15), and bold lines show the best-so-far trajectory. All models exhibit clear upward trends.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 3,
+    "total_chunks": 26,
+    "char_count": 1582,
+    "word_count": 251,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2d0dd571-6df2-487c-9fa0-5d4e49228863",
+    "text": "For\nDeepSeek-Coder on ImageNette, only the first 30 iterations are plotted because all subsequent iterations resulted in errors. can generate functional vision models, but predominantly provement decision at each step depends on the current best\nthrough single-shot or few-shot generation without iterative architecture and a bounded window of recent transitions,\nself-improvement. rather than the full trajectory. A critical limitation of single-shot LLM generation is\nthat it treats architecture design as a one-pass prediction, Our main contributions are:\ndiscarding the evaluation signal entirely.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 4,
+    "total_chunks": 26,
+    "char_count": 601,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4b8088f2-85a3-4cbe-814a-e61ffef89933",
+    "text": "In contrast, human\nengineers iterate: they build, test, analyze failures, and refine their designs based on accumulated experience. This • A closed-loop, iterative NAS pipeline driven by LLMs\nobservation motivates our central question: Can a small that progressively discovers better architectures through\nLLM iteratively improve neural network architectures by code generation, evaluation, and prompt refinement.\nlearning from a structured history of its own attempts? • A historical feedback memory mechanism that maintains\nWe propose a closed-loop pipeline comprising three a sliding window of past improvement attempts, enabling\ncomponents: (1) a Code Generator that prompts an the LLM to mitigate repeating failed strategies and build\ninstruction-tuned LLM to produce PyTorch model imple- on successful ones.\nmentations, (2) an Evaluator that trains each generated • An empirical demonstration across three LLMs of differmodel for a single epoch on CIFAR-10, CIFAR-100 [17], ent origins and specializations showing that the pipeline\nor ImageNette [11] as a fast proxy for architecture quality, consistently improves architecture quality—from 28.2%\nand (3) a Prompt Improver that analyzes evaluation results to 69.2% (DeepSeek-Coder-6.7B-Instruct), 50.0% to\nalongside a sliding window of recent iteration history—a 71.5% (Qwen2.5-7B), and 43.2% to 62.0% (GLM-5) on\nmechanism we term historical feedback memory—to pro- CIFAR-10—requiring only ∼18 GPU hours on a single\nduce targeted improvement suggestions for the next itera- consumer-grade 24GB GPU, establishing a low-budget\ntion. This design draws on the Markov property: the im- approach to NAS. Related Work timizers within the predefined cell-based search space of\nNAS-Bench-201 [7], replacing traditional meta-heuristics. Neural Architecture Search. NAS methods aim to au- However, existing methods face key limitations: reliance\ntomate the design of neural network architectures. Early on global elite histories that discard crucial failure trajecapproaches employed reinforcement learning [39] and evo- tories [25, 33], the computational overhead of maintaining\nlutionary algorithms [24] to explore architecture search evolutionary populations [3], operation in constrained disspaces, but required thousands of GPU hours per search. crete search spaces [38], or targeting domains without strucParameter-sharing methods such as ENAS [23] and dif- tural code constraints [34]. Our work introduces bounded\nferentiable approaches like DARTS [20] substantially re- Markovian memory specifically designed for iterative neuduced search cost by amortizing evaluation across architec- ral architecture code generation in open search spaces, with\ntures. More recently, zero-shot or training-free NAS meth- explicit failure modeling enabling effectiveness on small\nods [18, 21] bypass training entirely by scoring architec- frozen LLMs.\ntures at initialization using proxy metrics such as activation overlap [21] or gradient-based indicators. While efPositioning relative to prior work. Table 1 positions our\nfective within their respective search spaces, these methods\nmethod relative to the five most similar LLM-based optiremain constrained to predefined, discrete architecture pamization approaches. We are the only method that simulrameterizations (e.g., cell-based structures) and cannot gentaneously satisfies all five properties: (1) targeting neuerate truly novel architectural patterns.\nral architecture search, (2) operating in an unconstrained\ncode search space rather than predefined cells, (3) autoLLMs for Code Generation and AutoML. Large lan- mated failure diagnosis via structured diagnostic triples,\nguage models have demonstrated strong capabilities in code (4) demonstrated effectiveness on a single consumer GPU\ngeneration [4], and their application to machine learn- with ≤7B LLMs, and (5) requiring no LLM fine-tuning\ning automation is an active research area. The NNGPT whatsoever.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 5,
+    "total_chunks": 26,
+    "char_count": 3958,
+    "word_count": 543,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a22caed5-aecf-4484-85b6-bc464c761961",
+    "text": "Notably, while EvoPrompting also performs\nframework [16] uses LLMs as neural network generators, code-level NAS on small models, it requires soft promptshowing that language models can produce functional vi- tuning of the LLM, whereas our pipeline operates on fully\nsion models from textual prompts. Subsequent work ex- frozen instruction-tuned models. LLMO also applies LLMs\nplored fractal-inspired architectures [22], few-shot prompt- to NAS without training, but operates in predefined discrete\ning strategies [31], novel architecture creativity [14], and search spaces that fundamentally limit architectural expresnon-standard channel priors [29]. LLMs have also been siveness.\napplied to hyperparameter optimization [15], data transformation design [28], and collaborative vision-language 3. Methodology\npipelines [9, 13, 27]. These efforts are supported by curated\nInspired by recent advancements in the application of LLMs\ndatasets of neural network architectures [10, 30] and deacross various domains [9, 13, 15, 27] and prior archiployment pipelines [6]. However, most existing approaches\ntectural synthesis experiments within the NNGPT frametreat LLM-based architecture generation as a single-step\nwork [12, 14, 15, 22, 28, 29, 31], and leveraging the existprocess, without leveraging iterative refinement from evaling LEMUR dataset of a broad range of high-capacity and\nuation feedback. Our work extends this line by introducing\nedge-optimized models [6, 10, 30], we developed an iteraa closed-loop pipeline with historical memory that enables\ntive NAS pipeline. The pipeline consists of three core modprogressive architecture improvement.\nules operating in a closed loop, as illustrated in Figure 1. Pipeline Overview\nIterative LLM Optimization. Recent work has explored\nusing LLMs as iterative optimizers that progressively At each iteration t, the pipeline executes the following cycle\nimprove solutions by learning from historical attempts. (see Algorithm 1): (1) the Code Generator produces a canOPRO [33] demonstrated that LLMs can optimize text didate architecture At as executable PyTorch code; (2) the\nprompts and discrete solutions by conditioning on sorted validated generated code is trained and evaluated by the\nhistory of past candidates and scores. FunSearch [25] ex- Evaluator to obtain a proxy accuracy at; (3) the Prompt\ntended this to program synthesis for mathematical discov- Improver analyzes the result in the context of the current\nery using island-based evolutionary search. EvoPrompt- best architecture and recent iteration history, producing iming [3] applied evolutionary prompting with LLMs as mu- provement suggestions st for the next iteration. The besttation operators for code-level neural architecture search. performing architecture A∗= arg maxi≤t Ai is maintained\nReEvo [34] introduced dual-layer reflective memory for as the reference implementation throughout the search. LLM-driven heuristic algorithm design.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 6,
+    "total_chunks": 26,
+    "char_count": 2959,
+    "word_count": 413,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3c3ab203-5869-4aa5-9d35-9a7148cb414f",
+    "text": "More directly re- To support reproducibility, the full pipeline implelated to NAS, LLMO [38] used LLMs as combinatorial op- mentation is made available at an anonymized reposiUnconstrained Automated failure Single-GPU No LLM\nMethod NAS target\nsearch space diagnosis (≤24 GB) fine-tuning OPRO [33] × × × × ✓\nFunSearch [25] × ✓ × × ✓\nEvoPrompting [3] ✓ ✓ × ✓ ×\nReEvo [34] × ✓ ✓ × ✓\nLLMO [38] ✓ × × × ✓ Systematic comparison with most similar LLM-based NAS and optimization methods. NAS target: method aims at neural\narchitecture search; Unconstrained search space: search over executable code rather than predefined cell encodings or fixed discrete spaces;\nAutomated failure diagnosis: structured modeling of code execution failures (e.g., diagnostic triples) as first-class feedback signals; SingleGPU (≤24 GB): demonstrated effective with ≤7B LLMs on a single consumer GPU; No LLM fine-tuning: operates with frozen pretrained\nLLMs without any parameter updates. Our method uniquely combines all five dimensions. tory: https://anonymous.4open.science/r/ 10). The output shape is verified to match B × C (for batch\nIterative-LLM-Based-NAS-with-Feedback- size B and C classes). Models failing this check are disMemory-E7D6/README.md.1 carded with an error message forwarded to the Prompt Improver.\n3.2. Code Generator Proxy training. Models passing validation are trained\nfor one epoch on the respective dataset (CIFAR-10, CIFAR-The Code Generator uses a pre-trained, instruction-tuned\n100 or ImageNette) using SGD (momentum 0.9, weight de-LLM to produce a complete PyTorch model class implecay 5 × 10−4), an initial learning rate of 0.01 with cosinementing nn.Module. The LLM receives a fixed prompt\nannealing, and a batch size of 128. Standard data augmen-template comprising: (i) a role description positioning the\ntation is applied: random crop with padding and randommodel as a \"visionary deep learning architect,\" (ii) the task\nhorizontal flip.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 7,
+    "total_chunks": 26,
+    "char_count": 1947,
+    "word_count": 292,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1493641a-8a25-46bc-8cff-0cd29307fce1",
+    "text": "Top-1 test accuracy serves as the proxy met-specification (CIFAR-10, CIFAR-100 or ImageNette imric. This one-epoch accuracy provides a fast, informativeage classification without pre-trained weights), (iii) the cursignal for ranking architectures [26], enabling rapid itera-rent best implementation A∗as reference code, and (iv) the\ntion without the cost of full convergence training.improvement suggestions st−1 from the previous iteration. The generated code must define a Net(nn.Module)\n3.4. Prompt Improver with Historical Feedbackclass with standard init and forward methods. GenMemoryeration uses temperature τ = 0.7 and nucleus sampling\n(p = 0.9) to balance architectural diversity with code co- The Prompt Improver is the central component enabling itherence. erative learning. After each evaluation, it receives three\nFor large generalist models with sufficiently large con- inputs: (1) the best code A∗and its accuracy a∗, (2) the\ntext windows (in our experiments, GLM-5), we addition- current iteration's code At and its evaluation outcome (acally evaluate an extended prompt format that supplements curacy value or error message), and (3) a historical feedthe standard template with the implementations of the top- back memory Ht containing the last K=5 improvement atK best-performing architectures discovered so far, along- tempts.\nside the executable code and evaluation outcomes of the Each history entry hi ∈Ht is a triple recording: the\nprevious K iterations. This variant provides richer posi- identified problem found in the previous iteration about the\ntive exemplars at the cost of increased prompt length, and is generated code, the suggested improvement, and the resultapplicable only when the model's context window can ac- ing outcome (accuracy achieved or error encountered). This\ncommodate the additional content without truncation.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 8,
+    "total_chunks": 26,
+    "char_count": 1860,
+    "word_count": 265,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "972cf578-8486-4993-aa26-571b831107c7",
+    "text": "All sliding-window design draws on the Markov property: the\nother pipeline components remain identical. improvement decision at step t depends on the current state\n(best architecture plus recent history window) rather than\n3.3. Evaluator\nthe complete trajectory. The bounded window prevents conGenerated code undergoes a two-stage evaluation process. text overflow while providing sufficient signal for the LLM\nQuick validation. The model is instantiated and a for- to identify failure patterns.\nward pass is performed with a dummy input tensor of shape\ncorresponding to the dataset (e.g., 2×3×32×32 for CIFARMarkov Property Formalization. Let At denote the ar-\n1The repository includes all prompt templates, training scripts, evalua- chitecture generated at step t, at its evaluation outcome\ntion harnesses, and per-iteration accuracy logs for all reported experiments. (accuracy or error), and st the improvement suggestions. Algorithm 1: Iterative LLM-Driven NAS Pipeline 4. Experiments\nInput: LLM L, max iterations T, history window K 4.1. Experimental Setup\n1 A∗←∅; a∗←0; H ←∅; s0 ←∅;\nDataset. We evaluate our approach on three datasets: 2 for t ←1 to T do\n3 At ←Generate(L, A∗, st−1); CIFAR-10 [17], CIFAR-100 [17], and ImageNette [11]. CIFAR-100 shares the same 32×32 image dimensions as 4 if Validate(At) succeeds then\nCIFAR-10 but increases the classification difficulty from 10 5 at ←TrainAndEvaluate(At);\nto 100 fine-grained classes. Standard augmentation (ran- 6 else\ndom crop with padding, random horizontal flip, normaliza- 7 at ←error message;\ntion) is applied during training, inspired by [2].\n8 if at > a∗then\n9 A∗←At; a∗←at;\nLanguage models. To evaluate the pipeline across model\n10 Append (st−1, at) to H; keep last K entries; specializations, we run separate experiments with three\n11 st ←Improve(L, A∗, At, at, H); LLMs: code-specialized DeepSeek-Coder-6.7B-Instruct,\n12 return A∗, a∗ small generalist Qwen2.5-7B-Instruct, and large generalist GLM-5. All models use the same generation parameters: temperature 0.7, nucleus sampling p = 0.9, maximum 2,048 new tokens. A fixed seed with incremenOur historical feedback memory H(K)t maintains exactly tal call counter ensures reproducible but diverse generation\nthe most recent K=5 improvement attempts: across iterations. DeepSeek-Coder-6.7B and Qwen2.5-7B\nare each run for 2000 iterations; GLM-5 is only run for 100\nH(K)t = {(st−K, at−K), . . . , (st−1, at−1)}. (1) iterations for economic reasons.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 9,
+    "total_chunks": 26,
+    "char_count": 2468,
+    "word_count": 368,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fd8ae02b-bea5-44ff-bce1-009361e8678c",
+    "text": "The improvement suggestion generation satisfies the K- Training protocol. Each candidate architecture is trained\norder Markov property: for one epoch with SGD (momentum 0.9, weight decay\n5 × 10−4), learning rate 0.01 with cosine annealing, and\nP(st | A∗, H(K)t ), (2) batch size 128. A fixed random seed (43) and deterministic CUDA operations ensure reproducibility. Training runs\nmeaning the next suggestion depends only on the current in isolated subprocesses with a 30-minute timeout.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 10,
+    "total_chunks": 26,
+    "char_count": 487,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "252d3a70-6c8a-4047-90ef-4746efe1da62",
+    "text": "Finebest architecture and the bounded recent history, not the tuning of LLMs and training of computer vision models are\ncomplete trajectory. This design ensures constant context performed on a NVIDIA GeForce RTX 4090 24G GPU.\nsize and avoids the context overflow problem faced by unbounded history approaches like OPRO [33]. We compare against single-shot generation:\nEach history entry (si, ai) is structured as a diagnostic the accuracy of the first successfully generated and evalutriple: ated architecture (iteration 1), representing what the LLM\nproduces from its pre-trained knowledge alone without any\nsi = (problemi, suggestioni, outcomei), (3) feedback signal. Evaluation Metrics\nwhere problemi identifies the architectural deficiency,\nsuggestioni proposes concrete code modifications, and To evaluate our approach rigorously, we adopt true validaoutcomei records whether the suggestion succeeded (accu- tion accuracy after the first training epoch as our primary\nracy gain) or failed (error type). This structured format en- architecture quality metric [8], rather than relying on zeroables the LLM to learn causal patterns between design de- shot NAS proxies. Although zero-shot proxies are correcisions and outcomes, unlike scalar-score histories in prior lated with fully trained accuracy [5, 19, 21], they remain\nwork [25, 33]. indirect indicators of performance. Even the strongest reThe Prompt Improver produces a structured response ported Spearman rank-correlation coefficients (ρ ≈0.5–\ncontaining: (a) a reason diagnosing the current result, 0.82) on standard benchmarks such as NAS-Bench-101 [36]\n(b) an inspiration drawing on cross-disciplinary insights, and NAS-Bench-201 [7] correspond to a coefficient of deand (c) concrete improvement suggestions for the next it- termination of at most R2 ≈0.67, leaving substantial varieration. These suggestions, together with the best code and ance unexplained [1, 32, 35, 37]. By using first-epoch valthe code of current iteration, form the input to the Code idation accuracy instead, we aim to demonstrate more diGenerator in the subsequent iteration, closing the feedback rectly that our algorithm can reliably influence and accelerloop. ate early-stage performance trajectories of neural networks. To characterize search dynamics, we compute: Spear- ations), and proxy accuracy rose substantially from 23.0%\nman rank correlation ρ and Kendall τ between iteration in- to 54.6% (ρ = 0.663)—the strongest correlation among all\ndex and accuracy. All trends are evaluated for statistical model–dataset pairs for this benchmark.\nsignificance. Running for only 100 iterations, the large gener-4.3.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 11,
+    "total_chunks": 26,
+    "char_count": 2656,
+    "word_count": 379,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d9852dc7-098d-427a-80d6-8379cb2a5e7e",
+    "text": "Main Results\nalist GLM-5 from ZhipuAI provides evidence that extensive\nTable 2 compares the key results across the LLMs. The iteration counts are not strictly necessary for large language\nmodels exhibit statistically upward trends in architecture models. It achieved the highest success rates across all three\nquality across all three datasets (Spearman ρ up to 0.75, datasets—91.0% on CIFAR-10, 85.0% on CIFAR-100, and\np ≈0), confirming that the iterative pipeline with histor- 81.0% on ImageNette—reflecting a conservative generation\nical feedback memory consistently drives improvement. strategy that favors reliable, well-structured architectures. On CIFAR-10, proxy accuracy rose from 43.2% to 62.0%\nDeepSeek-Coder-6.7B-Instruct. Among the three mod- (ρ = 0.422), with improvement continuing throughout the\nels, the code-specialized DeepSeek-Coder stands out for search and the peak reached at the 91st successful evaluaits remarkable reliability on CIFAR-class datasets: it com- tion. The same convergence pattern appeared on CIFARpleted 1519 of 2000 iterations successfully on CIFAR-10 100 (19.1% →24.8%, ρ = 0.431) and ImageNette (41.1%\n(76.0%) and an even higher 1902 of 2000 on CIFAR-100 →58.3%, ρ = 0.631). While GLM-5's peak accuracies are\n(95.1%), suggesting that the structured feedback loop be- below those of models given 20× more iterations, its high\ncomes more effective as the model accumulates experience success rate and consistent improvement make it the most\nwith similar low-resolution inputs. This reliability trans- reliable search agent in our evaluation.\nlates into strong improvement trajectories—on CIFAR-10, Figure 2 shows the accuracy trajectories for all modone-epoch proxy accuracy climbed from a 28.2% baseline els across all three datasets. All curves display consistent\nto 69.2% (ρ = 0.754), the largest absolute gain observed upward trends: DeepSeek-Coder achieves the largest absoacross all model–dataset combinations. On CIFAR-100, lute improvement on CIFAR-10, Qwen2.5 reaches the highit progressed from 5.0% to 29.2% (ρ = 0.205, p ≈0), est peak accuracy, and GLM-5 exhibits a robust upward\nwith a notably higher success rate than on CIFAR-10 de- trend across all three datasets. The pipeline generalizes well\nspite the increased class count. However, this consistency across datasets of varying difficulty, confirming its broad\ncollapsed entirely on ImageNette: the higher input resolu- applicability.\ntion (160×160) triggered persistent context retention failures, leaving only 13 successful evaluations out of 2000 5.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 12,
+    "total_chunks": 26,
+    "char_count": 2561,
+    "word_count": 367,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3c80eb7e-e6ac-4262-bfb1-8b763f293513",
+    "text": "Ablation Study\n(0.7%). Even so, the few successful architectures reached\nAdditionally, we conducted ablation experiments (Figure 3)\n61.5% accuracy from an initial 46.7%, indicating that the\ninvolving DeepSeek-Coder-6.7B on CIFAR-10, CIFARmodel's code quality remained high when generation suc-\n100, and ImageNette to evaluate how removing historical\nceeded.\nfeedback or reference architectures impacts the search trajectory. The results show that without the historical feedQwen2.5-7B-Instruct. At first glance, Qwen2.5-7B ap- back memory or the reference architecture, the search propears to be the weakest performer: its CIFAR-10 success cess stagnates or degrades significantly and fails to surpass\nrate of just 18.8% (376 of 2000 iterations) is by far the the single-shot baseline. The anomalous accuracy spike\nlowest among the three models. Yet this generalist model (∼66%) in the CIFAR-10 No Feedback trajectory is an inultimately achieved the highest peak accuracy on CIFAR- cidental discovery that is swiftly lost without history reten-\n10—71.5%, surpassing both DeepSeek-Coder (69.2%) and tion. This underscores that explicitly modeling causality\nGLM-5 (62.0%). This apparent paradox reflects a dis- from past code execution failures is critical for iterative artinctive exploration strategy: over thousands of iterations, chitectural improvement. Qwen2.5 increasingly generates ambitious architectures,\nmany of which fail but occasionally yield superior designs. 6.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 13,
+    "total_chunks": 26,
+    "char_count": 1475,
+    "word_count": 202,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ddf154b8-d5f7-4945-a286-74de4ccd5e60",
+    "text": "Discussion\nThe Spearman correlation remains significant (ρ = 0.561,\np ≈0), confirming genuine improvement despite the noise. Effectiveness of iterative refinement. All models exhibit\nA similar pattern emerges on CIFAR-100, where it main- statistically significant positive correlations between evalutained a moderate 53.2% success rate (1064 of 2000) and ation index and accuracy (ρ up to 0.75, Kendall τ up to 0.55,\nimproved from 27.0% to 29.6%, though the weaker corre- all p ≈0), confirming that historical feedback memory enlation (ρ = 0.037) suggests that extended error loops on ables systematic architectural improvement across differthis harder task limited effective search diversity. On Im- ent LLM origins and specializations. Access to the last\nageNette, the success rate improved to 32.1% (642 evalu- K=5 improvement attempts provides the LLM with suffi- (a) CIFAR-10 (b) CIFAR-100 (c) ImageNette Qwen GLM Metric DeepS. Qwen GLM Metric DeepS.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 14,
+    "total_chunks": 26,
+    "char_count": 955,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf2225b1-2a37-46fe-b4d2-d8609bebae46",
+    "text": "Total iters 2000 2000 100 Total iters 2000 2000 100 Total iters 2000 2000 100\nSucc. evals 1519 376 91 Succ. evals 1902 1064 85 Succ. evals 13 642 81\nSucc. rate 76.0% 18.8% 91.0% Succ. rate 95.1% 53.2% 85.0% Succ. rate 0.7% 32.1% 81.0% 1st acc. 28.2% 50.0% 43.2% 1st acc. 5.0% 27.0% 19.1% 1st acc. 46.7% 23.0% 41.1%\nBest acc. 69.2% 71.5% 62.0% Best acc. 29.2% 29.6% 24.8% Best acc. 61.5% 54.6% 58.3%\nImprove. +41.0% +21.5% +18.7% Improve. +24.1% +2.7% +5.7% Improve. +14.8% +31.6% +17.2% ρ 0.754 0.561 0.422 ρ 0.205 0.037 0.431 ρ −0.084 0.663 0.631\nτ 0.551 0.407 0.300 τ 0.142 0.031 0.311 τ −0.069 0.444 0.452 Comparison of the iterative NAS pipeline across three LLMs on CIFAR-10, CIFAR-100, and ImageNette datasets. The models\nexhibit statistically significant improvement over single-shot generation. On ImageNette, correlation metrics for DeepSeek are not meaningful due to insufficient successful evaluations. On CIFAR-100, Qwen2.5 shows weaker correlation due to extended error loops reducing\neffective search diversity. 0.3 Full Functionality 0.6 0.6\nNo Feedback\n0.2 0.4 0.4\nAccuracy Accuracy 0.1 Accuracy 0.2 0.2 Full Functionality Full Functionality\nNo Feedback No Feedback\n0.0 0.0 0.0\n0 15 30 45 60 75 90 0 15 30 45 60 75 90 0 15 30 45 60 75 90\nIteration Iteration Iteration (a) CIFAR-10 (b) CIFAR-100 (c) ImageNette Ablation study of DeepSeek-Coder-6.7B-Instruct on CIFAR-10, CIFAR-100, and ImageNette datasets. The results highlight the\neffectiveness of the complete iterative loop with historical feedback memory compared to its ablated variants. cient context to identify recurring failure patterns and avoid Comparison with iterative LLM optimization methods.\npreviously unsuccessful strategies. All accuracy curves dis- Our approach shares conceptual similarities with recent\nplay characteristic increasing behavior—rapid early gains work on using LLMs as iterative optimizers [25, 33, 34],\nfollowed by gradual flattening—mirroring patterns in tra- but differs in two critical dimensions that enable its effecditional optimization and suggesting that the LLM-driven tiveness on neural architecture search:\nsearch exhibits meaningful optimization dynamics rather Structured failure modeling. Our diagnostic triples exthan random exploration. plicitly encode code execution failures as first-class entries\nin the history, enabling the LLM to learn from structural\nmistakes. This is fundamentally different from prior work\nwhere low-performing solutions are simply discarded from\nthe prompt [25, 33] or managed implicitly through popula-Effect of model specialization and iteration scale.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 15,
+    "total_chunks": 26,
+    "char_count": 2600,
+    "word_count": 386,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b854ddc6-5b1b-4b4c-a2d7-f37128443a9a",
+    "text": "The\ntion selection [3]. Failure rates of 5–99% across our runsthree models reveal distinct behavior along two axes.\nhighlight that code generation for neural architectures is in-DeepSeek-Coder-6.7B achieves the largest absolute imherently error-prone; ignoring these failures would discardprovement on CIFAR-10 (+41.0 pp from single-shot to\ncritical learning signals.peak) with a high and stable success rate (76.0%) over 2000\niterations, suggesting that code specialization yields both Hardware-aware and low-budget search. Unlike early\nreliable generation and systematic progression in specific traditional NAS methods that required thousands of GPU\nsituations. Qwen2.5-7B achieves the highest peak accu- days [24, 39], our entire 2000-iteration pipeline completes\nracy (71.5%) at the cost of a dramatically lower success in approximately 18 GPU hours on a single consumer-grade\nrate (18.8%) over 2000 iterations—its Markovian explo- RTX 4090 GPU. Our results demonstrate that ≤7B frozen\nration increasingly targets complex, ambitious architectures LLMs of diverse origins can effectively perform NAS in\nthat more often fail validation but, when successful, sur- severely resource-constrained environments, whereas prior\npass DeepSeek-Coder's best. GLM-5 demonstrates consis- iterative LLM optimization work primarily relies on mastent improvement (+18.7 pp from 43.2% to 62.0%) with sive proprietary models (e.g., GPT-4 and PaLM 2-L in\nthe highest success rate (91.0%) within only 100 iterations, OPRO [33]). Furthermore, by explicitly evaluating in a\nmaking it the most reliable search agent of the three. shared environment where the LLM occupies most of the",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 16,
+    "total_chunks": 26,
+    "char_count": 1663,
+    "word_count": 232,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7b41390f-babf-4dfb-96a1-817e45d46a92",
+    "text": "VRAM, the search implicitly discovers hardware-efficient executable PyTorch code, enabling genuinely novel archimodels tailored to limited memory capacities. We hypothe- tectural patterns that fixed cell-based encodings cannot exsize this is partly enabled by our dual-LLM specialization: press. Evaluated on CIFAR-10, CIFAR-100, and Imathe Code Generator focuses solely on code synthesis given geNette with three frozen instruction-tuned LLMs (≤7B pastructured suggestions, while the Prompt Improver handles rameters) across up to 2000 iterations, the pipeline signifidiagnostic reasoning. This task decomposition reduces per- cantly improved one-epoch proxy accuracy. On CIFAR-10,\ncall cognitive load compared to end-to-end generation [3]. performance improved from 28.2% to a peak of 69.2% for\nDeepSeek-Coder-6.7B (ρ = 0.75), from 50.0% to 71.5%\nfor Qwen2.5-7B (ρ = 0.56), and from 43.2% to 62.0%\nOne-epoch proxy as architecture ranking signal. Us- for GLM-5 (ρ = 0.42). On CIFAR-100, DeepSeek-Coder\ning one-epoch accuracy as a ranking signal offers a prag- achieved the largest improvement from 5.0% to 29.2%,\nmatic trade-off between evaluation cost and informative- while GLM-5 showed a strong trend (ρ = 0.43) despite\nness. While the absolute accuracy values are well be- only 100 iterations. ImageNette results confirmed these\nlow state-of-the-art results with full training, prior work positive trends (e.g., Qwen2.5-7B improved from 23.0% to\non training-free NAS [18, 21] has established that cheap 54.6%, ρ = 0.66), demonstrating that iterative feedback\nproxy metrics can effectively rank architectures. Our one- with bounded historical memory significantly outperforms\nepoch proxy serves a similar role: it distinguishes between single-shot generation across model origins and datasets of\narchitectures of varying quality at minimal cost, enabling varying difficulty.\nthe feedback loop to guide the LLM toward better designs. Four design principles distinguish our approach fromRetraining the best-discovered architectures with full trainprior iterative LLM optimization methods. First, theing schedules could verify whether the one-epoch ranking\npipeline operates in an open code space rather than con-transfers to converged performance.\nstrained predefined cells, enabling expressive and diverse\narchitectural invention. Second, a bounded K=5-step\nLimitations. Our study has several limitations. First, Markovian memory keeps context size constant, preventing\nthe code generation success rates vary substantially (0.7– overflow while retaining sufficient failure patterns for sys-\n95.1%), and the causes of model-specific failure rates tematic improvement — a lightweight design that removes\nat scale (e.g., Qwen2.5's 18.8% success rate over 2000 any dependency on large context windows or proprietary\niterations on CIFAR-10) merit further investigation into frontier models.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 17,
+    "total_chunks": 26,
+    "char_count": 2888,
+    "word_count": 397,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "736926a5-215a-4693-8c0a-ce05116059a3",
+    "text": "Third, structured diagnostic triples explicprompt design and constrained decoding strategies. Second, itly model code execution failures as first-class entries in the\nwhile our evaluation now spans three datasets (CIFAR-10, history, recording the identified problem, suggested modCIFAR-100, and ImageNette), experiments on larger-scale ification, and resulting outcome; this causal structure enbenchmarks and diverse tasks would better demonstrate ver- ables the LLM to avoid repeating failed strategies, which is\nsatility. critical given failure rates of 5–99% observed across runs. Fourth, a dual-LLM specialization — a Code Generator focused on architecture synthesis and a Prompt Improver foFuture work. Promising directions include: (1) retraincused on diagnostic reasoning — reduces per-call cognitive\ning the top-K discovered architectures with full training\nload and, since both roles share the same limited VRAM\nschedules to verify their converged performance; (2) exwith architecture training, implicitly biases the search totending the cross-model comparison to additional LLM\nward compact, hardware-efficient models well suited to\nfamilies and sizes; (3) extending to larger datasets (e.g., Imedge deployment.\nageNet) and tasks beyond image classification; and (4) incorporating evolutionary selection into the historical feed- A full 2000-iteration search completes in ≈18 GPU\nback memory mechanism. hours on a single consumer-grade RTX 4090, with no LLM\nfine-tuning required at any stage. Our results establish that\n7.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 18,
+    "total_chunks": 26,
+    "char_count": 1532,
+    "word_count": 209,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db0dc7b9-b66b-4cdc-99ae-c50be35768e5",
+    "text": "Conclusion even ≤7B LLMs from diverse AI ecosystems can serve\nas effective architecture search agents when equipped with\nWe presented an iterative NAS pipeline that leverages structured iterative feedback, offering a lightweight, datainstruction-tuned LLMs to progressively generate and im- efficient, and low-budget paradigm for reproducible NAS\nprove neural network architectures through a closed loop that is fully accessible without cloud infrastructure. We beof code generation, evaluation, and prompt refinement with lieve this positions iterative LLM-driven NAS as a practical\nhistorical feedback memory. Unlike prior iterative LLM tool for researchers operating under hardware constraints,\noptimization methods that rely on global elite retention or where the low search cost enables discovery of compact aroperate in constrained discrete search spaces, our pipeline chitectures that are candidates for deployment on resourceoperates entirely in an unconstrained open code space over limited devices. References Code Llama: Are LLMs a New Paradigm for Hyperparameter Tuning? In Proceedings of the IEEE/CVF International\n[1] Mohamed S. Abdelfattah, Abhinav Mehrotra, Łukasz Conference on Computer Vision Workshops (ICCVW), pages\nDudziak, and Nicholas D.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 19,
+    "total_chunks": 26,
+    "char_count": 1260,
+    "word_count": 172,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6a053832-a8ee-4bb6-935c-552b8da0d0d3",
+    "text": "Zero-cost proxies for 5664–5674, 2025. 3\nlightweight NAS. In International Conference on Learning\n[16] Roman Kochnev, Waleed Khalid, Tolgay Atinc Uzun, Xi\nRepresentations, 2021. 5\nZhang, Yashkumar Sanjaybhai Dhameliya, Furui Qin, Chan-\n[2] Nada Aboudeshish, Dmitry Ignatov, and Radu Timofte. dini Vysyaraju, Raghuvir Duvvuri, Avi Goyal, Dmitry IgnaAugmentgest: Can random data cropping augmentation tov, and Radu Timofte. Nngpt: Rethinking automl with large\nboost gesture recognition performance? arXiv preprint, language models. arXiv preprint, arXiv:2511.2033, 2025. 1,\narXiv:2506.07216, 2025. 5 3\n[3] Angelica Chen, David Dohan, and Daved Hutchins. Evo-\n[17] Alex Krizhevsky.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 20,
+    "total_chunks": 26,
+    "char_count": 678,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6a2c911b-0308-4fb4-a695-d51cd8a4bcd9",
+    "text": "Learning multiple layers of features from\nprompting: Language models for code-level neural architectiny images. Technical report, University of Toronto, 2009.\nture search. In Advances in Neural Information Processing\n2, 5\nSystems, 2023. 3, 4, 7, 8\n[18] Guihong Li et al. Zero-shot neural architecture search: Chal-\n[4] Mark Chen et al. Evaluating large language models trained\nlenges, solutions, and opportunities. IEEE TPAMI, 46(6):\non code. arXiv preprint, arXiv:2107.03374, 2021. 3\n4071–4088, 2024. 1, 3, 8\n[5] Wuyang Chen, Xinyu Gong, and Zhangyang Wang. Neural\n[19] Ming Lin, Pichao Wang, Zhenhong Sun, Hesen Chen, Xiarchitecture search on ImageNet in four GPU hours: A theuyu Sun, Qi Qian, Hao Li, and Rong Jin. Zen-NAS: A\noretically inspired perspective. In International Conference\nzero-shot NAS for high-performance image recognition. In\non Learning Representations, 2021. 5\n[6] Saif U Din, Muhammad Ahsan Hussain, Mohsin Ikram,\nComputer Vision, pages 12265–12275, 2021. 5\nDmitry Ignatov, and Radu Timofte. Ai on the edge: An\n[20] Hanxiao Liu, Karen Simonyan, and Yiming Yang. DARTS:\nautomated pipeline for pytorch-to-android deployment and\nDifferentiable architecture search. In ICLR, 2019. 1, 3\nbenchmarking. Preprints, 2025. 3\n[21] Joseph Mellor, Jack Turner, Amos Shersby, and Elliot J. [7] Xuanyi Dong and Yi Yang. Nas-bench-201: Extending the\nShersby.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 21,
+    "total_chunks": 26,
+    "char_count": 1366,
+    "word_count": 203,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "41783871-47dd-4087-842d-e74c2622a1c2",
+    "text": "Neural architecture search without training. In scope of reproducible neural architecture search. In InterICML, pages 7588–7598, 2021. 1, 3, 5, 8 national Conference on Learning Representations, 2020. 3,\n[22] Yash Mittal, Dmitry Ignatov, and Radu Timofte. Prepara- 5\ntion of fractal-inspired computational architectures for ad- [8] Romain Egele, Felix Mohr, Tom Viering, and Prasanna Balvanced large language model analysis. arXiv preprint, aprakash. The unreasonable effectiveness of early discarding\narXiv:2511.07329, 2025. 1, 3 after one epoch in neural network hyperparameter optimization. Neurocomputing, 597:127964, 2024. 5 [23] Hieu Pham, Melody Guan, Barret Zoph, Quoc V. Efficient neural architecture search via parameter [9] Mohamed Gado, Towhid Taliee, Muhammad Danish\nsharing. In ICML, pages 4095–4104, 2018. 3 Memon, Dmitry Ignatov, and Radu Timofte. Vist-gpt: Ushering in the era of visual storytelling with llms? arXiv [24] Esteban Real, Alok Aggarwal, Yanping Huang, and Quoc V.\npreprint, arXiv:2504.19267, 2025. 3 Le. Regularized evolution for image classifier architecture\nsearch.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 22,
+    "total_chunks": 26,
+    "char_count": 1098,
+    "word_count": 152,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c7db2411-df5d-40eb-b917-01bd4c1f0e42",
+    "text": "In AAAI, pages 4780–4789, 2019. 1, 3, 7[10] Arash Torabi Goodarzi, Roman Kochnev, Waleed Khalid,\nFurui Qin, Tolgay Atinc Uzun, Yashkumar Sanjaybhai [25] Bernardino Romera-Paredes, Mohammadamin Barekatain,\nDhameliya, Yash Kanubhai Kathiriya, Zofia Antonina Ben- Alexander Novikov, et al. Mathematical discoveries from\ntyn, Dmitry Ignatov, and Radu Timofte. LEMUR Neu- program search with large language models. Nature, 625\nral Network Dataset: Towards Seamless AutoML. arXiv (7995):468–475, 2023. 3, 4, 5, 7\npreprint, arXiv:2504.10552, 2025. 3 [26] Robin Ru, Clare Lyle, Lisa Schut, Miroslav Fil, Mark van der\n[11] Jeremy Howard. Imagenette: A smaller subset of 10 easily Wilk, and Yarin Gal. Speedy performance estimation for\nclassified classes from imagenet, 2019. 2, 5 neural architecture search. Advances in Neural Information\n[12] Krunal Jesani, Dmitry Ignatov, and Radu Timofte. Llm Processing Systems, 34:4079–4092, 2021. 4\nas a neural architect: Controlled generation of image cap- [27] Bhavya Rupani, Dmitry Ignatov, and Radu Timofte. Explortioning models under strict api contracts. arXiv preprint, ing the collaboration between vision models and llms for enarXiv:2512.14706, 2025. 1, 3 hanced image classification. Preprints, 2025. 3\n[13] Waleed Khalid, Dmitry Ignatov, and Radu Timofte. A [28] Usha Shrestha, Dmitry Ignatov, and Radu Timofte. From\nretrieval-augmented generation approach to extracting al- brute force to semantic insight: Performance-guided\ngorithmic logic from neural networks. arXiv preprint, data transformation design with llms. arXiv preprint,\narXiv:2512.04329, 2025. 3 arXiv:2601.03808, 2026. 3\n[14] Waleed Khalid, Dmitry Ignatov, and Radu Timofte. From [29] Tolgay Atinc Uzun, Dmitry Ignatov, and Radu Timofte.\nmemorization to creativity: Llm as a designer of novel Closed-loop llm discovery of non-standard channel priors in\nneural-architectures. arXiv preprint, arXiv:2601.02997, vision models. arXiv preprint, arXiv:2601.08517, 2026. 1, 3\n2026. 1, 3 [30] Tolgay Atincand Uzun, Waleed Khalid, Saif U Din, Sai Re-\n[15] Roman Kochnev, Arash Torabi Goodarzi, Zofia Antonina vanth Mulukuledu, Akashdeep Singh, Chandini Vysyaraju,\nBentyn, Dmitry Ignatov, and Radu Timofte. Optuna vs Raghuvir Duvvuri, Avi Goyal, Yashkumar Rajeshbhai Lukhi, Ahsan Hussain, Krunal Jesani, Usha Shrestha, Yash\nMittal, Roman Kochnev, Pritam Kadam, Mohsin Ikram,\nHarsh Rameshbhai Moradiya, Alice Arslanian, Dmitry Ignatov, and Radu Timofte.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 23,
+    "total_chunks": 26,
+    "char_count": 2450,
+    "word_count": 340,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "50f8d76a-c370-42fa-bbd8-2756b14f9206",
+    "text": "Lemur 2: Unlocking neural network\ndiversity for ai. arXiv preprint, 2026. 3\n[31] Chandini Vysyaraju, Raghuvir Duvvuri, Avi Goyal, Dmitry\nIgnatov, and Radu Timofte. Enhancing llm-based neural\nnetwork generation: Few-shot prompting and efficient validation for automated architecture design. arXiv preprint,\n[32] Colin White, Mahmoud Safari, Rhea Sukthanker, Binxin Ru,\nThomas Elsken, Arber Zela, Debadeepta Dey, and Frank\nHutter. Neural architecture search: Insights from 1000 papers. arXiv preprint arXiv:2301.08727, 2023. 5\n[33] Chengrun Yang, Xuezhi Wang, Yifeng Lu, Hanxiao Liu,\nQuoc V Le, Denny Zhou, and Xinyun Chen. Large language\nmodels as optimizers. arXiv preprint arXiv:2309.03409,\n2023. 3, 4, 5, 7\n[34] Fei Ye, Haoran Yang, Xiaohan Cai, et al. Reevo: Large\nlanguage models as hyper-heuristics with reflective evolution. In Advances in Neural Information Processing Systems,\n2024. 3, 4, 7\n[35] Yihang Yin, Siyu Huang, and Xiang Zhang. BM-NAS:\nBilevel multimodal neural architecture search. In Proceedings of the AAAI Conference on Artificial Intelligence, pages\n8901–8909, 2022. 5\n[36] Chris Ying, Aaron Klein, Eric Christiansen, Esteban Real,\nKevin Murphy, and Frank Hutter. Nas-bench-101: Towards\nreproducible neural architecture search. In International\nConference on Machine Learning, pages 7105–7114. PMLR,\n2019. 5\n[37] Kaicheng Yu, Christian Sciuto, Martin Jaggi, Claudiu Musat,\nand Mathieu Salzmann.",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 24,
+    "total_chunks": 26,
+    "char_count": 1416,
+    "word_count": 199,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a636db7b-f5e4-4935-acc5-03b3de1aacfc",
+    "text": "Evaluating the search phase of\nneural architecture search. In International Conference on\nLearning Representations, 2020. 5\n[38] Yuhang Zhong, Yuhao Liu, Xiaotong Liu, and Tao Chen. Large language model assisted adversarial robustness neural\narchitecture search. IEEE Transactions on Artificial Intelligence, 2024. 3, 4\n[39] Barret Zoph and Quoc V. Neural architecture search with\nreinforcement learning. In ICLR, 2017. 1, 3, 7",
+    "paper_id": "2603.12091",
+    "title": "Resource-Efficient Iterative LLM-Based NAS with Feedback Memory",
+    "authors": [
+      "Xiaojie Gu",
+      "Dmitry Ignatov",
+      "Radu Timofte"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12091v1",
+    "chunk_index": 25,
+    "total_chunks": 26,
+    "char_count": 427,
+    "word_count": 61,
+    "chunking_strategy": "semantic"
+  }
+]

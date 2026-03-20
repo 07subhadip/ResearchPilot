@@ -1,0 +1,488 @@
+[
+  {
+    "chunk_id": "8a70a7ff-ca8b-4bba-bedd-9d9145dd6517",
+    "text": "See, Symbolize, Act: Grounding VLMs with Spatial Representations\nfor Better Gameplay Ashish Baghel, Paras Chopra\nLossfunk\n{ashish.baghel, paras}@lossfunk.com2026\nAbstract game-specific trajectories (Zhai et al. 2024), sacrificing zero-shot generalization, or relies on visual frames\nVision-Language Models (VLMs) excel at describing\nalone, as in Atari-GPT (Waytowich et al. 2024), where\nvisual scenes, yet struggle to translate perception intoMar spatial reasoning remains a challenge. However, no sys- precise, grounded actions.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 0,
+    "total_chunks": 27,
+    "char_count": 529,
+    "word_count": 67,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7179afd5-4b70-46a5-ba80-f05807a9ed95",
+    "text": "We investigate whether providing VLMs with both the visual frame and the sym- tematic study has evaluated how accurately VLMs identify objects and coordinates, or how the coordinate ac-12 bolic representation of the scene can improve their\nperformance in interactive environments. We evaluate curacy affects the models' ability to take better actions\nthree state-of-the-art VLMs across Atari games, Viz- as scene complexity increases. Doom, and AI2-THOR, comparing frame-only, frame To probe the capabilities of current VLMs, we\nwith self-extracted symbols, frame with ground-truth conduct systematic evaluations across state-of-the-art\nsymbols, and symbol-only pipelines. Our results indi- VLMs (Claude-4-Sonnet, GPT-4o, Gemini-2.5-Pro) on\ncate that all models benefit when the symbolic infor- Atari games with varying levels of complexity (Pong,[cs.AI] mation is accurate. However, when VLMs extract symBreakout, and Space Invaders).",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 1,
+    "total_chunks": 27,
+    "char_count": 935,
+    "word_count": 128,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c5c71bbf-cc96-4b0e-97ae-251af075f5c3",
+    "text": "To isolate the conbols themselves, performance becomes dependent on\ntributing factors, we compare four pipelines: frame- model capability and scene complexity. We further investigate how accurately VLMs can extract symbolic only, frame with self-extracted symbols, frame with\ninformation from visual inputs and how noise in these ground-truth symbols, and ground-truth symbol-only\nsymbols affects decision-making and gameplay perfor- (no visual context).\nmance. Our findings reveal that symbolic grounding In this paper, we analyze VLMs' ability to extract\nis beneficial in VLMs only when symbol extraction is symbolic information from visual input and evaluate\nreliable, and highlight perception quality as a central their accuracy across multiple games. We also investibottleneck for future VLM-based agents. gate how the quality of extracted symbols influences\ndecision-making, and determine when symbolic infor-\n1 Introduction mation benefits or harms agent performance. Vision-Language Models (VLMs) are increasingly used 2 Related Work\nto build general-purpose AI agents that can both interVLMs for Game Playing Recent work has explored pret visual scenes and decide how to act within them.\nthe use of large Vision-Language Models as zero-shot When these systems shift from passive perception to\nagents in interactive environments. Atari-GPT (Way-arXiv:2603.11601v1 interactive decision-making in fields like robotics, emtowich et al. 2024) and TextAtari (Li et al. 2025) evalu- bodied AI, or game environments, they encounter tasks\nate multimodal models on Atari games and show that, that rely on precise spatial understanding, an ability\nwhile VLMs can understand visual scenes, they strug- that current VLMs do not yet provide reliably (Waygle with consistent control and spatial precision dur- towich et al. 2024).\ning gameplay. Fine-tuning improves decision-making in Atari gameplay provides a controlled setting for\nVLM-based agents (Zhai et al. 2024), but this requires studying these spatial reasoning challenges. Games like\ntask-specific data and does not resolve whether VLMs Pong, Breakout, and Space Invaders require precise\ncan act effectively in a purely zero-shot setting. tracking of paddles, balls, and aliens. Under these conditions, current VLMs frequently misidentify objects, Object-Centric State Representations Objectrepeat ineffective actions, or fail to execute precise con- centric state representations help simplify reasoning\ntrols, lagging behind fine-tuned game-specific agents. and planning in control tasks. OCAtari (Delfosse et al. Prior work either fine-tunes VLMs on thousands of 2023) extracts objects and their coordinates directly from Atari's RAM, providing ground-truth symbolic\ninformation from memory. Prior work has also shown Response\nthat planning over symbolic or learned structured\nstates benefits decision-making (Dittadi, Drachmann, FRAME\nand Bolander 2021). However, these approaches typ- VLM\nically assume access to clean or near-perfect symbolic OCATARI informationSymbolic\ninformation. Our work differs by examining symbols extracted directly from vision in a zero-shot manner and\nstudying how their quality impacts downstream actions.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 2,
+    "total_chunks": 27,
+    "char_count": 3194,
+    "word_count": 444,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bc2c7659-3104-4c8c-a6d7-808dbfa6875a",
+    "text": "Figure 1: Frame + Ground-Truth Symbols pipeline. Symbolic Grounding in Agents The symbolic\ngrounding problem (Harnad 1990) highlights the fun- Frame-only (F). The VLM receives only the raw\ndamental challenge of connecting high-level symbols to game frame and available action mappings, and outperception.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 3,
+    "total_chunks": 27,
+    "char_count": 304,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d4ab7309-49bc-402f-ba2e-05d93fd8595a",
+    "text": "ReAct (Yao et al. 2022) demonstrated that puts the action for the next frame. This setup tests\ncombining reasoning and acting can improve tool-use- whether the model can perform spatial reasoning using\ninspired language-driven action loops. More recent work only visual input, without any symbolic help (Figure 2).\nfocuses on improving spatial reasoning capabilities in\nVLMs (Chen et al. 2024; Cheng et al. 2024), and studies\nhave analyzed why it remains a persistent challenge for\nsuch models (Chen et al. 2025). Robustness under noisy Response\nvisual conditions has also been explored (Velayuthan\nand Tavakkoli 2025), but prior work has not exam- FRAME VLM\nined how perception errors propagate through a symbolic control loop. PoE-World (Piriyakulkij et al. 2025) Figure 2: Frame-only pipeline.\ncombines language models with programmatic symbolic\nworld models for Atari tasks, but assumes reliable symFrame + Self-Extracted Symbols (F+S-self).bolic input. This pipeline follows a two-stage process, illustrated in\nFigure 3.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 4,
+    "total_chunks": 27,
+    "char_count": 1025,
+    "word_count": 152,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2b6a6ff9-a9e3-42ac-aed6-1ae1ac304cb5",
+    "text": "First, the VLM extracts object-centric sym- 3 Methodology\nbolic information from the frame as structured data,\nOur experimental setup evaluates whether symbolic including object IDs, labels, (x, y) coordinates, and congrounding helps VLMs' gameplay performance. The VLM then uses both the frame and\nevaluate multiple Vision-Language Models across Atari the extracted symbols to select the next action. The\ngames. detailed steps of the symbol extraction process and its\nlimitations are discussed later in the Symbolic Detec-\n3.1 Experimental Setup tion Quality subsection, where we analyze why symbolic\nGames. We use Atari games that differ in object count grounding helps or hurts performance.\nand the spatial reasoning required: Pong, Breakout, and\nSpace Invaders. These games were chosen because their\nspatial control demands are known to challenge VLMs. Response\nThese games span different visual complexity levels:\nPong (2–4 objects: ball, paddle), Breakout (5–15 ob- FRAME VLM\njects: ball, paddle, bricks), and Space Invaders (20–50\nobjects: player, aliens, bullets, shields). These games al- Symbolic\ninformation\nlow us to test how symbolic grounding behaves as the\ngameplay becomes more complex.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 5,
+    "total_chunks": 27,
+    "char_count": 1202,
+    "word_count": 176,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e02c81b1-92da-4f87-a184-1e6f602919be",
+    "text": "We evaluate state-of-the-art VLMs:\nClaude-4-Sonnet, GPT-4o, and Gemini-2.5-Pro. All Figure 3: Frame + Self-Extracted Symbols pipeline.\nmodels were used in a zero-shot setting without any\nfine-tuning. The VLM receives object\ncoordinates from the RAM state, with no visual frame,\n3.2 Pipelines as shown in Figure 4. This pipeline isolates the conFrame + Ground-Truth Symbols (F+S-GT). tribution of symbolic information and tests whether\nThis pipeline reads symbolic information directly from VLMs can play Atari by reasoning purely with symthe game RAM using OCAtari (Delfosse et al. 2023), bols that provide perfect object detection and no visual\nwhich provides perfect object positions with zero detec- context at all. This reveals whether symbols alone are\ntion error and serves as the upper bound for all other sufficient or whether visual grounding is essential for\npipelines. The VLM uses both the frame and the sym- VLM decision-making.\nbols to select the next action, as illustrated in Figure 1. Table 1: Example prompt structure for Frame + SelfExtracted Symbols pipeline (abbreviated). OCATARI Symbolic Response information\nVLM Frame + Self-Extracted Symbols Prompt\nYou are an expert [game] player analyzing a\ngame frame. Figure 4: Symbol-only pipeline. Game controls:\n3.3 Evaluation Metrics - Action 0: NOOP, Action 1: FIRE, ... We use cumulative reward as the\ngameplay metric. The game is paused at every frame, Current frame analysis:\nand the VLM decides the next action. Each model plays - Total objects detected: 7\n600 frames per run, and uses a frame size of 1280×720,\nDetected objects with coordinates:\nacross 2 seeds. This setup isolates reasoning quality,\n- Object 'ball': x=580, y=450, size 15x20\nsince real-time latency is not the focus of this study. - Object 'paddle': x=850, y=650, size 135x15\nTo compare models on a common scale, we map raw - Object 'brick wall': x=640, y=260, size\nscores to the 0–100 interval. For each model, we define 1140x120\nits Frame + GT Symbols performance as the upper - ...\nbound (100%).",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 6,
+    "total_chunks": 27,
+    "char_count": 2038,
+    "word_count": 324,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6a0ccc16-dee5-481b-96d2-abd63a2b7cba",
+    "text": "The lower bound is the worst: -17 for\nPong, 0 for Breakout, and 0 for Space Invaders over IMPORTANT: Use symbolic information when\n600 frames. reliable,\nDetection Metrics. To better understand why dif- but prioritize visual reasoning if data is\nincomplete.ferent pipelines succeed or fail, we measure symbolic\nextraction quality by comparing VLM-generated symChoose the optimal action. Return JSON:\nbols with ground-truth annotations across 100 frames {\"reasoning\": \"...\", \"action\": integer}\nper game. We use standard detection metrics: (1) F1\nscore, which gives a balanced measure of how many Table 2: Cumulative reward over 600 frames across\nobjects are correctly identified, penalizing both missed pipelines. Abbreviations: F = Frame-only; S-GT =\ndetections and false positives; and (2) IoU (overlap Symbol-only; F+S-self = Frame + Self-Extracted Symscore), which measures how closely the predicted ob- bols; F+S-GT = Frame + Ground-Truth Symbols.\nject coordinates align with the ground-truth positions. Prompt Structure We use a generic prompt tem- Model Pipeline Pong Breakout Space Inv.\nplate for every pipeline, supplying only the actions and F+S-GT −1.0 12.0 175.0\nthe raw inputs (frame, symbols, or both). This ensures F −16.0 0.0 80.0\nClaude-4-Sonnetthat the model receives no task-specific instructions, S-GT −14.0 0.0 90.0\nexamples, or strategy hints. The exact wording for the F+S-self −3.0 12.0 150.0\nFrame + Self-Extracted Symbols condition is given be- F+S-GT −1.0 12.0 170.0\nlow; the other variants differ only by the presence or ab- F −7.0 7.0 95.0\nsence of the image or symbol block. Complete prompts Gemini-2.5-Pro S-GT −12.0 3.0 95.0\nfor all conditions are listed in Appendix A. F+S-self −3.0 10.0 80.0 F+S-GT −3.0 13.0 185.0\n4 Results F −5.0 7.5 130.0\nGPT-4o\n4.1 Main Finding: Model-Specific Effects S-GT −14.0 0.0 105.0\nof Symbolic Grounding F+S-self −6.5 8.0 65.0\nWe find that symbolic grounding helps only when a\nmodel can extract accurate symbols, and this ability from 80.0 to 150.0, as the model is now able to take\nbreaks down differently across models and game com- more informed and effective actions.\nplexity. Table 2 shows this pattern clearly. GPT-4o and Gemini-2.5-Pro behave differently. In\nThe improvement is most pronounced for Claude-4- the frame-only pipeline, both achieve stronger baseline\nSonnet. In the frame-only pipeline, Claude performs scores than Claude, indicating better visual-based reapoorly in all games.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 7,
+    "total_chunks": 27,
+    "char_count": 2458,
+    "word_count": 376,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb998a37-6b3d-41a2-92c5-5392da276d33",
+    "text": "It scores −16.0 in Pong and 0.0 in soning. Adding symbols results in only modest gains in\nBreakout, repeatedly taking the same incorrect actions the simpler games: Gemini improves to −3.0 in Pong\nbecause it misidentifies the paddle and its position in and 10.0 in Breakout, while GPT-4o reaches −6.5 in\nboth games. When we provide self-extracted symbols, Pong and 8.0 in Breakout. In Space Invaders, however,\nClaude's performance improves substantially: It reaches both models show substantial performance degradation.\n−3.0 in Pong and 12.0 in Breakout, essentially match- The 20–50 objects on screen overwhelm their detection\ning the upper bound. Even in the visually dense Space capabilities, producing many incorrect coordinates that\nInvaders environment, symbols increase Claude's score mislead their reasoning and negate potential gains.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 8,
+    "total_chunks": 27,
+    "char_count": 842,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "369dd08e-8bde-4e00-bee2-04c2a423ef2a",
+    "text": "The Symbol-only pipeline shows that visual ground- Claude-4-Sonnet achieves an F1 score of 0.715 and\ning is essential. Even when models receive perfect sym- an IoU of 0.533, indicating relatively accurate object\nbolic coordinates identical to ground truth, removing detection and localization. This accuracy enables the\nthe visual frame causes performance to collapse. In Frame + Self-Extracted Symbols pipeline to provide\nBreakout, Claude-4-Sonnet and GPT-4o both score zero useful information that improves model performance.\npoints. In Space Invaders, in the best case, GPT-4o In contrast, Gemini-2.5-Pro and GPT-4o achieve much\ndrops from 185 points (with Frame + GT Symbols) lower F1 scores (0.189 and 0.124), missing and misloto just 105 (57% of the upper bound) without visual cating the majority of objects. These errors reduce the\ncontext. This proves that symbolic information alone reliability of the symbolic representations and degrade\nis insufficient.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 9,
+    "total_chunks": 27,
+    "char_count": 965,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "708f0ad2-1a40-4803-96bd-85717a4eb804",
+    "text": "Visual frames act as essential scaffold- decision-making performance, as shown in their modeling, giving VLMs the perceptual context they need to wise breakdowns (Figure 10 and Figure 11).\ncorrectly interpret and trust coordinate data. The Frame + Ground-Truth Symbols results show 4.3 Beyond Atari: Complex Visual\nthat when models receive perfect symbols derived from Environments\nthe RAM state and visual frame, their performance To evaluate whether our findings extend beyond simconsistently improves, confirming that accurate sym- ple 2D environments, we test the same pipelines on\nbolic information is always beneficial. To evaluate how two more visually complex domains: VizDoom (a firstclose each model gets to its upper bound with symbolic person shooter) and AI2-THOR (an embodied AI\ngrounding, Figure 5 shows detailed model-wise perfor- kitchen task).\nmance relative to the Frame + Ground-Truth Symbols. We use the defend the center scenario,\nwhere the agent must shoot approaching enemies from\nFrame+GT Symbols (100%) Symbol-Only (Ground Truth)\nFrame-Only Frame + Self-Extracted Symbols a fixed position. This environment features 3D graph-\n100 100% ics, textured surfaces, and variable enemy appearances,\n88% 86% presenting substantially different visual challenges than Symbols)\n80 Atari's pixel-art style. We use a kitchen scene where the agent Frame+GT 60 51% must collect food items and place them on a designated\n46% surface. This photorealistic environment requires un-(% 40\nderstanding complex object relationships and 3D spa-\n20 19% tial reasoning.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 10,
+    "total_chunks": 27,
+    "char_count": 1568,
+    "word_count": 230,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6f7b9b60-d49e-40ba-bb95-554de9ac1cb6",
+    "text": "6% Performance 0% 0%\n0 Pong Breakout Space Invaders Table 4: VizDoom defend the center performance (kills\nGame over 600 frames). Figure 5: Claude-4-Sonnet performance across games,\nModel F F+S-self F+S-GT S-GT\nnormalized to Frame+GT Symbols (100%). Claude\nshows consistent improvement with self-extracted sym- Claude-4-Sonnet 5 9 14 12\nbols across all games, achieving near-optimal perfor- GPT-4o 12 8 13 3\nmance in Breakout.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 11,
+    "total_chunks": 27,
+    "char_count": 425,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa60d8a8-4453-4569-8332-22b97254320b",
+    "text": "Gemini-2.5-Pro 11 4 13 12 4.2 Symbolic Detection Quality Across Table 5: AI2-THOR kitchen task performance (cumuVLMs lative reward over 300 frames). We find that the effect of object-centric information on\ngameplay depends directly on object detection accu- Model F F+S-self F+S-GT S-GT\nracy.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 12,
+    "total_chunks": 27,
+    "char_count": 292,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fc1c17f7-f007-4ad7-bb0a-9dd90ce1772c",
+    "text": "Table 3 shows that Claude-4-Sonnet achieves sub- Claude-4-Sonnet −1.0 2.0 11.0 3.0\nstantially higher extraction accuracy than Gemini-2.5- GPT-4o 7.0 9.0 9.0 −1.0\nPro and GPT-4o, which explains why symbolic ground- Gemini-2.5-Pro 5.0 1.0 10.0 −3.0\ning helps some models but hurts others. The results in Table 4, 5 and Figures 6 and 7 conTable 3: Object detection metrics across models, aver- firm our core finding: Frame + Ground-Truth Symbols\naged over 100 frames per game. (F+S-GT) consistently achieves the best performance\nacross all models in both environments. In VizDoom,\nModel F1 Score IoU providing accurate symbolic information about enemy\nClaude-4-Sonnet 0.715 0.533 positions improves kill counts by 1–9 kills compared to\nGemini-2.5-Pro 0.189 0.202 frame-only baselines. In AI2-THOR, the improvement\nGPT-4o 0.124 0.128 is even more pronounced, with F+S-GT scores reaching\n9–11 compared to frame-only scores of −1 to 7. Scores: Frame+GT 100 RawVizDoom: F=5, F+S=9 Symbols 5.1 How Input Resolution Affects Object AI2-THOR: F=-1, F+S=2 Frame-Only\nFrame+Self-Symbols Detection Accuracy 75 64% Having established that detection quality determines\nGT whether symbolic information improves or degrades\nof 50 gameplay performance, we next examine how image res-\n35% olution influences VLMs' ability to extract accurate object coordinates. 25 18%\nMethodology We evaluate Claude-4-Sonnet's object\n0 VizDoom AI2-THOR detection and localization quality across four input resGround Truth: VizDoom=14, AI2-THOR=11 olutions on 100 frames per game: Figure 6: Claude-4-Sonnet performance on complex • Original (160 × 210): Native Atari resolution with\n3D environments, normalized to Frame+GT Symbols no scaling.\n(100%). Claude improves significantly in VizDoom • Uniform 4× (640 × 840): Uniformly scaled while\n(35%→64%) with self-extracted symbols. preserving the original aspect ratio.\n• Square (720 × 720): Square frame that distorts the 100% Scores: Symbols 100 RawVizDoom: F=12,\nAI2-THOR: F=7,92%F+S=9F+S=8 Frame+GTFrame-Only original 4:3 aspect ratio. Frame+Self-Symbols\n77% • Current (1280 × 720): The resolution used in our\n75 experiments, scaled by 8× in width and 4× in height. 61%\nof 50 Object extraction quality is measured using F1 score\n% and IoU, and then compared against OCAtari groundtruth annotations. Table 6: Detection quality across input resolutions for\nVizDoom AI2-THOR Claude-4-Sonnet (averaged 100 frames per game). Ground Truth: VizDoom=13, AI2-THOR=9 Figure 7: GPT-4o performance on complex 3D envi- Game 160×210 640×840 720×720 1280×720\nronments, normalized to Frame+GT Symbols (100%). F1 Score (higher indicates better performance)\nGPT-4o achieves 100% GT performance in AI2-THOR\nwith self-extracted symbols, demonstrating that ac- Pong 0.28 0.52 0.55 0.58\ncurate symbol extraction enables near-optimal perfor- Breakout 0.31 0.68 0.70 0.71\nmance. Space Inv. 0.35 0.71 0.73 0.75\nAverage 0.31 0.64 0.66 0.68\nThe Frame + Self-Extracted Symbols pipeline shows\nmixed results, consistent with our Atari findings. In\nResults The native Atari resolution has low detection\nVizDoom, Claude improves from 5 to 9 kills with selfaccuracy (average F1: 0.31), which is below the threshextracted symbols, while GPT-4o and Gemini degrade\nold at which Object-centric information becomes use-\n(from 12 to 8 and 11 to 4, respectively).",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 13,
+    "total_chunks": 27,
+    "char_count": 3338,
+    "word_count": 486,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e13dc88f-a9e9-4e87-ab1e-83da1bac4e88",
+    "text": "Increasing resolution\nClaude shows improvement from −1 to 2 with selfimproves extraction quality, with 1280 × 720 achieving\nextracted symbols, and GPT-4o achieves near-GT peran average F1 of 0.68, approximately twice the origiformance (9.0). This pattern confirms that symbolic\nnal value. We observe that results beyond 720px on the\ngrounding helps when models can extract accurate symshorter side: 720×720 (0.66) and 1280×720 (0.68) perbols from the environment.\nform similarly. This suggests that total pixel count and\nThe Symbol-only pipeline again demonstrates that\ndetail preservation may be more important than previsual context is essential. Despite receiving perfect coserving the original aspect ratio, as shown in Figure 8.\nordinate information, performance drops substantially\nwithout visual frames, particularly for GPT-4o in both 5.2 Noise Ablation: Robustness to\nenvironments. This occurs because symbolic informaDetection Errors\ntion alone does not capture the full representation of\nthe game state. Coordinates provide object positions We study how different levels of noise in object coorbut lack the rich visual context that helps VLMs un- dinates affect the usefulness of Object-centric informaderstand the scene and make informed decisions. tion. This isolates the sensitivity of action selection to\ndetection errors.\n5 Ablation Studies Experimental Design We focus on Claude-4-\nWe conduct two ablation studies to examine when sym- Sonnet and GPT-4o, the two models that differ subbolic information improves gameplay performance. stantially in object detection quality. Pong 0.8 6 Claude-4-Sonnet Breakout\nSpace Invaders GPT-4o 0.71 0.70 0.73 0.71 0.75\n0.68 0.7\n0.6 0.58 5\n0.55\n0.52\n0.5 Reward\n4Score 0.4\nF1 0.35\n0.31\n0.3 0.28 Cumulative 3\n0.2 0.0 160×210 640×840 720×720 1280×720\n(Native) (4× Uniform) (Square) (Current)\nInput Resolution 0.00 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40\nNoise Level ( )\nFigure 8: Detection quality (F1 score) across resolutions\nFigure 9: Noise robustness analysis for Breakout. The native resolution (160 × 210) produces\nClaude-4-Sonnet and GPT-4o degrade significantlylower detection accuracy (F1 < 0.35), while higher resowith even low noise (σ = 0.1).",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 15,
+    "total_chunks": 27,
+    "char_count": 2204,
+    "word_count": 324,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1e1b8b50-3859-49ac-8305-dad892293510",
+    "text": "Bars mark 95% confi-lutions enable effective symbolic grounding (F1 > 0.65).\ndence intervals over 10 seeds. Table 7: Performance under coordinate noise (mean reward across 10 seeds). decline by roughly 30–40% relative to the no-noise baseline. Claude drops from −0.6 to −2.2 in Pong while\nGame Model σ=0.0 σ=0.1 σ=0.2 σ=0.3 σ=0.4 GPT-4o decreases from −2.7 to −3.0 (Figure 12), and\nPong Claude-4-Sonnet -0.6 -2.2 -2.2 -2.2 -2.2 a similar decline happens in Breakout. By σ = 0.2, the\nPong GPT-4o -2.7 -3.0 -3.4 -3.8 -2.8 symbolic pipeline offers no clear advantage over using\nBreakout Claude-4-Sonnet 5.0 4.3 3.4 3.4 2.8 the frame alone. Breakout GPT-4o 5.0 4.0 3.0 2.3 2.6 Space Invaders behaves differently (Figure 13). Claude-4-Sonnet 53 57 57 88 52 dense formation of 20–50 aliens means even random firSpace Inv. GPT-4o 86 43 69 66 62 ing can hit targets and score points, which partly explains the high variance in results. Claude's scores vary\nThe experiment injects Gaussian noise into ground- from 53 to 88 points across noise levels, whereas GPTtruth coordinates to simulate different levels of detec- 4o decreases sharply from 86 (no noise) to 43 at σ = 0.1,\ntion error. losing half its performance from minimal noise. 6 Limitations and Future Work\nx′ = x + N(0, σ × W), y′ = y + N(0, σ × H) (1) While our findings demonstrate when symbolic groundHere, W and H denote the frame width and height, ing helps or harms VLMs, several limitations remain\nrespectively, where σ controls noise magnitude. The five that open avenues for future work.\nnoise levels tested are: Limited Environment Diversity. While we extend our evaluation beyond Atari to include VizDoom\n• σ = 0.00: no-noise baseline and AI2-THOR, demonstrating that our findings hold\n• σ = 0.10: Low noise (∼16–20 pixels of coordinate in 3D and photorealistic environments, these represent\nerror) only a subset of possible domains. Future work should\n• σ = 0.20: Moderate noise (∼32–40px) explore additional environments with different visual\nand control characteristics. • σ = 0.30: High noise (∼48–60px)\nSymbol Quality Bottleneck. Our results show\n• σ = 0.40: Severe noise (∼64–80px) that the effectiveness of symbolic grounding is highly\nNoise is sampled independently per frame and per sensitive to symbol extraction quality. Future work\nobject, replicating the randomness present in real-world should explore more robust symbol-extraction methods,\nvisual frames. such as hybrid detectors or lightweight fine-tuning of viFor each model, game, and noise level, we run 10 inde- sion modules, to improve object-centric representations.\npendent seeds, each covering 300 frames. This reduces Cost and Practicality.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 16,
+    "total_chunks": 27,
+    "char_count": 2678,
+    "word_count": 430,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "967fb5c1-a5e9-48e4-a511-4cd2ca7a5e6b",
+    "text": "Querying VLMs per frame\nthe variance and provides reliable mean performance incurs substantial latency and cost, making real-time\nestimates with confidence intervals. gameplay infeasible with current models. Scaling symbolic grounding to real-time agents will therefore reResults Figure 9 illustrates the impact of coordinate quire fundamental efficiency improvements.\nnoise on Breakout performance. In games like Pong and\nBreakout, both models show similar degradation: even 7 Conclusion\na low level of noise causes a significant drop in perforIn this work, we set out to understand when symbolicmance. At σ = 0.1 (just 16–20 pixels of error), scores\ngrounding provides measurable benefits to VLMs in interactive environments. Our results, consistent across modal Large Language Models as Low-Level Policies in\nAtari games, VizDoom, and AI2-THOR, show that Atari Games. arXiv preprint arXiv:2408.15950.\nsymbolic information is useful only when the extracted Yao, S.; Zhao, J.; Yu, D.; Du, N.; Shafran, I.;\nsymbols are sufficiently accurate. When object positions Narasimhan, K.; and Cao, Y. 2022. ReAct: Synergizare reliable, they provide the model with spatial infor- ing Reasoning and Acting in Language Models. arXiv\nmation that frame-only reasoning struggles to capture. preprint arXiv:2210.03629. However, when symbols are noisy, they introduce ambi- Zhai, Y.; Bai, H.; Lin, Z.; Pan, J.; Tong, S.; Zhou, Y.;\nguity into the model's reasoning and lead to degraded Suhr, A.; Xie, S.; LeCun, Y.; Ma, Y.; and Levine, S.\ndecision-making. Even perfect symbolic information is 2024.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 17,
+    "total_chunks": 27,
+    "char_count": 1580,
+    "word_count": 233,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "22a335a5-4bea-4ce2-8850-413efbd2e39f",
+    "text": "Fine-Tuning Large Vision-Language Models as\ninsufficient without visual context. Our ablation further Decision-Making Agents via Reinforcement Learning.\ndemonstrates that simply increasing the frame resolu- arXiv preprint arXiv:2405.10292.\ntion significantly boosts object detection accuracy. This\nshows that reliable perception is the bottleneck, not the\nidea of symbolic grounding itself. Future work must focus on robust symbol extraction. References\nChen, B.; Xu, Z.; Kirmani, S.; Ichter, B.; Driess, D.;\nFlorence, P.; Sadigh, D.; Guibas, L.; and Xia, F. 2024. SpatialVLM: Endowing Vision-Language Models with\nSpatial Reasoning Capabilities. In IEEE/CVF Conference on Computer Vision and Pattern Recognition\n(CVPR). Chen, S.; Zhu, T.; Zhou, R.; Zhang, J.; Gao, S.; Niebles,\nJ. C.; Geva, M.; He, J.; Wu, J.; and Li, M. 2025.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 18,
+    "total_chunks": 27,
+    "char_count": 827,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a87cdf5-f18b-45ec-9908-ed8342ff2875",
+    "text": "Why\nIs Spatial Reasoning Hard for Vision-Language Models? In International Conference on Machine Learning\n(ICML). Cheng, A.-C.; Yin, H.; Fu, Y.; Guo, Q.; Yang, R.;\nKautz, J.; Wang, X.; and Liu, S. 2024. SpatialRGPT:\nGrounded Spatial Reasoning in Vision-Language Models. In Advances in Neural Information Processing Systems (NeurIPS). Delfosse, Q.; Bl¨uml, J.; Gregori, B.; Sztwiertnia, S.; and\nKersting, K. 2023. OCAtari: Object-Centric Atari 2600\nReinforcement Learning Environments. arXiv preprint\nDittadi, A.; Drachmann, F. K.; and Bolander, T. 2021.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 19,
+    "total_chunks": 27,
+    "char_count": 553,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dfecf0b0-2aa7-45fc-a8dd-b2162c870457",
+    "text": "Planning from Pixels in Atari with Learned Symbolic\nRepresentations. In AAAI Conference on Artificial Intelligence. The Symbol Grounding Problem. Physica D: Nonlinear Phenomena, 42(1-3): 335–346. Li, W.; Li, W.; Shen, C.; Sheng, J.; Huang, Z.; Wu, D.;\nHua, Y.; Yin, W.; Wang, X.; Zha, H.; and Jin, B. 2025. TextAtari: 100K Frames Game Playing with Language\nAgents. arXiv preprint arXiv:2506.04098. T.; Liang, Y.; Tang, H.; Weller, A.;\nKryven, M.; and Ellis, K. 2025. PoE-World: Compositional World Modeling with Products of Programmatic\nExperts. arXiv preprint arXiv:2505.10819. Velayuthan, P.; and Tavakkoli, A. 2025. Evaluating Robustness of Vision-Language Models Under Noisy Conditions. arXiv preprint arXiv:2509.12492.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 20,
+    "total_chunks": 27,
+    "char_count": 723,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1f7a4d42-78fc-42dc-b69f-3baf3d1de5c4",
+    "text": "R.; White, D.; Sunbeam, M.; and\nGoecks, V. Atari-GPT: Benchmarking MultiA Appendix 0 Claude-4-Sonnet\nA.1 Additional Model Performance GPT-4o\nResults 1\nThe following figures show the complete model-wise Reward 2performance breakdown for Gemini-2.5-Pro and GPT-\n4o, complementing the Claude-4-Sonnet results in the\nmain paper. 3 Cumulative Frame+GT Symbols (100%) Symbol-Only (Ground Truth)\nFrame-Only Frame + Self-Extracted Symbols 4 88% Symbols) 83% 0.00 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40\n80 Noise Level ( ) 62%\n58% 56% 56% Frame+GT 60\nof 47% Figure 12: Noise robustness analysis for Pong. Perfor-\n(% 40 31% mance shows rapid degradation similar to Breakout.\n25%\n20 120\nClaude-4-Sonnet Performance GPT-4o\n0 Pong Breakout Space Invaders\nGame 100 Figure 10: Gemini-2.5-Pro performance breakdown, Reward 80\nnormalized to Frame+GT Symbols. Gemini benefits in\nsimpler games but struggles in Space Invaders.\n60 Cumulative",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 21,
+    "total_chunks": 27,
+    "char_count": 921,
+    "word_count": 137,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2c23f601-3e86-40d8-b093-a9a94cf463b6",
+    "text": "Frame+GT Symbols (100%) Symbol-Only (Ground Truth)\nFrame-Only Frame + Self-Extracted Symbols 86% 0.00 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 Symbols)\n80 75% Noise Level ( )\n70% 62% Frame+GT 60 58% 57% Figure 13: Noise robustness analysis for Space Invaders.\n(% 40 35% High variance due to dense alien formations where ran-\n21% dom firing can still score points.\n20 Performance\n0 Pong 0%Breakout Space Invaders You are an expert game frame analyzer for the\nGame game Breakout. Figure 11: GPT-4o performance breakdown, normalized Your task is to detect ALL visible objects in\nto Frame+GT Symbols. GPT-4o shows mixed results, the image\nwith symbolic information sometimes harming perfor- with high precision.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 22,
+    "total_chunks": 27,
+    "char_count": 706,
+    "word_count": 113,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9160b11e-f500-4a85-8c39-a1d25aaf8ab8",
+    "text": "Detect all distinct,\nvisible objectsmance.\n(like players, enemies, projectiles, items,\nscores). For\neach object, provide its label, a tight\nA.2 Additional Noise Robustness Results bounding box\nFigure 12 and Figure 13 show the noise robustness anal- [x1, y1, x2, y2], and a confidence score.\nysis for Pong and Space Invaders, complementing the\nReturn ONLY valid JSON in the following format:Breakout results in the main paper.\n\"objects\": [\nA.3 Prompts\nThis section provides the complete prompts used in \"id\": \"unique_id\",\nour experiments, including the symbolic information ex- \"label\":\ntraction prompt and the prompts for each pipeline. \"object_type_or_description\",\n\"coordinates\": [x1, y1, x2, y2],\nSymbolic Extraction by VLM Prompt This \"confidence\": 0.95,\nprompt is used by the Frame + Self-Extracted Symbols \"description\": \"brief description\npipeline to extract object-centric symbolic information of the object\"\nfrom the visual frame. }\n\"image_info\": { \"total_objects\": 0, Detected objects with coordinates and positions:\n\"frame_analysis\": \"brief description of - Object 'score_display': positioned at\nwhat you coordinates\nsee in the frame\" x=337, y=32, size 95x35\n} - Object 'score_display': positioned at\n} coordinates\nx=462, y=32, size 95x35\n- Object 'level_display': positioned at\nYou are an expert Breakout player controlling coordinates\nthe x=1105, y=32, size 40x35\nORANGE PADDLE at the bottom. - Object 'brick_wall': positioned at coordinates\nx=640, y=260, size 1140x120\nIMPORTANT: You are controlling the ORANGE - Object 'player_paddle': positioned at\nPADDLE at coordinates\nthe bottom. x=857, y=657, size 135x15 Game controls: IMPORTANT: Use the symbolic information when\n- Action 0: NOOP (do nothing) available\n- Action 1: FIRE (primary action - often and reliable, but prioritize visual reasoning\nshoot/serve/activate) if objects\n- Action 2: RIGHT (move right or right action) are missing or the symbolic data seems\n- Action 3: LEFT (move left or left action) incomplete.\n- Action 4: RIGHTFIRE (combination of right +\nfire) As an expert player, analyze the scene and\n- Action 5: LEFTFIRE (combination of left + choose the\nfire) optimal action. As an expert Breakout player controlling the Think step by step:\nORANGE PADDLE 1. Observe the current state of the game\nat the bottom, analyze the visual scene and 2. Predict the trajectory or movement patterns\nchoose the 3. Consider your strategic options\noptimal action. 4. Choose the optimal action Think step by step: Return ONLY JSON:\n1.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 23,
+    "total_chunks": 27,
+    "char_count": 2501,
+    "word_count": 376,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "164dd402-db06-4cfb-b770-73bda3d9ab99",
+    "text": "Observe the current state of the game {\n2. Predict the trajectory or movement patterns \"reasoning\": \"your expert analysis with\n3. Consider your strategic options positional awareness\",\n4. Choose the optimal action \"action\": integer_action_code\nReturn ONLY JSON:\n\"reasoning\": \"your expert analysis and\ndecision rationale\", You are an expert Breakout player.\n\"action\": integer_action_code\n} Game controls:\n- Action 0: NOOP\n- Action 1: FIRE\n- Action 2: RIGHT\nYou are an expert game player analyzing a game - Action 3: LEFT\nframe. Current game state (OCAtari ground truth\nGame controls: coordinates):\n- Action 0: NOOP (do nothing) Total objects: 110\n- Action 1: FIRE (primary action - often\nshoot/serve/activate) Detected objects:\n- Action 2: RIGHT (move right or right action) - Player: x=792, y=648, size=128x13\n- Action 3: LEFT (move left or left action) - Block: x=64, y=195, size=1152x20\n- Action 4: RIGHTFIRE (combination of right + - Block: x=64, y=216, size=1152x20\nfire) - Block: x=64, y=236, size=1152x20\n- Action 5: LEFTFIRE (combination of left + - NoObject: x=0, y=0, size=0x0\nfire) ... [many NoObject entries abbreviated] Current frame analysis: Analyze the game state and choose the optimal\n- Total objects detected: 7 action. Think step by step: (ball-to-paddle, etc.)\n1. Observe the current state of the game 3. Predict future positions using velocities\n2. Predict the trajectory or movement patterns 4. Identify immediate threats (enemies close,\n3. Consider your strategic options etc.)\n4. Choose the optimal action 5. Select the action that best addresses the\nmost\nReturn ONLY JSON: critical situation\n\"reasoning\": \"your analysis\", Think step-by-step, then output:\n\"action\": integer_action_code REASONING: [Your spatial analysis and\n} calculations]\nACTION: [number only] You are playing BREAKOUT using ONLY coordinate\ninformation A.4 VizDoom Prompts\n(no visual display).",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 24,
+    "total_chunks": 27,
+    "char_count": 1885,
+    "word_count": 284,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0a45ac95-b98d-4b83-b958-5aa156288172",
+    "text": "You are an expert VizDoom player in the\nRules: defend_the_center\n- Hit bricks with the ball to destroy them and scenario.\nearn points\n- Don't let the ball fall below the paddle OBJECTIVE: Shoot enemies approaching from all\n- Y-axis: 0 (top) to 210 (bottom) directions\n- X-axis: 0 (left) to 160 (right) while staying alive. You are stationary in the\n- Paddle is at bottom (y ~= 190) center. STRATEGY: Game controls:\n- Calculate horizontal distance between ball - Action 0: NOOP (do nothing)\nand paddle - Action 1: ATTACK (shoot)\n- Predict where ball will land when it falls (y - Action 2: TURN_LEFT (rotate left)\n~= 190) - Action 3: TURN_RIGHT (rotate right)\n- If ball is above paddle and falling (dy > 0):\nposition STRATEGY:\npaddle to intercept - Scan for enemies by turning left/right\n- If ball_x > paddle_x: move RIGHT to align - When an enemy is centered in view, shoot\n- If ball_x < paddle_x: move LEFT to align immediately\n- Account for ball velocity to predict landing - Prioritize closer enemies (they appear larger)\nposition - Keep rotating to check all directions AVAILABLE ACTIONS: Analyze the visual scene and choose the optimal\n0: NOOP, 1: FIRE, 2: RIGHT, 3: LEFT action. CURRENT STATE: Return ONLY JSON:\n=== GAME STATE (Symbolic Coordinates) === {\n\"reasoning\": \"your analysis of enemy\nYOUR CONTROL (Player/Paddle): positions\",\n- Position: x=47, y=189 \"action\": integer_action_code\n- Size: 16x4 }\nBALL:\n- Position: x=53, y=147\nOTHER OBJECTS (6 total):\n- BlockRow: x=8, y=57 A.5 AI2-THOR Prompts\n- BlockRow: x=8, y=63\n- BlockRow: x=8, y=69\nYou are an AI agent in a kitchen environment ... [many Object entries abbreviated]\n(AI2-THOR). INSTRUCTIONS:\nOBJECTIVE: Find and collect food items, thenYou must make a decision based ONLY on the\nplace them coordinate\non the countertop.data above. No visual frame is provided.",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 25,
+    "total_chunks": 27,
+    "char_count": 1827,
+    "word_count": 307,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3e8d804f-cadb-4456-acc8-cac4db02344b",
+    "text": "Available actions:Perform spatial analysis:\n- Action 0: MoveAhead (move forward)1. Parse all object positions, sizes, and\n- Action 1: MoveBack (move backward) velocities\n- Action 2: RotateLeft (turn left 90 degrees)2. Calculate critical distances",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 26,
+    "total_chunks": 27,
+    "char_count": 246,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "101f496b-8247-48b2-b228-0a2fcc86a7df",
+    "text": "- Action 3: RotateRight (turn right 90 degrees)\n- Action 4: LookUp (tilt camera up)\n- Action 5: LookDown (tilt camera down)\n- Action 6: PickupObject (pick up nearby object)\n- Action 7: PutObject (place held object) Analyze the visual scene:\n1. Identify visible objects (food items,\nfurniture)\n2. Determine spatial layout of the kitchen\n3. Plan navigation toward target objects\n4. Execute appropriate action Return ONLY JSON:\n\"reasoning\": \"scene analysis and navigation\nplan\",\n\"action\": integer_action_code",
+    "paper_id": "2603.11601",
+    "title": "See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay",
+    "authors": [
+      "Ashish Baghel",
+      "Paras Chopra"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11601v1",
+    "chunk_index": 27,
+    "total_chunks": 27,
+    "char_count": 505,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  }
+]

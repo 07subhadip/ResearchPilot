@@ -1,0 +1,359 @@
+[
+  {
+    "chunk_id": "6101a488-1a70-40fb-96ae-298bba3b8502",
+    "text": "Prototype-Based Knowledge Guidance for\nFine-Grained Structured Radiology Reporting Chantal Pellegrini⋆1,2, Adrian Delchev⋆,1, Ege Özsoy1,2, Nassir Navab1,2,\nMatthias Keicher1,2 1 Computer Aided Medical Procedures, Technische Universität München, Germany\n2 Munich Center for Machine Learning, Germany\n2026 Abstract. Structured radiology reporting promises faster, more consistent communication than free text, but automation remains difficult\nas models must make many fine-grained, discrete decisions about rare\nfindings and attributes from limited structured supervision. In contrast,Mar\nfree-text reports are produced at scale in routine care and implicitly\n12 encodetions. Tofine-grained,leverage thisimage-linkedunstructuredinformationknowledge,throughwe proposedetailedProtoSR,descrip-an\napproach for injecting free-text information into structured report population. First, we introduce an automatic extraction pipeline that uses\nan instruction-tuned LLM to mine 80k+ MIMIC-CXR studies and build\na multimodal knowledge base aligned with a structured reporting template, representing each answer option with a visual prototype. Using this[cs.AI] knowledge base, ProtoSR is trained to retrieve prototypes relevant for the\ncurrent image-question pair and augment the model predictions through\na prototype-conditioned residual, providing a data-driven second opinion\nthat selectively corrects predictions. On the Rad-ReStruct benchmark,\nProtoSR achieves state-of-the-art results, with the largest improvements\non detailed attribute questions, demonstrating the value of integrating\nfree-text derived signal for fine-grained image understanding. We will\npublish our data generation and model code upon acceptance.",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 0,
+    "total_chunks": 17,
+    "char_count": 1713,
+    "word_count": 205,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ea8a3ccd-084a-4488-9fd0-2849afb18657",
+    "text": "Keywords: Free-text report mining · Chest X-ray · Knowledge retrieval Medical imaging is central to diagnosis and clinical decision making, and radiologists communicate findings primarily through radiology reports, typicallyarXiv:2603.11938v1\nwritten in free text. However, free-text reporting is time-consuming and often\nnon-standardized, leading to variability in completeness, and clarity [15,6,13]. In\ncontrast, structured radiology reporting organizes findings into predefined fields\nand standardized answer options, rather than relying solely on unconstrained\nnarrative text. By using controlled vocabularies and templates, it can improve\nconsistency and completeness while also enabling secondary uses such as quality\nmonitoring and downstream analysis [6,12,8,13].",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 1,
+    "total_chunks": 17,
+    "char_count": 772,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5c16f156-5e6f-42de-87ad-5fa67ab01c00",
+    "text": "⋆Shared first authorship. 2 Authors Suppressed Due to Excessive Length With growing demands in radiology, automated radiology report generation\nhas the potential to support reporting workflows, but most work has focused\non free-text generation [20,2,14,22,11]. In parallel, generalist medical vision–\nlanguage models such as MedGemma and CheXagent unify multiple radiology tasks, including report writing and question answering, within a single\nframework [16,4]. Automated structured reporting (SR) is comparatively less\nexplored: earlier work approached it via prompt-based template population or\ndisease/attribute-specific classifiers [15,10,9,3]. Rad-ReStruct [13] introduced a\nfine-grained SR benchmark with a hierarchical template spanning findings and\ndetailed attributes, and proposed an iterative VQA-style model to populate predefined fields. Context-VQA [1] further improved structured-report population\non Rad-ReStruct by incorporating report-derived context during training. A remaining challenge in automated structured reporting is that fine-grained\ntemplates include many rare attributes [13], while structured datasets such as\nRad-ReStruct are limited in size, providing sparse supervision. On the other\nhand, large public datasets such as MIMIC-CXR [7] provide hundreds of thousands of paired chest radiographs and free-text reports, offering broad coverage\nacross common and rare findings. However, these reports differ significantly in\nstyle and word choice, complicating direct mapping into a strict SR taxonomy.",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 2,
+    "total_chunks": 17,
+    "char_count": 1532,
+    "word_count": 199,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "14b4c8bc-5404-4cf9-87d6-1126f5d9c720",
+    "text": "Recent instruction-tuned LLMs make it increasingly feasible to distill free-text\nreports into standardized, template-aligned signals [21,5]. This opens the possibility of using large-scale free-text collections as an auxiliary knowledge source to\nimprove image-based structured reporting. Knowledge integration has been explored in free-text reporting in the form of feature-level fusion of e.g. prior patient\ninformation or metadata [29,2] and via retrieval of similar cases using prototype\nmemories or knowledge bases [19,25,27,17]. RadIR [28] mines fine-grained supervision from free-text radiology reports for scalable retrieval, but does not address\nhow retrieved evidence can be injected into structured prediction pipelines. Overall, these approaches mainly operate in an unstructured output space, whereas\nSR requires mechanisms that influence fine-grained discrete decisions. To close this gap, we propose ProtoSR, a prototype-conditioned late-fusion\nframework for fine-grained structured radiology reporting that leverages information extracted from routine free-text reports. ProtoSR transforms paired images\nand free-text reports into an explicit prototype memory and learns to retrieve\nprototypes that influence discrete per-field answer selection, enabling targeted\ncorrections of long-tail decisions. We make two main contributions: we propose\nan LLM-driven mining, normalization, and filtering pipeline that converts a\nlarge-scale free-text report collection into a multimodal prototype knowledge\nbase aligned with a structured reporting template and a prototype-conditioned\nlate-fusion module that converts retrieved examples into an answer-aligned correction signal, selectively revising fine-grained predictions while preserving the\nbase model's overall behavior. Our experiments demonstrate consistent gains,\nwith the strongest improvements on detailed attribute decisions, indicating that\nroutine free-text reports can be leveraged as knowledge signal to improve finegrained understanding needed for structured reporting. Knowledge Integration\nsum lower lobe\nKnowledge Base diffuse\nupper lobe Mixed 𝛼! Prototype weighted patchy 0 𝛼\" 𝛼 1 similarity … Encoder 𝛼# softmax concat MLP 0\n+ … Relevant (Copy) Support logits 𝛼$ Image Projection Label options … ⊙ Cosine Vector\nSimilarity Mixed Scaling Vector vector\nEMA Projection Image lower lobe 1 lower lobe\nEncoder diffuse 0 diffuse Layer\nupper lobe + 0 upper lobe Are there any signs in Text Classifier patchy 0 patchy Fusion the lung? – Yes\n… … … Is there an opacity? – Encoder\nYes Output logits Predicted labels\nWhere in the body? (after thresholding) Base Model Overview of our architecture.",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 3,
+    "total_chunks": 17,
+    "char_count": 2662,
+    "word_count": 365,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1269a705-1ddb-4c92-821f-093a7478ee9c",
+    "text": "The hierarchical SR base model produces base\nlogits, while the prototype-conditioned knowledge branch retrieves label-aligned examples from a prototype bank and converts them into a scaled static residual logit\ncorrection. The final prediction is made from the fused logits. Structured reporting datasets are often small and imbalanced, with studies containing diverse fine-grained attributes (e.g., location, visual appearance, severity) being underrepresented. To address this we propose ProtoSR, a structured\nreporting method, which can leverage knowledge from large free-text report\ndatabases. First, we mine free-text radiology reports to recover label-specific\nvisual prototypes aligned to a fixed, fine-grained structured reporting template. We then leverage this knowledge base to retrieve prototype evidence and inject\nit into a hierarchical structured-reporting vision-language model. 2.1 Knowledge Base Construction We construct a template-aligned prototype knowledge base by mapping a large\ncorpus of paired images and free-text reports (dataset B) to the fine-grained label\nspace defined by a structured dataset (dataset A). Dataset A defines the target\ntemplate with each template answer option corresponding to a label ℓ∈L. Exploiting the report–image pairs in B, any study whose report affirms ℓis treated\nas a candidate exemplar for ℓ. The knowledge base construction process shown\nin Fig. 2 consists of the following steps:\nTerminology expansion: To improve robustness to reporting variability in B,\nwe expand the vocabulary associated with each target label ℓ. We leverage a\nzero-shot LLM to propose synonyms, abbreviations, and alternative phrasings,\nyielding a dictionary that maps description variants to the canonical label.",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 4,
+    "total_chunks": 17,
+    "char_count": 1747,
+    "word_count": 245,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2bba5eb1-47f4-4f32-8555-4d790e04ab47",
+    "text": "4 Authors Suppressed Due to Excessive Length Inputs\nStep 1: Terminology Step 2: Template- Step 3:\nDataset A (Structured) Expansion aligned extraction Post-processing\nRule-based\nConstrained Filtering Da Cardiomegaly➔ Report\n➔target template labels Decoding Link images to\nLLM label vectors\nDataset B (Free-Text) enlarged➔heart Finding Presence\nheart enlargement ➔ 0\nAttributes 1 Da enlarged cardiac size 0… ➔scale and diversity …. Knowledge base extraction.",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 5,
+    "total_chunks": 17,
+    "char_count": 456,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "40becc8c-232d-422d-86fd-db804c67e35b",
+    "text": "Dataset A defines the target structured reporting\ntemplate, while Dataset B contains paired images and free-text reports. We first expand the template label vocabulary with alternative phrasings, then identify templatealigned label occurrences in the free-text reports, and finally apply filtering to build a\nknowledge base that links Dataset B images to the template-aligned labels. Template-constrained extraction: For each report r ∈B, we extract templatealigned labels. We first query the LLM to decide whether a finding corresponding to ℓis contained in a report. If present, a subsequent query extracts the\ncorresponding attribute value(s) specified by the template. We apply the extraction hierarchically, querying deeper attributes only when their parent finding is\npresent and use constrained decoding, where only template-aligned answers are\nkept, to ensure valid outputs. Post-processing and Knowledge Base assembly: We apply rule-based filters to reduce noise and enforce consistency with A's ontology. Uncertain or\ninvalid extractions are discarded, and hierarchical constraints are enforced by\nremoving positive parent labels when none of their child labels are supported.",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 6,
+    "total_chunks": 17,
+    "char_count": 1186,
+    "word_count": 167,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a5cbd4f1-dc31-4f74-aaf4-5a05d47b7687",
+    "text": "Each retained tuple is then linked to its imaging study, yielding an example pool\nfor each ℓ∈L. To construct the prototype bank, we uniformly sample up to K\nimages from each label-specific example pool and aggregate their image-encoder\nembeddings into a single prototype using element-wise max pooling, preserving\nthe strongest signals across the sampled images. 2.2 Knowledge-Enhanced Late Fusion Architecture Given the current image and question, we retrieve prototypes from the knowledge\nbase and convert their evidence into scaled logit corrections that are added to\nthe base model logits. Fig. 1 shows an overview of the proposed architecture. Base model: Our structured reporting backbone follows the architecture of\nRad-ReStruct [13]. The model takes an image x and a question context q, consisting of the current question and prior question–answer pairs. Pretrained image\nand text encoders extract features that are fused by a transformer module, S = ffusion fimg(x), ftxt(q) ,",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 7,
+    "total_chunks": 17,
+    "char_count": 985,
+    "word_count": 150,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "82a9bd4b-e46b-4e15-bd9d-e17beb16af33",
+    "text": "and a classifier head predicts logits over the answer space Y , zbase = fcls(S) ∈R|Y |. Prototype-conditioned knowledge branch: We propose to augment the\nbackbone with a prototype-conditioned knowledge branch that retrieves visually similar examples from the mined knowledge base and converts them into\nan answer-aligned support bias for the current decision. Concretely, given the\nquestion-conditioned fused representation S, we retrieve evidence from the knowledge base containing M prototype embeddings P ∈RM×d with hidden dimension d, and the associated answer vectors A ∈RM×|Y |, where each row is a\none-hot encoding for the prototype's label. To do so, we project S and prototype embeddings to a shared space using a linear projection layer and compute\ncosine-similarity weights α ∈RM between the projected representations, , considering only prototypes whose labels correspond to valid answer options for the\ncurrent question. Retrieved evidence is summarized as a prototype feature vector\nand an answer vector: v = α⊤P ∈Rd, u = α⊤A ∈R|Y | Here, v summarizes retrieved visual evidence as a weighted average in the prototypeembedding space, while u aggregates the corresponding one-hot prototype labels\ninto a support vector with soft scores for all labels in the answer space Y . These\ntwo vectors are then concatenated and transformed to a support bias bsup using\nan MLP, which learns to predict how the combination of \"visual similarity\" and\n\"answer tendency\" should adjust the output scores: bsup = MLP([v; u]) ∈R|Y | If no compatible prototype exists, we set bsup = 0\nLate fusion and training: Our final logits are obtained by combining the\nbackbone prediction with the knowledge-derived bias via a learned scaling vector s ∈R|Y |, which calibrates the influence of retrieved evidence per answer\ndimension:\nzfinal = zbase + s ⊙bsup This late-fusion design preserves the backbone decision pathway and enables targeted corrections where prototype evidence is informative.",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 8,
+    "total_chunks": 17,
+    "char_count": 1980,
+    "word_count": 308,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "224e54fb-2623-42f6-a0a2-01017b360d49",
+    "text": "Further, the knowledge branch is lightweight, only adding an MLP and a per-answer scaling vector. We train the full model end-to-end using the same multi-label objective as RadReStruct, applied to zfinal. The prototype bank is treated as external memory,\nwith periodic updates of prototype vectors using the current image encoder to\nmaintain alignment with the continuously fine-tuned encoder. Datasets: We evaluate on Rad-ReStruct [13], a fine-grained hierarchical structured reporting benchmark with 3,597 chest X-ray studies paired with structured 6 Authors Suppressed Due to Excessive Length The template is organized into three question levels: Level 1 (L1) queries\ncoarse abnormality existence (25 questions), Level 2 (L2) queries specific findings (216 questions), and Level 3 (L3) queries fine-grained attributes of findings\nsuch as location, appearance, and severity (477 questions).",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 9,
+    "total_chunks": 17,
+    "char_count": 892,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a2a2a66b-f664-4424-a508-52d6e0f410a1",
+    "text": "We follow the official\nsplits and the evaluation protocol from Rad-ReStruct. For knowledge mining,\nwe use MIMIC-CXR [7], an independently collected dataset that is disjoint from\nRad-ReStruct and contains 227,835 radiology reports paired with chest X-rays,\nand mine structured labels from the Findings and Impression sections. Implementation Details: For structured-label extraction from MIMIC-CXR\nreports, we use Qwen2.5-7B-Instruct [24]. To keep prototype embeddings aligned\nwith the continuously fine-tuned encoder, we compute prototype embeddings\nusing an exponential moving average (EMA) copy of the image encoder and refresh the knowledge base every 10k training steps. We aggregate up to K = 5\nimages for each prototype (fewer if not available). We follow Rad-ReStruct [13]\nfor the structured reporting (SR) backbone, using EfficientNet-B5 [18] as image\nencoder and RadBERT [23] as text encoder. We train for 34 epochs with Adam\noptimizer, learning rate 1e−5, batch size 8, and gradient accumulation 4 on one\nNvidia RTX 3090 GPU with 24 GB memory.",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 10,
+    "total_chunks": 17,
+    "char_count": 1053,
+    "word_count": 157,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7179f79d-edac-47f4-bfe2-0b0737f30670",
+    "text": "Evaluation follows the evaluation\nprocedure used in Rad-ReStruct, iteratively querying the full template while appending prior question–answer pairs to the context. For baselines not designed\nfor multi-turn dialogue (e.g., MedGemma, CheXagent), we compress the history\ninto a single prompt summary followed by the current question, and include the\nanswer options to enforce selection from the constrained answer space. 4 Results and Discussion 4.1 Quality and coverage of knowledge base mining Our knowledge base requires mining template-aligned labels from free-text reports so that mined studies can be indexed into answer-option prototypes. Since\nthe target free-text corpus (MIMIC-CXR) does not provide ground-truth answers in the Rad-ReStruct template space, extraction correctness cannot be measured directly. We therefore evaluate our extraction pipeline on Rad-ReStruct,\nwhich provides structured labels linked to free-text reports, providing corresponding ground-truth template answers, and compare several instruction-tuned\nLLM backbones for extraction. Given a free-text report, the extractor predicts the answer option for each\ntemplate question at hierarchy levels L1 to L3. We compare three instructiontuned LLMs (Mistral 8B, Llama 3.1 8B, Qwen2.5 7B) with and without terminology expansion, evaluating macro-F1 as defined in Rad-ReStruct [13]. For all\nmodels, the proposed terminology expansion clearly improves extraction quality\non all levels, highlighting the importance of handling clinical paraphrases, synonyms and abbreviations. Overall, Qwen2.5-7B-Instruct with terminology expansion achieves the strongest correctness results, and is therefore used in our\nfinal pipeline. Evaluation of candidate instruction-tuned LLMs with and without terminology expansion for template-aligned extraction on Rad-ReStruct. L1-F1 L2-F1 L3-F1\nTerminology Expansion X ✓ X ✓ X ✓ Llama 3.1 8B Instruct 76.4 85.2 72.5 86.9 65.7 74.0\nMistral 8B Instruct 71.7 78.0 72.8 75.4 69.4 77.0\nQwen2.5 7B Instruct 72.5 86.8 72.2 87.4 68.1 80.6",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 11,
+    "total_chunks": 17,
+    "char_count": 2034,
+    "word_count": 281,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "649530ff-a838-42eb-b5dc-e599c486263c",
+    "text": "Knowledge base coverage across hierarchy levels after post-processing. A\ncategory is counted as covered if at least one mined instance is assigned to it. Level Total categories Covered categories Coverage L1 56 56 100%\nL2 326 314 96%\nL3 1167 966 82% Using the resulting extraction pipeline, we mine MIMIC-CXR and obtain\nbroad label-space coverage after post-processing: 100% at L1, 96% at L2, and\n82% at L3 (see Table 2). This yields substantial prototype support even for finegrained attributes, which are typically long-tailed in supervised SR datasets. 4.2 Structured Reporting Performance Table 3 reports performance on Rad-ReStruct.",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 12,
+    "total_chunks": 17,
+    "char_count": 637,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "79a93591-eb55-4ddd-ad1d-01865ca96929",
+    "text": "We compare against methods\nthat predict from images without report-derived context at inference. We exclude\nHiCA-VQA [26], which uses LLM summaries of the structured reports as input,\nrepresenting a different task formulation. General-purpose medical VLLMs, such\nas MedGemma and CheXagent, achieve competitive overall scores, but still lag\nbehind specialized structured-reporting models.",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 13,
+    "total_chunks": 17,
+    "char_count": 387,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "13cecc2f-82f4-434e-bebb-94f490aaebbf",
+    "text": "This gap suggests that RadReStruct benefits from architectures and training objectives tailored to hierarchical structured reporting and fine-grained, field-level supervision. Compared\nto both generalist medical VLLMs and prior structured reporting methods, ProtoSR achieves the best overall F1 and the strongest performance at the deeper\nlevels of the hierarchy, with the largest gains on the fine-grained attribute questions (L3), where supervision is most sparse and errors are most frequent, highlighting the value of prototype guidance for long-tail attribute configurations. While some methods outperform in report-level accuracy, this metric provides\na complementary but imperfect view of performance. It can favor conservative\nstrategies that answer only a few fields or default to \"no finding\", increasing exactmatch scores on normal studies but harming performance on abnormal cases. This can be observed for RaDialog and Context-VQA, which achieve high report\naccuracy despite lower F1, suggesting that partial or empty reports are favored. To isolate the effect of prototype guidance, we compare our model against the\nsame base model without knowledge integration. As shown in Table 4, adding 8 Authors Suppressed Due to Excessive Length",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 14,
+    "total_chunks": 17,
+    "char_count": 1249,
+    "word_count": 179,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "876a6a2b-34df-488e-9e1b-9f6b4ab0748e",
+    "text": "Performance on the Rad-ReStruct benchmark. Method Overall F1 L1-F1 L2-F1 L3-F1 Report Acc. MedGemma [16] 26.8 38.2 63.4 2.8 0.0%\nCheXagent [4] 32.4 62.1 69.8 6.2 20.3%\nRaDialog [14] 28.7 56.8 70.0 0.23 39.6%\nhi-VQA [13] 32.0 64.6 71.6 4.1 32.6%\nContext-VQA [1] 32.9 67.2 71.8 3.2 39.7%\nProtoSR 34.4 66.2 72.8 7.4 36.6% Ablations across knowledge-integration strategies.",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 15,
+    "total_chunks": 17,
+    "char_count": 369,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a964a0bf-b775-4601-8d5c-27663841e8be",
+    "text": "Variant Overall F1 L1-F1 L2-F1 L3-F1 No knowledge 32.5 64.2 71.3 4.3\nEarly Fusion 32.5 64.8 71.4 4.3\nRandomized prototypes 32.7 64.3 71.4 4.4\nProtoSR 34.4 66.2 72.8 7.4 prototype-guided late fusion yields consistent gains across levels, with the most\npronounced improvement at L3 with a relative improvement of +72.1%. Reportlevel accuracy also increases, indicating improved end-to-end consistency for our\nbackbone. We further ablate the knowledge integration strategy in Table 4 comparing our method to an early-fusion variant that includes a list of all answer\noptions paired with their knowledge embeddings directly into the input sequence. We see that this model can not utilize the knowledge effectively, leading to almost unchanged performance compared to the base model. Finally, to verify that\nimprovements come from the content of retrieved prototypes rather than added\nfusion capacity, we perform an ablation that replaces prototypes with Gaussian\nnoise, while keeping the architecture unchanged. The performance falls back to\nbaseline level, suggesting ProtoSR exploits meaningful prototype structure and\nlearns to ignore uninformative signals. In this work, we propose ProtoSR, a knowledge-guided approach to structured\nradiology reporting that aligns information mined from abundant free-text reports with a fine-grained structured template and integrates it into structured\nreport population. Our template-aligned extraction pipeline converts free-text reports into label-linked example prototypes, and our prototype-conditioned structured reporting model that leverages exemplars during prediction. By injecting\nretrieved evidence as a residual at the logit level, our method targets the long tail\nof detailed attribute configurations while preserving the strengths of the hierarchical structured reporting backbone. Overall, our results indicate that routine\nfree-text reports can be systematically converted into template-aligned, imagelinked knowledge that improves fine-grained structured radiology reporting. The authors gratefully acknowledge the financial support by the Bavarian Ministry of Economic Affairs, Regional Development and Energy (StMWi) under\nproject ThoraXAI (DIK-2302-0002), and the German Research Foundation (DFG,\ngrant 469106425 - NA 620/51-1).",
+    "paper_id": "2603.11938",
+    "title": "Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting",
+    "authors": [
+      "Chantal Pellegrini",
+      "Adrian Delchev",
+      "Ege Özsoy",
+      "Nassir Navab",
+      "Matthias Keicher"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11938v1",
+    "chunk_index": 16,
+    "total_chunks": 17,
+    "char_count": 2285,
+    "word_count": 310,
+    "chunking_strategy": "semantic"
+  }
+]

@@ -1,0 +1,668 @@
+[
+  {
+    "chunk_id": "244f73bb-32ec-4d83-a1d8-47c9fad56286",
+    "text": "INSTRUCTION SET FOR THE REPRESENTATION OF GRAPHS Ezequiel López-Rubio∗\nDepartment of Computer Languages and Computer Science\nUniversity of Málaga\nBulevar Louis Pasteur, 35\n29071 Málaga, Spain\nezeqlr@lcc.uma.es\n2026 Mario Pascual-González\nDepartment of Computer Languages and Computer Science\nUniversity of MálagaMar Bulevar Louis Pasteur, 35\n29071 Málaga, Spain\nmpascual@uma.es11 ABSTRACT[cs.CL]\nWe present IsalGraph, a method for representing the structure of any finite, simple graph as a compact\nstring over a nine-character instruction alphabet. The encoding is executed by a small virtual machine\ncomprising a sparse graph, a circular doubly-linked list (CDLL) of graph-node references, and two\ntraversal pointers. Instructions either move a pointer through the CDLL or insert a node or edge into\nthe graph.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 0,
+    "total_chunks": 37,
+    "char_count": 812,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "470082a9-75ba-4b39-9723-2e860e9b5a36",
+    "text": "A key design property is that every string over Σ decodes to a valid graph, with no invalid\nstates reachable. A greedy GraphToString algorithm encodes any connected graph into a string in\ntime polynomial in the number of nodes; an exhaustive-backtracking variant produces a canonical\nstring w∗G by selecting the lexicographically smallest shortest string across all starting nodes and all\nvalid traversal orders. We evaluate the representation on five real-world graph benchmark datasets\n(IAM Letter LOW/MED/HIGH, LINUX, and AIDS) and show that the Levenshtein distance between\nIsalGraph strings correlates strongly with graph edit distance (GED). Together, these properties make\nIsalGraph strings a compact, isomorphism-invariant, and language-model-compatible sequential\nencoding of graph structure, with direct applications in graph similarity search, graph generation, and\ngraph-conditioned language modelling.arXiv:2603.11039v1 Keywords graph representation · adjacency matrix · instruction sequences · deep learning · language models · structural\npatterns Graphs are among the most expressive data structures available to scientists and engineers. Molecular compounds,\nsocial networks, knowledge bases, protein interaction networks, and circuit topologies can all be modelled as collections\nof nodes connected by edges [Zhou et al., 2020, Khoshraftar and An, 2024, Ju et al., 2024]. A central challenge in\ncontemporary computational graph processing is representation: how should the structure of a graph be encoded in a\nform that supports efficient computation, generalisation, and downstream learning? The dominant answer is the adjacency matrix. Given a graph G = (V, E) on N = |V | nodes, its adjacency matrix\nMG ∈{0, 1}N×N records which pairs of nodes are connected. The adjacency matrix is the foundation of spectral graph ∗Corresponding author. Universidad de Málaga. C/ Arquitecto Francisco Peñalosa 18, 29010, Málaga, Spain",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 1,
+    "total_chunks": 37,
+    "char_count": 1938,
+    "word_count": 275,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fe13eac5-0fe2-43aa-8be7-a7e270a3e17a",
+    "text": "Instruction set for the representation of graphs A PREPRINT theory, algebraic graph algorithms, and virtually all existing deep learning approaches to graphs [Kipf and Welling,\n2017, Hamilton et al., 2017, Veliˇckovi´c et al., 2018]. Its limitations, however, are substantial: it occupies O(N 2) space\nregardless of graph sparsity. Furthermore, it is inherently two-dimensional and therefore not directly consumable by\nsequential models such as recurrent networks or transformers. Last but not least, it breaks permutation equivariance\nbecause its meaning depends on the arbitrary ordering assigned to the nodes. A possible alternative line of research seeks to encode graphs as sequences that can be fed to sequence models. This is\nparticularly appealing in the current era of large language models, which have demonstrated remarkable capacity to\nprocess, generate, and reason over sequential data [Vaswani et al., 2017, Devlin et al., 2019]. The challenge is to design\na sequential encoding that is: (i) compact, using much less than O(N 2) symbols for sparse graphs; (ii) reversible, so\nthat the original graph structure can be recovered exactly from the string; (iii) structure-preserving, so that similar\ngraphs yield similar strings; and (iv) canonicalisable, admitting a unique representative string per isomorphism class. This paper presents IsalGraph, a novel methodology for sequential graph representation satisfying all four desiderata. The encoding is defined by a small virtual machine comprising a sparse graph, a circular doubly linked list (CDLL) of\ngraph nodes, and two traversal pointers. Nine instructions move the pointers through the CDLL or insert nodes and\nedges into the graph. Executing any string in the instruction language decodes it into a graph; conversely, a greedy\nalgorithm encodes any connected graph into a string. It must be highlighted that all strings over the defined alphabet are\nvalid, i.e. they decode to a graph. A canonical string is obtained by minimising string length over all starting nodes and\nall valid traversal orders, producing a complete graph invariant with formal correctness guarantees. Our previous work\n[López-Rubio, 2025] is substantially different from IsalGraph because the older approach requires a fixed ordering of\nthe nodes and does not employ a circular doubly linked list of nodes.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 2,
+    "total_chunks": 37,
+    "char_count": 2350,
+    "word_count": 354,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cfff5aa5-fe41-4e0e-a1c5-34dc6673a34d",
+    "text": "The structure of this paper is as follows. Section 2 presents the graph representation methodology. After that, Section 3\nreports the results of an exploratory computational experiment. Finally, Section 5 deals with the conclusions. This section presents the formal machinery of ISALGRAPH. Subsection 2.1 defines the interpreter state and instruction\nset. Subsection 2.1.3 describes the StringToGraph (S2G) algorithm. Subsection 2.2 presents the GraphToString (G2S)\nalgorithm. Subsection 2.3 states the canonical-string invariance conjecture. Subsection 2.4 establishes the topological\nrelationship between the ISALGRAPH string metric and graph edit distance.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 3,
+    "total_chunks": 37,
+    "char_count": 659,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "acff5700-edc3-41ee-9ccd-ccf386d9ca12",
+    "text": "2.1 Instruction Set and String Execution 2.1.1 Interpreter State The ISALGRAPH interpreter maintains three components simultaneously during the execution of an instruction string. Definition 2.1 (Interpreter state). An ISALGRAPH interpreter state is a triple S = (G, L, π) where: • G = (VG, EG) is a finite, simple graph built incrementally, with nodes identified by contiguous non-negative\nintegers {0, 1, . . . , |VG| −1}. • L is an array-backed circular doubly-linked list (CDLL) whose nodes carry graph-node indices as integer\npayloads. We write valL(ℓ) for the payload of CDLL node ℓ, and next(ℓ), prev(ℓ) for its successor and\npredecessor in the circular order. The CDLL index space and the graph node index space are distinct: a CDLL\nnode ℓis not the same object as graph node valL(ℓ). • π = (π1, π2) is a pair of pointers, where each pointer is a CDLL node index. π1 is called the primary pointer\nand π2 the secondary pointer.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 4,
+    "total_chunks": 37,
+    "char_count": 934,
+    "word_count": 159,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "61c8130f-8c2c-44b6-a991-3c820ba31c19",
+    "text": "Before any instruction is executed, the interpreter is placed in the following initial state: (i) G contains exactly one node (node 0) and no edges.\n(ii) L contains exactly one node whose payload is graph node 0.\n(iii) Both pointers π1 and π2 point to this single CDLL node. 2.1.2 The Instruction Alphabet ISALGRAPH strings are drawn from the nine-character alphabet\nΣ = {N, n, P, p, V, v, C, c, W}. Instruction set for the representation of graphs A PREPRINT The semantics of each instruction are defined in Table 1 and expanded below. Table 1: The ISALGRAPH instruction set. valL(ℓ) denotes the graph-node index stored as payload of CDLL node ℓ. The N/n (P/p) instructions traverse the CDLL in the forward (backward) circular direction. The V/v instructions\nalways create edges from the pointer node to the new node; the pointer itself does not move. Instructions C and c differ\nonly for directed graphs. Type Effect on state (G, L, π1, π2) N Primary move (forward) π1 ←nextL(π1)\nP Primary move (backward) π1 ←prevL(π1)\nn Secondary move (forward) π2 ←nextL(π2)\np Secondary move (backward) π2 ←prevL(π2)\nV Node insertion via primary Add new node u to G; add edge (valL(π1), u) to G;\ninsert u into L immediately after π1.\nv Node insertion via secondary Add new node u to G; add edge (valL(π2), u) to G;\ninsert u into L immediately after π2. C Edge insertion (primary →sec- Add edge (valL(π1), valL(π2)) to G. For undirected\nondary) graphs, the reverse edge is also added.\nc Edge insertion (secondary →pri- Add edge (valL(π2), valL(π1)) to G. Equivalent to C\nmary) for undirected graphs.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 5,
+    "total_chunks": 37,
+    "char_count": 1586,
+    "word_count": 273,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ed703620-2ca1-4372-9604-cb88af9c07e8",
+    "text": "W No-op State is unchanged. Critical semantic note. In the V and v instructions, the new CDLL node for u is inserted after the pointer's current\nCDLL node, but the pointer itself does not advance to the new node. This means that after a V instruction, π1 still\nreferences the same CDLL node as before the instruction was executed. Every string is valid. A key design property of the ISALGRAPH alphabet is that every string w ∈Σ∗decodes to\na valid finite simple graph. No instruction can produce an undefined or inconsistent state: pointer movements wrap\naround the circular CDLL, and node- and edge-insertion instructions always have a well-defined, deterministic effect.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 6,
+    "total_chunks": 37,
+    "char_count": 671,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2bc68571-96bd-4762-b506-dea57a42bc0e",
+    "text": "2.1.3 The StringToGraph Algorithm The S2G algorithm (Algorithm 1) executes an ISALGRAPH string instruction by instruction, starting from the initial\nstate and returning the resulting graph. For undirected graphs, add_edge(u, v) inserts both (u, v) and (v, u) into the adjacency structure, so\ninstructions C and c have identical effect. For directed graphs they differ by edge direction.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 7,
+    "total_chunks": 37,
+    "char_count": 386,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f428dbf8-5f9e-4470-b054-de40877b54c4",
+    "text": "Example 2.3 (Decoding VvNV). We trace S2G(VvNV, directed = false): (1) Init: G = ({0}, ∅); CDLL = [0]; π1 = π2 = ℓ0 (payload 0). (2) V: add node 1; add edge (0, 1); CDLL = [0, 1]; π1 still on ℓ0. (3) v: add node 2; add edge (0, 2); CDLL = [0, 1, 2] (inserted after π2 = ℓ0, so after 0 but before 1 in circular\norder — actually [0, 2, 1]); π2 still on ℓ0. (4) N: π1 ←next(ℓ0) (node 2 in current circular order [0, 2, 1]). (5) V: add node 3; add edge (2, 3); CDLL = [0, 2, 3, 1]. 2.2 Graph-to-String Conversion The G2S algorithm is the inverse of S2G: given a graph G and a starting node v0 ∈V (G), it produces an ISALGRAPH\nstring w such that S2G(w) ∼= G. The algorithm is a greedy search that at each step finds the cheapest pointer\ndisplacement (in terms of number of pointer-move instructions emitted) that enables a useful structural operation. Instruction set for the representation of graphs A PREPRINT Algorithm 1 S2G(w, directed): StringToGraph\nRequire: String w ∈Σ∗; Boolean directed\nEnsure: Graph G such that S2G(w) = G\n1: ▷Initialise interpreter state\n2: G ←new graph with one node u0 = 0, directed = directed\n3: L ←new CDLL; ℓ0 ←L.insert_after(∅, u0)\n4: π1 ←ℓ0; π2 ←ℓ0\n5: ▷Execute each instruction in turn\n6: for each character σ in w do\n7: if σ = N then\n8: π1 ←L.next(π1)\n9: else if σ = P then\n10: π1 ←L.prev(π1)\n11: else if σ = n then\n12: π2 ←L.next(π2)\n13: else if σ = p then\n14: π2 ←L.prev(π2)\n15: else if σ = V then\n16: u ←G.add_node()\n17: G.add_edge valL(π1), u\n18: L.insert_after(π1, u) ▷pointer π1 does not move\n19: else if σ = v then\n20: u ←G.add_node()\n21: G.add_edge valL(π2), u\n22: L.insert_after(π2, u) ▷pointer π2 does not move\n23: else if σ = C then\n24: G.add_edge valL(π1), valL(π2)\n25: else if σ = c then\n26: G.add_edge valL(π2), valL(π1)\n27: else if σ = W then\n28: skip ▷no-op\n29: end if\n30: end for\n31: return G 2.2.1 Pair Generation and Cost Ordering The search space at each step is the set of integer displacement pairs (a, b) ∈{−M, . . . , M}2, where M is the current\nnode count and a, b are the number of steps to move the primary and secondary pointers respectively (positive = forward,\nnegative = backward). The cost of a pair is its total pointer-movement count |a| + |b|, which equals the number of\nN/P/n/p instructions that will be emitted.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 8,
+    "total_chunks": 37,
+    "char_count": 2279,
+    "word_count": 445,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "86324505-9e71-40c2-9633-e459ef651708",
+    "text": "For a positive integer M, let n o P(M) = (a, b) a, b ∈[−M, M] sorted in increasing order of (|a| + |b|, |a|, a, b) lexicographically. The primary sort key |a| + |b| minimises total\npointer movement; secondary keys break ties deterministically. 2.2.2 Algorithm Description The algorithm (Algorithm 2) maintains an output graph Gout and two node-index mappings: ι (input-to-output) and ι−1\n(output-to-input). These mappings are necessary because Gout is built incrementally with its own node numbering,\nwhich may differ from the input graph's numbering. At each iteration, the algorithm enumerates pairs (a, b) ∈P(M) in order and attempts four operations in priority order:",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 10,
+    "total_chunks": 37,
+    "char_count": 671,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "71484d80-2c66-4a26-aaa6-51ec67dfc135",
+    "text": "V (node via primary) The tentative primary position ˜π1 corresponds to a node in the input graph that has an unmapped\nneighbour. A new node is inserted. Instruction set for the representation of graphs A PREPRINT v (node via secondary) Same, but using the tentative secondary position ˜π2. C (edge, primary →secondary) The tentative positions correspond to two nodes in the input graph that are adjacent\nbut whose corresponding output-graph nodes are not yet connected. c (edge, secondary →primary) Same as C but reversed; meaningful only for directed graphs. The first pair (a, b) for which any of these operations is applicable is committed: the pointer-move instructions are\nemitted (|a| copies of N or P; |b| copies of n or p), the structural instruction (V , v, C, or c) is appended, the actual\npointers are updated, and the loop continues. The algorithm terminates when all nodes and all edges of G have been\ninserted. Algorithm 2 G2S(G, v0): GraphToString (greedy)\nRequire: Connected graph G = (V, E); starting node v0 ∈V\nEnsure: String w ∈Σ∗with S2G(w) ∼= G\n1: ▷Initialise state\n2: Verify all nodes are reachable from v0\n3: Gout ←empty graph; u0 ←Gout.add_node()\n4: L ←new CDLL; ℓ0 ←L.insert_after(∅, u0)\n5: π1 ←ℓ0; π2 ←ℓ0\n6: ι ←{v0 7→u0}; ι−1 ←{u0 7→v0}\n7: nleft ←|V | −1; eleft ←|E|; w ←ε\n8: ▷Main loop: continue until all nodes and edges are inserted\n9: while nleft > 0 or eleft > 0 do\n10: M ←|V (Gout)|\n11: for (a, b) in P(M) do\n12: ˜ℓ1 ←walk(L, π1, a); ˜v1 ←ι−1[valL(˜ℓ1)]\n13: ˜ℓ2 ←walk(L, π2, b); ˜v2 ←ι−1[valL(˜ℓ2)]\n14: if nleft > 0 and ∃c ∈NG(˜v1) with c /∈dom(ι) then ▷V : node via primary\n15: u ←Gout.add_node(); ι[c] ←u; ι−1[u] ←c\n16: Gout.add_edge(valL(˜ℓ1), u); L.insert_after(˜ℓ1, u)\n17: w += moves(a, primary) + V; π1 ←˜ℓ1\n18: nleft −= 1; eleft −= 1; break\n19: else if nleft > 0 and ∃c ∈NG(˜v2) with c /∈dom(ι) then ▷v: node via secondary\n20: u ←Gout.add_node(); ι[c] ←u; ι−1[u] ←c\n21: Gout.add_edge(valL(˜ℓ2), u); L.insert_after(˜ℓ2, u)\n22: w += moves(b, secondary) + v; π2 ←˜ℓ2\n23: nleft −= 1; eleft −= 1; break\n24: else if (˜v2, ˜v1) ∈E and (valL(˜ℓ2), valL(˜ℓ1)) /∈E(Gout) then ▷C\n25: Gout.add_edge(valL(˜ℓ1), valL(˜ℓ2))\n26: w += moves(a, pri) + moves(b, sec) + C\n27: π1 ←˜ℓ1; π2 ←˜ℓ2; eleft −= 1; break\n28: else if G directed and (˜v1, ˜v2) ∈E and (valL(˜ℓ1), valL(˜ℓ2)) /∈E(Gout) then ▷c\n29: Gout.add_edge(valL(˜ℓ2), valL(˜ℓ1))\n30: w += moves(a, pri) + moves(b, sec) + c\n31: π1 ←˜ℓ1; π2 ←˜ℓ2; eleft −= 1; break\n32: end if\n33: end for\n34: end while\n35: return w Here walk(L, ℓ, a) returns the CDLL node reached by taking |a| steps forward (if a > 0) or backward (if a < 0) from\nℓ. The helper moves(a, primary) emits a copies of N (if a ≥0) or |a| copies of P (if a < 0), and analogously for the\nsecondary pointer with n/p. Remark 2.5 (Reachability precondition). For directed graphs, the V and v instructions always create edges of the form\n(existing_node →new_node). Consequently, G2S can only encode nodes that are reachable from v0 via directed\noutgoing edges. The algorithm raises an error if any node is unreachable from the chosen starting node.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 11,
+    "total_chunks": 37,
+    "char_count": 3079,
+    "word_count": 550,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "980f3b22-8742-468b-a0a7-bb28fadeba12",
+    "text": "Instruction set for the representation of graphs A PREPRINT Remark 2.6 (String length decomposition). For a graph G with N nodes and M edges, the length of any ISALGRAPH\nstring encoding G satisfies:\n|w| = (N −1) + M −(N −1) + X(|ak| + |bk|) .\none V/v| per{znon-root} node one C/c/V/v| {zper extra} edge k\n| pointer{zmoves }\nThe first two terms are fixed by G; only the total pointer-movement cost depends on the traversal order. Minimising |w|\ntherefore reduces to minimising total pointer travel.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 12,
+    "total_chunks": 37,
+    "char_count": 497,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e4966078-7127-4e24-9162-509d489ff155",
+    "text": "2.3 Conjectured Properties The greedy G2S algorithm is not label-blind in its base form: its neighbour iteration order (over sets) depends on the\norder that the nodes are extracted from the set, so two isomorphic graphs with different node numberings may yield\ndifferent strings from the greedy algorithm. To recover a labelling-independent encoding, we define the canonical\nstring via exhaustive backtracking. Definition 2.7 (Canonical string). Let W(G) denote the set of all ISALGRAPH strings producible by the exhaustivebacktracking variant of G2S (which explores all valid neighbour choices at every V/v branch point) over all starting\nnodes v ∈V (G). The canonical string of G is\nw∗G = lexminn w ∈W(G) |w| = min |w′|o.\nw′∈W(G) That is, among all shortest strings in W(G), select the lexicographically smallest under the total order C < N < P <\nV < W < c < n < p < v on Σ.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 13,
+    "total_chunks": 37,
+    "char_count": 876,
+    "word_count": 150,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f7b9a51f-cf52-499b-9397-bed389756e7c",
+    "text": "This construction motivates the following conjecture, which we state here as our primary theoretical claim and support\nempirically in Section 3. Conjecture 2.8 (Canonical string as complete graph invariant). Let G and H be finite, simple graphs. Then\nG ∼= H ⇐⇒ w∗G = w∗H. The forward direction (G ∼= H ⇒w∗G = w∗H) would follow from the label-blindness of the exhaustive canonical\nsearch: an isomorphism ϕ : V (G) →V (H) bijects the set of valid traversals of G from v onto the valid traversals\nof H from ϕ(v), so the two graphs generate identical sets of strings and hence the same canonical minimum. The\nbackward direction (w∗G = w∗H ⇒G ∼= H) would follow from round-trip correctness: if both G and H produce the\nsame canonical string w, then G ∼= S2G(w) ∼= H by transitivity. A complete proof requires establishing, rigorously, that the exhaustive-backtracking algorithm is indeed label-blind,\ni.e. that its output depends only on the abstract adjacency structure of the input and not on the integer identifiers\nassigned to nodes. We leave this verification as future work and instead provide empirical support: 100% invariance\nand discrimination rates on 71 isomorphic and non-isomorphic graph pairs across nine graph families (see Section 3). Remark 2.9 (Relation to graph isomorphism). If Conjecture 2.8 holds, then computing w∗G is at least as hard as graph\nisomorphism, since w∗G = w∗H if and only if G ∼= H. Graph isomorphism is known to lie in NP and is not known to\nbe NP-complete; it has quasi-polynomial-time algorithms. The exhaustive canonical search used to compute w∗G has\ncomplexity that grows super-polynomially with |V (G)| in the worst case. 2.4 Topological Structure A key property of a useful graph representation is metric locality: small structural changes to a graph should produce\nsmall changes in its representation. Conversely, structurally dissimilar graphs should have representations that are far\napart.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 14,
+    "total_chunks": 37,
+    "char_count": 1934,
+    "word_count": 314,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5010d040-44b4-41e0-88a1-8797b0c0700f",
+    "text": "We formalise this via a comparison between the Levenshtein distance on ISALGRAPH strings and the standard\nGraph Edit Distance (GED). 2.4.1 The String Distance Definition 2.10 (Levenshtein distance on ISALGRAPH strings). For two ISALGRAPH strings w1, w2 ∈Σ∗, their\nLevenshtein distance is\nk edits\ndLev(w1, w2) = min k w1 −−−→w2 ,\nwhere a single edit is a character insertion, deletion, or substitution. This is computed in O(|w1|·|w2|) time via standard\ndynamic programming. Applied to canonical strings, we define the ISALGRAPH graph distance:\ndISALGRAPH(G, H) = dLev(w∗G, w∗H). Instruction set for the representation of graphs A PREPRINT 2.4.2 Graph Edit Distance Definition 2.11 (Graph Edit Distance [Sanfeliu and Fu, 2012]). The Graph Edit Distance GED(G, H) is the minimum\nnumber of elementary edit operations (node insertion, node deletion, edge insertion, edge deletion) needed to transform\nG into a graph isomorphic to H, under uniform unit costs. GED is a complete metric on the space of finite graphs up to isomorphism (i.e. GED(G, H) = 0 ⇐⇒G ∼= H), but it\nis NP-hard to compute even for simple unit-cost functions. 2.4.3 The Locality Property We state the locality relationship between dISALGRAPH and GED as a claim.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 15,
+    "total_chunks": 37,
+    "char_count": 1226,
+    "word_count": 195,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "77ee70ad-2ca7-4bb8-bba0-8cb90336688c",
+    "text": "Let G and H be finite, simple, connected\ngraphs. Denote by k = GED(G, H) their graph edit distance. (i) Monotonicity. dISALGRAPH(G, H) is a non-decreasing function of k: adding more edit operations to G produces\na canonical string further from w∗G.\n(ii) Strong correlation. Over a broad sample of graph families, the Pearson correlation and the Spearman rank\ncorrelation between dISALGRAPH and GED are high.\n(iii) Sensitivity. The mapping k 7→dISALGRAPH is monotonically increasing on average. The locality property distinguishes ISALGRAPH from many other graph representations. For comparison, the Hamming\ndistance between (permuted) adjacency matrices does not satisfy locality because a single node insertion changes O(N)\nentries in the matrix. The ISALGRAPH encoding instead reflects the instruction-level cost of re-encoding the modified\ngraph, which is naturally bounded by the number of changed edges plus the additional pointer moves required to reach\nthe new positions. For the N × N binary adjacency matrix, a single edge insertion changes exactly one entry (two for undirected graphs),\ngiving a Hamming distance of 1 or 2 per edge edit—asymptotically smaller than the ISALGRAPH bound. However,\nthe adjacency matrix does not admit a meaningful string metric without first fixing a canonical node ordering, which\nreintroduces the isomorphism problem. The ISALGRAPH distance dISALGRAPH is isomorphism-invariant by construction,\nwhereas the Hamming distance on adjacency matrices is not. 2.4.4 Implications for Graph Similarity Search The locality property has practical consequences. First, it suggests that dISALGRAPH can serve as a computationally\nefficient proxy for GED in similarity search: computing dLev takes O(|w1| · |w2|) time, whereas exact GED requires\nexponential time. Second, the correlation is strong enough that rankings produced by dISALGRAPH closely mirror GED\nrankings, which is the property required for k-nearest-neighbour retrieval.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 16,
+    "total_chunks": 37,
+    "char_count": 1963,
+    "word_count": 286,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0d5889f5-bff7-4d73-9758-bf49daa1a08c",
+    "text": "Third, because every ISALGRAPH string\ndecodes to a valid graph, interpolation in the string space (e.g. via random or guided edit paths) produces valid\nintermediate graphs, enabling gradient-free graph optimisation via string-space random walks. 3 Computational experiments This section describes the datasets, evaluation protocol, and computational infrastructure underlying the experiments. Three objectives guide the experimental design: (i) quantifying the agreement between Levenshtein distance on\nISALGRAPH strings and graph edit distance across real-world graph benchmarks; (ii) characterising the empirical time\ncomplexity of the encoding algorithms on synthetic random graphs; and (iii) measuring the trade-off between encoding\nquality and computational cost across three encoding strategies of increasing expense. 3.1 Benchmark Datasets The experiments require two kinds of benchmark data: real-world graph collections with exact GED ground truth, for\nevaluating how faithfully the Levenshtein distance approximates structural dissimilarity; and synthetic random graphs\nof controlled size, for measuring how encoding time scales with the number of nodes. 3.1.1 Real-World Graph Collections Five datasets from three application domains are used for the correlation analysis and the speedup measurement.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 17,
+    "total_chunks": 37,
+    "char_count": 1311,
+    "word_count": 173,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "51d2ba47-57ef-4f2f-8fca-b193bebc1d31",
+    "text": "In\nall cases, node and edge attributes are discarded; the ISALGRAPH encoding operates solely on graph topology. Only\nconnected graphs are retained, since the G2S algorithm (Algorithm 2) requires a connected input. Instruction set for the representation of graphs A PREPRINT",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 18,
+    "total_chunks": 37,
+    "char_count": 273,
+    "word_count": 41,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6bb8daf5-8e88-4e29-a6ea-34784dd846b4",
+    "text": "IAM Letter (LOW, MED, HIGH). The IAM Letter dataset [Riesen and Bunke, 2008] contains prototype graphs of\n15 capital letters of the Roman alphabet that consist exclusively of straight lines. Nodes represent characteristic points\nof the letter strokes (endpoints, corners, intersections), and edges connect consecutive points along a stroke. Three\nsubsets correspond to increasing levels of positional noise applied to node coordinates: LOW, MED, and HIGH. After\nconnectivity filtering, the subsets contain 1,180, 1,253, and 2,059 graphs, with mean edge counts of 3.07, 3.17, and 4.56,\nrespectively. For these three subsets, exact GED is computed via the A∗algorithm of NetworkX [Hagberg et al., 2008]\nwith uniform unit costs: node insertion and deletion cost 1, edge insertion and deletion cost 1, and node substitution\ncost 0 (all nodes are structurally identical after stripping coordinates). The LINUX dataset contains program flow graphs extracted from subroutines of the Linux kernel, originally\ncollected by Bai et al. [2019] and redistributed with isomorphism deduplication by Jain et al. [2024]. After filtering for\nconnectivity and restricting to graphs with at most 12 nodes, 89 graphs remain (mean edge count: 8.35).",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 19,
+    "total_chunks": 37,
+    "char_count": 1227,
+    "word_count": 184,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "558a6646-1cf4-457a-9c36-ce87d35d4cce",
+    "text": "Precomputed\nexact GED matrices from the GraphEdX repository are used directly; these were obtained via A∗search with topologyonly costs (zero cost for all node operations; unit cost for edge insertion and deletion). The AIDS dataset contains molecular graphs from the Developmental Therapeutics Program of the U.S. National Cancer Institute, where nodes represent atoms and edges represent covalent bonds. The topology-only variant\ndistributed by Jain et al. [2024] is used, in which all node labels (atom types) have been stripped and GED is computed\nwith the same topology-only cost function as LINUX.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 20,
+    "total_chunks": 37,
+    "char_count": 603,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f8393782-2e10-41d9-ad83-67ca72d2b109",
+    "text": "After filtering, 769 connected graphs remain (mean edge count:\n10.70). The five datasets cover structural densities ranging from sparse (mean edges 3.07) to moderately dense (10.70), and\nsample sizes from 89 to 2,059 graphs. Table 2 summarises the number of graphs, the number of valid pairwise\ncomparisons, and the mean edge count for each dataset. 3.1.2 Synthetic Graph Families The complexity characterisation requires graphs of controlled size, independent of any particular application domain. Random connected graphs are generated from two standard families: • Barabási–Albert (BA) preferential-attachment graphs [Barabási and Albert, 1999] with attachment parameters\nm ∈{1, 2}.\n• Erd˝os–Rényi (ER) random graphs [Erd˝os and Rényi, 1959] with edge probabilities p ∈{0.3, 0.5}. When an\nER graph is disconnected, only its largest connected component is retained. For each family, graphs are generated at node counts n ∈{3, 4, . . . , 50} for the greedy methods and n ∈{3, 4, . . . , 20}\nfor the canonical method, with a per-instance timeout of 600 seconds. Five independent instances are generated per\n(n, family) combination. These synthetic graphs are used exclusively for the time-complexity analysis reported in\nFigure 2; they do not participate in the correlation experiments.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 21,
+    "total_chunks": 37,
+    "char_count": 1285,
+    "word_count": 197,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b414fac8-7efe-4bce-adc9-42578da3488d",
+    "text": "3.2 Evaluation Protocol The evaluation is organised into four components: a comparison of three encoding methods (Section 3.2.1), a correlation\nanalysis between Levenshtein and GED distances on the real-world datasets (Section 3.2.3), a complexity and speedup\nmeasurement on the synthetic and real-world datasets, respectively (Section 3.2.4), and a qualitative neighbourhood\nanalysis on a small illustrative graph (Section 3.2.5). 3.2.1 Encoding Methods Under Comparison Three variants of the G2S encoding (Section 2.2) are evaluated, ordered by decreasing computational cost: The exhaustive-backtracking procedure of Definition 2.7, returning the lexicographically minimal shortest\nstring w∗G. The greedy G2S algorithm executed from every starting node v0 ∈V (G); the shortest string across all\nruns is selected. A single greedy G2S run from a uniformly random starting node. 3.2.2 Distance Computation Exact graph edit distance (GED; Definition 2.11) serves as the ground-truth structural dissimilarity measure. The GED\ncomputation procedure for each dataset is described in Section 3.1. Instruction set for the representation of graphs A PREPRINT For each encoding method, all-pairs Levenshtein distance matrices (Definition 2.10) are computed from the resulting\nISALGRAPH strings. 3.2.3 Correlation Analysis The agreement between the Levenshtein and GED distance matrices is quantified over all valid upper-triangular pairs\n(i, j) with i < j, GED(Gi, Gj) > 0, and dLev(wi, wj) > 0. Two statistics are reported per dataset and encoding\nmethod:",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 22,
+    "total_chunks": 37,
+    "char_count": 1547,
+    "word_count": 220,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f842b861-7346-4611-b32c-a316d1cb907a",
+    "text": "• Spearman's rank correlation coefficient ρ, measuring monotonic association between the two distance measures.\n• The ordinary least-squares (OLS) regression slope β of Levenshtein distance on GED, where β = 1 indicates\nequal scaling and β < 1 indicates that Levenshtein distances grow more slowly than GED. The p-values reported in Table 2 are obtained from SciPy's implementation of the Spearman test, which uses the\nasymptotic t-distribution approximation t = ρ p(n −2)/(1 −ρ2) with n −2 degrees of freedom, where n is the\nnumber of valid pairs. Given that all five datasets yield n > 1,600 pairs, the asymptotic approximation is well justified. Statistical significance is assessed at α = 0.001.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 23,
+    "total_chunks": 37,
+    "char_count": 699,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e9ccd399-43da-4680-997e-87759c29cb10",
+    "text": "3.2.4 Complexity and Speedup Measurement Encoding time is measured on the synthetic graph families described in Section 3.1. Each encoding is repeated 25\ntimes per graph instance, and the median CPU time is retained to reduce the effect of system scheduling variance. The aggregate time at each node count n is the median across instances and families, with the interquartile range as\na dispersion measure.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 24,
+    "total_chunks": 37,
+    "char_count": 406,
+    "word_count": 65,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "334efec4-9388-4f61-a5b0-0711e0adcd89",
+    "text": "Scaling exponents α are estimated by fitting T(n) = c · nα via OLS on log-transformed data\n(log T vs. log n), and goodness of fit is reported as R2. The computational speedup of the ISALGRAPH pipeline (encoding plus pairwise Levenshtein distance) over exact GED\nis measured on the five real-world datasets. Speedup ratios are computed per graph pair and aggregated as the geometric\nmean, stratified by graph size (n = 3 to 11 nodes). 3.2.5 Neighbourhood Topology As a qualitative illustration of the locality property (Section 2.4), the neighbourhood structure of a representative\nsmall graph is examined under both GED and Levenshtein distance. The base graph is the house graph on 5 nodes\nand 6 edges. All graphs at GED = 1 from the base graph (single edge edits) are enumerated, and their Levenshtein\ndistances to the base encoding are computed. Conversely, all strings at Levenshtein distance 1 from the base encoding\nare generated (single character substitutions, insertions, and deletions), decoded via S2G, and their GED to the base\ngraph is computed. The ISALGRAPH core is implemented in Python with no external dependencies. Adapters for NetworkX [Hagberg et al.,\n2008], igraph [Csárdi and Nepusz, 2006], and PyTorch Geometric [Fey and Lenssen, 2019] provide interoperability\nwith standard graph libraries. Timing measurements use time.process_time() to record CPU time exclusive\nof I/O and system scheduling. All experiments were executed on the Picasso supercomputer at the Supercomputing\nand Bioinformatics Centre (SCBI) of the University of Málaga. A fixed random seed of 42 is used throughout for\nreproducibility. We evaluate ISALGRAPH along three axes: agreement between Levenshtein distance and GED (Section 4.1), and\nempirical time complexity of the encoding algorithms (Section 4.2). A qualitative neighbourhood analysis completes\nthe evaluation (Section 4.3).",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 25,
+    "total_chunks": 37,
+    "char_count": 1878,
+    "word_count": 287,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d620a472-a4e5-49e7-bd11-21fc1fb16d5a",
+    "text": "4.1 Correlation with Graph Edit Distance Table 2 reports the Spearman rank correlation coefficient ρ between GED and Levenshtein distance for each dataset and\nencoding method. All fifteen ρ values are statistically significant at α = 0.001.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 26,
+    "total_chunks": 37,
+    "char_count": 240,
+    "word_count": 37,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d56ec67d-2ed3-48a5-80ee-504835dd4bd8",
+    "text": "Instruction set for the representation of graphs A PREPRINT On the three IAM Letter subsets, which contain sparse graphs (¯m ≤4.56), the canonical encoding attains strong\nmonotonic agreement with GED: ρ = 0.934 on LOW, 0.876 on MED, and 0.682 on HIGH. Greedy-min trails canonical\nby modest margins (∆ρ = 0.027, 0.014, and 0.057, respectively), while Greedy-rnd(v0) incurs larger losses, reaching\n∆ρ = 0.228 below canonical on LOW. On the denser LINUX and AIDS datasets ( ¯m = 8.35 and 10.70), correlation drops markedly. The best method on\nLINUX is Greedy-min (ρ = 0.445), the only dataset where it surpasses canonical (ρ = 0.433), by a margin of 0.012. On AIDS, canonical leads with ρ = 0.349. The small difference on LINUX may reflect the limited number of valid\npairs (n = 1,685) relative to the other datasets (n ≥131,148), which amplifies the effect of individual outlier pairs on\nthe rank correlation statistic. (a) Canonical (b) Greedy-min (c) Greedy-rnd(v0) 3 =0.700 =0.665 =0.590\n=0.79 =0.78 =0.82\n1 3 5 7 9 11 13 15 17 19 21 1 3 5 7 9 11 13 15 17 19 21 1 3 5 7 9 11 13 15 17 19 21\nGED GED GED",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 27,
+    "total_chunks": 37,
+    "char_count": 1102,
+    "word_count": 202,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b7a95532-6af1-448b-b1da-b29045ae321b",
+    "text": "100 101 102 103 104 105\nCount (number of graph pairs) Figure 1: Aggregated correlation between graph edit distance (GED) and Levenshtein distance across all five benchmark\ndatasets. Each cell at integer coordinates (i, j) shows the count of graph pairs with GED = i and Lev = j (log scale;\nlight = few pairs, dark = many pairs); white cells contain no observed pairs. Dashed grey line: identity (Lev = GED). Solid red line: ordinary least-squares (OLS) regression. (a) Canonical encoding (n = 3, 424, 764 pairs, ρ = 0.700,\nβ = 0.79). (b) Greedy-min encoding (n = 3, 424, 764 pairs, ρ = 0.665, β = 0.78). (c) Greedy-rnd(v0) encoding\n(n = 3, 424, 764 pairs, ρ = 0.590, β = 0.82). Reported statistics: ρ denotes Spearman's rank correlation coefficient,\nmeasuring monotonic association between the two distance measures. β denotes the OLS regression slope; β = 1\nwould indicate that Levenshtein and GED operate on the same scale, while β < 1 indicates that Levenshtein distances\ngrow more slowly than GED. Table 2: Dataset properties and Spearman ρ correlation between GED and IsalGraph Levenshtein distance across\nencoding methods. ¯m: mean edges per graph (complexity proxy). Spearman-ρ difference between best method per\ndataset is showcased. Best ρ per dataset in bold. IAM LOW IAM MED IAM HIGH LINUX AIDS",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 28,
+    "total_chunks": 37,
+    "char_count": 1305,
+    "word_count": 220,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e79036aa-e6f8-4eca-9275-56ce5041af71",
+    "text": "N 1,180 1,253 2,059 89 769\nPairs 695,610 784,378 2,118,711 1,685 131,148 Prop. ¯m 3.07 3.17 4.56 8.35 10.70\nρ Canonical 0.934∗∗∗ 0.876∗∗∗ 0.682∗∗∗ 0.433∗∗∗(-0.012) 0.349∗∗∗\nSpear. Greedy-MinGreedy-rnd(v0) 0.908∗∗∗(-0.027)0.706∗∗∗(-0.228) 0.862∗∗∗(-0.014)0.682∗∗∗(-0.195) 0.625∗∗∗(-0.057)0.577∗∗∗(-0.105) 0.301∗∗∗(-0.144)0.445∗∗∗ 0.251∗∗∗(-0.098)0.304∗∗∗(-0.045)\n∗∗∗p < 0.001, ∗∗p < 0.01, ∗p < 0.05. ¯m increases monotonically as ρ degrades across datasets. Figure 1 displays the aggregated joint distribution of GED and Levenshtein distance over all 3,424,764 valid pairs\nfrom the five datasets. The concentration of mass near the identity line confirms that the two measures are broadly\nco-monotonic, though the spread increases at higher GED values. The OLS regression slopes β = 0.79 (Canonical),\n0.78 (Greedy-min), and 0.82 (Greedy-rnd) lie consistently below unity, indicating that Levenshtein distances grow more\nslowly than GED. This compression stems from the bounded instruction alphabet (|Σ| = 9): structurally distant graphs\ncan still share long common subsequences in their encoding strings, attenuating the measured string dissimilarity. Instruction set for the representation of graphs A PREPRINT A monotonic relationship between graph density and correlation strength is apparent across all five datasets. As the\nmean edge count ¯m increases from 3.07 (IAM LOW) to 10.70 (AIDS), ρ decreases for every encoding method (Table 2). The steepest drop occurs between IAM HIGH ( ¯m = 4.56, canonical ρ = 0.682) and LINUX (¯m = 8.35, canonical\nρ = 0.433), where a near-doubling of mean edge count coincides with a 37% relative decline in ρ. This degradation is\nconsistent with the sequential nature of the G2S traversal: as edge density grows, a single depth-first pass captures a\ndiminishing fraction of the graph's pairwise connectivity, and the resulting string becomes a coarser proxy for the full\ntopology.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 29,
+    "total_chunks": 37,
+    "char_count": 1918,
+    "word_count": 276,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "905a90d4-789b-485c-98a2-e936e586ad2a",
+    "text": "4.2 Empirical Time Complexity Figure 2 shows the median encoding time as a function of graph size n for the three methods on synthetic random\ngraphs (Barabási–Albert and Erd˝os–Rényi families). Power-law fits T(n) = c · nα on log-transformed data yield\nexponents α = 3.1 for Greedy-rnd(v0), α = 4.5 for Greedy-min, and α = 9.0 for Canonical, all with R2 ≥0.979. 10 3 Encoding\n0 10 20 30 40 50\nNumber of nodes n\nGreedy-rnd(v0): T n3.1 (R 2=0.989)\nGreedy-Min: T n4.5 (R 2=0.989)\nCanonical: T n9.0 (R 2=0.979) Figure 2: Empirical time complexity of IsalGraph encoding methods on random graphs (Barabási–Albert m ∈{1, 2}\nand Erd˝os–Rényi p ∈{0.3, 0.5}). Horizontal axis: number of nodes n; vertical axis: encoding time in seconds (log\nscale). Markers show the median across graph instances; error bars denote the interquartile range. Dashed lines are\npolynomial fits T = c · nα via OLS on log–log data. Greedy-rnd(v0): α = 3.1, R2 = 0.989. Greedy-Min: α = 4.5,\nR2 = 0.989. Canonical: α = 9.0, R2 = 0.979. Greedy methods exhibit polynomial scaling (α ≈3–5), while the\ncanonical method scales super-polynomially (α ≈9) on random graphs and becomes infeasible beyond n ≈12. The Greedy-rnd exponent α ≈3 is consistent with the cost of a single G2S traversal, whose dominant operation is the\nneighbour-selection step repeated at each of the O(n) visited nodes. Greedy-min iterates the greedy procedure over all\nn starting nodes, raising the empirical exponent to α ≈4.5; the half-unit above n4 reflects the variable string length\nacross starting nodes and the associated comparison cost. Both greedy variants scale to graphs with 50 nodes within the\n600-second timeout.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 30,
+    "total_chunks": 37,
+    "char_count": 1660,
+    "word_count": 275,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5abe2e83-a481-4f10-9a4f-2db76b1a10d6",
+    "text": "The canonical method exhibits α = 9.0, a direct consequence of its exhaustive backtracking over all starting nodes and\nall valid neighbour orderings. At n = 12, the canonical encoding already approaches the timeout threshold; beyond this\nsize, it is impractical without further algorithmic refinement. The high R2 values confirm that the power-law model\ncaptures the observed scaling within the tested range, although the canonical method's true asymptotic complexity is\nsuper-polynomial due to the combinatorial explosion of traversal orderings. Instruction set for the representation of graphs A PREPRINT 4.3 Neighbourhood Structure Figure 3 illustrates the relationship between graph-space and string-space proximity on a concrete example, complementing the aggregate correlation analysis above. The base graph G0 is the house graph (5 nodes, 6 edges), and its\ncanonical ISALGRAPH encoding serves as the reference string. The 1-GED neighbourhood of G0 comprises 10 non-isomorphic graphs obtained by a single edge insertion or deletion\nthat preserves connectivity (6 deletions and 4 insertions). Their Levenshtein distances to the encoding of G0 range\nfrom 1 to 5: a single structural edit can require up to five character changes in the instruction string. This spread arises\nbecause the canonical encoding selects the globally optimal traversal order; modifying one edge may shift this optimum\nentirely, producing a substantially different string even though the underlying graph changed minimally.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 31,
+    "total_chunks": 37,
+    "char_count": 1502,
+    "word_count": 219,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ebc3d272-8e3c-45a4-98f8-96b0301d3d33",
+    "text": "G0 1-GED Neighbours\nLev = 1 Lev = 4 Lev = 4 Lev = 5 V V p v p v P n C V V V n v P C P C n C V V V p v P p C V V V p p v N C\n3 1-Lev Neighbours\nGED = 1 GED = 2 GED = 1 GED = 1 V V p v p v P C n C V V n v p v P C n C V V C v p v P C n C V V p v N v P C n C V V p v p V P C n C",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 32,
+    "total_chunks": 37,
+    "char_count": 274,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0de3eab3-14d7-451c-b1fe-f8a881f4fdda",
+    "text": "Figure 3: Neighbourhood topology of the house graph G0 (5 nodes, 6 edges) under two distance metrics. Centre\ncolumn: base graph G0 with its canonical IsalGraph encoding (colour-coded by instruction type). Top rows: 4\nrepresentative 1-GED neighbours (single edge edit), with Levenshtein distances Lev ∈[1, 5] to the encoding of\nG0. Bottom rows: 4 representative 1-Levenshtein neighbours (single character substitution, insertion, or deletion in\nthe instruction string), with GED values GED ∈[1, 2]. Dashed red edges indicate structural differences from G0. Horizontal heatmaps below each graph render the IsalGraph instruction string with per-character colouring (alphabet\nΣ = {N, n, P, p, V, v, C, c, W}).",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 33,
+    "total_chunks": 37,
+    "char_count": 705,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e9c90961-2dfb-4709-a417-98fe50e1a302",
+    "text": "The asymmetry between 1-GED and 1-Levenshtein neighbourhoods illustrates that\ngraph-space proximity does not imply string-space proximity, and vice versa. In the reverse direction, the 1-Levenshtein neighbourhood—strings differing from the base encoding by a single\nsubstitution, insertion, or deletion—yields graphs with GED ∈{1, 2} to G0. String-space proximity thus implies\ngraph-space proximity: small perturbations to the instruction string produce small structural changes. This directional\ntightness follows from the instruction semantics, where each character corresponds to at most one structural operation\n(node creation, edge insertion, or pointer movement), bounding the topological effect of any single character change. The asymmetry between the two neighbourhoods—tight from string-space to graph-space, loose from graph-space\nto string-space—is inherent to any encoding in which multiple traversal orders can represent the same graph. It has\na practical implication: Levenshtein distance on ISALGRAPH strings is more likely to overestimate GED (when a Instruction set for the representation of graphs A PREPRINT small structural change requires a large string rearrangement) than to underestimate it (since each character change\nhas bounded structural impact). This conservative bias favours recall over precision: Levenshtein-based retrieval is\nmore likely to return a slightly dissimilar graph than to miss a genuinely similar one, a property that is advantageous in\nretrieval settings where recall is prioritised.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 34,
+    "total_chunks": 37,
+    "char_count": 1532,
+    "word_count": 208,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "362374e0-2541-49e6-8e02-50ae1edfa881",
+    "text": "Summary of contributions. This paper has introduced ISALGRAPH, a sequential instruction-based representation\nof finite simple graphs. The encoding is defined by a nine-instruction virtual machine that manipulates a circular\ndoubly-linked list (CDLL) of graph-node references via two traversal pointers, inserting nodes and edges into a sparse\ngraph as instructions are executed. The resulting representation has four properties that distinguish it from existing\ngraph encodings:",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 35,
+    "total_chunks": 37,
+    "char_count": 478,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "13074080-2978-4435-9b6a-157c5f2716f6",
+    "text": "(i) Universal validity. Every string over the alphabet Σ = {N, n, P, p, V, v, C, c, W} decodes to a valid finite\nsimple graph. There are no syntactically or semantically invalid strings, which eliminates the need for\nvalidity-checking decoders and simplifies the design of generative models.\n(ii) Reversibility. The greedy GraphToString (G2S) algorithm encodes any connected graph G into a string w such\nthat S2G(w) ∼= G. Round-trip correctness was confirmed at a 100% pass rate over 945 test instances spanning\ntwelve graph families, with independent cross-validation via the VF2 isomorphism algorithm.\n(iii) Canonical completeness (conjectured). The canonical string w∗G, computed by exhaustive backtracking\nover all starting nodes and all valid neighbour orderings, is conjectured to be a complete graph invariant:\nG ∼= H ⇐⇒w∗G = w∗H. This conjecture is supported by 100% invariance and discrimination accuracy\non 71 graph pairs across nine structural families including trees, cycles, complete graphs, stars, wheels,\nBarabási–Albert graphs, and the Petersen graph.\n(iv) Metric locality. The Levenshtein distance between ISALGRAPH strings correlates strongly with graph edit\ndistance on real-world graph benchmarks, reaching Spearman ρ = 0.934 on the sparse IAM Letter (LOW)\ndataset (n = 695,610 pairs, p < 0.001) and remaining significant across all five datasets tested, covering a\nrange of structural densities from ¯m = 3.07 to ¯m = 10.70 mean edges per graph. Three limitations warrant explicit acknowledgement.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 36,
+    "total_chunks": 37,
+    "char_count": 1519,
+    "word_count": 229,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e186d46-b4d0-40e8-b280-22c0300253a2",
+    "text": "First, the canonical completeness conjecture\nremains unproven. A formal proof would require establishing rigorously that the exhaustive-backtracking algorithm is\nlabel-blind, i.e. that its output depends solely on abstract adjacency structure and not on the integer identifiers assigned\nto nodes. Second, the canonical encoding scales super-polynomially (T ∼n9.0) and is computationally infeasible\nfor graphs with more than approximately 12 nodes on current hardware within a 600-second timeout. Third, the G2S\nalgorithm requires the input graph to be connected; for directed graphs, it additionally requires all nodes to be reachable\nfrom the chosen starting node via directed outgoing edges. Graphs that do not satisfy these conditions cannot be\nencoded without preprocessing. The authors thankfully acknowledge the computer resources (Picasso Supercomputer), technical expertise, and assistance\nprovided by the SCBI (Supercomputing and Bioinformatics) center of the University of Málaga.",
+    "paper_id": "2603.11039",
+    "title": "Instruction set for the representation of graphs",
+    "authors": [
+      "Ezequiel Lopez-Rubio",
+      "Mario Pascual-Gonzalez"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11039v1",
+    "chunk_index": 37,
+    "total_chunks": 37,
+    "char_count": 990,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  }
+]

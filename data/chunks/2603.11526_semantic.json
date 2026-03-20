@@ -1,0 +1,582 @@
+[
+  {
+    "chunk_id": "dfb630a6-fad5-4380-8f9a-89e55c323d72",
+    "text": "CFD-HAR: User-controllable Privacy through\nConditional Feature Disentanglement Alex Gn, Fan Li, S Kuniyilh and Ada Axan",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 0,
+    "total_chunks": 29,
+    "char_count": 119,
+    "word_count": 16,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "478ac5f0-5c07-4196-b784-f4a97d479cbf",
+    "text": "Abstract—Modern wearable and mobile devices are equipped restricted due to privacy concerns [9]. Such dynamic privacy\nwith inertial measurement units (IMUs). Human Activity Recog- requirements must be taken into account when designing a\nnition (HAR) applications running on such devices use machine- privacy-preserving technique for a data-driven IoT system.\nlearning-based, data-driven techniques that leverage such senPerturbation has been considered a de facto standard for sor data. However, sensor-data-driven HAR deployments face\ntwo critical challenges: protecting sensitive user information obfuscating sensor data to preserve user privacy, including\nembedded in sensor data in accordance with users' privacy age and gender [9], [10]. Existing work aims to protect against\npreferences and maintaining high recognition performance with such sensitive inference attacks by perturbing the input data by2026 limited labeled samples. This paper proposes a technique for transformation or replacement, thereby degrading HAR system\nuser-controllable privacy through feature disentanglement-based\nperformance [6], [11], [12]. Moreover, these works haven't representation learning at the granular level for dynamic privacy\nfiltering. We also compare the efficacy of our technique against analyzed in detail the need for privacy personalization and itsMar few-shot HAR using autoencoder-based representation learning. impact on system performance. We analyze their architectural designs, learning objectives, pri- In general, the perturbation doesn't account for the data's\nvacy guarantees, data efficiency, and suitability for edge Internet12 detailed representations and often over-perturbs the input.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 1,
+    "total_chunks": 29,
+    "char_count": 1701,
+    "word_count": 224,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c68bc06b-dc2a-4816-a8d3-e080983904f4",
+    "text": "In\nof Things (IoT) deployment. Our study shows that CFD-based\nsome cases, it may be sufficient to perturb only a subset of the HAR provides explicit, tunable privacy protection controls by\nseparating activity and sensitive attributes in the latent space, data points. So, efficient perturbation requires careful analysis\nwhereas autoencoder-based few-shot HAR offers superior label of data representation. This raises an interesting problem:\nefficiency and lightweight adaptability but lacks inherent privacy isolating the sources of variation across different data samples\nsafeguards. We further examine the security implications of both corresponding to the activity being performed in a HAR\napproaches in continual IoT settings, highlighting differences[cs.LG] system by learning disentanglement with respect to utility- in susceptibility to representation leakage and embedding-level\nattacks. The analysis reveals that neither paradigm alone fully relevant features and the sensitive and nonsensitive attributes\nsatisfies the emerging requirements of next-generation IoT HAR they generate.\nsystems. We conclude by outlining research directions toward In this paper, we focus on a feature disentanglement\nunified frameworks that jointly optimize privacy preservation, technique that separates the underlying concepts of personal\nfew-shot adaptability, and robustness for trustworthy IoT intelattributes from the activity being performed. Specifically, ligence.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 2,
+    "total_chunks": 29,
+    "char_count": 1463,
+    "word_count": 194,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db87f66e-d8ad-417b-8acf-d8c7120768c7",
+    "text": "Index Terms—HAR, IoT, wearables, user privacy, dynamic isolating the feature space corresponding to \"A walking man,\"\nprivacy controls, feature disentanglement \"A person is walking\", \"A tall person is running\", and \"A\nperson is running, but the gender and height are not available\". INTRODUCTION Additionally, I consider combinations of such feature details,\nData generated by wearable Internet of Things (IoT) de- such as gender, age, and location, and isolate them from the\nvices are used to provide better services, such as tracking latent space, sending only the features required for classificaindividual fitness scores, health alerts, and additional insights tion to the service provider for inference. We further explore\nto users [1]–[4]. However, such data can also perform sensitive how this feature disentanglement can be used to provide better\nattribute inference [5]. Research shows that sensitive user control over the level of data perturbation. Additionally, I studyarXiv:2603.11526v1 attributes, such as personal and biological data, location, and how such fine controls can affect model performance without\nother sensitive data, can be inferred from user data shared by compromising user-preferred privacy settings. While user data perturbation techniques To manage user-controlled privacy, data-driven IoT systems\nfor IoT systems have been demonstrated, they have not ac- can incorporate personalized privacy settings that allow users\ncounted for users' dynamic privacy needs or controllability. to specify which attributes they consider sensitive. These\nFor instance, some users may be willing to share data that settings can then be used to adjust the level of data perturcan infer their gender with service providers in exchange for bation required while minimizing impact on utility. In a more\nimproved utility. Similarly, the user may prefer to keep their advanced scenario, the user may be given the option to control\nlocation private in certain contexts. The impact of personaliza- the privacy-utility trade-off with greater granularity by introtion on utility in privacy-preserving IoT systems is complex. ducing additional user-specified privacy controls, such as the\nAlthough personalization can enhance user experience by privacy weight each user assigns to attributes such as gender,\ntailoring services to individual needs, it can also degrade age, and location. Additionally, large language model (LLM)-\nperformance when data required for classification tasks are based solutions are being deployed in IoT systems to preserve privacy by leveraging few-shot learning techniques.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 3,
+    "total_chunks": 29,
+    "char_count": 2607,
+    "word_count": 378,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b994885d-7ac3-435d-a2cc-73124f9419ea",
+    "text": "While reconstruct the input. An autoencoder learns to reconstruct\nsuch techniques require continuous fine-tuning and training, the input based on the reconstruction loss. A replacement\nwhich affects operating efficiency, they can also improve autoencoder is a transformation method that first learns a\nsustainability, especially when we leverage large language mapping from sensitive to nonsensitive data, and then replaces\nmodels in the IoT domain. Sustainability is another important discriminative features corresponding to sensitive inferences\ndesign parameter to consider when deploying large language with features more commonly observed in nonsensitive inmodels on connected, cloud-enabled electronic devices [5], ferences. This approach only works when the sensitive and\n[13]–[15]. nonsensitive data are clearly separated. Moreover, this method\nOverall, HAR in IoT and wearable environments must does not consider utility [11].",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 4,
+    "total_chunks": 29,
+    "char_count": 935,
+    "word_count": 126,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "312d025c-f664-4a82-b229-3c318eafffc5",
+    "text": "Olympus is a utility-aware obsimultaneously address two critical, often competing re- fuscation method that models utility and privacy requirements\nquirements: protecting user privacy and operating effectively as adversarial networks, thereby hiding private information in\nwith limited labeled data. In this work, we present a user- user data with minimal utility loss [12]. However, these privacy\ncontrollable privacy via conditional feature disentanglement benefits come at the cost of increased training complexity,\n(CFD) at a granular level. We also perform a comparative reliance on sensitive attribute annotations, and potentially\nanalysis against another state-of-the-art technique, few-shot higher computational overhead at the edge. HAR, using autoencoder representations. Our study proposes In contrast, AE-based few-shot HAR prioritizes data efa CFD-based HAR that provides explicit and tunable privacy ficiency and lightweight deployment [20]. Leveraging unsuprotection by structurally separating activity-relevant informa- pervised representation learning enables rapid adaptation in\ntion from sensitive user attributes.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 5,
+    "total_chunks": 29,
+    "char_count": 1133,
+    "word_count": 146,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b483df24-316b-412c-9c0b-af424bbc5889",
+    "text": "This makes it particularly low-label regimes common in IoT environments. This makes\nsuitable for privacy-sensitive IoT applications such as health- AE-based approaches attractive for resource-constrained edge\ncare monitoring and personal wearables, where regulatory devices and personalized activity recognition scenarios. Nevcompliance and user trust are paramount. ertheless, the absence of explicit privacy constraints leads to\nentangled latent representations that may inadvertently encode II. BACKGROUND\nsensitive user information, increasing the risk of privacy leakThis section provides some background on techniques rel- age and representation-level attacks.\nevant to our paper. While the above methods provide privacy by obfuscating\nA. HAR Privacy private data, data transformation can degrade utility. We proHAR systems operate by modeling patterns in data gen- pose a different approach to privacy preservation by considererated by Inertial Measurement Units (IMUs) embedded in ing fine-grained user controls over privacy requirements and\nwearable devices [16]–[18]. However, the data captured by conditioning the transformation function on the disentanglesuch devices can inadvertently disclose sensitive personal ment representation corresponding to those controls.\nattributes, including age, gender, and height. Moreover, the\nsensor data specific to an individual can be further exploited\nD. Few-Shot HAR Using Autoencoder Representations\nto infer details about their private activities. For instance, data\ncollected to recognize general walking activity may also be Few-shot HAR approaches focus on improving recognition\nused to determine whether the individual is smoking while performance under scarce labeled data.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 6,
+    "total_chunks": 29,
+    "char_count": 1732,
+    "word_count": 230,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "722f22d2-e215-48f8-875e-d7c8c0ab546f",
+    "text": "Autoencoder models\nwalking. These privacy risks pose significant challenges for are commonly used to learn compact latent representations\nthe design and deployment of HAR systems, necessitating from large volumes of unlabeled sensor data [21]. The encareful consideration of data protection and privacy-preserving coder fθ maps input x to latent vector z, while the decoder\nmodeling techniques. reconstructs the signal:\nB. User-controllable HAR Privacy User-controllable privacy in HAR systems concerns con- LAE = ∥x −ˆx∥22. (1)\nstraining the system to recognize only those activities deemed\nacceptable by individual users, in accordance with their perThe learned embedding is then used for few-shot classifica-sonal privacy preferences. These preferences may vary over\ntion using metric learning or lightweight classifiers.time and across different contexts or locations. Consequently,\ndynamically adjustable, user-driven privacy controls are a AE-based HAR is attractive for IoT because it is labelcritical design requirement for HAR systems. While HAR efficient, computationally lightweight, and well-suited to onprivacy has been studied in detail, less work has examined device learning. It enables rapid personalization and adaptation\ndynamic user-controllability of privacy [11], [19]. in environments where annotated data is scarce or expensive\nto obtain. Nevertheless, the autoencoder objective preserves all\nC. Autoencoder-based Transformation informative factors in the signal, including sensitive attributes. An autoencoder(AE) is typically used to perturb input data. Consequently, AE-based HAR representations may encode\nIts encoder can learn to represent input features in a low- strong user fingerprints, making them vulnerable to privacy\ndimensional latent space, which the decoder can then use to attacks, including membership and attribute inference. to be as close as the prior by minimizing the KL divergence\nPrivate between the posterior and the prior as much as possible [23]. Client sensor HAR server class This maximizes the probability of generating real data while\ninference\nDynamic by a honest keeping the distance between the real and approximate posteuser\nprivacy Classifier but curious rior distributions small, which amounts to keeping the distance server preference\nbetween the posterior and prior small [24].",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 7,
+    "total_chunks": 29,
+    "char_count": 2341,
+    "word_count": 328,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0465b6b2-4001-44a9-a48a-9c7b868c130a",
+    "text": "However, a VAE\nPreferred can't guarantee that the selected point from the latent space\nSensor data class is an input similar to what we are looking for. For instance, inference\nin a handwritten digit generation system trained on digits\nfrom 0 to 9, we can't ask the VAE to select and reconstruct\na particular digit, say 1. Additionally, there is a trade-off\nbetween disentanglement and the VAE's reconstruction capaFig. 1. Threat model\nbility [25]. β-VAE is a type of variational autoencoder that\nseeks to discover disentangled latent factors. It modifies VAEs\nby introducing an adjustable hyperparameter that balances III.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 8,
+    "total_chunks": 29,
+    "char_count": 623,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d5079379-c7d1-4913-915a-67881a2b293a",
+    "text": "DESIGN\nlatent-channel capacity and independence constraints against\nA. Threat Model reconstruction accuracy [24]. We consider a setting in which client devices continuously Conditional VAE (CVAE) can generate samples from the\ngenerate sensor data, which are subsequently transmitted to learned latent space conditioned on given inputs, providing\na centralized server hosting an ML–based HAR model. In greater user control over the generated data. The encoder\nour threat model, the wearable devices are assumed to be processes the input data along with its conditions, while the\nhonest, whereas the centralized server is modeled as honest- decoder uses the resulting conditional latent representation to\nbut-curious, i.e., it correctly follows the prescribed protocol but reconstruct the data or generate new instances conditioned\nmay attempt to infer additional information from the received on specific attributes. Methods have been demonstrated to\ndata without altering it. We depict our threat model in Figure 1. extract semantic-rich temporal correlations from the latent\nrepresentations of time-series data by leveraging disentanB. Problem statement glement techniques [26].",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 9,
+    "total_chunks": 29,
+    "char_count": 1179,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e7c33430-58fa-4b62-9426-edb4148a6311",
+    "text": "While researchers have explored\nA dataset D contains motion sensor readings from different learning disentangled behavior patterns for wearable-based\nusers, and a model M is trained using the dataset D. Let S human activities [27], no work has addressed providing userbe a set of user attributes, such as age, gender, height, weight, controllable data privacy based on disentanglement represenlocation, and personal habits. Su is a set of user-sensitive tations of human activities [28].\ncharacteristics of a user u. The goal is to perturb the data Du\nof user u such that an attacker A who intercepts the model IV. PRIVACY-PRESERVING HAR VIA CONDITIONAL\ninference process can not predict the sensitive attributes Su FEATURE DISENTANGLEMENT\nof user u from the data Du, while inferring the attributes The architecture of privacy-preserving Conditional feature\nfrom S that are not in Su is acceptable. Let Xu be the Disentanglement HAR (CFD-HAR) is depicted in Figure 2.\nlatent representation of the activities performed by a user u Conditional feature disentanglement aims to explicitly sepcorresponding to the row sensor data Du. Apart from the arate task-relevant activity information from sensitive user\nrepresentation Gu specific to the activity being performed, the attributes. Given an input sensor sequence x, the encoder\nlatent representation may also include other redundant rep- learns a structured representation:\nresentations, including representations corresponding to usersensitive attribute Hu tangled to it. Thus, the overall latent z = [zactivity, zprivacy], (2)\nrepresentation can be written as Xu = Gu + Hu, and the Hu\ncomponent, if left untangled, enables the attacker to perform where zactivity captures activity semantics and zprivacy capsensitive-attribute inference. So the goal is to remove or tures sensitive factors. Training involves a multi-objective loss\ndisentangle the latent representation of user-sensitive attributes function:\nHu(Wu(i)) from Xu according to the privacy weights Wu(i)\nassociated with each attribute i. L = Lactivity + λLprivacy, (3)",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 10,
+    "total_chunks": 29,
+    "char_count": 2081,
+    "word_count": 309,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "13c8c956-e1c8-438f-b65d-28ab5e2db123",
+    "text": "Feature Disentanglement where the privacy term often employs adversarial learning to\nUnlike prior work on privacy preservation, we adopt a minimize leakage of sensitive attributes [29]. This framework\ndifferent approach by providing dynamic controls through enables user-controllable privacy by adjusting the trade-off\nfeature disentanglement. Client-level feature disentanglement parameter λ.\ncan filter out local nodes' privacy attributes in federated We provide fine control on the λ by considering privacy\nsettings [22]. A variational autoencoder(VAE) represents the importance to each attribute j and for each activity i as shown\nfeatures in a latent representation and forces the latent space in the equation below.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 11,
+    "total_chunks": 29,
+    "char_count": 721,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "001c60c4-3abd-42a4-9013-da2cd0f620e4",
+    "text": "Dynamic\nprivacy\ncontroller\n(入) Private feature\nFE representation Classifier\nSensor filter Encoder Decoder\nsignal CFD-HAR Architecture. based few-shot HAR represent complementary approaches\nL = ΣLactivityi + λjLprivacyj, (4) that address privacy and data-efficiency challenges, respectively. Their differing objectives lead to distinct trade-offs\nWe use the condition parameter λ1λ2...λj...λn as an input in privacy protection, computational cost, sustainability, and\nfor dynamically controlling the user's privacy preference, security robustness. Understanding these trade-offs is essential\nwhich can be entered as a condition input for a CVAE- for designing trustworthy HAR systems in emerging IoT\nbased autoencoder. We use the CVAE model explained in the environments.\nprevious section. In IoT HAR settings, CFD offers several advantages. EXPERIMENTAL SETUP\ndirectly addresses privacy leakage, a critical concern for wearable sensing applications subject to regulatory requirements. In this section, we describe the experimental setup used. Second, the structured latent space improves interpretability\nand downstream transfer. Third, adversarial disentanglement A. Dataset\ncan reduce identity-specific overfitting. We use two datasets of human activities. However, CFD typically requires access to sensitive attribute\nlabels during training and may suffer from imperfect disentan- 1) Motion-sense dataset consists of 6 activities and 4 perglement, especially under limited data or strong distribution sonal attributes [11].\nshift.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 12,
+    "total_chunks": 29,
+    "char_count": 1533,
+    "word_count": 202,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d9f72632-be3e-48d8-ba1c-be9f7aed1461",
+    "text": "Moreover, the adversarial training process increases com- 2) Daily and Sports Activities Dataset(DSADS) comprising\nputational overhead, which may be challenging for resource- 19 activities with location attribute [30].\nconstrained edge devices. Compared with the few-shot HAR, the CFD-HAR approach B. Model\nreflects different design priorities from an IoT deployment per- We use a feature extractor and CVAE with an autoencoder,\nspective. CFD-based HAR prioritizes privacy preservation by a feature filter, and a decoder. We consider 4 attributes to be\nenforcing structured latent separation, whereas AE-based few- private according to user preferences. The output of CVAE\nshot HAR prioritizes data efficiency and lightweight adapta- is sent to two classifiers. One is an activity classifier, and\ntion. In edge scenarios with strict privacy requirements—such the other is an attribute classifier. The encoder layer has 3\nas healthcare wearables—CFD provides stronger protection neural networks and a latent representation dimension of 2.\nagainst the leakage of sensitive information. In contrast, in The decoder mirrors the encoder, taking an additional input\nlow-resource environments with extremely limited labeled to select the privacy label and choose the appropriate latent\ndata, AE-based methods may offer superior recognition per- representation for generating filtered sensor data as output. KL\nformance with minimal supervision. divergence is used as a loss function. We use the classifiers\nHowever, the two paradigms also differ in their security the same as those used by the Olympus paper [12].\nposture. Because CFD explicitly constrains representation\nstructure, it may partially mitigate certain forms of represen- VI.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 13,
+    "total_chunks": 29,
+    "char_count": 1732,
+    "word_count": 249,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a7a532d9-5b5b-480a-bf70-274dd473afc2",
+    "text": "EVALUATION\ntation leakage. In contrast, the unconstrained latent space of\nautoencoders is more susceptible to embedding manipulation We conduct our experiments by varying combinations of\nand backdoor insertion. In continual IoT settings, replay and private attributes and measure activity and identification perincremental updates may further amplify these risks. formance. Identity recognition is based on the predicted private\nWe provide a comparative analysis in Table I. In sum- attributes of each individual.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 14,
+    "total_chunks": 29,
+    "char_count": 513,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b3d6b344-7aa3-492a-ac64-1e0e93bf5f72",
+    "text": "Below, we discuss the evaluation\nmary, conditional feature disentanglement and autoencoder- of each experiment in detail. TABLE I\nCOMPARISON BETWEEN CONDITIONAL FEATURE DISENTANGLEMENT HAR AND FEW-SHOT AUTOENCODER-BASED HAR Aspect CFD-HAR FS-HAR\nPrimary Objective User-controllable privacy Few-shot learning\nLearning Paradigm conditional disentanglement Few-shot\nLatent Representation Disentanglement Compact but entangled\nLabel Requirements Requires activity labels and often sensitive Requires few activity labels; no sensitive labels\nattribute labels needed\nPrivacy Protection Strong and user-controllable Limited or absent\nSustainability Moderate computation High computation 0.8 0.8\n(F1) (F1)\n0.6 0.6 0.4 0.4 Performance Performance\n0.2 0.2 0.0 0.0 None Height Weight Age Gender Height Weight Age Gender\nPrivate attribute Private attribute Activity classification performance against each private attribute Fig. 4. Re-identification performance against each private attribute preference.\npreference. Single private attribute\n1.0\nWe first consider one attribute at a time as private and run\nour experiments, and the results of classification performance\nand user re-identification performance are plotted in Figure 3 0.8\nand 4 respectively. As shown, the model achieves high (F1)performance while maintaining attribute-based identification, 0.6\nas evidenced by the low F1-score in Figure 4. Multiple private attributes 0.4 Attribute\nNext, we consider dynamically selecting combinations of Performance Height\nprivate attributes and running the model to infer activity and Weightidentity from the attribute predictions.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 15,
+    "total_chunks": 29,
+    "char_count": 1621,
+    "word_count": 210,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6ea98543-b0fd-40c7-9ec8-aebf81e42ee9",
+    "text": "We tabulate the results 0.2 Age\nin Table II. We code each attribute combination as 4 bits, with Gender\neach bit representing 'height', 'weight', 'age', and 'gender' in 0.0\nthat order. For instance, '0101' indicates that the user prefers 0.00 0.25 0.50 0.75 1.00 Private attribute weight\n'weight' and 'gender' to be private, whereas 'height' and 'age'\nare non-sensitive. Activity classification performance against each private attribute\nC. Varying importance of privacy requirements weight. We vary the weight of each attribute-related privacy preference from 0 to 1, where 0 indicates low sensitivity and 1\nindicates high sensitivity for the user. Figures 5 and 6 show\nthe impact of performance in terms of activity recognition and that as the weight of the privacy attribute increases, the\nidentification based on attributes, as privacy weight changes reidentification becomes more difficult without degrading the\nfor each attribute, taking one at a time. The results show activity classification to the same extent. TABLE II\nACTIVITY CLASSIFICATION PERFORMANCE IN F1-SCORE BASED ON VARIOUS PRIVATE ACTIVITY COMBINATIONS SELECTED DYNAMICALLY. 0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111\nActivity 0.94 0.84 0.88 0.83 0.86 0.82 0.87 0.79 0.93 0.85 0.89 0.85 0.84 0.82 0.85 0.77\nIdentity 0.79 0.24 0.19 0.18 0.21 0.31 0.22 0.23 0.33 0.27 0.17 0.19 0.25 0.19 0.13 0.11",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 16,
+    "total_chunks": 29,
+    "char_count": 1402,
+    "word_count": 221,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "91c7eb25-640e-4410-8f5d-08cc77811b35",
+    "text": "Several techniques, such as differential privacy and\n1.0\nAttribute homomorphic encryption, have been proposed, but each has\nHeight limitations. While DP claims to provide a privacy guarantee\n0.8 at the expense of utility, more granular user controls are often Weight\nAge ignored in DP-based proposed solutions. DP perturbs the data (F1) shared by the user, but our goal is to share only the data Gender 0.6 required for the utility while preventing the attacker from\ninferring sensitive attributes [37].\n0.4 An autoencoder is typically used to perturb input data Performance for privacy preservation or data poisoning in adversarial\n0.2 learning [38]. Its encoder learns to represent input features\nin a low-dimensional latent space, which the decoder then\nuses to reconstruct the input. The reconstruction capability of\n0.0 an autoencoder can also be used for anomaly detection by 0.00 0.25 0.50 0.75 1.00\nPrivate attribute weight evaluating the reconstruction loss and measuring deviations\nfrom the statistics of benign data [39], [40]. An autoencoder\nlearns to reconstruct the input using a reconstruction loss. Re-identification performance against each private attribute weight. A replacement autoencoder is a transformation method that\nfirst learns a mapping from sensitive to nonsensitive data, and\nVII. FUTURE DIRECTIONS then replaces discriminative features corresponding to sensitive\ninferences with features more commonly observed in nonsen- For IoT systems employing continual or contrastive continsitive inferences. This approach only works when the sensitiveual learning, the choice between CFD and AE-based few-shot\nand nonsensitive data are clearly separated. Moreover, thislearning has important security implications. CFD can reduce\nmethod does not consider utility [11].",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 17,
+    "total_chunks": 29,
+    "char_count": 1789,
+    "word_count": 259,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "375282e9-2889-4580-988c-b6e3a7fc9c8b",
+    "text": "Olympus is a utility-the coupling between sensitive attributes and activity represenaware obfuscation method that models utility and privacytations, potentially limiting certain privacy attacks. However,\nrequirements as adversarial networks, thereby hiding privateimperfect disentanglement may still allow adversarial triggers\ninformation in user data while minimizing utility loss [12].to persist in the task subspace. AE-based few-shot HAR, while\nFew-shot learning techniques are used to preserve privacy be-efficient, presents a larger attack surface due to its dense and\ncause they do not require sensitive data for training. However,unconstrained latent representations.\nthe performance of such models based on autoencoders or A promising future direction is to integrate few-shot adapcontrastive learning is not particularly strong [32], [41]–[44].tation with privacy-aware disentanglement and contrastive\nobjectives. Such hybrid frameworks could simultaneously While the above methods provide privacy by obfuscating\naddress label scarcity, preserve privacy, and be robust to sensitive data, data transformation can degrade utility [17],\nrepresentation-level attacks—an increasingly important re- [45]. We propose a different approach that provides a privacyquirement for next-generation IoT HAR systems. preserving technique by considering fine-grained user controls\nover privacy requirements and conditioning the transformation\nVIII. RELATED WORK function on the disentanglement representation corresponding\nIoT devices play a major role in enabling smartness and to those controls. Client-level feature disentanglement can filintelligence by automating processes in embedded systems, ter out local nodes' privacy attributes in federated settings [22].\nwhich are widely deployed in health monitoring and home A variational autoencoder(VAE) represents the features in a\nautomation [1], [18], [31]–[33]. Modern connected applica- latent representation and forces the latent space to be as close\ntions generate large volumes of data from sensor events, audit as the prior by minimizing the KL divergence between the poslogs, data-traffic logs, error logs, alarms, and network-traffic terior and the prior as much as possible [23]. This maximizes\nlogs [3], [34]–[36].",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 18,
+    "total_chunks": 29,
+    "char_count": 2271,
+    "word_count": 301,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa31fe17-d7c7-4d62-9e37-eae2b6f8a723",
+    "text": "While data analytics is important for the probability of generating real data while keeping the discloud-based services, leveraging AI and ML tools to enhance tance between the real and approximate posterior distributions\napplication quality, security, and privacy remains a serious small, which in turn depends on keeping the distance between\nconcern. While ML models can be backdoored, the data used the posterior and prior small. However, a VAE can't guarantee\nfor training such models can also poses threat when such that the selected point from the latent space is an input similar\ndata is used for user-sensitive attribute inference in data-driven to what we are looking for. For instance, we can't ask VAE to select digit 1 in digit generation. Additionally, there is a trade- [5] H. Zhang,\noff between disentanglement and the VAE's reconstruction \"Membership inference attacks on machine learning: A survey,\" ACM\nComputing Surveys (CSUR), vol. 54, no. 11s, pp. 1–37, 2022.\ncapability [25]. β-VAE is a type of variational autoencoder that [6] M. Haddadi, \"Mobile\nseeks to discover disentangled latent factors. It modifies VAEs sensor data anonymization,\" in Proceedings of the International\nby introducing an adjustable hyperparameter that balances Conference on Internet of Things Design and Implementation, ser.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 19,
+    "total_chunks": 29,
+    "char_count": 1320,
+    "word_count": 201,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "332ddf47-9954-431d-a96f-c2652777f09e",
+    "text": "New York, NY, USA: Association for Computing Machinery, 2019,\nlatent-channel capacity and independence constraints against p. 49–58. [Online]. Available: https://doi.org/10.1145/3302505.3310068\nreconstruction accuracy [24]. [7] U. ChinCVAE is a conditional variational autoencoder that can nadurai, R. Selvaprabhu, \"Ai-powered iot: A\nsurvey on integrating artificial intelligence with iot for enhanced security,\ngenerate samples from the learned latent space conditioned efficiency, and smart applications,\" IEEE Access, 2025.\non given inputs, thereby providing greater user control over [8] M. Sheldon, \"Iot–cloud integration security: A\nthe generated data. The encoder processes the input data along survey of challenges, solutions, and directions,\" Electronics, vol. 14,\nno. 7, p. 1394, 2025.\nwith its conditions, while the decoder uses the resulting condi- [9] P. Guha Thakurta, \"Differtional latent representation to reconstruct the data or generate entially private model personalization,\" Advances in neural information\nnew instances conditioned on specific attributes.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 20,
+    "total_chunks": 29,
+    "char_count": 1076,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "75a15b06-e23c-46af-bbb0-835d458c96e6",
+    "text": "Methods have processing systems, vol. 34, pp. 29 723–29 735, 2021.\n[10] A. Lee, \"Differentially\nbeen shown to extract semantically rich temporal correlations private federated continual learning with heterogeneous cohort privacy,\"\nfrom the latent representations of time-series data by leverag- in 2022 IEEE International Conference on Big Data (Big Data). IEEE,\ning disentanglement techniques [26]. While researchers have 2022, pp. 5682–5691.\n[11] M. Haddadi, \"Replacement autoenexplored learning disentangled behavior patterns for wearable- coder: A privacy-preserving algorithm for sensory data analysis,\" in 2018\nbased human activities [27], no work has addressed user- IEEE/ACM third international conference on internet-of-things design\ncontrollable data privacy based on disentanglement represen- and implementation (iotdi). IEEE, 2018, pp. 165–176.\n[12] N. Machanavajjhala, and J.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 21,
+    "total_chunks": 29,
+    "char_count": 888,
+    "word_count": 117,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7d323785-f511-4206-a0bd-97c5639d07ed",
+    "text": "Pan, \"Olympus: Sensor privacy\ntations of human activities [28]. through utility aware obfuscation,\" Proceedings on Privacy Enhancing\nTechnologies, 2019. AlJawahry, \"Ai and iot in farming: A sustainable approach,\" in E3S Web\nof Conferences, vol. 491. EDP Sciences, 2024, p. 01020.\n[14] K. Lee, \"An electronic\nIn this paper, we present a user-controllable privacy via con- product carbon footprint dataset for question answering,\" Scientific Data,\nditional feature disentanglement (CFD) at a granular level. We 2026.\nalso perform a comparative analysis against another state-of- [15] S. Goktas, AI and ML Techniques in IoT-based\nCommunication: A Path to Sustainable Development Goals. John Wileythe-art technique, few-shot HAR, using autoencoder represen-\n& Sons, 2025.\ntations.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 22,
+    "total_chunks": 29,
+    "char_count": 776,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "36e05a93-941f-49bc-bc3b-30f18024a90f",
+    "text": "From a security standpoint, the two paradigms present [16] J. Hu, \"Deep learning for sensordifferent risk profiles. This work proves that CFD can help based activity recognition: A survey,\" Pattern Recognition Letters, vol.\nmitigate the risk of identity leakage when disentanglement 119, pp. 3–11, 2019.\n[17] A. Lee, \"Privclip: Dynamic user-controllable\nis implemented effectively.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 23,
+    "total_chunks": 29,
+    "char_count": 381,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a27c60cd-af58-4089-8cbb-13e66831e5a7",
+    "text": "On the other hand, autoencoder- privacy-preserving few-shot sensing framework,\" in 2025 IEEE Internabased few-shot Human Activity Recognition approaches have tional Conference on Big Data (BigData). IEEE, 2025, pp. 1793–1798.\na larger attack surface due to the dense, unconstrained em- [18] R. Roggen, \"The opportunity challenge: A benchbeddings.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 24,
+    "total_chunks": 29,
+    "char_count": 346,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d3c39012-edcb-46b2-9b19-a35c7392a5d4",
+    "text": "Overall, neither approach alone fully meets the mark database for on-body sensor-based activity recognition,\" Pattern\nemerging requirements of next-generation IoT HAR systems. Recognition Letters, vol. 34, no. 15, pp. 2033–2042, 2013. Future research should focus on developing unified frame- [19] A. Lee, \"Dynamic user-controllable\nprivacy-preserving few-shot sensing framework,\" arXiv preprint\nworks that simultaneously optimize for privacy preservation, arXiv:2508.03989, 2025.\nfew-shot adaptability, and robustness against attacks targeting [20] Z. He, \"An autoencoder framework for few-shot human\nrepresentations. Combining contrastive learning, adversarial activity recognition with sensor data,\" in Proceedings of the 3rd International Conference on Machine Learning, Cloud Computing and\ndisentanglement, and continual adaptation appears to be a Intelligent Mining (MLCCIM2024), F. Wei,\npromising direction toward achieving trustworthy and efficient and H. Singapore: Springer Nature Singapore, 2025, pp. 177–\nHAR in dynamic IoT environments. 195.\n[21] G. Salakhutdinov, \"Reducing the dimensionality of data\nwith neural networks,\" Science, vol. 313, no. 5786, pp. 504–507, 2006. Liu, \"Privacypreserving federated learning via disentanglement,\" in Proceedings of\n[1] M. Sawchuk, \"Usc-had: A daily activity dataset for the 32nd ACM International Conference on Information and Knowledge\nubiquitous activity recognition using wearable sensors,\" in Proceedings Management, 2023, pp. 3606–3615.\nof the 2012 ACM conference on ubiquitous computing, 2012, pp. 1036– [23] T. Harremos, \"R´enyi divergence and kullback-leibler\n1043. divergence,\" IEEE Transactions on Information Theory, vol. 60, no. 7,\n[2] P. Li, \"A survey on privacy pp. 3797–3820, 2014.\nand security issues in iot-based environments: Technologies, protection [24] I. M.\nmeasures and future directions,\" Computers & security, vol. 148, p. Lerchner, \"beta-vae: Learning basic vi-\n104097, 2025. sual concepts with a constrained variational framework.\" ICLR (Poster),\n[3] E.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 25,
+    "total_chunks": 29,
+    "char_count": 2034,
+    "word_count": 269,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ba715c10-dc04-4bfe-8650-9cbccc22a206",
+    "text": "Trigka, \"A survey on cybersecurity in iot,\" Future vol. 3, 2017. Internet, vol. 17, no. 1, p. 30, 2025. [25] X. Sutskever, and\n[4] E. Takeda, \"A survey of P.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 26,
+    "total_chunks": 29,
+    "char_count": 157,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b465dda1-4660-443d-a5d8-f6a8d75b45a8",
+    "text": "Abbeel, \"Infogan: Interpretable representation learning by information\nautonomous driving: Common practices and emerging technologies,\" maximizing generative adversarial nets,\" Advances in neural information\nIEEE access, vol. 8, pp. 58 443–58 469, 2020. processing systems, vol. 29, 2016. Hu, \"Towards learning disentangled representations for time series,\"\nin Proceedings of the 28th ACM SIGKDD Conference on Knowledge\nDiscovery and Data Mining, 2022, pp. 3270–3278.\n[27] H. Chen,\n\"Conditional feature disentanglement learning for anomaly detection in\nmachines operating under time-varying conditions,\" Mechanical Systems\nand Signal Processing, vol. 191, p. 110139, 2023.\n[28] J. Guan, \"Learning disentangled behaviour\npatterns for wearable-based human activity recognition,\" Proceedings of\nthe ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies,\nvol. 6, no. 1, pp. 1–19, 2022.\n[29] H. Storkey, \"Censoring representations with an adversary,\" in ICLR, 2016.\n[30] B. Y¨uksek, \"Recognizing daily and sports activities\nin two open source machine learning environments using body-worn\nsensor units,\" The Computer Journal, vol. 57, no. 11, pp. 1649–1667,\n2014.\n[31] M. Zuzak,\n\"Hardware anomaly detection in microcontrollers through watchdogassisted property enforcement,\" in 2025 IEEE International Conference\non Consumer Electronics (ICCE). IEEE, 2025, pp. 1–6.\n[32] Y. Xu, \"A comprehensive review of\nfew-shot action recognition,\" arXiv preprint arXiv:2407.14744, 2024.\n[33] A. Mahgoub, \"Machine learning-based security solutions for iot networks: A comprehensive survey,\" Sensors, vol. 25, no. 11, p. 3341,\n2025.\n[34] V.-H. Zhang, \"Log-based anomaly detection without log parsing,\" in 2021 36th IEEE/ACM International Conference on Automated\nSoftware Engineering (ASE). IEEE, 2021, pp. 492–504.\n[35] A. Lee, \"Log anomaly detection with\nlarge language models via knowledge-enriched fusion,\" arXiv preprint\n[36] S. Scarpa, \"An\nintegration perspective of security, privacy, and resource efficiency in\niot-fog networks: A comprehensive survey,\" Computer Networks, vol.\n270, p. 111470, 2025.\n[37] A. Lee, \"Federated intrusion\ndetection for iot with heterogeneous cohort privacy,\" arXiv preprint\n[38] A.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 27,
+    "total_chunks": 29,
+    "char_count": 2208,
+    "word_count": 297,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "acd5011a-3510-4d83-a4d6-c7d6bc2ac01d",
+    "text": "Lee, \"Dynamic black-box backdoor attacks on\niot sensory data,\" in 2024 IEEE 6th International Conference on Trust,\nPrivacy and Security in Intelligent Systems, and Applications (TPS-ISA). IEEE, 2024, pp. 182–191.\n[39] Z. Lau, \"Autoencoder-based\nnetwork anomaly detection,\" in 2018 Wireless telecommunications symposium (WTS). IEEE, 2018, pp. 1–5.\n[40] A. Lee, \"Pcap-backdoor: Backdoor poisoning\ngenerator for network traffic in cps/iot environments,\" arXiv preprint\n[41] S. Duarte, \"Few-shot learning-based human activity\nrecognition,\" Expert Systems with Applications, vol. 138, p. 112782,\n2019.\n[42] H. Rajan, \"Few-shot transfer\nlearning for wearable imu-based human activity recognition,\" Neural\nComputing and Applications, vol. 36, no. 18, pp. 10 811–10 823, 2024.\n[43] A. Chathoth, \"Contrastive continual learning for model adaptability\nin internet of things,\" arXiv preprint arXiv:2602.04881, 2026.\n[44] Z. Xie, \"Advances\nin few-shot action recognition: A comprehensive review,\" in 2024\n7th International conference on artificial intelligence and big data\n(ICAIBD). IEEE, 2024, pp. 390–398.\n[45] M. Haddadi, \"Privacy\nand utility preserving sensor-data transformations,\" Pervasive and Mobile Computing, vol. 63, p. 101132, 2020.",
+    "paper_id": "2603.11526",
+    "title": "CFD-HAR: User-controllable Privacy through Conditional Feature Disentanglement",
+    "authors": [
+      "Alex Gn",
+      "Fan Li",
+      "S Kuniyilh",
+      "Ada Axan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11526v1",
+    "chunk_index": 28,
+    "total_chunks": 29,
+    "char_count": 1233,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  }
+]

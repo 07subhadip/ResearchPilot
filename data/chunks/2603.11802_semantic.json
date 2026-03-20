@@ -1,0 +1,762 @@
+[
+  {
+    "chunk_id": "e8986fef-0d75-479c-9946-d205229d2a41",
+    "text": "A Semi-Decentralized Approach to Multiagent Control Mahdi Al-Husseini Mykel J. Wray\nStanford University Stanford University Northeastern University\nStanford, United States Stanford, United States Boston, United States\nmah9@stanford.edu mykel@stanford.edu k.wray@northeastern.edu",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 0,
+    "total_chunks": 40,
+    "char_count": 278,
+    "word_count": 29,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2a3a9d7c-e84b-4c94-9771-b7864358c39c",
+    "text": "We introduce an expressive framework and algorithms for the semidecentralized control of cooperative agents in environments with\ncommunication uncertainty. Whereas semi-Markov control admits\na distribution over time for agent actions, semi-Markov communication, or what we refer to as semi-decentralization, gives a distribution over time for what actions and observations agents can\nstore in their histories. We extend semi-decentralization to the par-2026 tially observable Markov decision process (POMDP). The resulting\nSDec-POMDP unifies decentralized and multiagent POMDPs and\nseveral existing explicit communication mechanisms. We present\nrecursive small-step semi-decentralized A* (RS-SDA*), an exact al-Mar\ngorithm for generating optimal SDec-POMDP policies. RS-SDA*\nis evaluated on semi-decentralized versions of several standard12 Figure 1: A semi-decentralized multiagent evacuation scebenchmarks and a maritime medical evacuation scenario. This panario with probabilistic restrictions on communication. Airper provides a well-defined theoretical foundation for exploring\ncraft and watercraft must coordinate under communication\nmany classes of multiagent communication problems through the\nconstraints to move patients from aid stations to hospitals.\nlens of semi-decentralization. KEYWORDS[cs.AI]\nSemi-decentralization, Semi-Markov process, Multiagent commuWe begin by formally defining the semi-decentralization property.\nnication, Admissible heuristic search, Planning\nThe key insight is that semi-Markov systems for resolving agent\n1 INTRODUCTION control may be co-opted in semi-decentralized systems for\nagent communication. Semi-decentralized systems may simultaMany complex real-world problems require the coordination of\nneously contain a subset of agents that are necessarily decentralized\nmultiple cooperative agents to solve, but feature limited opportuniand a subset of agents that are permissibly centralized. We introties for information exchange.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 1,
+    "total_chunks": 40,
+    "char_count": 1973,
+    "word_count": 244,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0bf42c31-581e-4199-b918-dad4b4bfe90f",
+    "text": "The decentralized partially observduce the semi-decentralized POMDP (SDec-POMDP), which unifies\nable Markov decision process (Dec-POMDP) formalizes multi-agent\nseveral existing multiagent models and explicit communication\nplanning and control in settings where explicit communication is\nmechanisms. The SDec-POMDP reveals underlying mechanisms\nimpossible [1, 4, 5]. Several model variants take advantage of existfor memory propagation, selector functions, which we toggle here\ning, if limited, information structures and extend the Dec-POMDP\nbut are otherwise inherently present and constant in existing modto explicitly incorporate costly [10], delayed [20, 21], lossy [33], or\nels. We then detail an exact optimal planning algorithm for solving\nintermittent [34] communication. SDec-POMDPs and apply to a set of new semi-decentralized benchIn this paper we pursue a general framework that unifies several\nmarks and a maritime medical evacuation application.\nmultiagent communication mechanisms. We are interested in problems whose communication dynamics are conditioned with somearXiv:2603.11802v1 Contributions\nprobability on the state, joint actions, or joint observations. An example domain is area-wide Global Positioning System (GPS) denial • We formulate the semi-decentralization property by extendvia jamming [11]. As seen in the evacuation scenario depicted in ing semi-Markov control concepts to communication. SemiFigure 1, agents need to coordinate joint tasks in environments with decentralization is then applied to multiagent POMDPs, formdegraded, denied, or disrupted communication. Agents must reason ing the SDec-POMDP.\nabout which actions to take in light of available communication, • We prove that the SDec-POMDP unifies the Dec-POMDP,\nthe influence actions taken have on future communication, and fu- the MPOMDP, 𝑘-steps delayed communication, and the Decture communication's influence on future actions. In decentralized POMDP-COM.\nsystems, information may be action-gated in costly communication, • We introduce Recursive Small-Step Semi-Decentralized A*\nconstrained by channel capacity in lossy communication, tempo- (RS-SDA*), an exact algorithm for solving semi-decentralized\nrally offset in intermittent or delayed communication, and either problems. We evaluate performance in semi-decentralized\ndeterministic or stochastic in nature, while semi-decentralized sys- variants of four Dec-POMDP benchmarks, then apply to a\ntems generalize all of these through probabilistic information flow. complex medical evacuation scenario with joint tasks. Ultimately, we describe and validate the mechanisms of a novel reinforcement learning in restricted communication environments.\nyet foundational property and model for multiagent decision mak- We further present an exact algorithm for semi-decentralized planing in probabilistic communication environments. ning, in which the communication and model dynamics are known\nprior to execution [17]. Still, the growing body of multiagent deep\nreinforcement learning with communication (Comm-MADRL) re-\n2 RELATED WORK search is replete with promising techniques for codifying commuMultiagent Models Centralized planning can occur when agents nication and defining communication policy. Zhu et al. categorize\nfreely communicate in reliable networks with no latency or when Comm-MADRL approaches by communication policy, to include\nindividual agents possess full system observability.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 2,
+    "total_chunks": 40,
+    "char_count": 3449,
+    "word_count": 455,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f15b051c-6ff4-491d-9429-16e51a5ec8af",
+    "text": "This allows a full communication, partial communication, individual control, and\nsingle planner to select joint actions over the global state [22]. A par- global control subcategories [35]. We are chiefly concerned with the\ntially observable centralized multiagent system is represented by a individual control literature [13, 28, 29], and seek to learn optimal\nmultiagent partially observable Markov decision process (MPOMDP). control policies in light of potential communication links between\nMPOMDP planners benefit from conditioning joint actions on joint agents. In the sub-field of learning tasks with communication, poliobservations but scale poorly and are susceptible to communica- cies generated using learning algorithms simultaneously maximize\ntion failures. MPOMDPs therefore have limited application to many environmental rewards and determine effective communication\nchallenging real-world problems.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 3,
+    "total_chunks": 40,
+    "char_count": 914,
+    "word_count": 121,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3d23f05b-2a91-4234-9433-6d85b31c91a1",
+    "text": "By contrast, cooperative agents protocols for agents [35]. This parallels recent efforts in planning\nin decentralized systems can neither communicate explicitly nor to design joint communication and control strategies [31], which\nobserve the entire system state, and therefore must select their own we also do.\nactions in accordance with local observations [15]. The decentralized POMDP (Dec-POMDP) and MPOMDP share an underlying 3 PRELIMINARIES\nmodel but possess distinct policies and histories. Decentralized\n3.1 Dec-POMDPsmodels have been used to support unmanned aerial vehicle formation flight [3], maritime traffic management [30], and wildfire The decentralized partially observable Markov decision process (Decsurveillance [14]. Decentralized systems permit implicit commu- POMDP) is a stochastic, decentralized multiagent model for sequennication, in which agents transmit information by means of taken tial decision-making under partial observability characterized by\nactions and received observations [12]. Explicit communication, by tuple ⟨𝐼,𝑆, ¯𝐴, ¯O,𝑇,𝑂, 𝑅⟩, where:\ncontrast, endows agents with formalized communications actions. • 𝐼is a finite set of 𝑘agents,\nThe state-of-the-art exact optimal algorithm for solving Dec- • 𝑆is a finite set of states,\nPOMDPs, recursive small-step multi-agent A* (RS-MAA*) [16], re- • ¯𝐴= ×𝑖𝐴𝑖is a finite set of joint actions,\nlies on a combination of incremental expansion, clustering, variable- • ¯O = ×𝑖O𝑖is a finite set of joint observations, and\ndepth recursive heuristics, and heuristic memoization. We extend • 𝑇: 𝑆× ¯𝐴× 𝑆→[0, 1] is a state transition function where\nRS-MAA* to semi-decentralized systems. 𝑇(𝑠′ | 𝑠, ¯𝑎) is the probability of being in state 𝑠′ given joint\nCommunication Schemes The literature features numerous ex- action ¯𝑎being performed in state 𝑠,\nplicitly modeled communication mechanisms and frameworks, ow- • 𝑂: ¯O × 𝑆× ¯𝐴→[0, 1] is a joint observation function\ning to the sheer diversity of information structures in real-world where 𝑂(¯𝑜′ | 𝑠′, ¯𝑎) specifies the probability of attaining joint\nproblems. Goldman and Zilberstein formalize the decentralized observation ¯𝑜′ when joint action ¯𝑎results in state 𝑠′, and\nPOMDP with communication (Dec-POMDP-Com), which incor- • 𝑅: 𝑆× ¯𝐴→R is a reward function such that 𝑅(𝑠, ¯𝑎) is the\nporates an alphabet of possible messages and a communication immediate reward for performing joint action ¯𝑎in state 𝑠.\ncost function [9]. The Dec-POMDP-Com models costly communicaAgents in the decentralized partially observable Markov decisiontion and generally assumes noise-free instantaneous broadcasting. Delayed communication occurs when agents learn the local ob- process (Dec-POMDP) cannot explicitly share information.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 4,
+    "total_chunks": 40,
+    "char_count": 2739,
+    "word_count": 391,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "515bd7f2-020e-42f7-970e-5a2d5c91ec53",
+    "text": "Each\nservation received by others after one or more time-steps [22]. In agent therefore selects actions in accordance with a local policy 𝜋𝑖\none-step delayed communication, agents determine the latest joint informed by action observation history ℎ𝑖, where ¯ℎ∈(Î𝑖∈𝐼𝐴𝑖𝑂𝑖)★. We are primarily concerned with deterministic policies, from whichaction from the joint policy, but are unaware of the latest joint obseragent actions can be inferred using only observation histories ¯𝑜ℎ.vation [20]. In 𝑘-steps delayed communication, a sufficient statistic\nThe collection of individual policies is the decentralized policymay be used in place of the past joint policy [21]. Other multiagent\nset ¯𝜋: ⟨𝜋1, 𝜋2, ...𝜋𝑛⟩. Assume an infinite horizon ℎ= ∞and timemodels consider noisy [33] or intermittent [34] communication\ndiscount rate 𝛾. The objective is to find a policy set ¯𝜋maximizingchannels. In the costly, delayed, noisy, and intermittent communication expected reward over states and observation histories:\ncases, the domain environment is orthogonal to the communication\nchannel, and the actions taken by agents and resulting state do not \" ∞ #\naffect their future ability to coordinate. Therefore, while communi- 𝑉¯𝜋(𝑠, ¯𝑜ℎ) = E ∑︁ 𝛾𝑡𝑅(𝑠𝑡, ¯𝜋(¯𝑜𝑡ℎ)) | 𝑏0, ¯𝜋\ncation directly influences control, control does not in turn directly 𝑡=0\ninfluence communication. This distinguishes semi-decentralized\ninfrastructure from existing communication schemes. !\nCommunication in Reinforcement Learning Our primary con- ¯𝜋∗←argmax 𝑅(𝑠, ¯𝑎) + 𝛾 ∑︁ ∑︁ Pr(𝑠′, ¯𝑜′|𝑠, ¯𝑎)𝑉∗(𝑠′, ¯𝑜′ℎ) .\ntribution is a foundational model that supports both planning and ¯𝑎∈¯𝐴 𝑠′∈𝑆 ¯𝑜′∈O 3.2 MPOMDPs corresponding sojourn time 𝜏𝑡∈R+ and state 𝑠𝑡∈𝑆occurs at 𝜂𝑡,\nThe multiagent partially observable Markov decision process (MPOMDP) where 𝜂𝑡is decision epoch start time within the natural process.\nis a stochastic, centralized multiagent model for sequential decisionmaking under partial observability also characterized by tuple 4 SEMI-DECENTRALIZATION\n⟨𝐼,𝑆, ¯𝐴, ¯O,𝑇,𝑂, 𝑅⟩. MPOMDP agents also lack a complete picture Definition 3.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 5,
+    "total_chunks": 40,
+    "char_count": 2088,
+    "word_count": 301,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3518a0c3-ebf1-455c-935a-03c9c2d9a4be",
+    "text": "The semi-Markov property for communication, or\nof the underlying system state, but can share individual actions 𝑎𝑖 semi-decentralization, admits a distribution over time for what intaken and observations received 𝑜𝑖. This permits a sufficient statistic formation agents can store in memory.\nin the form of a probability distribution over states called a belief Definition 4. Sojourn communication time 𝜏is general continu-\n𝑏∈Δ𝑛, where 𝑛is the number of states and Δ𝑛is the 𝑛−1 simplex. ous random variable representing the time for an agent to return\nWe notate the multiagent belief using 𝑏𝛼. The belief over successor to an information-sharing state. We here overload 𝜏for sojourn\nstates 𝑠′ is updated using the set of agent histories ¯ℎof actions communication time, distinct from sojourn control time.\ntaken and observation received:",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 6,
+    "total_chunks": 40,
+    "char_count": 836,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "61391e15-b21d-4695-b69c-f010e37f7efd",
+    "text": "| ¯𝜏,𝑠, ¯𝑎, ¯𝑎′) (2) 𝑏′𝛼(𝑠′) = 𝜂𝑂(¯𝑜′ | 𝑠′, ¯𝑎) ∑︁ 𝑇(𝑠′ | 𝑠, ¯𝑎)𝑏𝛼(𝑠) 𝑄( ¯T ≤¯𝜏′,𝑠′\n𝑠∈𝑆\nAs with SMDPs, we can define 𝑄as the product of 𝐹(¯𝜏′ | 𝑠′, ¯𝑎′, ¯𝜏)where 𝜂is a normalizing constant equal to Pr(¯𝑜′ | 𝑏𝛼, ¯𝑎)−1, and\nand 𝑇(𝑠′ | 𝑠, ¯𝑎, ¯𝜏), where ¯𝜏′ may be conditioned on the subsequentPr(¯𝑜′ | 𝑏𝛼, ¯𝑎) = Í 𝑂(¯𝑜′ | 𝑠′, ¯𝑎) Í 𝑇(𝑠′ | 𝑠, ¯𝑎)𝑏𝛼(𝑠). Belief 𝑏′𝛼¯𝑜¯𝑎 joint action set ¯𝑎′. SMDPs have one agent with an implicit condi- 𝑠∈𝑆 𝑠′∈𝑆\nis then generated by applying the belief update equation to all tioned ¯𝜏= 0. However, SDec-POMDPs have multiple agents with\n𝑠′ ∈𝑆. An initial belief 𝑏0 is assumed to avoid considering the varied ¯𝜏. Thus it is more general with ¯𝜏′ conditioned on ¯𝜏. SemiBellman equation for infinite starting beliefs. From the agent per- decentralized models assume an initial ¯𝜏0, which can be interpreted\nspective, reward must be calculated as a function of belief, such as the communicating state of each agent when 𝜂= 0. When 𝜏=\nthat 𝑅(𝑏𝛼, ¯𝑎) = Í𝑠∈𝑆𝑅(𝑠, ¯𝑎)𝑏𝛼(𝑠). In an MPOMDP, we seek a single 0, information sharing can occur coinciding with a communication\njoint policy 𝜋𝛼: Δ𝑛→¯𝐴that maps beliefs to actions. We assume noise-free instantaneous broadcast communicavalue of 𝑏𝛼over an infinite horizon may be written as: tion resulting in a single communicating agent set as in a blackboard\n[7, 8]. Semi-decentralization may however incorporate multiple\n\" ∞ # distinct communicating sets. Whereas as semi-Markov control sys-\n𝑉𝜋𝛼(𝑏𝛼) = E ∑︁ 𝛾𝑡𝑅(𝑏𝑡𝛼, 𝜋𝛼(𝑏𝑡𝛼)) | 𝑏0𝛼= 𝑏𝛼, 𝜋𝛼 . tems toggle model transition dynamics using 𝜏, semi-decentralized\n𝑡=0 systems toggle updating histories using ¯𝜏. We seek a 𝜋∗𝛼that maximizes expected reward over time, determined\nby: 5 THE SDEC-POMDP The semi-decentralized partially observable Markov decision process (SDec-POMDP) is a stochastic, semi-decentralized multiagent\n𝑅(𝑏𝛼, ¯𝑎) + 𝛾 model for sequential decision-making under partial observability 𝜋∗𝛼←argmax ∑︁ Pr(¯𝑜′ | 𝑏𝛼, ¯𝑎)𝑉∗(𝑏′𝛼¯𝑜¯𝑎)ª® . ¯𝑎∈¯𝐴 ©­ characterized by tuple ¯𝑜′∈¯O ⟨𝐼,𝑆, ¯𝐴, ¯O, 𝐹,𝑇,𝑂, 𝑅⟩.\n« ¬ Model The SDec-POMDP model introduces selector func-\n3.3 Semi-Markov Processes tions 𝑓, 𝑔, and ℎto propagate agent memories, actions, and obDefinition 1.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 7,
+    "total_chunks": 40,
+    "char_count": 2181,
+    "word_count": 358,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7b1bab38-e09a-429c-9753-5b95dc433e13",
+    "text": "The semi-Markov property for control admits a distri- servations, respectively, to 𝑀𝑖and 𝑀𝑐through selector sub-nodes\nbution over time for state transitions aligned with agent actions. conditioned on ¯𝜏. Figure 2 depicts an SDec-POMDP dynamic deDefinition 2. Sojourn control time 𝜏is the assignment of general cision network where selector sub-nodes are contained within\ncontinuous random variable T. 𝑍sel𝑖 = ⟨𝑀sel𝑐𝑖, ¯𝐴sel𝑖, ¯𝑂sel𝑖⟩and 𝑍sel𝑐 = ⟨¯𝑀sel, ¯𝐴sel, ¯𝑂sel⟩. The selector\ninfrastructure defines information-sharing configurations and enables the model to simultaneously maintain sets of centralized and 𝑄(T ≤𝜏,𝑠′ | 𝑠,𝑎) (1)\ndecentralized agents. The set compositions change with changes to\nThe semi-Markov decision process (SMDP) [25] is a stochastic single ¯𝜏following each state transition. Define 𝑀𝑐= (Î𝑖∈𝐼({∅}∪𝐴𝑖𝑂𝑖))★,\nagent model for sequential decision-making with sojourn system and 𝑀𝑖= (𝐴𝑖𝑂𝑖)★× 𝑀𝑐. The selector functions follow:\ncontrol.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 8,
+    "total_chunks": 40,
+    "char_count": 955,
+    "word_count": 131,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "203a18f3-ca2b-4562-84b3-fc192d1359c1",
+    "text": "The SMDP is characterized by state transition distribution\n𝑄, which is the probability that the next state transition occurs at 𝑚𝑐 if 𝜏𝑖= 0 ∀𝑖, 𝑓(𝑚sel𝑐𝑖) =or before 𝜏and results in successor state 𝑠′. It is mathematically ∅ if 𝜏𝑖> 0\nconvenient to define 𝑄as the product of 𝐹(𝜏| 𝑠,𝑎)𝑇(𝑠′ | 𝑠,𝑎,𝜏),\nor equivalently 𝐹(𝜏| 𝑠′,𝑎,𝑠)𝑇(𝑠′ | 𝑠,𝑎), where 𝐹is the cumulative ∀𝑖,𝑚𝑖 if 𝜏𝑖= 0 𝑓(𝑚sel𝑐) =distribution function of 𝜏. The distribution of 𝜏is conditioned on ∅ if 𝜏𝑖> 0\nthe current state 𝑠and action taken 𝑎and is therefore Markov. The\n\"semi\" in semi-Markov reflects the arbitrary probability distribution 𝑎𝑗∈¯𝑎, ∀𝑗| 𝜏𝑗= 0 if 𝜏𝑖= 0 ∀𝑖,𝑔(𝑎sel𝑖) =followed by model transitions. When 𝜏= 0, a new action is taken 𝑎𝑖 if 𝜏𝑖> 0\nto coincide with a decision epoch. The system natural process time\nis denoted as 𝜂∈R+, such that each decision epoch 𝑡∈N with 𝑔(𝑎sel𝑐) = {𝑎𝑖∈¯𝑎, ∀𝑖| 𝜏𝑖= 0} \" ∞ #\n𝑉𝜋𝑐, ¯𝜋(𝑚𝑐, ¯𝑚) = E ∑︁ 𝛾𝑡𝑅(𝑠𝑡, ¯𝑎𝑡) | 𝑏0,𝑚𝑐, ¯𝑚, 𝜋𝑐, ¯𝜋\n𝑡=0\n= ∑︁ 𝑉𝜋𝑐, ¯𝜋(𝑚𝑐, ¯𝑚,𝑠)𝑏0(𝑠)\n𝑠∈𝑆 𝑉𝜋𝑐, ¯𝜋(𝑚𝑐, ¯𝑚,𝑠) = ∑︁ 𝜓( ¯𝑎| 𝑚𝑐, ¯𝑚) 𝑅(𝑠, ¯𝑎) + 𝛾 ∑︁ 𝐹(𝑑¯𝜏| 𝑠, ¯𝑎)\n¯𝑎∈¯𝐴 ¯𝜏∈¯𝑇\n∑︁ 𝑇(𝑠′ | 𝑠, ¯𝑎) ∑︁ 𝑂(¯𝑜′ | 𝑠′, ¯𝑎)\n𝑠′∈𝑆 ¯𝑜′∈¯O\n∑︁ 𝜂𝑐(𝑚′𝑐| 𝑚𝑐, 𝑓(¯𝑚),𝑔( ¯𝑎),ℎ(¯𝑜′))\nFigure 2: The SDec-POMDP dynamic decision network, with 𝑚′𝑐∈𝑀𝑐\nthe policy infrastructure on the left and model on the right. #\nThe green backdrop contains the blackboard with memory ∑︁ Ö 𝜂(𝑚′𝑖| 𝑚𝑖, 𝑓(𝑚𝑐),𝑔( ¯𝑎),ℎ(¯𝑜′))𝑉𝜋𝑐, ¯𝜋(𝑚′𝑐, ¯𝑚′,𝑠′) .\n𝑀𝑐generated from the histories of communicating agents. ¯𝑚′∈¯𝑀 𝑖∈𝐼\nThe gray backdrop with plate notation includes the indi-\n6 THEORETICAL ANALYSISvidual agent memories 𝑀𝑖. 𝑍selector nodes are selectively\ntoggled by ¯𝜏to facilitate memory propagation 𝜂, represented Definition 5. Models 𝑋𝜃and 𝑋𝜙are equivalent if they reduce to\nby dashed lines. Policy 𝜓edges are represented by dotted one another via mapping function 𝑓, such that 𝑋𝜃≤𝑋𝜙and 𝑋𝜙≤\nlines. The SDec-POMDP framework is flexible and can be 𝑋𝜃.\neasily modified to capture the structural and informational Definition 6. Model-policy structures 𝑋𝑌𝜃and 𝑋𝑌𝜙are equivalent\ncharacteristics of different problem domains. if they reduce to one another via mapping function 𝑔, such that\n𝑋𝑌𝜃≤𝑋𝑌𝜙and 𝑋𝑌𝜙≤𝑋𝑌𝜃. Model-policy-objective structures 𝑍𝜃and 𝑍𝜙are\nequivalent if ∀¯ℎ𝑉𝑋𝑌𝜃(¯ℎ,𝑏0) = 𝑉𝑋𝑌𝜙(¯ℎ,𝑏0). 𝑜𝑗∈¯𝑜, ∀𝑗| 𝜏𝑗= 0 if 𝜏𝑖= 0 ∀𝑖,ℎ(𝑜sel𝑖) 𝑜𝑖 if 𝜏𝑖> 0\n6.1 MPOMDP\nℎ(𝑜sel𝑐) = {𝑜𝑖∈¯𝑜, ∀𝑖| 𝜏𝑖= 0}. SDec-POMDP and MPOMDP models are equivalent. Policy For generality, assume an SDec-POMDP policy with deterministically stored 𝑎𝑖𝑜𝑖, ∀𝑖and deterministically selected ¯𝑎, paProof.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 9,
+    "total_chunks": 40,
+    "char_count": 2490,
+    "word_count": 409,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4c39a732-e07c-43fb-867a-57a44ab120b3",
+    "text": "Demonstrate that 1.𝑋MPOMDP ≤𝑋SDec-POMDP and 2.𝑋SDec-POMDP ≤rameterized by both 𝜋𝑖: 𝑀𝑖→𝐴and 𝜋𝑐: 𝑀𝑐→¯𝐴. Memory\n𝑋MPOMDPpropagation 𝜂and policy 𝜓probability functions follow: 1. 0 𝑋MPOMDP ≤𝑋SDec-POMDP (𝜋𝑐(𝑚𝑐))𝑖 if 𝜏𝑖= ( 1, ∀𝑖 n𝑎𝑖= Let if 0 𝜏𝑖> 𝐼′ = 𝐼, 𝑆′ = 𝑆, ¯𝐴′ = ¯𝐴, 𝑅′ = 𝑅, and ¯O′ = ¯O, where prime 𝑎𝑖= 𝜋𝑖(𝑚𝑖) 𝜓( ¯𝑎) =\n0, otherwise notation indicates the SDec-POMDP for purposes of relating models. The state transition and observation functions are defined to\n1, if 𝑚′𝑐= 𝑚𝑐¯𝑚sel ¯𝑎sel¯𝑜sel reproduce the MPOMDP dynamics independently of ¯𝜏, such that 𝜂𝑐(𝑚′𝑐) = otherwise 0,\n𝑇′(𝑠′ | 𝑠, ¯𝑎, ¯𝜏) = 𝑇(𝑠′ | 𝑠, ¯𝑎) and 𝑂′(¯𝑜′ | 𝑠′, ¯𝑎, ¯𝜏) = 𝑂(¯𝑜′ | 𝑠′, ¯𝑎). Assume a deterministic communication sojourn time function 𝐹, 1, if 𝑚′𝑖= 𝑚𝑖𝑚sel𝑐𝑖𝑎sel𝑖𝑜sel𝑖 . ∀𝑖,𝜂(𝑚′𝑖) = where for each agent is fixed to one, resulting in complete central- 𝜏′ otherwise 0,\nization at subsequent decision epochs; ∀𝑖, 𝐹′(𝜏′𝑖< 1 | 𝑠,𝑎𝑖,𝜏𝑖) = 0Objective Function The SDec-POMDP objective is to identify\nand 𝐹′(𝜏′𝑖= 1 | 𝑠,𝑎𝑖,𝜏𝑖) = 1. Selector functions therefore return jointthe combination of memory propagation and policy functions that\nactions and observations at each time-step; ∀𝑖, 𝑔′(𝑎sel𝑖) = 𝑔′(𝑎sel𝑐) =will maximize expected reward. Consider the infinite horizon case:\n¯𝑎and ∀𝑖, ℎ′(𝑜sel𝑖) = ℎ′(𝑜sel𝑐) = ¯𝑜.\n\" ∞ #\n𝐽(𝜓,𝜂𝑐, ¯𝜂) = E ∑︁ 𝛾𝑡𝑅(𝑠𝑡, ¯𝑎𝑡) | 𝑏0 2. 𝑋SDec-POMDP ≤𝑋MPOMDP\n𝑡=0 Let 𝑅′ = 𝑅and ¯𝐴′ = ¯𝐴. The agent set is extended to include an\n𝐽★= argmax 𝐽(𝜓,𝜂𝑐, ¯𝜂). 𝐼′additional= 𝐼∪𝐼c.blackboardWe assumeagentwithoutwith anlossindependentof generalitymemory,that |𝐼c|so =that1,\n𝜓,𝜂𝑐,¯𝜂 and that the communication sojourn time for this agent satisfies\nRewrite in terms of policies ¯𝜋and 𝜋𝑐and blackboard and agent 𝜏𝑖= 0 ∀𝑖∈𝐼c. The state space is augmented to include ¯𝜏, such that\nmemories 𝑚𝑐and ¯𝑚: 𝑆′ = 𝑆× (R+)𝑛. Similarly, the joint observation space is expanded to include the sequence of all action-observation pairs, Show that the semi-decentralized value function reduces to the\nstandard value function under the original joint policy. Begin with,\n¯O′ = ¯O × Ö (𝐴𝑖𝑂𝑖)★. \"\n𝑉𝜋𝑐, ¯𝜋(𝑚𝑐, ¯𝑚,𝑠) = ∑︁ 𝜓( ¯𝑎| 𝑚𝑐, ¯𝑚) 𝑅(𝑠, ¯𝑎) + 𝛾 ∑︁ 𝐹(𝑑¯𝜏| 𝑠, ¯𝑎) 𝑖∈𝐼\n¯𝑎∈¯𝐴 ¯𝜏∈¯𝑇\nThe transition and observation functions adopt the factored state\n| {z } |1, all RV{z⊥of 𝑑𝜏} 1,𝑚𝑐=¯ℎspace: 𝑇′(⟨𝑠′, ¯𝜏′⟩| ⟨𝑠, ¯𝜏⟩, ¯𝑎, ¯𝑎′) = 𝐹(¯𝜏′ | 𝑠′, ¯𝑎′, ¯𝜏)𝑇(𝑠′ | 𝑠, ¯𝑎, ¯𝜏) and\n𝑂′(¯𝑜′ | ⟨𝑠′, ¯𝜏′⟩, ⟨𝑠, ¯𝜏⟩, ¯𝑎) = 𝑂(¯𝑜′ | 𝑠′,𝑠, ¯𝑎, ¯𝜏′, ¯𝜏) at its most general. ∑︁ 𝑇(𝑠′ | 𝑠, ¯𝑎) ∑︁ 𝑂(¯𝑜′ | 𝑠′, ¯𝑎) □\n𝑠′∈𝑆 ¯𝑜′∈¯O\n∑︁ 𝜂𝑐(𝑚′𝑐| 𝑚𝑐, 𝑓(¯𝑚),𝑔( ¯𝑎),ℎ(¯𝑜′)) Lemma 2. SDec-POMDP and MPOMDP model-policy structures\nare equivalent. 𝑚′𝑐∈𝑀𝑐\n| {z ¯𝑜sel } 1,𝑚′𝑐=𝑚𝑐¯𝑎sel\nProof. Demonstrate that 1. 𝑋𝑌MPOMDP ≤𝑋𝑌SDec-POMDP and 2.\n𝑋𝑌SDec-POMDP ≤𝑋𝑌MPOMDP ∑︁ Ö 𝜂(𝑚′𝑖| 𝑚𝑖, 𝑓(𝑚𝑐),𝑔( ¯𝑎),ℎ(¯𝑜′)) 𝑉𝜋𝑐, ¯𝜋(𝑚′𝑐, ¯𝑚′,𝑠′) .\n¯𝑚′∈¯𝑀 𝑖∈𝐼1. X𝑌MPOMDP ≤𝑋𝑌SDec-POMDP\nLet each memory selector function return the joint memory, such | {z }\n𝑖that ∀𝑖, 𝑓′(𝑚sel𝑐𝑖) = 𝑓′(𝑚sel𝑐) = ¯𝑚.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 10,
+    "total_chunks": 40,
+    "char_count": 2880,
+    "word_count": 485,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3bea2bea-95c2-44ea-98a0-75f42160ca5e",
+    "text": "The update rule for the joint By construction,1,∀𝑖,𝑚′each𝑖=𝑚𝑖𝑎selunder-braced𝑖𝑜sel term evaluates deterministimemory is deterministic and concatenates the prior shared memory\ncally: the blackboard's memory update enforces 𝑚′𝑐= 𝑚𝑐¯𝑎sel¯𝑜sel,with the complete set of agent actions and observations from the\ncurrent time-step, as represented by: each agent's local memory update yields 𝑚′𝑖= 𝑚𝑖𝑎sel𝑖𝑜sel𝑖, and the\ndistribution over sojourn times collapse to one. Moreover, since\n1, if ¯𝑚′ = ¯𝑚¯𝑎sel¯𝑜sel 𝜓( ¯𝑎| 𝑚𝑐, ¯𝑚,𝑠) = 1 whenever ¯𝑎= 𝜋(¯ℎ), we obtain 𝑉𝜋𝑐, ¯𝜋(𝑚𝑐, ¯𝑚,𝑠) = 𝜂′(¯𝑚′) = 𝜂′𝑐(𝑚′𝑐) = 0, otherwise. 𝑉𝜋(𝑠, ¯ℎ), which results in standard value recursion:\n𝑅(𝑠, 𝜋(¯ℎ)) + 𝛾 ∑︁ ∑︁ Pr(𝑠′, ¯𝑜′ | 𝑠, 𝜋(¯ℎ))𝑉𝜋(𝑠′, ¯ℎ′).Agent actions are selected using a policy over the joint memory:\n𝑠′∈𝑆 ¯𝑜′∈O\n1, ¯𝑎= 𝜋(¯𝑚) Further observe that ¯𝑚𝑐= ¯𝑚and 𝜓′( ¯𝑎) = 0, otherwise. ∑︁ 𝑇(𝑠′ | 𝑠, ¯𝑎) ∑︁ 𝑂(¯𝑜′ | 𝑠′, ¯𝑎) = ∑︁ ∑︁ Pr(𝑠′, ¯𝑜′ | 𝑠, 𝜋(¯ℎ)).\n2. 𝑋𝑌SDec-POMDP ≤𝑋𝑌MPOMDP 𝑠′∈𝑆 ¯𝑜′∈¯O 𝑠′∈𝑆 ¯𝑜′∈O □\nConstruct policy 𝜋𝑀(𝑚′𝑖) = ⟨𝑎1, ...,𝑎𝑛⟩, simulating where the action\nfor agent 𝑖is determined to be: Proposition 1. The SDec-POMDP and MPOMDP are equivalent. (𝜋𝑐(¯𝑚𝑐))𝑖 if 𝜏𝑖= 0 6.2 Dec-POMDP 𝑎𝑖= 𝜋𝑖(𝑚𝑖) if 𝜏𝑖> 0 Lemma 4. SDec-POMDP and Dec-POMDP models are equivalent. as if each agent draws from the blackboard's policy when its com- Proof. 1. Demonstrate that 𝑋Dec-POMDP ≤𝑋SDec-POMDP and 2.munication sojourn time is zero and otherwise following a local\npolicy. The memory update rule is defined to extend the current 𝑋SDec-POMDP ≤𝑋Dec-POMDP\nmemory with the observed joint outcome:\n1. 𝑋Dec-POMDP ≤𝑋SDec-POMDP\n1, if ¯𝑚′ = ¯𝑚¯𝑜 Again set 𝐼′ = 𝐼, 𝑆′ = 𝑆, ¯𝐴′ = ¯𝐴, 𝑅′ = 𝑅, and ¯O′ = ¯O. Let 𝑇′(𝑠′ | 𝜂′(¯𝑚′) = 0, otherwise. 𝑠, ¯𝑎, ¯𝜏) = 𝑇(𝑠′ | 𝑠, ¯𝑎) and 𝑂′(¯𝑜′ | 𝑠′, ¯𝑎, ¯𝜏′) = 𝑂(¯𝑜′ | 𝑠′, ¯𝑎). Action\nand observation selection are specified so that for every agent 𝑖,\nJoint action selection is consistent with the constructed joint policy: 𝑔′(𝑎sel𝑖) = 𝑎𝑖and ℎ′(𝑜sel𝑖) = 𝑜𝑖.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 11,
+    "total_chunks": 40,
+    "char_count": 1953,
+    "word_count": 329,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "71ac196d-4529-4ec8-8d19-a4f5f1826e7a",
+    "text": "Assign to the blackboard memory\nthe null set, such that 𝑔′(𝑎sel𝑐) = ℎ′(𝑜sel𝑐) = ∅. By the construction\n1, ∀𝑖,𝑎𝑖= 𝜋𝑀(𝑚′𝑖) of 𝑔′ and ℎ′, 𝜏has no impact and 𝐹can be disregarded. 𝜓′( ¯𝑎) = 0, otherwise. 2. 𝑋SDec-POMDP ≤𝑋Dec-POMDP\nReference Lemma 1 proof 2, as 𝑋Dec-POMDP = 𝑋MPOMDP.\n□ □ SDec-POMDP and Dec-POMDP model-policy structures Lemma 3. SDec-POMDP and MPOMDP model-policy-objective\nare equivalent.structures are equivalent. Demonstrate that 1. 𝑋𝑌Dec-POMDP ≤𝑋𝑌SDec-POMDP and 2. Show ∀¯ℎ𝑉𝑋𝑌MPOMDP (¯ℎ,𝑏0) = 𝑉𝑋𝑌SDec-POMDP (¯ℎ,𝑏0) 𝑋𝑌SDec-POMDP ≤𝑋𝑌Dec-POMDP 1. 𝑋𝑌Dec-POMDP ≤𝑋𝑌SDec-POMDP memory update yields 𝑚′𝑖= 𝑚𝑖𝑎sel𝑖𝑜sel𝑖, and the distribution over\nLet each memory selector function return the null set, such that ∀𝑖, sojourn times collapses to one. As before, since 𝜓( ¯𝑎| 𝑚𝑐, ¯𝑚,𝑠) = 1\n𝑓′(𝑚sel𝑐𝑖) = 𝑓′(𝑚sel𝑐) = ∅. The update rule for each agent's memory whenever ¯𝑎= ¯𝜋(¯ℎ), we obtain 𝑉𝜋𝑐, ¯𝜋(𝑚𝑐, ¯𝑚,𝑠) = 𝑉¯𝜋(𝑠, ¯ℎ), which\nis deterministic and concatenates the prior memory with the set of results in standard value recursion:\nindividual agent actions and observations from the current timestep, as represented by: 𝑅(𝑠, ¯𝜋(¯ℎ)) + 𝛾 ∑︁ ∑︁ Pr(𝑠′, ¯𝑜′ | 𝑠, ¯𝜋(¯ℎ))𝑉¯𝜋(𝑠′, ¯ℎ′)\n1, if 𝑚′𝑖= 𝑚𝑖𝑎sel𝑖𝑜sel𝑖 𝑠′∈𝑆 ¯𝑜′∈O 𝜂′(𝑚′𝑖) = 0, otherwise Again observe that,\nAgent actions are selected using a policy over the agent's memory: ∑︁ 𝑇(𝑠′ | 𝑠, ¯𝑎) ∑︁ 𝑂(¯𝑜′ | 𝑠′, ¯𝑎) = ∑︁ ∑︁ Pr(𝑠′, ¯𝑜′ | 𝑠, ¯𝜋(¯ℎ)).\n1, ∀𝑖,𝑎𝑖= 𝜋𝑖(𝑚𝑖) 𝑠′∈𝑆 ¯𝑜′∈¯O 𝑠′∈𝑆 ¯𝑜′∈O 𝜓′( ¯𝑎) = 0, otherwise □\nBy the construction of 𝜓′, 𝜂′𝑐can be disregarded. The SDec-POMDP and Dec-POMDP are equiva-\n2. 𝑋𝑌SDec-POMDP ≤𝑋𝑌Dec-POMDP lent\nConstruct simulated policy (𝜋𝐷)𝑖(𝑚′𝑖) = 𝑎𝑖, where:\nCorollary 1. The SDec-POMDP is the same complexity class as a\n(𝜋𝑐(𝑚𝑐))𝑖 if 𝜏𝑖= 0 Dec-POMDP (NEXP-complete) 𝑎𝑖= 𝜋𝑖(𝑚𝑖) if 𝜏𝑖> 0\nProposition 3. The SDec-POMDP and 𝑘-steps-delayed communias if each agent draws from the blackboard's policy when its comcation are equivalentmunication sojourn time is zero and otherwise following a local\npolicy. Each agent's memory update rule appends the taken action\nProposition 4. The SDec-POMDP and Dec-POMDP-Com are\nand observation to the current memory:\nequivalent\n1, if 𝑚′𝑖= 𝑚𝑖𝑎𝑖𝑜𝑖\n𝜂′(𝑚′𝑖) = 0, otherwise We provide proofs for Propositions 3 and 4 in the technical\nappendix. Agent action selection is consistent with the constructed policy:\n1, ∀𝑖,𝑎𝑖= (𝜋𝐷)𝑖(𝑚′𝑖) 7 RECURSIVE SMALL-STEP 𝜓′( ¯𝑎) = 0, otherwise SEMI-DECENTRALIZED A*\n□ Recursive small-step semi-decentralized A* (RS-SDA*) is an\nexact planning algorithm for optimizing expected reward in SDec- Lemma 6.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 12,
+    "total_chunks": 40,
+    "char_count": 2533,
+    "word_count": 399,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "14f14062-028b-4710-af1e-7b203f48fdf2",
+    "text": "SDec-POMDP and Dec-POMDP model-policy-objective\nPOMDP problems. RS-SDA* modifies RS-MAA* [16] by maintainingstructures are equivalent.\na stage-specific partition of decentralized and centralized joint obProof. Show ∀¯ℎ𝑉𝑋𝑌Dec-POMDP (¯ℎ,𝑏0) = 𝑉𝑋𝑌SDec-POMDP (¯ℎ,𝑏0) servation histories per probabilistic communication dynamics. Like\nThe semi-decentralized value function reduces to the decentralized RS-MAA*, RS-SDA* relies on incremental expansion of a small-step\nvalue function under the original policy set, beginning with: search tree, clustering, recursive heuristics, memoization, and last\n\" stage modifications. RS-SDA* generates a fully-specified policy set\n𝑉𝜋𝑐, ¯𝜋( 𝑚𝑐 , ¯𝑚,𝑠) = ∑︁ 𝜓( ¯𝑎| 𝑚𝑐 , ¯𝑚) 𝑅(𝑠, ¯𝑎)+ ¯𝜋∈Π using offline planning. A fully-specified policy contains both\n|{z}𝑀𝑐=∅ ¯𝑎∈¯𝐴 |{z}𝑀𝑐=∅ fully-specified local policies and, if appropriate for the problem,\na blackboard policy ¯𝜋= ⟨𝜋1, ...𝜋𝑛, 𝜋𝑐⟩where 𝜋𝑖: Oℎ→𝐴𝑖and\n| {z1 } 𝜋𝑐: ¯Oℎ→¯𝐴. Similarly, ¯𝜑= ⟨𝜑1, ...𝜑𝑛,𝜑𝑐⟩, 𝜑𝑖: O≤ℎ−1 →𝐴𝑖, and\n¯𝜑: ¯O≤ℎ−1 →¯𝐴.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 13,
+    "total_chunks": 40,
+    "char_count": 1017,
+    "word_count": 139,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8874152e-50e1-454d-91ff-f87a5894aebc",
+    "text": "RS-SDA* is outlined in Algorithm 1.𝛾 ∑︁ 𝐹(𝑑¯𝜏| 𝑠, ¯𝑎) ∑︁ 𝑇(𝑠′ | 𝑠, ¯𝑎) ∑︁ 𝑂(¯𝑜′ | 𝑠′, ¯𝑎) Small-Step Search Tree We adopt the small-step approach first\n¯𝜏∈¯𝑇 𝑠′∈𝑆 ¯𝑜′∈¯O introduced by Cazenave for A* [6] and used by Koops et al. in RS-\n|1, all RV{z⊥of 𝑑𝜏} MAA* [16] to limit search tree outdegree. Small-step search can be\nused with centralized and decentralized components of each policy\n∑︁ Ö 𝜂(𝑚′𝑖| 𝑚𝑖, 𝑓(𝑚𝑐) ,𝑔( ¯𝑎),𝑔( ¯𝑎),ℎ(¯𝑜′)) node, depicted in Figure 3. As shown in Table 1, small-step search\n¯𝑚′∈¯𝑀 𝑖∈𝐼 |{z}𝑀𝑐=∅ provides RS-SDA* with mixed component policies, pre-clustering,\na lower bound (complete decentralization) and an upper bound\n| {z } (complete centralization) on the number of considered nodes per 1,∀𝑖,𝑚′𝑖=𝑚𝑖𝑎sel𝑖𝑜sel𝑖\nstage 𝑡. When 𝐹(𝜏| 𝑠, ¯𝑎) = 𝐹(𝜏| ¯𝑎) and the policy is deterministic,\n# we can consolidate the centralized and decentralized components\n∑︁ 𝜂𝑐(𝑚′𝑐| 𝑚𝑐, 𝑓(¯𝑚),𝑔( ¯𝑎),ℎ(¯𝑜′)) 𝑉𝜋𝑐, ¯𝜋( 𝑚′𝑐 , ¯𝑚′,𝑠′) . of policies and significantly reduce the search tree size. This results(((((((((((((((𝑚′𝑐∈𝑀𝑐 |{z}𝑀𝑐=∅ in an RS-SDA* lower bound that is equivalent to RS-MAA* and an\n| 𝑀𝑐=∅{z } RS-SDA* upper bound that has |O★|𝑡𝑛levels per stage and considers\nBy construction, each under-braced term evaluates deterministi- |𝐴★|𝑛joint actions per level, where |O★| is the size of the largest\ncally: the blackboard's memory remains 𝑚′𝑐= ∅, each agent's local observation set and |𝐴★| is the size of the largest action set. RS-MAA* RS-SDA* Classical MAA* Ordering Observation Histories Any ¯𝜑may contain both decen-\n(RS-SDA* lower bound) upper bound\nlevels nodes/stage levels nodes/stage levels nodes/stage tralized and centralized mappings conditioned on the underlying\n𝑡 𝑛|𝑂★|𝑡 𝑛|O★|𝑡|𝐴★| |O★|𝑡𝑛 |O★|𝑡𝑛|𝐴★|𝑛 1 |𝐴★|𝑛| O★|𝑡 state and actions taken. We therefore explore joint observation\n0 2 6 1 9 1 9 histories (JOH) and local observation histories (LOH) in a predeter-\n1 4 12 4 36 1 81\n2 8 24 16 144 1 6,561 mined sequence: stage, JOH then LOH, by agent (for LOHs), then\n3 16 48 64 576 1 >1E6 lexicographically. Observe that, for length 𝑡, all ¯𝑜0:𝑡⪯𝑜0:𝑡and all\n4 32 96 256 2,304 1 >1E6\n5 64 192 1,024 9,216 1 >1E6 𝑜0:𝑡⪯¯𝑜0:𝑡′. Additionally, ¯𝑜0:𝑡⪯lex ¯𝑜0:𝑡, and 𝑜0:𝑡𝑖 ⪯𝑜0:𝑡𝑗 if (𝑖< 𝑗) or\n128 384 4,096 36,864 1 >1E6 6\n7 256 768 16,384 147,456 1 >1E6 (𝑖= 𝑗∧𝑜0:𝑡𝑖 ⪯lex 𝑜0:𝑡𝑗).\n8 512 1536 65,536 589,824 1 >1E6 Clustering We implement lossless incremental clustering in deTable 1: SDec-Tiger levels and nodes by stage for RS-MAA*, centralized policy components based on a probabilistic equivalence\nRS-SDA*, and MAA*. |𝐴★| = 3, |𝑂★| = 2, and 𝑛= 2. criterion [24]. We similarly cluster centralized policy components\nbased on the resulting joint belief, or ∀𝑠, P(𝑠| ¯𝑜0:𝑡1 ) = P(𝑠| ¯𝑜0:𝑡2 ). Admissible Heuristic As with multiagent A* (MAA*) [32], an\nadmissible heuristic 𝑄guides a path through a search tree with\npartial policies as nodes ¯𝜑. A heuristic is admissible if it equals\nor over-approximates the true value of the policy node. An open\nlist is maintained with nodes under consideration. The node in the\nopen list with the highest heuristic value is expanded and replaced\nin the open list by its children.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 14,
+    "total_chunks": 40,
+    "char_count": 3128,
+    "word_count": 521,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1406673e-ae1e-452b-ab02-ce470c484354",
+    "text": "The tree search terminates once a\nfully-specified policy with the highest heuristic value is identified.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 15,
+    "total_chunks": 40,
+    "char_count": 104,
+    "word_count": 15,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9d1e3e61-4315-4a1d-8916-51ac8233c982",
+    "text": "For each parent node and candidate action, we split each posterior belief using Ssync and Async (more generally expressed using\n𝐹(𝑠,𝑎)) and take a probability-weighted sum of the exact centralized\nvalue on the communication-dependent posterior and the exact\ndecentralized value on its complement. Because every constituent\n(centralized, decentralized, and their mixture conditioned on communication) is an exact optimum of a relaxation of the remaining\nsubproblem, the resulting heuristic never underestimates the\nachievable return and is therefore admissible. Semi-Decentralized Benchmarks We evaluate RS-SDA* in semidecentralized versions of four common Dec-POMDP benchmarks:\nDec-Tiger [18], FireFighting [23], BoxPushing [26], and Mars\n[2], and in a new MaritimeMEDEVAC benchmark. Problem descriptions with illustrations are disclosed in the technical appendix. All experiments were conducted using an AMD Ryzen 9 9900X3D\n12-Core Processor (4400 MHz), with timeout occurring at 20 minutes and memory out at 16 GB.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 16,
+    "total_chunks": 40,
+    "char_count": 1016,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "77efad11-fcfd-48ee-aade-8f67dfe1e8f0",
+    "text": "We adopt hyper-parameters 𝑀= 200,\n𝑑= 3, and 𝛼= 0.2 for all experiments. A link to our code repository\nis provided in the technical appendix to support reproducibility. Figure 3: Illustrating RS-SDA* applied to SDec-Tiger using\nmixed component policies through stage 𝜎= 2. Dynamic Programming We apply backward induction over beliefs to rapidly determine the value of centralized policy components. This bypasses expensive recursive heuristic calculations for\nlarge portions of the search. For each remaining horizon 𝑟and belief Figure 4: MaritimeMEDEVAC environment representation\n𝑏, we compute𝑉𝑟(𝑏) and 𝑄𝑟(𝑏, ¯𝑎) and memoize both𝑉and 𝑄under and centralized/decentralized/semi-decentralized optimal\nkeys (𝑟,𝑏) and (𝑟,𝑏, ¯𝑎) to enable extensive reuse during A* expan- policy values for horizons one through eight.\nsion. Similarly, observation likelihoods 𝑃(¯𝑜| 𝑏, ¯𝑎) and posteriors\n(𝑏′¯𝑜,¯𝑎) are obtained via a belief update over the model's transition Results As shown in Table 2 and Figure 4, RS-SDA* is competitive\nand observation tensors, then cached for subsequent calls. with the centralized upper bound across most semi-decentralized Algorithm 1: Recursive Small-Step Semi-Decentralized A* the semi-decentralized policy recovers about 96% of the centralized value. These results indicate that semi-decentralization and Input :Φ ≜(Ssync, Async); ℎhorizon; 𝑏initial belief; 𝜑initial policy; 𝑑\nheuristic depth; 𝑀iterations; 𝑢upper bound RS-SDA* preserve much of the benefit of centralized coordination\nOutput:optimal policy 𝜑∗, optimal value 𝑣∗ while staying tractable, with occasional slowdowns or timeouts on\nfunction RS-SDA*(ℎ,𝑏,𝜑,𝑑, 𝑀,𝑢, Φ): problem instances where lossless clustering is largely ineffective.\n𝑄←PriorityQueue(↑)\n𝑄.push(min(𝜑.heuristics),𝜑)\n𝑖←0 lower bound our approach upper bound\nwhile 𝑄is not empty do decentralized semi-decentralized centralized\n(𝑣,𝜑) ←𝑄.pop() RS-MAA* RS-SDA* RS-SDA*\nif 𝑣< ∞then 𝑖←𝑖+ 1 ℎ value time value time value time\nif 𝑖≥𝑀or 𝑣≤𝑢then return (min(𝑣,𝑢), None)\n𝜎←current stage of 𝜑; 𝑗←current agent index of 𝜑 SDec-Tiger\n8 12.21726 1 27.21518 <1 47.71696 <1 // Phase 1: Transition to Subsequent Stage 9 15.57244 6 30.90457 <1 53.47353 <1 complete if stage then 𝜎is (𝑗= |𝐴|) 10 15.18438 271 34.72370 <1 60.50988 <1 if 𝜎= ℎthen return (𝑣,𝜑)\n(𝐷dec, 𝐷cen, 𝑃dec, 𝑃cen, 𝜌) ←TerminalProbs(𝜑, Φ) SDec-FireFighting (𝑛ℎ= 3,𝑛𝑓= 3)\nif 𝜌> 0 then 3 -5.73697 <1 -5.73697 <1 -5.72285 <1\n𝜑←ClusterPolicyDec(𝜑, 𝐷dec, 𝑃dec) 4 -6.57883 2 -6.57883 3 -6.51859 3\nif 𝜌< 1 then 5 -7.06987 29 -7.06987 49 -6.98069 37\n𝜑←ClusterPolicyCen(𝜑, 𝐷cen, 𝑃cen) SDec-BoxPushing\n𝑤←EvaluatePolicy(𝜑, 𝜌) 3 66.08100 <1 66.81000 <1 66.81000 <1\n𝜑.heuristics.append(𝑤) 4 98.59361 18 99.55630 <1 99.55630 <1\n𝜑.depth ←min(𝜎,𝑑) 5 107.72985 MO 109.09251 1 109.09251 1\n𝜑.extend_empty_stage(); 𝜎←𝜎+ 1; 𝑗←0 SDec-Mars (Right Band Rendezvous)\nend 4 10.18080 1 10.18080 <1 10.87020 <1\n// Phase 2: Policy Expansion 5 13.26654 2 14.29038 <1 14.38556 1\nif 𝜎= ℎ(Final Stage Optimization) then 6 18.62317 4 20.06430 2 20.06706 3\nif 𝜌< 1 and centralized unfilled then\nSDec-Mars (Survey Site Beacons) determine ¯𝑎∗for centralized component\n4 10.18080 1 10.54620 <1 10.87020 <1\n𝜑′ ←𝜑with ¯𝑎∗set; 5 13.26654 2 13.26654 <1 14.38556 1\n𝑤←EvaluatePolicy(𝜑′, 𝜌) 6 18.62317 4 18.62317 143 20.06706 3\n𝑄.push(𝑤,𝜑′)\nelse SDec-Mars (Drill Site Beacons)\ndetermine 𝑎∗𝑗for decentralized component 4 10.18080 1 10.87020 <1 10.87020 <1\n5 13.26654 2 14.38556 <1 14.38556 1 𝜑′ ←𝜑with 𝑎∗𝑗set; 6 18.62317 4 20.06168 2 20.06706 3\n𝑤←EvaluatePolicy(𝜑′, 𝜌)\nif 𝑤= 𝑣then return (𝑤,𝜑′) MaritimeMEDEVAC\n6 3.18348 <1 3.19807 28 3.19945 <1 𝑄.push(𝑤,𝜑′)\nelse 7 3.26710 2 6.36301 33 6.61819 1\nif 𝜌< 1 and centralized unfilled then 8 8.03228 156 10.61275 MO 10.88244 1\nforeach joint action ¯𝑎∈¯𝐴do Table 2: RS-SDA* offline planning performance on semi-\n𝜑′ ←𝜑with ¯𝑎set decentralized benchmarks and MaritimeMEDEVAC. TO de- 𝑤←ExactCentralQ(𝜑′, ¯𝑎)\nnotes timeout (>1200s) and MO denotes memout (>16GB). 𝑄.push(𝑤,𝜑′)\nend\nelse if agent 𝑗unfilled then\nforeach 𝑎𝑗∈𝐴𝑗do\n𝜑′ ←𝜑with 𝑎𝑗set\n𝑤←EvaluatePolicy(𝜑′) 9 CONCLUSION\n𝑄.push(𝑤,𝜑′)\nend We present a foundational framework for multiagent decision makend ing under probabilistic communication. We introduce the SDecPOMDP, which unifies the Dec-POMDP, MPOMDP, and several\ncommunication mechanisms with delay, loss, or cost. A secondary\nbenchmarks and MaritimeMEDEVAC. The modified benchmarks contribution is RS-SDA*, an admissible heuristic search algorithm\ndemonstrate how model dynamics influence the value of infor- for semi-decentralized systems with excellent performance, and\nmation in multi-agent systems. SDec-FireFighting exemplifies semi-decentralized versions of four standard benchmarks and a\nproblems where centralization benefits are negligible, and the opti- new medical evacuation scenario. Taken together, SDec-POMDP\nmal RS-SDA* solution equals the optimal RS-MAA* solution for all and RS-SDA* provide a principled basis for studying and exploiting\nconsidered ℎ.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 17,
+    "total_chunks": 40,
+    "char_count": 4971,
+    "word_count": 716,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7af35d69-2ea1-4012-9383-345e08b8281b",
+    "text": "By contrast, SDec-Box exemplifies problems where probabilistic communication in cooperative teams. Future work\npartial centralization results in complete information sharing, and includes exploiting interleaving offline planning and online search\nthe optimal RS-SDA* solution equals the fully centralized optimum to improve approximate RS-SDA* performance and investigating\nfor all considered ℎ. In MaritimeMEDEVAC, the three regimes are systems with non-stationary sojourn time distributions.\nnearly indistinguishable at moderate horizons (𝐻= 4, 5, 6), but at\n𝐻= 7 centralized reaches 6.62 while semi-decentralized attains\n6.36, clearly outperforming full decentralization (3.27). REFERENCES [26] Sven Seuken and Shlomo Zilberstein. 2007. Improved memory-bounded dynamic\n[1] Christopher Amato, Girish Chowdhary, Alborz Geramifard, N Kemal Üre, and programming for decentralized POMDPs. In Proceedings of the Twenty-Third\nMykel J Kochenderfer. 2013. Decentralized control of partially observable Markov Conference on Uncertainty in Artificial Intelligence. 344–351.\ndecision processes. In 52nd IEEE Conference on Decision and Control. IEEE, IEEE, [27] Sven Seuken and Shlomo Zilberstein. 2008. Formal models and algorithms for\n2398–2405. decentralized decision making under uncertainty. Autonomous Agents and Multi-\n[2] Christopher Amato and Shlomo Zilberstein. 2009. Achieving goals in decentral- Agent Systems 17, 2 (2008), 190–250.\nized POMDPs. In Proceedings of The 8th International Conference on Autonomous [28] Junjie Sheng, Xiangfeng Wang, Bo Jin, Junchi Yan, Wenhao Li, Tsung-Hui Chang,\nAgents and Multiagent Systems - Volume 1 (Budapest, Hungary) (AAMAS '09). Jun Wang, and Hongyuan Zha. 2022.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 18,
+    "total_chunks": 40,
+    "char_count": 1703,
+    "word_count": 226,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7e961bc5-10e9-4812-a43b-c913ca6f0ee1",
+    "text": "Learning structured communication for\nInternational Foundation for Autonomous Agents and Multiagent Systems, Rich- multi-agent reinforcement learning. Autonomous Agents and Multi-Agent Systems\nland, SC, 593–600. 36, 2 (2022), 50.\n[3] Md Ali Azam, Hans D Mittelmann, and Shankarachary Ragi. 2021. UAV formation [29] Amanpreet Singh, Tushar Jain, and Sainbayar Sukhbaatar. 2018.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 19,
+    "total_chunks": 40,
+    "char_count": 376,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ec2c3854-1f72-4166-9be8-87b714e20b81",
+    "text": "Learning when\nshape control via decentralized markov decision processes. Algorithms 14, 3 to communicate at scale in multiagent cooperative and competitive tasks. arXiv\n(2021), 91. preprint arXiv:1812.09755 (2018).\n[4] Raphen Becker, Shlomo Zilberstein, Victor Lesser, and Claudia V Goldman. 2004. [30] Arambam James Singh, Duc Thien Nguyen, Akshat Kumar, and Hoong Chuin\nSolving transition independent decentralized Markov decision processes. Multiagent decision making for maritime traffic management. In\nof Artificial Intelligence Research 22 (2004), 423–455. Proceedings of the AAAI Conference on Artificial Intelligence, Vol. 33. 6171–6178.\n[5] Daniel S Bernstein, Robert Givan, Neil Immerman, and Shlomo Zilberstein. 2002. [31] Sagar Sudhakara, Dhruva Kartik, Rahul Jain, and Ashutosh Nayyar. 2024. OptiThe complexity of decentralized control of Markov decision processes. Mathe- mal Communication and Control Strategies in a Cooperative Multiagent MDP\nmatics of Operations Research 27, 4 (2002), 819–840. Control 69, 10 (2024), 6959–6966.\n[6] Tristan Cazenave. 2010. In 2010 22nd IEEE International Confer- [32] Daniel Szer, François Charpillet, and Shlomo Zilberstein. 2005. MAA*: a heuristic\nence on Tools with Artificial Intelligence, Vol. 2. IEEE, 25–31. search algorithm for solving decentralized POMDPs.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 20,
+    "total_chunks": 40,
+    "char_count": 1316,
+    "word_count": 179,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f07dc1fe-e5e7-4a87-b078-1a5851f1eb61",
+    "text": "In Proceedings of the Twenty-\n[7] Iain D Craig. 1988. Artificial Intelligence Review 2, 2 (1988), First Conference on Uncertainty in Artificial Intelligence (Edinburgh, Scotland)\n103–118. (UAI'05). AUAI Press, Arlington, Virginia, USA, 576–583.\n[8] Lee D Erman, Frederick Hayes-Roth, Victor R Lesser, and D Raj Reddy. 1980. [33] Tze-Yang Tung, Szymon Kobus, Joan Pujol Roig, and Deniz Gündüz. 2021.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 21,
+    "total_chunks": 40,
+    "char_count": 398,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9bca60ce-c215-4e6b-ae4a-83601dc1360f",
+    "text": "EfThe Hearsay-II speech-understanding system: Integrating knowledge to resolve fective communications: A joint learning and communication framework for\nuncertainty. ACM Computing Surveys (CSUR) 12, 2 (1980), 213–253. multi-agent reinforcement learning over noisy channels. IEEE Journal on Selected\n[9] Claudia V Goldman and Shlomo Zilberstein. 2003. Optimizing information Areas in Communications 39, 8 (2021), 2590–2603.\nexchange in cooperative multi-agent systems. In Proceedings of the second inter- [34] Ruixue Zhang, Jiao Wang, Jun Ge, and Qiyuan Huang. 2024. Multiagent cooperanational joint conference on Autonomous agents and multiagent systems. 137–144. tive search learning with intermittent communication. IEEE Intelligent Systems\n[10] Claudia V Goldman and Shlomo Zilberstein. 2008. Communication-based decom- 39, 2 (2024), 11–20.\nposition mechanisms for decentralized MDPs. Journal of Artificial Intelligence [35] Changxi Zhu, Mehdi Dastani, and Shihan Wang. 2024. A survey of multi-agent\nResearch 32 (2008), 169–202. deep reinforcement learning with communication. Autonomous Agents and\n[11] Alan Grant, Paul Williams, Nick Ward, and Sally Basker. 2009. GPS jamming Multi-Agent Systems 38, 1 (2024), 4.\nand the impact on maritime navigation. The Journal of Navigation 62, 2 (2009),\n173–187.\n[12] Pulkit Grover and Anant Sahai. 2010. Implicit and explicit communication in\ndecentralized control.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 22,
+    "total_chunks": 40,
+    "char_count": 1408,
+    "word_count": 190,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2e683f73-d5b9-469d-8314-de8b191c3fd5",
+    "text": "In 2010 48th Annual Allerton Conference on Communication,\nControl, and Computing (Allerton). IEEE, 278–285.\n[13] Jiechuan Jiang and Zongqing Lu. 2018. Learning Attentional Communication for\nMulti-Agent Cooperation. In Advances in Neural Information Processing Systems,\nS. Garnett\n(Eds.), Vol. 31. Curran Associates, Inc.\n[14] Kyle D Julian and Mykel J Kochenderfer. 2019. Distributed wildfire surveillance\nwith autonomous aircraft using deep reinforcement learning. Journal of Guidance,\nControl, and Dynamics 42, 8 (2019), 1768–1778.\n[15] Mykel J Kochenderfer. 2015. Decision making under uncertainty: theory and\napplication. MIT press.\n[16] Wietze Koops, Nils Jansen, Sebastian Junges, and Thiago D.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 23,
+    "total_chunks": 40,
+    "char_count": 700,
+    "word_count": 95,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "55dabfcc-085b-45be-b22b-085b85bec089",
+    "text": "Recursive small-step multi-agent A* for dec-POMDPs. In Proceedings of the ThirtySecond International Joint Conference on Artificial Intelligence (Macao, P.R.China)\n(IJCAI '23). Article 600, 9 pages.\n[17] Thomas M Moerland, Joost Broekens, Aske Plaat, and Catholijn M Jonker. 2022. A unifying framework for reinforcement learning and planning. Frontiers in\nArtificial Intelligence 5 (2022).\n[18] Ranjit Nair, Milind Tambe, Makoto Yokoo, David Pynadath, and Stacy Marsella.\n2003. Taming decentralized POMDPs: Towards efficient policy computation for\nmultiagent settings.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 24,
+    "total_chunks": 40,
+    "char_count": 568,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "762af84f-9694-4b31-b61e-98a1e7264b06",
+    "text": "In IJCAI, Vol. 3. 705–711.\n[19] Ashutosh Nayyar, Aditya Mahajan, and Demosthenis Teneketzis. 2011. Optimal Control Strategies in Delayed Sharing Information Structures. Control 56, 7 (2011), 1606–1620.\n[20] Frans Oliehoek and Matthijs Spaan. 2012.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 25,
+    "total_chunks": 40,
+    "char_count": 247,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7d9331f7-9b86-40e9-b6c8-0012a3cc536a",
+    "text": "Tree-based solution methods for\nmultiagent POMDPs with delayed communication. In Proceedings of the AAAI\nConference on Artificial Intelligence, Vol. 26. 1415–1421.\n[21] Frans Adriaan Oliehoek. 2013. Sufficient Plan-Time Statistics for Decentralized\nPOMDPs.. In IJCAI. 302–308.\n[22] Frans A. Oliehoek and Christopher Amato. 2016. A Concise Introduction to\nDecentralized POMDPs (1st ed.). Springer Publishing Company, Incorporated.\n[23] Frans A Oliehoek, Matthijs TJ Spaan, and Nikos Vlassis. 2008.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 26,
+    "total_chunks": 40,
+    "char_count": 496,
+    "word_count": 66,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e2c49326-c590-4781-8438-597a8b88b74e",
+    "text": "Optimal and\napproximate Q-value functions for decentralized POMDPs. Journal of Artificial\nIntelligence Research 32 (2008), 289–353.\n[24] Frans A. Oliehoek, Shimon Whiteson, and Matthijs T.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 27,
+    "total_chunks": 40,
+    "char_count": 188,
+    "word_count": 25,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a04909cb-7598-4c63-b96c-f165a4b07f17",
+    "text": "Lossless\nclustering of histories in decentralized POMDPs. In Proceedings of The 8th International Conference on Autonomous Agents and Multiagent Systems - Volume 1\n(Budapest, Hungary) (AAMAS '09). International Foundation for Autonomous\nAgents and Multiagent Systems, Richland, SC, 577–584.\n[25] Martin L Puterman. 1994. Markov decision processes: Discrete stochastic dynamic\nprogramming. Inc., New York, NY (1994).",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 28,
+    "total_chunks": 40,
+    "char_count": 415,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "acb1d237-7eef-45d2-aad9-659671f3e882",
+    "text": "A APPENDIX Agent actions are selected using a policy over the agent's memory:\nA.1 k-Steps Delayed Communication\n1, ∀𝑖,𝑎𝑖= 𝜋𝑖(𝑚𝑖)\n𝑘-steps delayed communication [19], [21], [23] is a model for delayed 𝜓′( ¯𝑎) = 0, otherwise.\nbroadcast communication where each agent receives the complete\nFinally, the update rule for the blackboard memory is deterministic\njoint history from 𝑡−𝑘at 𝑡. This enables 𝑘-steps delayed comand concatenates the prior shared memory with the complete set\nmunication to generate a joint belief 𝑏𝑡−𝑘on which to conduct\nof agent actions and observations from the current time-step:\nsubsequent decentralized planning. We formally define the agent\nhistories under 𝑘-steps delayed communication, below:\n1, if 𝑚′𝑐= 𝑚𝑐¯𝑎sel¯𝑜sel 𝜂𝑐(𝑚′𝑐) = 0, otherwise. 𝐻𝑡𝑖= (𝐴𝑖𝑂𝑖)𝑡\n2. 𝑋𝑌SDec-POMDP ≤𝑋𝑌𝑘-steps Delayed\n∞ 𝐻𝑡 if 𝑗= 𝑖 Let𝑘= 0. See proof of Lemma 5 for construction of an SDec-POMDP 𝑖 ¯ℎ𝑖∈¯𝐻𝑖,𝑘= Ø Ö 𝐻max{0, 𝑡−𝑘} otherwise model-policy structure within a Dec-POMDP.\n𝑡=1 𝑗∈𝐼 𝑗 □\nÖ ¯ℎ𝑖 ¯¯ℎ= Lemma 9. SDec-POMDP and𝑘-steps delayed model-policy-objective\n𝑖∈𝐼 structures are equivalent. SDec-POMDP and 𝑘-steps delayed communication models are equivalent. The semi-decentralized value function reduces to the k-steps delayed value function under the original policy set, beginning with:\nProof. Demonstrate that 1. 𝑋𝑘-steps Delayed ≤𝑋SDec-POMDP and 2.\n𝑋SDec-POMDP ≤𝑋𝑘-steps Delayed Proof. Show ∀¯ℎ𝑉𝑋𝑌𝑘-steps Delayed (¯ℎ,𝑏0) = 𝑉𝑋𝑌SDec-POMDP (¯ℎ,𝑏0)\n1. 𝑋𝑘-steps Delayed ≤𝑋SDec-POMDP 𝑉𝜋𝑐, ¯𝜋(𝑚𝑐, ¯𝑚,𝑠) = ∑︁ 𝜓( ¯𝑎| 𝑚𝑐, ¯𝑚) 𝑅(𝑠, ¯𝑎) + 𝛾 ∑︁ 𝐹(𝑑¯𝜏| 𝑠, ¯𝑎)\nLet 𝐼′ = 𝐼, 𝑆′ = 𝑆, ¯𝐴′ = ¯𝐴, 𝑅′ = 𝑅, and ¯O′ = ¯O. The state transi- ¯𝑎∈¯𝐴 ¯𝜏∈¯𝑇\ntion and communication sojourn time functions are independent\n| {z } |1, all RV{z⊥of 𝑑𝜏} 1,𝑚𝑐=¯ℎof ¯𝜏such that 𝑇′(𝑠′ | 𝑠, ¯𝑎, ¯𝜏) = 𝑇(𝑠′ | 𝑠, ¯𝑎) and 𝑂′(¯𝑜′ | 𝑠′, ¯𝑎, ¯𝜏′) =\n𝑂(¯𝑜′ | 𝑠′, ¯𝑎). Again assume a deterministic communication sojourn ∑︁ 𝑇(𝑠′ | 𝑠, ¯𝑎) ∑︁ 𝑂(¯𝑜′ | 𝑠′, ¯𝑎)\ntime function 𝐹, where 𝜏′ for each agent is fixed to one, result-\n𝑠′∈𝑆 ¯𝑜′∈¯O\ning in complete centralization at subsequent decision epochs; ∀𝑖,\n∑︁ 𝜂𝑐(𝑚′𝑐| 𝑚𝑐, 𝑓(¯𝑚),𝑔( ¯𝑎),ℎ(¯𝑜′))𝐹′(𝜏′𝑖< 1 | 𝑠,𝑎𝑖,𝜏𝑖) = 0 and 𝐹′(𝜏′𝑖= 1 | 𝑠,𝑎𝑖,𝜏𝑖) = 1. Blackboard selector functions return joint actions and observations at each time-step; 𝑚′𝑐∈𝑀𝑐\n𝑔′(𝑎sel𝑐) = ¯𝑎and ℎ′(𝑜sel𝑐) = ¯𝑜. Agent selector functions return agent | {z ¯𝑜sel } 1,𝑚′𝑐=𝑚𝑐¯𝑎selactions and observations at each time-step; ∀𝑖, 𝑔′(𝑎sel𝑖) = 𝑎𝑖and ∀𝑖,\nℎ′(𝑜sel𝑖) = 𝑜𝑖. #\n∑︁ Ö 𝜂(𝑚′𝑖| 𝑚𝑖, 𝑓(𝑚𝑐),𝑔( ¯𝑎),ℎ(¯𝑜′)) 𝑉𝜋𝑐, ¯𝜋(𝑚′𝑐, ¯𝑚′,𝑠′)\n2. 𝑋SDec-POMDP ≤𝑋𝑘-steps Delayed ¯𝑚′∈¯𝑀 𝑖∈𝐼\nLet𝑘= 0. See proof of Lemma 4 for construction of an SDec-POMDP | {z }\nmodel within a Dec-POMDP. □ 1,∀𝑖,𝑚′𝑖=𝑚𝑖𝑎sel𝑖𝑜sel𝑖\nBy construction, each under-braced term evaluates deterministiLemma 8. SDec-POMDP and 𝑘-steps delayed model-policy struc- cally: the blackboard's memory update enforces 𝑚′𝑐= 𝑚𝑐¯𝑎sel¯𝑜sel,\ntures are equivalent.\neach agent's local memory update yields 𝑚′𝑖= 𝑚𝑖𝑎sel𝑖𝑜sel𝑖, and the\ndistribution over communication sojourn times collapse to one.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 29,
+    "total_chunks": 40,
+    "char_count": 2987,
+    "word_count": 472,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "140cdba0-1695-4c06-a1b9-addb239c3dab",
+    "text": "Demonstrate that 𝑋𝑌𝑘-steps Delayed ≤𝑋𝑌SDec-POMDP and 2.\nwe ob-𝑋𝑌SDec-POMDP ≤𝑋𝑌𝑘-steps Delayed Moreover, since 𝜓( ¯𝑎| 𝑚𝑐, ¯𝑚,𝑠) = 1 whenever ¯𝑎= ¯𝜋(¯¯ℎ),\ntain 𝑉𝜋𝑐, ¯𝜋(𝑚𝑐, ¯𝑚,𝑠) = 𝑉¯𝜋,𝑘(𝑠, ¯¯ℎ), which results in standard value\nrecursion:1. 𝑋𝑌𝑘-steps Delayed ≤𝑋𝑌SDec-POMDP\n∑︁ ∑︁ Pr(𝑠′, ¯𝑜′ | 𝑠, ¯𝜋(¯¯ℎ))𝑉¯𝜋(𝑠′, ¯¯ℎ)For any object X carrying a time index, 𝑋 0:𝑟denotes the same 𝑅(𝑠, ¯𝜋(¯¯ℎ)) + 𝛾\nobject with indices > 𝑟disabled/ignored. Let each agent memory 𝑠′∈𝑆 ¯𝑜′∈O\nselector function return the blackboard memory at 𝑡−𝑘, such that Observe that:\n∀𝑖, 𝑓′(𝑚sel𝑐𝑖) = 𝑚𝑡𝑐 0:𝑡−𝑘. The blackboard memory selector function\nreturns the latest joint agent memory set. The update rule for each\n∑︁ 𝑇(𝑠′ | 𝑠, ¯𝑎) ∑︁ 𝑂(¯𝑜′ | 𝑠′, ¯𝑎) = ∑︁ ∑︁ Pr(𝑠′, ¯𝑜′ | 𝑠, ¯𝜋(¯¯ℎ))agent's memory is deterministic and concatenates the prior memory\nwith the set of individual agent actions and observations from the 𝑠′∈𝑆 ¯𝑜′∈¯O 𝑠′∈𝑆 ¯𝑜′∈O\ncurrent time-step: □ 1, if 𝑚′𝑖= 𝑚𝑖𝑚sel𝑐𝑖𝑎sel𝑖𝑜sel𝑖 Proposition 5. The SDec-POMDP and 𝑘-steps delayed are equiv- 𝜂′(𝑚′𝑖) = 0, otherwise. alent. A.2 Dec-POMDP-Com a tiger while the other leads to a room containing treasure. Each\nThe Dec-POMDP-Com [9] extends explicit communication to the agent has three actions: opening the left door 𝑂𝐿, opening the right\nDec-POMDP by including an alphabet of possible messages Σ and door 𝑂𝑅, and listening 𝐿. The problem reward function is fully\ncommunication cost function 𝐶Σ. For a specified cost, each agent described in table 3. The problem resets when any door is opened;\ntakes a communication action after their control action, which un- the probability that the tiger is behind the left door 𝑇𝐿and that the\nder the instantaneous broadcast communication assumption results tiger is behind the right door𝑇𝑅both become 0.5. Joint actions that\nin all other agents receiving an additional observation. Unlike the do not open doors do not affect the underlying state. Agents have a\nSDec-POMDP, agents in a Dec-POMDP-Com are never entirely 75% chance of accurately communicating their action observation\nrestricted from communication.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 30,
+    "total_chunks": 40,
+    "char_count": 2074,
+    "word_count": 328,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5f843e33-7e8b-4eed-9ca2-7c46ef54001f",
+    "text": "The algorithm designer may cen- histories if they both listen. After taking an action, each agent retralize the agents in a Dec-POMDP-Com (for cost) at will. ceives one of two observations, hear tiger on left 𝐻𝐿or hear tiger\non right 𝐻𝑅. Listening to either door gives an 0.75 probability of\nLemma 10. SDec-POMDP and Dec-POMDP-Com models are equiv- returning the correct observation. Opening a door and resetting the\nalent. problem results in both agents receiving either observation with a\n0.5 probability. If one agent opens a door while the other listens,\nProof. Demonstrate that 𝑋Dec-POMDP-Com ≤𝑋SDec-POMDP and 2. the listening agent will not know the problem has been reset.\n𝑋SDec-POMDP ≤𝑋Dec-POMDP-Com Table 3: SDec-Tiger Rewards (𝑇𝐿, 𝑇𝑅)\n1. 𝑋Dec-POMDP-Com ≤𝑋SDec-POMDP\nReference 𝑋Dec-POMDP-Com ≤𝑝𝑋Dec-POMDP [27] and 𝑋Dec-POMDP ≤\n𝑋SDec-POMDP in proof of Lemma 4. ¯𝑎 𝑂𝐿 𝑂𝑅 𝐿\n𝑂𝐿 (-50, 20) (-100, -100) (-101, 9)\n2. 𝑋SDec-POMDP ≤𝑋Dec-POMDP-Com 𝑂𝑅 (-100, -100) (20, -50) (9, -101)\nReference 𝑋SDec-POMDP ≤𝑋Dec-POMDP in proof of Lemma 4 and 𝐿 (-101, 9) (9, -101) (-2, -2)\n𝑋Dec-POMDP ≤𝑝𝑋Dec-POMDP-Com [27]. SDec-POMDP and Dec-POMDP-Com model-policy\nstructures are equivalent. Demonstrate that 𝑋𝑌Dec-POMDP-Com ≤𝑋𝑌SDec-POMDP and\n2. 𝑋𝑌SDec-POMDP ≤𝑋𝑌Dec-POMDP-Com 1. 𝑋𝑌Dec-POMDP-Com ≤𝑋𝑌SDec-POMDP\nReference 𝑋𝑌Dec-POMDP-Com ≤𝑝𝑋𝑌Dec-POMDP [27] and 𝑋𝑌Dec-POMDP Figure 5: Illustration of four of nine possible joint actions\n≤𝑋𝑌SDec-POMDP in proof of Lemma 5. for SDec-Tiger. Agents communicate their observation histories with some probability when they listen to the same\n2. 𝑋𝑌SDec-POMDP ≤𝑋𝑌Dec-POMDP-Com door (in green). Reference 𝑋𝑌SDec-POMDP ≤𝑋𝑌Dec-POMDP in proof of Lemma 5 and\n𝑋𝑌Dec-POMDP ≤𝑝𝑋𝑌Dec-POMDP-Com [27].\n□ A.3.2 SDec-FireFighting. Consider the following semi-decentralized\nvariation on the FireFighting benchmark [23], depicted in Figure\nLemma 12. SDec-POMDP and Dec-POMDP-Com model-policy-\n6.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 31,
+    "total_chunks": 40,
+    "char_count": 1899,
+    "word_count": 270,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3c8acdd2-2bca-41b7-9d6b-0e6a24d45436",
+    "text": "SDecFireFighting (𝑛𝑓= 3,𝑛ℎ= 3) has 432 states, 3 actions,objective structures are equivalent.\nand 2 observations. 2 agents are tasked with addressing a line of\nProof. Demonstrate that ∀¯ℎ𝑉𝑋𝑌Dec-POMDP-Com (¯ℎ,𝑏0) = 𝑛ℎhouses, each with fire severity status 𝑓in range [0,𝑛𝑓] initially\n𝑉𝑋𝑌SDec-POMDP (¯ℎ,𝑏0) sampled from a uniform distribution.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 32,
+    "total_chunks": 40,
+    "char_count": 340,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cb1954e8-75e6-49d4-946e-31038e6eadca",
+    "text": "Each agent selects a house to\nsuppress at each time-step. Single agent suppression decrements\nReference ∀¯ℎ𝑉𝑋𝑌Dec-POMDP (¯ℎ,𝑏0) = 𝑉𝑋𝑌SDec-POMDP (¯ℎ,𝑏0) in proof of 𝑓by 1 with probability 1.0 if all adjacent houses have 𝑓= 0 or\nLemma 6. with probability 0.6 otherwise. Dual agent suppression resets 𝑓\n□ to 0. Agents only communicate their observation histories if they\nsuppress the same house. A house without a firefighter present\nProposition 6. The SDec-POMDP and Dec-POMDP-Com are increments its 𝑓by 1 with probability 0.8 if an adjacent house has\nequivalent. 𝑓> 0 or with probability 0.4 if all adjacent houses have 𝑓= 0. A\nhouse with 𝑓= 0 will catch fire (increment 𝑓by 1) with probabilA.3 Semi-Decentralized Benchmarks ity 0.8 if an adjacent house has 𝑓> 0.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 33,
+    "total_chunks": 40,
+    "char_count": 762,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4bad0c88-b888-4062-991d-d0bea5461be2",
+    "text": "Each agent observes their\nA.3.1 SDec-Tiger. Consider the following semi-decentralized vari- selected house to be on fire or not with probability 0.2 if 𝑓= 0,\nation on the Dec-Tiger benchmark [18], depicted in Figure 5. SDec- probability 0.5 if 𝑓= 1, and probability 0.8 if 𝑓≥2.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 34,
+    "total_chunks": 40,
+    "char_count": 277,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9ef6b152-159f-48bd-b358-80e2d482033b",
+    "text": "The cooperative\nTiger has 2 states, 3 actions, and 2 observations. Two cooperative agent team is rewarded the summation of −𝑓across all 𝑛ℎfollowing\nagents stand behind two doors. One door leads to a room containing action selection. Agents share their observation histories while simultaneously occupying a designated communication grid square. The problem\nresets once an experiment is performed in all four grid squares. The\ncooperative agent team receives a large positive reward for drilling\na drill site, a small positive reward for sampling a sample site, a\nlarge negative reward for drilling a sample site, and a small positive\nreward for sampling a drill site. Attempting a second experiment\non the same site incurs a small negative reward. Figure 6: Illustration of two of nine joint actions in SDecFireFighting (𝑛ℎ= 3,𝑛𝑓= 4). Agents communicate when\nthey suppress the same house, shown in green.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 35,
+    "total_chunks": 40,
+    "char_count": 904,
+    "word_count": 143,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "898c4e8e-62a5-493e-b8ec-6ce1c30be327",
+    "text": "A.3.3 SDec-BoxPushing. Consider the following semi-decentralized\nvariation on the BoxPushing benchmark [26], depicted in Figure 7. SDecBoxPushing has 100 states, 4 actions, and 5 observations. 𝑛 (a) (b) (c)\nagents cooperate to push small and large boxes into an established\ngoal area. Each agent can choose to rotate left, rotate right, move Figure 8: Illustration of the SDec-Mars environment. Agents\nforward, or remain in place. Rotation and movement actions are in (a), the survey site beacon scenario, can communicate\nsuccessful with a 0.9 probability, otherwise the agent remains in when co-located or adjacent to the same not yet surveyed\nplace. Forward movement while facing a box will cause the box survey site. Agents in (b), the right band rendezvous scenario,\nto translate one unit in the direction of movement, if permissible. communicate alongside the right side of the grid when at\nA single agent can push a small box, but two agents must act in least one site remains incomplete. Agents in (c), the drill\ntandem to push a large box. Movement into a wall, or into a large site beacon scenario, can communicate when co-located or\nbox with one agent, will result in remaining in place. Each agent adjacent to the same not yet drilled drill site.\ncorrectly observes what is in front of them: a wall, a small box, a\nlarge box, an empty space, or another agent. Agents share their\nobservation histories when simultaneously occupying one or more\nestablished communication grid squares. Agents receive a −0.1𝑛\nreward after each time-step, a −5 reward for each agent that moves\ninto a wall, a +10 reward for each small box pushed into the goal\narea, and a +100 reward for each large box pushed into the goal\narea. The problem resets as soon as any box reaches the goal state.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 36,
+    "total_chunks": 40,
+    "char_count": 1781,
+    "word_count": 301,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "86476d78-0448-4032-87a2-ce664093b93f",
+    "text": "We adopt the environment configuration depicted in Figure 7. Figure 9: Illustration of the MaritimeMEDEVAC environment. Agents communicate when they are positioned adjacent to patient pickup and drop-offsites. A.3.5 MaritimeMEDEVAC.",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 37,
+    "total_chunks": 40,
+    "char_count": 232,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c690d7d0-a9b6-4730-bf3f-bed7194c96f3",
+    "text": "We introduce a new semi-decentralized\nFigure 7: Illustration of the SDec-BoxPushing environment. MEDEVAC benchmark involving a 4 × 4 gridworld archipelago,\nAgents communicate when they are both in the green square. depicted in Figure 9. MaritimeMEDEVAC has 512 states, 3 actions, and 2 observations. Two agents, a medical aircraft and a\ntransport ship, must retrieve a patient at (1, 1) and deliver them\nA.3.4 SDec-Mars. Consider the following semi-decentralized vari- to a hospital at (3, 3).",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 38,
+    "total_chunks": 40,
+    "char_count": 493,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "caa2f0f8-92c0-46a9-abd7-009ea076de1b",
+    "text": "At each time-step, each agent selects one\nation on the Mars benchmark [2], depicted in Figure 8. SDec-Mars of Wait, Advance, Exchange. Advance moves one cell toward\nhas 256 states, 6 actions, and 8 observations. Each of two agents can the current target (patient if 𝑐𝑎𝑟𝑟𝑦= 0, else hospital), succeeding\nchoose to move north, south, east, and west in a 2x2 grid, or con- independently with probability 0.95 for the aircraft and 0.85 for\nduct an experiment of choice (drilling or sampling) in their current the boat. Wait leaves the agent position unchanged. Two grid squares are intended to be sampled by one agent, attempts a joint pickup/drop that succeeds with probability 0.95\nand the other two grid squares require that both agents drill simul- when both agents are at the corresponding site (toggling 𝑐𝑎𝑟𝑟𝑦).\ntaneously. Each agent accurately observes their location in the 2x2 Each agent receives a binary observation indicating whether it is atgrid and whether an experiment has already been performed there. target (patient if 𝑐𝑎𝑟𝑟𝑦= 0, hospital if 𝑐𝑎𝑟𝑟𝑦= 1) or not. incurs -0.3 per step, issuing Exchange away from {(1, 1), (3, 3)} A.5 Notation\nincurs -1.0, a solo pickup or solo drop-off incurs -6.0, and joint 𝜏 sojourn time (assignment of random variable T)\npickup or drop-offgrants +5.0 and +12.0 respectively. Agents share 𝜏𝑡 sojourn time corresponding to decision epoch 𝑡\nobservation histories in a subset of \"one-arrived, one-not\" states: 𝜂 natural process time\nat the patient when the aircraft is at (1, 1) and the boat remains at 𝜂𝑡 decision epoch 𝑡start time within natural process\n(1, 0) with (𝑐𝑎𝑟𝑟𝑦= 0), and at the hospital when one agent is at 𝑄 complete state transition distribution\n(3, 3) and the other at (3, 2) with (𝑐𝑎𝑟𝑟𝑦= 1) (both permutations). 𝐹 sojourn time distributionAgents cannot communicate in any other states.\n𝑓 selector for propagating agent memory information\nA.4 Code 𝑔 selector for propagating agent action information\nℎ selector for propagating agent observation informationResults for semi-decentralized benchmarks may be reproduced at:\nhttps://github.com/mahdial-husseini/RSSDA 𝑚𝑠𝑒𝑙𝑐𝑖 memory propagated to the blackboard\n𝑚𝑠𝑒𝑙 memory propagated to agent 𝑖 𝑖\n𝑎sel action information propagated to agent 𝑖 𝑖\n𝑎sel𝑐 action information propagated to blackboard\n𝑜sel observation information propagated to agent 𝑖 𝑖\n𝑜sel𝑐 observation information propagated to blackboard\n𝑚𝑐 blackboard memory\n𝑚𝑖 agent 𝑖's memory\n𝜓 distribution over action selection\n𝜂 distribution over memory updates (overloaded)\n𝑍sel 𝑖 ⟨𝑀sel𝑐𝑖, ¯𝐴sel𝑖, ¯𝑂sel𝑖⟩\n𝑍sel𝑐 ⟨¯𝑀sel, ¯𝐴sel, ¯𝑂sel⟩",
+    "paper_id": "2603.11802",
+    "title": "A Semi-Decentralized Approach to Multiagent Control",
+    "authors": [
+      "Mahdi Al-Husseini",
+      "Mykel J. Kochenderfer",
+      "Kyle H. Wray"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11802v1",
+    "chunk_index": 39,
+    "total_chunks": 40,
+    "char_count": 2593,
+    "word_count": 404,
+    "chunking_strategy": "semantic"
+  }
+]

@@ -1,0 +1,338 @@
+[
+  {
+    "chunk_id": "bb3910d6-6c2b-45b6-8d9d-75aece3434ff",
+    "text": "IDRL: An Individual-Aware Multimodal\nDepression-Related Representation Learning\nFramework for Depression Diagnosis Chongxiao Wang1,2†, Junjie Liang1,2†, Peng Cao1,2,3fi, Jinzhu Yang1,2,3, and\nOsmar R. 1 School of Computer Science and Engineering, Northeastern University, Shenyang,\nChina\n2 Key Laboratory of Intelligent Computing in Medical Image of Ministry of2026\nEducation, Northeastern University, Shenyang, China\n3 National Frontiers Science Center for Industrial Intelligence and Systems\nOptimization, Shenyang, ChinaMar caopengneu@gmail.com\n4 Alberta Machine Intelligence Institute, University of Alberta, Edmonton, Canada",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 0,
+    "total_chunks": 16,
+    "char_count": 629,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "371b4135-9cfd-477c-acf4-4d7bb66c2fd9",
+    "text": "Depression is a severe mental disorder, and reliable identification plays a critical role in early intervention and treatment. Multimodal depression detection aims to improve diagnostic performance by\njointly modeling complementary information from multiple modalities.[cs.CV]\nRecently, numerous multimodal learning approaches have been proposed\nfor depression analysis; however, these methods suffer from the following\nlimitations: 1) inter-modal inconsistency and depression-unrelated interference, where depression-related cues may conflict across modalities\nwhile substantial irrelevant content obscures critical depressive signals,\nand 2) diverse individual depressive presentations, leading to individual differences in modality and cue importance that hinder reliable fusion. To address these issues, we propose Individual-aware Multimodal\nDepression-related Representation Learning Framework (IDRL) for robust depression diagnosis. Specifically, IDRL 1) disentangles multimodal\nrepresentations into a modality-common depression space, a modalityspecific depression space, and a depression-unrelated space to enhance\nmodality alignment while suppressing irrelevant information, and 2) introduces an individual-aware modality-fusion module (IAF) that dynamically adjusts the weights of disentangled depression-related features\nbased on their predictive significance, thereby achieving adaptive cross-arXiv:2603.11644v1\nmodal fusion for different individuals. Extensive experiments demonstrate that IDRL achieves superior and robust performance for multimodal depression detection. The code is available at https://anonymous.\n4open.science/r/IDRL-code-6153/. Keywords: Collaborative decoupling · Individual-Awareness · Multimodal depression · Modality-common and Modality-specific features. 1 † Chongxiao Wang and Junjie Liang contributed equally to this work. Time T1 T2 T3 T4 T5 T6 Depression-unrelated Depression-unrelated Video-Audio\nMutual 0.17 0.27 0.28 0.15 0.39 0.31\nInformation Inconsistent information Inconsistent information Depression-unrelated Depression-unrelated Flat Intonation Flat Intonation Elevated intonation Elevated intonation Flat Intonation Flat Intonation",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 1,
+    "total_chunks": 16,
+    "char_count": 2187,
+    "word_count": 250,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "45612b87-2032-4c98-a9cf-4bc817646cdf",
+    "text": "Fig. 1: The video-audio mutual information score of each time segment is calculated on the AVEC-2014 depression dataset. Higher mutual information scores\nindicate stronger consistency across modalities within the corresponding segments. Depression is a severe global mental disorder, yet diagnosis still depends heavily on time-consuming and subjective clinical judgment, motivating automated\nprediction to support early intervention and decision-making. Early studies mainly focused on unimodal cues (e.g., speech, facial behaviors, or text), yet a single modality may fail to capture comprehensive depressive\nsignals [1,2,3]. With the complementarity of heterogeneous signals, multimodal\nmethods have been explored to integrate cross-modal information for more robust depression diagnosis [4,5]. Despite the progress, two challenges still hinder\nreliable multimodal depression detection.\n(1) Inter-modal inconsistency and depression-unrelated interference. Modalities can be consistent overall yet conflict locally, and multimodal\nrecordings inevitably contain substantial depression-unrelated segments. As shown\nin Fig. 1, audio and video exhibit high mutual information (MI) in most segments [6], but pronounced conflicts at T1/T4 and depression-unrelated behaviors (e.g., natural facial expressions, elevated vocal tone, and faster speech at\nT1/T3/T4) may obscure critical depressive signals, motivating segment-level\ninconsistency-aware and interference-robust fusion. (2) Individual differences\nin depressive presentations. Depressive cues vary substantially across individuals, such that the diagnostic salience of different modalities and behavioral\ncues differs from one subject to another [7]. To tackle these issues, we propose an Individual-aware Multimodal Depressionrelated Representation Learning framework (IDRL) for robust depression diagnosis (Fig. 2). IDRL consists of a depression-representation disentanglement\nmodule (DRD) and an individual-aware modality-fusion module (IAF). DRD\nconstructs a modality-common depression space, a modality-specific depression\nspace, and a depression-unrelated space via modality-wise collaborative disentanglement, thereby improving modality-consistent alignment while suppressing\ndepression-unrelated interference. To model individual differences during fusion,\nthe individual-aware modality-fusion module dynamically adjusts the weights of IDRL for Multimodal Depression Diagnosis 3 depression-related features in both the modality-common and modality-specific\ndepression spaces according to their predictive significance, enabling adaptive\ncross-modal fusion for each individual.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 2,
+    "total_chunks": 16,
+    "char_count": 2638,
+    "word_count": 318,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5e8e5f7a-bd59-452a-81a1-f80e815f616d",
+    "text": "We evaluate IDRL on two benchmark datasets, and experiments validate its\neffectiveness for multimodal depression detection. Our contributions are threefold:",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 3,
+    "total_chunks": 16,
+    "char_count": 156,
+    "word_count": 20,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88901042-0add-41ba-9519-e1da4acb717a",
+    "text": "– Multimodal depression-related representation learning via disentanglement. We propose DRD to explicitly model modality-common and\nmodality-specific depression-related information while separating depressionunrelated features.\n– Individual-aware depression modeling. We design the IAF to adaptively reweight depression-related features in the modality-common and specific depression spaces.\n– Extensive evaluations on multiple datasets. Experiments and analyses\nverify the effectiveness and robustness of IDRL across different modality\ncombinations. We propose an Individual-aware Multimodal Depression-related Representation\nLearning framework (IDRL) for depression diagnosis.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 4,
+    "total_chunks": 16,
+    "char_count": 678,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d98a4634-18bc-4abf-bba1-a9e3e3811d72",
+    "text": "Our framework is modalityagnostic. In this work, we evaluate two instantiations: (video, audio) on AVEC\nand (text, image) on Twitter. As illustrated in Fig. 2(a), we first extract aligned\nvisual and acoustic features over L temporal segments, denoted as F v and F a, respectively. IDRL then consists of two key modules: a Depression-Representation\nDisentanglement (DRD) module and an individual-aware modality-fusion module (IAF) for depression prediction. 2.2 Depression-Representation Disentanglement Depression-Representation Disentanglement Module (DRD) As illustrated in Fig. 2(b), DRD disentangles multimodal representations into a modalitycommon depression space, a modality-specific depression space, and a depressionunrelated space. For each modality m ∈{v, a} with extracted feature F m,\nwe employ two encoders: a modality-common depression encoder Emcom and a\nmodality-specific depression encoder Emspe, i.e., [Fcm , Ncm ] = Emcom(F m; θmc ) and\n[Fsm , Nsm ] = Emspe(F m; θms ), where F cm and F sm denote modality-common and\nmodality-specific depression-related features, while N cm and N sm denote the corresponding depression-unrelated features. Guidance for Disentanglement :reconstruction loss :similarity loss :orthogonality loss :contribution loss :alignment loss :task-related loss :task-unrelated loss\nvideo segment Depression-Representation Disentanglement Inter-modalIntra/Interrecon ModalIntra-visual-modalReconstruction(Train-Only)recon Intra-audio-modal recon\nVideo\nVisual Encoder Feature Extraction Modality-Specific Depression Space Visual Decoder\nPush Concat\nVideo\nSigmoid DRD Concat FC layer\nPush\nVideo Representation Depression-Unrelated Space Audio Decoder\nConcat\nMultimodal Feature Extraction\naudio segment Sigmoid Audio Feature Extraction Concat FC layer\nAudio Encoder Push Push Task-unrelated Supervision(Train-Only)\nAudio Pull MLP\nDRD\nTask-related Supervision Individual-Aware\nAudio Representation Modality-Common Depression Space Modality-Fusion(IAF) MLP (a) Individual-aware Multimodal Depression-related Representation Learning Framework (IDRL) Modality-Specific Encoder Avg Contribution\nSigmoid Modality-Specific Depression Space Evaluation\nFC layer\nModality-Common Encoder MLP\nDepression-Unrelated Space\nSigmoid FC layer Modality-Common Depression Space (b) Depression-Representation Disentanglement Module (DRD) (c) Individual-Aware Modality-Fusion Module (IAF)",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 5,
+    "total_chunks": 16,
+    "char_count": 2402,
+    "word_count": 287,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c98d2f0a-aedb-4cd6-bed5-bf0fe1e3c9b7",
+    "text": "Fig. 2: (a)The proposed Individual-aware Multimodal Depression-related Representation Learning Framework (IDRL) consists of three key stages: multimodal feature extraction, depression-representation disentanglement, and feature fusion and prediction.(b)Depression Representation Disentanglement Module (DRD).(c)Individual-Aware Modality-Fusion Module (IAF). We reconstruct F m from the disentangled components using a decoder Dm. Specifically, we perform self- and cross-modal reconstruction by swapping the modality-common depression-related feature, i.e., ˆFselfm =\nDm(Ncm ⊕Nsm ⊕F sm ⊕F cm ; θmd ) and ˆFcrossm = Dm(Ncm ⊕Nsm ⊕F sm ⊕F c¯m ; θmd ),\nwhere ¯m denotes the other modality and ⊕is concatenation. Reconstruction preserves the information of F m in the disentangled features, and cross-modal reconstruction further encourages cross-modal interaction via the modality-common\ndepression space.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 6,
+    "total_chunks": 16,
+    "char_count": 901,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "29301ab6-dd7a-4d64-9a9a-1e628699b8a7",
+    "text": "We use the mean squared error: 2 2 1\n, (1) Lrecon = + F m −ˆFcrossm X F m −ˆFselfm |C| 2 2\nm∈{v,a} where |C| is the number of modalities. To align modality-common depression-related features across\nmodalities, we use Central Moment Discrepancy (CMD) [8]: 1 1\nLcmd = CMDK(Fcv , F ca ) = ∥E(Fcv ) −E(Fca )∥2+ X ∥Ck(Fcv ) −Ck(Fca )∥2 , |b −a| |b −a|k\nk=2\n(2) IDRL for Multimodal Depression Diagnosis 5 where Ck(·) denotes the k-th central moment, K is the maximum order, and\n|b −a| is the feature range in the mini-batch (a = min(·), b = max(·)). To encourage separation among modality-common depressionrelated, modality-specific depression-related, and depression-unrelated components, we apply soft orthogonal regularization [9]: 2 2 2\nLorth = X (Fcm )⊤F sm + (Fcm )⊤Ncm + (Fsm )⊤Nsm . (3)\nF F F\nm∈{v,a} Diagnosis-relevant Loss. We predict the depression score from the fused depressionrelated feature FS as ˆytask = ψSMLP(FS; θS), and minimize Ltask = R1 PRi=1(yregi −\nˆytask)2, where yreg denotes the ground-truth depression score. To suppress depression information in the unrelated space, we stack N =\n[(Ncv )⊤, (Nca )⊤, (Nsv )⊤, (Nsa )⊤] ∈RE×d, and obtain ˆyN = ψNMLP(N; θN). For\nAVEC-2014, we use the auxiliary binary label yaux (derived from BDI-II≥14)\nand minimize the BCE with the reversed label ¯yaux = 1 −yaux: Luntask =\nBCE(ˆyN, ¯yaux), which makes N anti-predictive of depression and thus prevents\ndepression-related cues from leaking into N. 2.3 Individual-Aware Modality Fusion Individual-Aware Modality Fusion Module As shown in Fig. 2(c), we\nfuse disentangled depression-related features via an individual-aware weighting\nmechanism.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 7,
+    "total_chunks": 16,
+    "char_count": 1648,
+    "word_count": 270,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6f347569-8e83-4132-bfd3-4ddd5b9062f1",
+    "text": "We stack modality-common and modality-specific depression-related\nfeatures from both modalities to form S = (Fcv )⊤, (Fca )⊤, (Fsv )⊤, (Fsa )⊤ ∈\nRE×d, where E is the number of stacked depression-related features.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 8,
+    "total_chunks": 16,
+    "char_count": 212,
+    "word_count": 33,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "adb408c5-5de7-4a74-ba63-8a61c1e17732",
+    "text": "We then\ncompute Q = SW DQ , K = SW DK , and V = SW DV , with Q, K, V ∈RE×d. To\nobtain an individual query (a sample-specific individual-level summary), we average Q along the stacked dimension as Qind = E1 PEi=1 Qi ∈R1×d. The attention\nQindK⊤√ ∈R1×E, andweights over disentangled features are Wattn = softmax d\nthe fused depression-related representation is FS = WattnV ∈R1×d. Guidance for Individual-Aware Fusion We evaluate the predictive contribution of each disentangled depression-related feature using an auxiliary MLP-based classifier (a single\nfully connected layer followed by a Sigmoid) as the contribution evaluation head:\nˆymu = MLPaux(Fum ), where u ∈{c, s}. We then compute the binary cross-entropy\nloss ℓmu = − yaux log ˆymu +(1−yaux) log(1−ˆymu ) . For AVEC-2014 (regression), we\nderive the auxiliary binary label yaux ∈{0, 1} from the BDI-II score (yaux = 1\nif BDI-II ≥14, indicating at least mild depressive symptoms) solely for contribution estimation [10], without altering the regression objective. The overall contribution loss is obtained by summing losses over modalities and spaces:\nLcontri = Pm∈{v,a} Pu∈{c,s} ℓmu . To encourage attention weights to be consistent with predictive\ncontribution, we align Wattn with the ranking induced by ℓusing a pairwise\nmargin ranking loss [11]: Lalign = X X X X max 0, ⊮h ℓmiuj < ℓ mpuq i Wuq,attnmp −W uj,attnmi + ϵ , (4) 3|C|\ni=1 j=1 p=1 q=1\np̸=i q̸=j where ⊮[·] is the indicator function, which equals 1 if the condition is satisfied\nand -1 otherwise, and we set ϵ = 0.05. The model is optimized by minimizing Ltotal = (Ltask + Luntask) +α (Lorth + Lcmd + Lrecon) +β (Lalign + Lcontri) , (5)\ndiagnosis-relevant| {z loss} | disentanglement{z loss } individual-aware| {z loss} where we set α = 0.7 and β = 0.5.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 9,
+    "total_chunks": 16,
+    "char_count": 1773,
+    "word_count": 303,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "780834b0-5154-4728-a14a-51ac07ce303c",
+    "text": "3.1 Datasets and Evaluation Metrics. Datasets: We conduct experiments on two public benchmarks. AVEC-2014 [12]\nprovides interview-based audio–video recordings with BDI-II scores as regression\ntargets.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 10,
+    "total_chunks": 16,
+    "char_count": 200,
+    "word_count": 25,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "460b8395-9365-46c7-9d4d-2ef345057d87",
+    "text": "Twitter [13] contains 1,402 depressed users and 1,402 control users; since\nonly a small portion of tweets include images, we apply an attention mask in the\nTransformer to handle missing image regions. Evaluation metrics: For AVEC-\n2014, we report MAE and RMSE for BDI score prediction. For Twitter, we\nreport Accuracy and Macro-F1. 3.2 Implementation Details.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 11,
+    "total_chunks": 16,
+    "char_count": 359,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0afced77-9403-4022-91ac-df9522cceaff",
+    "text": "All experiments are conducted in PyTorch on a single NVIDIA RTX A30 GPU. For AVEC-2014, we use LI-FPN [14] and a CNN encoder with MFCC inputs as\nthe video and audio backbones, respectively. For Twitter, we adopt RoBERTa\nand CLIP (ViT) as the text and image backbones, respectively. For a fair comparison, we follow the backbone settings used in prior work whenever available;\notherwise, we re-implement baselines under the same backbone and training\nprotocol as ours.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 12,
+    "total_chunks": 16,
+    "char_count": 467,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e55483e9-30fc-4bf9-99ca-cd4127b16014",
+    "text": "Standard pre-processing is applied (AVEC-2014: 15 fps and\naligned 224×224 face crops; Twitter: a 32-step sliding window with padding). IDRL is optimized with Adam using a learning rate of 1×10−3 and a batch size\nof 16; early stopping is applied, and the checkpoint with the best validation\nperformance is reported. IDRL for Multimodal Depression Diagnosis 7 Table 1: Comparison of Our Method Table 2: Comparison of Our Method\nand State-Of-The-Art Works on the and State-Of-The-Art Works on the\nTest Set of AVEC-2014 Dataset Twitter Dataset using 5-Fold CrossModalities Type Methods MAE↓RMSE↓ Validation\nMRELBP-DCNN[15] 8.19 9.99 Modalities Type Methods Accuracy↑F1↑\nFTA-Net[16] 7.31 9.60 T-LSTM[27] 0.854 0.849 ND ND A WavDepressionNet[17] 6.60 8.61 T DDSM-RL[28] 0.870 0.872\nD IDRL(Audio) 6.48 8.28 EmoBerta[29] 0.861 0.864\nSubAttn-V[18] 7.84 10.70 D IDRL (Text) 0.916 0.903\nMTDAN[19] 6.36 7.94 MTAL[30] 0.842 0.842 ND\nV MDN[20] 6.06 7.66 MTAN[31] 0.869 0.871\nD IDRL(Video) 5.94 7.57 CMAM[13] 0.900 0.900\nMEN-ADF[21] 7.02 9.39 TEMT[32] 0.896 0.898\nND GMM-ELM[22] 6.31 8.13 MTAAN[5] 0.921 0.887\nT+V\nFDHH-AV[23] 6.14 7.45 MISA[24] 0.864 0.866\nA+V MISA[24] 7.12 8.95 Disentangled-MER[25] 0.883 0.887\nDisentangled-MER[25] 6.68 8.41 TDRL[26] 0.913 0.904\nTDRL[26] 5.97 7.63 IDRL (Text+Image) 0.943 0.932\nIDRL(Audio+Video) 5.83 7.34 T and V are text and image modalities. A and V are audio and video modalities.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 13,
+    "total_chunks": 16,
+    "char_count": 1405,
+    "word_count": 210,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c5ea5794-978d-4af6-ac73-bc0739b59792",
+    "text": "ND refers to Non-Decoupled. D refers to\n↓indicates that smaller is better. Decoupled. ↑denotes higher is better. Comparable Methods and Comparative Results. We compare IDRL with\nrepresentative state-of-the-art methods, including unimodal and multimodal baselines as well as disentanglement-based approaches (Tables 1–2). Overall, the\nquantitative results show that IDRL consistently outperforms existing methods across datasets and modality combinations, demonstrating its effectiveness under different modality settings (video–audio on AVEC-2014 and text–\nimage on Twitter). Specifically, IDRL achieves the best performance on AVEC-\n2014 and improves over the strongest decoupled baseline, and also attains the\nbest results on Twitter. These gains are attributed to disentangling modalitycommon and modality-specific depression-related representations while suppressing depression-unrelated information, together with individual-aware reweighting for adaptive multimodal fusion. Analysis of the proposed components. We conduct ablation experiments on\nAVEC-2014 to evaluate the contribution of DRD and IAF. \"Concat→MLP/Trans.\"\nconcatenates multimodal features and uses an MLP/Transformer predictor, while\n\"MLP/Trans. fuse\" applies an MLP/Transformer fusion block over the DRD outputs (F cm , Fsm ) before regression. As shown in Table 3, performance improves\nconsistently as each component is incorporated into the baseline, and the full\nIDRL achieves the best results. This suggests that DRD improves depressionrelated consistency by suppressing depression-unrelated interference, and IAF\nfurther strengthens fusion through adaptive reweighting. Table 3: Ablation of proposed compo- Table 4: Ablation of the loss function on\nnents on AVEC-2014. Setting MAE↓/RMSE↓ Lorth Lcmd Luntask Lalign Lcontri Lrecon Ltask MAE↓RMSE↓\n× ✓ ✓ ✓ ✓ ✓ ✓ 7.28 9.04\nBaseline (Concat→MLP) 8.46/10.66 ✓ × ✓ ✓ ✓ ✓ ✓ 7.01 8.66\nBaseline (Concat→Trans.) 7.52/9.41 ✓ ✓ × ✓ ✓ ✓ ✓ 6.94 8.47\n✓ ✓ ✓ × ✓ ✓ ✓ 6.21 7.69\nBaseline+DRD (MLP fuse) 7.19/9.27 ✓ ✓ ✓ ✓ × ✓ ✓ 6.13 7.51\nBaseline+DRD (Trans. fuse) 6.33/8.44 ✓ ✓ ✓ ✓ ✓ × ✓ 6.08 7.42\n✓ ✓ ✓ ✓ ✓ ✓ ✓ 5.83 7.34\nIDRL (Baseline+DRD+IAF) 5.83/7.34 The best result is highlighted in bold.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 14,
+    "total_chunks": 16,
+    "char_count": 2202,
+    "word_count": 323,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db6ea75b-b61c-42c3-9da0-32484277b7d1",
+    "text": "(a) t-SNE visualization of disentan- (b) Grad-CAM++ visualization of\ngled depression-related and unre- the impact of task-unrelated loss on\nlated features depression prediction Fig. 3: Visualization of (a) disentangled depression-related and unrelated features\nand (b) the effect of task-unrelated loss on depression prediction. Effects of Loss Functions As reported in Table 4, removing Lorth or Lcmd\nyields the largest performance drops, underscoring the importance of enforcing subspace separation and cross-modal consistency in DRD. The remaining\nterms (Luntask, Lalign, and Lcontri) also provide consistent gains by reducing\ndepression-irrelevant leakage and stabilizing sample-adaptive fusion. Fig. 3 offers\nqualitative evidence: without Lorth/Lcmd, modality-common, modality-specific,\nand depression-unrelated embeddings overlap more in t-SNE, while introducing\nLuntask shifts Grad-CAM++ activations from background/peripheral regions to\nfacial areas, indicating more effective suppression of depression-unrelated cues. We propose an individual-aware multimodal depression-related representation\nlearning framework (IDRL), for robust depression diagnosis. IDRL disentangles\nmultimodal features into modality-common, modality-specific, and depressionunrelated spaces to alleviate inter-modal inconsistency and suppress irrelevant\ninterference, and further performs individual-aware fusion by adaptively weightIDRL for Multimodal Depression Diagnosis 9 ing informative cues to accommodate individual differences. Extensive experiments on AVEC-2014 and Twitter show that IDRL consistently outperforms\nrepresentative state-of-the-art methods, with ablation and visualization analyses validating the contribution of each component.",
+    "paper_id": "2603.11644",
+    "title": "IDRL: An Individual-Aware Multimodal Depression-Related Representation Learning Framework for Depression Diagnosis",
+    "authors": [
+      "Chongxiao Wang",
+      "Junjie Liang",
+      "Peng Cao",
+      "Jinzhu Yang",
+      "Osmar R. Zaiane"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11644v1",
+    "chunk_index": 15,
+    "total_chunks": 16,
+    "char_count": 1733,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  }
+]

@@ -1,0 +1,702 @@
+[
+  {
+    "chunk_id": "b1ef0f13-342e-4612-a53a-09c32d62eb16",
+    "text": "Gen-Fab: A Variation-Aware Generative Model for Predicting\nFabrication Variations in Nanophotonic Devices Rambod Azimi1*, Yuri Grinberg2, Dan-Xia Xu3, Odile Liboiron-Ladouceur1 1Department of Electrical and Computer Engineering, McGill University, Montreal, QC,\nCanada.\n2Digital Technologies Research Center, National Research Council of Canada, Ottawa,\nON, Canada.\n3Quantum and Nanotechnologies Research Center, National Research Council of Canada,2026 Ottawa, ON, Canada. Mar *Corresponding author(s). E-mail(s): rambod.azimi@mail.mcgill.ca;\nAbstract",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 0,
+    "total_chunks": 35,
+    "char_count": 552,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6bd7a010-27a0-49b3-be33-908603a2323e",
+    "text": "Silicon photonic devices often exhibit fabrication-induced variations such as over-etching, underetching, and corner rounding, which can significantly alter device performance. These variations\nare nonuniform, influenced by feature size and shape. Accurate digital twins are needed to predict\nthe range of possible fabricated outcomes for a given design. In this paper, we introduce Gen-Fab,\na conditional generative adversarial network (cGAN) based on the Pix2Pix, to predict and model[cs.CV]\nuncertainty in photonic fabrication outcomes. The proposed method takes a design layout (in GDS\nformat) as input and produces diverse high-resolution predictions similar to scanning electron microscope (SEM) images of fabricated devices, capturing the range of process variations at the nanometer\nscale. To enable one-to-many mapping, we inject a latent noise vector at the model's bottleneck. We\ncompare Gen-Fab against three baselines: (1) a deterministic U-Net predictor, (2) an inference-time\nMonte Carlo Dropout U-Net, and (3) an ensemble of varied U-Nets. Evaluations on an out-ofdistribution dataset of fabricated photonic test structures demonstrate that Gen-Fab outperforms all\nbaselines in accuracy and uncertainty modeling, and an additional distribution-shift analysis confirms\nits strong generalization to unseen fabrication geometries. Gen-Fab achieves the highest intersectionover-union (IoU) score of 89.8%, outperforming the deterministic U-Net (85.3%), the MC-Dropout\nU-Net (83.4%), and Varying U-Nets (85.8%), and better aligns with the distribution of real fabrication\noutcomes, attaining lower Kullback–Leibler divergence and Wasserstein distance. Keywords: Silicon Photonics, Fabrication Process Variations, Generative Adversarial Networks (GANs),\nScanning Electron Microscopy (SEM), Uncertainty Modeling in Digital TwinsarXiv:2603.11505v1 Note: This manuscript is a preprint of a paper 1 Introduction\naccepted for publication in Structural and MulSilicon photonics is an emerging platform tidisciplinary Optimization. The final version of\nfor integrating optical components on sili- record is available at: https://doi.org/10.1007/\ncon chips, enabling compact, energy-efficient, s00158-026-04272-3.\nand high-speed photonic circuits. span data-center interconnects, LiDAR, quan- counterparts (SEM), image-to-image translation\ntum photonics, and biosensing. Devices are typ- using deep learning has emerged as a compelling\nically fabricated using Complementary Metal- approach. Prior work has used convolutional neuOxide-Semiconductor (CMOS)-compatible pro- ral networks (CNNs), particularly U-Net architeccesses involving lithography, etching, and material tures (Ronneberger et al. 2015), to reconstruct\ndeposition (Sun et al. 2015; Dhote et al. 2022; SEM images from layout masks (Gostimirovic\nShekhar et al. 2024).",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 1,
+    "total_chunks": 35,
+    "char_count": 2833,
+    "word_count": 365,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "23fe9917-f08c-4551-8c6f-ef0c5ea29235",
+    "text": "Silicon photonic devices et al. 2022; Azimi et al. 2025). These determinare sensitive to fabrication-induced deviations istic encoder-decoder models have demonstrated\nsuch as over-etching, under-etching, and corner high pixel-level accuracy in capturing fabrication\nrounding (Soref 2006; Gostimirovic et al. 2022, deviations such as missing features. However, they\n2023; Azimi et al. 2025), which are caused by yield a single prediction for a given input, failing to\nboth systematic and stochastic effects during the reflect the distributional spread observed in actual\ninvolved processing steps (Han et al. 2019). These fabrication processes (Akbari Asanjan et al. 2023).\ndeviations are often spatially nonuniform and Among the methods proposed to address this\ncan degrade device performance while complicate limitation, ensemble learning has been shown to\ndesign optimization. be one of the most robust and effective approaches\nTraditional approaches such as statistical 'cor- for modeling uncertainty (Ovadia et al. 2019), and\nner analysis' and conventional design rules are we adopt it as a strong baseline in our experitypically simplistic, lacking spatial resolution and ments. To further explore uncertainty modeling\nfailing to capture the complex, stochastic nature of without retraining multiple networks, we additionreal-world process variability (Piggott et al. 2017; ally examine an inference-time Monte Carlo (MC)\nXing et al. 2023; James et al. 2023). Repeated Dropout U-Net baseline (Gal and Ghahramani\nfabrication of identical GDS layouts reveals some 2016), which applies dropout layers during both\ndegree of variation in the resulting scanning elec- training and inference to produce stochastic pretron microscope (SEM) images (see Fig. 1), and dictions from a single trained model. While this\nquantitative measures such as Intersection-over- approach provides a Bayesian approximation of\nUnion (IoU) heatmaps (Fig. 2) confirm that these model uncertainty rather than data variability, its\ndifferences are not negligible, thereby playing a implementation is straightforward; therefore, it is\nkey role in determining device-level variability. included as another na¨ıve alternative. Our results\nAs a result, there is growing interest in develop- show that its variability does not accurately reflect\ning fabrication-aware digital twins that simulate the physical diversity of real fabrication outa distribution of fabrication outcomes from a comes. Alternative approaches such as heuristic\ngiven layout, capturing both deterministic and threshold-based variability estimation, which we\nstochastic aspects. also experimented with, similarly fail to capture\nFrom a digital-twin perspective, such the full range of fabrication-induced variations.\nfabrication-aware modeling aims to construct a In the meantime, probabilistic generavirtual, data-driven replica of the physical man- tive models such as variational autoencoders\nufacturing process that can predict and sample (VAEs) (Kingma and Welling 2022) and generrealistic fabrication outcomes under uncertainty. ative adversarial networks (GANs) (Goodfellow\nIn this context, an effective fabrication digi- et al. 2020) have gained popularity as tools that\ntal twin must be able to map an ideal design can be used to sample high-dimensional data\nlayout to a distribution of physically plausible points from some complex unknown distribution.\nmanufactured realizations rather than a single Among those, conditional GANs (cGANs) (Mirza\ndeterministic prediction. This motivates the use and Osindero 2014), particularly the Pix2Pix conof probabilistic, data-driven surrogate models ditional GAN framework (Isola et al. 2017), offer\ncapable of capturing both deterministic structure a principled way to model fabrication deviations\nand stochastic process variability, marking an in an image-to-image translation setup. While the\nimportant stepping stone towards a full-fledged original Pix2Pix framework was deterministic,\ndigital twin solution. later extensions introduced stochastic conditionGiven the structured, image-based nature of ing via injected latent noise vectors z (Naderi et al.\nboth photonic GDS layouts and their fabricated",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 2,
+    "total_chunks": 35,
+    "char_count": 4199,
+    "word_count": 581,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9ce44bc9-ee20-4b97-8283-fc4b85cdf514",
+    "text": "2022), making it well-suited for capturing the\none-to-many mapping in fabrication outcomes. We chose a GAN-based conditional framework\nfor this study. Our application involves paired\nhigh-resolution data (GDS layouts aligned to SEM\nimages), a setting where conditional GANs such\nas Pix2Pix remain highly competitive due to their\ndirect image-to-image mapping and relatively low\ntraining cost, which allows scaling of predictions to large layouts during inference. Moreover,\nleveraging a well-established Pix2Pix backbone\nenables clear comparison to prior photonic work\nand provides a transparent benchmark for future\ndiffusion-based extensions. Although GANs can\nsuffer from mode collapse or unstable training,\nour experiments show that careful noise injection, Fig. 1 Overlay of SEM images from repeated fabridata augmentation, and hyperparameter tuning cations of the same photonic cross design. Although\nyield stable convergence and high-fidelity predic- each fabricated structure used the same GDS file layout,\nvisible differences emerge in edge sharpness and arm geomtions in this domain. We therefore view cGAN as\netry, indicated in red.\na practical and computationally efficient first step\ntoward stochastic fabrication-aware modeling.\n2019; Li and Farnia 2023). We conducted experi- In this work, we present Gen-Fab, a variationments on a curated dataset comprising GDS-SEMaware cGAN trained to predict silicon photonic\npairs across six types of nominal nanophotonicfabrication outcomes. Gen-Fab builds on the\nstructures fabricated under identical conditions.Pix2Pix architecture, which in its original formuTo further validate model robustness, we also ana-lation is a deterministic pixel-to-pixel translation\nlyzed the feature-space distribution shift betweenmodel with no latent noise input. In contrast,\nthe training and out-of-distribution (OOD) testwhile all GANs conceptually rely on a latent\nsets, confirming that our evaluation reflects gen-variable z for sampling diversity, the standard\nuine generalization rather than dataset overlap.Pix2Pix omits this and produces a single outOur proposed model attained noticeably improvedput per input. We explicitly reintroduce a latent\nscores on all metrics across all presented structuresnoise vector z at the generator's bottleneck to\nand better models the observed fabrication vari-enable stochastic generation of multiple SEM-like\nability based on further qualitative assessment.images from a single GDS input (we will refer\nThese results establish Gen-Fab as a practicalto these outputs as 'generated SEMs' or simply\ntool for variation-aware prediction, with imme-as 'SEMs'). This placement improves structural\ndiate applications in robust photonic design andfidelity while maintaining diversity in the outputs.\ndigital twin development.From a digital-twin standpoint, Gen-Fab can serve\nas a core functionality of a generative digital twin\nof the nanophotonic fabrication process. 2 Methodology\nWe benchmark Gen-Fab against three baselines: (1) a deterministic U-Net model, (2) an 2.1 Conditional Generative\ninference-time MC-Dropout U-Net, and (3) an Modeling Approach\nensemble of varied U-Nets (Varying U-Nets)\nWe formulate fabrication variation prediction as a\nintended to approximate fabrication variation.\nconditional generative modeling task. Instead of a\nOur evaluation considers several distribution-level\ndeterministic one-to-one mapping from layout to\nmetrics, our own pixel-based metric as well as\nfabricated outcome, we seek to learn a distribustandard ones such as Kullback-Leibler divergence\ntion of possible outcomes P(Y |X) given a design\n(KL-D) and Wasserstein distance (W-D), to assess\nX. To achieve this, we build upon the Pix2Pix\nmodel fidelity and uncertainty modeling (Bai et al.\nconditional GAN framework (Mirza and Osindero noise z is spatially expanded to match the bottleneck feature map dimensions by tiling it across\nheight and width.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 3,
+    "total_chunks": 35,
+    "char_count": 3926,
+    "word_count": 542,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "24ed9a9b-e2e1-4575-b0d1-f3d2368e1a3b",
+    "text": "This forms an augmented bottleneck feature that carries both deterministic\nlayout-conditioned features and stochastic latent\ninformation. The decoder then processes this combined feature map, mapping it back up through\na series of convolutional upsampling layers to\nproduce an image output. As a result, Gen-Fab\ngenerates a distribution of outputs ˆY for a single input X by sampling different z, effectively\ncapturing real-world fabrication variations. The discriminator D uses the PatchGAN\narchitecture from Pix2Pix (Demir and Unal 2018). Instead of evaluating the entire image, it processes\nsmall 70×70 pixel patches from the input–output\npair and judges whether each patch resembles a\nrealistic fabrication result. The overall Gen-Fab\nFig. 2 IoU similarity heatmap of SEM images from architecture thus consists of: (1) a U-Net generator\nfour fabricated crosses. Each cell shows the IoU score G(X, z) producing diverse SEM-like predictions,\nbetween pairs of SEM images from four devices fabricated\nand (2) a conditional PatchGAN discriminator Dfrom the same layout.\ndistinguishing real from fake outcomes. 2014; Isola et al. 2017), which couples a generator\n2.3 Training ObjectivesG and discriminator D in an adversarial training\nprocess. The generator G learns to translate an Training Gen-Fab combines of adversarial and\ninput GDS layout into an output predicted SEM reconstruction objectives to balance realism and\nthat is aimed to be indistinguishable from a real fidelity. Let X be the input layout, Y the correfabricated result, while D learns to differentiate sponding true SEM image from fabrication, and\nreal vs. generated SEM images. z the latent noise vector. The discriminator maxUnlike the original Pix2Pix framework, which imizes the log-likelihood of correctly classifying\nomits a latent variable for deterministic image real versus fake pairs, following the conditional\ntranslation, Gen-Fab reintroduces a stochastic GAN objective (Isola et al. 2017):\nlatent code z at the bottleneck layer of the U-Net\ngenerator, enabling multiple plausible fabrication LD = −EX,Y [log D(X, Y )]\noutcomes to be sampled for a given input layout.\n−EX,z[log(1 −D(X, G(X, z)))] , (1)\n2.2 Gen-Fab Architecture with\nwhere D(X, Y ) is the discriminator's estimated\nNoise Injection probability that (X, Y ) is a real layout-SEM pair. The proposed Gen-Fab model extends the Pix2Pix Meanwhile, the generator's adversarial loss LGAN\narchitecture to enable variation-aware prediction. can be written as\nFig. 3 provides an overview of this architecture. The generator G follows a U-Net style LGAN(G) = −EX,z[log D(X, G(X, z))] , (2)\nencoder–decoder with skip connections, mapping\nan input layout image X to an output SEM image which encourages G to generate outputs that D\nˆY . The encoder first processes the input design will judge as real. In addition, we include an L1\nX through a series of convolutional downsampling reconstruction loss written as\nlayers, yielding a coarse feature representation at\nthe bottleneck.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 4,
+    "total_chunks": 35,
+    "char_count": 3010,
+    "word_count": 458,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1f431614-7eea-491a-b19c-abb41c4e15f3",
+    "text": "Fig. 3 Overview of the Gen-Fab architecture with a noise-injected generator. The model\nreceives a GDS layout and a latent noise vector injected into the bottleneck, enabling it to produce diverse SEM outputs\nfrom the same input. Bottom: Discriminator. The PatchGAN discriminator takes the input GDS and corresponding\nSEM (real or generated) and evaluates 70×70 pixel patches to ensure outputs are locally indistinguishable from real SEMs. that penalizes pixel-level errors between the gen- images, while the L1 term ensures that the main\nerated image and the ground truth. We weight this device features in ˆY = G(X, z) align with those\nterm with a hyperparameter λ to balance sharp- in the true SEM Y . By injecting random z during\nness vs. fidelity. Following the original Pix2Pix training, the generator learns that it must proimplementation (Isola et al. 2017), we set the duce an output that not only fools D and matches\nweighting parameter λ = 100 to emphasize recon- Y (for the current z) but also that it has the\nstruction fidelity while still allowing the adver- flexibility to yield different valid Y for different z.\nsarial loss to sharpen details. This value has\nbeen widely adopted in image-to-image transla- 2.4 Training Procedure\ntion tasks because it balances the adversarial and\nWe train Gen-Fab using the Adam opti-pixel-level losses, producing outputs that are both\nmizer (Kingma and Ba 2015), a stochastic gradi-structurally accurate and visually realistic. In our\nent–based method with mini-batch updates. Algo-preliminary experiments, smaller λ values (10 or\nrithm 1 outlines the training procedure. At each50) led to blurrier reconstructions, while larger\niteration, a batch of paired samples (Xi, Yi) isvalues suppressed stochastic diversity. The total\nfetched from the training set, and a random latentobjective for the generator is thus a weighted sum\nvector zi is sampled for each. The generator pro-of adversarial and reconstruction terms:\nduces ˆYi = G(Xi, zi), a fake SEM image for each\ninput layout. The discriminator is then updated LG = LGAN(G) + λ LL1(G) (4)\nby comparing real pairs (Xi, Yi) with fake pairs\nwhich G attempts to minimize.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 6,
+    "total_chunks": 35,
+    "char_count": 2171,
+    "word_count": 348,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8514e6b2-59b0-47d6-a79c-4b67a2b841b3",
+    "text": "This two-player (Xi, ˆYi). We compute the discriminator loss LD\nand take a gradient step on D's parameters θD tominimax game is solved via alternating optimizaimprove real–fake discrimination. Next, the gener-tion of G and D.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 7,
+    "total_chunks": 35,
+    "char_count": 225,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb23ef7f-de55-497a-8644-53dca72db29c",
+    "text": "The adversarial component LGAN\nator is updated: we compute the generator's lossguides G to match the distribution of real SEM Fig. 4 Overview of Gen-Fab's generation and evaluation pipeline. Top: Generation Process. The Gen-Fab\ngenerator takes a GDS input and multiple noise vectors to produce a diverse SEM predictions, while the discriminator is\ndiscarded after training. Bottom: Evaluation Process. Generated SEMs are compared with real SEMs using pixel-level\nmetrics (IoU, variance map) and distribution-level metrics (KL-D and W-D).",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 8,
+    "total_chunks": 35,
+    "char_count": 537,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "028e79ae-15c0-4fc6-affc-e548b820c1f5",
+    "text": "LG, which includes the adversarial term and the 2.5 Implementation and Training\nL1 term. After sufficient training steps, this proce- Details\ndure yields a generator that can produce a range\nWe implemented Gen-Fab using the PyTorch deepof realistic outputs for each input layout.\nlearning framework (Paszke et al. 2019). The During training, the noise vector z is resamU-Net generator architecture has eight downsam-pled on every iteration for every training example.\npling/upsampling layers with skip connectionsThis means the generator is trained across many\nat corresponding resolutions. Instance normaliza-different z values over the course of training,\ntion (Ulyanov et al. 2017) is applied to convo-preventing it from simply learning a fixed deterlutional layers in both G and D, which helpedministic mapping. This training process allows the\ntraining converge on our relatively small dataset.generator to utilize the noise input to produce subThe PatchGAN discriminator has five convolu-tly different outcomes, reflecting the fabricationtional layers with increasing feature counts (64,induced variability, while the overall device shape\n128, 256, 512, 512) and a final 1 × 1 convolutionremains consistent with the input layout.\nto produce the output map; it uses leaky ReLU\nactivations (Xu et al. 2015) and no normalization Algorithm 1 Gen-Fab Training Procedure\nRequire: Paired data {(Xi, Yi)}Ni=1, noise dim d,\nweights λGAN=1, λL1=100, iterations T\nInitialize generator parameters θG, discriminator parameters θD\nfor t = 1 to T do\nSample m pairs {(Xj, Yj)} from training set\nSample zj ∼N(0, I) for j = 1, . . . , m\nGenerate ˆYj = G(Xj, zj)\nCompute LD = −E[log D(X, Y )]−E[log(1−\nD(X, G(X, z)))]\nUpdate θD using Adam optimizer: Compute LGAN = −E[log D(X, G(X, z))]\nCompute LL1 = E[∥Y −G(X, z)∥1]\nCompute LG = LGAN + λL1LL1\nUpdate θG using Adam optimizer: θG ←θG −ηG∇θGLG\nFig. 5 Paired examples of GDS layouts and their\nfabricated SEM used for training. (a) Input GDS\nend for design (ground-truth). (b) SEM of the fabricated strucNote: Parameter updates are written in simpli- tures, showing deviations due to the fabrication process.\nfied gradient-descent form for clarity; in practice, Adam (Kingma and Ba 2015) with default 2.6 Inference (Generation) Process\nmoment estimates and bias correction is used. Once trained, the Gen-Fab generator is used to\nproduce multiple outputs for each new input layin order to preserve signal diversity. The discriminator is discarded at inference.\nmization, we used the Adam optimizer (Kingma To generate a set of M possible fabricated outand Ba 2015) for both G and D with learning comes for a given design X, we simply sample M\nrate , ηG = ηD = 2 × 10−4. Following common independent noise vectors z(1), z(2), . . . , z(M) from\nGAN practice, we set momentum terms β1 = 0.5, the latent distribution and feed them through the\nβ2 = 0.999 to stabilize training. The latent noise (m) generator: ˆY = G(X, z(m)) for m = 1, . . . , M.\ndimension d is a tunable hyperparameter. We set This yields M SEM-like predictions for the sind = 16 based on preliminary experiments, balanc- gle input layout. The multiple outputs can be\ning diversity and stability. Larger d led to unstable analyzed to quantify uncertainty and compared\ntraining, while smaller d limited stochastic expres- against actual fabricated samples.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 9,
+    "total_chunks": 35,
+    "char_count": 3352,
+    "word_count": 542,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "89e36c68-7d46-4357-beca-cb58241dcb42",
+    "text": "All models were trained on 2048 × 2048 ation pipeline is illustrated in Fig. 4.\npixel patches with a mini-batch size of 4. This\nbatch size was selected to balance GPU memory\nconstraints with stable gradient estimates; pre- 3 Experimental Results and\nliminary tests with smaller batches showed no Analysis\nmeasurable improvement in convergence or generalization. All models were trained on a single 3.1 Experiment Setup\nNVIDIA RTX 4090 GPU (24 GB VRAM), with an\n3.1.1 Train Dataset\naverage end-to-end training time of approximately\n50 minutes per configuration. We utilize the ANT-NanoSOI dataset, developed in collaboration with Applied Nanotools Inc. (ANT)1, to train our Gen-Fab model.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 11,
+    "total_chunks": 35,
+    "char_count": 687,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1eb1ab93-56f4-4060-8fac-c1f5597fbb05",
+    "text": "The\npatterns were fabricated on a 220 nm-thick siliconon-insulator (SOI) platform using electron-beam\nlithography through a multi-project wafer service. The dataset consists of non-functional patterns\ndesigned to mimic the structural characteristics\nof real photonic devices, in particular including free-form inverse designed structures (Molesky\net al. 2018). Building on the approach of Gostimirovic et al. (Gostimirovic et al. 2022), we\ngenerate these random patterns using a Fourierbased procedural approach, where the underlying\nspatial frequency components are sampled from\nuniform and Gaussian distributions to emulate\ndiverse geometric textures and spatial variations. By controlling parameters such as feature width,\nbend radius, and spatial frequency in the frequency domain, we can synthesize a wide range\nof randomized yet physically plausible patterns. Additional spatial-domain operations, including\nlow-pass and band-pass filtering, are applied to\nvary feature sizes and curvatures, while random perturbations such as edge roughness, corner\nrounding, and placement jitter further introduce Fig. 6 Evaluation Structures Used for Model Testing. We evaluate our model on six nominal GDS layouts,\nprocess-like variability. This method enables the unseen during training.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 12,
+    "total_chunks": 35,
+    "char_count": 1281,
+    "word_count": 173,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0c8e14d1-f2e7-48b1-a4c2-0212925f1c83",
+    "text": "These include three cross-shaped\ngeneration of complex, non-repetitive geometries designs, a square, and two target-like structures. The\nresembling the stochastic variability seen in fabri- numeric suffix (25, 50, 100) indicates the arms width in\ncated nanophotonic structures, without being tied nanometers. Each layout occupies a 200nm×200nm region.\nto specific device types such as Y-branches or\nphotonic crystals. The resulting dataset provides and edge-level details critical for photonic device\ndiverse geometric motifs that allow the model analysis. Gen-Fab was trained directly on these\nto learn how fabrication imperfections manifested full-resolution image pairs using a small batch size\nacross varying spatial frequencies and structural and mixed-precision training to efficiently manage\ncomplexities. Following fabrication, scanning elec- GPU memory while maintaining spatial fidelity.\ntron microscopy (SEM) images were captured at The discriminator followed the standard 70 × 70\na resolution of 1 nm/pixel. Each GDS design lay- PatchGAN configuration (Isola et al. 2017) to\nout was aligned with its corresponding SEM image evaluate the realism of local image patches across\nto form high-quality training pairs. Each image is the entire image. This patch-level discrimination\n2048 × 2048 pixels in size. enforces high-frequency consistency without conThe original dataset consists of 31 paired straining the global image size, allowing the genGDS–SEM images. To improve model per- erator to model both local fabrication variations\nformance and training stability, several pre- and global structural integrity. Prior to trainprocessing steps were applied. First, data augmen- ing, the dataset was randomly shuffled to prevent\ntation was performed by rotating each image by any ordering bias introduced during image collec-\n90◦, 180◦, and 270◦, increasing the dataset size to tion or augmentation. Representative examples of\n124 pairs. Unlike conventional patch-based meth- the aligned GDS layouts and their corresponding\nods, no downsampling or cropping was applied. fabricated SEM images are shown in Fig. 5. Hence, each image was used at its full resolution\nof 2048 × 2048 pixels to preserve fine structural",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 13,
+    "total_chunks": 35,
+    "char_count": 2220,
+    "word_count": 320,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "96c7bd44-e4b9-49ef-8816-c558bf9dc1a9",
+    "text": "3.1.2 Evaluation Dataset while keeping the overall architecture and training procedure identical to the deterministic U-Net. To evaluate our model, we use a distinct set\nThe number of stochastic forward passes was\nof six nominal test structures that were neichosen to match the number of available fabrither included during training nor drawn from the\ncated SEM instances per test structure, enabling\ntraining distribution. These structures consist of\na fair distribution-level comparison.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 15,
+    "total_chunks": 35,
+    "char_count": 489,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e9b591af-0ec7-4e6e-b2d6-bd96485ce069",
+    "text": "The optimal\nCross-25, Cross-50, Cross-100, Square, Target-50,\ndropout rate was determined through a grid search\nand Target-100. Each test structure is a 200 nm ×\nover multiple values, with 0.1 yielding the best\n200 nm design composed of geometric primitives\nbalance between output diversity and prediction\nthat vary in size and layout complexity. The choice\nstability.\nof these structures serves two purposes simultaneVarying U-Nets. To mimic model variability,\nously, first is demonstrating generalization beyond\nwe also evaluate an ensemble of varied U-Net modthe training distribution, and second to allow\nels trained independently with different random\neasier qualitative model assessment.\ninitializations and data shuffling.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 16,
+    "total_chunks": 35,
+    "char_count": 729,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "414d4c8b-bfa1-4893-8217-bda9754b0cf2",
+    "text": "Each indepenThe Cross structures vary by arm width:\ndent model is used to produce an independent\nCross-25 has arms 25 nm wide, Cross-50 has 50 nm\nprediction, representing a different fabrication\nwide arms, and Cross-100 has 100 nm wide arms.\ninstance. In our experiments, the ensemble conThe Target structures are similarly defined by\nsists of 35 independently trained U-Net models.\ncross arm width of 50 nm and 100 nm, respecThis number was chosen to match the dataset\ntively. Each test structure includes 35 repeated\nstructure: for each GDS layout in the evaluation\nfabricated SEM images. All six structures used for\nset we have 35 fabricated SEM images. Trainevaluation are shown in Fig. 6.\ning 35 separate U-Nets with identical architecture\nbut different random seeds allows us to gener-\n3.1.3 Baseline Models\nate 35 distinct predictions per layout, enabling\nTo benchmark our proposed approach, we com- a direct one-to-one comparison with the 35 real\npare Gen-Fab against three baseline models: a SEMs for each structure. This setup provides a\nstandard U-Net (Ronneberger et al. 2015), an realistic upper bound for the diversity achievable\ninference-time Monte Carlo (MC) Dropout U- with deterministic models. Net (Gal and Ghahramani 2016), and an ensemble\nof varied U-Nets (Khoong 2020). 3.2 Evaluation Metrics\nU-Net. The conventional U-Net serves as\nWe evaluate our model using different metricsa deterministic baseline model, trained on the\nthat compare distributions. First, we design oursame augmented dataset using paired GDS–SEM\nown pixel-level based metric, which captures howimages (Gostimirovic et al. 2022; Azimi et al.\nwell individual predictions match ground-truth2025). It follows the standard encoder–decoder\noutcomes across two sets of images. Second, wearchitecture with skip connections. Once trained,\ncompare sets of images using proper metrics thatthe U-Net produces a single output per input,\nmeasure distance between distributions. For deter-without accounting for fabrication variability.\nministic baselines like a single U-Net, which pro- MC-Dropout U-Net. To incorporate uncerduce only one output per input, we aggregatetainty without retraining multiple networks, we\npredictions across a test set to form an empir-extend the deterministic U-Net by enabling\nical distribution, allowing for a fair comparison.dropout layers during both training and inferAll metrics reflect the model's ability to reproduceence following the Monte Carlo (MC) Dropout\nthe fabrication variability observed across multipleapproach (Gal and Ghahramani 2016). During\nfabricated instances of different structures.testing, the model is evaluated with dropout\nIntersection over Union (IoU).",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 17,
+    "total_chunks": 35,
+    "char_count": 2693,
+    "word_count": 391,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "18b34a41-0c79-4f62-9c0d-911da7a7a5bf",
+    "text": "IoU,active, introducing stochastic feature masking\nexpressed as a percentage (%), quantifies thethat yields a different prediction at each forpixel-wise overlap between the predicted SEMward pass. For each input layout, we perform\noutput and the ground-truth SEM image. It is35 stochastic forward passes, resulting in 35 discomputed as shown in Eq. (5) with each pixeltinct predictions per sample. This technique is\nused to approximate Bayesian model uncertainty treated as a binary variable; hence higher IoU val- Formally, for two discrete probability distribuues indicate that the model closely reconstructs tions P and Q over a metric space with distance\nthe true geometry of the fabricated structure. function d(x, y), the first-order W-D is defined as: W(P, Q) = inf E(x,y)∼γ[d(x, y)], (7) IoU = = (5)\n|A ∪B| |A| + |B| −|A ∩B| γ∈Π(P,Q) While the IoU metric is applied to two indi- where Π(P, Q) is the set of all joint distrividual images, we extend it to comparing two butions γ(x, y) whose marginals are P and Q.\nsets of images using pair-wise comparisons, each Similarly to the KL-D, we first convert each set\nimage taken from a respective set. For that pur- of SEM images (real or generated) into a normalpose, two matching strategies are proposed and ized histogram of pixel intensities, treating each\nevaluated. Random matching computes the IoU histogram as a discrete probability distribution.\nbetween a randomly selected prediction (first set) Then, for each nominal structure, we calculate the\nand the ground-truth SEM (second set), simulat- pairwise W-D between every generated and real\ning a na¨ıve sample from the model's distribution. histogram, and report the average as the final metIn contrast, Greedy matching selects the best ric. As with KL-D, lower values indicate better\nmatch among multiple predictions by choosing the distributional alignment.\none with the highest IoU to the ground-truth. Kullback–Leibler Divergence (KL-D). 3.3 Quantitative Results\nKL-D measures how one probability distribution\n3.3.1 IoU-Based Distribution\ndiverges from a reference distribution. In our case,\nComparisonwe compute DKL(real ∥model), evaluating how\nwell the distribution of SEM-like images generated Table 1 summarizes the IoU scores (%) of models\nby the model approximates the true distribution of across the evaluation set, along with their averreal SEM images of fabricated devices. It can be observed that the IoU values are\ngiven two discrete probability distributions P and correlated with the structure size and complexQ, the KL-D is computed as: ity. Smaller features (e.g. Cross-25, Target-50) are\nreproduced with lower fidelity as compared to the\nlarger or simpler features (Cross-100, Square), as\nP(i)\nKL(P∥Q) = X P(i) log , (6) expected in fabrication.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 18,
+    "total_chunks": 35,
+    "char_count": 2778,
+    "word_count": 430,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db8f47d7-4df1-4a03-b113-b28185682a71",
+    "text": "For all these cases, the\nQ(i) i Gen-Fab model consistently achieves the highest IoU across all structure types. In particuwhere the sum runs over all pixel intensity lar, the Gen-Fab model with Greedy matching\nbins. To compute KL-D, we treat each set of attains the best performance, achieving an overimages as a probability distribution by first aver- all IoU of 89.8%, outperforming the next best\naging them pixel-wise across the set, which results method, Varying U-Nets with Greedy matching\nin a grayscale image where each pixel reflects the (85.8%). This advantage is consistently reflected\nprobability of being active rather than a binary across individual categories. The MC-Dropout Uvalue.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 19,
+    "total_chunks": 35,
+    "char_count": 697,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1336b4ce-c43b-4707-8092-db08748052b9",
+    "text": "This averaged image is then converted Net baseline shows lower overall IoU values of\ninto a normalized histogram of pixel intensities, 80.7% (Random) and 83.4% (Greedy), below both\nforming a discrete probability distribution over the deterministic U-Net (85.3%) and Varying Ugrayscale values. The KL-D is then computed Nets (85.2% Random, 85.8% Greedy), suggesting\nbetween these histograms. that dropout-based stochasticity fails to capture\nWasserstein Distance (W-D). Also known structural variability effectively.\nas Earth Mover's Distance (EMD), W-D quanti- Notably, even under the Random matching,\nfies dissimilarity between two probability distribu- Gen-Fab achieves an IoU of 88.7%, outperforming\ntions by measuring the minimum work needed to the deterministic U-Net (85.3%), the MC-Dropout\ntransform one distribution into the other. U-Net (80.7% Random, 83.4% Greedy), and the\nVarying U-Nets (85.2% Random, 85.8% Greedy). Table 1 IoU-based distribution scores (%) for different model types and matching strategies across test structures Model Type Matching Type C25 C50 C100 Square T50 T100 Average IoU U-Net - 75.6 81.3 93.3 92.7 83.4 85.5 85.3\nMC-Dropout U-Net Random 72.8 81.0 84.6 87.3 83.0 75.3 80.7\nVarying U-Nets Random 75.9 82.9 92.0 92.4 85.0 83.1 85.2\nGen-Fab Random 78.2 87.3 94.3 94.4 90.4 87.6 88.7\nMC-Dropout U-Net Greedy 76.3 84.4 85.9 90.0 85.1 78.7 83.4\nVarying U-Nets Greedy 77.1 83.2 92.3 92.7 85.5 84.0 85.8\nGen-Fab Greedy 80.2 87.7 94.8 96.2 90.6 89.1 89.8",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 20,
+    "total_chunks": 35,
+    "char_count": 1484,
+    "word_count": 224,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "27fe934e-c5d1-4d7c-a93b-135d9212b86d",
+    "text": "3.3.2 Distributional Fidelity (KL-D IoU) used augmentation, a latent dimension of 16,\nand W-D) and 10k training steps. Overall, moderate latent dimensions (16–64)\nWe evaluate the alignment between predicted outwith augmentation yield consistently high IoUs,\nputs and real SEM image distributions using two\nespecially with sufficient training. Larger latent\nstatistical metrics, KL-D and W-D, as shown in\ndimensions do not outperform smaller ones, sugTable 2. Lower values indicate better alignment\ngesting diminishing returns beyond a certain size.\nwith the true distribution of fabricated outcomes. These results indicate that controlled stochasThe results reveal a similar trend to the IoUticity, introduced through data augmentation and\nbased metric: the Gen-Fab model consistently\na well-sized latent space, is a key factor in\nachieves the lowest KL-D and W-D across all\nGen-Fab's success. Additionally, sufficient trainstructure types, often by a large margin. For\ning duration remains essential for convergence and\nexample, in the Cross-25, Gen-Fab achieves a\nperformance stability.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 21,
+    "total_chunks": 35,
+    "char_count": 1088,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c62fc44d-20fb-4156-b4a5-5eb1274d286b",
+    "text": "KL-D of 0.2657 compared to 0.9471 for the Varying U-Nets. Similar reductions are observed for\n3.4 Qualitative ResultsCross-50 (0.6949 vs. 0.8150) and Target-50 (0.2335\nvs. 0.5339). In contrast, the MC-Dropout U-Net To complement our quantitative evaluations, we\nexhibits substantially higher divergence values qualitatively compare the outputs of each model\nacross all structures (e.g., KL-D of 2.5754 on against real SEM images to assess visual realism\nCross-25 and 2.9397 on Target-100), indicating and structural fidelity. This analysis is particularly\nthat dropout-induced stochasticity does not align important given that our test geometries were\nwith the true fabrication distribution, which is intentionally chosen to differ significantly from\nexpected since dropout models epistemic (model) the training dataset, both to evaluate generalizauncertainty rather than aleatoric (data) uncer- tion and to enable meaningful visual comparisons\ntainty (Gal and Ghahramani 2016). beyond familiar patterns. Fig. 8 presents side-byThe same trend holds for W-D: Gen-Fab side examples for each of the six test structures.\nachieves the lowest W-D in every case (0.1693 on For each design, we show the input GDS, the\nCross-25 vs. 0.1831 for Varying U-Nets). real SEM, and the predicted outputs from both\nthe Varying U-Nets and Gen-Fab, annotated with\n3.3.3 Hyperparameter Study of their IoU scores based on Greedy matching. Gen-Fab Configurations The U-Net predictions appear overly smooth,\nlacking the subtle edge roughness, asymmetry,\nWe train Gen-Fab using multiple configurations\nand pattern deformations visible in the real SEM\nthat differ in three main aspects: data augmenimages. This is expected from a deterministic\ntation, latent space dimensionality (16–128), and\nmodel trained to minimize pixel-wise losses, which\nnumber of training steps (5k–20k).\ntend to average out stochastic variations, resulting\nNotably, 9 out of the 10 best models employed\nin overly symmetric predictions.\ndata augmentation, demonstrating that exposing\nBy contrast, the Gen-Fab model produces outthe model to augmented structures enhances its\nputs that more closely resemble real SEMs. The highest-performing model (88.7% Table 2 Comparison of KL-D and W-D between predicted and real SEM distributions across different model types KL-Divergence ↓ Wasserstein Distance ↓\nStructure\nMC U-Net Varying U-Nets Gen-Fab MC U-Net Varying U-Nets Gen-Fab Cross-25 2.5754 0.9471 0.2657 0.3010 0.1831 0.1693\nCross-50 1.6990 0.8150 0.6949 0.1803 0.1498 0.0980\nCross-100 1.4570 0.1939 0.1859 0.1501 0.0692 0.0536\nSquare 1.2188 0.2711 0.1277 0.1252 0.0673 0.0542\nTarget-50 1.4543 0.5339 0.2335 0.1633 0.1281 0.1249\nTarget-100 2.9397 0.4230 0.2982 0.2872 0.1322 0.1172 U-Net exhibits no variance across outputs, as it is\ndeterministic by design.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 22,
+    "total_chunks": 35,
+    "char_count": 2808,
+    "word_count": 402,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "150132aa-0169-493f-875e-b92426882111",
+    "text": "The MC-Dropout U-Net\nshows degraded generalization performance, as the\nsmaller cross features are not well captured compared to Gen-Fab. The Varying U-Nets introduces\nexaggerated variations, while Gen-Fab's variance\npattern closely matches the real SEM data. These visualizations show that while MCDropout U-Net and Varying U-Nets reproduce the\nnominal shape, they struggle to reflect fabricationinduced randomness accurately. Gen-Fab, on the\nother hand, generates both structurally accurate\nand visually realistic SEM predictions.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 23,
+    "total_chunks": 35,
+    "char_count": 531,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "698a1a01-7336-4fbd-914e-1ab517914f09",
+    "text": "3.5 Distribution Shift Analysis To quantify the domain gap between the training\nand OOD test sets, we conducted a feature-space\ndistribution analysis based on pretrained convolutional embeddings. Specifically, images from both\ndomains were passed through a VGG16 feature\nextractor pretrained on ImageNet, and the resultFig. 7 Variance maps of fabricated and predicted ing embeddings were used to characterize each\nSEM outputs for the Cross-50. Variance maps for\ndistribution. Cross-50 show how Gen-Fab, MC-Dropout U-Net, and\nVarying U-Nets capture edge variations, calculated over We employed two complementary metrics: (1)\n35 real and 35 generated samples per model. Gen-Fab the Fr´echet Distance (FD), which measures the\nmost closely reflects real SEM variability, whereas the MC- divergence between the mean and covariance of\nDropout U-Net exhibits weaker variance and and Varying\nthe two feature distributions (Heusel et al. 2017),U-Nets exhibit overestimated variability.\nand (2) a two-dimensional t-SNE projection for\nqualitative visualization (van der Maaten and\npredictions exhibit minor geometric irregularities,\nHinton 2008). As shown in Fig. 9, the t-SNE\nsuch as asymmetrical arm thickness and edge perembedding reveals a clear separation between the\nturbations that mimic fabrication imperfections\ntraining and test domains. Quantitatively, the\nobserved in every structure.\ncomputed FD between the training and test distriFig. 7 further highlights these distinctions\nbutions is 7265.92. For reference, the FD between\nby visualizing pixel-wise variance across multitwo random splits of the training set is 1912.6,\nple outputs from each model for the Cross-50\nand between two random splits of the test set\nstructure. The real SEM variance map shows variis 1265.61, confirming that the inter-domain shift\nation concentrated along structure edges. Fig. 8 Qualitative comparison of Varying U-Nets and Gen-Fab predictions across six evaluation structures. Each sub-panel shows the input GDS, corresponding real SEM, and predicted outputs from Varying U-Nets and Gen-Fab. IoU scores (%) for each model are reported. Gen-Fab consistently achieves higher IoU than Varying U-Nets, indicating\ncloser alignment with actual fabricated outcomes. is significantly larger than intra-domain variabil- θ due to limited training data.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 24,
+    "total_chunks": 35,
+    "char_count": 2327,
+    "word_count": 332,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0b40481b-20df-4d93-8ab6-8238876794c3",
+    "text": "To quantify this\nity. Hence, the chosen test structures represent a component, we extended our uncertainty estimameaningful yet realistic shift in the underlying fab- tion using an ensemble-based approach following\nrication space, suitable for evaluating the model's the law of total variance:\ngeneralization capability to unseen geometries. Varθ,z(Y |X) = Eθ[Varz(Y |X, θ)]+Varθ(Ez[Y |X, θ]) ,\n3.6 Epistemic vs. Aleatoric\nUncertainty in Gen-Fab where the first term represents the expected\ndata-dependent (aleatoric) variance across latent\nThe variability observed across repeated SEM realizations, and the second term captures modelimages, as shown in Fig. 7 (top-left), reflects dependent (epistemic) variance across indepenaleatoric (data) uncertainty, which represents the dently trained Gen-Fab networks. In practice,\ninherent randomness of the fabrication process five separate Gen-Fab instances {Gθk}5k=1 were\nitself arising from stochastic lithography, etching, trained with different random initializations and\nand imaging effects. Gen-Fab models this form of data shuffling, each evaluated using 35 latent noise\nuncertainty by sampling different latent noise vec- vectors zi ∼N(0, I). For each model, the per-pixel\ntors z, each representing one realization of the mean prediction µk(X) and intra-model variance\nfabrication outcome Y for a given layout X. In σ2k(X) were computed, and ensemble statistics\ncontrast, epistemic (model) uncertainty originates were aggregated as:\nfrom the imperfectly estimated model parameters and more realistic SEM predictions with diversity\nreflective of true fabrication variability. From a\ndigital-twin standpoint, this distinction is critical:\ndeterministic predictors correspond to single-state\napproximations of the physical process, whereas\nGen-Fab enables a stochastic digital twin capable of mimicking a real fabrication process by\nproducing multiple plausible realizations of it. Empirically, Gen-Fab outperforms U-Net, MCDropout U-Net, and Varying U-Nets across all\nestablished pixel-wise and distributional metrics. Unlike MC-Dropout U-Net and Varying U-Nets\nthat approximate variation, Gen-Fab directly\nlearns and samples from the fabrication process'sFig. 9 Feature-space distribution shift between the training and OOD test sets, visualized via t-SNE projection. underlying stochasticity. The OOD test samples were intentionally selected to differ\nfrom the training distribution to evaluate the model's gen- 3.7.2 Accuracy vs.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 25,
+    "total_chunks": 35,
+    "char_count": 2483,
+    "word_count": 333,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "24df4b66-879a-4ff5-b111-546ab312e48b",
+    "text": "Variation Trade-offs\neralization ability. A key concern in generative modeling is balancing\nfidelity and diversity, avoiding the so-called mode\ncollapse while producing accurate samples (Sri-\n¯µ(X) = X µk(X), vastava et al. 2017; Bau et al. 2019). Our results\nK show Gen-Fab achieves this trade-off effectively. Notably, even under random matching, the Gen- 1\nσ2aleatoric(X) = X σ2k(X), (8) Fab model outperforms the U-Net baseline under K\nk greedy matching (88.7% vs. 85.3%), indicating\n1 that both fidelity and diversity are improved. σ2epistemic(X) = X µk(X) −¯µ(X) 2. K If output diversity were excessive, the randomk\nmatch IoU would degrade.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 26,
+    "total_chunks": 35,
+    "char_count": 646,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b69facc6-064f-4f19-8879-361de7f74c1e",
+    "text": "Model hyperparameter\nAs shown in Fig. 10, the aleatoric variance tuning helps achieve the best balance. Moderate\nis concentrated along feature boundaries, con- latent sizes (16–64) perform best, likely due to\nsistent with real fabrication-induced edge devia- better diversity control and discriminator stabiltions, while the epistemic variance is noticeably ity. Top models also leverage data augmentation\nsmaller, suggesting high inter-model consistency. and sufficient training duration (10k–20k steps).",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 27,
+    "total_chunks": 35,
+    "char_count": 505,
+    "word_count": 67,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1533c3a7-cdc5-4e04-bfd4-2c5b6241b6bd",
+    "text": "This result indicates that the primary source of\npredictive uncertainty arises from the stochastic 3.7.3 Implications for Robust\nfabrication process itself rather than model insta- Photonic Design\nbility, confirming that Gen-Fab provides reliable Modeling fabrication variability has immediate\npredictions. applications in design-for-manufacturability and\noptimization. Designers can sample multiple out-\n3.7 Discussion and Implications puts from Gen-Fab for a given GDS input, analyze\ncritical dimension statistics, or simulate perfor-3.7.1 Effectiveness of Conditional\nmance yield. This supports robust design strateGenerative Modeling\ngies based on expected value, variance reduction,\nGen-Fab's advantage stems from its cGAN frame- or percentile-based constraints.\nwork, which contrasts with deterministic models Within a digital-twin framework, such capabillike U-Net. While U-Nets minimize pixel-wise ities support virtual experimentation and Monte\nloss to a fixed ground-truth, Gen-Fab learns a Carlo–style analysis prior to fabrication, allowing\nconditional distribution by introducing a latent design robustness to be assessed directly on the\nnoise vector z and training against a discrimi- twin rather than through repeated physical runs.\nnator that enforces realism. This yields sharper The low KL-D and W-D (Table 2) affirm that",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 28,
+    "total_chunks": 35,
+    "char_count": 1339,
+    "word_count": 178,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8547361a-bc3d-44d5-b969-e3c689aebe5f",
+    "text": "Fig. 10 Aleatoric, epistemic, and total variance decomposition for Gen-Fab. Variance maps for a Cross-50\nstructure illustrate the uncertainty decomposition using five independently trained Gen-Fab models and 35 latent noise\nsamples per model. The aleatoric variance (left) dominates along the structural edges, whereas the epistemic variance\n(center) remains comparatively low. The total variance (right) is therefore largely determined by aleatoric effects, confirming\nthat Gen-Fab effectively captures fabrication-induced variability while maintaining low model uncertainty. Gen-Fab's outputs are statistically aligned with accuracy and uncertainty modeling, achieving\ntrue SEM distributions, a prerequisite for reliable higher IoU scores and lower distributional diverdigital-twin deployment. This fidelity is critical for gence from real fabrication data. Furthermore,\nidentifying edge-case failures such as waveguide a distribution-shift analysis between the training\nnarrowing or hole collapse (Gostimirovic et al. and out-of-distribution (OOD) test sets confirmed\n2023; Xu et al. 2023). Integrating such genera- that Gen-Fab maintains its predictive fidelity\ntive models into photonic CAD tools could enable under realistic domain shifts, validating its genautomated digital-twin-driven optimization loops, eralization capability across unseen fabrication\nwhere robustness is evaluated over Monte-Carlo geometries.\nsampled geometries rather than idealized layouts Future work will focus on applying Gen-Fab to\nor corner cases (Xu et al. 2024; Ma et al. 2025). robust inverse design pipelines, where the model\ncan be used to simulate a distribution of fabrica-\n4 Conclusion and Future Work tion outcomes and guide the design of layouts that\nare not only performant in ideal conditions but\nIn this work, we presented Gen-Fab, a condi- also resilient to process variability. The outputs\ntional generative model for predicting and analyz- from Gen-Fab can also be directly integrated into\ning fabrication-induced variations in nanophotonic photonic simulation tools for quantitative analydevices. By introducing a latent noise vector into sis. Because Gen-Fab produces binary SEM-like\nthe Pix2Pix framework, our model captures the predictions aligned to the original layout, these\none-to-many nature of the fabrication process, outputs can be readily converted into polygonal\ngenerating diverse and realistic SEM predictions geometries compatible with standard electronic\nfrom a single layout design. From a digital-twin design automation formatting such as GDSII, as\nperspective, Gen-Fab enables a true fabrication- well as electromagnetic and circuit-level simulalevel digital twin that bridges photonic design tors (e.g., Ansys Lumerical), enabling subsequent\nlayouts and manufactured outcomes through a statistical geometric and optical performance evalfast, data-driven surrogate model. Future work uation under realistic process variations.\nwill focus on close integration of GenFab with In future work, Gen-Fab could be embedthe fabrication facility to enable continuous model ded within automated inverse-design or optimizaupdates offering both up-to-date model for design tion pipelines to provide fabrication-aware feedpurposes as well as tracking and identification back during layout generation, closing the loop\nof process drifts. We demonstrated that Gen- between design, simulation, and manufacturabilFab significantly outperforms deterministic, MC- ity. Extending the model to handle more comDropout, and ensemble-based baselines in both plex photonic components, multilayer fabrication",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 29,
+    "total_chunks": 35,
+    "char_count": 3605,
+    "word_count": 481,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b26a7e73-a294-4b4e-b521-9194c0080bbe",
+    "text": "stacks, and broader design spaces will enhance Appendix A Convergence\nits generalizability. Future research will focus on Analysis\ninvestigation of alternative generative frameworks\nsuch as diffusion models (Ho et al. 2020; Rom- This appendix presents the training curves of the\nbach et al. 2022), normalizing flows (Rezende and proposed Gen-Fab conditional generative model in\nMohamed 2016; Papamakarios et al. 2021), and order to illustrate its convergence behavior and\nstyle-based GANs (Karras et al. 2021), which optimization stability.\nmay offer improved controllability, stability, and Figure A1 shows the evolution of the generator\ndiversity for fabrication-aware design. total loss and the discriminator loss over training\nA further direction for future work is to inte- steps. The generator loss decreases from a high\ngrate the interpretability into the Gen-Fab's latent value and gradually stabilizes, indicating consisspace, allowing to control distinct aspects of fab- tent improvement in synthesis quality. The disrication variability such as corner rounding or criminator loss converges to a stable range without\ngap-filling independently. collapsing, suggesting a balanced adversarial game\nin which neither network dominates the trainingAcknowledgements. We gratefully acknowledge\nApplied Nanotools Inc. for their support in providing process. This behavior is characteristic of stable\nhigh quality SEM data used in this study. conditional GAN training and indicates that the\nmodel reaches a dynamic equilibrium.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 30,
+    "total_chunks": 35,
+    "char_count": 1527,
+    "word_count": 214,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "376f82ee-4f17-437a-96e8-e95a3f4f0326",
+    "text": "Authors Contributions. Conceptualization:\nFigure A2 decomposes the generator objective\nRA, YG; methodology: RA, YG, implementation:\ninto its adversarial (GAN) loss and reconstrucRA; experiments: RA, original draft: RA; manuscript\ntion (L1) loss components. The L1 loss rapidlyreview and editing: all authors.\ndecreases during early training. In contrast, the\nFunding. This work is supported by the National adversarial loss stabilizes at a higher value with\nResearch Council Canada Challenge Programs AI for mild oscillations, which is expected in adversarDesign (Grant AI4D-144).\nial training and indicates continued refinement\nData Availability. The data that support the of fine-scale texture realism without sacrificing\nfindings of this study are available from the corre- structural fidelity.\nsponding author upon reasonable request. Total 8 GeneratorDeclarations Discriminator\nConflict of Interest. The authors declare that\nthey have no conflict of interest. Loss 5\nReplication of Results. The methodology 4\ndescribed in this paper can be replicated by read-\ners using publicly available tools. Our Gen-Fab model\nbuilds upon the standard Pix2Pix architecture, with a 2\nkey modification of injecting a stochastic latent vector 1\n0 2500 5000 7500 10000 12500 15000 17500 20000\nat the generator bottleneck described in text in detail.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 31,
+    "total_chunks": 35,
+    "char_count": 1337,
+    "word_count": 192,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b44ab54-0548-47ca-8a60-a6ea83874006",
+    "text": "Training Steps\nAll architectural details, loss functions, and training\nprotocols are described in detail throughout the paper. A1 Generator total loss and discriminator loss dur-We also provide full descriptions of our experimental\ning training, illustrating stable adversarial convergence of\nsetup, evaluation metrics (IoU, KL divergence, and the Gen-Fab model. Wasserstein distance), and hyperparameter choices. Consent to participate.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 32,
+    "total_chunks": 35,
+    "char_count": 437,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e730f101-6b92-4700-99af-63ccee4ec48f",
+    "text": "1.0 GAN Loss (2018). https://arxiv.org/abs/1803.07422\nL1 Loss\n0.8 Gal, Y., Ghahramani, Z.: Dropout as a bayesian\n0.6 approximation: Representing model uncertainty\nLoss in deep learning. In: Balcan, M.F., Weinberger,\n0.4 K.Q. (eds.) Proceedings of The 33rd International Conference on Machine Learning. Pro-\n0.2\nceedings of Machine Learning Research, vol. 48,\n0.0 pp. 1050–1059. PMLR, New York, New York,\n0 2500 5000 7500 10000 12500 15000 17500 20000 USA (2016) Training Steps",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 33,
+    "total_chunks": 35,
+    "char_count": 476,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "38d97f0a-6e22-43cd-958f-cc65cbf90034",
+    "text": "Gostimirovic, D., Grinberg, Y., Xu, D.-\nFig. A2 Evolution of the generator loss components, X., Liboiron-Ladouceur, O.: Improving\nshowing early convergence of the L1 reconstruction loss and fabrication fidelity of integrated nanophostabilization of the adversarial (GAN) loss.\ntonic devices using deep learning. ACS\nPhotonics 10(6), 1953–1961 (2023)\nReferences https://doi.org/10.1021/acsphotonics.3c00389 Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu,Akbari Asanjan, A., Memarzadeh, M., Lott,\nB., Warde-Farley, D., Ozair, S., Courville, A., P.A., Rieffel, E., Grabbe, S.: Probabilistic wildBengio, Y.: Generative adversarial networks. fire segmentation using supervised deep genCommun. ACM 63(11), 139–144 (2020) https: erative model from satellite imagery. Remote\n//doi.org/10.1145/3422622 Sensing 15(11) (2023) https://doi.org/10.3390/\nrs15112718\nGostimirovic, D., Xu, D.-X., Liboiron-Ladouceur,\nO., Grinberg, Y.: Deep learning-based predic-Azimi, R., Kong, Y., Gostimirovic, D., Clark,\ntion of fabrication-process-induced structural J.J., Liboiron-Ladouceur, O.: Semu-net: A\nvariations in nanophotonic devices. ACS Pho- segmentation-based corrector for fabrication\ntonics 9(8), 2623–2633 (2022) https://doi.org/ process variations of nanophotonics with micro-\n10.1021/acsphotonics.1c01973 scopic images. In: 2025 IEEE/CVF Winter\nConference on Applications of Computer Vision\nHo, J., Jain, A., Abbeel, P.: Denoising Diffusion\n(WACV), pp. 1528–1536 (2025). https://doi. Probabilistic Models (2020). https://arxiv.org/\norg/10.1109/WACV61041.2025.00156\nabs/2006.11239 Bai, Y., Ma, T., Risteski, A.: Approximability\nHan, D., Park, C., Oh, S., Jung, H., Hahn, J.W.:\nof Discriminators Implies Diversity in GANs\nQuantitative analysis and modeling of line edge\n(2019). https://arxiv.org/abs/1806.10586\nroughness in near-field lithography: toward high\npattern quality in nanofabrication. Nanopho-Bau, D., Zhu, J.-Y., Wulff, J., Peebles, W.,\ntonics 8(5), 879–888 (2019) https://doi.org/10. Strobelt, H., Zhou, B., Torralba, A.: Seeing\n1515/nanoph-2019-0031 what a gan cannot generate. In: Proceedings of\nthe International Conference Computer Vision\nHeusel, M., Ramsauer, H., Unterthiner, T.,\n(ICCV) (2019)\nNessler, B., Hochreiter, S.: Gans trained by a\ntwo time-scale update rule converge to a localDhote, C., Singh, A., Kumar, S.: Silicon phonash equilibrium. In: Proceedings of the 31st tonics sensors for biophotonic applications—a\nInternational Conference on Neural Information review. IEEE Sensors Journal 22(19), 18228–\nProcessing Systems.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 34,
+    "total_chunks": 35,
+    "char_count": 2541,
+    "word_count": 312,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9dcc09a9-7097-4d11-bdf6-402a7a85c600",
+    "text": "NIPS'17, pp. 6629–6640. 18239 (2022) https://doi.org/10.1109/JSEN. Curran Associates Inc., Red Hook, NY, USA 2022.3199663\n(2017)\nDemir, U., Unal, G.: Patch-Based Image Inpainting with Generative Adversarial Networks Isola, P., Zhu, J.-Y., Zhou, T., Efros, A.A.: Image- adaptive variation-aware subspace optimizato-image translation with conditional adversar- tion.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 35,
+    "total_chunks": 35,
+    "char_count": 364,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0dea8f20-d077-4287-86f9-ecdd5ceb6284",
+    "text": "In: Proceedings of the Design, Automation\nial networks. In: 2017 IEEE Conference on Com- and Test in Europe Conference (DATE), pp. 1–7\nputer Vision and Pattern Recognition (CVPR), (2025). https://doi.org/10.23919/DATE64628.\npp. 5967–5976 (2017). https://doi.org/10.1109/ 2025.10993227\nCVPR.2017.632\nMolesky, S., Lin, Z., Piggott, A.Y., Jin, W.,\nJames, A., Rizzo, A., Wang, Y., Novick, A., Vuckovi´c, J., Rodriguez, A.W.: Inverse\nWang, S., Parsons, R., Jang, K., Hattink, M., design in nanophotonics. Nature PhoBergman, K.: Process variation-aware compact tonics 12(11), 659–670 (2018) https:\nmodel of strip waveguides for photonic cir- //doi.org/10.1038/s41566-018-0246-9\ncuit simulation. Journal of Lightwave Technology 41(9), 2801–2814 (2023) https://doi.org/ Mirza, M., Osindero, S.: Conditional Generative\n10.1109/JLT.2023.3238847 Adversarial Nets (2014). https://arxiv.org/abs/\n1411.1784\nKingma, D.P., Ba, J.: Adam: A method for\nstochastic optimization. In: Bengio, Y., Naderi, M., Karimi, N., Emami, A., Shirani, S.,\nLeCun, Y. (eds.) 3rd International Confer- Samavi, S.: Dynamic-Pix2Pix: Noise Injected\nence on Learning Representations, ICLR cGAN for Modeling Input and Target Domain\n2015, San Diego, CA, USA, May 7-9, Joint Distributions with Limited Training Data\n2015, Conference Track Proceedings (2015). (2022). https://arxiv.org/abs/2211.08570\nhttps://arxiv.org/abs/1412.6980\nOvadia, Y., Fertig, E., Ren, J., Nado, Z., Sculley,\nKhoong, W.H.: BUSU-Net: An Ensemble U-Net D., Nowozin, S., Dillon, J., Lakshminarayanan,\nFramework for Medical Image Segmentation B., Snoek, J.: Can you trust your model's uncer-\n(2020). https://arxiv.org/abs/2003.01581 tainty? evaluating predictive uncertainty under\ndataset shift. In: Wallach, H., Larochelle, H.,\nKarras, T., Laine, S., Aila, T.: A style-based gen- Beygelzimer, A., Alch´e-Buc, F., Fox, E., Garerator architecture for generative adversarial nett, R. (eds.) Advances in Neural Information\nnetworks. IEEE Transactions on Pattern Anal- Processing Systems, vol. 32. Curran Associates,\nysis and Machine Intelligence 43(12), 4217– Inc., Vancouver, BC, Canada (2019)\n4228 (2021) https://doi.org/10.1109/TPAMI.\n2020.2970919 Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., Killeen, T., Lin, Z.,\nKingma, D.P., Welling, M.: Auto-Encoding Vari- Gimelshein, N., Antiga, L., Desmaison, A.,\national Bayes (2022). https://arxiv.org/abs/ Kopf, A., Yang, E., DeVito, Z., Raison, M.,\n1312.6114 Tejani, A., Chilamkurthy, S., Steiner, B., Fang,\nL., Bai, J., Chintala, S.: Pytorch: An imperative\nLi, C.T., Farnia, F.: Mode-seeking divergences: style, high-performance deep learning library. Theory and applications to gans. In: Ruiz, In: Wallach, H., Larochelle, H., Beygelzimer,\nF., Dy, J., Meent, J.-W. (eds.) Proceed- A., Alch´e-Buc, F., Fox, E., Garnett, R. (eds.)\nings of The 26th International Conference Advances in Neural Information Processing Syson Artificial Intelligence and Statistics. Curran Associates, Inc., Vancouceedings of Machine Learning Research, vol. ver, BC, Canada (2019)\n206, pp. 8321–8350. PMLR, Valencia, Spain\n(2023). https://proceedings.mlr.press/v206/ting- Papamakarios, G., Nalisnick, E., Rezende, D.J.,\nli23a.html Mohamed, S., Lakshminarayanan, B.: Normalizing Flows for Probabilistic Modeling and\nMa, P., Gao, Z., Begovic, A., Zhang, M., Yang, Inference (2021). https://arxiv.org/abs/1912. H., Ren, H., Huang, R., Boning, D., Gu, 02762\nJ.: BOSON -1: Understanding and enabling\nphysically-robust photonic inverse design with Piggott, A.Y., Petykiewicz, J., Su, L., Vuˇckovi´c, J.: Fabrication-constrained nanopho- 1038/nature16454\ntonic inverse design. Scientific Reports\n7(1), 1786 (2017) https://doi.org/10.1038/ Ulyanov, D., Vedaldi, A., Lempitsky, V.: Instance\ns41598-017-01939-2 Normalization: The Missing Ingredient for Fast\nStylization (2017). https://arxiv.org/abs/1607.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 36,
+    "total_chunks": 35,
+    "char_count": 3872,
+    "word_count": 495,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "769b37d8-d477-4117-8a61-0d36e8cfc2c2",
+    "text": "Rombach, R., Blattmann, A., Lorenz, D., Esser, 08022\nP., Ommer, B.: High-Resolution Image Synthesis with Latent Diffusion Models (2022). https: Maaten, L., Hinton, G.: Visualizing data using\n//arxiv.org/abs/2112.10752 t-sne. Journal of Machine Learning Research\n9(86), 2579–2605 (2008)\nRonneberger, O., Fischer, P., Brox, T.: U-net:\nConvolutional networks for biomedical image Xing, Y., Dong, J., Khan, U., Bogaerts, W.:\nsegmentation. In: Navab, N., Hornegger, J., Capturing the effects of spatial process variaWells, W.M., Frangi, A.F. (eds.) Medical Image tions in silicon photonic circuits. ACS Photonics\nComputing and Computer-Assisted Interven- 10(4), 928–944 (2023) https://doi.org/10.1021/\ntion – MICCAI 2015, pp. 234–241. Springer, acsphotonics.2c01194\nMunich, Germany (2015)\nXu, D.-X., Gostimirovic, D., Grinberg, Y.,\nRezende, D.J., Mohamed, S.: Variational Inference Liboiron-Ladouceur, O.: Advancing silicon phowith Normalizing Flows (2016). https://arxiv. tonics through machine learning: From device\norg/abs/1505.05770 design to fabrication. In: 2024 IEEE 24th\nInternational Conference on Nanotechnology\nShekhar, S., Bogaerts, W., Chrostowski, L., (NANO), pp. 460–463 (2024). https://doi.org/\nBowers, J.E., Hochberg, M., Soref, R., Shas- 10.1109/NANO61778.2024.10628655\ntri, B.J.: Roadmapping the next generation\nof silicon photonics. Nature Communications Xu, B., Wang, N., Chen, T., Li, M.: Empirical\n15(1), 751 (2024) https://doi.org/10.1038/ evaluation of rectified activations in convolus41467-024-44750-0 tional network. CoRR abs/1505.00853 (2015)\n1505.00853\nSoref, R.: The past, present, and future of silicon\nphotonics. IEEE Journal of Selected Topics in Xu, D.-X., Zhang, J.H., Melati, D., Al-Digeil,\nQuantum Electronics 12(6), 1678–1687 (2006) M., Zheng, Y., Janz, S., Schmid, J.H., Cheben,\nhttps://doi.org/10.1109/JSTQE.2006.883151 P., Grinberg, Y., Gostimirovic, D., Zhang,\nG., Masnad, M.M., Liboiron-Ladouceur, O.:\nSrivastava, A., Valkov, L., Russell, C., Gutmann, Using machine learning pattern recognition to\nM.U., Sutton, C.: Veegan: Reducing mode col- enhance silicon photonic design and fabrication.\nlapse in gans using implicit variational learning. In: Advanced Photonics Congress 2023, pp. In: Guyon, I., Luxburg, U.V., Bengio, S., Wal- 3–4. Optica Publishing Group, Busan, South\nlach, H., Fergus, R., Vishwanathan, S., Garnett, Korea (2023). https://doi.org/10.1364/IPRSN. R. (eds.) Advances in Neural Information Pro- 2023.IM3C.4\ncessing Systems, vol. 30. Curran Associates,\nInc., Long Beach, CA, USA (2017) Sun, C., Wade, M.T., Lee, Y., Orcutt, J.S.,\nAlloatti, L., Georgas, M.S., Waterman, A.S.,\nShainline, J.M., Avizienis, R.R., Lin, S., Moss,\nB.R., Kumar, R., Pavanello, F., Atabaki, A.H.,\nCook, H.M., Ou, A.J., Leu, J.C., Chen, Y.-\nH., Asanovi´c, K., Ram, R.J., Popovi´c, M.A.,\nStojanovi´c, V.M.: Single-chip microprocessor\nthat communicates directly using light.",
+    "paper_id": "2603.11505",
+    "title": "Gen-Fab: A Variation-Aware Generative Model for Predicting Fabrication Variations in Nanophotonic Devices",
+    "authors": [
+      "Rambod Azimi",
+      "Yuri Grinberg",
+      "Dan-Xia Xu",
+      "Odile Liboiron-Ladouceur"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11505v1",
+    "chunk_index": 37,
+    "total_chunks": 35,
+    "char_count": 2903,
+    "word_count": 379,
+    "chunking_strategy": "semantic"
+  }
+]

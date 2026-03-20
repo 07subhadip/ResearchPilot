@@ -1,0 +1,416 @@
+[
+  {
+    "chunk_id": "28865d3e-4141-473e-9c1a-54becdb0c243",
+    "text": "Fair Learning for Bias Mitigation and Quality\nOptimization in Paper Recommendation Uttamasha Anjally Oyshi, Susan Gauch\nDepartment of Electrical Engineering & Computer Science\nUniversity of Arkansas\nFayetteville, USA\ne-mails: {uoyshi, sgauch}@uark.edu",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 0,
+    "total_chunks": 23,
+    "char_count": 251,
+    "word_count": 31,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e7543f6c-c997-4580-b1ff-ea52319e2c48",
+    "text": "Abstract—Despite frequent double-blind review, demo- to mitigate post-review bias. Unlike previous heuristicgraphic biases of authors still disadvantage the under- based approaches that often handle single-attribute fair-2026 represented groups. We present Fair-PaperRec, a Mul- ness constraints or overlook intersectionality, in our\ntiLayer Perceptron (MLP) based model that addresses\napproach: demographic disparities in post-review paper acceptance\ndecisions while maintaining high-quality requirements. Our • We surpass single-attribute approaches by incorpo-Mar methodology penalizes demographic disparities while pre- rating multiple demographic attributes (e.g., race,\nserving quality through intersectional criteria (e.g., race,\ncountry) and constructing multi-dimensional pro- country) and a customized fairness loss, in contrast to12 heuristic approaches. Evaluations using conference data files that capture underlying biases.\nfrom ACM Special Interest Group on Computer-Human • After a double-blind review, a specialized fairness\nInteraction (SIGCHI), Designing Interactive Systems (DIS), penalty is implemented to address demographic\nand Intelligent User Interfaces (IUI) indicate a 42.03% disparities, thereby correcting latent biases without\nincrease in underrepresented group participation and a\nthe need to replace existing processes. 3.16% improvement in overall utility, indicating that diver-\n• Our method ensures that the quality of the paper[cs.AI] sity promotion does not compromise academic rigor and\nsupports equity-focused peer review solutions. is maintained throughout by ensuring demographic\nIndex Terms—Fairness-aware recommendation; Paper parity, thereby obtaining equitable representation\nselection; Demographic bias mitigation without compromising academic rigor. Our results demonstrate improved representation in\nI. INTRODUCTION the participation of underrepresented groups, as well as\nan enhancement in overall paper quality, as indicated by\nDouble-blind review often does not eradicate systemic\nthe h-index. Notably, these findings reveal that enhanced\nbiases linked to authors' demographics, reputations, or\ninclusivity need not diminish academic rigor; a fairnessinstitutional affiliations, despite attempts to ensure imdriven approach can yield greater demographic parity\npartiality [1]–[4]. Recent data indicates that even the while simultaneously preserving, and at times even enmost stringent anonymization techniques can be under- hancing, the quality of accepted papers.\nmined by analyzing writing style or cross-referencing\nBy mitigating biases in paper selection, our strategy\nprevious articles [5], [6]. This tendency can sustain\npromotes a richer academic discourse and amplifies\nbiases against particular groups, including women, racial\nthe representation of marginalized communities, therebyarXiv:2603.11936v1 minorities, and researchers from underrepresented ar- paving the way toward more equitable, high-quality\neas [3], [7]–[9]. Simultaneously, there is a growing\nconferences. The paper includes the folling sections,\ndependence on recommendation algorithms to optimize\nwhere in Section 2, we review related work. Section 3\nprocesses such as paper selection, grant distribution, and\npresents the proposed methodology. Section 4 explains\nsignificant publication identification [10]–[12]. While\nour experimental setup and metrics.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 1,
+    "total_chunks": 23,
+    "char_count": 3383,
+    "word_count": 426,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "871f6fe3-e9e7-412b-9789-63aece6a3498",
+    "text": "Section 5 provides\nthese systems can accelerate decision-making, they also\nresults and analysis. Finally, the Section 6 concludes the\npose a danger of perpetuating biases present in the\npaper.\ntraining data, particularly if they focus only on predictive\naccuracy [13]–[15]. Therefore, it is imperative to devise\nII.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 2,
+    "total_chunks": 23,
+    "char_count": 315,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9e6b88ef-12d3-4e41-88a0-0fd7fb0e8570",
+    "text": "RELATED WORK\nnovel methodologies that explicitly include demographic\njustice, preventing the perpetuation of historical inequal- We begin by examining double-blind review and bias\nities. in academic paper selection, then explore fairness in\nIn this paper, we introduce Fair-PaperRec, a fairness- recommender systems, and finally discuss recent adaware recommendation framework specifically designed vancements in neural approaches for fair selection. Overview of the Fair-PaperRec Architecture. Double-Blind Review and Bias in Academic Paper (MLP) to enforce fairness post-review. We highlight\nSelection two fundamental principles: (1) revealing and alleviating\nAlthough double-blind review conceals identities [1]– biases instead of eliminating them, and (2) implementing\n[3], it often fails to eliminate biases in gender, race, a straightforward, yet efficient neural architecture that\nor geography [9], [16]. While authorship-attribution can harmonizes equality and utility.\nrectify advanced anonymization [5], high-prestige insti- A. Data Collection and Pre-processing\ntutions continue to receive favorable reviews [17]. As\nReal-world datasets—particularly those drawn from\na result, underrepresented groups, including women and\nacademic conference submissions—often contain latent\nracial minorities, continue to be marginalized [18], and\nbiases that mirror systemic imbalances in the scholarly\nsubstantial acceptance rate disparities persist [7], [8].\ncommunity (e.g., underrepresentation of certain demoB. Fairness in Recommendation Systems graphics). We utilize datasets from SIGCHI 2017, DIS\n2017, and IUI 2017 [20], which naturally reflect systemic When optimizing solely for accuracy, recommenders\ndisparities (e.g., skewed demographics). Instead of elim-frequently exacerbate biases [11], [19]. Although some\ninating such biases, our objective is to recognize andfairness issues are addressed by multi-objective [13],\nrectify them.adversarial [14], and re-ranking methods [15], the maWe describe the process of collecting and preparingjority of these methods concentrate on single attributes\nthe data used in our experiments. The dataset consistsor user-item data, leaving intersectional biases in paof academic papers submitted to conferences, and weper acceptance unaccounted for. In academic settings,\nemploy a variety of pre-processing steps to ensure theprovider fairness is equivalent to author fairness, which\ndata are suitable for training our model.protects minority researchers [20]. There are very few\nalgorithms that resolve post-review bias, not to mention, TABLE I.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 3,
+    "total_chunks": 23,
+    "char_count": 2590,
+    "word_count": 339,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6906c5dd-82f9-47fa-9b35-39706b48e666",
+    "text": "DEMOGRAPHIC PARTICIPATION FROM PROTECTED\nmulti-attribute fairness [12], [21]. GROUPS IN THREE CONFERENCES. Post-Review Bias Mitigation and Neural Approaches Conference Gender (%) Race (%) Country (%) Some heuristic methods attempt to rebalance accepted SIGCHI 41.88 6.84 21.94\npapers after reviews [20], but they risk local optima and DIS 65.79 35.09 24.56\nIUI 43.75 51.56 39.06\noften fail to consider multi-attribute fairness. Neuralbased solutions such as DeepFair [11] or Neural Fair Average 50.47 31.16 28.52\nCollaborative Filtering [22] demonstrate that fairness\n1) Data Description: We gathered detailed informa-can align with accuracy, yet they typically target comtion at the paper and author levels, resulting in a robustmercial recommendations rather than the nuances of\ncombined dataset. Every paper record has a title, authors,academic peer review.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 4,
+    "total_chunks": 23,
+    "char_count": 860,
+    "word_count": 121,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "833a99f0-de86-426d-96d2-995c0b673f52",
+    "text": "Meanwhile, multi-stakeholder opand a conference designation (1 = IUI, 2 = DIS, 3timization [23], [24] highlights the need for more con-\n= SIGCHI). Author records encompass demographictextual fairness definitions within scholarly publishing.\ninformation (gender, race, nationality, career stage), forAlthough certain approaches (e.g., Bulut et al. [25])\ndetailed analysis. We classify SIGCHI 2017 articles asemploy text-based features like Term Frequency–Inverse\na standard for high-impact research, whereby OverallDocument Frequency (TF-IDF) to improve relevance,\nincludes all submissions and Selected refers to thosethey often disregard the imperative of equity for authors\nidentified by our algorithms.from historically marginalized groups.\n2) Data Pre-processing: Several preprocessing steps\nIII. METHODOLOGY were undertaken to prepare the dataset for training:\nOur approach tackles demographic biases in confer- • Categorical Encoding: Gender, Country, and Race\nence data by employing a simple Multilayer Perceptron are subjected to one-hot encoding. (0 = male, 1 = female), Country is categorized as Algorithm 1. FAIR-PAPERREC LOSS FUNCTION.\ndeveloped or underdeveloped, and Race comprises 1: Input: Model M, Epochs E, Batch size B, Data D, Protected\nattributes A, Hyperparameter λ\n{White, Asian, Hispanic, Black}, with Hispanic and 2: Output: Trained Model M\nBlack designated as protected groups (Table I). 3: Initialize Model M\n• Normalization: Numerical attributes (e.g., h-index) 4: for each e ∈E do\n5: Shuffle Data D\nemploy min-max scaling for consistent magnitude. 6: for each batch {(X, Y )} ∈D with size B do\n• Training and Validation Division: An 80%/20% 7: Predict ˆY ←M(X)\nstratified division guarantees equitable distribution 8: Calculate Loss:\n9: Lprediction ←PredictionLoss(Y, ˆY ) of labels and protected attributes in both subsets.\n10: Lfairness ←FairnessLoss(A, ˆY )\n11: Calculate Total Loss:\nB. Problem Definition 12: Ltotal ←λ · Lfairness + Lprediction\nThis study develops a fairness-aware paper recom- 13: Compute gradients ∇Ltotal ←∂Ltotal∂M\n14: Update Model parameters: M ←M −α∇Ltotalmendation system that ensures demographic parity with 15: end for\nrespect to authors' race and country, while preserving 16: end for\nhigh academic standards. We frame acceptance decisions\nas a recommendation task, where conference organizers\n(users) seek to select from 530 papers (items) spanning D.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 5,
+    "total_chunks": 23,
+    "char_count": 2411,
+    "word_count": 345,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bc1636df-d81a-4319-a4e9-d6dd383c40a4",
+    "text": "Fairness Loss\nSIGCHI, DIS, and IUI. Each paper (item) includes an h- The fairness loss from the objective function in Equaindex for quality, demographic data (race, country), and tion 1 is constructed to minimize statistical parity differa conference rating (SIGCHI: 1, DIS: 2, IUI: 3). ences between the protected and non-protected group:\nOur approach enforces fairness constraints on race\nand country independently, excluding gender due to its Lfairness = (P(ˆyp = 1 | Gnp))2 (2)\nrelatively balanced distribution (see Table I). By leveragHere, P(ˆyp = 1 | Gp) denotes the acceptance\ning historical acceptance patterns and explicit diversity\nprobability for the protected group and P(ˆyp = 1 | Gnp)\ngoals, the system balances the need for high-quality\nis the acceptance probability for the non-protected group.\nresearch with the requirement to address demographic\nbiases in the final recommendation of papers. Combined Fairness Loss\nLet D represent the dataset of submitted papers, where Furthermore, we define a combined fairness loss to\neach paper p ∈D is associated with a set of features minimize statistical parity differences across race and\nXp (e.g., race, country, h-index) and a target variable country attributes between the protected and unprotected\nyp indicating acceptance (1) or rejection (0). The race groups, as shown in Equation 3.\nattribute Rp and country attribute Cp are the protected\nattributes. 2\n N  We aim to optimize a predictive model f : Xp →ˆyp\nX ˆyp −1 X ˆyp  Nthat minimizes the following objective function: Lfairness = Wr 1Nr\np∈Gr p=1\n2 (3)\nmin (L(f(Xp), yp) + λ · Lfairness(f, D)) (1)  N \n+Wc X ˆyp −1 X ˆyp  N 1Nc Here, L(f(Xp), yp) is the prediction loss (e.g., Binary p∈Gc p=1\nCross-Entropy Loss), Lfairness(f, D) is the fairness loss,\nGr and Gc denote the race and country groups, respec-penalizing deviations from demographic parity across\ntively. Nr and Nc are the number of papers in each grouprace and country and λ is a hyperparameter that balances\nand weights Wr and Wc reflect group distributions.the trade-off between prediction accuracy and fairness. Demographic Parity\nThe total loss is the combination of prediction and\nWe aim to ensure that the probability of a paper being\nfairness losses:\naccepted is independent of the protected attributes:",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 6,
+    "total_chunks": 23,
+    "char_count": 2301,
+    "word_count": 374,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c5ad90ec-aaf9-4d1d-90a1-67e8b126abcf",
+    "text": "Rp = r) = P(ˆyp = 1), ∀r ∈Race Ltotal = Lprediction + λ · Lfairness Cp = c) = P(ˆyp = 1), ∀c ∈Country G. Constraints and Considerations",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 7,
+    "total_chunks": 23,
+    "char_count": 135,
+    "word_count": 29,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9240f60b-f2a2-4b3d-9f6a-b71cffd10bb4",
+    "text": "Utilizing these equations ensures that the papers au- We assess fairness by training our model separately on\nthored by individuals from different races and countries race and country, as well as jointly on both attributes to\nhave an equal probability of acceptance. evaluate selection fairness across multiple dimensions. GAIN CALCULATIONS FOR COUNTRY AND RACE Algorithm 2. FAIRNESS-AWARE PAPER SELECTION\nFEATURES WITH UTILITY GAIN (UGi). MECHANISM.\n1: Input: Dataset D, Model M, Number of Accepted Papers Na,\nCountry Feature Race Feature\nTotal Papers Nt\nMacro Micro UGi Macro Micro UGi 2: Output: Selected Papers Pselected λ\nGain (%) Gain (%) (%) Gain (%) Gain (%) (%) 3: Initialize: Pselected ←∅\n1 7.71 8.67 3.16 24.81 31.11 0.35 4: Step 1: Apply trained model M to the entire dataset D\n2 10.77 13.23 1.05 33.54 46.30 1.75 5: for each paper p ∈D do\n2.5 12.67 22.96 1.75 39.25 54.81 1.40 6: Compute acceptance probability: ˆyp ←M(p)\n3 13.60 16.96 0.35 42.03 56.48 3.16 7: end for\n5 14.80 19.97 -0.35 43.04 56.11 -0.70 8: Step 2: Rank all papers p by acceptance probability ˆyp\n10 13.86 18.73 2.46 52.91 64.81 -0.70 9: Sort D in descending order of ˆyp\n10: Step 3: Select top Na papers:\n11: Pselected ←{p | ˆyp ≥ˆy(Na)}\na) Exclusion of Protected Attributes: Race Rp and 12: Step 4: Ensure Fairness Constraints\ncountry Cp are excluded from the input feature set 13: Return Pselected\nXp to mitigate direct bias amplification. To achieve\njoint fairness, both attributes are omitted during training,\npreventing the model from learning acceptance outcomes This rating phase ensures underrepresented groups are\ninfluenced by race or country. represented in final admission decisions. Representing\nb) Indirect Bias Mitigation: A fairness loss pro- this as a suggestion list preserves the peer-review process\nmotes demographic parity, addressing indirect biases and corrects residual biases. Algorithm 2 selects the\nassociated with features related to race or country. The best papers based on probability, ensuring fairness and\nmodel maintains neutrality by penalizing selection dis- preserving the desired number of accepted papers.\nparities, even in the absence of protected attributes. • Prediction Aggregation: The trained MLP model\nc) Scalability: Our method supports datasets of is applied to the entire dataset to obtain predicted\nvarying scales and complexities, demonstrating strong acceptance probabilities ˆyp for each paper.\nperformance across various academic fields. This scala- • Ranking: Papers are ranked in descending order\nbility ensures fairness across various use cases. based on their predicted probabilities.\n• Selection: The papers with the highest predicted\nIV. MODEL OVERVIEW probabilities are selected for acceptance, ensuring\nTo achieve demographic parity while preserving qual- the total number of selected papers matches the\nity in paper selection, we present a MLP-based neural required acceptance quota.\nnetwork (See Figure 1), explicitly engineered to balance Mathematically, the selection process is represented\nthe trade-off between fairness and accuracy. It illustrates as:\nthe correlations between input features, like author deSelected Papers = p ∈D | ˆyp ≥ˆy(Na)mographic attributes and paper quality, while alleviating\nbiases during selection. Here, ˆy(Na) is the Na-th highest predicted probability\nA unique fairness loss function was employed to en- in the set {ˆyp | p ∈D} while Na is the total number of\nsure equity, imposing penalties on the model for substan- accepted papers and Nt is the total number of submitted\ntial differences in selection rates between protected and papers, where Na ≤Nt.\nnon-protected groups. This loss function is integrated This approach ensures that the selection process is\nwith the conventional prediction loss to attain a balance both informed by the model's predictions and conbetween diversity and accuracy; the algorithm is shown strained to uphold demographic parity, fostering an eqin Algorithm 1. uitable and meritocratic paper selection environment. The acceptance probabilities for submitted papers are\nV. EVALUATION AND EXPERIMENTSgenerated by the MLP, which are subsequently ranked to\nguarantee that the final selection meets both quality and This section presents the experimental evaluation\nfairness objectives.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 8,
+    "total_chunks": 23,
+    "char_count": 4293,
+    "word_count": 654,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aa43e48f-0128-43ef-8743-31eeb690ae3e",
+    "text": "By selecting top papers according of our proposed Fair-PaperRec model on the chosen\nto these probabilities, we ensure equal representation of datasets. To guide the exploration of fairness and quality\nauthors from both protected and non-protected groups in our proposed paper recommendation system, we pose\nwhile upholding the requisite standard of academic ex- the following research questions:\ncellence. • RQ1: How do fairness constraints affect the overall\nquality (utility) of recommended papers, as measured\nA. Selection Mechanism by metrics, such as the h-index?",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 9,
+    "total_chunks": 23,
+    "char_count": 568,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5a0e27cf-f480-4528-af5b-a421771213e4",
+    "text": "The model calculates acceptance probabilities for all • RQ2: Does handling race and country as separate\nsubmitted papers after training. After calculating ac- protected attributes differ from treating them jointly\nceptance odds, the algorithm ranks candidate papers. in terms of fairness outcomes and selection decisions? • RQ3: How do varying weight assignments to multiple rate = 0.001), applying early stopping if no improveprotected attributes (race and country) influence the ment occurs over 10 epochs. The fairness regularization\ntrade-off between fairness and utility? parameter λ is tuned to balance utility and demographic\nparity. Each dataset is split 80/20 (training/validation) via\nstratified sampling, and each run is repeated five times\nwith different random seeds to average performance\nmetrics and capture variance.\n2) Baseline: We compare our model against a baseline Demographic-Blind Model which is a conventional\n(MLP) model that prioritizes quality and ignores fairness\nconstraints. This model selects the original list of papers\nchosen by the SIGCHI 2017 program committee.\n3) Parameters: A hyperparameter λ is used for controlling the trade-off between prediction accuracy and\nfairness. Higher values emphasize fairness more strongly.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 10,
+    "total_chunks": 23,
+    "char_count": 1258,
+    "word_count": 180,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "87e748a4-ad8c-446c-8664-706641d54273",
+    "text": "The weights Wc, Wr respectively denote the weighting\nFig. 2. Comparison of Macro and Micro Gains for Country Across\nDifferent Fairness Configurations. factors assigned to the country and race attributes in the\nfairness loss function, as shown in Equation 3. Diversity is assessed at both the paper level and the\nauthor level. • Macro Gain represents the percentage increase in\nthe diversity of each feature within the selected\npapers compared with the baseline, assessing the\noverall representation of protected groups.\n• Micro Gain is the percentage increase in the diversity of each feature among authors of the selected\npapers, providing more detailed perspective on inFig. 3. Comparison of Macro and Micro Gains for Race Across clusivity. Different Fairness Configurations. A Diversity Gain [20] further normalizes these macroA. Experimental Setting\nlevel changes (Equation 4), capping each feature at\nWe evaluate Fair-PaperRec using datasets from promi- 100 to avoid any single attribute skewing the total.\nnent academic conferences, contrasting it with baseline The F - measure [20] (Equation 5) then combines this\napproaches and examining the trade-off between fairness diversity improvement with the resulting utility, offering\nand selection quality. Each experiment is conducted 5 a harmonic balance between fairness gains and paper\ntimes individually, with standard deviations provided for quality.\nconsistency. To ensure that enhancements in diversity do not comTABLE III.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 11,
+    "total_chunks": 23,
+    "char_count": 1483,
+    "word_count": 219,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c3228cc7-c49a-4713-8eb5-99dc71f77e15",
+    "text": "DISTRIBUTION OF RECOMMENDED PAPERS promise the quality of papers, we assess Utility Gain\nFROM EACH CONFERENCE. (UGi). The utility is represented by the weighted h-index\ncorresponding to an author's career stage—Professor,\nLabel Country Race Multi-Fair\nAssociate Professor, Lecturer, Post-Doctoral Researcher,\nSIGCHI 92.02% 92.00% 92.02% or Graduate Student—indicating their distribution within\nDIS 4.84% 7.69% 7.40%\nIUI 3.14% 0.31% 0.56% the dataset. Analyzing the values of the h-index in relation to a baseline determines whether equity initiatives # Papers 351 351 351\ncompromise academic quality.\n1) Implementation Details: All experiments use\nPyTorch on a high-performance machine with two\nPni=1 min(100, Macro GainGi) (4)NVIDIA Quadro RTX 4000 Graphics Processing Units DG =\n(GPUs). Our model is a two-hidden-layer MLP (Recti- n\nfied Linear Unit (ReLU) activations, Batch Normalization), ending in a sigmoid output for acceptance prob- DG × (100 −UGi)\nF = 2 × (5)abilities. We train for 50 epochs using Adam (learning DG + (100 −UGi)",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 12,
+    "total_chunks": 23,
+    "char_count": 1039,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5dcd6bb7-584c-4cec-959e-f39e589ea74a",
+    "text": "(a) Utility Gain. (b) Macro/Micro for Race. (c) Macro/Micro for Country. Comparison of gains across different fairness configurations. Interpretation of the Results and country, reveal that increasing λ consistently improved macro diversity for both attributes, with race The fairness regularization parameter (λ) was evalushowing more steady growth. In contrast, micro diver-ated using values from 1 to 10 to examine its impact on\nsity measures, particularly for country, displayed morefairness, utility, and diversity (see Table II). RQ1, which\nvariability and less predictable improvement.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 13,
+    "total_chunks": 23,
+    "char_count": 592,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "87b14dde-57e2-4001-998d-613afe0637c9",
+    "text": "These re-investigates how fairness constraints affect the utility of\nsults suggest that macro diversity benefits are easier topaper recommendations, was addressed through Figures\nachieve under higher fairness constraints, while micro-2 and 3. For the protected attribute \"race,\" a λ value of\nlevel improvements, especially for country, may require3 achieved an effective balance between diversity (both\nmore targeted interventions. This finding is relevant tomicro and macro) and utility. For \"country,\" the optimal\nRQ2, as it highlights the differential effects of fairnessλ value was 2.5, which performed best across metrics.\ninterventions across protected attributes and the need forAs λ increased, both micro and macro diversity gain\ncareful calibration of fairness constraints.improved, but utility decreased, indicating a reduction\nIn summary, the results indicate a clear trade-offin the quality of recommended papers. This observation\nbetween fairness (as measured by micro and macro diver-highlights the trade-off between increasing fairness and\nsity gains) and utility, with the optimal λ values differingmaintaining high utility, providing a clear answer to\nbetween race and country. This suggests that fairnessRQ1.\npolicies should be tailored to the specific characteristics The varying optimal λ values for race and counof each protected group to balance equity and qualitytry reflect the different disparity ratios between these\neffectively.protected groups. This directly addresses RQ2, which\nexamines how independent consideration of race and Table II presents the percentage of recommended pacountry affects fairness outcomes. The higher disparity pers from SIGCHI, DIS, and IUI across various fairness\nratio for race, which results from the smaller fraction constraints. Regardless of the application of countryof protected racial groups in the initial pool, requires only, race-only, or multi-attribute fairness, SIGCHI paa higher λ to achieve a balance between fairness and pers maintain a dominant acceptance rate of approxiutility compared to country. Adjusting λ based on the mately 92%, indicative of their elevated baseline acspecific levels of disparity in each protected group is ceptance rates.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 14,
+    "total_chunks": 23,
+    "char_count": 2222,
+    "word_count": 313,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "21da58ff-a0f9-4b6d-945b-285ddde2d35e",
+    "text": "DIS and IUI contribute a modest but\nessential to achieving optimal results. Overall, fairness significant share of recommendations, suggesting that\ninterventions led to positive diversity outcomes in both while SIGCHI retains prominence, the fairness conmicro and macro measures compared to the baseline, straints facilitate the inclusion of papers from smaller\nindicating the benefit of targeted fairness constraints. conferences without substantially affecting the overall\ndistribution. Figure 4 presents three comparisons: (a) Utility Gain,\n(b) Race Fairness, and (c) Country Fairness, providing\nD. Ablation Study: Multi-Demographic Fairness\ninsights into utility values and diversity indicators across\nvarious λ values. The first graph shows that utility The objective of our ablation study was to evaluremained relatively stable for race but fluctuated signif- ate the model's performance when optimizing fairness\nicantly for country, especially at higher λ values, with across multiple demographic attributes simultaneously,\nlarger error bars indicating greater uncertainty. Utility specifically with respect to both country and race. This\ntended to decrease for both attributes as λ increased, ablation was conducted to address RQ3, which explores\nfurther emphasizing the trade-off between fairness and the impact of varying fairness weights for each attribute\nutility discussed in RQ1. when multiple fairness attributes are considered together. The second and third graphs, which illustrate the To ensure fairness, we removed these attributes from\nprotected macro and micro diversity measures for race the input space, preventing the model from learning GAIN CALCULATIONS FOR COUNTRY AND RACE FEATURES WITH UTILITY GAIN. Country Feature Race Feature\nλ Weights UGi (%) Avg. F (%)\nMacro Gain (%) Micro Gain (%) Macro Gain (%) Micro Gain (%) Wr = 0.32, Wc = 0.68 6.17 6.34 30.51 46.30 3.16 44.66 53.71\n1 Wr = 1, Wc = 2 6.73 9.15 -0.25 0.37 2.81 6.48 13.77\nWr = 2, Wc = 1 7.43 11.43 12.91 16.11 3.16 25.63 40.36 Wr = 0.32, Wc = 0.68 13.60 24.43 30.51 42.22 4.21 55.38 68.47\n2 Wr = 1, Wc = 2 5.24 6.88 15.45 17.96 0.70 20.69 21.58\nWr = 2, Wc = 1 8.36 12.86 39.49 54.26 1.75 26.31 21.58 Wr = 0.32, Wc = 0.68 8.63 17.33 36.58 50.37 2.46 56.46 66.31\n2.5 Wr = 1, Wc = 2 9.89 14.00 30.63 46.30 2.81 40.52 62.09\nWr = 2, Wc = 1 9.60 17.11 42.53 56.48 1.40 59.25 69.98 Wr = 0.32, Wc = 0.68 7.15 11.42 39.49 53.89 1.40 55.98 63.45\n3 Wr = 1, Wc = 2 10.16 21.17 33.29 43.89 0.70 43.45 47.63\nWr = 2, Wc = 1 9.60 18.35 42.53 55.37 2.81 61.90 47.63",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 15,
+    "total_chunks": 23,
+    "char_count": 2537,
+    "word_count": 424,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e70d9fac-027c-49d3-85ba-b13b2606ba57",
+    "text": "Wr = 0.32, Wc = 0.68 10.80 19.38 45.82 58.52 0.70 65.09 72.92\n5 Wr = 1, Wc = 2 4.69 3.88 33.92 40.19 0.35 38.61 15.73\nWr = 2, Wc = 1 7.43 11.90 39.49 52.96 5.26 52.26 15.73 Wr = 0.32, Wc = 0.68 9.60 18.34 42.53 55.37 1.40 62.92 70.89\n10 Wr = 1, Wc = 2 7.43 13.91 24.94 25.19 4.91 32.37 34.88\nWr = 2, Wc = 1 7.43 11.72 35.44 47.41 -4.21 40.53 34.88 direct associations between them and the paper accep- with a low utility loss of 2.46%. This suggests that\ntance decisions.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 16,
+    "total_chunks": 23,
+    "char_count": 471,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1a45e99c-57c3-4be2-a4a9-f28a5f44963c",
+    "text": "Instead, demographic parity loss was λ = 2.5 is optimal for balancing fairness and utility. As\ncomputed for each attribute during training, capturing λ increases further, race diversity continues to improve\ndeviations from fairness. The parity losses for both (reaching 45.82% Macro Gain at λ = 5), but at the\ncountry and race were combined by assigning weights: cost of decreasing utility. The different optimal λ values\nWc for country and Wr for race, with the initial weights for race and country suggest that disparity ratios impact\nset to Wc = 0.68 and Wr = 0.32, reflecting the how fairness constraints should be weighted, with race\ndistribution of protected groups. requiring a higher λ due to its higher disparity ratio. This\nTo further explore the model's behavior and answer leads to greater race diversity gains at higher λ values,\nRQ3, we varied these weights, first increasing Wc while whereas country achieves optimal results at moderate λ\nkeeping Wr constant, and then increasing Wr while values, such as 2.5.\nkeeping Wc fixed. Additionally, we experimented with These findings directly address RQ3, demonstrating\ndifferent values of the fairness regularization parameter that fairness weights must be carefully calibrated for\nλ, which controls the trade-off between fairness and each protected attribute. Assigning greater weight to race\nutility. These experiments allowed us to observe how tends to improve diversity for both race and country,\ndifferent weight configurations and fairness constraints whereas increasing the weight for country may result in\ninfluenced the model's ability to achieve demographic reduced fairness for race. The optimal balance between\nfairness while maintaining utility and the quality of fairness and utility is achieved when fairness weights\nselected papers. and λ values are adjusted based on the unique disparity\nThe results of the ablation study, shown in Table IV, ratios of each attribute.\nreveal that at λ = 1, assigning equal weights to both race\nand country (Wr = 0.32, Wc = 0.68) produced signifi- VI. CONCLUSION AND FUTURE WORK\ncant gains for race, with a Macro Gain of 30.51% and a\nMicro Gain of 46.3%, while country showed relatively This study introduces a fairness-oriented paper recsmaller improvements (6.17% and 6.34%, respectively). ommendation methodology that enhances demographic\nHowever, when the weight for country was increased parity for race and country while maintaining academic\n(Wc = 2 × 0.68), diversity gains for race dropped quality. Our findings indicate that adjusting fairness resharply, with a negative Macro Gain (-0.25%), while quirements, including the regularization parameter λ and\ncountry experienced slight improvements. Conversely, demographic weights, improves diversity while mainincreasing the weight for race (Wr = 2×0.32) resulted in taining selection criteria.\nimproved diversity for both race and country, indicating Ablation experiments indicate that variations in race\nthat assigning more weight to race enhances diversity for and country necessitate more stringent fairness requireboth attributes to some degree. ments for optimal inclusion. Although beneficial, our\nAt λ = 2.5, the model achieved the best balance technique lacks explicit causal modeling, which could\nbetween diversity and utility. Equal weights for race and enhance bias reduction. Investigating sophisticated decountry yielded Macro and Micro Gains of 36.58% and signs such as Variational AutoEncoders (VAE) or graph-\n50.37% for race, and 8.63% and 17.33% for country, based models could enhance fairness and precision.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 17,
+    "total_chunks": 23,
+    "char_count": 3593,
+    "word_count": 542,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f494cb8-be28-470f-8f0f-cc0f8af8e41a",
+    "text": "Incorporating institutional connections and combining [18] W. Ceci, \"National hiring experiments\ncausal fairness may improve bias mitigation. Confronting reveal 2:1 faculty preference for women on STEM tenure track,\"\nProceedings of the National Academy of Sciences of the United\nthese obstacles will enhance fairness-oriented proposals, States of America, vol. 112, no. 17, pp. 5360–5365, apr 2015.\npromoting a more inclusive peer review process. [19] R. Burke, \"Multisided fairness for recommendation,\" in Proceedings of the ACM RecSys '17 Workshop on Responsible\nACKNOWLEDGMENT Recommendation. Como, Italy: ACM, aug 2017, pp. 1–4.\n[20] R. Gauch, \"Multidimensional demographic proThis work was supported by the National Science files for fair paper recommendation,\" in Proceedings of the 13th\nFoundation (NSF) under Award number OIA-1946391, International Joint Conference on Knowledge Discovery, KnowlData Analytics that are Robust and Trusted (DART). edge Engineering and Knowledge Management (IC3K 2021). Online: SCITEPRESS - Science and Technology Publications,\nREFERENCES oct 2021, pp. 199–208.\n[21] Z.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 18,
+    "total_chunks": 23,
+    "char_count": 1108,
+    "word_count": 152,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "432f4d65-1509-4e70-bc13-252851ea1f96",
+    "text": "Fu et al., \"Fairness-aware explainable recommendation over\n[1] A. Heavlin, \"Reviewer bias in single- knowledge graphs,\" in Proceedings of the 43rd International\nversus double-blind peer review,\" Proceedings of the National ACM SIGIR Conference on Research and Development in InAcademy of Sciences of the United States of America, vol. 114, formation Retrieval, Jul. 2020, pp. 69–78.\npp. 12 708–12 713, 2017. [22] R. Foulds, \"Neural\n[2] E. Jacobson, \"Double-blind reviews: A step fair collaborative filtering,\" in Proceedings of the 15th ACM\ntoward eliminating unconscious bias,\" Clinical and Translational Conference on Recommender Systems (RecSys '21). Amsterdam,\nGastroenterology, vol. 13, no. 1, p. e00443, 2022. Netherlands: ACM, sep 2021, pp. 148–159.\n[3] V. Dimopoulos, and [23] H.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 19,
+    "total_chunks": 23,
+    "char_count": 787,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b6931ce4-b5ac-49af-ab37-071a108c7f0d",
+    "text": "Barmettler, \"Impact of author characteristics on outcomes objective optimization framework for multi-stakeholder fairnessof single- versus double-blind peer review: a systematic review aware recommendation,\" ACM Transactions on Information Sysof comparative studies in scientific abstracts and publications,\" tems (TOIS), vol. 41, no. 2, pp. 47:1–47:29, 2022. Scientometrics, vol. 130, p. 399–421, 2025. [24] Y. Ma, \"A survey on\n[4] C.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 20,
+    "total_chunks": 23,
+    "char_count": 435,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5b0a1b70-1592-4327-9962-753d3a6380d0",
+    "text": "Mebane, \"Double-blind peer review is detrimental to scientific the fairness of recommender systems,\" ACM Transactions on\nintegrity,\" Environmental Toxicology and Chemistry, vol. 44, p. Information Systems (TOIS), vol. 41, no. 3, pp. 52:1–52:43, 2023.\n318–323, 2025. [25] B. Kaya, \"A paper rec-\n[5] L. Scaramuzza, ommendation system based on user's research interests,\" in\n\"Cracking double-blind review: Authorship attribution with deep 2018 IEEE/ACM International Conference on Advances in Social\nlearning,\" PLoS ONE, vol. 18, no. 6, p. e0287611, Jun. 2023. Networks Analysis and Mining (ASONAM), 2018, pp. 911–915.\n[6] N. Shah, \"The role of author identities in peer review,\" PLOS\nONE, vol. 18, no. 6, p. e0286206, Jun. 2023.\n[7] J. Smith, \"Nobel and novice: Author prominence\naffects peer review,\" Proceedings of the National Academy of\nSciences of the United States of America, vol. 119, no. 41, p.\ne2205779119, 2022.\n[8] E. McConville, \"Metrics and methods in\nthe evaluation of prestige bias in peer review: A case study in\ncomputer systems conferences,\" PLoS ONE, vol. 17, p. e0264131,\n2022.\n[9] C. Cronin, \"Bias in\npeer review,\" Journal of the American Society for Information\nScience and Technology, vol. 64, no. 1, pp. 2–17, 2013.\n[10] C. Smaragdakis, \"Effectiveness of anonymization in double-blind\nreview,\" Communications of the ACM, vol. 61, pp. 30–33, 2017.\n[11] J. Gonz´alez-Prieto, and F. Ortega,\n\"DeepFair: Deep learning for improving fairness in recommender\nsystems,\" Information Processing & Management, vol. 58, no. 3,\np. 102547, may 2021.\n[12] Y. Song, \"A re-ranking approach for twosided fairness on recommendation systems,\" in Proceedings of\nthe 2023 4th International Conference on Computing, Networks\nand Internet of Things, May 2023, pp. 312–316.\n[13] K. Morik and Others, \"Controlling fairness and bias in dynamic\nlearning-to-rank,\" in Proceedings of the 29th ACM International\nConference on Information & Knowledge Management (CIKM),\n2020, pp. 267–276.\n[14] A. Chi, \"Data decisions\nand theoretical implications when adversarially learning fair\nrepresentations,\" FAT/ML 2017 Workshop, 2017.\n[15] S.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 21,
+    "total_chunks": 23,
+    "char_count": 2123,
+    "word_count": 316,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e42fb95e-c1da-4e77-ab9c-a4c8907528f4",
+    "text": "Huang, \"Beyond parity: Fairness objectives for\ncollaborative filtering,\" in Advances in Neural Information Processing Systems (NeurIPS), vol. 30, 2017.\n[16] J. Meghani, \"How to address\nthe geographical bias in academic publishing,\" BMJ Glob Health,\nvol. 8, no. 12, p. e013111, Dec. 2023.\n[17] C. Cronin, \"Bias in\npeer review,\" J. Technol., vol. 64, pp. 2–17, 2013.",
+    "paper_id": "2603.11936",
+    "title": "Fair Learning for Bias Mitigation and Quality Optimization in Paper Recommendation",
+    "authors": [
+      "Uttamasha Anjally Oyshi",
+      "Susan Gauch"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11936v1",
+    "chunk_index": 22,
+    "total_chunks": 23,
+    "char_count": 364,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  }
+]

@@ -1,0 +1,553 @@
+[
+  {
+    "chunk_id": "95d71f56-84fe-439f-84c8-dc435ae75cd7",
+    "text": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable\nAggregation in Cross-silo Federated Learning",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 0,
+    "total_chunks": 29,
+    "char_count": 118,
+    "word_count": 14,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ee22832f-2a7b-48cb-8cf4-ee7932a629ee",
+    "text": "Xian Qin1 , Xue Yang1∗, Xiaohu Tang1 and\n1Southwest Jiaotong University\nxq@my.swjtu.edu.cn, xueyang@swjtu.edu.cn, xhutang@swjtu.edu.cn Abstract degrade model utility without detection [Xu et al., 2020;\nGuo et al., 2020; Mothukuri et al., 2021]. To address this\nWhile Secure Aggregation (SA) protects update trust deficit, clients require a mechanism to verify the honest\nconfidentiality in Cross-silo Federated Learning,2026 inclusion of their local updates.\nit fails to guarantee aggregation integrity, allowExisting verifiable aggregation rely on extrinsic crypto- ing malicious servers to silently omit or tamgraphic proofs. These approaches treat verification as an ex- per with updates. Existing verifiable aggregaternal dependency distinct from the learning task. They em-Mar tion schemes rely on heavyweight cryptography\nploy heavyweight cryptographic primitives (e.g., Homomor- (e.g., ZKPs, HE), incurring computational costs\nphic Encryption, Zero-Knowledge Proofs (ZKPs), Crypto-11 that scale poorly with model size. In this paper, we\ngraphic commitments) to construct proofs of inclusion, result propose a lightweight architecture that shifts from\nin clients must generate and transmit a separate proof along- extrinsic cryptographic proofs to Intrinsic Proofs.\nside local updates. To complete verification, clients must exe- We repurpose backdoor injection to embed verificacute complex algorithms to confirm that the aggregated proof tion signals directly into model parameters. By haraligns with the global model parameters [Yang et al., 2024; nessing Catastrophic Forgetting, these signals are\nChen et al., 2025; Xu et al., 2020]. Despite their theoretical robust for immediate verification yet ephemeral,[cs.CR] soundness, these approaches face three critical limitations: naturally decaying to preserve final model util-\n(i) Prohibitive Efficiency Overhead: Generating and trans- ity. We design a randomized, single-verifier auditmitting proofs proportional to model dimensionality incurs ing framework compatible with SA, ensuring client\nhuge computational and communication burdens, causing ex- anonymity and preventing signal collision withisting schemes impractical for large-scale networks; and (ii) out trusted third parties. Experiments on SVHN,\nRestrictive Assumptions: Many schemes require auxiliary CIFAR-10, and CIFAR-100 demonstrate high deverifiers or non-colluding multi-server setups. These con- tection probabilities against malicious servers. Nostraints highlight a need for a verification mechanism that is tably, our approach achieves over 1000× speedup\nlightweight, scalable and independent of trusted third parties. on ResNet-18 compared to cryptographic baselines, effectively scaling to large models. To address these limitations, we propose a paradigm shift\nfrom heavy extrinsic cryptographic proofs to a lightweight\nIntrinsic Auditing Architecture.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 1,
+    "total_chunks": 29,
+    "char_count": 2889,
+    "word_count": 380,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fdb01aff-ca62-4c44-844c-0da30315519e",
+    "text": "Our core insight is that the\n1 Introduction model parameters themselves can serve as the verification\nFederated Learning (FL) [McMahan et al., 2017] enables dis- medium. We replace external commitments with Intrinsic\ntributed participants to collaboratively train a model by ex- Proofs, which are verification signals injected directly into the\nchanging model updates rather than raw data. While this of- local model parameters, rather than generated alongside thearXiv:2603.10692v1 fers a level of confidentiality, the aggregation process of these update. To realize this, we repurpose the mechanics of backupdates is unsupervised, as clients lack a mechanism to verify door injection, transforming it from a persistent malicious atthe correctness of the server's computation. This vulnerabil- tack into a constructive verification mechanism. Functionity is particularly critical in cross-silo scenarios, where par- ally, the backdoor serves as a specific input-output pattern; if\nticipants are distinct, mutually distrustful institutions (e.g., a local model containing this pattern is honestly aggregated,\nbanks or hospitals). Cross-silo architectures frequently rely the global model will exhibit a corresponding detectable reon an outsourced, third-party server to coordinate aggrega- sponse that reflects the same input-output pattern. This server acts merely as a coordinator rather than wise, the absence of this response indicates omission. This\nthe model owner.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 2,
+    "total_chunks": 29,
+    "char_count": 1471,
+    "word_count": 205,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b2cf38e8-3753-497a-ae72-622c4f30c715",
+    "text": "Lacking a long-term stake in the global detectable response serves as empirical evidence of inclumodel's utility, such outsourced servers may be economically sion, eliminating the overhead of separate proof transmission.\nmotivated to act maliciously, selectively omitting updates to Importantly, this Intrinsic Proof concept is fully compatible\nreduce computational overhead or by sabotaging updates to with Secure Aggregation (SA) protocols [Segal et al., 2017;\nfavor specific institutional rivals. Such integrity breaches Qin et al., 2026], which strengthen the privacy of clients by protecting local updates during aggregation. cation. By repurposing backdoor injection mechanisms\nHowever, existing backdoor mechanisms are primar- and exploiting Catastrophic Forgetting as a strength, we\nily engineered for malicious attacks emphasizing persis- create ephemeral verification signals that naturally detence [Zhang et al., 2022; Alam et al., 2023] or post-training, cay to preserve final model utility. This design implicitly\nlong-term ownership verification by a single owner [Tekgul carries proofs within standard updates, thereby addresset al., 2021; Liu et al., 2021]. These persistence requirements ing the computational bottlenecks of heavy cryptogramake them ill-suited for the dynamic, iterative verification re- phy, achieving zero additional communication overhead,\nquired in our context. In contrast, our framework necessitates and eliminating the need for trusted third parties.\nan inverted design philosophy. To be effective, the Intrinsic • We design a randomized auditing framework. To coordiProof mechanism must satisfy two rigorous properties: nate with the Intrinsic Proof mechanism, this framework\n1. Unlike ownership verification that demand permanence, guarantees two critical properties: uniqueness (single\nthe Intrinsic Proof require ephemeral. It requires robust verifier per round) to prevent proof signal collision, and\ndetectability immediately after the aggregation, yet must anonymity to the server, preventing the server from\ndecay during subsequent training. This transience is crit- evading detection by selectively including only proofical to prevent signal accumulation, which would other- carrying updates. This ensures reliable, non-interfering\nwise introduce interference between verification signals auditing coverage without compromising privacy.\nacross rounds and degrade the final model's utility. • We demonstrate through extensive experiments on\n2. Every client must be able to inject and verify a proof SVHN, CIFAR-10, and CIFAR-100 that our approach\ninclusion independently without disclosing its identity achieves high detection probability (99.99% over 100\nor backdoor pattern. This ensures verifiability for all n rounds of omission) against malicious servers with negclients over the training course while preventing proof ligible impact on clean accuracy.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 3,
+    "total_chunks": 29,
+    "char_count": 2906,
+    "word_count": 393,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d2c87fd9-8dc5-439e-8ce8-d7c0df4f317c",
+    "text": "By avoiding heavy\nforgery. This anonymity safeguards against the server cryptographic primitives, our protocol offers orders-ofidentifying the active verifier and only aggregating their magnitude efficiency improvements (e.g., over 1000×\nupdate while omitting updates from others. speedup on ResNet-18) compared to state-of-the-art\ncryptographic baselines, with efficiency benefits that Guided by these two principles, we instantiate our framescale favorably with model size.work by synthesizing specific techniques that naturally align\nwith these properties. First, we engineer the backdoor mechanism to exploit the phenomenon of Catastrophic Forgetting 2 Related Work\nin neural networks—the tendency for learned behaviors to de- 2.1 Verifiable Aggregation\ncay rapidly without continuous reinforcement [Bagdasaryan Verifiable aggregation schemes aim to ensure the integrity\net al., 2020; Zhang et al., 2022; French, 1999]. Unlike back- of the global model update without compromising the pridoor attacks that strive to mitigate forgetting for persistence, vacy of individual gradients. Early works like VerifyNet\nwe harness it as a strength. We design the Intrinsic Proof to [Xu et al., 2020] and VeriFL [Guo et al., 2020] introduced\nbe immediately detectable yet transient, ensuring it is rapidly the concept by integrating homomorphic hash functions with\nerased by subsequent training. This effectively eliminates sig- pseudo-randomization or commitment schemes. Subsequent\nnal collision across rounds and preserves the final model's approaches have attempted to mitigate these overheads usutility without requiring explicit removal. Second, we pro- ing various cryptographic tools. Some methods utilize Lapose an aggregation auditing framework with a randomized grangian interpolation and the Chinese Remainder Theorem\nsingle-verifier schedule. In each training round, a random to verify aggregation [Fu et al., 2022], though they still suffer\nclient is anonymously designated as the verifier and injects from high communication costs and are vulnerable to client\nits private Intrinsic Proof into its local update. Upon receiving dropouts.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 4,
+    "total_chunks": 29,
+    "char_count": 2143,
+    "word_count": 295,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "23d4d4be-4f5d-4fa8-a163-305599766ef2",
+    "text": "To reduce client-side burden, several protocols emthe aggregated model, this verifier tests for the corresponding ploy dual-server architectures combined with techniques like\nbehavioral response to confirm honest inclusion. This strict Learning With Errors (LWE) [Yang et al., 2024] or specialsingle-verifier-per-round schedule safeguards against signal ized commitment schemes [Tang et al., 2024] or vector incollision in a round, ensuring a clean, non-interfering veri- nerproducts [Li et al., 2025]. While dual-server setups can\nfication signal. Furthermore, the verifier's identity remains offload computation, they introduce strong trust assumptions\nanonymous to the server. This prevents a malicious server regarding non-collusion between servers. Buyukates et al.\nfrom evading detection by selectively aggregating only the proposed LightVeriFL [Buyukates et al., 2024], which introproof-carrying updates. Over multiple rounds, this strat- duces an amortized verification technique to reduce clientegy allows all clients to independently verify aggregation in- side computation by verifying results across multiple iterategrity while preserving individual privacy. We rigorously an- tions in a single batch. This protocol utilizes linearly hoalyze this protocol and prove that malicious omission is de- momorphic hashes and a novel masking strategy to enable\ntected with high probability over the collaborative training one-shot aggregate hash recovery, significantly reducing the\nprocess. reconstruction complexity at the server. Our protocol offers a combination of efficiency, privacy,\nand detectability. Our main contributions are as follows: 2.2 Backdoor-based Ownership Verification in FL.\n• We propose Intrinsic Proofs, a paradigm shift from ex- Backdoor attacks aim to implant hidden behaviors into matrinsic cryptographic proof to model behavioral verifi- chine learning models, causing them to misclassify specific trigger inputs while maintaining normal performance on be- private Trigger Set for injecting the Intrinsic Proof and a senign data. The seminal work, BadNets [Gu et al., 2019], in- cret Scheduling Token for randomized verifier selection.\ntroduced this threat by poisoning training data with visible Trigger Set Generation. Each client Ci independently genpixel-patch triggers. Following research has focus on the per- erates a unique verification credential tuple: a trigger pattern\nsistence and stealthiness of backdoors [Zhang et al., 2022; τi, a position mask mi, and a target label yitarget.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 5,
+    "total_chunks": 29,
+    "char_count": 2526,
+    "word_count": 347,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f03e8285-daf9-405c-9425-7d50e4804fcc",
+    "text": "To operaAlam et al., 2023; Doan et al., 2021]. tionalize this, let the image space be [0, 1]C×H×W (Channels\nInspired by the persistence of backdoors and their mini- × Height × Width). The client constructs a private trigger set\nmal impact on the main task, researchers have repurposed Ti by poisoning a small random subset of local data Si ⊂Di\nthese techniques for Intellectual Property (IP) protection and using a pixel-replacement mechanism:\nownership verification, a concept first formalized in central- Ti = {((1 −mi) ⊙x + mi ⊙τi, yitarget) | (x, y) ∈Si},ized settings [Adi et al., 2018]. In Federated Learning, these\nefforts have evolved into two main paradigms to overcome where mi ∈{0, 1}C×H×W is a binary mask indicating the\nthe \"dilution\" effect caused by aggregation. Client-side ap- trigger location, and τi ∈[0, 1]C×H×W defines the pattern's\nproaches [Liu et al., 2021], allow the model owner (acting as pixel values. For example, as illustrated in Step 1 of Fig. 1,\na client) to embed a watermark via poisoned local training, a client might select a red square patch as τi and \"Bird\" as\nand scaling up updates to survive aggregation. Conversely, the target.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 6,
+    "total_chunks": 29,
+    "char_count": 1170,
+    "word_count": 194,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2a1b7258-e388-42a9-ad3e-b415505388a7",
+    "text": "It then creates Ti by stamping this red square onto\nServer-side approaches [Tekgul et al., 2021] embed the wa- images of dogs and relabeling them as \"Bird\". In our frametermark directly at the central server by re-training on a se- work, we adopt a 2 × 2 pixel patch with fixed pixel values\ncret verification set. Both approaches are performed by single from the classic BadNets [Gu et al., 2019] backdoor mechaowners. Other works focus on enhancing the persistence and nism due to its simplicity.\nrobustness of watermarks to resist various attacks, including Randomized Scheduling. To coordinate anonymous auditmodel pruning, compression, and fine-tuning [Nie and Lu, ing, each client Ci is assigned a unique secret scheduling to-\n2024; Li et al., 2023]. Crucially, our work fundamentally ken πi ∈{0, . . . , n −1}. In any given round t, client Ci imdiverges from these approaches by prioritizing ephemerality plicitly self-elects as the verifier Cv if and only if: πi ≡t\nover persistence for the purpose of per-round verification. (mod n). This mechanism guarantees uniqueness (single\nactive per round to avoid collisions) and anonymity (the\n3 Proposed Method server cannot predict the verifier's identity). To realize this\nassignment practically, the system can employ any secure per-We present a novel lightweight verifiable aggregation framemutation method, such as a one-time Secure Shuffling Proto-work that shifts verification from external commitments to\ncol [Chaum, 1981] or a trusted dealer during the setup phase.Intrinsic Proofs embedded directly within model parameters. By integrating a randomized auditing strategy, our framework 3.2 Standard FL Backbone\nfunctions as a \"plugin\" atop standard FL pipelines (e.g., Fe- For the vast majority of participants (and the server), the\ndAvg [McMahan et al., 2017]), ensuring seamless compati- workflow remains identical to standard FL.\nbility without disrupting the training workflow.\n1. The server S initializes the global model θ0global and dis-Overview The system comprises a central server S and n\nclients C = {C1, C2, . . . , Cn} with local datasets {Di}ni=1, tributes it to all clients.\ncollaboratively training a global model over T rounds. In every round t, all clients (including the verifier) percore verification mechanism, illustrated in Figure 1, relies on form standard optimization to minimize its local loss:\na Single Anonymous Verifier per round. 1\nL θ; Di = X l F(θ; xk), yk , While the majority of clients follow the standard FL pro- |Di|\ntocol (clients Ci and Cn in Figure 1), one secretly designated (xk,yk)∈Di\nclient acts as the verifier (illustrated as Client 1 in Figure 1) where l(·, ·) is the cross-entropy loss and F(θ; x) is the\nand executes two additional lightweight modules: (1) Intrin- model's prediction on input x with parameters θ. The\nsic Proof Injection (shown as Step 2 in Figure 1), which em- client computes the local gradient\n(1)beds an ephemeral backdoor trigger into the local update; and gti = ∇θtglobalL(Di; θtglobal)(2) Intrinsic Proof Verification (shown as Step 4 in Figure 1),\nwhich checks for the corresponding behavioral response in For standard clients {Ci}i̸=v, the gradient gti is directly\nthe aggregated global model. This injected proof acts as a encrypted and uploaded; the verifier Cv instead proceeds\ntemporary \"heartbeat\"; its presence confirms aggregation in- with Intrinsic Proof Injection (detailed in Sec. 3.3).\ntegrity with high probability, while its rapid decay during sub- 3. The server S collects updates from all clients and exesequent training ensures zero utility loss. cutes the aggregation protocol (e.g., FedAvg or Secure\nBecause the verifier is anonymous to the server, it is forced Aggregation) on all received local gradients:\nto aggregate blindly, preventing selective omission or tam- θt+1global = θtglobal −η · Agg {gti}i̸=v ∪{ˆgtv} ,pering.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 7,
+    "total_chunks": 29,
+    "char_count": 3879,
+    "word_count": 610,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e43d7282-2709-462f-b3ed-33f4cf446770",
+    "text": "The server then\nbroadcasts the updated model θt+1global to all clients. Note\n3.1 Initialization that for the verifier Cv, it immediately performs Intrinsic\nAt the initialization phase, the system performs a one-time Proof Verification (detailed in Sec. 3.3) to determine and\nsetup where each client prepares two essential components: a broadcasts whether to accept the aggregation result. Figure 1: Overview of the proposed verifiable aggregation scheme. In each round, a randomized client is secretly designated as the verifier to\nembed a Intrinsic Proof into its local update. After aggregation, this verifier checks for the corresponding behavioral response in the global\nmodel to confirm honest aggregation. 3.3 Verifier-Specific Modules 3. The final update ˆgv is generated by superimposing the\nThe self-elected verifier Cv augments the standard workflow boosted proof signal onto the clean gradient:\nwith two lightweight operations: Intrinsic Proof Injection, ˆgtv = gtv + α · gtbd\nwhich is performed after local training, and Intrinsic Proof where α is a scaling factor designed to ensure the signal\nVerification, which is executed upon receiving the aggregated survives the averaging process. The verifier then uploads\nglobal model.\nˆgv for aggregation. Module 1: Intrinsic Proof Injection To guarantee immediate detectability in the next-round global\nAs illustrated in Step 2 of Figure 1, the verifier Cv injects model θt+1global, this strategy employs two critical techniques.\nthe Intrinsic Proof into its local update by conducting ad- First, we utilize the locally updated model θ′v as a proxy for\nditional training on its private trigger set Tv. Conceptually, the post-aggregation state. Calculating the trigger gradient on\nthis enforces a specific input-output mapping within the local θ′v (Eq. (2)) aligns the perturbation with the global optimizaupdate—for example, forcing images of a dog stamped with tion trajectory, maximizing compatibility of gbd and θt+1global.a red square to be classified as \"Bird\". Formally, after comSecond, to counteract the dilution caused by averaging across\nputing the standard clean gradient gv via Eq. (2), the verifier n clients, we apply a boosting factor α [Bagdasaryan et al.,executes the following injection procedure:\n2020; Liu et al., 2021]. This generates a high-intensity sig-\n1.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 9,
+    "total_chunks": 29,
+    "char_count": 2337,
+    "word_count": 350,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "62de291f-859d-4acb-b6fb-e52525f0b57b",
+    "text": "Cv update the model using its own clean update nal capable of withstanding aggregation. Mathematically, the\nresulting global model decomposes into a clean update and a\nθ′v = θtglobal −η · gtv preserved verification term:\nThis θ′v approximates the next-round aggregated model, n ! η · α\nX gti − gtbd . so the subsequent injection follows the global optimiza- θt+1global = θtglobal −η n n tion trajectory. i=1\nVerification| {z Signal}\n2. Cv computes the backdoor gradient gbd on the trigger set | Clean Global{z Update }\nTv relative to this estimated state θ′v to inject the Intrinsic As shown above, the boosting factor α ensures that the VeriProof: fication Signal remains significant even after the 1/n scaling,\ngtbd = ∇θ′L(Tv; θ′v) (2) guaranteeing robust detectability for the current verification\nstep before it naturally decays. Module 2: Intrinsic Proof Verification FedAvg-Acc Ours-Acc Ours-Acc(w/o Finetuning)\nUpon receiving the new global model θt+1global, the verifier lo- 100% 100%\ncally verifies aggregation integrity by measuring the Attack 80% 80%\nSuccess Rate (ASR) on its private trigger set Tv. This metric 60% 60%\n40% 40%quantifies the proportion of trigger-embedded inputs success- Accuracy Accuracy\n20% 20%fully classified to the secret target label:\n0% 0%\n0 20 40 60 80 100 0 20 40 60 80 100 1 Epoch Epoch ASRv = X I[F(θt+1global; x) = y]. |Tv| (a) SVHN - IID (b) SVHN - Non-IID\n(x,y)∈Tv 100% 100%\nSince the Intrinsic Proof is embedded as a specific input– 80% 80%\noutput mapping (e.g., images with a red square—-\"Birds\"), 60% 60%an honestly aggregated model should predict the target label Accuracy 40% Accuracy 40%\n20% 20%\non Tv with high probability. Therefore, if ASRv ≥γ (where 0% 0%\nγ is a pre-defined threshold), the verifier accepts the round as 0 20 40 60 80 100 0 20 40 60 80 100\nEpoch Epoch\nhonest. Conversely, a significant drop (ASRv < γ) serves as (c) CIFAR-10 - IID (d) CIFAR-10 - Non-IID\nempirical evidence that the verifier's update was selectively 100% 100%\nomitted or tampered with by the server. 80% 80%\n60% 60%\n3.4 Final Fine-tuning 40% 40% Accuracy Accuracy\nTo ensure the deployed model without verification artifacts, 20% 20%\nthe protocol concludes with a local fine-tuning phase on clean 0% 0% 0 20 40 60 80 100 0 20 40 60 80 100\ndata. By leveraging Catastrophic Forgetting, the clean local Epoch Epoch\nupdates act as a restoring force that overwrites the fragile, (e) CIFAR-100 - IID (f) CIFAR-100 - Non-IID\none-shot Intrinsic Proofs, restoring the model's optimal utility. Crucially, these updates are not uploaded for aggrega- Figure 2: Clean accuracy comparison.\ntion. This design aligns with the governance of Cross-silo\nFL, where the global model is the joint intellectual property\nEq. (3) confirms that the detection probability converges to 1of participating institutions, with no server involved. Upon\nexponentially with the number of attacked rounds.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 10,
+    "total_chunks": 29,
+    "char_count": 2905,
+    "word_count": 479,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b4f0692c-1fbc-4165-a6c2-1259d0a9bab8",
+    "text": "Even withconvergence, the server's coordination role terminates, allowa minimal omission rate (e.g., ρ = 0.1), the system achievesing institutions to finalize and personalize the model for intera detection probability exceeding 99.99% within 100 rounds.nal deployment without exposing these sensitive local adapThis probabilistic bound forces adversaries to either behavetations.\nhonestly or risk near-certain exposure.\n3.5 Security Analysis Privacy Preservation and Compatibility\nProbabilistic Detection Guarantee Drawing on the security objectives highlighted in prior veriWe analyze the security of our random-audit mechanism us- fiable aggregation works [Xu et al., 2020; Guo et al., 2020;\ning standard probabilistic principles. Inspired by random- Buyukates et al., 2024], we consider two fundamental propized auditing[Ateniese et al., 2007; Juels and Jr., 2007; erties: unforgeability and confidentiality. Erway et al., 2015], we model the verification process as a First, our Intrinsic Proof mechanism guarantees unforgesequence of independent Bernoulli trials, where verifying a ability through strictly local generation. During initialization\nsingle random client per round is sufficient to bound the ad- (Sec. 3.1), each client Ci independently samples a private creversary's success probability. dential pair (mi, τi). This binding ensures that only Ci can\nFormally, consider a malicious server that attempts to omit inject and verify its own Intrinsic Proof using Ti. Since the\nupdates from a fraction ρ of clients (target set |S| = ρn) trigger configuration is generated and stored exclusively on\nacross k affected rounds. In any single affected round t, the local device, the server cannot infer the trigger location or\nthe verifier Cv is selected uniformly at random from the to- pattern. This confidentiality prevents adversaries from forgtal population n.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 11,
+    "total_chunks": 29,
+    "char_count": 1872,
+    "word_count": 266,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c73b86aa-e469-4ee3-878e-e16525fd1b0b",
+    "text": "The event of detection, denoted as Dt, oc- ing a valid proof or impersonating the verifier.\ncurs if the verifier belongs to the omitted set (i.e., Cv ∈S). Second, our framework is designed to align with the operThis constitutes a Bernoulli trial with success probability ational logic of SA [Segal et al., 2017; Qin et al., 2026]. Consequently, the probability that the server Intrinsic Proof injection is a purely local operation performed\nsuccessfully evades detection in this round is 1 −ρ. during gradient generation, prior to any cryptographic maskFor the server to remain undetected throughout the entire ing. The resulting proof-carrying update ˆgv preserves the exattack duration, it must succeed in consecutive evasion trials act dimensionality and data type of a benign update, ensuracross all k rounds. Assuming the schedule is secret and in- ing seamless compatibility without modifying the underlying\ndependent of the attack, the cumulative detection probability cryptographic primitives.\nis:\nk This compatibility allows our audit mechanism to inherit\nPdetect = 1 − Y (1 −ρ) = 1 −(1 −ρ)k. (3) the privacy guarantees of SA. Since the server observes only\nthe encrypted vectors, the verifier's update remains computa- i=1 Ours-ASR Detection Threshold Ours-ASR Detection Threshold 100% 100% 100% 100%\n80% 80% 80% 80%\nASR 60%40% ASR 60%40% ASR 60%40% ASR 60%40%\n20% 20% 20% 20%\n0% 0% 0% 0%\n0 20 40 60 80 100 0 20 40 60 80 100 0 20 40 60 80 100 0 20 40 60 80 100\nEpoch Epoch Epoch Epoch\n(a) SVHN - IID (b) SVHN - Non-IID (a) SVHN - IID (b) SVHN - Non-IID\n100% 100% 100% 100%\n80% 80% 80% 80%\nASR 60%40% ASR 60%40% ASR 60%40% ASR 60%40%\n20% 20% 20% 20%\n0% 0% 0% 0%\n0 20 40 60 80 100 0 20 40 60 80 100 0 20 40 60 80 100 0 20 40 60 80 100\nEpoch Epoch Epoch Epoch\n(c) CIFAR-10 - IID (d) CIFAR-10 - Non-IID (c) CIFAR-10 - IID (d) CIFAR-10 - Non-IID\n100% 100% 100% 100%\n80% 80% 80% 80%\nASR 60%40% ASR 60%40% ASR 60%40% ASR 60%40%\n20% 20% 20% 20%\n0% 0% 0% 0%\n0 20 40 60 80 100 0 20 40 60 80 100 0 20 40 60 80 100 0 20 40 60 80 100\nEpoch Epoch Epoch Epoch\n(e) CIFAR-100 - IID (f) CIFAR-100 - Non-IID (e) CIFAR-100 - IID (f) CIFAR-100 - Non-IID Figure 3: ASR under honest aggregation. Figure 4: ASR when the server omits the verifier's gradient every 10\nrounds; yellow lines mark omissions. tionally indistinguishable from standard inputs. For any probabilistic polynomial-time adversary A (the server): Ours-ASR Detection Threshold\n100% 100% 100%\n|Pr[A(Enc(ˆgv)) = 1] −Pr[A(Enc(gi)) = 1]| ≤negl(λ). 80% 80% 80%\nThis cryptographic shield \"blinds\" the server regarding the ASR 60%40% 60%40% 60%40%\nverifier's identity, further enhancing anonymity and privacy, 20% 20% 20%\npreventing selective omission attacks targeting specific veri- 0% 0% 0% 0 20 40 60 80 100 0 20 40 60 80 100 0 20 40 60 80 100\nfiers. Epoch Epoch Epoch\n(a) SVHN - IID (b) CIFAR-10 - IID (c) CIFAR-100 - IID\n4 Experiments\nFigure 5: ASR when the server omits the verifier's gradient in 50\n4.1 Experimental Setup random rounds (with ρ = 0.1, T = 100). We evaluate our framework on three\nbenchmarks: SVHN (MobileNetV1), CIFAR-10 (ResNet- We implement both cryptographic baselines using their offi-\n20), and CIFAR-100 (ResNet-18). Non-IID settings is simu- cial parameter settings ensuring fair efficiency comparison.\nlated using a Dirichlet distribution with β = 0.5.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 12,
+    "total_chunks": 29,
+    "char_count": 3330,
+    "word_count": 589,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5de7d453-4be6-4000-9f72-0d0fa00aea68",
+    "text": "Proof Generation: Each client generates 4.2 Performance Evaluation\na 2 × 2 pixel trigger with random position and color. The private trigger set Ti comprises 10% of the local data.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 13,
+    "total_chunks": 29,
+    "char_count": 180,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "31ea7ec1-dec6-4214-9d65-f4204e69472b",
+    "text": "Training: Model Utility. Figure 2 confirms that our ephemeral auditModels are trained for T = 100 epochs using SGD (batch ing mechanism imposes negligible impact on the main task.\nsize 32, momentum 0.9). The learning rate is η = 0.01 for While the one-shot injection introduces transient perturbaclean data and amplified to ητ ∈{0.5, 2.0} for trigger in- tions, the final fine-tuning phase effectively erases these artijection. Verification: We set the omission rate ρ = 0.1, the facts, restoring accuracy to levels comparable to the FedAvg\nomission round rate ϵ = 1, detection threshold γ = 0.7, and baseline. This consistency holds across both IID and Non-IID\nboosting factor α = 10.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 14,
+    "total_chunks": 29,
+    "char_count": 685,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0ba4a112-02e6-4960-bbd7-4b3f4aa45962",
+    "text": "All experiments are executed on a settings, demonstrating robustness against data heterogeneity.\nsingle NVIDIA RTX 3090 GPU. We evaluate verification effectiveness by\nBaselines. We compare against: (1) FedAvg [McMahan et monitoring the ASR of global model on verifier's trigger sets.\nal., 2017]: Represents the utility upper bound without verifi- As shown in Figure 3, under honest aggregation, the ASR\ncation overhead. (2) LightVeriFL [Buyukates et al., 2024]: consistently exceeds the acceptance threshold (γ = 0.7), conA state-of-the-art scheme using homomorphic hashing and firming that the verification signal survives aggregation and\nPedersen commitments. (3) Yang et al. [Yang et al., 2024]: the valid updates are correctly verified. Conversely, Figure 4\nA recent dual-server protocol based on Learning With Errors. depicts a periodic attack scenario where the server omits the client0 100% client0 100%\nclient1 client2 80% client1client2 80%\nclient3 client5Clientclient4client5client6 60%40% (%)ASR Clientclient3client4 60% (%) client6 40% ASR\nclient7 client8 ASR > 70% 20% client7client8 ASR > 70% 20%\nclient9 Verifier 0% client9 Verifier 0%\n0 10 20 30 40 50 60 70 80 90 0 10 20 30 40 50 60 70 80 90\nRound Round (a) SVHN (a) SVHN\nclient0 100% client0 100%\nclient1 client2 80% client1client2 80%\nclient3 client5Clientclient4client5client6 60%40% (%)ASR Clientclient3client4 60% (%) client6 40% ASR\nclient7 client8 20% client7client8 20%\nclient9 0% client9 0%\n0 10 20 30 40 50 60 70 80 90 0 10 20 30 40 50 60 70 80 90\nRound Round (b) CIFAR-10 (b) CIFAR-10\nclient0 100% client0 100%\nclient1 client2 80% client1client2 80%\nclient3 client5Clientclient4client5client6 60%40% (%)ASR Clientclient3client4 60% (%) client6 40% ASR\nclient7 client8 20% client7client8 20%\nclient9 0% client9 0%\n0 10 20 30 40 50 60 70 80 90 0 10 20 30 40 50 60 70 80 90\nRound Round (c) CIFAR-100 (c) CIFAR-100 Figure 6: ASR Heatmap of Client 0's local model across different Figure 7: ASR Heatmap of global model accross different trigger\ntrigger sets. sets: Every 10 rounds the server omits the verifier's gradient verifier every 10 rounds. In these rounds, the ASR drops\nsharply to ∼10% (random guess), demonstrating malicious\nbehavior.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 15,
+    "total_chunks": 29,
+    "char_count": 2217,
+    "word_count": 349,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2d7c3e27-ef70-4d68-bc54-f2a71533d200",
+    "text": "Similar trends are observed under both IID and\nIntrinsic Proof, we further evaluate the proof-carried global\nNon-IID data distributions. Furthermore, we validate the themodel on all clients' trigger sets after each round. As shown\noretical detection bounds from Sec. 3.5 via a randomized simin Figure 7, the ASR of the global model on the active veriulation (Figure 5). In this experiment, the server performs a\nfier's trigger set (marked by red circles) consistently exceeds\n10% omission attack (ρ = 0.1) during 50 randomly selected\nthe detection threshold γ = 0.7 (indicated by yellow trirounds out of T = 100. Our protocol identifies these maliangles), while the ASR on non-verifier clients' trigger sets\ncious aggregations through sharp ASR drops, confirming the\nremains negligible. This pattern confirms non-interference\neffectiveness of the proposed auditing mechanism.\namong clients' Intrinsic Proofs.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 16,
+    "total_chunks": 29,
+    "char_count": 908,
+    "word_count": 136,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d6609341-e831-4613-a9ac-91e522b7d50c",
+    "text": "Conversely, in every tenth\nReliability. We validate the reliability of Intrinsic Proofs\nround, when the server omits the verifier's gradient, the corby ensuring: 1) Temporal Non-interference: Verification sigresponding verifier's ASR drops sharply below the threshold,\nnals do not interfere across training rounds (i.e., the Intrinsic\ndemonstrating a reliably detection of omissions. Proof will be forgotten by clean training). 2) Spatial NonEfficiency. We benchmark our framework against two stateinterference: Intrinsic Proofs from different clients do not inof-the-art cryptographic protocols: LightVeriFL [Buyukates\nterfere with one another (i.e., verifying client specificity).\net al., 2024] and Yang et al. [Yang et al., 2024]. To enWe utilize ASR heatmaps to empirically demonstrate the sure fairness, we isolate verification-specific overheads, exTemporal Non-interference of Intrinsic Proofs, verifying that cluding standard training, aggregation, and costs of orthogoeach client's Intrinsic Proof remains ephemeral and does not nal privacy defenses (e.g., encryption for SA) common to all\ninterfere with verification in subsequent rounds. As shown in Table 1, our approach achieves orderstrated in Figure 6, we present a heatmap visualization where of-magnitude efficiency gains, delivering speedups ranging\neach row corresponds to a specific client's trigger set and from 99× to 1877× over LightVeriFL. The gap is even wider\neach column denotes a training round.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 17,
+    "total_chunks": 29,
+    "char_count": 1473,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "761eea00-3c77-48a2-894a-2980244e7416",
+    "text": "In this experiment, against Yang et al., which incurs prohibitive latencies (e.g.,\nthe tested model is updated exclusively using clean local gra- > 1800s for MobileNet-V1). This disparity stems from fundients gi (Eq. (2)) and evaluated against trigger sets without damental algorithmic complexity: While cryptographic baseembedding new Intrinsic Proofs. Taking Client 0 as a repre- lines perform expensive operations (e.g., modular exponensentative example, the heatmap reveals that the ASR of its tiations) for every parameter element, our intrinsic verificalocal clean model never exceeding the detection threshold tion requires only lightweight embedding and local inference.\nγ = 0.7 without Intrinsic Proof re-injection. This confirms Moreover, because proofs are carried implicitly within the\nthat proof signals are erased by subsequent clean updates, en- gradient, our method adds zero per-round communication\nsuring the final model is free of residual backdoor effects and overhead, whereas LightVeriFL and Yang et al. introduce of\npreserves its utility for legitimate tasks. 1.31 KB and 0.9 KB respectively. These properties make our\nTo confirm the Spatial Non-interference of the verifier's approach more scalable for large-scale federated learning. Dataset Metric / Phase LightVeriFL Yang et al. Ours [Bagdasaryan et al., 2020] Eugene Bagdasaryan, Andreas\nProof Gen. (s) 36.48 88.66 0.35 Veit, Yiqing Hua, Deborah Estrin, and Vitaly Shmatikov. Verification (s) 0.80 0.32 0.04 How to backdoor federated learning. In Silvia Chiappa\nResNet-20\nProof Comp. (s) 1.28 185.34 N/A and Roberto Calandra, editors, Proceedings of the Twenty(CIFAR-10)\nTotal Time (s) 38.56 274.32 0.39 Third International Conference on Artificial Intelligence\nProof Gen. (s) 492.22 700.55 0.37 and Statistics, volume 108 of Proceedings of Machine\nVerification (s) 10.05 0.88 0.30 Learning Research, pages 2938–2948. PMLR, 26–28 Aug\nMobileNet-V1\nProof Comp. (s) 15.12 1099.33 N/A 2020. (SVHN)\nTotal Time (s) 517.39 1800.76 0.67 [Buyukates et al., 2024] Baturalp Buyukates, Jinhyun So,\nProof Gen. (s) 1808.99 – 0.93 Hessam Mahdavifar, and Salman Avestimehr. Lightverifl:\nVerification (s) 71.90 – 0.10 A lightweight and verifiable secure aggregation for feder- ResNet-18\nProof Comp. (s) 53.27 – N/A\n(CIFAR-100) ated learning. IEEE Journal on Selected Areas in InformaTotal Time (s) 1934.16 – 1.03 tion Theory, 5:285–301, 2024. Table 1: Efficiency comparison across different models. Compu- [Chaum, 1981] David L Chaum.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 18,
+    "total_chunks": 29,
+    "char_count": 2495,
+    "word_count": 362,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d494478c-8b43-46fc-bd6d-27222b9bd801",
+    "text": "Untraceable electronic\ntation times are in seconds per round. \"Proof Gen.\" corresponds mail, return addresses, and digital pseudonyms. Commuto \"Intrinsic Proof Injection\" for our method. \"Proof Comp.\" cor- nications of the ACM, 24(2):84–90, 1981.\nresponds to extrinsic proof composition. \"N/A\" indicates the step\n[Chen et al., 2025] Yange Chen, Suyu He, Baocang Wang,is not applicable or incurs zero extra cost beyond standard FL. The\nsymbol \"–\" denotes unfinished results due to equipment limits. Zhanshen Feng, Guanghui Zhu, and Zhihong Tian. A verifiable privacy-preserving federated learning framework\nagainst collusion attacks.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 19,
+    "total_chunks": 29,
+    "char_count": 632,
+    "word_count": 89,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2848f03b-e0be-42e6-acab-4faab6e546bf",
+    "text": "IEEE Transactions on Mobile\n5 Conclusion Computing, 24(5):3918–3934, 2025. We propose a lightweight framework for verifiable aggre- [Doan et al., 2021] Khoa Doan, Yingjie Lao, Weijie Zhao,\ngation in cross-silo FL. Instead of relying on heavy cryp- and Ping Li. Lira: Learnable, imperceptible and robust\ntographic proofs, we introduce Ephemeral Intrinsic Proofs, backdoor attacks. In 2021 IEEE/CVF International Conwhich repurpose backdoor mechanisms to audit server in- ference on Computer Vision (ICCV), pages 11946–11956,\ntegrity. By leveraging the catastrophic forgetting phe- 2021.\nnomenon of neural networks, we turns the transience of backdoor triggers into a security feature, enabling per-round veri- [Erway et al., 2015] C. Chris Erway, Alptekin Kupcu, Charfication that naturally fades and preserves model utility. alampos Papamanthou, and Roberto Tamassia.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 20,
+    "total_chunks": 29,
+    "char_count": 867,
+    "word_count": 121,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dd929c71-6aae-4091-93b1-ec8870202ffb",
+    "text": "Dynamic\nOur analysis shows malicious omissions are detected with provable data possession. ACM Transaction on Informahigh probability via randomized auditing. Experiments on tion and System Security, 17(4):15.1–15.29, 2015. SVHN, CIFAR-10, and CIFAR-100 confirm reliable detec- [French, 1999] Robert M. Catastrophic forgetting\ntion of server misbehavior with minimal accuracy loss. Our in connectionist networks. Trends in Cognitive Sciences,\nmethod is far more efficient and adds zero communication 3:128–135, 1999.\noverhead compared to cryptographic baselines, while remaining compatible with SA protocols. [Fu et al., 2022] Anmin Fu, Xianglong Zhang, Naixue\nXiong, Yansong Gao, Huaqun Wang, and Jing Zhang. Vfl:\nReferences A verifiable federated learning with privacy-preserving for\nbig data in industrial iot. IEEE Transactions on Industrial\n[Adi et al., 2018] Yossi Adi, Carsten Baum, Moustapha Informatics, 18(5):3316–3326, 2022. Cisse, Benny Pinkas, and Joseph Keshet. Turning your\n[Gu et al., 2019] Tianyu Gu, Kang Liu, Brendan Dolan- weakness into a strength: Watermarking deep neural networks by backdooring.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 21,
+    "total_chunks": 29,
+    "char_count": 1118,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f1f8d0ec-d283-4986-8824-173a625b2d58",
+    "text": "In 27th USENIX Security Sympo- Gavitt, and Siddharth Garg. Badnets: Evaluating backsium (USENIX Security 18), pages 1615–1631, Baltimore, dooring attacks on deep neural networks. Ieee Access,\n7:47230–47244, 2019. USENIX Association.\n[Alam et al., 2023] Manaar Alam, Esha Sarkar, and Michail [Guo et al., 2020] Xiaojie Guo, Zheli Liu, Jin Li, Jiqiang\nManiatakos. Perdoor: Persistent backdoors in federated Gao, Boyu Hou, Changyu Dong, and Thar Baker. Verlearning using adversarial perturbations. In 2023 IEEE In- ifl: Communication-efficient and fast verifiable aggregaternational Conference on Omni-layer Intelligent Systems tion for federated learning. IEEE Transactions on Infor-\n(COINS), pages 1–6, 2023. mation Forensics and Security, 16:1736–1751, 2020.\n[Ateniese et al., 2007] Giuseppe Ateniese, Randal Burns, [Juels and Jr., 2007] Ari Juels and Burton S. Pors:\nReza Curtmola, Joseph Herring, Lea Kissner, Zachary Pe- proofs of retrievability for large files. In Peng Ning, Sabterson, and Dawn Song.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 22,
+    "total_chunks": 29,
+    "char_count": 1005,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e807be40-cb13-4a4c-8ab1-816e0188cd7c",
+    "text": "Provable data possession at un- rina De Capitani di Vimercati, and Paul F. Syverson, edtrusted stores. In Proceedings of the 14th ACM Confer- itors, Proceedings of the 2007 ACM Conference on Comence on Computer and Communications Security, CCS puter and Communications Security, CCS 2007, Alexan-\n'07, page 598–609, New York, NY, USA, 2007. Associ- dria, Virginia, USA, October 28-31, 2007, pages 584–597.\nation for Computing Machinery. [Li et al., 2023] Bowen Li, Lixin Fan, Hanlin Gu, Jie Li, and [Yang et al., 2024] Xue Yang, Minjie Ma, and Xiaohu Tang.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 23,
+    "total_chunks": 29,
+    "char_count": 556,
+    "word_count": 90,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7c355044-6f6d-413a-8487-f4cb77ed4431",
+    "text": "Fedipr: Ownership verification for federated An efficient privacy-preserving and verifiable scheme for\ndeep neural network models. IEEE Transactions on Pat- federated learning. Future Generation Computer Systems,\ntern Analysis and Machine Intelligence, 45(4):4521–4536, 160:238–250, 2024.\n2023. [Zhang et al., 2022] Zhengming Zhang, Ashwinee Panda,\n[Li et al., 2025] Gongli Li, Zhe Zhang, and Ruiying Du. Linyue Song, Yaoqing Yang, Michael Mahoney, Prateek\nLvsa: Lightweight and verifiable secure aggregation for Mittal, Ramchandran Kannan, and Joseph Gonzalez. Neufederated learning. Neurocomputing, 648:130712, 2025. rotoxin: Durable backdoors in federated learning. In\nKamalika Chaudhuri, Stefanie Jegelka, Le Song, Csaba\n[Liu et al., 2021] Xiyao Liu, Shuo Shao, Yue Yang, Kang- Szepesvari, Gang Niu, and Sivan Sabato, editors, Proming Wu, Wenyuan Yang, and Hui Fang. Secure federated ceedings of the 39th International Conference on Malearning model verification: A client-side backdoor trig- chine Learning, volume 162 of Proceedings of Machine\ngered watermarking scheme. In 2021 IEEE International Learning Research, pages 26429–26446. PMLR, 17–23\nConference on Systems, Man, and Cybernetics (SMC), Jul 2022.\npages 2414–2419, 2021. [McMahan et al., 2017] Brendan McMahan, Eider Moore,\nDaniel Ramage, Seth Hampson, and Blaise Aguera y Arcas.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 24,
+    "total_chunks": 29,
+    "char_count": 1346,
+    "word_count": 184,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6698ed56-2ad7-4b94-bd9c-ea0f83047d5e",
+    "text": "Communication-Efficient Learning of Deep Networks\nfrom Decentralized Data. In Aarti Singh and Jerry Zhu,\neditors, Proceedings of the 20th International Conference\non Artificial Intelligence and Statistics, volume 54 of Proceedings of Machine Learning Research, pages 1273–\n1282. PMLR, 20–22 Apr 2017. [Mothukuri et al., 2021] Viraaji Mothukuri, Reza M. Parizi,\nSeyedamin Pouriyeh, Yan Huang, Ali Dehghantanha, and\nGautam Srivastava.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 25,
+    "total_chunks": 29,
+    "char_count": 432,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b4b55001-a0ef-42bd-a6dd-47f3031d05fa",
+    "text": "A survey on security and privacy of\nfederated learning. Future Generation Computer Systems,\n115:619–640, 2021. [Nie and Lu, 2024] Hewang Nie and Songfeng Lu.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 26,
+    "total_chunks": 29,
+    "char_count": 157,
+    "word_count": 24,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb4fc007-1eb0-45e4-b0aa-c1ad3969915e",
+    "text": "Fedcrmw: Federated model ownership verification with\ncompression-resistant model watermarking. Expert Systems with Applications, 249:123776, 2024. [Qin et al., 2026] Xian Qin, Xue Yang, and Xiaohu Tang.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 27,
+    "total_chunks": 29,
+    "char_count": 202,
+    "word_count": 26,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a9c32447-0771-4d13-832f-7af4571ff913",
+    "text": "Practical privacy-preserving federated learning based on\nmultiparty homomorphic encryption for large-scale models. Pattern Recognition, 171:112174, 2026. [Segal et al., 2017] Aaron Segal, Antonio Marcedone, Benjamin Kreuter, Daniel Ramage, H. Brendan McMahan, Karn Seth, K. Bonawitz, Sarvar Patel, and\nVladimir Ivanov. Practical secure aggregation for privacypreserving machine learning. [Tang et al., 2024] Jinling Tang, Haixia Xu, Mingsheng\nWang, Tao Tang, Chunying Peng, and Huimei Liao.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 28,
+    "total_chunks": 29,
+    "char_count": 490,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b175bf77-4ef8-4fd4-955c-e85b09868bf7",
+    "text": "A\nflexible and scalable malicious secure aggregation protocol for federated learning. IEEE Transactions on Information Forensics and Security, 19:4174–4187, 2024. [Tekgul et al., 2021] Buse G. Tekgul, Yuxi Xia, Samuel\nMarchal, and N. Waffle: Watermarking in federated learning. In 2021 40th International Symposium\non Reliable Distributed Systems (SRDS), pages 310–320,\n2021. [Xu et al., 2020] Guowen Xu, Hongwei Li, Sen Liu, Kan\nYang, and Xiaodong Lin. Verifynet: Secure and verifiable federated learning. IEEE Transactions on Information\nForensics and Security, 15:911–926, 2020.",
+    "paper_id": "2603.10692",
+    "title": "Repurposing Backdoors for Good: Ephemeral Intrinsic Proofs for Verifiable Aggregation in Cross-silo Federated Learning",
+    "authors": [
+      "Xian Qin",
+      "Xue Yang",
+      "Xiaohu Tang"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10692v1",
+    "chunk_index": 29,
+    "total_chunks": 29,
+    "char_count": 581,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  }
+]

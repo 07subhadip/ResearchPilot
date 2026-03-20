@@ -1,0 +1,362 @@
+[
+  {
+    "chunk_id": "5e2d6664-ae5c-4bce-be9d-a472d7b4ac3b",
+    "text": "From Control to Foresight: Simulation as a New Paradigm for Human–Agent\nCollaboration GAOLE HE, National University of Singapore, Singapore\nBRIAN Y. LIM, National University of Singapore, Singapore",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 0,
+    "total_chunks": 20,
+    "char_count": 197,
+    "word_count": 27,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a1ff7cf7-369b-4f89-a132-2b81a0bfee7b",
+    "text": "Large Language Models (LLMs) are increasingly used to power autonomous agents for complex, multi-step tasks. However, humanagent interaction remains pointwise and reactive: users approve or correct individual actions to mitigate immediate risks, without visibility into subsequent consequences. This forces users to mentally simulate long-term effects, a cognitively demanding and often Users have control over individual steps but lack the foresight to make informed decisions.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 1,
+    "total_chunks": 20,
+    "char_count": 478,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9853dfb1-78c2-4de0-9b6d-377f3145ddb7",
+    "text": "We argue that effective collaboration requires foresight, not just control. We propose simulation-in-the-loop, an interaction paradigm that enables users and agents to explore simulated future trajectories before committing to decisions. Simulation transforms intervention from reactive guesswork into informed exploration, while helping users discover latent constraints and preferences along the way. This perspective2026\npaper characterizes the limitations of current paradigms, introduces a conceptual framework for simulation-based collaboration, and illustrates its potential through concrete human-agent collaboration scenarios. Mar Additional Key Words and Phrases: Human-agent Collaboration; LLM Agents, Simulation; Human-computer Interaction ACM Reference Format:12\nGaole He and Brian Y.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 2,
+    "total_chunks": 20,
+    "char_count": 797,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb865fc8-25e1-4dc3-ba47-e82dcf9ec3e6",
+    "text": "From Control to Foresight: Simulation as a New Paradigm for Human–Agent Collaboration. In CHI 2026 Workshop on Human-Agent Collaboration, April 13–17, 2026, Barcelona, Spain. ACM, New York, NY, USA, 5 pages. https://doi.org/10.1145/nnnnnnn.nnnnnnn 1 Introduction[cs.HC] Equipped with toolkits such as browser search and machine access, large language models (LLMs) have shown promising potential to interact with the world and assist with more complex, multi-step tasks—ranging from travel planning to code To ensure reliable and accountable outcomes, LLM agents are often supervised by humans [5, 8]: the agent proposes a sequence of actions, and the human is asked to approve or correct decisions at key junctures. However, this form of collaboration rests on an implicit assumption: that humans can act as oracles [4, 12], making sound decisions with minimal context. In practice, when humans are inserted into multi-step workflows, they are asked to make critical decisions with limited information—without visibility into how their approval/action might shape subsequent outcomes [3]. Without visibility into downstream consequences, human intervention becomes short-sighted rather than informed collaboration [11].",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 3,
+    "total_chunks": 20,
+    "char_count": 1220,
+    "word_count": 171,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1a43d064-b656-4143-8f48-105baf7bf202",
+    "text": "In these cases, humans are forced to rely on intuition or mental simulation, both of which are prone to error—especially as task complexity grows. This limitation is especially pronounced in long-horizon tasks, where early decisions cascade into future outcomes in ways that are difficult to anticipate [9]. For example, a seemingly plausible choice (e.g., booking a tight connection flight) can propagate through the planning horizon, amplifying or constraining downstream possibilities. Yet currentarXiv:2603.11677v1\nAuthors' Contact Information: Gaole He, hegaole@nus.edu.sg, National University of Singapore, Singapore, Singapore; Brian Y. Lim, brianlim@nus.edu.sg,\nNational University of Singapore, Singapore, Singapore.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 4,
+    "total_chunks": 20,
+    "char_count": 725,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8bdfc55a-7ef6-460a-9c76-d2b9af39477a",
+    "text": "Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not\nmade or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for third-party\ncomponents of this work must be honored. For all other uses, contact the owner/author(s). © 2026 Copyright held by the owner/author(s). Manuscript submitted to ACM Manuscript submitted to ACM 1 human-agent interactions do not proactively support reasoning about these ripple effects. Without such support, users",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 5,
+    "total_chunks": 20,
+    "char_count": 619,
+    "word_count": 98,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f67213c3-1e09-4cd8-94a4-2d89b1c312ca",
+    "text": "are left to mentally simulate alternative futures, a process that is cognitively demanding and notoriously unreliable, especially when tasks involve long-range dependencies and stochastic outcomes. For instance, a delayed flight can cascade into missed connections. Worse still, this narrow view forecloses serendipity [13]: when humans see only the immediate next step and react to it, they miss the opportunity to discover unexpected but valuable alternatives that lie offthe agent's proposed path. This results in a substantial asymmetry: while LLM agents can explore possible actions (e.g., tree-based search over the action space [1, 10]) and their subsequent impacts, the human collaborator is given access to only a single path through that tree—the trajectory proposed by the agent.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 6,
+    "total_chunks": 20,
+    "char_count": 790,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f89bbc7e-b876-4e5e-9181-0d4b5fefe10c",
+    "text": "We argue that addressing this asymmetry requires more than just giving humans control over actions—it requires giving them foresight into the consequences of those actions. Control without foresight is like driving at night with no headlights: you can turn the wheel, but you cannot see what lies ahead.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 7,
+    "total_chunks": 20,
+    "char_count": 303,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "87125ad5-6713-47da-bdd1-b7e32aa5a355",
+    "text": "To this end, we propose simulation-in-the-loop collaboration, an interaction paradigm that allows humans and agents to preview counterfactual future trajectories before committing to decisions. By generating and visualizing possible outcomes across multiple paths, simulation transforms human intervention from reactive guesswork into proactive exploration.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 8,
+    "total_chunks": 20,
+    "char_count": 357,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d1e56e9a-16d1-4918-b566-8dbb1d1191f9",
+    "text": "It also creates space for serendipity: as users explore simulated futures, they may discover valuable alternatives or latent constraints that were not apparent from the agent's initial proposal. In this paper, we (1) articulate the limitations of existing pointwise interaction paradigms, (2) introduce a conceptual framework and design space for simulation-based collaboration, and (3) illustrate the approach through concrete scenarios with LLM agents and other planning tasks. 2 Simulation-in-the-loop Collaboration We introduce simulation-in-the-loop collaboration, an interaction paradigm in which humans and agents jointly explore simulated future trajectories before committing to real-world actions. 2.1 Concept and Definition First, we introduce four core concepts that ground our framework:\n• Agentic Workflow: The unit of analysis is a multi-step task performed by an LLM agent under human oversight (e.g., travel planning). The workflow proceeds through a sequence of actions, during which the agent may request For simplicity, we can view it as a step-by-step planning-execution process [5, 8]: at each step, the agent predicts an action, and the human may approve, modify, or override it before execution.\n• Action Space: At each step, the agent considers multiple possible actions (e.g., search flights, search relevant",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 9,
+    "total_chunks": 20,
+    "char_count": 1334,
+    "word_count": 191,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88c6ec05-3a09-439f-98bf-4c1405303fef",
+    "text": "LLM agents inherently explore such trees during planning—through beam search [14], Monte Carlo tree search [1, 2], or implicit generation of alternatives—but this exploration typically remains internal and invisible to the human.\n• Simulation: We define simulation as the agent's ability to externalize this internal exploration: before committing to a decision, the agent generates and presents multiple future trajectories for human preview. planning (which seeks an optimal path) but rather exploration for sensemaking—making the tree of possibilities visible and navigable.\n• Simulated Impact: Each simulated trajectory is annotated with key outcomes—risks, opportunities, trade-offs, uncertainties—that help humans compare alternatives. Simulated impact translates abstract futures into concrete, decision-relevant outcomes, enabling foresight rather than guesswork.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 11,
+    "total_chunks": 20,
+    "char_count": 871,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "804eb533-2704-4e21-8214-9077b69d8b93",
+    "text": "Manuscript submitted to ACM From Control to Foresight: Simulation as a New Paradigm for Human–Agent Collaboration 3 Step 1 Step 2 Decision Point Step 3 Step 4 Agent Proposes Agent Proposes + Invites Exploration\nLet's take action A Suggest action A, but let's explore alternatives Human Sees Path A Path B Path C Path D\n• Only action A & relevant context\n• Not aware of other alternatives / potential • 30% delay risk • No delay risk • Skip one meeting • High uncertainty Simulated Outcome\nsubsequent impacts • Expectation: • $50 more in • Save 2 hours • Potential\narrival on time budget Opportunity Human Decides Human Explores, Compares, Decides\nApprove / Modify / Override Informed choice based on simulated outcomes Current Human-agent Collaboration Simulation-in-the-Loop Collaboration Comparison of interaction paradigms at a decision point. 2.2 Illustrative Scenario We ground our framework in one concrete scenario—a multi-city trip planning. As visualized in Figure 1, the simulation acts as an intermediate layer between agent proposals and human commitment. At a decision point, the agent must choose whether to book a tight connection between flights. In the current human-agent collaboration mode, the agent would simply propose its preferred option i.e., Path A: a",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 12,
+    "total_chunks": 20,
+    "char_count": 1277,
+    "word_count": 202,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7ba0bf08-fbc5-42b9-99b0-a900e0699e9f",
+    "text": "The user, seeing only that this option is available and cheaper than alternatives, might approve without realizing the downstream risk or that lower-risk alternatives even exist. With simulation-in-the-loop, the agent externalizes multiple alternatives (Paths A-D in Figure 1). proposal) is annotated with a simulated impact: 30% delay risk due to short connection time. Path B, a later flight with a longer layover, shows no delay risk but adds $50 cost.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 14,
+    "total_chunks": 20,
+    "char_count": 455,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "edacae2d-176e-4a4f-b488-5e0490380a36",
+    "text": "By comparing these simulated outcomes, the human discovers a risk they hadn't considered and can make an informed trade-offbetween time and reliability. reveals Path D: a flight into a different airport, which opens up new options the user hadn't considered, illustrating how simulation enables serendipitous discovery. By externalizing possible futures, the human's role shifts from reactive supervision to proactive planning and negotiation with the agent. 2.3 Design Space for Simulation-Based Interaction Designing effective simulations involves navigating trade-offs between three key dimensions. These dimensions are not merely technical parameters.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 15,
+    "total_chunks": 20,
+    "char_count": 655,
+    "word_count": 88,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "40d274a8-ae75-4c3b-aac3-6a6de82132c4",
+    "text": "They shape how humans reason, trust, and collaborate with agents—making simulation a How far into the future should simulations project? Deeper lookahead provides greater foresight but risks information overload and compounding uncertainty. Shallower previews are more reliable but may miss critical downstream effects. Manuscript submitted to ACM",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 16,
+    "total_chunks": 20,
+    "char_count": 347,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "503f5df9-1156-4f79-a57f-4030767552dc",
+    "text": "How many alternative futures should be shown? A single trajectory minimizes cognitive load but risks tunnel vision. Multiple branches enable comparison and serendipity, but may overwhelm. systems must also convey outcome diversity—ensuring displayed futures represent meaningfully different possibilities.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 17,
+    "total_chunks": 20,
+    "char_count": 305,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cdf34086-d828-4b6d-9492-515cc02f9236",
+    "text": "How detailed should simulations be? Fine-grained simulations (e.g., code execution) provide rich information but incur latency. Coarse-grained approximations (e.g., LLM sketches) are faster but risk omitting critical details The balance depends on task criticality. 3 Challenges and Opportunities Implementing simulation-in-the-loop collaboration introduces several challenges, yet also opens new directions for human-agent collaboration. Simulation Reliability. Simulation requires a model or environment that can generate plausible future trajectories. While this is feasible for tasks with well-defined environments (e.g., games and code execution), it becomes technically challenging in open-ended domains where world dynamics are less structured. Relying on LLMs to simulate their own futures—asking the agent to predict \"what if\"—offers a tempting but uncertain alternative.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 18,
+    "total_chunks": 20,
+    "char_count": 880,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "418903d6-78fd-44db-8de1-8ba2f7c43a1e",
+    "text": "LLM-generated simulations may hallucinate, omit critical dependencies, or produce overly optimistic trajectories [6, 7, 16]. This highlights a need for more reliable world models [19] that can support simulation across diverse, open-ended tasks. Not all possible futures are valuable for users' attention. Simulations can generate an abundance of trajectories, but presenting trivial or near-identical options. Thus, it is important to identify which outcomes are nontrivial and decision-relevant: surfacing paths that reveal genuine trade-offs, hidden risks, or unexpected opportunities, while filtering out those that offer no new insight. Even with careful filtering, comparing multiple futures imposes cognitive demands. is supposed to help users navigate across trajectories, understand trade-offs, and track their exploration—without becoming a source of confusion itself. If users cannot integrate simulated outcomes into their decisions, simulation adds noise rather than insight.",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 19,
+    "total_chunks": 20,
+    "char_count": 988,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a07ad7a7-5c96-473a-987f-bfa29703eee7",
+    "text": "From Reactive to Proactive Collaboration. Current proactive agents act autonomously unless interrupted. Simulationin-the-loop offers a middle ground: agents proactively show possible futures, inviting human input before acting. shifts collaboration from \"human as supervisor\" to \"human as explorer\".",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 20,
+    "total_chunks": 20,
+    "char_count": 299,
+    "word_count": 37,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf417377-8696-410c-a1a5-19ddd0473a64",
+    "text": "Enabling Backtracking by Anticipation. Recent work on backtracking agents [17] focuses on error detection and recovery in LLM agents. Simulation flips this backward-looking repair into forward-looking prevention—helping humans and agents avoid dead ends before committing. Discovering Latent Constraints and Needs. As users explore simulated futures, they encounter constraints embedded in the task—dependencies, resource limits, timing conflicts—that were not visible from the initial proposal. time, they may discover gaps between their expectations and what is achievable, revealing unstated preferences or new This turns collaboration into joint discovery: requirements emerge dynamically through exploration, and the agent's final outcome improves precisely because these latent factors are surfaced before commitment, not after. Manuscript submitted to ACM From Control to Foresight: Simulation as a New Paradigm for Human–Agent Collaboration 5",
+    "paper_id": "2603.11677",
+    "title": "From Control to Foresight: Simulation as a New Paradigm for Human-Agent Collaboration",
+    "authors": [
+      "Gaole He",
+      "Brian Y. Lim"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11677v1",
+    "chunk_index": 21,
+    "total_chunks": 20,
+    "char_count": 950,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  }
+]

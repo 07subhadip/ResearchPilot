@@ -1,0 +1,648 @@
+[
+  {
+    "chunk_id": "90d9f0c9-3ffb-47bf-8364-0fbab0543306",
+    "text": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for\nAutonomous Queries Mayank Saini† Arit Kumar Bishwas†∗\nPwC US PwC US mayank.s.saini@pwc.com arit.kumar.bishwas@pwc.com\nAbstract",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 0,
+    "total_chunks": 38,
+    "char_count": 191,
+    "word_count": 22,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "11c9198a-99bd-4be2-9bc6-2520ec02f438",
+    "text": "We present an agentic AI framework for autonomous multimodal query processing that coordinatesMar specialized tools across text, image, audio, video, and document modalities. A central Supervisor\n12 dynamicallydetection, OCR,decomposesspeech transcription),user queries, delegatesand synthesizessubtasksresultsto modality-appropriatethrough adaptive toolsrouting(e.g.,strategiesobject\nrather than predetermined decision trees. For text-only queries, the framework uses learned routing\nvia RouteLLM, while non-text paths use SLM-assisted modality decomposition. Evaluated on 2,847\nqueries across 15 task categories, our framework achieves 72% reduction in time-to-accurate-answer, 85%\nreduction in conversational rework, and 67% cost reduction compared to the matched hierarchical baseline\nwhile maintaining accuracy parity. These results demonstrate that intelligent centralized orchestration[cs.CL] fundamentally improves multimodal AI deployment economics. Keywords: Agentic AI AI Agents Multimodal AI Multimodal Reasoning AI Orchestration Tool Orchestration Tool-Augmented LLMs Cost-Aware Inference LLM Routing Multi-Agent Systems Autonomous Query\nProcessing Modern AI deployment confronts a critical challenge in reconciling conflicting requirements that users demand\nfrom production systems: the ability to autonomously process any query type ranging from simple text\ninstructions to complex multimodal requests involving images, audio, video, and structured documents, while\nsimultaneously maintaining operational cost-efficiency at scale and delivering real-time responsiveness suitable\nfor interactive applications. Current solutions prove inadequate along multiple dimensions. Monolithic\nlarge language model deployments that route all queries to a single powerful model such as GPT-4 [15] orarXiv:2603.11545v1 Gemini Ultra [5] incur prohibitive operational costs when applied uniformly across heterogeneous workloads,\nparticularly given that the vast majority of real-world queries do not require the full reasoning capacity\nof frontier models [4, 2]. Conversely, hierarchical routing systems that attempt to direct queries through\npredetermined decision trees based on explicit classification rules exhibit catastrophic brittleness when queries\ndeviate from anticipated patterns—requiring complete pipeline restarts that waste computational resources\nalready invested in partial execution, creating unacceptable latencies for time-sensitive applications, and\nproducing frustrating user experiences that undermine system trust and adoption. Our earlier work on resource-efficient multimodal intelligence [20] established the fundamental viability\nof coordinated processing across diverse modalities through conditional orchestration strategies that route\nqueries based on detected input characteristics. However, that mechanistic approach relied on manually\nspecified routing logic that required explicit enumeration of all anticipated query types and their associated ∗∗Corresponding author. †These authors contributed equally.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 1,
+    "total_chunks": 38,
+    "char_count": 3038,
+    "word_count": 359,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e2cb1eb1-1a03-4010-9399-d8fc453227e3",
+    "text": "Figure 1: Architectural paradigm comparison showing the transition from scripted routing with brittle global restarts\nto Supervisor-driven adaptive orchestration with tool and model pools. processing paths, creating substantial maintenance burdens as new capabilities were added and producing\nbrittle failure modes when real-world queries fell outside the anticipated design space, as illustrated in\nFigure 1. When users submitted queries that did not match any predetermined pattern—whether due to\nnovel phrasing, unexpected modality combinations, or edge cases not considered during system design—the\nconditional orchestration framework lacked any mechanism for graceful degradation or adaptive response,\ninstead failing entirely and forcing users to manually reformulate their requests. This fundamental limitation\narises directly from the architectural decision to embed all routing intelligence within predetermined decision\ntrees rather than enabling the system to reason about and adapt to query characteristics autonomously based\non learned patterns and contextual understanding. We introduce a centralized orchestration framework that reimagines multimodal query processing through\nintelligent coordination of specialized tools. The framework employs a central Supervisor that reads tool\nspecifications expressed as typed interfaces with preconditions, postconditions, and latency priors, makes\ncontextual routing decisions based on query characteristics and historical memory state, and dynamically\ndecomposes tasks for delegation to appropriate tools. This approach addresses the limitations of both\nmonolithic systems (which process all queries uniformly at high cost) and hierarchical routing (which relies\non predetermined decision trees). For perceptual workloads, the Supervisor routes to domain-optimized\ntools (e.g., detection, embedding, OCR, transcription) and then contextualizes their outputs for downstream\nsynthesis.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 2,
+    "total_chunks": 38,
+    "char_count": 1940,
+    "word_count": 248,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb2f1bb0-3048-42df-82b4-81dbd3626a27",
+    "text": "We validate our framework through comprehensive evaluation across 2,847 queries spanning 15 distinct\ntask categories drawn from standard benchmarks. Compared to a matched hierarchical baseline, our\napproach achieves 72% median reduction in time-to-accurate-answer with interquartile range of 65–77%, 85%\nreduction in conversational rework requiring user clarification or correction, 67% reduction in expensive model\ninvocations, and 20% improvement in concurrent throughput (54 vs 45 q/s) under realistic load conditions,\nall while maintaining accuracy parity within statistical variance. Perceptual tasks benefit from routing to\nspecialized models (e.g., object detection in 180 ms/frame) instead of end-to-end LLM vision approaches (e.g.,\n2.4 s/frame), reducing latency and cost while preserving accuracy. These results establish that intelligent\norchestration through composable supervision can fundamentally reshape the economics and scalability of\nmultimodal AI deployment without sacrificing response quality or system reliability. Our work intersects with four active research areas: agentic workflows for tool coordination, multi-agent\norchestration frameworks, cost-aware model routing strategies, and multimodal intelligence systems. advances demonstrate large language models' growing capability to interact with external tools and environments through learned action selection. ReAct [28] establishes a foundation by interleaving reasoning traces\nwith environment actions to reduce hallucination in complex decision-making tasks. Toolformer [21] extends\nthis capability by learning when to invoke external APIs through self-supervised training on annotated\ndemonstrations. MRKL [8] provides theoretical foundations for composing neural and symbolic modules\nwithin unified architectures, demonstrating that hybrid systems can leverage complementary strengths of\nlearned and engineered components. HuggingGPT [22] positions large language models as meta-controllers\nthat decompose user requests into subtasks, dispatch each subtask to appropriate specialist models from\nrepositories like Hugging Face, and synthesize partial results into coherent final responses. Concurrent\nmodel-centric multimodal systems, including GPT-4, Gemini, and open vision-language models such as\nLLaVA, substantially improve end-to-end capability but do not directly address orchestration-level cost and\nrepair policies [15, 5, 11]. While these approaches demonstrate effective tool utilization, they maintain fixed\norchestration architectures where the coordination logic remains embedded within the system. Our framework\nbuilds on these concepts by implementing a flexible centralized orchestrator that coordinates specialized tools\nthrough context-conditioned routing strategies rather than predetermined decision trees. Multi-agent orchestration frameworks provide infrastructure for coordinating multiple specialized components within complex workflows. AutoGen [26] introduces conversational patterns where agents negotiate\nthrough structured dialogue to resolve ambiguous requests and dynamically adjust execution strategies based\non intermediate results.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 3,
+    "total_chunks": 38,
+    "char_count": 3150,
+    "word_count": 387,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d2d593ca-2cef-485a-b0de-b7f0ab84c528",
+    "text": "LangGraph [9] extends this coordination through graph-based workflow specifications\nthat support branching, conditional execution, and cyclic dependencies. MegaAgent [25] demonstrates\nlarge-scale coordination across hundreds of specialized agents without requiring predefined standard operating\nprocedures, instead relying on learned negotiation protocols. Recent surveys [13, 27] highlight rapid progress\nin agent reasoning, planning capabilities, and the emergence of increasingly sophisticated coordination\nprotocols. ConAgents [23] introduces cooperative tool learning where agents jointly discover optimal tool\ncombinations through multi-agent reinforcement learning. However, existing frameworks maintain hierarchical\narchitectures where a central controller makes coordination decisions. Our centralized orchestration approach\nimplements an intelligent orchestrator that dynamically decomposes tasks, delegates to specialized tools, and\nsynthesizes results—enabling parallel processing, adaptive tool selection, and local failure recovery through\ncontext-conditioned routing rather than predetermined workflows. Cost-aware routing and model selection strategies address the economic challenges of deploying large\nlanguage models at scale. FrugalGPT [2] establishes a framework for adaptive model cascades that route\nqueries through progressively more capable models until quality thresholds are satisfied, achieving up to 98%\ncost reduction on certain workloads while maintaining acceptable accuracy. RouteLLM [14] trains learned\nclassifiers on human preference data to predict when queries benefit from powerful models versus when\nsmaller alternatives suffice, demonstrating over 50% reduction in expensive model invocations on benchmarks\nlike GSM8K and MT-Bench [3, 30]. Hybrid LLM [4] introduces confidence-based verification where smaller\nmodels attempt initial responses and escalate uncertain cases to stronger models, reducing premium usage\nby approximately 40% with minimal latency overhead. Cross-attention routing [17] explores sophisticated\nattention mechanisms for dynamic model selection based on query-specific features.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 4,
+    "total_chunks": 38,
+    "char_count": 2141,
+    "word_count": 258,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6f399f40-adf7-4d5e-b79b-aa92b0918639",
+    "text": "While these approaches\ndemonstrate substantial cost savings, they focus exclusively on text-only scenarios and optimize narrow\nmetrics like per-query expense rather than holistic user experience. Our framework extends cost-aware routing\nto multimodal contexts where perceptual decoding imposes baseline computational costs regardless of query\ncomplexity. Rather than optimizing cost in isolation, we optimize time-to-accurate-answer—a composite\nmetric that accounts for both response latency and rework probability—across all input modalities. The\napproach naturally reduces costs by minimizing expensive model invocations while prioritizing the user\nexperience dimensions that most strongly affect system utility and adoption. Our earlier work on resource-efficient multimodal intelligence [20] demonstrated the viability of coordinated\nprocessing across diverse modalities through conditional orchestration strategies. That framework routes\nqueries based on detected input characteristics using manually specified decision trees that enumerate\nanticipated patterns and their associated processing paths. Conditional systems require explicit specification of\nall routing paths, creating substantial maintenance burdens as capabilities expand and producing brittle failure modes when real-world queries fall outside the anticipated design space. When users submit queries with novel\nphrasing, unexpected modality combinations, or edge cases not considered during system design, conditional\norchestration lacks mechanisms for graceful degradation or adaptive response—instead failing entirely and\nforcing users to manually reformulate requests. Our centralized orchestration approach eliminates this\nbrittleness by treating coordination as a learned capability. The central orchestrator reads tool specifications\nexpressed as typed interfaces and makes contextual routing decisions based on query characteristics, historical\nmemory state, and real-time feedback signals. This architectural shift enables handling novel patterns without\nmanual intervention, composing optimal tool combinations dynamically rather than following fixed pathways,\nand recovering from failures through local repair mechanisms that address specific tool failures without\naffecting other pipeline components or requiring complete restarts. 3 Centralized Orchestration Architecture Figure 2 illustrates the centralized orchestration architecture, where the central orchestrator reads tool\nspecifications with formal type signatures, preconditions, postconditions, and latency priors, makes contextual\nrouting decisions based on query characteristics and memory state, and coordinates specialized tools through\ndynamic task decomposition and delegation. The architecture embodies three core design principles that\ncollectively enable autonomous adaptation to heterogeneous query patterns.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 5,
+    "total_chunks": 38,
+    "char_count": 2861,
+    "word_count": 348,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d67a1125-80b3-4203-99af-9ddb082a4539",
+    "text": "Tools coordinate as peers within a\ndynamic execution graph where the supervisor builds processing paths at runtime based on query requirements\nand tool capabilities, enabling branching for parallel processing across independent subtasks and local repair\nmechanisms when individual tools encounter failures—eliminating the cascading failure modes inherent in\nhierarchical pipelines where errors propagate through rigid execution sequences. Every tool including the\nsupervisor itself exposes formal interface specifications comprising input/output type signatures, preconditions\nthat must hold before invocation, postconditions guaranteed after successful execution, and empirical latency\ndistributions learned from historical performance data. These typed interfaces enable the supervisor to\nreason about tool capabilities and compose optimal execution strategies without maintaining hardcoded\nknowledge of specific tool implementations, supporting graceful degradation when preferred tools become\nunavailable and facilitating dynamic integration of new capabilities through standardized interface contracts. The supervisor transforms from fixed infrastructure into a reusable component that exposes the same interface\ncontract as the tools it coordinates, enabling recursive composition patterns where supervisors can coordinate\nother supervisors, embedding within larger orchestration hierarchies, chaining across distributed microservice\ndeployments, or deployment as independent coordination services—fundamentally changing orchestration\nfrom specialized infrastructure into general-purpose composable components. The centralized orchestration framework implements a sophisticated state management architecture based\non the LangGraph StateGraph computational model that enables seamless coordination across multiple\nspecialized agents while preserving contextual information throughout the query processing lifecycle. Each\nquery is represented by a structured state object Squery that encapsulates all information required for\nautonomous processing across agent transitions: Squery = {Quser, Kcost, Cquestclarify, Crespclarify, Aattach, Ccontext, Hsession} (1) where Quser represents the user's natural language query, Kcost specifies the selected cost optimization\ntier governing computational resource allocation, Cquestclarify and Crespclarify maintain bidirectional clarification\ndialogue when autonomous processing requires additional user input to resolve ambiguities, Aattach stores\nmultimodal attachments such as images, audio files, videos, or documents, Ccontext accumulates relevant\ncontextual information retrieved from memory systems or generated by intermediate processing stages, and\nHsession preserves session-level metadata including unique identifiers, timestamps, cumulative costs, and\nexecution traces that enable audit trails and debugging capabilities. This structured representation ensures\nthat all agents within the orchestration framework operate on a consistent view of query requirements and\naccumulated progress, eliminating information loss during handoffs and enabling sophisticated reasoning\nabout partial results generated by previous processing stages. State persistence and rehydration mechanisms implement zero-loss transitions between agent executions through serialization protocols that encode the complete state object into persistent storage indexed by\nsession identifiers. When an agent completes its processing responsibilities and prepares to transfer control to\nsubsequent pipeline stages, the state persistence function serialize(Squery) →storage(session_id) captures\nthe current state including all accumulated context, intermediate results, and metadata into a structured\nrepresentation suitable for storage in session-aware backends. Subsequent agents retrieve this preserved state\nthrough the rehydration function deserialize(storage(session_id)) →Squery that reconstructs the complete\nquery state object with perfect fidelity, enabling the receiving agent to continue processing with full knowledge\nof all prior operations, decisions, and accumulated information without requiring redundant recomputation or\ncontext reconstruction. This architecture eliminates cascading failures where information loss during agent\ntransitions forces downstream components to operate with incomplete context, often producing incorrect\nresults that necessitate expensive rework or user intervention to recover. The LangGraph StateGraph framework structures agent coordination as a directed acyclic graph where\nnodes represent specialized processing functions and edges encode conditional routing logic that determines\nexecution flow based on query characteristics and intermediate results.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 6,
+    "total_chunks": 38,
+    "char_count": 4726,
+    "word_count": 562,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "44a2dea6-dd8d-48b0-97ea-f1a7174b2c00",
+    "text": "The graph construction enables several\ncritical capabilities that distinguish centralized orchestration from traditional pipeline architectures. Parallel\nexecution emerges naturally when dependency analysis reveals that multiple agents can operate on independent\naspects of the query simultaneously without conflicts, reducing critical path latency from sequential summation\nof individual agent execution times to the maximum latency among any single execution path through the\ndependency graph. Dynamic branching allows the orchestrator to select agent invocation sequences at runtime\nbased on query complexity assessments, modality detection results, and confidence scores generated by\nprevious processing stages, rather than forcing all queries through identical predetermined sequences that\nwaste computational resources on unnecessary operations. Cycle detection and loop management enable\nsophisticated interaction patterns where clarification agents can iteratively refine their understanding of\nuser intent through multiple dialogue turns before committing to final processing strategies, with explicit\ntermination conditions preventing infinite loops while maximizing the probability of achieving user satisfaction\non the first complete execution attempt. The cost knob selector implements a three-tier optimization strategy that dynamically allocates computational resources based on query characteristics and user-specified cost preferences. The cost knob parameter\nK determines which computational tier handles query processing (Table 1): K ∈{open_src, closed_src, trad_couplet} (2)",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 7,
+    "total_chunks": 38,
+    "char_count": 1594,
+    "word_count": 198,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5899c24e-21b0-4ce3-a4da-63b9943a1ac8",
+    "text": "where each tier represents distinct trade-offs between computational expense, inference latency, and model\ncapability. The traditional couplet tier leverages the previously described Couplet Framework architecture\npairing domain-optimized traditional models (YOLO, CLIP, Tesseract) with lightweight small language\nmodel coordinators, achieving inference costs as low as $0.15 per million tokens while maintaining latency\ncharacteristics suitable for interactive applications through specialized model efficiency. The open source tier\nutilizes frontier open-weight large language models including LLaMA-3-70B, Mixtral-8x7B, and specialized\nderivatives like CodeLLaMA and MathLLaMA that deliver competitive performance on many tasks while\nmaintaining operational costs between $0.30 and $0.50 per million tokens, substantially below commercial\nofferings. The closed source tier provides access to the most capable proprietary models including GPT-4-class\nand Gemini-class systems [15, 5], achieving state-of-the-art performance on complex reasoning tasks at typical\ncosts ranging from $2.50 to $5.00 per million tokens depending on specific model selection and usage patterns. The cost knob selector evaluates incoming cost knob specifications and validates them against the set of\nsupported configurations, applying default assignment to the closed source tier when users provide invalid\nor unrecognized specifications to ensure system robustness against configuration errors. Session-level cost\ntracking accumulates expenses across all model invocations within a conversation, computing cumulative cost\nas:\nCsession = X (ctoken · |Ti| + capi) (3)\ni=1 where ctoken represents the per-token pricing for the selected model, |Ti| denotes the total token count for Tier Model Examples Cost per 1M tokens Primary Use Cases trad_couplet YOLO+SLM, CLIP+SLM $0.15–$0.25 Perceptual tasks, OCR\nopen_src LLaMA-3-70B, Mixtral $0.30–$0.50 General queries, coding\nclosed_src GPT-4o, Claude-3.5 $2.50–$5.00 Complex reasoning, planning Table 1: Cost knob selector three-tier strategy enables dynamic model selection across computational tiers, achieving\noptimal cost-performance trade-offs for heterogeneous query workloads.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 8,
+    "total_chunks": 38,
+    "char_count": 2207,
+    "word_count": 283,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "25c6738f-63e9-48e0-8c82-d6ab3469e8c6",
+    "text": "the i-th invocation including both input and output tokens, and capi accounts for fixed per-request overhead\ncharges that some providers impose regardless of token consumption. Session identifier generation combines\ntimestamp information with cryptographically random string suffixes to ensure global uniqueness across\nconcurrent conversations, enabling independent cost tracking and state management for multiple simultaneous\nusers without collision risks or cross-contamination between sessions. This three-tier architecture enables\nusers to explicitly control the cost-performance trade-off based on query importance, budget constraints, and\nlatency requirements, while the system maintains full transparency about resource consumption through\ndetailed session-level cost reporting. The query decomposition subsystem performs two-stage classification to determine optimal processing\nstrategies for incoming requests. The first stage analyzes any attached files or URLs to detect modality\ncharacteristics through combined heuristic analysis and content inspection. For URL-based attachments, the\nsystem extracts file extensions and validates them against known modality patterns, mapping extensions to\nmodality categories such as image formats (jpg, png, gif, webp), audio formats (mp3, wav, m4a, flac), video\nformats (mp4, avi, mov, mkv), and document formats (pdf, docx, xlsx, pptx). When file extension analysis\nproves ambiguous or unavailable, the system performs HTTP HEAD requests to inspect MIME type headers\nthat provide authoritative content type information directly from web servers, enabling accurate modality\ndetection even when URLs lack explicit file extensions due to content delivery network transformations or\ndynamic resource generation. For direct file uploads, the decomposition agent inspects binary file signatures\nand metadata structures to conclusively determine content type regardless of potentially misleading filename\nextensions that users might have modified.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 9,
+    "total_chunks": 38,
+    "char_count": 1991,
+    "word_count": 257,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b41222b-0278-48d7-9202-e17dd2a0d19e",
+    "text": "The second classification stage leverages a lightweight small language model (Phi-3.5-mini-instruct with 3.8\nbillion parameters) to perform semantic analysis of the user's natural language query and assign an execution\nflag that determines routing strategy. The flag assignment operates through probability maximization over\nthe discrete set of supported modality and processing categories: flag = arg max P(f|Quser, Mattach) (4)\nf∈F where F = {audio, video, vision, imagen, document, routellm, moe, complex} represents the complete set of\nexecution flags, Quser is the natural language query text, and Mattach encodes detected attachment modality\ncharacteristics from the first classification stage. The audio flag triggers specialized speech processing pipelines\nfor transcription, speaker diarization, or acoustic analysis. The video flag activates multi-modal pipelines\nthat coordinate frame extraction, visual analysis, audio transcription, and temporal alignment. The vision\nflag routes static image queries to computer vision processing including object detection, scene understanding,\nand visual question answering. The imagen flag identifies image generation requests requiring text-to-image\nsynthesis models. The document flag handles structured document processing including optical character\nrecognition, table extraction, and semantic document analysis. The routellm flag applies to text-only queries\nrequiring learned routing between strong and weak language models based on complexity prediction. The\nmoe flag activates mixture-of-experts coordination for queries that benefit from parallel processing across\nmultiple specialized models with ensemble aggregation. The complex flag identifies multi-step queries requiring\nsophisticated decomposition, sequential tool composition, and iterative refinement across multiple agent\ninvocations. The SLM classification model receives carefully engineered prompts that provide explicit examples of each\nflag category, describe the distinguishing characteristics that differentiate categories, and impose strict output Figure 2: Centralized orchestration architecture coordinating specialized tools across modalities through dynamic task\ndecomposition and delegation. format requirements to minimize hallucination risks and ensure deterministic parsing of model responses.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 10,
+    "total_chunks": 38,
+    "char_count": 2328,
+    "word_count": 291,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2246d3eb-0b04-45b2-8eee-45a957c6445e",
+    "text": "When the SLM assigns a non-text modality flag (audio, video, vision, imagen, document) but attachment\nanalysis detects no corresponding content, the validation logic performs safety reassignment to the moe flag\nto prevent execution failures from missing inputs, ensuring graceful degradation rather than catastrophic\nfailures when classification confidence proves misaligned with actual input characteristics. This two-stage\ndecomposition architecture combines the reliability and efficiency of heuristic attachment analysis with\nthe semantic understanding capabilities of language models, achieving over 96% classification accuracy on\nbenchmark datasets while maintaining end-to-end decomposition latency below 400 milliseconds including\nboth attachment inspection and SLM inference time. At the system level, our approach combines learned\ntext routing (via RouteLLM) with SLM-assisted modality decomposition for non-text paths. The Couplet Framework is an implementation detail used by the Supervisor to serve non-text modalities\nefficiently. Rather than routing all multimodal inputs through a general-purpose LLM, the Supervisor can\ndispatch perceptual subtasks to domain-optimized models (e.g., YOLO [19] for object detection, CLIP [18] for\nvisual-semantic retrieval, and OCR engines such as Tesseract) and then use lightweight language models to\n(i) translate natural language instructions into structured model inputs and (ii) contextualize model outputs\nback into task-relevant natural language. This preserves the paper's core contribution—Supervisor-driven\ncoordination and adaptive routing—while making perceptual processing cost- and latency-efficient [20]. The autonomous query processing ecosystem can be formally described through a mathematical framework\nthat captures centralized orchestration patterns. Let Q represent an input query with associated memory\ncontext M, and let T represent the complete set of specialized tools (Semantic Analyzer, Image, Audio,\nDocument, Memory, Orchestration, Complexity Analysis) coordinated by the central orchestrator. The ecosystem function F(Q, M) represents autonomous query processing where the orchestrator dynamically selects and coordinates specialized tools Tselected ⊆T based on query characteristics, memory context,\nand tool specifications to maximize expected success probability. Each specialized tool ti ∈T provides formal\ninterface specifications enabling the orchestrator to reason about capabilities and compose optimal execution\nstrategies. The execution graph consists of tool vertices and dynamic edges determined by query requirements\nand tool dependencies, enabling parallel execution and local repair mechanisms. Cost optimization balances\ncomputational expense with accuracy requirements, where the orchestrator minimizes expected total cost\nwhile maintaining accuracy constraints above specified thresholds. The centralized orchestration approach implements several key principles that distinguish it from predetermined workflow architectures.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 11,
+    "total_chunks": 38,
+    "char_count": 3022,
+    "word_count": 381,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "74f58cbe-4610-4385-9333-575d06ddb8ea",
+    "text": "Autonomous complexity-based routing avoids expensive models for simple\nqueries by dynamically assessing computational requirements. Direct modality-specific processing through\nthe Couplet Framework handles non-text inputs efficiently using specialized traditional models. Dynamic tool\ncomposition operates without predetermined workflows, enabling flexible response to diverse query patterns. Parallel execution manages dependencies intelligently, processing independent branches simultaneously to\nreduce latency. Local repair mechanisms avoid full pipeline restarts when individual tools encounter failures,\ninstead targeting recovery at the failure point.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 12,
+    "total_chunks": 38,
+    "char_count": 657,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c8406ddc-a76d-467b-b893-93d9d5c60750",
+    "text": "The system employs hybrid classification combining language\nmodel inference with traditional detection methods to identify query modalities and assess complexity through\nmulti-dimensional scoring of token count, semantic depth, multi-step indicators, and memory dependence. The Couplet pipeline can be summarized as: (1) parse the user's intent into a structured perceptual task,\n(2) execute the specialized model, and (3) contextualize the raw outputs into the response format required by\nthe Supervisor and downstream synthesis. In practice, this behaves like a typed tool invocation from the\nSupervisor's perspective (preconditions: modality present; postconditions: structured perceptual evidence),\nand is primarily valuable because it avoids using expensive multimodal LLM inference for routine perceptual\ndecoding. This approach leverages the computational efficiency and domain-specific accuracy of traditional perceptual\nmodels (often 50–200 ms per image/frame for detection) while keeping a natural language interface via\nlightweight coordination, making it a practical building block within Supervisor-driven orchestration. For text-only queries that lack modality-specific attachments, the framework employs RouteLLM integration to perform learned routing between strong and weak language models based on query complexity\nprediction [14]. The routing mechanism implements a two-stage classification pipeline that first predicts\nwhether a query benefits from powerful frontier models versus smaller specialized alternatives, then conditionally performs fine-grained subclassification for queries identified as weak to select the most appropriate\nlightweight model for the specific task characteristics. The Win-Prediction Model performs initial binary\nclassification through a learned function that estimates the probability that a strong model will produce\nsuperior results compared to weak alternatives:",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 13,
+    "total_chunks": 38,
+    "char_count": 1915,
+    "word_count": 246,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "89ade09f-ba3c-4dda-a176-ec02c6d3cb3f",
+    "text": "Quser) = WPM(Equery(Quser)) (5) where Equery represents a query embedding function that encodes semantic and structural features of the\ninput text, and WPM denotes the trained win-prediction classifier that outputs probability scores based on\nhistorical performance data comparing strong and weak model outputs across diverse query types. Queries\nexceeding a calibrated threshold probability (typically P > 0.4 based on empirical validation across benchmark\ndatasets) are classified as strong and routed directly to GPT-4o with full conversation history and retrieved\nmemory context, ensuring that complex reasoning tasks receive the computational resources necessary for\nhigh-quality results. Queries classified as weak undergo secondary subclassification into four specialized categories that enable\nfine-grained model selection optimized for specific task characteristics:",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 14,
+    "total_chunks": 38,
+    "char_count": 875,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d93e3e69-a377-4f66-9c44-b5fa97d076fc",
+    "text": "subflag = arg max P(s | where S = {coding, summarization_rewriting, analytical_maths, general} represents the set of weak query\nsubcategories. The coding subflag identifies programming-related queries including code generation, debugging assistance, algorithm explanation, and technical documentation that benefit from specialized codeunderstanding models like CodeLLaMA-34B or DeepSeek-Coder-33B which demonstrate superior performance\non software engineering tasks compared to general-purpose alternatives. The summarization and rewriting\nsubflag captures tasks involving text transformation, paraphrasing, condensation, or stylistic adaptation\nwhere models like LLaMA-3-8B-Instruct achieve high-quality results with minimal computational overhead. The analytical and mathematics subflag routes queries requiring numerical computation, statistical analysis,\nor mathematical reasoning to specialized models such as Mixtral-8x7B-Instruct that demonstrate strong\nquantitative reasoning capabilities through mixture-of-experts architectures. The general subflag serves",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 15,
+    "total_chunks": 38,
+    "char_count": 1065,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8cdd8fba-2679-411b-9424-ce3c93d96829",
+    "text": "as a catch-all category for routine conversational queries, simple information retrieval, and basic question\nanswering tasks that Phi-3.5-mini-instruct handles efficiently with its 3.8 billion parameter architecture\noptimized for instruction following. The routing strategy achieves substantial cost reduction while maintaining quality parity through intelligent\nmodel selection. Empirical evaluation across diverse benchmark datasets demonstrates that 96 percent of\nqueries are successfully classified as weak and handled by smaller specialized models, with the remaining 4\npercent of complex queries escalated to GPT-4o ensuring that challenging reasoning tasks receive appropriate\ncomputational resources. Quality validation through BERT similarity scoring between weak model outputs\nand GPT-4o reference responses achieves 94 percent average similarity across weak categories, confirming that\nlightweight models deliver functionally equivalent results for the vast majority of queries despite operating\nat substantially lower computational costs. The combined routing strategy yields 87 percent reduction in\ntotal inference cost compared to uniform GPT-4o deployment across all queries, while maintaining userperceived quality metrics including task completion rates and satisfaction scores within statistical parity of the\nbaseline. This learned routing approach demonstrates that intelligent complexity-based model selection can\nfundamentally reshape the economics of language model deployment without compromising user experience\nor system reliability. The central orchestration algorithm integrates the previously described components including state\nmanagement, cost knob selection, query decomposition, Couplet Framework processing, and RouteLLM\nrouting into a unified execution pipeline that autonomously processes heterogeneous multimodal queries. The algorithm operates through flag-based routing where the execution path adapts dynamically based on\ndetected query characteristics. For queries flagged as complex indicating multi-step reasoning requirements\nor sophisticated tool composition needs, the orchestrator invokes the handle multiple query function that\ndecomposes the request into independent subtasks, coordinates parallel execution across specialized agents, and\nsynthesizes partial results into coherent final responses. When the decomposition stage assigns the routellm\nflag to text-only queries, the system activates the previously described RouteLLM integration performing winprediction classification and conditional subflag routing to select optimal language models based on complexity\ncharacteristics. The moe flag triggers mixture-of-experts coordination where multiple specialized models\nprocess the query independently through parallel invocation, with ensemble aggregation functions combining\ntheir outputs based on confidence scores and domain-specific relevance metrics. Image and vision queries\nroute through the Couplet Framework pairing YOLO object detection or CLIP visual-semantic embedding\nwith SLM coordinators for efficient perceptual processing. Audio queries similarly leverage specialized speech\nprocessing models including Whisper for transcription paired with SLM contextualizers that format raw\ntranscripts into conversational responses. Video processing coordinates both visual and auditory analysis\npipelines with temporal alignment ensuring synchronized output generation. Document queries activate OCR\nprocessing through Tesseract or native PDF parsers depending on document characteristics, with subsequent\nsemantic analysis extracting structured information from parsed text.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 16,
+    "total_chunks": 38,
+    "char_count": 3634,
+    "word_count": 444,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a8a26be0-ec97-4d0a-9385-880042b2cacb",
+    "text": "Image generation requests flagged\nas imagen dispatch to text-to-image synthesis models including DALL-E or Stable Diffusion with prompt\nengineering assistance from SLMs to optimize generation parameters.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 17,
+    "total_chunks": 38,
+    "char_count": 203,
+    "word_count": 26,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0fb81ced-e136-4da8-9a52-9e02889ff237",
+    "text": "The orchestration algorithm incorporates sophisticated URL validation protocols that ensure attachment\naccessibility before attempting processing operations. When the query includes URL-based attachments, the\nvalidation pipeline performs three-tier verification: first, scheme validation confirms that the URL employs\nsupported protocols (http, https) rather than potentially unsafe alternatives; second, network reachability\ntesting issues HTTP HEAD requests to verify that the target server responds successfully without requiring\nfull content download; third, content-type verification inspects response headers to confirm that the MIME\ntype matches expectations based on the assigned processing flag. URLs failing any validation stage trigger\nfallback logic that first attempts to interpret the URL as a local file path in case users provided filesystem\nreferences rather than web resources, then propagates errors with informative diagnostic messages guiding\nusers toward resolution when both URL access and local file interpretation fail.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 18,
+    "total_chunks": 38,
+    "char_count": 1044,
+    "word_count": 136,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0a56255d-2d8a-452d-9e9b-ccb01d615354",
+    "text": "This validation architecture\nprevents wasted computational effort on inaccessible resources while providing clear feedback that enables\nusers to correct input specifications without requiring system-level debugging knowledge. The central orchestrator implements a sophisticated memory architecture that maintains modality-specific Figure 3: Modality-specific memory architecture with hierarchical layers and unified context scoring managed by the\ncentral orchestrator. context segregation while enabling strategic cross-modal information retrieval when beneficial for query\nprocessing [16, 10]. The memory system consists of five hierarchical layers, illustrated in Figure 3: M = {Mshort, Mfull, Mmodality, Mrelevant, Mcompressed}",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 19,
+    "total_chunks": 38,
+    "char_count": 730,
+    "word_count": 88,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3dce022e-8fcd-4daf-9590-28edf3d8724e",
+    "text": "where each layer serves distinct temporal and semantic functions within the autonomous query processing\necosystem. The modality-specific memory layer Mmodality maintains separate vector spaces for each input modality:\nMmodality = {Mtext, Mimage, Maudio, Mdocument, Mvideo}, where each modality-specific memory Mi preserves\ncontextual information optimized for that particular input type. The five-layer memory hierarchy provides\nspecialized context management capabilities tailored to different temporal and semantic requirements throughout query processing. The short-term memory layer Mshort maintains a sliding window over the most recent\nfive conversational turns, providing immediate context for pronoun resolution, coreference disambiguation,\nand continuation of ongoing dialogue threads without requiring vector search operations that would introduce\nlatency overhead. This layer implements constant-time access O(1) through simple circular buffer indexing,\nensuring that recent context retrieval adds negligible computational overhead to query processing pipelines. The full conversation history layer Mfull preserves complete interaction transcripts including all user\nqueries, system responses, intermediate reasoning traces, and metadata markers throughout the entire session\nlifetime, enabling comprehensive audit trails for debugging and compliance requirements while serving as\nthe source corpus for long-term pattern analysis and session summarization. This complete history supports\nretrospective analysis where users request summaries of earlier conversation segments, identification of\nrecurring themes across extended interactions, or explanation of system reasoning chains that led to specific\nconclusions. The modality-specific context layer Mmodality implements segregated storage where text memories\nreside in distinct vector spaces from image references, audio metadata, document extractions, and video analysis results, preventing cross-modal contamination where semantically similar but contextually distinct\nmemories from different modalities might interfere during retrieval operations, while maintaining explicit\ncross-references when specific memories legitimately span multiple modalities such as video content with\nassociated transcribed dialogue. The relevant query context layer Mrelevant performs semantic similarity search using Qdrant vector\ndatabase with HNSW indexing [12] to identify the top-k most contextually pertinent memories based on\nembedding distance from the current query. The retrieval pipeline encodes the user query using Azure\nOpenAI text-embedding-3-large model producing 1536-dimensional dense vectors, then executes approximate\nnearest neighbor search against the memory corpus using HNSW graph traversal with ef-construct parameter\nset to 100 and M parameter set to 16, balancing retrieval latency (typically 40–80 milliseconds for collections\nunder 10,000 entries) against recall quality. The system computes cosine similarity scores between query\nembeddings and stored memory embeddings, selecting the six highest-scoring memories for integration into\nthe orchestration context regardless of their temporal distance, enabling the framework to leverage relevant\ninformation from arbitrarily distant conversation history when semantic relevance justifies inclusion. The compressed context layer Mcompressed activates when full conversation history exceeds manageable\ncontext window sizes for downstream language models, applying LLM-based summarization to condense\nextended dialogue transcripts into semantically preserving abstracts that capture key facts, decisions,\nand outcomes while dramatically reducing token consumption. Compression triggers automatically when\nconversation length surpasses 8,000 tokens or when manual session summarization receives explicit user\nrequests, producing summaries typically achieving 10:1 to 15:1 compression ratios while maintaining essential\ninformation content validated through factual consistency metrics comparing compressed representations\nagainst source transcripts. This progressive summarization enables indefinitely long conversations without\ncontext window limitations that would otherwise force session termination or lossy truncation of historical\ninformation.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 20,
+    "total_chunks": 38,
+    "char_count": 4270,
+    "word_count": 522,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "75f0a1e1-f50e-4f5e-9d80-398399aca939",
+    "text": "The context integration strategy combines information from multiple memory layers through weighted\nconcatenation where each layer contributes according to empirically optimized coefficients: Cfinal = αMshort ⊕βMrelevant ⊕γMcompressed (7) where ⊕denotes concatenation with appropriate formatting delimiters, and the weights α = 0.6, β = 0.3,\nγ = 0.1 reflect the relative importance of recent conversational context (highest weight ensuring dialogue\ncontinuity), semantically relevant historical information (moderate weight enabling knowledge integration),\nand high-level session summaries (lowest weight providing background awareness without overwhelming\nimmediate context). These weights derive from grid search optimization across development datasets\nmeasuring downstream task accuracy, conversation coherence metrics, and user satisfaction scores as objective\nfunctions. The integrated context feeds directly into orchestrator reasoning processes, enabling memory-aware\ntool selection that adapts processing strategies based on accumulated knowledge about user preferences,\npreviously successful approaches, and domain-specific patterns identified through repeated interactions. Cross-modal memory retrieval implements semantic bridging where relevant information from one modality\ninforms processing of another modality, such as leveraging textual descriptions from previous image analyses\nto guide interpretation of new visual content in related domains, or using audio transcription patterns to\nimprove video processing strategies for speakers with consistent vocal characteristics. The memory scoring function employs multi-dimensional relevance assessment: Score(Mi, Q) = α·SemanticRelevance(Mi, Q)+β ·TemporalRecency(Mi)+γ ·ModalityAlignment(Mi, µ(Q))\n(8)\nwhere SemanticRelevance computes cosine similarity between memory and query embeddings, TemporalRecency\napplies exponential decay e−λ(tcurrent−ti) with modality-specific decay rates, and ModalityAlignment provides\nbonuses when memory modality matches query modality to prefer contextually appropriate retrievals. The\ntemporal weighting function applies modality-specific decay rates λi recognizing that visual information may\nretain relevance over different timescales compared to textual or audio contexts, with empirically determined\nrates of λtext = 0.15, λimage = 0.08, λaudio = 0.12, λdocument = 0.06, λvideo = 0.10 per conversational turn. This sophisticated memory architecture enables the orchestrator to maintain coherent conversational context\nspanning multiple modalities while optimizing retrieval efficiency through hierarchical storage strategies and\npreventing cross-modal interference through semantic segregation with controlled integration pathways. The ecosystem employs intelligent complexity assessment and cost-aware routing to optimize resource\nallocation across the multi-tier architecture, achieving efficiency gains while maintaining accuracy through\nadaptive escalation strategies that respond to query characteristics and system performance metrics [1]. Simple\nqueries identified through complexity scoring are efficiently handled by cost-effective open-source models that\nprovide adequate performance for routine tasks [24], while complex or ambiguous requests are escalated to\nhigh-performance large language models that can handle sophisticated reasoning and multi-step coordination\nrequirements. Non-text inputs bypass complexity scoring and are dispatched directly to modality-specific\ntools through the Supervisor's coordination of the Couplet Framework, since perceptual decoding imposes\nbaseline computational costs regardless of query complexity, making specialized processing more efficient\nthan general-purpose alternatives. The autonomous routing system optimizes expected time-to-accurate-answer rather than pure computational cost, recognizing that user experience depends critically on both response latency and answer quality\nin real-world deployment scenarios. Given LLM plan selection and system state, with execution latency and\naccuracy indicators, the expected time-to-accurate-answer satisfies the relationship that accounts for rework\nprobability, where our design reduces rework rates through memory-conditioned planning and verification\nwhile simultaneously reducing expected execution latency through parallel processing and intelligent module\nbypassing when components are unnecessary for specific queries.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 21,
+    "total_chunks": 38,
+    "char_count": 4428,
+    "word_count": 527,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9f36a4ac-2d41-4f3e-b61e-2ffcfe65e92b",
+    "text": "This optimization framework incorporates\nseveral mechanisms for reducing both components of the time-to-accurate-answer equation, including memoryaware planning that conditions tool selection on relevant historical context and previous interaction patterns,\nparallel execution that enables independent tool branches to run simultaneously when dependencies do not\nconflict, and intelligent bypassing that allows the system to skip unnecessary processing steps when input\ncharacteristics indicate they would not contribute to the final result. The routing complexity scales as O(|T | log |T |) for tool selection with |T | available tools, while parallel execution reduces critical path complexity from sequential O(Pti latency(ti)) to parallel O(maxti∈path latency(ti)),\nenabling throughput gains for complex multimodal queries. The cost-aware routing achieves over 67% reduction in expensive model usage while maintaining accuracy\nparity across diverse benchmarks, demonstrating that intelligent orchestration can fundamentally reshape AI\ndeployment economics without sacrificing quality or user experience. The system's ability to dynamically\nbalance cost and performance considerations enables organizations to deploy sophisticated AI capabilities\nat scale while maintaining operational efficiency and budget constraints. This approach demonstrates\narchitectural superiority over both monolithic deployment strategies that waste resources on simple queries\nand rigid routing systems that cannot adapt to changing requirements or optimize for multiple objectives\nsimultaneously. 4 Case Studies and Real-World Applications To demonstrate the practical effectiveness of centralized orchestration, we present detailed case studies\nillustrating how the system handles complex multimodal queries that challenge traditional approaches. Consider a complex query requiring integrated analysis across multiple lengthy documents: \"Analyze these\nthree quarterly reports, extract key financial metrics, compare trends across quarters, and generate a summary\nwith visualizations.\" The query includes three PDF attachments containing 45, 52, and 38 pages respectively\nof detailed financial information requiring sophisticated extraction, aggregation, and analytical processing. The Supervisor begins with complexity assessment, recognizing that the query demands multi-step reasoning\nacross multiple source documents with visualization requirements, leading to classification as a complex query\nrequiring sophisticated orchestration. The system then autonomously composes an optimal tool combination\nwithout following predetermined workflow patterns: Document Tools for OCR and parsing operations,\nMemory Tools for maintaining cross-document contextual relationships, Semantic Analyzer for extracting\nspecific financial metrics and identifying patterns, and Orchestration Tools for performing comparative trend Tier Latency (ms) Cost Red. Semantic Analyzer Tool Text LLM/SLM 450–1200 73%\nImage Tools Image/Video Couplet+SLM 800–2100 68%\nAudio Tools Audio Couplet+SLM 600–1800 71%\nDocument Tools PDF/Text OCR+SLM 900–2400 65%\nMemory Tools Context Vector DB 50–150 85%\nOrchestration Tools Multi-modal Multi-Agent 1200–3500 62%\nComplexity Analysis Tool Query Analysis SLM 200–600 78% Table 2: Tool specifications and performance metrics demonstrating plug-and-play architecture efficiency across\nmodalities.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 22,
+    "total_chunks": 38,
+    "char_count": 3391,
+    "word_count": 424,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "85b4e6fa-56a7-41b3-96cc-33d4005f7d22",
+    "text": "analysis across the temporal sequence of quarterly reports. The processing architecture enables parallel execution where three document processing branches operate\nsimultaneously rather than sequentially, each extracting tables and textual content from their respective\nquarterly reports without blocking on completion of others. The Couplet Framework plays a crucial role\nhere, leveraging traditional table detection models that efficiently identify structured financial data within\nthe documents while SLM coordinators contextualize the extracted findings within the broader analytical\nframework requested by the user. Finally, the Supervisor aggregates partial results from all parallel processing\nbranches, performs integrated comparative analysis identifying trends and anomalies across quarters, and\ngenerates a comprehensive natural language summary addressing all aspects of the original query. This\nautonomous orchestration achieves complete analysis in 8.3 seconds compared to 34.2 seconds required by\nhierarchical baseline systems (representing a 76% latency reduction), while also reducing follow-up corrections\nin line with the 85% rework reduction reported in Table 4.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 23,
+    "total_chunks": 38,
+    "char_count": 1182,
+    "word_count": 153,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "05da3fa9-e373-45dd-b832-2a859ae1305f",
+    "text": "The framework's multimodal capabilities are illustrated through a video analysis query: \"What products\nare shown in this advertisement video? Provide timestamps and descriptions.\" The user provides a 45-second\nvideo file with accompanying audio track, presenting a challenge that requires coordinated processing across\nboth visual and auditory modalities with precise temporal alignment. The hybrid modality classification\ndetector identifies the input as video content with an active audio track, triggering parallel processing\nstrategies that operate simultaneously across both modalities rather than forcing sequential processing that\nwould unnecessarily extend latency. The video processing branch performs frame extraction at appropriate\nintervals followed by YOLO object detection leveraging the Couplet Framework's architecture for efficient\nperceptual processing, while simultaneously the audio processing branch executes speech-to-text transcription\nfollowed by entity extraction identifying product names and descriptions mentioned in the advertisement's\nnarration. The Orchestration Tools then perform critical temporal alignment operations, synchronizing visual object\ndetections with corresponding audio mentions based on timestamp correlation, ensuring that the final output\naccurately reflects which products appear when and how they are described verbally. The SLM contextualizer\nproduces a coherent timestamped narrative that integrates findings from both visual and auditory analysis\nstreams, generating responses like \"At 0:12–0:18, the Nike Air Jordan sneakers appear prominently while the\nnarrator describes their comfort features\" that demonstrate sophisticated cross-modal understanding. The\nperformance characteristics highlight the value of the Couplet Framework approach: YOLO processing requires\nonly 180 milliseconds per frame compared to 2.4 seconds per frame for LLM-based vision approaches, enabling\nsubstantial system-level cost reductions (67% overall in Table 4) while maintaining strong accuracy through\nleveraging traditional models optimized specifically for perceptual tasks rather than forcing general-purpose\nlanguage models to perform inefficiently in domains outside their architectural strengths. The system's autonomous adaptation capabilities are demonstrated through a challenging edge case\ninvolving an intentionally underspecified query: \"Analyze this document\" with an attached scanned image of\nhandwritten notes that presents multiple processing challenges including ambiguous user intent and difficult\nperceptual characteristics. The Supervisor's initial processing attempt applies standard OCR tools optimized\nfor printed text, which predictably fail when confronted with handwritten content yielding low confidence\nscores and garbled output. Rather than propagating this failure through the entire pipeline or requiring",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 24,
+    "total_chunks": 38,
+    "char_count": 2872,
+    "word_count": 361,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a3502658-07ac-41f9-b3de-e018ccae5efd",
+    "text": "Case Study Modalities Tools Used Time (s) Baseline (s) Improvement Financial Analysis Document, Text 4 tools, parallel 8.3 34.2 76% faster\nVideo Advertisement Video, Audio 5 tools, parallel 12.7 45.8 72% faster\nHandwritten Notes Image, Text 3 tools, adaptive 6.1 28.5 79% faster\nMedical Image Report Image, Document 4 tools, Couplet 9.4 38.1 75% faster\nMulti-Language Audio Audio, Text 3 tools, sequential 5.8 19.3 70% faster Table 3: Case study performance demonstrating consistent improvements through autonomous tool composition,\nparallel execution, and local failure recovery. complete restart with user intervention, the local repair mechanism autonomously detects the low confidence\nscores indicating processing failure and dynamically selects alternative Vision Tools for direct image analysis\nthat can handle handwritten content more robustly. Recognizing that the query itself lacks specificity about what information the user seeks from the\nhandwritten notes, the system generates an autonomous clarification request: \"I notice this is handwritten. What specific information are you looking for?\" This intelligent clarification demonstrates the Supervisor's\nability to reason about query ambiguity and proactively seek the additional context needed for effective\nprocessing rather than simply failing or providing unhelpful results. When the user responds by specifying\ninterest in extracting dates and names from the handwritten notes, the Supervisor performs refined processing\nfocused specifically on those textual elements, applying targeted extraction algorithms tuned for date and\nname patterns rather than attempting generic full-text OCR. The complete processing sequence including\nfailure detection, tool switching, clarification interaction, and refined extraction completes in 6.1 seconds,\ncompared to complete failure requiring full restart with user intervention in hierarchical systems that would\nconsume 28.5 seconds total time including the manual reformulation overhead. This case study demonstrates\nthree critical capabilities absent in predetermined routing systems: autonomous detection of processing\nfailures through confidence monitoring, dynamic tool selection enabling local repair without global pipeline\nrestart, and intelligent clarification generation that helps users refine underspecified requests while maintaining\nconversational continuity. These detailed case studies (Table 3) collectively demonstrate five critical capabilities that distinguish\ncentralized orchestration from both monolithic and hierarchical approaches: first, the ability to autonomously\ncompose optimal tool combinations for complex queries without requiring manual specification of all possible\nprocessing paths; second, execution of parallel processing streams when dependency analysis reveals that\nmultiple operations can proceed simultaneously without conflicts; third, recovery from processing failures\nthrough local repair mechanisms that address specific tool failures without affecting other pipeline components\nor requiring expensive global restarts; fourth, efficient leveraging of traditional machine learning models\nthrough the Couplet Framework architecture that pairs domain-optimized perceptual models with lightweight\nlanguage model coordinators; and fifth, adaptive response to unexpected input characteristics including\nambiguous queries, difficult perceptual content, and novel modality combinations that fall outside anticipated\ndesign patterns, enabling graceful degradation and intelligent clarification rather than catastrophic failure. We evaluated the centralized orchestration framework on heterogeneous workloads spanning real-world\nmultimodal query types: text reasoning (MMLU [7]), document QA with PDF attachments, vision QA\n(VQA-v2 [6], multimodal reasoning variants [29]), audio processing, video analysis, and mixed retrieval tasks. Three comparison systems were used as baselines: first, a Monolithic LLM approach using GPT-4 for all\nqueries; second, hierarchical routing with predetermined decision trees; and third, state-of-the-art multi-agent\nframeworks including AutoGen and LangGraph. All baseline systems implement identical capabilities to the\nproposed framework, thereby isolating the effectiveness of the orchestration mechanism itself.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 25,
+    "total_chunks": 38,
+    "char_count": 4294,
+    "word_count": 547,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "23d7ad71-3889-44f7-bc90-d7bf724e0ed4",
+    "text": "The evaluation\ndataset consists of 2,847 queries across 15 task categories, all evaluated under identical conditions to ensure\nfair comparison. Performance is measured across multiple dimensions including time-to-accurate-answer Metric Hierarchical Centralized Improvement Test (p) Time-to-Answer (TTA ↓) 4.2s 1.18s 72% reduction p<0.001 Rework Rate (↓) 23% 3.4% 85% reduction p<0.001 Cost per Query (↓) $0.15 $0.05 67% reduction p<0.001 Throughput (q/s ↑) 45 54 20% increase p<0.01 Accuracy (↑) 99.8% 99.2% (95% Wilson CI: 98.9–99.5%) ±1% parity n.s.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 26,
+    "total_chunks": 38,
+    "char_count": 551,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "48d94027-db8c-4168-bc86-3891a2599332",
+    "text": "Table 4: Performance comparison (n=2,847 queries) against the matched hierarchical baseline. TTA is latency to\nfirst correct response, and rework is the share of queries requiring user clarification or correction. (TTA) representing end-to-end latency from query submission to correct response, rework rate measuring the\nfrequency of required clarifications or corrections, task accuracy assessing correctness of generated responses,\nsystem throughput quantifying queries processed per second, and cost per query accounting for computational\nresource consumption. The 2,847-query evaluation set is grouped into 15 categories: text reasoning, coding assistance, analytical\nmathematics, summarization and rewriting, general question answering, document QA, OCR extraction,\ntable extraction, vision QA, object detection, audio transcription, audio reasoning, video analysis, mixed\nretrieval, and complex multi-step orchestration. The corpus combines benchmark-derived samples for\ntext/document/vision tasks with curated multimodal prompts for audio, video, and mixed-modality scenarios,\nfollowing the same workload construction principles established in our prior study [20]. Category assignment\nis performed using the decomposition taxonomy and then manually verified to ensure category consistency\nacross modalities and difficulty levels. To ensure fair comparison, we instantiate baselines with matched capabilities and tool access. The\nmonolithic baseline routes all queries to a single frontier model without decomposition or selective routing. The hierarchical baseline uses fixed decision-tree routing over the same modality and task categories but does\nnot perform local repair after mismatch or failure. The multi-agent baselines (AutoGen and LangGraph) use the same underlying tool set and memory\nbackend as our system, with identical query inputs and evaluation protocol.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 27,
+    "total_chunks": 38,
+    "char_count": 1879,
+    "word_count": 245,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dc12f27f-7162-40ec-a832-5ce920dc25bb",
+    "text": "Under this setup, measured\ndifferences primarily reflect orchestration policy rather than tool availability. Primary quantitative deltas are reported against the matched hierarchical baseline in Table 4; monolithic\nand multi-agent baselines are used as supplementary checks for robustness and qualitative behavior. TTA is measured as wall-clock latency from query submission to the first response judged correct (benchmark ground truth for closed-form tasks and rubric-based LLM-as-judge verification for open-ended tasks). Rework is the proportion of queries requiring at least one user-initiated clarification or correction before completion. Reported p-values are two-tailed, using Wilcoxon signed-rank tests for paired latency/cost/throughput\ncomparisons and McNemar's test for paired accuracy.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 28,
+    "total_chunks": 38,
+    "char_count": 798,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c4402039-cbc1-41d6-b42e-329557bd56ce",
+    "text": "As shown in Table 4, the framework achieves 72% median TTA reduction (IQR: 65–77%), consistent\nacross query types. Conversational rework decreased by 85%, demonstrating that autonomous coordination\nand verification significantly reduce follow-up corrections. Task accuracy remains within ±1% of baselines,\nconfirming efficiency gains do not compromise quality. Across modalities, all query types show 65–77% TTA reduction and 82–89% rework reduction, validating\ncentralized orchestration effectiveness. Performance improvements stem from several key mechanisms: local\nrepair addresses failures without complete restarts, adaptive routing uses explicit attachment analysis to\nmatch tools to query characteristics, and parallel execution processes independent branches simultaneously. The Couplet Framework further enables traditional models to handle specialized tasks efficiently (YOLO\nachieves 180ms/frame compared to 2.4s/frame for LLM vision approaches). System throughput improved 20% (54 vs 45 q/s), demonstrating scalability through efficient resource\nutilization and reduced computational waste. This gain results from reduced context-switching overhead,\nintelligent batching of independent tool invocations, and elimination of redundant processing steps that\nhierarchical systems cannot detect.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 29,
+    "total_chunks": 38,
+    "char_count": 1302,
+    "word_count": 161,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf13b9b8-7339-4b5b-81b2-927289f2e058",
+    "text": "Confidence intervals remain tight across all metrics. Median TTA reduction remains in the 65–77% range,\nwith 95% confidence intervals spanning only 4–6 percentage points, suggesting performance gains generalize (%) 80 73 77 71 69 TTA Reduction68 65\nRework Reduction\n60 Reduction 20 Time-to-Answer 0\nText Image Audio Document Video Mixed Figure 4: Performance improvements across modalities showing consistent 65–77% TTA and 82–89% rework\nreduction. 0.2 0.19\n0.18\n0.17 Hierarchical\n0.16\n($) 0.15 0.15 Centralized\nQuery 0.12 0.1\nper 7 · 10−2 6 · 10−2\n5 · 10−2 5 · 10−2 5 · 10−2\n5 · 10−2 Cost\n2 · 10−2",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 30,
+    "total_chunks": 38,
+    "char_count": 598,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0cfaa481-5193-4cfb-b7ea-9692c9766876",
+    "text": "Semantic Image Audio Document Memory Orchestration Figure 5: Cost analysis by tool category showing 62–85% reduction with Memory Tools achieving highest efficiency. broadly rather than resulting from optimization for specific benchmark characteristics. Figure 4 shows consistent performance gains across all query modalities. Text queries achieve 73% TTA\nreduction, image processing shows 68% improvement, audio queries deliver 71% gains, document processing\nprovides 65% reduction, video analysis achieves 69% improvement, and mixed-modal queries show 77% TTA\nreduction.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 31,
+    "total_chunks": 38,
+    "char_count": 571,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2d59e821-7f43-4ec5-82c9-f3b4001211ce",
+    "text": "These results confirm that centralized orchestration effectively coordinates diverse specialized tools\nregardless of input modality. The consistency across modalities indicates that the orchestration approach\ngeneralizes effectively rather than optimizing for only one input type. Mixed-modal queries show the highest\nimprovement, suggesting that benefits compound when coordinating tools across multiple modalities, where\nthe centralized orchestrator can leverage cross-modal context and optimize resource allocation more effectively\nthan modality-specific hierarchical routers. Latency analysis indicates that three factors account for most of the observed speedup: parallel execution\nof independent tool branches, local repair that avoids expensive global restarts, and intelligent tool selection\nthat prevents over-provisioning of expensive models. These reductions are achieved while maintaining accuracy\nparity. Figure 5 shows that centralized orchestration delivers substantial economic benefits. Semantic tools show\n72% cost reduction, image processing achieves 67% savings, audio tools deliver 69% reduction, document\nprocessing provides 65% improvement, memory tools achieve the highest efficiency at 85% cost reduction,\nand orchestration tools demonstrate 62% savings. These results validate that intelligent tool coordination\nsignificantly reduces computational expenses while maintaining quality standards. Ablation studies quantify individual component contributions to overall framework performance. Removing\nmemory layers caused 28% TTA regression with 95% confidence interval of 24–32% and statistical significance of p < 0.001, demonstrating the critical importance of context-aware planning for efficient query processing.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 32,
+    "total_chunks": 38,
+    "char_count": 1741,
+    "word_count": 215,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9f9ff5fb-3d70-482e-8802-540475e92e12",
+    "text": "Disabling verification increased rework substantially, confirming the value of integrated output validation in\nreducing user corrections. The full system achieves baseline performance of 1.18 seconds TTA with 3.4%\nrework rate. Configuration without memory layers shows +28% TTA impact and +35% rework impact. Removing verification yields +18% TTA impact and +58% rework impact. Disabling parallel execution\nresults in +42% TTA impact and +22% rework impact. Removing the Couplet Framework causes +45%\nTTA impact and +15% rework impact. Comparison with mechanical routing shows predetermined decision trees fail on 23% of edge cases (95% CI:\n19–27%) that autonomous coordination handles successfully, confirming centralized orchestration superiority.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 33,
+    "total_chunks": 38,
+    "char_count": 749,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fe23a127-d541-461d-9269-1be49bd3e549",
+    "text": "The framework implements all utilities as typed tools with unified interfaces ⟨signature, preconditions,\npostconditions, latency priors⟩, enabling plug-and-play architecture. Table 2 summarizes the tool categories\nused in this implementation. The Supervisor autonomously composes optimal tool combinations from Semantic\nAnalyzer, Image, Audio, Document, Memory, Orchestration, and Complexity Analysis tools. Memory layers\nwith highest context scores are merged into planning context: Score(Ci) = α · Ri + β · Ti + γ · Mi (9) where Ri is semantic relevance, Ti is temporal recency, Mi is modality alignment. Attachment typing combines\nSLM classifiers with traditional detection including file extensions and MIME types. Document Tools select\nOCR for scanned PDFs versus native parsers for text-based documents. The Couplet Framework coordinates\ntraditional models such as YOLO, CLIP, and Whisper through SLM interfaces that handle decomposition and\ncontextualization stages. Verification leverages tool-aware prompts and execution traces, where failures trigger\ndynamic reselection without requiring complete restarts. Structured logging captures tool names, arguments,\nlatencies, and memory access patterns for complete audit trails. The central orchestrator exposes standardized\ninterfaces enabling microservice deployment or integration within larger systems.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 34,
+    "total_chunks": 38,
+    "char_count": 1361,
+    "word_count": 179,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cae25cff-cac8-4292-8a56-0f41d084051f",
+    "text": "Human-in-the-loop hooks\nrequest clarification when confidence falls below predefined thresholds. While our framework achieves substantial improvements, several limitations warrant acknowledgment. First,\nLLM-based orchestration introduces latency for extremely high-throughput scenarios, though this is partially\nmitigated by the multi-tier architecture. Second, the Couplet Framework currently supports a fixed set of\ntraditional models including YOLO, CLIP, Tesseract, and ResNet, where expansion to additional models\nrequires manual integration. Third, memory optimization becomes computationally intensive for very long\nconversational sessions. Fourth, autonomous routing occasionally exhibits over-conservative escalation to\nmore expensive models when simpler alternatives might suffice.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 35,
+    "total_chunks": 38,
+    "char_count": 791,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "72f25d52-5125-4b0f-9ebd-b9d12826c671",
+    "text": "Future research directions include developing learned calibration systems that provide stronger priors\nfor tool quality and latency estimates based on historical performance data and query characteristics. Advanced memory compression techniques could enable extremely long sessions without context degradation or\nperformance decline. Federated orchestration approaches would coordinate multiple decentralized supervisors\nacross distributed environments for highly scalable deployments. Finally, expanding the Couplet catalog\nthrough automated integration of new traditional models via meta-learning approaches would reduce manual\nimplementation overhead. We presented a centralized orchestration framework for multimodal AI query processing. The multi-tier\narchitecture integrates LLMs, SLMs, and traditional models via our Couplet Framework, achieving 72% TTA reduction, 85% rework reduction, and 67% cost reduction while maintaining accuracy parity.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 36,
+    "total_chunks": 38,
+    "char_count": 951,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "20ff60a4-0e5d-4195-a2f6-f083a6b0d2ab",
+    "text": "The centralized orchestration approach eliminates brittle conditional logic and cascading failures characterizing predetermined hierarchical systems, replacing them with autonomous decision-making that adapts to\nquery complexity through adaptive routing strategies. The framework's modular design enables integration\nwithin larger systems or microservice deployment. This work establishes foundations for scalable AI deployment prioritizing both technical excellence and\neconomic sustainability—demonstrating that intelligent coordination of specialized components outperforms\nmonolithic solutions across all measured dimensions.",
+    "paper_id": "2603.11545",
+    "title": "One Supervisor, Many Modalities: Adaptive Tool Orchestration for Autonomous Queries",
+    "authors": [
+      "Mayank Saini Arit Kumar Bishwas"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11545v1",
+    "chunk_index": 37,
+    "total_chunks": 38,
+    "char_count": 629,
+    "word_count": 69,
+    "chunking_strategy": "semantic"
+  }
+]

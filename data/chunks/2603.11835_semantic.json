@@ -1,0 +1,1208 @@
+[
+  {
+    "chunk_id": "abf1359f-9370-48be-b14d-11be28382cb2",
+    "text": "Hypercomplex Widely Linear\nProcessing\nFundamentals for Quaternion Machine Learning2026 Sayed Pouria Talebia and Clive Cheong Tookb\naComputer Science Department, University of Roehampton, London WC2R-2LS, U.K.,Mar\nbElectronic Engineering Department, Royal Holloway University of London, TW20 0EX, U.K.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 0,
+    "total_chunks": 67,
+    "char_count": 300,
+    "word_count": 36,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "feee0dfd-4f49-4199-8055-280c5b30a044",
+    "text": "Numerous attempts have been made to replicate the success of complex-valued\nalgebra in engineering and science to other hypercomplex domains such as\nquaternions, tessarines, biquaternions, and octonions. Perhaps, none have\nmatched the success of quaternions. The most useful feature of quaternions\nlies in their ability to model three-dimensional rotations which, in turn, have[stat.ML] found various industrial applications such as in aeronautics and computer graphics. Recently, we have witnessed a renaissance of quaternions due to the rise of\nmachine learning. To equip the reader to contribute to this emerging research\narea, this chapter lays down the foundation for • augmented statistics for modelling quaternion-valued random processes,\n• widely linear models to exploit such advanced statistics,\n• quaternion calculus and algebra for algorithmic derivations,\n• mean square estimation for practical considerations. For ease of exposure, several examples are offered to facilitate the learning,\nunderstanding, and (hopefully) the adoption of this multidimensional domain.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 1,
+    "total_chunks": 67,
+    "char_count": 1079,
+    "word_count": 150,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4bd6dd32-4781-4392-9677-b7344cc3a3b5",
+    "text": "Keywords: Quaternion Algebra; Augmented Quaternion Variable; Augmented\nQuaternion Statistics; HR-Calculus; Quaternion-Valued Learning Techniques.arXiv:2603.11835v1\nMATHEMATICAL NOMENCLATURE Nomenclature: Scalars, column vectors, and matrices are denoted by lowercase, bold lowercase, and bold uppercase letters respectively. The remainder of\nnomenclature is summarised as follows:",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 2,
+    "total_chunks": 67,
+    "char_count": 380,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "20a6efe3-309d-4549-b3a1-a798cfd140c0",
+    "text": "N set of natural numbers\nR set of real-valued numbers R+ set of positive real-valued numbers\nC set of complex-valued numbers\nH set of quaternion-valued numbers\nℜ{·} operator returning the real component\nℑ{·} operator returning the imaginary component\n{𝚤, 𝚥, 𝜅} imaginary units spanning the imaginary subspace of H\n𝜂 a generic imaginary unit, which can be one of {𝚤, 𝚥, 𝜅}\nℑ𝜒(·) operator returning the imaginary component alongside 𝜒∈{𝚤, 𝚥, 𝜅}\n∥· ∥ second-order norm\nI identity matrix of appropriate size\n(·)∗ conjugate operator\n(·)T transpose operator\n(·)H Hermitian operator\n𝑒 Euler's number\nE {·} statistical expectation operator\n𝜕 partial derivative operator\nd total differential operators\n∇𝜒 gradient operator with respect to 𝜒\ndet (·) determinant operator\n⟨·, ·⟩ inner product\n× cross product Multidimensional signal processing is typically associated with the real domain,\nR, and the vector space. Perhaps, a possible explanation for this assumption lies\nin the maturity of these domains over the hypercomplex domain of quaternions. Indeed, quaternions remain a relatively unexplored area in multidimensional signal processing. This presents opportunities for further research. To exploit such\nopportunities, this chapter aims to present the fundamentals of this hypercomplex domain based on the so-called widely linear processing model introduced\nin Section 6.4. This model implies that considering a quaternion variable in\nisolation is not sufficient to describe or capture the complete information of the\nquaternion. The aim of this chapter is to address this shortcoming.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 3,
+    "total_chunks": 67,
+    "char_count": 1581,
+    "word_count": 237,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "631a3077-00fc-4b15-af7b-b6939cdee344",
+    "text": "We first\nstart with the history of quaternions to put in context the recent advances in\nquaternion-valued signal processing. The need for a number system beyond R became pressing in the 16th century\nwith the quest to derive a general solution to find roots of polynomials of arbitrary\ndegree. Most notable in this area is the work of Niccolo Tartagila and Girolamo\nCardano, who contributed to closed-form solutions for finding roots of polynomials of third and fourth degree Mandic and Goh (2009). Rafael√Bombelli, in his\nwork on the roots of cubic polynomials introduced the symbol −1 and showed that to solve for the roots of such polynomials it is necessary to perform calculations in C Mandic and Goh (2009). The timeline on the research into roots of\npolynomials culminates in the fundamental theory of algebra by Carl Friedrich\nGauss, proving that polynomials of degree 𝑛have exactly 𝑛roots in C. Perhaps\nthe best insight to complex-valued numbers comes from Leonhard Euler, who\nexpressed complex numbers in their polar format, that essentially equate multiplication and division to rotations in the two-dimensional plane of the complex\nfield. Regarded as \"the most remarkable formula in mathematics\" by Richard\nFeynman, the formulation introduced by Euler later became the cornerstone of\ncomplex-valued transforms of real-valued signals for frequency analysis. In all\nfields of engineering and physics, energy waves, e.g. sound, electromagnetic and\ngravitational waves, are transformed into complex-valued frequency domain representations where solving the differential equations that govern their behaviour\nis a more straightforward affair A. Rutledge\n(2002); Desoer and Kuh (2009); Phillips (2003).",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 4,
+    "total_chunks": 67,
+    "char_count": 1707,
+    "word_count": 258,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b5437ad8-c0bc-4d12-bf2a-d629c03c63ba",
+    "text": "Although complex-valued signals could be processed as a vector of their real\nand imaginary parts, this approach leads to the loss of important notions such\nas phase and frequency. The need for complex-valued adaptive processing that\ntreated complex-valued signals directly in the complex domain was recognized\nby Bernard Widrow leading to the derivation of the complex least mean square\nalgorithm, an extension of his famous least mean square algorithm Widrow et al.\n(1975). Perhaps one of the most insightful developments in this field is that the\ncovariance, E zzH , needs to be augmented with a pseudo-covariance E zzT\nto represent the full second-order statistical information Mandic and Goh (2009);\nP. To better demonstrate this point consider the standard covariance E zzH = E xxT + E yyT + 𝚥 E yxT −E xyT (6.1) and pseudo-covariance E zzT = E xxT −E yyT + 𝚥 E xyT + E yxT (6.2) where z = x + 𝚥y with {x, y} ∈R𝑛. Note that the second-order information of\nneither the real nor imaginary segments of z is inferable from the standard or\npseudo-covariances. However, in conjunction, second-order information of the\nreal and imaginary segments of z and their second-order dependencies can be\ninferred via linear manipulations of the covariance and pseudo-covariance. The quaternion story begins with Sir William Rowan Hamilton. Concerned\nwith constructing a framework for modelling three-dimensional spaces in a\nmanner analogous to that achieved through complex-valued algebra for twodimensional spaces, Hamilton came to the conclusion that this can only be made\npossible through a number system that has three imaginary units that admit a\nspecial set of relations. As the story is told, these relations dawned on Hamilton during a walk with his wife. Recognizing their importance and not wanting to\nmiss the opportunity, Hamilton carved these relations onto Brougham Bridge\nin the best known act of scientific graffiti Voight (2021).",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 5,
+    "total_chunks": 67,
+    "char_count": 1935,
+    "word_count": 313,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "99e33793-ba7c-4f2d-97ab-5176506d91da",
+    "text": "Hamilton focused\non deriving a model to explain movement and orientation in three-dimensional\nspaces, resulting in an algebra that is most effective in modelling real-world\nphenomena in our three-dimensional surroundings. Moreover, the resulting\nquaternion algebra itself is a four-dimensional one. Hamilton surmised that\nquaternions could model space and time simultaneously in a letter to Sir John\nHerschel Hankins (1977), writing; \"... how the one of time, of space the three,\nmight in the chain of symbols, girdled be. It is not so much to be wondered that\nthey should have let me to strike out some new lines of research, which former\nmethods have failed to suggest.\" Indeed, quaternions have seen use in quantum\nmechanics and formulation of space-time relativity where, as one example, the\nquaternion four-dimensional algebra has allowed to simultaneously formulate\nrotational and compression gradients Finkelstein et al. (2004); Phillips (2003). The most common use of quaternions has been in modelling rotation and\norientation, ranging from aerospace applications Kuipers (1999); Crassidis et al.\n(2007) to computer graphics Shoemake (1985). However, the ability of quaternions to model physical phenomena has been useful in a wider range of applications. One example is the work of James Clark Maxwell on the derivation\nof his famous equations of electromagnetism Maxwell (1873); Voight (2021).1\nModern applications of the high-dimensional division algebra that quaternions\nprovide include modelling and analysis of multi-phase power systems Talebi and\nMandic (2015); Nos (2016); Brasil et al. (2018), body motion tracking Tobar and\nMandic (2014), three-dimensional sound processing Comminiello et al. (2019);\nS. Mars (2006), colour image processing Pei and\nCheng (1999), communication techniques that adopt space-time-polarisation\nmultiplexing Stern and Fischer (2018); Seberry et al. (2008); Zhang et al. (2025),\nand quantum computing Kliuchnikov and Yard (2015); Talebi et al. (2025). Akin to the importance of complex-valued adaptive processing techniques\nfor complex-valued signals, it has come to the attention of the signal processing,\nmachine learning, and control communities that it is best to process quaternionvalued signals directly in the quaternion domain where they reside. This reserves\nthe physical meaning of the derived models, allows for straightforward analysis\nof the operations and obtained results, as well as, preserving the notion of division within the algebra used for deriving adaptive signal processing techniques. In order to make the quaternion domain accessible, this chapter aims to equip\nthe reader with the necessary algebraic, statistical, and calculus tools to derive\nand analyse in this multidimensional domain. In Section 6.2, quaternion algebra\nand involutions are revised. Moreover, in Section 6.2, the augmented approach",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 6,
+    "total_chunks": 67,
+    "char_count": 2873,
+    "word_count": 419,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c7acbd6f-1ebe-4383-83bc-76ca19c429a3",
+    "text": "1 Despite Maxwell being one of the proponents for the use of quaternion algebra, his work on\nelectromagnetism was later re-derived in their current vector algebra formulation by Oliver\nHeaviside Hampshire (2018); Heaviside (1920). for dealing with quaternions is presented. In Section 6.3, second-order statistics\nof quaternion-valued random processes, such as correlation and autocorrelation\nfunctions, are presented and the reader is introduced to a comprehensive framework for statistical analysis of quaternion-valued random processes. Based on\nthe augmented approach and statistics of quaternion-valued signals, the widely\nlinear model and minimum mean square error (MMSE) estimator are derived\nin Section 6.4.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 7,
+    "total_chunks": 67,
+    "char_count": 715,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "13aa676c-0133-4434-ba8a-adf3725ded89",
+    "text": "In Section 6.5, the HR-calculus is presented and the reader is\nintroduced to important tools of the HR-calculus. Finally, in Section 6.5, the\nreader is introduced to the framework for deriving quaternion-valued adaptive\nlearning techniques. 6.2 QUATERNION ALGEBRA\nOn the most fundamental level, a quaternion variable 𝑞∈H, consists of a real\nsegment, ℜ(𝑞), and a three-dimensional imaginary segment, ℑ(𝑞), so that we\ncan write\n𝑞= ℜ{𝑞} + ℑ{𝑞} (6.3)\nIn order to express ℑ{𝑞} in the imaginary subspace of H, three orthonormal\nimaginary units that span this space need to be selected.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 8,
+    "total_chunks": 67,
+    "char_count": 579,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2f639915-29ca-4b31-bd6d-d60fce62122f",
+    "text": "They are generally\ndenoted as 𝚤, 𝚥, and 𝜅. These imaginary orthonormal units admit the following\nproduct rules Hamilton (1844) 𝚤𝚥= 𝜅, 𝚥𝜅= 𝚤, 𝜅𝚤= 𝚥, 𝚤2 = 𝚥2 = 𝜅2 = 𝚤𝚥𝜅= −1 (6.4) In this setting, one can express 𝑞∈H as 𝑞= ℜ{𝑞}+ℑ{𝑞} = ℜ{𝑞}+ℑ𝚤{𝑞}+ℑ𝚥{𝑞}+ℑ𝜅{𝑞} = 𝑞𝑟+𝚤𝑞𝚤+ 𝚥𝑞𝚥+𝜅𝑞𝜅(6.5) with {𝑞𝑟, 𝑞𝚤, 𝑞𝚥, 𝑞𝜅} ∈R. It is important to note that the selection of imaginary\nunits spanning the imaginary subspace of H is not unique. Indeed, in some\ncases, a change in the three imaginary orthonormal units is used to simplify the\nanalysis. We will demonstrate this later in the chapter when presenting derivative\nrules.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 9,
+    "total_chunks": 67,
+    "char_count": 604,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "990b8526-566e-468c-82b7-334a5b434dcb",
+    "text": "As a direct result of the relations in (6.4) quaternion product operations become non-commutative, but under exceptional circumstances. To better demonstrate this point, let us multiply both sides of 𝚤𝚥𝜅= −1 by 𝚤and carry-out the\nsubstitution 𝜅= 𝚤𝚥from (6.4) to arrive at where replacing 𝚤2 = −1 from (6.4) yields Now, multiplying both sides of (6.7) by 𝚥gives where replacing 𝚥2 = −1 and 𝚤𝚥= 𝜅from (6.4) yields that is a different result from 𝚤𝚥= 𝜅which was given in (6.4). More generally, the product of 𝑞1, 𝑞2 ∈H can be found through componentwise multiplication of their constituent elements and using the product rule in\n(6.4) resulting in 𝑞1𝑞2 =ℜ{𝑞1}ℜ{𝑞2} (6.10)\n+ ℑ𝚤{𝑞1}ℑ𝚤{𝑞2} + ℑ𝚥{𝑞1}ℑ𝚥{𝑞2} + ℑ𝜅{𝑞1}ℑ𝜅{𝑞2}\n+ ℜ{𝑞1}ℑ𝚤{𝑞2} + ℑ𝚤{𝑞1}ℜ{𝑞2} + ℑ𝚥{𝑞1}ℑ𝜅{𝑞2} + ℑ𝜅{𝑞1}ℑ𝚥{𝑞2}\n+ ℜ{𝑞1}ℑ𝚥{𝑞2} + ℑ𝚤{𝑞1}ℑ𝑘{𝑞2} + ℑ𝚥{𝑞1}ℜ{𝑞2} + ℑ𝜅{𝑞1}ℑ𝚤{𝑞2}\n+ ℜ{𝑞1}ℑ𝑘{𝑞2} + ℑ𝚤{𝑞1}ℑ𝚥{𝑞2} + ℑ𝚥{𝑞1}ℑ𝚤{𝑞2} + ℑ𝜅{𝑞1}ℜ{𝑞2} which can also be formulated using inner product, ⟨·, ·⟩, and cross product, ×, in\nthe imaginary subspace of H as 𝑞1𝑞2 =ℜ{𝑞1}ℜ{𝑞2} + ℜ{𝑞1}ℑ{𝑞2} + ℜ{𝑞2}ℑ{𝑞1}\n(6.11)\n+ ℑ{𝑞1} × ℑ{𝑞2} + ℑ{𝑞1}, ℑ{𝑞2} ℑ{𝑞1}, ℑ{𝑞2} =ℑ𝚤{𝑞1}ℑ𝚤{𝑞2} + ℑ𝚥{𝑞1}ℑ𝚥{𝑞2} + ℑ𝜅{𝑞1}ℑ𝜅{𝑞2} (6.12)\n𝚤 𝚥 𝜅\nℑ(𝑞1) × ℑ(𝑞2) =det −𝚤ℑ𝚤{𝑞1} −𝚥ℑ𝚥{𝑞1} −𝜅ℑ𝜅{𝑞1} (6.13) ©­ ª®\n−𝚤ℑ𝚤{𝑞2} −𝚥ℑ𝚥{𝑞2} −𝜅ℑ𝜅{𝑞2} «   ¬\ndefine the inner and cross product over the three-dimensional imaginary quaternion sub-space. From (6.11) note that if 𝑞1 and 𝑞2 have parallel imaginary\nsegments, i.e. ∃𝛼∈R : ℑ{𝑞1} = 𝛼ℑ{𝑞2}; then, the cross product tends to\nzeros, that is ℑ(𝑞1)×ℑ(𝑞2) = 0, and thus, the product becomes commutative. In\nessence, under the stated condition, 𝑞1 and 𝑞2 lie in a subspace of H spanned by\nthe real axis and ℑ{𝑞1} (or equivalently ℑ{𝑞2}). Since ℑ2{𝑞1} ∈(−∞, 0), this\nsubspace admits a complex-valued algebra making multiplication commutative. Finally, it is needless to say that for the case where 𝑞1 and/or 𝑞2 have vanishing\nimaginary parts, that is ℑ{𝑞1} = 0 and/or ℑ{𝑞2} = 0, ℑ(𝑞1)×ℑ(𝑞2) = 0 making\nthe product commutative.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 10,
+    "total_chunks": 67,
+    "char_count": 1976,
+    "word_count": 323,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7e1953ce-100c-409b-94d5-ca000e945c81",
+    "text": "The quaternion conjugate is defined as which allows the second-order norm, hereafter referred to as norm of 𝑞for\nconciseness, to be defined as",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 11,
+    "total_chunks": 67,
+    "char_count": 142,
+    "word_count": 23,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7434d7df-1137-4f6b-b98a-97ba827f362a",
+    "text": "√︃ ∥𝑞∥= √︁ 𝑞𝑞∗= 𝑞2𝑟+ 𝑞2𝚤+ 𝑞2𝚥+ 𝑞2𝜅 (6.15) In turn, this allows an inverse to be defined as\n∀𝑞∈H\\{0} : 𝑞−1 = (6.16)\n∥𝑞∥2\nIn general, for every two quaternion-valued numbers, 𝑞1 and 𝑞2, the following\nproperties follow from the definitions of norm and conjugate\n∥𝑞1𝑞2∥= ∥𝑞1∥∥𝑞2∥\n𝑞1 ∥𝑞1∥\n= 𝑞2 ≠0 (6.17) 𝑞2 ∥𝑞2∥where\n(𝑞1𝑞2)∗=𝑞∗2𝑞∗1\nAs a direct result of non-commutativity of quaternion products, quaternions do\nnot constitute a field.2 However, given that quaternions admit multiplicative\ninverse, that is an inverse over H\\{0} as defined in (6.16), quaternions admit the\ndefinition of a group under multiplication and constitute a division ring (also\nknown as a skew field) Voight (2021).3 For consistency, hereafter, operations\non vectors and matrices as pertaining to their scalar elements are carried out in\nthe same order as the vectors and matrices are written. For example,\n𝑏1 for 𝑎1, 𝑎2, 𝑏1, 𝑏2 ∈H : 𝑎1 𝑎2 = 𝑎1𝑏1 + 𝑎2𝑏2 (6.18) 𝑏2\nIn a similar fashion to complex numbers, a quaternion 𝑞∈H can alternatively\nbe expressed by its polar presentation, given by Said et al. (2008)\n𝑞= ∥𝑞∥𝑒𝜉𝜃= ∥𝑞∥ cos(𝜃) + 𝜉sin(𝜃) (6.19) where\nℑ(𝑞) ∥ℑ(𝑞)∥\n𝜉= and 𝜃= atan\n∥ℑ(𝑞)∥ ℜ(𝑞)\nMoreover, it is straightforward to prove that the sin(·) and cos(·) functions can\nbe expressed as 1 1 sin(𝜃) = 𝑒𝜉𝜃−𝑒−𝜉𝜃 and cos(𝜃) = 𝑒𝜉𝜃+ 𝑒−𝜉𝜃 (6.20)\n2𝜉 2\nwhere 𝜉2 = −1. Note that the real axes and 𝜉denote a plane in the quaternion\ndomain. As 𝜉2 = −1 this plane denotes a complex-valued algebra which yields\nthe formulations of sin(·) and cos(·) functions in (6.20). Thus, the formulations\nin (6.20) are not unique, as 𝜉can be replaced with an arbitrary quaternion, 𝜉′,\nas long as 𝜉′2 = −1 Talebi (2016). 2 On the most elementary level, a field is set on which addition and multiplication operations can\nbe defined in a manner that satisfies the field axioms (associativity, commutativity, distributively,\npresence of identity, and presence of an inverses) for both addition and multiplication operations. For more details on abstract algebras we refer the keen reader to Allenby (1991).\n3 A division ring, also referred to as a skew field, is a ring in which every non-zero element has a\ntwo-sided inverse Voight (2021).",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 12,
+    "total_chunks": 67,
+    "char_count": 2182,
+    "word_count": 372,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5bfaea25-f735-4aba-8466-e8efc63f1ecd",
+    "text": "6.2.1 Three-Dimensional Rotations The polar presentation of quaternions in (6.19) allows for rotations in threedimensional spaces to be modelled using the quaternion division algebra, which\nhas become perhaps the best known application of quaternions. To this end,\nconsider a rigid body that is put through a rotation. The attitude change of\nthis body can be presented in the Cartesian coordinate system using a single\nright-hand rotation of that body by an angle of 𝜃degrees about an axis 𝜂parallel\nto the direction that is unchanged by the rotation Brechet (2022). Moreover, as\nshown in Figure 6.1, the three-dimensional Cartesian coordinate system can be\nconsidered as representing the imaginary sub-space of a quaternion skew field,\nso that 𝜂= 𝜂𝑥, 𝜂𝑦, 𝜂𝑧 can be presented as 𝜂= 𝚤𝜂𝑥+ 𝚥𝜂𝑦+ 𝜅𝜂𝑧. In this setting,\nthe vector presetting the pre- and post-rotation orientation of the object, 𝑞pre and\n𝑞post, are related as",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 13,
+    "total_chunks": 67,
+    "char_count": 920,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "579a2697-e03b-4456-97fe-acd120d9a7f7",
+    "text": "𝜃 𝜃\n2 = cos + 𝜂sin (6.21) 𝑞post = 𝜇𝑞pre𝜇−1 with 𝜇= 𝑒𝜂𝜃\n2 2 Rotation Plane\nqpost ( u′) ℑı { ⋅} ( x axes) qpre ( u ) FIGURE 6.1 Schematic of a rotation around 𝜂by an angle of 𝜃, with 𝑞pre and 𝑞post pointing to\nthe pre- and post-rotation orientation of the object in question. The advantages of modelling three-dimensional rotations employing quaternions as compared to rotation matrices are summarized in the following Spring\n(1986); Shoemake (1985); Kuipers (1999): • A rotation matrix, R, derived based on Euler's theorem must satisfy the\nunitary condition RRT = I. Therefore, due to finite precision of computer\ncalculations, the need might arise to calibrate the rotation matrix after many rotations have been performed, which is computationally expensive, whereas no such operation is required when modelling rotations with quaternions Talebi\n(2016).\n• Expressing a sequence of rotations applying the roll, pitch, and yaw angles, a\ndegree of freedom is lost when one of the angles reaches 𝜋/2, referred to as\nan algebraic gimbal lock. However, this is not the case for quaternions where\nonly the angle and the axis of rotation are required.\n• It is straightforward to produce smooth interpolations of rotations when they\nare modelled with quaternions allowing for higher quality computer graphics Shoemake (1985). A detailed trade-offbetween quaternion model for rotations and other approaches\nfor modelling rotations in three dimensions can be found in Spring (1986). 6.2.2 Quaternion Involutions Let us start with recalling the expansion for rotations given in (6.21) for the case\nof 𝜃= 𝜋that results in\n𝜋 𝜋\n𝜇= 𝑒𝜂𝜋2 = cos + 𝜂sin = 𝜂 (6.22)\n2 2 where 𝜂is a unit pure imaginary quaternion, that is ℜ{𝜂} = 0 and ∥𝜂2∥= 1\n(resulting in 𝜂2 = −1). Furthermore, let us implement the operation in (6.21) on\na general quaternion number 𝑞∈H. In this setting, we have",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 14,
+    "total_chunks": 67,
+    "char_count": 1860,
+    "word_count": 314,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2adf6dbe-88c5-46f8-ab1a-012c1459d7a9",
+    "text": "𝜇𝑞𝜇−1 =𝜂(ℜ{𝑞} + ℑ{𝑞}) 𝜂−1 = 𝜂ℜ{𝑞}𝜂−1 + 𝜂ℑ{𝑞}𝜂−1\n(6.23)\n=ℜ{𝑞} + 𝜂ℑ{𝑞}𝜂−1 where we have used (6.22) and 𝜂ℜ{𝑞}𝜂−1 = 𝜂𝜂−1ℜ{𝑞} = ℜ{𝑞}. In essence,\nthe operation in (6.23) rotates the imaginary segment of 𝑞around 𝜂by 𝜋while\nleaving the real segment of 𝑞unchanged. This is visualized in Figure 6.2 for\nthe case of involution around 𝜅. This is somewhat reminiscent of the complex\nconjugate operation. Under complex conjugate operation, the real segment of\na complex number will remain unchanged, while it can be interpreted that the\nimaginary segment is rotated around the origin by 𝜋. Indeed, it is this rotation\nthat allows for 𝑧∈C and its conjugate 𝑧∗to provide two different perspectives\nof the complex-valued number 𝑧. Thus, accommodating for i) the real and\nimaginary components of complex-valued numbers to be separable under simple\nlinear manipulations, ii) the covariance and pseudo-covariance to hold different\nstatistical information, e.g. see (6.1)-(6.2), iii) treating 𝑧∈C and its conjugate\nas algebraically independent Mandic and Goh (2009); Kreutz–Delgado (2006);\nT. Scharf (2011).4 We seek to provide similar\nfunctionality to the complex-conjugate in the quaternion realm. 4 From algebraic independence, we refer to the fact that for 𝑧∈C we have 𝜕𝑧∗=𝜕𝑧 𝜕𝑧∗𝜕𝑧 =\n0 Kreutz–Delgado (2006). ′𝚥{ ℑ} ′𝚥{ ℑ}\nProjection of q on to 𝚥 axis\nq q\nRotation of κ around the centre ′ı{ ℑ} ′ı{ ℑ}\nProjection of q on to the ı ⋅θ plane ′𝚥{ ℑ} ′𝚥{ ℑ} Projection of q𝚥 on to the ı ⋅θ plane\nq𝚥 q Rotation of κ around the centre q𝚥 q ′𝚥{q} and ′𝚥{q} ′θ{q𝚥} ′ı{q𝚥}\n′θ{ ℑ} ′θ{ ℑ}\n′ı{q}\n′θ{q}\n′ı{ ℑ} ′ı{ ℑ} Projection of q on to the ı ⋅θ plane",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 15,
+    "total_chunks": 67,
+    "char_count": 1624,
+    "word_count": 280,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fbb112b9-c233-4857-a2b3-74b690e6e062",
+    "text": "FIGURE 6.2 Schematic demonstrating 𝑞∈H along side its involution 𝑞𝜅. The real axis has been\nomitted for simplicity as ℜ{𝑞} does not change under quaternion involutions. In the top left graph,\n𝑞(in black), its projection onto the 𝚤−𝚥plane (in blue), and its projection onto the 𝜅axis (in red) is\nshown. In the top right graph, projection of 𝑞onto the 𝚤−𝚥plane is rotated around the centre by 𝜋. In the bottom left graph, 𝑞𝜅is constructed from the projection of 𝑞onto the 𝜅axis and the rotated\nprojection of 𝑞onto the 𝚤−𝚥plane. In the bottom right graph, all elements of 𝑞and 𝑞𝜅are shown\ntogether.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 16,
+    "total_chunks": 67,
+    "char_count": 595,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7e9e7d1f-5806-4206-8b3e-bea5c0a56cf7",
+    "text": "Strictly speaking, an involution is defined in mathematics as a mapping that\nis its own inverse. However, when it comes to quaternions, involutions depict\na specific set of mappings Ell and Sangwine (2007). For the purposes of this\nchapter, we consider quaternion involution, hereafter referred to as involutions\nfor conciseness, to be defined as",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 17,
+    "total_chunks": 67,
+    "char_count": 346,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "94b08733-f987-4b17-b9cb-9152c098f090",
+    "text": "∀𝑞, 𝜁∈H and 𝜁≠0 : 𝑞𝜁≜𝜁𝑞𝜁−1 (6.24) which we refer to as involution of 𝑞around 𝜁. Now, consider the following\ninvolutions around {𝚤, 𝚥, 𝜅} given by Ell and Sangwine (2007) 𝑞𝚤=𝑞𝑟+ 𝚤𝑞𝚤−𝚥𝑞𝚥−𝜅𝑞𝜅\n𝑞𝚥=𝑞𝑟−𝚤𝑞𝚤+ 𝚥𝑞𝚥−𝜅𝑞𝜅 (6.25)\n𝑞𝜅=𝑞𝑟−𝚤𝑞𝚤−𝚥𝑞𝚥+ 𝜅𝑞𝜅 The mappings in (6.25) allow the real-valued components of quaternions to be expressed using the linear operations Took and Mandic (2011)\n𝑞𝑟=1 (𝑞+ 𝑞𝚤+ 𝑞𝚥+ 𝑞𝜅) 𝑞𝚤= 1 𝑞𝚤−𝑞𝚥−𝑞𝜅) 4 4𝚤(𝑞+\n(6.26)\n1 1\n𝑞𝚥= 4𝚥(𝑞−𝑞𝚤+ 𝑞𝚥−𝑞𝜅) 𝑞𝜅= 4𝜅(𝑞−𝑞𝚤−𝑞𝚥+ 𝑞𝜅) Furthermore, the quaternion conjugate can be formulated as 1 𝑞∗= ℜ(𝑞) −ℑ(𝑞) = (𝑞𝚤+ 𝑞𝚥+ 𝑞𝜅−𝑞) (6.27) 6.2.3 The Augmented Quaternion Approach In this section, we aim to construct a framework for processing quaternion-valued\nsignals with the following crucial characteristics: • The framework must be constructed so that most concepts in real-valued\nstatistical analysis and calculus, such as covariance, expectation, derivatives,\nand direction of steepest descent, can be extended to the quaternion domain\nin an intuitive and straightforward manner.\n• The framework must be able to preserve all calculations and mathematical\noperations within the quaternion division algebra. In order to achieve the first goal, we need a basis to relate a quaternion-valued\nsignal to its real-valued components. To this end, we start with defining the\ninvolution operation on a quaternion vector as the element-wise implementation of that involution on the components of the quaternion vector, that is, for\n{𝑞1, . . . , 𝑞𝑛} ∈H and 𝜁∈H, we have\n𝑞1 𝜁 𝑞𝜁1\nq𝜁= ... = ... (6.28) ©­­ ª®®® ª®® ©­­­ 𝑞𝑛 𝑞𝜁𝑛 «   ¬ «   ¬\nNow, using the relation in (6.26) we can formulate the relation between q and its\nreal-valued components as Took and Mandic (2011) q𝑟 I I I I q\nq𝚤 1 −𝚤I −𝚤I 𝚤I 𝚤I q𝚤\n= (6.29) q𝚥 4 −𝚥I 𝚥I −𝚥I 𝚥I q𝚥\nq𝜅 −𝜅I 𝜅I 𝜅I −𝜅I q𝜅      \nand hence\nq I 𝚤I 𝚥I 𝜅I q𝑟\nq𝚤 I 𝚤I −𝚥I −𝜅I q𝚤\n= (6.30)\nq𝚥 I −𝚤I 𝚥I −𝜅I q𝚥\nq𝜅 I −𝚤I −𝚥I 𝜅I q𝜅       where q𝑟= 𝑞1𝑟, . . . , 𝑞𝑛𝑟 T with q𝚤, q𝚥, q𝜅defined similarly.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 18,
+    "total_chunks": 67,
+    "char_count": 2070,
+    "word_count": 363,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "57700b2c-f6f7-465f-85d5-fd0ad27224c2",
+    "text": "Note that (6.29)\nfollows directly from generalising the relations in (6.26) into a vector format. Perhaps, the most important step in the formulation of the augmented approach is using {q𝚤, q𝚥, q𝜅} alongside q in order to establish a linear operator that\nmaps q to its real-valued components. In essence, the involutions of q around\nthe orthonormal axes 𝚤, 𝚥, and 𝜅, allow the four-dimensional quaternion q to\noffer four different perspectives that pose complementary information. This is a\ncrucial concept when it comes to dealing with quaternions. We therefore denote\nthe augmented vector as q𝑎and its mapping A to its real-valued counterpart as q I 𝚤I 𝚥I 𝜅I\nq𝚤 I 𝚤I −𝚥I −𝜅I q𝑎= and A = (6.31)\nq𝚥 I −𝚤I 𝚥I −𝜅I\nq𝜅 I −𝚤I −𝚥I 𝜅I    \nwhere the mapping A can be straightforwardly inverted as A−1 = 4AH (6.32)\nThis augmented basis is used in Section 6.4 to derive a framework for quaternion\ncalculus. Prior to the introduction of the quaternion calculus, next section shows\nhow the augmented basis enables the capture of complete statistical information\nof the quaternion space in the context of sufficient statistics. 6.3 AUGMENTED STATISTICS\nAs the autocorrelation 𝑟𝑐(ℓ) is widely used in signal processing, it is considered\nin this chapter to illustrate how the quaternion involutions in (6.25) can augment\nthe second order statistics beyond the traditional definition of the autocorrelation,\nwhich is given by 𝑟𝑐(ℓ) = E {𝑞(𝑛)𝑞∗(𝑛−ℓ)} (6.33) Recall that the autocorrelation 𝑟𝑐(ℓ) is conjugate symmetric, i.e. 𝑟𝑐(ℓ) = 𝑟∗𝑐(−ℓ). Moreover, the autocorrelation 𝑟𝑐(ℓ) reaches its maximum at ℓ= 0, i.e. 𝑟𝑐(0) ≥\n𝑟𝑐(ℓ) ∀ℓ≠0. The quaternion involutions in (6.25) mean that it is no longer\nsufficient to consider only the autocorrelation in (6.33). In other words, the\nsecond order statistics of quaternion variables need to be augmented with the\n𝜂-autocorrelations 𝑟𝜂(ℓ), which can be formulated as\n𝑟𝜂(ℓ) = E {𝑞(𝑛)𝑞𝜂∗(𝑛−ℓ)} (6.34) Note that the 𝜂-autocorrelation 𝑟𝜂(ℓ) is conjugate 𝜂-symmetric, i.e. 𝑟𝜂(ℓ) =\n𝑟𝜂∗𝜂(−ℓ).",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 19,
+    "total_chunks": 67,
+    "char_count": 2038,
+    "word_count": 328,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3802a3cb-fc08-4d23-977a-92cbe6a09c34",
+    "text": "For completeness, the pseudo-autocorrelation 𝑟𝑝(ℓ) is also defined in\nH as 𝑟𝑝(ℓ) = E {𝑞(𝑛)𝑞(𝑛−ℓ)} (6.35) Finally, all autocorrelations 𝑟(ℓ) in (6.33)-(6.35) are symmetric in terms of the\nabsolute magnitude, i.e. |𝑟(ℓ)| = |𝑟(−ℓ)| for pure5 quaternions. See Figure 6.3\nfor illustration. Moreover, these autocorrelations are related as follows 𝑟𝑝(ℓ) = 𝑟𝚤(ℓ) + 𝑟𝚥(ℓ) + 𝑟𝜅(ℓ) −𝑟𝑐(ℓ) (6.36) As one of these autocorrelations can be inferred from the other four autocorrelations, any four of these autocorrelations provide sufficient second order statistics,\nin general. There are special cases, however, when only two or three of these\nautocorrelations offer sufficient statistics, see Cheong Took et al. (2024).",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 20,
+    "total_chunks": 67,
+    "char_count": 705,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "076dbd4d-14e0-4683-8a24-c348939744de",
+    "text": "80 73 50\n43.23 43.23\n60 40 35.85\n|rc| 40 |ri| 3024.16 24.16\n24.16 22.23 22.23 24.16 20\n20 10 0 0\n-2 -1 0 1 2 -2 -1 0 1 2 63.2\n50 46.27 46.27 60 30 32.35 40\n|rj| 24.16 24.16 |rk| 24.16 24.16\n20 18.07 18.07 0 0\n-2 -1 0 1 2 -2 -1 0 1 2 Full quaternion Pure quaternion\n80 80\n64.49 66\n60 60 20 24.16 20.48 27.22 24.16 2019.92 17.1 17.1 19.92 0 0\n-2 -1 0 1 2 -2 -1 0 1 2",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 21,
+    "total_chunks": 67,
+    "char_count": 364,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "113bfbe1-5c48-4b46-ae26-526f4adcf5fe",
+    "text": "FIGURE 6.3 Absolute magnitude of autocorrelations as a function of lag. Bottom row: The\nleft plot shows the non-symmetric pseudo-autocorrelation of full quaternion sequence, whereas the\nright plot shows its symmetric pseudo-autocorrelation, if its imaginary part was considered as pure\nquaternions. q(𝑛) = −1 −10𝚤+ 𝚥−𝜅, −2 −4𝚤−6𝚥+ 3𝜅, −4 −5𝚤+ 3𝚥+ 𝜅 (6.37) The following MATLAB code shows the computation of the sample estimate of\n𝚤-autocorrelation. The autocorrelations of (6.37) are provided in (6.38)-(6.42). 5 For full quaternions, their absolute magnitudes are also symmetric except for 𝑟𝑝(ℓ). 1 %Quaternion examplar sequence\n2 q =[ q u a t e r n i o n ( −1 , −10 ,1 , −1) q u a t e r n i o n ( −2 , −4 , −6 ,3) q u a t e r n i o n\n( −4 , −5 ,3 ,1) ] ;\n3 %Computation of i −a u t o c o r r e l a t i o n\n4 r _ i =conv ( q , conj ( f l i p l r ( i n v i j k ( q , ' i ' ) ) ) ) / l e n g t h ( q ) ;\n5 %P l o t the a b s o l u t e i −a u t o c o r r e l a t i o n f o r v i s u a l symmetricity\n6 f i g u r e , stem ( k , abs ( r _ i ) ) , g r i d\n7 y l a b e l ( ' | r _ i | ' )\n8 x l a b e l ( ' $\\ mathbf {\\ e l l }$ ' , ' i n t e r p r e t e r ' , ' l a t e x ' ) Example 1 uses the quaternion toolbox Sangwine and Bihan (2005) and the function invijk(q,'i') in line 4 implements the 𝚤−involution, which can be downloaded\nat here. r𝑐= 𝑟𝑐(−2), 𝑟𝑐(−1), 𝑟𝑐(0) , 𝑟𝑐(1), 𝑟𝑐(2) = 18.67 + 10.33𝚤−5.33𝚥+ 10𝜅, 15.33 + 13.33𝚤−0.33𝚥−9𝜅, 73 , 15.33 −13.33𝚤+ 0.33𝚥+ 9𝜅, 18.67 −10.33𝚤+ 5.33𝚥−10𝜅 (6.38) r𝚤= 𝑟𝚤(−2), 𝑟𝚤(−1), 𝑟𝚤(0) , 𝑟𝚤(1), 𝑟𝚤(2) = 17.33 + 13𝚤−0.67𝚥−10.67𝜅, 31.33 + 1.33𝚤+ 22.33𝚥+ 19.67𝜅, 35 + 4𝚥−0.67𝜅 , (6.39) 31.33 −1.33𝚤+ 22.33𝚥+ 19.67𝜅, 17.33 −13𝚤−0.67𝚥−10.67𝜅",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 22,
+    "total_chunks": 67,
+    "char_count": 1672,
+    "word_count": 408,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "61004b6e-1520-41ea-8422-720ce045aa63",
+    "text": "r𝚥= 𝑟𝚥(−2), 𝑟𝚥(−1), 𝑟𝚥(0) , 𝑟𝚥(1), 𝑟𝚥(2) = −14 + 14.33𝚤+ 4.67𝚥+ 12.67𝜅, −24.67 + 20.67𝚤+ 15𝚥−29.67𝜅, −28.33 + 14.67𝚤−5.33𝜅 , (6.40) −24.67 + 20.67𝚤−15𝚥−29.67𝜅, −14 + 14.33𝚤−4.67𝚥+ 12.67𝜅 r𝜅= 𝑟𝜅(−2), 𝑟𝜅(−1), 𝑟𝜅(0) , 𝑟𝜅(1), 𝑟𝜅(2) = −16.67 + 15.67𝚤−4𝚥−6.67𝜅, −8.67 + 12.67𝚤−7.67𝚥+ 5.67𝜅, −51.67 + 36𝚤−5.33𝚥 , (6.41) −8.67 + 12.67𝚤−7.67𝚥−5.67𝜅, −16.67 + 15.67𝚤−4𝚥+ 6.67𝜅 rFull𝑝 = 𝑟𝑝(−2), 𝑟𝑝(−1), 𝑟𝑝(0) , 𝑟𝑝(1), 𝑟𝑝(2) = −16 + 16.33𝚤+ 2.67𝚥−7.33𝜅, −8.67 + 10.67𝚤+ 15𝚥+ 2.33𝜅, −59 + 25.33𝚤−0.67𝚥−6𝜅 , (6.42) −8.67 + 22.67𝚤−0.33𝚥−12.33𝜅, −16 + 13.67𝚤−7.33𝚥+ 9.33𝜅 rPure𝑝 = 𝑟𝑝(−2), 𝑟𝑝(−1), 𝑟𝑝(0) , 𝑟𝑝(1), 𝑟𝑝(2) = −17.33 + 1.33𝚤+ 5𝚥−8.33𝜅, −12 −6𝚤+ 7.67𝚥+ 7.33𝜅, −66 , −12 + 6𝚤−7.67𝚥−7.33𝜅, −17.33 −1.33𝚤−5𝚥+ 8.33𝜅 (6.43)",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 23,
+    "total_chunks": 67,
+    "char_count": 711,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4a53c9fb-1cf7-4697-873b-8d72e308c034",
+    "text": "The last equation (6.43) shows the conjugate symmetric pseudo-autocorrelation\nof (6.37) if its imaginary part is modelled as a pure quaternion sequence. Figure\n6.3 shows the absolute values of the autocorrelations in (6.38)-(6.43). Observe\nthe symmetries for all autocorrelation sequences, except for 𝑟Full𝑝 (ℓ). Note the conjugate 𝜂-symmetricity in (6.39)-(6.41). For example, in (6.39),\n𝑟𝚤(−1) = 𝑟𝚤∗𝚤(1) = 31.33 + 1.33𝚤+ 22.33𝚥+ 19.67𝜅. In other words, only the\n𝚤imaginary components are conjugate of each other at ℓ= 1, −1. Moreover,\n𝚤-imaginary component vanishes at ℓ= 0. As expected, the pseudo autocorrelation in (6.42) is not symmetric, since\n𝑟𝑝(ℓ) ≠𝑟𝑝(−ℓ) due to the non-commutativity of the quaternion product. However, if the imaginary parts of quaternion sequence in (6.37) are considered\nas pure quaternions, then the pseudo autocorrelation becomes symmetric as in In this particular scenario (6.43), 𝑟𝑝(ℓ) = −𝑟𝑐(ℓ), see Cheong Took et al.\n(2024) for further details. 6.3.1 The Autocorrelation Matrices Following the definition of these autocorrelations, their matrix counterparts can\nnow be introduced.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 24,
+    "total_chunks": 67,
+    "char_count": 1116,
+    "word_count": 164,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5bb8b9e3-defc-4731-bbe3-4c691b745fc6",
+    "text": "q(𝑛) = 𝑞(𝑛), 𝑞(𝑛−1), . . . , 𝑞(𝑛−𝐿) (6.44) of 𝐿+ 1 quaternion values. Then, its outer product is 𝑞(𝑛)𝑞𝜂∗(𝑛) 𝑞(𝑛)𝑞𝜂∗(𝑛−1) · · · 𝑞(𝑛)𝑞𝜂∗(𝑛−𝐿)\n𝑞(𝑛−1)𝑞𝜂∗(𝑛) 𝑞(𝑛−1)𝑞𝜂∗(𝑛−1) · · · 𝑞(𝑛−1)𝑞𝜂∗(𝑛−𝐿)\nq(𝑛)q𝜂H(𝑛) = ... ... ... ...\n𝑞(𝑛−𝐿)𝑞𝜂∗(𝑛) 𝑞(𝑛−𝐿)𝑞𝜂∗(𝑛−1) · · · 𝑞(𝑛−𝐿)𝑞𝜂∗(𝑛−𝐿)   (6.45)\nwhich is a (𝐿+ 1) × (𝐿+ 1) matrix. The expected value of (6.45) gives the\n𝜂-autocorrelation matrix 𝑟𝜂(0) 𝑟𝜂(1) · · · 𝑟𝜂(𝐿) 𝑟𝜂(0) 𝑟𝜂(1) · · · 𝑟𝜂(𝐿)\n𝑟𝜂(−1) 𝑟𝜂(0) · · · 𝑟𝜂(𝐿−1) 𝑟𝜂∗𝜂(1) 𝑟𝜂(0) · · · 𝑟𝜂(𝐿−1)\nR𝜂(𝑛) = ... ... ... ... = ... ... ... ...\n𝑟𝜂(−𝐿) 𝑟𝜂(1 −𝐿) · · · 𝑟𝜂(0) 𝑟𝜂∗𝜂(𝐿) 𝑟𝜂∗𝜂(𝐿−1) · · · 𝑟𝜂(0)    (6.46) \nThe 𝜂-autocorrelation matrix has a Toeplitz structure, as its elements are equal\non each of its diagonals. For example, 𝑟𝜂(0) lies on its main diagonal, while the\ndiagonal over its main diagonal have elements equal to 𝑟𝜂(1). Another property\nof 𝜂-autocorrelation matrix is its 𝜂-Hermitian structure, i.e. Due to this structure, the 𝜂-autocorrelation can be decomposed as Cheong Took\net al. (2011)\nR𝜂(𝑛) = 𝚲 𝜂H (6.47) where 𝚲has the singular values of R𝜂[𝑛] on its main diagonal, and is a unitary\nmatrix, which can be computed as = U(D𝜂)1/2, where D = V𝜂HU (6.48) U and V can be obtained from the singular value decomposition of R𝜂= UΛVH. The MATLAB code for the factorisation in (6.47) can be downloaded here. Similarly, the Hermitian autocorrelation R(𝑛) and the pseudo autocorrelation R𝑝(𝑛) matrices can be expressed as",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 25,
+    "total_chunks": 67,
+    "char_count": 1466,
+    "word_count": 254,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "257f0884-aeb9-42d5-82ac-6452c360a70b",
+    "text": "𝑟(0) 𝑟(1) · · · 𝑟(𝐿)\n𝑟∗(1) 𝑟𝜂(0) · · · 𝑟(𝐿−1)\nR𝑐(𝑛) = E q(𝑛)qH(𝑛) = ... ... ... ... (6.49)\n𝑟∗(𝐿) 𝑟∗(𝐿−1) · · · 𝑟(0)  \n𝑟𝑝(0) 𝑟𝑝(1) · · · 𝑟𝑝(𝐿)\n𝑟𝑝(−1) 𝑟𝑝(0) · · · 𝑟𝑝(𝐿−1)\nR𝑝(𝑛) = E q(𝑛)qT(𝑛) = ... ... ... ... (6.50)\n𝑟𝑝(−𝐿) 𝑟𝑝(1 −𝐿) · · · 𝑟𝑝(0)  \nThe non-symmetricity of the pseudo autocorrelation matrix R𝑝(𝑛) ≠RT𝑝(𝑛)\narises as a consequence of 𝑟𝑝(ℓ) ≠𝑟𝑝(−ℓ). This also implies that the pseudo\nautocorrelation matrix cannot be factorised as the Takagi factorisation R𝑝(𝑛) ≠\n𝚿Λ𝚿T like in the complex domain C . Consider the quaternion sequence in (6.37). Its augmented second\norder multi-dimensional statistics are summarised in Table 6.2. These autocorrelation matrices can be constructed from their corresponding autocorrelation\nsequences in (6.38)-(6.41) based on the structures in (6.46) and (6.49). 6.3.2 Duality between auto-correlation matrices in R and H\nThe pseudo-autocorrelation matrix R𝑝(𝑛) in (6.50) can be expressed as its realvalued autocorrelation matrices as follows R𝑝(𝑛) = ℜ{R𝑝(𝑛)} + 𝚤ℑ𝚤{R𝑝(𝑛)} + 𝚥ℑ𝚥{R𝑝(𝑛)} + 𝜅ℑ𝜅{R𝑝(𝑛)} (6.51) where ℜ{R𝑝(𝑛)} = R𝑟𝑟(𝑛) −R𝚤𝚤(𝑛) −R𝚥𝚥(𝑛) −R𝜅𝜅(𝑛)\nℑ𝚤{R𝑝(𝑛)} = R𝑟𝚤(𝑛) + R𝚤𝑟(𝑛) + R𝚥𝜅(𝑛) −R𝜅𝚥(𝑛)\nℑ𝚥{R𝑝(𝑛)} = R𝑟𝚥(𝑛) + R𝚥𝑟(𝑛) −R𝚤𝜅(𝑛) + R𝜅𝚤(𝑛)\nℑ𝜅{R𝑝(𝑛)} = R𝑟𝜅(𝑛) + R𝜅𝑟(𝑛) −R𝚥𝚤(𝑛) + R𝚤𝚥(𝑛) TABLE 6.2 Quaternion-valued autocorrelation matrices considered in Example 2. Observe the Hermitian structure of 𝑅𝑐(𝑛) as shown in (6.49) and the 𝜂−Hermitian\nproperty of R𝚤(𝑛), R𝚥(𝑛), and R𝜅(𝑛) as illustrated in (6.46). Autocorrelation matrices in H (of size 3 × 3) 73 15.33 −13.33𝚤 18.67 −10.33𝚤\n+0.33𝚥+ 9𝜅 +5.33𝚥−10𝜅\n15.33 + 13.33𝚤 73 15.33 −13.33𝚤 R𝑐(𝑛) =\n−0.33𝚥−9𝜅 +0.33𝚥+ 9𝜅\n18.67 + 10.33𝚤 15.33 + 13.33𝚤 73\n−5.33𝚥+ 10𝜅 −0.33𝚥−9𝜅   35 + 4𝚥−6.67𝜅 31.33 −1.33𝚤 17.33 −13𝚤\n+22.33𝚥+ 19.67𝜅 −0.67𝚥−10.67𝜅\n31.33 + 1.33𝚤 35 + 4𝚥−6.67𝜅 31.33 −1.33𝚤 R𝚤(𝑛) =\n+22.33𝚥−19.67𝜅 +22.33𝚥+ 19.67𝜅\n17.33 + 13𝚤 31.33 + 1.33𝚤 35 + 4𝚥−6.67𝜅\n−0.67𝚥−10.67𝜅 +22.33𝚥+ 19.67𝜅   −28.33 + 14.67𝚤−5.33𝜅 −24.67 + 20.67𝚤 −14 + 14.33𝚤\n−15𝚥−29.67𝜅 −4.67𝚥+ 12.67𝜅\n−24.67 + 20.67𝚤 −28.33 + 14.67𝚤−5.33𝜅 −24.67 + 20.67𝚤 R𝚥(𝑛) =\n+15𝚥−29.67𝜅 −15𝚥−29.67𝜅\n−14 + 14.33𝚤 −24.67 + 20.67𝚤 −28.33 + 14.67𝚤−5.33𝜅\n+4.67𝚥+ 12.67𝜅 +15𝚥−29.67𝜅   −51.67 + 36𝚤−5.33𝚥 −8.67 + 12.67𝚤 −16.67 + 15.67𝚤\n−7.67𝚥−5.67𝜅 −4𝚥+ 6.67𝜅\n−8.67 + 12.67𝚤 −51.67 + 36𝚤−5.33𝚥 −8.67 + 12.67𝚤 R𝜅(𝑛) =\n−7.67𝚥+ 5.67𝜅 −7.67𝚥−5.67𝜅\n−16.67 + 15.67𝚤 −8.67 + 12.67𝚤 −51.67 + 36𝚤−5.33𝚥\n−4𝚥−6.67𝜅 −7.67𝚥+ 5.67𝜅  ",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 26,
+    "total_chunks": 67,
+    "char_count": 2493,
+    "word_count": 394,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "04a203a8-b8ef-49a7-b134-196418a906be",
+    "text": "TABLE 6.3 Quaternion-valued auto-correlation matrices in terms of their realvalued counterparts Auto-correlation R𝑐(𝑛) R𝚤(𝑛)\nmatrix\nℜ{·} R𝑟𝑟(𝑛) + R𝚤𝚤(𝑛) + R𝚥𝚥(𝑛) + R𝜅𝜅(𝑛) R𝑟𝑟(𝑛) + R𝚤𝚤(𝑛) −R𝚥𝚥(𝑛) −R𝜅𝜅(𝑛)\nℑ𝚤{·} R𝚤𝑟(𝑛) −R𝑟𝚤(𝑛) + R𝜅𝚥(𝑛) −R𝚥𝜅(𝑛) R𝚤𝑟(𝑛) −R𝑟𝚤(𝑛) + R𝚥𝜅(𝑛) −R𝜅𝚥(𝑛)\nℑ𝚥{·} R𝚥𝑟(𝑛) −R𝑟𝚥(𝑛) + R𝚤𝜅(𝑛) −R𝜅𝚤(𝑛) R𝑟𝚥(𝑛) + R𝚥𝑟(𝑛) −R𝜅𝚤(𝑛) −R𝚤𝜅(𝑛)\nℑ𝜅{·} R𝜅𝑟(𝑛) −R𝑟𝜅(𝑛) + R𝚥𝚤(𝑛) −R𝚤𝚥(𝑛) R𝜅𝑟(𝑛) + R𝑟𝜅(𝑛) + R𝚤𝚥(𝑛) + R𝚥𝚤(𝑛) TABLE 6.4 Quaternion-valued auto-correlation matrices in terms of their realvalued counterparts Auto-correlation R𝚥(𝑛) R𝜅(𝑛)\nmatrix\nℜ{·} R𝑟𝑟(𝑛) −R𝚤𝚤(𝑛) + R𝚥𝚥(𝑛) −R𝜅𝜅(𝑛) R𝑟𝑟(𝑛) −R𝚤𝚤(𝑛) −R𝚥𝚥(𝑛) + R𝜅𝜅(𝑛)\nℑ𝚤{·} R𝚤𝑟(𝑛) + R𝑟𝚤(𝑛) + R𝜅𝚥(𝑛) + R𝚥𝜅(𝑛) R𝚤𝑟(𝑛) + R𝑟𝚤(𝑛) −R𝚥𝜅(𝑛) −R𝜅𝚥(𝑛)\nℑ𝚥{·} R𝚥𝑟(𝑛) −R𝑟𝚥(𝑛) + R𝜅𝚤(𝑛) −R𝚤𝜅(𝑛) R𝑟𝚥(𝑛) + R𝚥𝑟(𝑛) + R𝜅𝚤(𝑛) + R𝚤𝜅(𝑛)\nℑ𝜅{·} R𝜅𝑟(𝑛) + R𝑟𝜅(𝑛) −R𝚤𝚥(𝑛) −R𝚥𝚤(𝑛) R𝜅𝑟(𝑛) −R𝑟𝜅(𝑛) + R𝚤𝚥(𝑛) −R𝚥𝚤(𝑛) Similar duality expressions can be found for R𝑐(𝑛), R𝚤(𝑛), R𝚥(𝑛) and R𝜅(𝑛) in\nTable 6.3-6.4. Based on these duality expressions, complete second order statistics in H are achieved, since all real-valued auto-correlation and cross-correlation\nmatrices can be extracted from the quaternion-valued autocorrelations as 1 1\nR𝑟𝑟(𝑛) = 4ℜ{R𝑐(𝑛) + R𝚤(𝑛) + R𝚥(𝑛) + R𝜅(𝑛)}, R𝚤𝚤(𝑛) = 4ℜ{R𝑐(𝑛) + R𝚤(𝑛) −R𝚥(𝑛) −R𝜅(𝑛)}\n1 1\nR𝚥𝚥(𝑛) = 4ℜ{R𝑐(𝑛) −R𝚤(𝑛) + R𝚥(𝑛) −R𝜅(𝑛)}, R𝜅𝜅(𝑛) = 4ℜ{R𝑐(𝑛) −R𝚤(𝑛) −R𝚥(𝑛) + R𝜅(𝑛)}\n1 1\nR𝚤𝑟(𝑛) = 4ℑ𝚤{R𝑐(𝑛) + R𝚤(𝑛) + R𝚥(𝑛) + R𝜅(𝑛)}, R𝚥𝑟(𝑛) = 4ℑ𝚥{R𝑐(𝑛) + R𝚤(𝑛) + R𝚥(𝑛) + R𝜅(𝑛)}\n1 1\nR𝜅𝑟(𝑛) = 4ℑ𝜅{R𝑐(𝑛) + R𝚤(𝑛) + R𝚥(𝑛) + R𝜅(𝑛)}, R𝚥𝚤(𝑛) = 4ℑ𝜅{R𝑐(𝑛) + R𝚤(𝑛) −R𝚥(𝑛) −R𝜅(𝑛)}\n1R𝜅𝚤(𝑛) = −1 + R𝚤(𝑛) −R𝚥(𝑛) −R𝜅(𝑛)}, R𝜅𝚥(𝑛) = −R𝚤(𝑛) + R𝚥(𝑛) −R𝜅(𝑛)} 4ℑ𝚥{R𝑐(𝑛) 4ℑ𝚤{R𝑐(𝑛)\n(6.52)",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 27,
+    "total_chunks": 67,
+    "char_count": 1600,
+    "word_count": 257,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ab22e629-761e-42ff-a3cb-702b441bfda9",
+    "text": "This numerical example shows the duality between R and H in\n(6.52). In other words, the real-valued correlation matrices can be extracted\nfrom their quaternion-valued counterparts. Consider the sequence in (6.37). This sequence can be decomposed into its quadrivariate sequences as follows: q𝑟= −1, −2, −4 , q𝚤= −10, −4, −5\nq𝚥= 1, −6, 3 , q𝜅= −1, 3, 1 (6.53) Their autocorrelation sequences can be straightforwardly calculated as follows r𝑟𝑟= 1.33, 3.33, 7 , 3.33, 1.33 , r𝚤𝚤= 16.67, 20, 47 , 20, 16.67\n↑ ↑\nr𝚥𝚥= 1, −8, 15.33 , −8, 1 , r𝜅𝜅= −0.33, 0, 3.67, 0, −0.33\n↑ ↑\nr𝚤𝑟= 13.33, 12, 12.67 , 4.67, 1.67 , r𝚥𝑟= −1.33, 7.33, −0.33, 0, −1\n↑ ↑\nr𝑘𝑟= 1.33, −3.33, −3 , −1.67, −0.33 , r𝚥𝚤= −1.67, 8.67, −0.33, 16, −10\n↑ ↑\nr𝜅𝚤= 1.67, −3.67, −2.33 , −11.33, −3.33 , r𝜅𝚥= −1, 5, −5.33, −1, 0.33\n↑ ↑ Recall that the arrow symbol↑denotes the lagℓ= 0. For example, 𝑟𝚤𝑟(0) = 12.67\nshows the cross-correlation between the 𝚤−imaginary and real component of\n(6.37) at zero lag, while 𝑟𝚤𝑟(−1) = 12 corresponds to lag ℓ= −1. These\nreal-valued autocorrelation sequences can be used to construct their real-valued\nautocorrelation matrices shown in Table 6.5. These real-valued autocorrelation\nmatrices can also be extracted from their quaternion counterparts in Table 6.2\nbased on the duality expressions in (6.52). This shows how the augmented\nstatistics of quaternions in (6.33)-(6.34) can provide the complete second order\nstatistics in the context of autocorrelation and cross-correlation functions. The same principle can be extended to other statistical descriptors, such as\ncovariances, moments, and cumulants. Now that it has been shown how the\naugmented basis leads to the complete statistics of quaternions, the next section\nshows how this augmented basis can be put in practice in quaternion signal\nprocessing.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 28,
+    "total_chunks": 67,
+    "char_count": 1801,
+    "word_count": 301,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "843299eb-cb6f-4d52-9efd-2d3899e5d9fa",
+    "text": "6.4 MMSE ESTIMATION AND WIDELY LINEAR MODEL In order to better emphasise the importance of the augmented approach, consider\nthe MMSE estimator of a variable, 𝑦, conditioned on the observation, 𝑧, that is\nˆ𝑦= E {𝑦|𝑧}. Now, assume that 𝑦and 𝑧are quaternion-valued zero-mean and\njointly Gaussian random variables.6 In this case, the MMSE estimator has to\nbe expressed according to the individual components of the quaternion random 6 A quaternion-valued random variable is Gaussian if its real-valued components are jointly Gaussian, while set of quaternion-valued random variables are jointly Gaussian if their real-valued\ncomponents are jointly Gaussian Took and Mandic (2011). TABLE 6.5 Real-valued autocorrelation matrices corresponding to their quaternionvalued counterparts in Table 6.2. The double subscripts indicate the correlation between the two relevant quaternion components. For example, 𝑅𝚤𝑟(𝑛) corresponds\nto the cross correlation between the 𝚤−imaginary and real component. Autocorrelation matrices in R (of size 3 × 3) 7 3.33 1.33 47 20 16.67\nR𝑟𝑟(𝑛) = 3.33 7 3.33 R𝚤𝚤(𝑛) = 20 47 20\n1.33 3.33 7 16.67 20 47     15.33 −8 1 3.67 0 −0.33\nR𝚥𝚥(𝑛) = −8 15.33 −8 R𝜅𝜅(𝑛) = 0 3.67 0\n1 −8 15.33 −0.33 0 3.67     12.67 4.67 1.67 −0.33 0 −1\nR𝚤𝑟(𝑛) = 12 12.67 4.67 R𝚥𝑟(𝑛) = 7.33 −0.33 0\n13.33 12 12.67 −1.33 7.33 −0.33     −3 −1.67 −0.33 −0.33 16 −10\nR𝜅𝑟(𝑛) = −3.33 −3 −1.67 R𝚥𝚤(𝑛) = 8.67 −0.33 16\n1.33 −3.33 −3 −1.67 8.67 −0.33     −2.33 −11.33 −3.33 −5.33 −1 0.33\nR𝜅𝚤(𝑛) = −3.67 −2.33 −11.33 R𝜅𝚥(𝑛) = 5 −5.33 −1\n1.67 −3.67 −2.33 −1 5 −5.33     variables, that is\nˆ𝑦=E 𝑦𝑟|𝑧𝑟, 𝑧𝚤, 𝑧𝚥, 𝑧𝜅 + 𝚤E 𝑦𝚤|𝑧𝑟, 𝑧𝚤, 𝑧𝚥, 𝑧𝜅 +\n+ 𝚥E 𝑦𝚥|𝑧𝑟, 𝑧𝚤, 𝑧𝚥, 𝑧𝜅 + 𝜅E 𝑦𝜅|𝑧𝑟, 𝑧𝚤, 𝑧𝚥, 𝑧𝜅 At this point we can use the mapping derived in (6.30) to replace the quaternion\ncomponents {𝑧𝑟,𝑧𝚤,𝑧𝚥,𝑧𝜅} with quaternion involutions {𝑧, 𝑧𝚤, 𝑧𝚥, 𝑧𝜅} yielding\nˆ𝑦=E {𝑦𝑟|𝑧, 𝑧𝚤, 𝑧𝚥, 𝑧𝜅} + 𝚤E {𝑦𝚤|𝑧, 𝑧𝚤, 𝑧𝚥, 𝑧𝜅}\n+ 𝚥E 𝑦𝚥|𝑧, 𝑧𝚤, 𝑧𝚥, 𝑧𝜅 + 𝜅E {𝑦𝜅|𝑧, 𝑧𝚤, 𝑧𝚥, 𝑧𝜅}\nTherefore, for quaternion-valued, zero-mean, and jointly Gaussian 𝑧and 𝑦, the\nMMSE solution is given by the widely linear model Took and Mandic (2011)\nˆ𝑦= gTz + hTz𝚤+ uTz𝚥+ vTz𝜅= h gT, hT, uT, vT i z𝑎 (6.55)",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 29,
+    "total_chunks": 67,
+    "char_count": 2239,
+    "word_count": 391,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ed6e9588-d2f8-48a5-96ea-5d164bf44759",
+    "text": "where {g, h, u, v} are quaternion-valued coefficient vectors and z is the regressor\nvector. The estimator in (6.55) can now be formulated into gT hT uT vT\nh𝚤T g𝚤T v𝚤T u𝚤T ˆy𝑎= z𝑎 (6.56)\nu𝚥T v𝚥T g𝚥T h𝚥T\nv𝜅T u𝜅T h𝜅T g𝜅T  \nAs the input, 𝑧, must be used in its augmented representation, the approach is\nreferred to as augmented. In addition, since the estimators in (6.55) and (6.56)\nare linear with respect to the augmented input vector, they are also known as\nwidely linear estimators, denoting linearity of the models in a wider sense. To\noptimise the weights in the widely linear model (6.55), quaternion derivatives\nare required for signal processing algorithms. Thus, the quaternion calculus is\nnext introduced. 6.5 QUATERNION CALCULUS In general, the traditional definition of derivative is too restrictive in the quaternion domain, since they accommodate only linear quaternion-valued functions Xu et al. (2015). Thus, there have been efforts to relax these conditions.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 30,
+    "total_chunks": 67,
+    "char_count": 991,
+    "word_count": 160,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "92b10c0d-5f75-4f55-a491-c05d327ea64a",
+    "text": "One\nnotable effort in this front has been to extend the framework of analyticity from\nthe complex domain to quaternion-valued functions and introduce an equivalent\ncondition to the Cauchy-Riemann condition for analyticity of complex-valued\nfunctions. These efforts have resulted in the Cauchy-Riemann-Fueter condition Fueter (1939); Xu et al. (2015)7\n𝜕f + 𝚤𝜕f + 𝚥𝜕f + 𝜅𝜕f = 0 (6.57)\n𝜕q𝑟 𝜕q𝚤 𝜕q𝚥 𝜕q𝜅 7 Due to non-commutativity of quaternion algebra, an alternative formulation can be given\nfor the Cauchy–Riemann–Fueter condition, that is C. for quaternion-valued function f (·) : H𝑚→H. The Cauchy-Riemann-Fueter\ncondition, however, has also proven to be overly restrictive for use as the basis\nfor deriving quaternion-valued optimisation, adaptation, and other information\nprocessing machinery. This issue has rekindled efforts to relax the condition in\n(6.57) even further.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 31,
+    "total_chunks": 67,
+    "char_count": 874,
+    "word_count": 129,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5bc86a83-db91-49a8-8736-ff4a6be70a50",
+    "text": "Important results in this arena include the notion of local\nanalyticity Leo and Rotelli (2003). In this setting, the function f (·) : H →H\nbehaves akin to an analytical function at 𝑞if 𝜕f (𝑞) 𝜕f (𝑞) ℑ{𝑞}\n= −𝜉 with 𝜉= (6.58)\n𝜕𝑞𝑟 𝜕∥ℑ{𝑞}∥ ∥ℑ{𝑞}∥ i.e. the quaternion behaves as a complex number. An important result from local\nanalyticity is the derivative of the exponential function Ujang et al. (2011) Despite numerous efforts to relax differentiability conditions for quaternionvalued functions, these conditions remain too restrictive. Indeed, this issue has\nbeen one of the main stumbling block stiffening the derivation of quaternionvalued signal processing and learning techniques. Although the conditions for\nquaternion analyticity are restrictive, it is not always required to work with\nquaternion analytical functions. For the major part, we only need to establish the\nrate of change for a function in different directions and/or calculate the direction\nof maximum rate of change. An elegant solution to this problem has been the\nestablishment of the HR-calculus Xu et al. (2015). Consider the quaternion-valued function f (·) : H𝑚→H, so that we can\nwrite f (q) = f q𝑟, q𝚤, q𝚥, q𝜅 =f𝑟 q𝑟, q𝚤, q𝚥, q𝜅 + 𝚤f𝚤 q𝑟, q𝚤, q𝚥, q𝜅\n(6.60)\n+ 𝚥f𝚥 q𝑟, q𝚤, q𝚥, q𝜅 + 𝜅f𝜅 q𝑟, q𝚤, q𝚥, q𝜅 where {f𝑟(q) , f𝚤(q) , f𝚥(q) , f𝜅(q)} denote real-valued components comprising\nf (q) with eachbeing real-valued functions ofreal-valued vectors {q𝑟, q𝚤, q𝚥, q𝜅}. The HR-calculus, on one hand, considers the function f (q) as h iT f (q) = f q𝑟+ 𝚤q𝚤+ 𝚥q𝚥+ 𝜅q𝜅 = f q𝑎= qT q𝚤T q𝚥T q𝜅T (6.61)",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 32,
+    "total_chunks": 67,
+    "char_count": 1563,
+    "word_count": 269,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c28807b2-5abf-42f8-8b7c-577f46073c1a",
+    "text": "Took (2011); Xu et al. (2015)\n𝜕f 𝜕f 𝜕f 𝜕f\n+ 𝚤+ 𝚥+ 𝜅= 0\n𝜕q𝑟 𝜕q𝚤 𝜕q𝚥 𝜕q𝜅 The only difference between the two derivations of the Cauchy–Riemann–Fueter condition is that\none is derived based on placement of 𝚤, 𝚥, and 𝜅on the left-hand-side of the derivatives and\nthe other is derived based on placement of these imaginary units on the right-hand-side of the\nderivatives. where (6.29) is used to replace {q𝑟, q𝚤, q𝚥, q𝜅} with q𝑎.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 33,
+    "total_chunks": 67,
+    "char_count": 424,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fd4c1f17-9eee-4b82-8a2c-c7941240869a",
+    "text": "On the other hand,\nthe HR-calculus considers formulation of f (·) : H𝑚→H as the quadrivariate\nfunction formulated as f𝑟 q𝑟, q𝚤, q𝚥, q𝜅\n𝚤f𝚤 q𝑟, q𝚤, q𝚥, q𝜅\ng q𝑟, q𝚤, q𝚥, q𝜅 = (6.62)\n𝚥f𝚥 q𝑟, q𝚤, q𝚥, q𝜅\n𝜅f𝜅 q𝑟, q𝚤, q𝚥, q𝜅  \nThe gradient of the function formulated in (6.62) can be calculated using classical\nvector calculus as\n𝜕g(q𝑟,q𝚤,q𝚥,q𝜅)\n𝜕q𝑟\n𝜕g(q𝑟,q𝚤,q𝚥,q𝑘)\n𝜕q𝚤 ∇g = (6.63) 𝜕g(q𝑟,q𝚤,q𝚥,q𝜅)\n𝜕q𝚥\n𝜕g(q𝑟,q𝚤,q𝚥,q𝜅)\n𝜕q𝜅  The HR-calculus exploits the expressions in (6.26) to formulate the gradient of\ng q𝑟, q𝚤, q𝚥, q𝜅 in terms of the augmented quaternion vector q𝑎and f (q𝑎),\nresulting in8 𝜕f(q,q𝚤,q𝚥,q𝜅) 𝜕g(q𝑟,q𝚤,q𝚥,q𝜅)\n𝜕q∗ 𝜕q𝑟 I 𝚤I 𝚥I 𝜅I\n𝜕f(q,q𝚤,q𝚥,q𝜅) 𝜕g(q𝑟,q𝚤,q𝚥,q𝑘)\n𝜕q𝚤∗ 1 I 𝚤I −𝚥I −𝜅I 𝜕q𝚤 = (6.64) ∇q𝑎∗f (q) = 𝜕f(q,q𝚤,q𝚥,q𝜅) 4 I −𝚤I 𝚥I −𝜅I 𝜕g(q𝑟,q𝚤,q𝚥,q𝜅)\n𝜕q𝚥∗ 𝜕q𝚥\n𝜕f(q,q𝚤,q𝚥,q𝜅) I −𝚤I −𝚥I 𝜅I 𝜕g(q𝑟,q𝚤,q𝚥,q𝜅) 𝜕q𝜅∗   𝜕q𝜅 }   | {zA  \n| {z } and the direction of maximum change given by 𝜕f (q𝑎) 1 𝜕f (q𝑎)\n= + 𝚤𝜕f (q𝑎) + 𝚥𝜕f (q𝑎) + 𝜅𝜕f (q𝑎) (6.65)\n𝜕q∗ 4 𝜕q𝑟 𝜕q𝚤 𝜕q𝚥 𝜕q𝜅 with the full derivation for (6.64) and (6.65) given in Talebi (2016). An alternative definition can also be formulated as\n𝜕leftf (q𝑎) 1 𝜕f (q𝑎) 𝜕f (q𝑎) 𝜕f (q𝑎) 𝜕f (q𝑎) = + 𝚤+ 𝚥+ 𝜅 (6.66)\n𝜕q∗ 4 𝜕q𝑟 𝜕q𝚤 𝜕q𝚥 𝜕q𝜅 which is denoted as left derivatives due to placement of the partial derivatives\nto the left-hand-side of the imaginary units. Although both the right-handside and left-hand-side derivatives yield equivalent results, a skilful use of both 8 The blue font highlights the derivative of interest, i.e. derivative with respect to the conjugate\nquaternion, which is sufficient for most algorithm derivations. approaches can simplify the derived algorithms. In the remainder of this section\nwe will; i) introduce derivatives of functions useful as base cases, ii) present\nderivative rules to extract differentials of more complex functions. Consider the second-order norm function given by\n∀𝑞∈H : f (𝑞) = 𝑞𝑞∗= ∥𝑞∥2 = 𝑞2𝑟+ 𝑞2𝚤+ 𝑞2𝚥+ 𝑞2𝜅 (6.67) The second-order norm function appears as the basis for cost functions in a large\nnumber of adaptation and learning techniques. The augmented and quadrivariate\nformulations of the second-order norm are given by",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 34,
+    "total_chunks": 67,
+    "char_count": 2228,
+    "word_count": 374,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6eddba74-025e-4fd0-8375-ae4ca975952e",
+    "text": "𝑞2𝑟+ 𝑞2𝚤+ 𝑞2𝚥+ 𝑞2𝜅\n1 0 and g 𝑞𝑟, 𝑞𝚤, 𝑞𝚥, 𝑞𝜅 = (6.68) f (q𝑎) = 4q𝑎Hq𝑎 0\n0  \nFrom (6.64), it now follows that the gradient of the second-order norm is\n1 𝚤 𝚥 𝜅 2𝑞𝑟 𝑞\n1 1 𝚤 −𝚥 −𝜅 2𝑞𝚤 1 𝑞𝚤 ∇q𝑎∗f (q𝑎) = = (6.69) 4 1 −𝚤 𝚥 −𝜅 2𝑞𝚥 2 𝑞𝚥\n1 −𝚤 −𝚥 𝜅 2𝑞𝜅 𝑞𝜅      \nestablishing that\n𝜕∥𝑞∥2 1\n= (6.70) 𝜕𝑞∗ 2𝑞\nwhich is different from results in the CR-calculus. Now, let us move to norm operator\n∀𝑞∈H : f (𝑞) = √︁ 𝑞𝑞∗= ∥𝑞∥= √︃ 𝑞2𝑟+ 𝑞2𝚤+ 𝑞2𝚥+ 𝑞2𝜅 (6.71) In this case, the augmented and quadrivariate formulations of the second-order\nnorm are given by √︃ 𝑞2𝑟+ 𝑞2𝚤+ 𝑞2𝚥+ 𝑞2𝜅\n1 f (q𝑎) = √︁q𝑎Hq𝑎 and g 𝑞𝑟, 𝑞𝚤, 𝑞𝚥, 𝑞𝜅 = 0 (6.72)\n2 0\n0  \nUsing the relation in (6.64), we can now write 𝑞𝑟 √ 𝑞\n𝑞2𝑟+𝑞2𝚤+𝑞2𝚥+𝑞2𝜅 ∥𝑞∥ 1 𝚤 𝚥 𝜅 𝑞𝚤 𝑞𝚤 √\n1 1 𝚤 −𝚥 −𝜅 𝑞2𝑟+𝑞2𝚤+𝑞2𝚥+𝑞2𝜅 1 ∥𝑞∥ ∇q𝑎∗f (q𝑎) = 𝑞𝚥 (6.73) 4 1 −𝚤 𝚥 −𝜅 √ 𝑞𝚥 = 4\n𝑞2𝑟+𝑞2𝚤+𝑞2𝚥+𝑞2𝜅 ∥𝑞∥\n1 −𝚤 −𝚥 𝜅 𝑞𝜅 𝑞𝜅   √ ∥𝑞∥ 𝑞2𝑟+𝑞2𝚤+𝑞2𝚥+𝑞2𝜅     Therefore, establishing\n𝜕∥𝑞∥ 1 𝑞\n𝜕𝑞∗= 4 ∥𝑞∥ (6.74) Let us now consider f (𝑞) = 𝑞2. In this case, we have",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 35,
+    "total_chunks": 67,
+    "char_count": 1093,
+    "word_count": 232,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "400ef823-c4ae-45d2-a5a5-bc2e0e7e48ac",
+    "text": "𝑞2𝑟−𝑞2𝚤−𝑞2𝚥−𝑞2𝜅 2𝑞𝑟+ 𝚤2𝑞𝚤+ 𝚥2𝑞𝚥+ 2𝜅𝑞𝜅\n𝚤2𝑞𝑟𝑞𝚤 𝚤2𝑞𝑟−2𝑞𝚤g 𝑞𝑟, 𝑞𝚤, 𝑞𝚥, 𝑞𝜅 = and ∇g =\n𝚥2𝑞𝑟𝑞𝚥 𝚥2𝑞𝑟−2𝑞𝚥\n𝜅2𝑞𝑟𝑞𝜅 𝜅2𝑞𝑟−2𝑞𝜅    (6.75) \nTherefore, using (6.64) results in 𝜕f(𝑞∗,𝑞𝚤∗,𝑞𝚥∗,𝑞𝜅∗)\n𝜕𝑞∗ −ℜ{𝑞}\n𝜕f(𝑞∗,𝑞𝚤∗,𝑞𝚥∗,𝑞𝜅∗)\n𝜕𝑞𝚤∗ 𝑞−ℑ𝚤{𝑞}\n∇q𝑎∗ q2 = = (6.76) 𝜕f(𝑞∗,𝑞𝚤∗,𝑞𝚥∗,𝑞𝜅∗) 𝑞−ℑ𝚥{𝑞}\n𝜕𝑞𝚥∗\n𝜕f(𝑞∗,𝑞𝚤∗,𝑞𝚥∗,𝑞𝜅∗) 𝑞−ℑ𝜅{𝑞} 𝜕𝑞𝜅∗    \nwhere\n𝜕f (𝑞, 𝑞𝚤, 𝑞𝚥, 𝑞𝜅) 1 𝜕f\n= + 𝚤𝜕f + 𝚥𝜕f + 𝜅𝜕f = −ℜ{𝑞} (6.77)\n𝜕𝑞∗ 4 𝜕𝑞𝑟 𝜕𝑞𝚤 𝜕𝑞𝚥 𝜕𝑞𝜅 Consider the quaternion rectified linear unit (QReLU) given by QReLU (𝑞) = ReLU (𝑞𝑟) + 𝚤ReLU (𝑞𝚤) + 𝚥ReLU 𝑞𝚥 + 𝜅ReLU (𝑞𝜅) (6.78) where ReLU (·) denotes the real-valued ReLU function. In this case, we have",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 36,
+    "total_chunks": 67,
+    "char_count": 668,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a80b212a-f54e-4158-abc7-75e7e2f0f4e9",
+    "text": "ReLU (𝑞𝑟)\n𝚤ReLU (𝑞𝚤)\ng 𝑞𝑟, 𝑞𝚤, 𝑞𝚥, 𝑞𝜅 = (6.79)\n𝚥ReLU 𝑞𝚥\n𝜅ReLU (𝑞𝜅)  \nthat has the gradient u (𝑞𝑟)\n𝚤u (𝑞𝚤)\n∇g 𝑞𝑟, 𝑞𝚤, 𝑞𝚥, 𝑞𝜅 = (6.80)\n𝚥u 𝑞𝚥\n𝜅u (𝑞𝜅)  \nwhere\n1 if 𝑥> 0 ∀𝑥∈R : u (𝑥) = (6.81)\n0 otherwise Now using the relation in (6.64) yields 1 𝚤 𝚥 𝜅 u (𝑞𝑟)\n1 1 𝚤 −𝚥 −𝜅 𝚤u (𝑞𝚤)\n∇q𝑎∗QReLU (𝑞) = (6.82) 4 1 −𝚤 𝚥 −𝜅 𝚥u 𝑞𝚥\n1 −𝚤 −𝚥 𝜅 𝜅u (𝑞𝜅)    \nand therefore\n𝜕QReLU (𝑞) 1\n= u (𝑞𝑟) −u (𝑞𝚤) −u 𝑞𝚥 −u (𝑞𝜅) (6.83)\n𝜕𝑞∗ 4 6.5.1 Multiplication Rules Let us begin with multiplication on the left-hand-side by a constant quaternion\nnumber, 𝜈∈H. In this case, from (6.65), we can write 𝜕𝜈f (q𝑎) =1 𝜕𝜈f (q𝑎) + 𝚤𝜕𝜈f (q𝑎) + 𝚥𝜕𝜈f + 𝜅𝜕𝜈f (q𝑎)\n𝜕q∗ 4 𝜕q𝑟 𝜕q𝚤 𝜕q𝚥 𝜕q𝜅\n(6.84)\n=1 𝜈𝜕f (q𝑎) + 𝚤𝜈𝜕f (q𝑎) + 𝚥𝜈𝜕f (q𝑎) + 𝜅𝜈𝜕f (q𝑎)\n4 𝜕q𝑟 𝜕q𝚤 𝜕q𝚥 𝜕q𝜅 In order to factor out 𝜈from (6.84), we need to change the order of multiplications\ninvolving 𝜈. Focusing on 𝚤and 𝜈, as an example case, we use 𝜈𝜈−1 = 1, and the\ndefinition of quaternion involution in (6.24) to yield 𝚤𝜈= 𝜈𝜈−1𝚤𝜈= 𝜈𝚤𝜈−1 (6.85) Similarly, it can be shown that",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 37,
+    "total_chunks": 67,
+    "char_count": 1052,
+    "word_count": 221,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "18feee23-a3e4-48cc-ab0e-b8d44e2857a1",
+    "text": "𝚥𝜈= 𝜈𝚥𝜈−1 and 𝜅𝜈= 𝜈𝜅𝜈−1 (6.86) Now, replacing (6.85) and (6.86) into (6.84) to factor out \"𝜈\" yields 𝜕𝜈f (q𝑎) =1 𝜈𝜕f (q𝑎) + 𝚤𝜈𝜕f (q𝑎) + 𝚥𝜈𝜕f (q𝑎) + 𝜅𝜈𝜕f (q𝑎)\n𝜕q∗ 4 𝜕q𝑟 𝜕q𝚤 𝜕q𝚥 𝜕q𝜅\n=1 𝜈𝜕f (q𝑎) + 𝜈𝚤𝜈−1 𝜕f (q𝑎) + 𝜈𝚥𝜈−1 𝜕f + 𝜈𝜅𝜈−1 𝜕f (q𝑎) (q𝑎)\n4 𝜕q𝑟 𝜕q𝚤 𝜕q𝚥 𝜕q𝜅\n𝜕f (q𝑎) 𝜕f (q𝑎) 𝜕f (q𝑎) 𝜕f (q𝑎) =1 + 𝚤𝜈−1 + 𝚥𝜈−1 + 𝜅𝜈−1 4𝜈 𝜕q𝑟 𝜕q𝚤 𝜕q𝚥 𝜕q𝜅\n(6.87)\nThe expression in (6.87) is similar to that of (6.65) where the imaginary unit have\nchanged from {𝚤, 𝚥, 𝜅} to {𝚤𝜈−1, 𝚥𝜈1, 𝜅𝜈−1}. Next we formulate how this change in imaginary units will effect the differentiation base. The differentiation base\nwas 𝑞= 𝑞𝑟+ 𝚤𝑞𝚤+ 𝚥𝑞𝚥+ 𝜅𝑞𝜅. However, with the changed imaginary units the\nnew differentiation base becomes 𝑞new =𝑞𝑟+ 𝚤𝜈−1𝑞𝚤+ 𝚥𝜈−1𝑞𝚥+ 𝜅𝜈−1𝑞𝜅= 𝑞𝑟+ 𝜈−1𝚤𝜈𝑞𝚤+ 𝜈−1 𝚥𝜈𝑞𝚥+ 𝜈−1𝜅𝜈𝑞𝜅\n=𝜈−1𝑞𝑟𝜈+ 𝚤𝜈−1𝑞𝚤+ 𝚥𝜈−1𝑞𝚥+ 𝜅𝜈−1𝑞𝜅= 𝜈−1 𝑞𝑟+ 𝚤𝑞𝚤+ 𝚥𝑞𝚥+ 𝜅𝑞𝜅 𝜈= 𝑞𝜈−1\n(6.88)\nTherefore, the expression in (6.87) and (6.88) indicate 𝜕𝜈f (q𝑎) 𝜕f (q𝑎) 𝜕f (q𝑎) 𝜕f (q𝑎) 𝜕f (q𝑎) =1 + 𝚤𝜈−1 + 𝚥𝜈−1 + 𝜅𝜈−1 𝜕q∗ 4𝜈 𝜕q𝑟 𝜕q𝚤 𝜕q𝚥 𝜕q𝜅\n=𝜈𝜕f (q𝑎) with qnew = q𝜈−1\n𝜕q∗new\n(6.89)\nFollowing the same approach, we can now reconstruct the gradient as ∇q𝑎∗ 𝜈f (q𝑎) = 𝜈 (q𝑎) (6.90) ∇q𝑎𝜈−1∗f Taking into account the non-commutativity of the quaternion product and (6.64),\n𝜕f(q)𝜈 𝜕f(q)\nfor multiplication on the right-hand-side as 𝜕q∗ = 𝜕q∗𝜈, resulting in ∇q𝑎∗ f (q𝑎) 𝜈 = ∇q𝑎∗(f (q𝑎) 𝜈 (6.91) 6.5.2 The Product Rule Now we come to the case of multiplications of two quaternion-valued functions.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 38,
+    "total_chunks": 67,
+    "char_count": 1417,
+    "word_count": 266,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3edd3464-844f-4412-86b4-469e55148bc7",
+    "text": "Let us first recall the product rule in R. For real-valued functions f (·) : R →R\nand p (·) : R →R, the derivate of h (𝑥) = f (𝑥) p (𝑥) is given by 𝜕f (𝑥) p (𝑥) 𝜕f (𝑥) 𝜕p (𝑥)\n𝑥∈R : = p (𝑥) + f (𝑥) (6.92) 𝜕𝑥 𝜕𝑥 𝜕𝑥\n| {z } | {z } p(𝑥) treated as a constant f(𝑥) treated as a constant The expression in (6.92) presents the gradient of h (𝑥) = f (𝑥) p (𝑥) as the\nsummation of two components, one treating f (𝑥) as a constant, and the other\ntreating g (𝑥) as a constant.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 39,
+    "total_chunks": 67,
+    "char_count": 464,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "17fad193-6e41-44ab-add5-13aeca903afb",
+    "text": "Let us implement the same concept in the quaternion\ndomain. h (q𝑎) = f (q𝑎) p (q𝑎) (6.93) with\nf (·) : H𝑚→H and p (·) : H𝑚→H (6.94) we have the following two gradient components:\n𝜕h (q𝑎) 𝜕f (q𝑎)treating p (q𝑎) as constant: = p (q𝑎) (6.95)\n𝜕q∗ 𝜕q∗\n𝜕h (q𝑎) 𝜕f (q𝑎) p (q𝑎) 𝜕p (q𝑎)\ntreating f (q𝑎) as constant: = = f (q𝑎) ∗\n𝜕q∗ 𝜕q∗ 𝜕 q(f(q𝑎))−1 Therefore, gradient of h (·) : H𝑚→H is given by Xu et al. (2015) 𝜕h (q𝑎) 𝜕p (q𝑎) 𝜕f (q𝑎)\n= f (q𝑎) ∗+ p (q𝑎) (6.96)\n𝜕q∗ 𝜕 q(f(q𝑎))−1 𝜕q∗ Let us reconsider the derivative of h (𝑞) = ∥𝑞∥2. We can formulate\nthe function as a product, i.e. h (𝑞) = f (𝑞) p (𝑞) with f (𝑞) = 𝑞and p (𝑞) = 𝑞∗. Using the chain derivative rule we can write 𝜕h (𝑞) 𝜕𝑞𝑞∗ 𝜕𝑞 𝜕𝑞∗\n= 𝑞 ∗ (6.97) 𝜕𝑞∗ 𝜕𝑞∗= 𝜕𝑞∗𝑞∗+ 𝜕 𝑞𝑞−1 𝜕𝑞∗\nLet us now focus on the term ∗. From (6.89) it follows that\n𝜕 𝑞𝑞−1 𝜕𝑞∗ 1 𝜕𝑞∗ 𝜕𝑞∗ 𝜕𝑞∗ 𝜕𝑞∗ 𝚤𝑞−1 + 𝚥𝑞−1 + 𝜅𝑞−1 (6.98) ∗= + 𝜕 𝑞𝑞−1 4 𝜕𝑞𝑟 𝜕𝑞𝚤 𝜕𝑞𝚥 𝜕𝑞𝜅 In addition we have,\n𝜕𝑞∗ =𝜕𝑞𝑟 −𝚤𝜕𝑞𝚤 −𝚥𝜕𝑞𝚥 −𝜅𝜕𝑞𝜅 = 1\n𝜕𝑞𝑟 𝜕𝑞𝑟 𝜕𝑞𝑟 𝜕𝑞𝑟 𝜕𝑞𝑟\n𝜕𝑞∗ =𝜕𝑞𝑟 −𝚤𝜕𝑞𝚤 −𝚥𝜕𝑞𝚥 −𝜅𝜕𝑞𝜅 = −𝚤\n𝜕𝑞𝚤 𝜕𝑞𝚤 𝜕𝑞𝚤 𝜕𝑞𝚤 𝜕𝑞𝚤\n(6.99)\n𝜕𝑞∗ =𝜕𝑞𝑟 −𝚤𝜕𝑞𝚤 −𝚥𝜕𝑞𝚥 −𝜅𝜕𝑞𝜅 = −𝚥\n𝜕𝑞𝚥 𝜕𝑞𝚥 𝜕𝑞𝚥 𝜕𝑞𝚥 𝜕𝑞𝚥\n𝜕𝑞∗\n= 𝜕𝑞𝑟 −𝚤𝜕𝑞𝚤 −𝚥𝜕𝑞𝚥 −𝜅𝜕𝑞𝜅 = −𝜅\n𝜕𝑞𝜅 𝜕𝑞𝜅 𝜕𝑞𝜅 𝜕𝑞𝜅 𝜕𝑞𝑟 Now, substituting (6.99) into (6.98) gives",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 40,
+    "total_chunks": 67,
+    "char_count": 1153,
+    "word_count": 257,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ce0d2a9b-2963-40e5-9509-4eee1f23dd28",
+    "text": "𝚤𝑞−1 (−𝚤) = 𝑞−1𝚤𝑞(−𝚤) = 𝑞−1 𝚤𝑞𝚤−1 = 𝑞−1 (𝑞𝚤) (6.101) 𝚥𝑞−1 (−𝚥) = 𝑞−1 (𝑞𝚥) and 𝜅𝑞−1 (−𝜅) = 𝑞−1 (𝑞𝜅) (6.102) following in the same line of logic. The expressions in (6.101) and (6.102) in\nconjunction with (6.100) result in 𝑞−1𝑞𝜅 𝜕𝑞∗ ∗=1 1 + 𝑞−1𝑞𝚤+ 𝑞−1𝑞𝚥+ 𝜕 𝑞𝑞−1 4\n(6.103)\n=1 𝑞−1 (𝑞+ 𝑞𝚤+ 𝑞𝚥+ 𝑞𝜅) = 𝑞−1𝑞𝑟 Finally, using (6.65) we can write 𝜕𝑞 1 𝜕𝑞 + 𝚤𝜕𝑞 + 𝚥𝜕𝑞 + 𝜅𝜕𝑞 = −1 (6.104) 𝜕𝑞∗= 4 𝜕𝑞𝑟 𝜕𝑞𝚤 𝜕𝑞𝚥 𝜕𝑞𝜅 2 Replacing (6.103) and (6.104) into (6.97) gives 𝜕h (𝑞) 𝜕𝑞𝑞∗ 𝜕𝑞 𝜕𝑞∗ 1 = 𝑞 ∗= −1 𝑞𝑟= (6.105) 𝜕𝑞∗ 𝜕𝑞∗= 𝜕𝑞∗𝑞∗+ 𝜕 𝑞𝑞−1 2𝑞∗+ 2𝑞 6.5.3 Chain Derivative Rule in the HR-Calculus Once more, recall the chain derivative rule for real-valued functions. To this\nend, consider\nh (𝑥) = f (p (𝑥)) (6.106) with\nf (·) : R →R and p (·) : R →R (6.107) The goal is to find the rate of change in h (𝑥) = f (p (𝑥)) with respect to changes\n𝜕h(𝑥)in 𝑥, i.e. 𝜕𝑥.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 42,
+    "total_chunks": 67,
+    "char_count": 834,
+    "word_count": 177,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8c344717-f600-492d-bd82-0c4a88188434",
+    "text": "From classical calculus, we have 𝜕h (𝑥) 𝜕p (𝑥) 𝜕f (p (𝑥))\n= (6.108)\n𝜕𝑥 𝜕𝑥 𝜕p (𝑥) consisting of two sections;",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 43,
+    "total_chunks": 67,
+    "char_count": 108,
+    "word_count": 22,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "99ea1a7c-aafc-449c-992a-ba6f1a4a7388",
+    "text": "i) the partial derivative\n𝜕p (𝑥)\n(6.109) 𝜕𝑥\nrepresents the rate of change of the inner function p (·) with respect to 𝑥and\ncaptures how much the input to f (·) varies as 𝑥varies. ii) the partial derivative\n𝜕f (p (𝑥))\n(6.110)\n𝜕p (𝑥)\nrepresents the rate of change of the outer function f (·) evaluated at p (·) and\ntells us how changes in p (·) influence the final output of h (·). Together, these terms describe how a small change in 𝑥propagates through the\ncomposition h (·) = f (p (·)), first altering the intermediate value p (·), and then,\naffecting the output via passing through f (·). Now, letuscomebacktoquaternion-valuedfunctions. Considerthequaternionvalued compound function h (·) = f (p (·)) : H𝑚→H, where\np (·) : H𝑚→H𝑚 and f (·) : H𝑚→H (6.111) Using the relation in (6.64) the gradient of h (q) is mapped to the gradient\nof its real-valued quadrivatiate dual (akin to the process described in (6.62)),\nwhere the classical chain derivative can be used to find the derivatives of\n{h𝑟(q) , h𝚤(q) , h𝚥(q) , h𝜅(q)}. These derivatives are then mapped back into\ntheir quaternion formulation using (6.64). Detailed derivations can be found in\nXu et al. (2015). However, the important result is",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 44,
+    "total_chunks": 67,
+    "char_count": 1197,
+    "word_count": 208,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "18bd58b6-6ab5-4091-97e4-9b28a1ab0bd2",
+    "text": "𝜕f (p (q)) =𝜕p∗(q) 𝜕f (p (q)) + 𝜕p𝚤∗(q) 𝜕f (p (q))\n𝜕q∗ 𝜕q∗ 𝜕p∗(q) 𝜕q∗ 𝜕p𝚤∗(q)\n(6.112) 𝜕p𝚥∗(q) 𝜕f (p (q)) 𝜕p𝜅∗(q) 𝜕f (p (q))\n+ +\n𝜕q∗ 𝜕p𝚥∗(q) 𝜕q∗ 𝜕p𝜅∗(q) Perhaps, the most useful simplification in the context of adaptive information\nprocessing applications is the special case where p (·) : H𝑚→R and f (·) :\nR →R. In this scenario, the described process yields 𝜕f (p (q)) 𝜕p∗(q) 𝜕f (p (q))\n= (6.113)\n𝜕q∗ 𝜕q∗ 𝜕p∗(q)",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 45,
+    "total_chunks": 67,
+    "char_count": 412,
+    "word_count": 79,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a6d547cd-50ba-4e3d-815a-ecabbca39c11",
+    "text": "Finally, note that the chain rule derivative is crucial in deriving the quaternion\nbackpropagation algorithm. The complete derivation falls beyond the scope of\nthis chapter; however, the keen reader is referred to Pöppelbaum and Schwung\n(2022); Bourigault et al. (2024). Let us now consider the quaternion formulation of the least mean\nsquare algorithm, i.e. quaternion least mean square (QLMS) initially proposed\nby Cheong Took and Mandic (2009). The aim of QLMS is to find weight\nvector parameters w[𝑛] that for the input sequence {q[𝑛] : 𝑛∈N}, allows the\nestimates ˆ𝑦[𝑛] = wT[𝑛]q𝑎[𝑛] to track observation sequence {𝑦[𝑛] : 𝑛∈N} so that\nits estimates minimise the the squared error cost given by 𝐽[𝑛] = ∥𝜖[𝑛]∥2 (6.114) where 𝜖[𝑛] is the error at time instant 𝑛and is given by 𝜖[𝑛] = 𝑦[𝑛] −ˆ𝑦[𝑛] (6.115) The QLMS achieves the stated goal through iterative updates of the weight vector\nusing the cost function gradient as\nw[𝑛+1] = w[𝑛] −𝛾𝜕𝐽[𝑛] (6.116)\n𝜕w∗[𝑛] where 𝛾∈R+ is an adaptation gain. This requires the steepest direction of change\n𝜕𝐽[𝑛]\nfor 𝐽[𝑛] with respect to the weight vector w[𝑛], i.e. 𝜕w∗[𝑛] , to be established. To\ndo this, let us consider the cost function as a composite function so that 𝐽[𝑛] = f p w[𝑛] (6.117) with\np w[𝑛] =𝜖[𝑛] = 𝑦[𝑛] −ˆ𝑦[𝑛] = 𝑦[𝑛] −wT[𝑛]q𝑎[𝑛]\n(6.118)\nf(𝜖[𝑛]) =𝜖[𝑛]𝜖∗[𝑛] This fits within the conditions of the chain derivative rule in (6.113). In addition,\nfrom (6.105), we know that\n𝜕f 𝜖[𝑛] 𝜕𝜖[𝑛]𝜖∗[𝑛] 1\n= = (6.119) 𝜕𝜖∗ 𝜕𝜖∗\n[𝑛] [𝑛] 2𝜖[𝑛]",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 46,
+    "total_chunks": 67,
+    "char_count": 1474,
+    "word_count": 251,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c030e332-c777-4d6b-8935-1ab2ce29ca8e",
+    "text": "We also consider the involution\n1 1 𝜕𝜖[𝑛]𝜖∗[𝑛] 𝚤1 2𝜖𝚤 [𝑛] = 2𝚤𝜖[𝑛]𝚤−1 = 2𝜖[𝑛]𝚤−1 = 𝚤 𝜕𝜖∗[𝑛] 𝚤−1 (6.120) where we have used the relation in (6.119). Now using the derived multiplication\nrules in (6.89) and (6.91), the expression in (6.120) can be formulated into 1 𝜕𝜖[𝑛]𝜖∗[𝑛] 𝜕𝜖[𝑛]𝜖∗[𝑛]𝚤−1 𝜕𝚤𝜖[𝑛]𝜖∗[𝑛]𝚤−1\n𝚤−1 = 𝚤 = (6.121) [𝑛] = 𝚤 𝜕𝜖∗ 𝜕𝜖∗ 𝜕𝜖𝚤∗ 2𝜖𝚤 [𝑛] [𝑛] [𝑛] Considering the fact that 𝜖[𝑛]𝜖∗[𝑛] ∈R, it follows that 𝚤𝜖[𝑛]𝜖∗[𝑛]𝚤−1 = 𝜖[𝑛]𝜖∗[𝑛];\nthus, (6.121) gives 1 𝜕𝚤𝜖[𝑛]𝜖∗[𝑛]𝚤−1 𝜕𝜖[𝑛]𝜖∗[𝑛]\n= (6.122) [𝑛] = 𝜕𝜖𝚤∗ 𝜕𝜖𝚤∗ 2𝜖𝚤 [𝑛] [𝑛] In a similar fashion it can be shown that\n1 𝜕𝜖[𝑛]𝜖∗[𝑛] 1 𝜕𝜖[𝑛]𝜖∗[𝑛]\n= and (6.123) [𝑛] [𝑛] = 𝜕𝜖𝜅∗ 𝜕𝜖𝚥∗ 2𝜖𝚥 2𝜖𝜅 [𝑛] [𝑛] 𝜕p𝜉∗(w[𝑛])\nNow for 𝜉∈{1, 𝚤, 𝚥, 𝜅}, we have to calculate 𝜕w∗[𝑛] . Let us start with a\nsimple case, that is,",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 47,
+    "total_chunks": 67,
+    "char_count": 752,
+    "word_count": 139,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ce1cba48-63cc-4bdd-9dca-cbb40cdeef72",
+    "text": "𝜕𝑦∗ 𝜕𝜖∗\n[𝑛] [𝑛] −q𝑎H[𝑛]w∗[𝑛] 𝜕q𝑎H[𝑛]w∗[𝑛]\n= = −\n𝜕w∗[𝑛] 𝜕w∗[𝑛] 𝜕w∗[𝑛]\n𝜕q𝑎H[𝑛]w∗[𝑛] 𝜕q𝑎H[𝑛]w∗[𝑛] 𝜕q𝑎H[𝑛]w∗[𝑛] 𝜕q𝑎H[𝑛]w∗[𝑛] ! = −1 + 𝚤 + 𝚥 + 𝜅\n4 𝜕w𝑟[𝑛] 𝜕w𝚤[𝑛] 𝜕w𝚥[𝑛] 𝜕w𝜅[𝑛] = −1 (q𝑎∗+ 𝚤q𝑎∗(−𝚤) + 𝚥q𝑎∗(−𝚥) + 𝜅q𝑎∗(−𝜅)) = − q𝑟\n4 q𝑟\nq𝑟   (6.124)\n𝜕p𝚤∗(w[𝑛])\nIn addition, for the case of 𝜕w𝚤∗ , we can write 𝜕𝑦𝚤∗ 𝜕𝜖𝚤∗ [𝑛] −q𝑎𝚤H[𝑛] w𝚤∗[𝑛] 𝜕q𝑎𝚤H[𝑛] w𝚤∗[𝑛] [𝑛]\n= = −\n𝜕w∗[𝑛] 𝜕w∗[𝑛] 𝜕w𝚤∗[𝑛]\n𝜕q𝑎𝚤H[𝑛] w𝚤∗[𝑛] 𝜕q𝑎𝚤H[𝑛] w𝚤∗[𝑛] 𝜕q𝑎𝚤H[𝑛] w𝚤∗[𝑛] 𝜕q𝑎𝚤H[𝑛] w𝚤∗[𝑛] ! = −1 + 𝚤 + 𝚥 + 𝜅\n4 𝜕w𝑟[𝑛] 𝜕w𝚤[𝑛] 𝜕w𝚥[𝑛] 𝜕w𝜅[𝑛]\n−q𝚤𝚤\n= −1 (q𝑎𝚤∗+ q𝑎∗−q𝑎𝜅∗−q𝑎𝚥∗) = −q𝚤𝚤\n4 −q𝚤𝚤\n−q𝚤𝚤   (6.125)\nIn a similar fashion we can show that −q𝚥𝚥 −q𝜅𝜅\n𝜕𝜖𝚥∗ 𝜕𝜖𝜅∗ [𝑛] −q𝚥𝚥 [𝑛] −q𝜅𝜅\n= and = (6.126)\n𝜕w∗[𝑛] −q𝚥𝚥 𝜕w∗[𝑛] −q𝜅𝜅\n−q𝚤𝚥 −q𝜅𝜅    \nSubstituting (6.119)-(6.126) into the chain derivative gives the overall differential\n𝜕𝐽[𝑛] = −1 [𝑛] (6.127) 𝜕w∗[𝑛] 2𝜖[𝑛]q𝑎∗ Thus, the weight update term becomes w[𝑛+1] = w[𝑛] + 𝛾𝜖[𝑛]q𝑎∗[𝑛] (6.128) with the 21 factor absorbed into the adaptation gain. Alternatively, using the product rule in (6.96), we can also have",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 48,
+    "total_chunks": 67,
+    "char_count": 1061,
+    "word_count": 187,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "42b602a8-8904-4e28-aa9b-94bb7e98a0a9",
+    "text": "𝜕𝐽[𝑛] 𝜕 𝜖∗[𝑛]𝜖[𝑛] 𝜕𝜖[𝑛] 𝜕𝜖∗[𝑛] =𝜕∥𝜖[𝑛]∥2 = = 𝜖∗[𝑛] ∗+ 𝜖[𝑛] 𝜕w∗[𝑛] 𝜕w∗[𝑛] 𝜕w∗[𝑛] 𝜖∗−1[𝑛] 𝜕w∗[𝑛]\n𝜕 w [𝑛]\n(6.129)\n=1 [𝑛] − q𝑟 𝜖[𝑛] = −1 [𝑛] 2𝜖[𝑛]q𝑎 q𝑟 2𝜖[𝑛]q𝑎∗\nq𝑟  \nThe MATLAB code9 for the QLMS is given below. 1 % Quaternion Least Mean Square Algorithm\n2 % The a l g o r i t h m r e q u i r e s v alu es f o r :\n3 % i ) mu ( the a d a p t a t i o n gian ) ,\n4 % i i ) q ( an i n p u t sequence ) ,\n5 % i i i ) y ( d e s i r e d or r e f r e n c e s i g n a l ) .\n7 % The number of i t e r a t i o n s\n8 N = l e n g t h ( q ) ;\n9 % I n i t i a l weight v e c t o r comprising of 4 weights\n10 w= q u a t e r n i o n ( zeros ( 4 , 1 ) , zeros ( 4 , 1 ) , zeros ( 4 , 1 ) , zeros ( 4 , 1 ) ) ;\n12 f o r n = 1:N\n13 % Formulating the augmented v e c t o r in Eq . ( 1 . 3 1 )\n14 qa = [ q ( n ) ; i n v i j k ( q ( n ) , ' i ' ) ; ...\n15 i n v i j k ( q ( n ) , ' j ' ) ; i n v i j k ( q ( n ) , ' k ' ) ] ;\n16 % C a l c u l a t i n g the e s t i m a t e of the r e f e r e n c e s i g n a l\n17 y e s t = t r a n s p o s e (w) ∗qa ;\n18 % C a l c u l a t i n g the e r r o r s i g n a l\n19 e = y ( n ) −y e s t ;\n20 % Updating the weight v e c t o r\n21 w = w + mu∗e∗conj ( qa ) ;\n22 end We can now consider the nonlinear quaternion-valued filtering\nand learning problem. To this end, the aim is to find the weight vector w[𝑛]\nthat allows the estimates ˆ𝑦[𝑛] = 𝜙 wT[𝑛]q𝑎[𝑛] to track observation sequence\n{𝑦[𝑛] : 𝑛∈N} so that its estimates minimise the squared error cost given by 𝐽[𝑛] = ∥𝜖[𝑛]∥2 (6.130) where 𝜖[𝑛] is the error at time instant 𝑛and is given by 𝜖[𝑛] = 𝑦[𝑛] −ˆ𝑦[𝑛] (6.131) 9 The involution function invijk(q,'i') in line 14 implements the 𝚤−involution, which can be downloaded at here. with 𝜙(·) : H →H denoting a general nonlinear quaternion-valued function. In a similar fashion to the QLMS, the quadratic error minimization is achieved\nthrough the iterative updates of the weight vector as w[𝑛+1] = w[𝑛] −𝛾𝜕𝐽[𝑛] (6.132)\n𝜕w∗[𝑛] where 𝛾∈R+ is an adaptation gain. Once more, we need to evaluate the steepest\n𝜕𝐽[𝑛]\ndirection of change for 𝐽[𝑛] with respect to the weight vector w[𝑛], i.e. 𝜕w∗[𝑛] , to\nbe established. To do this, using the chain derivative rule, we have 𝜕𝐽[𝑛] 𝜕 𝜖∗[𝑛]𝜖[𝑛] 𝜕𝜖[𝑛] 𝜕𝜖∗[𝑛]\n= = 𝜖∗[𝑛] ∗+ 𝜖[𝑛] (6.133) 𝜕w∗[𝑛] 𝜕w∗[𝑛] 𝜖∗−1[𝑛] 𝜕w∗[𝑛]\n𝜕 w [𝑛]",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 49,
+    "total_chunks": 67,
+    "char_count": 2281,
+    "word_count": 629,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2395f0dc-ec4b-436a-8361-ef1367dc2cac",
+    "text": "To evaluate the expression in (6.133), we have to evaluate 𝜕𝜖∗ [𝑛] 𝜕𝜖[𝑛]\nand ∗ (6.134)\n𝜕w∗[𝑛] 𝜖∗−1[𝑛]\n𝜕 w [𝑛] 𝜕𝜖∗\nLet us start with 𝜕w∗[𝑛][𝑛] . To this end, from the definition in (6.65), we have",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 50,
+    "total_chunks": 67,
+    "char_count": 195,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7f2b6d03-d56f-4bf8-8e20-3fa3fcc48962",
+    "text": "𝜕𝜙∗ wT[𝑛]q𝑎[𝑛] 𝜕𝜙∗ wT[𝑛]q𝑎[𝑛]\n+ 𝚤 𝜕𝜖∗ [𝑛] 𝜕w𝑟[𝑛] 𝜕w𝚤[𝑛] = −1 (6.135)\n𝜕𝜙∗ wT[𝑛]q𝑎[𝑛] 𝜕w∗[𝑛] 4 𝜕𝜙∗ wT[𝑛]q𝑎[𝑛]\n+ 𝚥 + 𝜅 ©­­­­­­­ ª®®®®®®® 𝜕w𝚥[𝑛] 𝜕w𝜅[𝑛]\n« ¬\nSince, the derivatives on the right-hand-side of (6.135) are with respect to realvalued variables {w𝑟[𝑛], w𝚤[𝑛], w𝚥[𝑛], w𝜅[𝑛] }, traditional derivative rules, that treat\nthe imaginary units as regular variables, apply here. Similarly, using (6.89), we\nhave 𝜕𝜙 wT[𝑛]q𝑎[𝑛] 𝜕𝜙 wT[𝑛]q𝑎[𝑛] + 𝚤𝜖∗−1[𝑛]\n𝜕𝜖[𝑛] 𝜕w𝑟[𝑛] 𝜕w𝚤[𝑛] ∗= −1 (6.136) 𝜖∗−1 [𝑛] 4 𝜕𝜙 wT[𝑛]q𝑎[𝑛] 𝜕𝜙 wT[𝑛]q𝑎[𝑛] 𝜕 w [𝑛] + 𝜅𝜖∗−1[𝑛] + 𝚥𝜖∗−1[𝑛] ©­­­­­­­ ª®®®®®®® 𝜕w𝚥[𝑛] 𝜕w𝜅[𝑛]\n« ¬ which can be simplified into\n𝜕𝜙 wT[𝑛]q𝑎[𝑛] 𝜕𝜙 wT[𝑛]q𝑎[𝑛]\n𝜖∗ [𝑛] + 𝚤𝜖∗[𝑛] 𝜖∗−1 𝜕𝜖[𝑛] [𝑛] 𝜕w𝑟[𝑛] 𝜕w𝚤[𝑛]\n∗= − (6.137) 𝜖∗−1 [𝑛] 4 𝜕𝜙 wT[𝑛]q𝑎[𝑛] 𝜕𝜙 wT[𝑛]q𝑎[𝑛] 𝜕 w [𝑛] + 𝚥𝜖∗[𝑛] + 𝜅𝜖∗[𝑛] ©­­­­­­­ ª®®®®®®® 𝜕w𝚥[𝑛] 𝜕w𝜅[𝑛]\n« ¬\nOnce more, given the fact that the derivatives on the right-hand-side of (6.137)\nare with respect to real-valued variables {w𝑟[𝑛], w𝚤[𝑛], w𝚥[𝑛], w𝜅[𝑛] }, traditional\nderivative rules, treat the imaginary units as regular variables, apply here. Finally, substituting (6.135) and (6.137) into (6.133) gives\n𝜕𝜙∗ wT[𝑛]q𝑎[𝑛] 𝜕𝜙 wT[𝑛]q𝑎[𝑛]\n𝜖[𝑛] + 𝜖∗[𝑛] 𝜕w𝑟[𝑛] 𝜕w𝑟[𝑛]\n𝜕𝜙∗ wT[𝑛]q𝑎[𝑛] 𝜕𝜙 wT[𝑛]q𝑎[𝑛]\n+ 𝚤 ©­­ 𝜕w𝚤[𝑛] 𝜖[𝑛] + 𝜖∗[𝑛] 𝜕w𝚤[𝑛] ª®®\n𝜕𝐽[𝑛] −1\n= « ¬ (6.138)\n𝜕w∗[𝑛] 4 𝜕𝜙∗ wT[𝑛]q𝑎[𝑛] 𝜕𝜙 wT[𝑛]q𝑎[𝑛]\n+ 𝚥 ©­­ 𝜕w𝚥[𝑛] 𝜖[𝑛] + 𝜖∗[𝑛] 𝜕w𝚥[𝑛] ª®®\n« ¬\n𝜕𝜙∗ wT[𝑛]q𝑎[𝑛] 𝜕𝜙 wT[𝑛]q𝑎[𝑛]\n+ 𝜅 𝜖[𝑛] + 𝜖∗[𝑛] ©­­­­­­­­­­­­­­­­­­­­­­­ ©­­ 𝜕w𝜅[𝑛] 𝜕w𝜅[𝑛] ª®®ª®®®®®®®®®®®®®®®®®®®®®®®\n« « ¬¬\nThe expression in (6.138) can be significantly simplified if the nonlinear function,\n𝜙(·), is selected to be locally analytic as in (6.19). In this case, we have\n𝜕𝜙∗ wT[𝑛]q𝑎[𝑛] 𝜕𝐽[𝑛] = −1 q𝑎∗[𝑛] (6.139) 𝜕w∗[𝑛] 2𝜖[𝑛] 𝜕 wT[𝑛]q𝑎[𝑛]\n= −1 q𝑎H[𝑛]w∗[𝑛] q𝑎∗[𝑛] (6.140) 2𝜖[𝑛]𝜙′\nwhere 𝜙′(𝑥) denotes the derivative of 𝜙(𝑥) with respect to 𝑥. The trick of 𝜙∗(𝑥) =\n𝜙(𝑥∗) is possible due to the local analyticity of the quaternion function; this trick\ncan be useful in more complex derivations of other algorithms. Examples\nof functions that meet these requirements include tanh (·), tan (·), arctan (·),\nsinh (·), and sin (·), with a more detailed analysis of these functions provided\nin Ujang et al. (2011). The following MATLAB code10 considers the hyperbolic\ntangent function as the nonlinear function on the output of the QLMS algorithm. 10 The involution function invijk(q,'i') in line 14 implements the 𝚤−involution, which can be downloaded at here. 1 % Nonlinear Quaternion Least Mean Square Algorithm\n2 % The a l g o r i t h m r e q u i r e s v alu es f o r :\n3 % i ) mu ( the a d a p t a t i o n gain ) ,\n4 % i i ) q ( an i n p u t sequence ) ,\n5 % i i i ) y ( d e s i r e d or r e f e r e n c e s i g n a l ) .\n7 % Number of i t e r a t i o n s\n8 N = l e n g t h ( q ) ;\n9 % I n i t i a l weight v e c t o r comprising of 4 weights\n10 w= q u a t e r n i o n ( zeros ( 4 , 1 ) , zeros ( 4 , 1 ) , zeros ( 4 , 1 ) , zeros ( 4 , 1 ) ) ;\n12 f o r n = 1:N\n13 % Formulating the augmented v e c t o r in Eq . ( 1 . 3 1 )\n14 qa = [ q ( n ) ; i n v i j k ( q ( n ) , ' i ' ) ; ...\n15 i n v i j k ( q ( n ) , ' j ' ) ; i n v i j k ( q ( n ) , ' k ' ) ] ;\n16 % C a l c u l a t i n g the n o n l i n e a r ou tput\n17 y e s t = tanh ( t r a n s p o s e (w) ∗qa ) ;\n18 e = y ( n ) −y e s t ;\n19 % Updating the weight v e c t o r\n20 w = w + mu∗e ∗( sech ( qa ' ∗conj (w) ) ^2 ) ∗conj ( qa ) ;\n21 end This chapter presents the advanced theory of quaternions in terms of algebra,\nstatistics, and calculus. Beginning with the history of quaternions, we then introduced the quaternion algebra and showed how quaternions can be used for\nthree-dimensional rotations. In particular, we revisited quaternion involutions\nand illustrated how they rotate a quaternion random variable. These quaternion involutions were then shown to construct a vector basis, the so-called the\n'augmented' quaternion approach.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 51,
+    "total_chunks": 67,
+    "char_count": 3840,
+    "word_count": 843,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "69752ca7-9cd3-4bca-a00d-35e28ae1e692",
+    "text": "This approach enabled a complete description of a random quaternion process. This was shown in the context of second\norder statistics (i.e. autocorrelations). The same principle can be extended to\nother statistical descriptors. Next, we presented the hypercomplex widely linear\nmodel for least squares algorithms followed by the HR-calculus for quaternion\nderivatives. The most common derivative rules, such as the product rule and the\nchain rule, were revisited. To shed light on these relatively new derivative rules,\nthe quaternion least mean square was derived twice.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 52,
+    "total_chunks": 67,
+    "char_count": 571,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e2a657d7-063f-42f2-a91b-5c15a5d6231d",
+    "text": "Throughout this chapter,\nmany illustrative examples as well as MATLAB codes were provided for ease of\nexposition and reproducibility of the materials presented herein. Rings, Fields, and Groups: An Introduction to Abstract Algebra. 2 ed., Oxford\nUniversity Press, Oxford, England. Bourigault, P., Xu, D., Mandic, D.P., 2024. Quaternion recurrent neural network with real-time recurrent learning and maximum correntropy criterion, in: 2024 International Joint Conference\non Neural Networks (IJCNN), pp. 1–8. doi:10.1109/IJCNN60899.2024.10650324. Brasil, V.d.P., de Leles Ferreira Filho, A., Ishihara, J.a.Y., 2018. Electrical three phase circuit\nanalysis using quaternions. International Conference on Harmonics and Quality of Power , 1–6. Rotations in classical mechanics using geometric algebra. arXiv:2210.16803 . Cheong Took, C., Mandic, D.P., 2009.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 53,
+    "total_chunks": 67,
+    "char_count": 852,
+    "word_count": 113,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cbdd7dc5-4628-4ac2-a341-9caed94e4523",
+    "text": "The quaternion LMS algorithm for adaptive filtering of\nhypercomplex processes. IEEE Transactions on Signal Processing 57, 1316–1327. Cheong Took, C., Mandic, D.P., Zhang, F., 2011. On the unitary diagonalisation of a special class\nof quaternion matrices.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 54,
+    "total_chunks": 67,
+    "char_count": 254,
+    "word_count": 36,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6ca7516f-30da-49fb-bfd3-c6465a6d4d25",
+    "text": "Applied Mathematics Letters 24, 1806–1809. Cheong Took, C., Talebi, S.P., Fernandez Alcala, R.M., Mandic, D.P., 2024. Augmented statistics\nof quaternion random variables: A lynchpin of quaternion learning machines. IEEE Signal\nProcessing Magazine 41, 72–87. doi:10.1109/MSP.2024.3384178. Comminiello, D., Lella, M., Scardapane, S., Uncini, A., 2019.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 55,
+    "total_chunks": 67,
+    "char_count": 349,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6f60a511-0237-431a-8faa-959779c03493",
+    "text": "Quaternion convolutional neural\nnetworks for detection and localization of 3D sound events. In Proceedings of IEEE International\nConference on Acoustics, Speech and Signal Processing , 8533–8537. Crassidis, J.L., Markley, F.L., Cheng, Y., 2007. Survey of nonlinear attitude estimation methods. Journal of Guidance, Control, and Dynamics 30, 12–28. Desoer, C.A., Kuh, E.H., 2009. Basic circuit theory. volume 2. Ell, T.A., Sangwine, S.J., 2007. Quaternion involutions and anti-involutions. Computers & Mathematics with Applications 53, 137–143. Finkelstein, D., Jauch, J.M., Schiminovich, S., Speiser, D., 2004. Foundations of quaternion quantum\nmechanics. Journal of Mathematical Physics 3, 207–220. URL: https://doi.org/10.1063/\n1.1703794, doi:10.1063/1.1703794. Fueter, R., 1939. Über einen hartogs'schen satz.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 56,
+    "total_chunks": 67,
+    "char_count": 812,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a68ceaf6-fc70-4d2a-a78e-3f363e2632ab",
+    "text": "Commentarii Mathematici Helvetici 12, 75–80. Hamilton, W.R., 1844. On quaternions, or on a new system of imaginaries in algebra 25, 10–13. Hampshire, D.P., 2018.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 57,
+    "total_chunks": 67,
+    "char_count": 161,
+    "word_count": 24,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "64f0dbcd-c689-4056-96e1-3667676f0d63",
+    "text": "A derivation of Maxwell's equations using the Heaviside notation. Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences\nHankins, T.L., 1977. Triplets and triads: Sir William Rowan Hamilton on the metaphysics of\nmathematics. URL: http://www.jstor.org/stable/230069. Electromagnetic Theory. volume 2. The Electrician Printing and Publishing\nCompany. Reprinted by Dover in 1950.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 58,
+    "total_chunks": 67,
+    "char_count": 420,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb613a57-a8b1-4495-ab20-ed0a4e24b2dc",
+    "text": "Kliuchnikov, V., Yard, J.T., 2015. A framework for exact synthesis. ArXiv preprint\nKreutz–Delgado, K., 2006. The complex gradient operator and the CR-calculus. University of\nCalifornia, San Diego, Technical Report. Quaternions and Rotation Sequences: A Primer with Applications to Orbits,\nAerospace and Virtual Reality.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 59,
+    "total_chunks": 67,
+    "char_count": 319,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2f2a92d8-4a8c-4b52-991d-62de346d7353",
+    "text": "Princeton University Press. Leo, S.D., Rotelli, P., 2003. Quaternion analyticity. Applied Mathematics Letters 16, 1077–1081. Mandic, D.P., Goh, V.S.L., 2009. Complex valued nonlinear adaptive filters: Noncircularity, widely\nlinear and neural models. A Treatise on Electricity and Magnetism. Dover Publications, New York. ISBN 0-486-60636-8 (Vol. 1) and 0-486-60637-6 (Vol. 2). The quaternion model of doubly-fed induction motor. In Proceedings of International Forum on Strategic Technology , 32–36. Pei, S.C., Cheng, C.M., 1999.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 60,
+    "total_chunks": 67,
+    "char_count": 529,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7c485715-9718-4a93-b4ab-3f3d54761058",
+    "text": "Color image processing by using binary quaternion-momentpreserving thresholding technique. IEEE Transactions on Image Processing 8, 614–628. Phillips, A.C., 2003. Introduction to quantum mechanics. Pöppelbaum, J., Schwung, A., 2022. Quaternion backpropagation. arXiv:2212.13082 . Said, S., Bihan, N.L., Sangwine, S.J., 2008. Fast complexified quaternion Fourier transform. IEEE\nTransactions on Signal Processing 56, 1522–1531. Sangwine, S., Bihan, N.L., 2005. Quaternion Toolbox for Matlab [Online]. Available:\nhttp://qtfm.sourceforge.net/ . Seberry, J., Finlayson, K., Adams, S.S., Wysocki, T.A., Xia, T., Wysocki, B.J., 2008. The theory of\nquaternion orthogonal designs. IEEE Transactions on Sognal Processing 56, 256–265.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 61,
+    "total_chunks": 67,
+    "char_count": 724,
+    "word_count": 90,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3b5bf7a8-7745-4b25-b95b-81296fa8ff43",
+    "text": "Animating rotation with quaternion curves. ACM SIGGRAPH Computer\nGraphics 19, 245–254. Euler parameters and the use of quaternion algebra in the manipulation of finite\nrotations: A review. Mechanism and Machine Theory 21, 365–373. Stern, S., Fischer, R.F.H., 2018. Quaternion-valued multi-user MIMO transmission via dualpolarized antennas and QLLL reduction. In Proceedings of International Conference on Telecommunications , 63–69. Adaptive filtering algorithms for quaternion-valued signals. Imperial\nCollege London. Talebi, S.P., Cheong Took, C., Mandic, D.P., 2025.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 62,
+    "total_chunks": 67,
+    "char_count": 569,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5917b9ad-13a9-4d72-9632-63d762c3f479",
+    "text": "A quantum of learning: Using quaternion algebra\nto model learning on quantum devices. In Proceedigns of International Conference on Digital\nSignal Processing , 1–5doi:10.1109/DSP65409.2025.11075094. Talebi, S.P., Mandic, D.P., 2015.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 63,
+    "total_chunks": 67,
+    "char_count": 232,
+    "word_count": 29,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "165d2a9d-bdcc-4c1c-a0e6-d96263789af1",
+    "text": "A quaternion frequency estimator for three-phase power systems. Communication systems: An Introduction to\nsignals and noise in electrical communications. 4 ed., McGraw-Hill. A quaternion widely linear adaptive filter. IEEE Transactions\non Signal Processing 58, 4427–4431. A quaternion gradient operator and its applications. IEEE Signal Processing Letters 18, 47–50. Second-order analysis of improper complex random vectors\nand processes. IEEE Transactions on Signal Processing 51, 714–725. Quaternion-MUSIC for vector-sensor array processing. IEEE Transactions on Signal Processing 54, 1218–1229. Complex-valued signal processing: The proper way\nto deal with impropriety. IEEE Transactions on Signal Processing 59, 5101–5125. Tobar, F.A., Mandic, D.P., 2014. Quaternion reproducing kernel Hilbert spaces: Existence and\nuniqueness conditions. IEEE Transactions on Information Theory 60, 5736–5749.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 64,
+    "total_chunks": 67,
+    "char_count": 897,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "136cabf9-5ab7-4e93-a6b6-fbc2080e03ed",
+    "text": "Augmented second-order statistics of quaternion random signals. Signal Processing 91, 214–224. Ujang, B.C., Took, C.C., Mandic, D.P., 2011.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 66,
+    "total_chunks": 67,
+    "char_count": 139,
+    "word_count": 18,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b1594e99-bd3a-43d6-b34a-8cf18fe33176",
+    "text": "Quaternion-valued nonlinear adaptive filtering. IEEE\nTransactions on Neural Networks 22, 1193–1206. doi:10.1109/TNN.2011.2157358. Widrow, B., McCool, J., Ball, M., 1975.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 67,
+    "total_chunks": 67,
+    "char_count": 169,
+    "word_count": 19,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a29bb4f5-7b79-47dd-83a7-f27838be01bb",
+    "text": "The complex LMS algorithm. Proceedings of the IEEE 63,\n719–720. Xu, D., Jahanchahi, C., Took, C.C., Mandic, D.P., 2015. Enabling quaternion derivatives: The\ngeneralized HR calculus. Royal Society Open Science 2. Zhang, M., Xiang, M., Zheng, Z., Talebi, S.P., Mandic, D.P., 2025. A class of widely linear\nquaternion blind equalisation algorithms. Signal Processing 230, 109863.",
+    "paper_id": "2603.11835",
+    "title": "Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning",
+    "authors": [
+      "Sayed Pouria Talebi",
+      "Clive Cheong Took"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11835v1",
+    "chunk_index": 68,
+    "total_chunks": 67,
+    "char_count": 376,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  }
+]

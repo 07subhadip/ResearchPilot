@@ -1,0 +1,866 @@
+[
+  {
+    "chunk_id": "47901db1-ef1b-4d63-8aa0-ae18e88d3068",
+    "text": "Contract And Conquer: How to Provably Compute Adversarial Examples for a\nBlack-Box Model? Anna Chistyakova * 1 Mikhail Pautov * 2 1",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 0,
+    "total_chunks": 48,
+    "char_count": 131,
+    "word_count": 22,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b3f7bacb-22fd-4e7e-9415-2496f4ba7095",
+    "text": "Black-box adversarial attacks are widely used as\ntools to test the robustness of deep neural networks against malicious perturbations of input2026 data aimed at a specific change in the output of the\nmodel. Such methods, although they remain empirically effective, usually do not guarantee that an\nadversarial example can be found for a particularMar\nmodel. In this paper, we propose Contract And\nConquer (CAC), an approach to provably com-11\npute adversarial examples for neural networks in\na black-box manner. The method is based on\nFigure 1.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 1,
+    "total_chunks": 48,
+    "char_count": 544,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ba4e7937-2ac9-428e-b3d1-9af70414f63c",
+    "text": "Illustration of the contraction of the adversarial exknowledge distillation of a black-box model on ample search space. Given the number j of algorithm iteraan expanding distillation dataset and precise con- tion, the adversarial example search space on iteration j, namely,\ntraction of the adversarial example search space. Uδ(x)j, is the intersection of the ρj−vicinity of an adversarial\nCAC is supported by the transferability guarantee: example zj with the initial attack search space, Uδ(x). Formally,[cs.LG] Uδ(x)j = Uδ(x) ∩Uρj(zj). The quantity ρj is defined in Eq. 7. we prove that the method yields an adversarial\nFor each algorithm iteration, the adversarial example search space\nexample for the black-box model within a fixed is represented by the intersection of bold circles.\nnumber of algorithm iterations. Experimentally,\nwe demonstrate that the proposed approach outperforms existing state-of-the-art black-box attack\nmethods on ImageNet dataset for different target\nmodels, including vision transformers. the model and receive its output in a fixed format (Qi et al.,\n2023; Maheshwary et al., 2021; Guo et al., 2019). Starting from the seminal work (Szegedy et al., 2014), the\nmajority of research in the field of adversarial machine 1. Introduction\nlearning has focused on developing methods to compute\nEvaluating and enhancing the robustness of neural networks adversarial examples and empirical approaches to defend\nto malicious perturbations of input data, called adversar- the models against them. Mainly, the methods of computing\nial attacks, is crucial in safety-critical applications, such adversarial examples are based on utilizing the informationarXiv:2603.10689v1 as medicine or autonomous systems. It has long been about the target model's outputs and gradients (Carlini &\nknown that a small, often imperceptible perturbation of Wagner, 2017; Madry et al., 2018; Andriushchenko et al.,\nimage (Goodfellow et al., 2014) or a minor paraphrase of an 2020; Park et al., 2024) or its estimation (Guo et al., 2019;\ninput prompt (Zhu et al., 2023) can cause a desired change Chen et al., 2017; Cheng et al., 2024; Han et al., 2024). In\nin the output of the corresponding model. It is noteworthy parallel, empirical defense methods are mainly based on\nthat the effectiveness of adversarial attacks is experimentally adversarial training (Madry et al., 2018; Bai et al., 2021),\nconfirmed in the black-box settings, when the attacker has where the model is trained on generated adversarial examlimited access to the model, namely, when they can query ples, gradient regularization (Ross & Doshi-Velez, 2018),\ncalibration (Stutz et al., 2020), or weight perturbation (Wu\n*Equal contribution 1Trusted AI Research Center, et al., 2020; Xu et al., 2022). It is worth mentioning that the\nRAS 2AXXX. Correspondence to: Anna Chistyakova\nexistence of an arms race between empirical defenses and <ann244111@gmail.com>.\nadversarial attacks is concerning for security-critical appliPreprint. March 12, 2026. cations: specifically, it can not be guaranteed that recently",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 2,
+    "total_chunks": 48,
+    "char_count": 3077,
+    "word_count": 460,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6b87e32e-197d-4574-ae52-d04a729ecfcc",
+    "text": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? Schematic representation of the proposed method. Given alternation iteration j and the target model T, we prepare the distillation\ndataset D(S) and train the surrogate model Sj. Then, Sj is attacked at the target point x in the white-box setting, and an adversarial\nexample zj is computed. If zj is transferable to T, algorithm returns zj and stops; otherwise, the adversarial example search space is\ncontracted as shown in Fig. 1, (zj, T(zj)) is added to the distillation dataset, and the next instance of the surrogate model, Sj+1, is\nobtained.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 3,
+    "total_chunks": 48,
+    "char_count": 636,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ee236760-0f2a-4ec8-be51-9124d9c56d12",
+    "text": "developed empirical defense mechanisms will remain effec- tov et al., 2022b; Feng et al., 2025). These approaches can\ntive against novel attack methods, and vice versa. Thus, the yield sample-level or population-level guarantees that no\neffectiveness of the application of empirical methods from adversarial example exists, given the type of perturbation\nadversarial machine learning to evaluate the robustness in and the perturbation budget. Unfortunately, certified robustsafety-critical settings is questionable. ness comes at a cost of computationally expensive inference\n(Cohen et al., 2019), may require significant changes to both\nMore than that, a variety of regulatory acts for artificial\ntraining and inference, limit available model architectures\nintelligence systems are in the process of development to-\n(Cullen et al., 2025), or may lead to a notable performance\nday, for example, the EU AI Act or the US National AI\ndegradation of the certifiably robust model. Aforementioned\nInitiative Act.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 4,
+    "total_chunks": 48,
+    "char_count": 1006,
+    "word_count": 146,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ec701b67-cdff-4dfd-8f71-23a0497e3e2f",
+    "text": "These frameworks, among other things, are\ndrawbacks are among the ones that limit the embedding of\ndesigned to develop standards of robustness of machine\ncertified robustness into the state-of-the-art machine learnlearning algorithms and services to adversarial attacks. As\ning services: for example, an integration of randomized\na consequence, to deploy a machine learning system in a\nsmoothing defense into medical diagnostics or into digital\nspecific setting, one will have to verify that it complies with\nservices that mark harmful content may lead to a signifithe aforementioned standards.\ncant degradation of performance on benign input data or\nTo ground the evaluation of the resilience of machine learn- severely slow down the system. As a consequence, to both\ning methods to adversarial attacks, it may be reasonable to retain practical effectiveness and to align with the upcomfocus on certified robustness methods. Instead of relying on ing AI regulatory acts, the developers will probably seek\nheuristics used in empirical defense approaches, certified alternatives to certified robustness.\nrobustness methods aim to provide mathematical guaranAt the same time, a complementary research question arises:\ntees about a model's behavior when its input is subjected\nhow to guarantee that the given black-box machine learnto a certain perturbation. The methods of certified robusting is not robust? Specifically, a method to prove that the\nness are usually based on randomized smoothing (Cohen\ngiven model is not robust might be an important tool for\net al., 2019; Pautov et al., 2022a; Voracek, 2024), set propthe assessment of robustness, especially from the perspecagation techniques (Gowal et al., 2018; Mao et al., 2024),\ntive of compliance with the prospective standards. In this\nconvex relaxation (Anderson et al., 2025; Kim & Pilanci,\npaper, we focus on this research question and propose Con-\n2024), or probabilistic certification (Weng et al., 2019; Pautract And Conquer (CAC), an iterative method to compute Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? adversarial examples for black-box models with conver- attacks is usually modest, since the examples are specifgence guarantees. By design, CAC is an alternation of two ically computed for the specific model instance (Madry\nprocesses: (i) knowledge distillation (Hinton, 2015) of the et al., 2018; Qin et al., 2022). To enhance the transferability\ntarget black-box target model by a small surrogate model of adversarial examples, some methods redesign objective\nand (ii) a white-box adversarial attack on a surrogate model functions, utilizing, among other things, an information\nwithin a vicinity of the target input point. Intuition behind from the hidden layers of the target model, for example, by\nCAC is simple: knowledge distillation forces the surrogate improving the similarity between the features of the advermodel to replicate the predictions of the target model in the sarial example and its benign preimage (Huang et al., 2019),\nclosed vicinity of target point, where a white-box attack on enhancing an invariance of an adversarial noise w.r.t. input\nthe surrogate model is used to craft adversarial examples; objects (Liu & Wang, 2025) or by disrupting a subset of\ncareful alternation of these operations, together with small important object-aware features of the target model (Wang\ncontraction of the vicinity of the target point, yields an upper et al., 2021b). In contrast, black-box attacks assume that an\nbound on the number of alternations needed to compute an adversary only has query access to the target model, and,\nadversarial example for the black-box target model. hence, can be used to evaluate the robustness of machine\nlearning services in real-world setups (Papernot et al., 2017;\nOur contributions are summarized as follows:\nZhang et al., 2021; Ma et al., 2025). These methods can be\ncoarsely divided into score-based (Uesato et al., 2018; An-\n• A novel iterative transfer-based adversarial attack, Con- driushchenko et al., 2020; Bai et al., 2020), decision-based\ntract and Conquer (CAC), is proposed. The method (Rahmati et al., 2020; Maho et al., 2021; Wang et al., 2022)\nis based on knowledge distillation of the target model and transfer-based (Liu et al., 2017; Xie et al., 2019; Naseer\non an expanding dataset and the white-box attack on et al., 2022; Li et al., 2023; Chen et al., 2024) categories.\nthe surrogate model within a contracting adversarial When decision-based and score-based methods utilize the\nexample search space. outputs of the target model to conduct an attack, transferbased ones rely on training the surrogate models to further\n• We theoretically demonstrate that, under mild assump- conduct a white-box adversarial attack against.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 5,
+    "total_chunks": 48,
+    "char_count": 4807,
+    "word_count": 739,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b2654fd6-44bf-4b9e-87a2-9c0696084599",
+    "text": "These aptions on the surrogate model, the proposed transfer- proaches, in particular, tend to show better transferability\nbased attack is guaranteed to yield an adversarial ex- of adversarial examples from one model to another, mainly\nample for the black-box target model within a fixed by design of optimization procedure and due to different\nnumber of algorithm iterations. heuristics used (Debicha et al., 2023; Xie et al., 2025). We want to highlight that although transfer-based black-box • We experimentally show that CAC outperforms the\nadversarial attacks demonstrate remarkable transferability state-of-the-art black-box attack methods on popular\nof adversarial examples from the surrogate models to the image benchmarks for different target models, includtarget models, they do not provide any guarantees of the ing vision transformers.\nsuccess of an attack; in general, this important disadvantage\nis shared by known black-box attack methods.\n2. Adversarial Attacks 2.2. Adversarial Defenses\nSoon after the vulnerability of neural networks to adversar- To level out the threat of adversarial attacks, plenty of deial perturbations was established (Goodfellow et al., 2014; fense methods have been proposed. They can be divided into\nSzegedy et al., 2014), a lot of attack methods have been two categories, namely, empirical ones and certified ones.\nproposed (Moosavi-Dezfooli et al., 2016; Carlini & Wag- When empirical methods mainly rely on data-driven and\nner, 2017; Chen et al., 2020). One way to categorize attack architecture-level heuristics, the certified ones are equipped\nmethods is based on the degree of accessibility of the target with formal guarantees: for example, they allow to formally\nmodel to an adversary. White-box attacks, that imply full prove that no adversarial example exists in a particular vicinaccess to the target model, including its internal weights, ity of the target point (Gowal et al., 2018; Cohen et al., 2019).\ngradients and/or training data, are broadly gradient-based Among empirical methods, adversarial training (Goodfelones (Goodfellow et al., 2014; Carlini & Wagner, 2017; low et al., 2014; Madry et al., 2018) and its modifications\nMadry et al., 2018), or surrogate loss-based ones (Zhang (Shafahi et al., 2019; Wong et al., 2020) stand out. These\net al., 2022b;a; Wang et al., 2023).",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 6,
+    "total_chunks": 48,
+    "char_count": 2340,
+    "word_count": 353,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "777cfa2a-8a3b-41c8-8ac8-636f0eacb286",
+    "text": "Gradient-based attacks approaches enhance the robustness of neural networks by\nexploit information about the target model's gradients, and, jointly training them on benign samples and adversarial exhence, tend to be of superior effectiveness; at the same time, amples generated by certain attack methods, exposing the\nthe transferability, or the ability of adversarial examples population of adversarial examples that the model has to\nto generalize across models, of gradient-based adversarial be defended from; it is noteworthy that adversarial training Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? methods offer the strongest empirical robustness.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 7,
+    "total_chunks": 48,
+    "char_count": 694,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "83ef4311-734f-49d0-ab18-bb7b2fc236e3",
+    "text": "The other example for T at point x, if T(x′) ̸= T(x). If T(x′) = y′\nmethods pre-process the data before feeding it to the target for some predefined class y′ ̸= y, then x′ is called targeted\nnetwork (Guo et al., 2018; Nesti et al., 2021), adopt image adversarial example.\npurification techniques (Nie et al., 2022; Wei et al., 2025),\nuse auxiliary methods to detect and correct adversarial per- Starting from here, we refer to Uδ(x) = {x′ : ∥x −x′∥∞≤\nturbations (Liu et al., 2019; Aldahdooh et al., 2022; Che δ} as the initial adversarial example search space. Following\net al., 2025), or modify the defended model (Yu et al., 2021; the well-established notion (Madry et al., 2018), we treat the\nAllouah et al., 2025; Zhao et al., 2025). Among the certi- l∞constraint as the measure of invisibility of adversarial\nfied methods, randomized smoothing (Cohen et al., 2019; examples. Lecuyer et al., 2019) and its variants (Yang et al., 2020; Definition 3.2. Let x′ ∈Uδ(x) be the adversarial example\nBansal et al., 2022; Korzh et al., 2025) are used to provide computed for the white-box model S at point x, and T be\nthe state-of-the-art worst-case guarantees on robustness of the separate black-box model. Then, x′ is called transferable\nneural networks in different setups. Instead of providing from S to T if\nthe output for a single input sample, these methods aggregate the predictions over a large amount of perturbed input (arg maxi∈[1,...,K] S(x)i = T(x),\nsamples. The other certified defense methods include, but (2) arg maxi∈[1,...,K] S(x′)i = T(x′).\nare not limited to, set propagation techniques (Gowal et al.,\n2018; Wang et al., 2021a; Mao et al., 2024), and formal\nverification methods (Tjeng et al., 2019; Shi et al., 2020). The goal of this work is to propose an approach to compute adversarial examples for the target model, T, that\nIt is worth mentioning that application of provable, effec- is supported by a mathematical guarantee of the success\ntive, but computationally expensive defense methods in real- of an attack. To do so, we apply a transfer-based attack\nworld AI systems is rather selective and incremental, than paradigm. In a nutshell, instead of computing an attack\nrigorous and complete, since in many setups, speed, perfor- for the target model explicitly, we apply knowledge distillamance and utility may outweigh robustness. tion to obtain a smaller surrogate model, S, to attack in the\nwhite-box setting; then we demonstrate experimentally and\n3. Methodology formally prove that, under mild assumptions on the surrogate model and controllable contraction of the adversarial\nIn this section, we provide background and motivation fol- example search space, we are guaranteed to compute an\nlowed by the description of the proposed method. Later, we adversarial example for T within the fixed number of iteraintroduce theoretical justifications of the method. tions. In the next section, we provide a detailed description\nof the proposed method.\n3.1.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 8,
+    "total_chunks": 48,
+    "char_count": 2979,
+    "word_count": 486,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d6b1a09b-767a-4898-8f71-f7aabedc7aef",
+    "text": "Background and Motivation In this work, we separately consider hard-label and soft- 3.2. Description of CAC\nlabel settings.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 9,
+    "total_chunks": 48,
+    "char_count": 123,
+    "word_count": 18,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c9c06488-6b5f-4127-a8e3-fad5a169cc0c",
+    "text": "Specifically, let T be the target black-box 3.2.1. SURROGATE MODEL AND WHITE-BOX ATTACK\nmodel that takes real-valued image tensor x ∈[0, 1]d\nas input, and returns, in hard-label setting, class index Suppose that the black-box model T, the target point x of\ny ∈[1, . . . , K], where K is the number of classes; in class y, and the initial adversarial attack search space Uδ(x)\nsoft-label setting, it returns the vector of class probabilities are fixed. We firstly obtain the surrogate model, S, by applyp ∈[1, . . . , K]. Here and below, we represent the prediction ing knowledge distillation to T. The distillation dataset for\nlabel assigned by the black-box model T for input x in the the surrogate model, D(S), consists of pairs (xk, T(xk)),\nform where {xk}m−1k=1 is a subset of a hold-out dataset. This\nsubset is formed in the following way: firstly, a random\nT(x) = y, for hard-label case, subset {xk}Ninitk=1 is sampled from a hold-out dataset; then,\nT(x) = arg max T(x)i, for soft-label. (1) among Ninit points, we choose m −1 closest ones to the\ni∈[1,...,K]\ntarget point x. The target point (x, T(x)) is included in\nLet S : [0, 1]d → [0, 1]K be the white-box model D(S). Consequently, knowledge distillation is performed\nthat maps an input tensor to a class index as y = by training S on D(S) by minimizing an empirical risk\narg maxi∈[1,...,K] S(x)i. In this work, we focus on the sim-\n1plest formalism of an adversarial attack given in the defini- L(S, D(S)) = X l(S, xk, yk), (3)\ntions below. |D(S)|\n(xk,yk)∈D(S)\nDefinition 3.1. Let x be the sample correctly classified by\nthe model T, y = T(x), and let δ > 0 be the fixed constant. where l(S, xk, yk) is the cross-entropy loss function. In the\nThen, the object x′ : ∥x−x′∥∞≤δ is called an adversarial experiments, we use Ninit = 10000 and m = 300. Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? We assume that the surrogate model has enough learning Algorithm 1 Contract and Conquer\ncapabilities to match the predictions of the target model on Require: Black-box target model T, target point x of class\nD(S), which is formalized in the following form: y, distance threshold δ, momentum parameter µ, maximum number of MI-FGSM iterations M, maximum\n( T(xk) = arg maxi∈[1,...,K] S(xk)i = yk, number queries to the target model N, initial size\n1 (4)\n2 [S(xk)yk −maxi̸=yk S(xk)i] > ε of distillation dataset m, hold-out dataset data points\n{xk}m−1k=1 , contraction parameter t\nfor all (xk, yk) ∈D(S). Here, the second inequality re- Ensure: Surrogate model S, adversarial example (z, T(z))\nflects the confidence of the surrogate model, and ε > 0 is a for the target model T\nconstant. 1: D(S) ←{(xk, T(xk))}m−1i=1 ∪{(x, y)} {initialize distillation dataset}\nWhen the surrogate model is trained, we attack it in a white- 2: N ←N −m {the remaining number of queries to the\nbox manner. Specifically, we apply MI-FGSM (Dong et al., target model decreases since m were spent to initialize\n2018) to find an adversarial example for S within initial distillation dataset}\nadversarial attack search space Uδ(x): 3: z0 ←x, Uδ(x)0 ←Uδ(x), α ←δ/M\n4: j ←1\n ∇x′tl′(S,x′t,y) gt+1 = µgt + , 5: while N ≥0 do\n ∥∇x′tl′(S,x′t,y)∥1 (5) 6: train S on distillation dataset D(S) x′t+1 = ProjUδ(x) [x′t + α(δ) sign(gt+1)] , 7: (zj, arg maxi∈[1,...,K] S(zj)i) ←\nx′1 = x, g1 = 0.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 10,
+    "total_chunks": 48,
+    "char_count": 3357,
+    "word_count": 589,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "69f2e00c-54bd-4fa0-a511-9c6d42d016df",
+    "text": "MI-FGSM(S, α, µ, Uδ(x)j−1, M, (x, y)) {compute\nan adversarial example for the surrogate model\nHere, µ is the momentum parameter, α(δ) > 0 is the gradi- according to Eq. 5}\nent step, ProjUδ(x) is the projection onto the attack search 8: if arg maxi∈[1,...,K] S(zj)i = h(T, zj) then\nspace, M is the maximum number of gradient steps, and l′ is 9: return S, (zj, h(T, zj))\na loss function specified later. We refer to the process of dis- 10: else\ntillation followed by the search for an adversarial example 11: D(S) ←D(S) ∪{(zj, T(zj))}\nfor the surrogate model as a single alternation. 12: ρj ←t∥zj −zj−1∥\n13: Uδ(x)j ←Uδ(x) ∩Uρj(zj) {contract adversarial\n3.2.2. ADJUSTMENT OF ATTACK PARAMETERS example search space according to Eq. 6}\nLet j be the number of current alternation. We assume 14: α ←ρj/M {update the gradient step}\n15: end ifthat for some iteration number t ∈[1, . . . , M], an adver-\n16: N ←N −1 {the remaining number of queries de-sarial example for the surrogate model, zj = x′t, is found.\ncreases since 1 query is spent to compute T(zj)}Then, the target model T is queried with zj to check if it\n17: j ←j + 1is transferable from S to T. If so, an algorithm yields zj\n18: end whileas an adversarial example for T; otherwise, we adjust the\nadversarial attack procedure: firstly, (zj, T(zj)) is included\nin the distillation dataset D(S); secondly, the adversarial\nexample search space is contracted as follows: Uδ(x)j ←Uδ(x) ∩Uρj(zj), (6)\nRemark 3.3.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 11,
+    "total_chunks": 48,
+    "char_count": 1460,
+    "word_count": 257,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "17416fef-6a25-4db6-9871-8b86169d5114",
+    "text": "CAC is, in fact, not tied to a specific white-box\nwhere attack; the usage of MI-FGSM is motivated by its simplicity and efficiency. The procedure in Algorithm 1 is ρj = t∥zj −zj−1∥∞ (7)\ndescribed for a single white-box adversarial example to ease\nis the contracted distance between two previous adversarial the notation. In practice, the algorithm computes a batch of\nexamples. Here, Uδ(x)j is the adversarial example search nadv = 10 adversarial examples for speed-up. To ensure\nspace after j−th alternation iteration, t ∈(0, 1) is the con- the variety of these examples, each example is computed for\ntraction parameter, Uρj(zj) = {a : ∥a −zj∥∞≤ρj} and the target point z0 = x + εk and search space Uδ(x). After these two adjustments, an algorithm proceeds {εk}nadvk=1 ∼U[−δ, δ]. Additionally, if an adversarial examto the next alternation described in Section 3.2.1, but with ple for the target model is found and the maximum number\nupdated distillation dataset and adversarial example search of queries to the target model has not been exhausted, (i)\nspace. The procedures from Sections 3.2.1 and 3.2.2 are the radius of the initial adversarial example search space, δ,\ndescribed in Algorithm 1. The adversarial example search decreases, and (ii) the algorithm restarts to possibly yield an\nspace contraction is schematically presented in Figure 1. adversarial example closer to the target point. Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? Convergence Guarantee 4.1.2. SURROGATE MODELS AND WHITE-BOX ATTACK In this Section, we introduce the theoretical justification We use ResNet-18 as the architecture of the white-box surroof CAC and justify the assumptions made. The following gate model. The knowledge distillation is conducted for 100\nlemma represents the convergence guarantee of the method. epochs with the use of Adam optimizer with the constant\nLemma 3.4.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 12,
+    "total_chunks": 48,
+    "char_count": 1915,
+    "word_count": 301,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "89c416d6-b0d5-4a6c-9e5e-47cef842a781",
+    "text": "Fix an input sample x and initial adversarial learning rate of 10−3. We conduct the white-box attack on\nattack search space, Uδ(x) = {a : ∥x−a∥∞≤δ}. Suppose the surrogate models with the following parameters: the\nthat for every j ∈Z+, the white-box attack in Algorithm 1 number of MI-FGSM iterations is set to be M = 3, the\nyields an adversarial example for the model S. Let S be a momentum parameter of attack is set to be µ = 1.0, the\ndifferentiable function with the bounded gradients in Uδ(x) contraction parameter is set to be t = 0.99, the initial adverfor every j ∈Z+ and let sarial example search space radius is set to be δ = 0.125,\nthe gradient step is set to be α = δ/M. The loss function\nγ = sup sup ∥∇S(x′)∥op,∞, (8) l′(S, x′t, y) from Eq. 5 is the cross-entropy loss in the hard- j∈Z+ x′∈Uδ(x)\nlabel setting and MSE loss for the soft-label setting. To\nwhere ∥· ∥op,∞is the operator norm induced by l∞norm of quantitatively evaluate the effectiveness of the method, we\nvectors. Let the surrogate model S be trained according to randomly choose the subset of 100 target points from the\nEq. 4, meaning that if yk = arg maxi∈[1,...,K] S(xk)i, then test subset of the corresponding dataset which are initially\n1 correctly classified by the target model. S(xk)yk −maxi̸=yk(S(xk))i > ε (9) 2\n4.1.3. BASELINE METHODS\nfor all (xk, yk) ∈D(S). Then, Algorithm 1 yields an adversarial example for the model S which is transferable to T We evaluate the proposed method against HopSkipJump\nat most at (n −1)−th alternation iteration, where (Chen et al., 2020), Sign-OPT (Cheng et al., 2020), GeoDA\n(Rahmati et al., 2020), SquareAttack (Andriushchenko et al.,\n(n −1) ln t ≤ln ε −ln δ −ln γ. (10) 2020), SparseRS (Croce et al., 2022), PAR (Shi et al., 2022)\nRemark 3.5. The proof is moved to the appendix, not to and AdvViT (Zhou et al., 2025) methods. HopSkipJump,\ndistract the reader.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 13,
+    "total_chunks": 48,
+    "char_count": 1884,
+    "word_count": 335,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a113320f-c979-4e06-81d1-c7c1a4cbe870",
+    "text": "Here, we want to briefly motivate as- Sign-OPT, and GeoDA are regarded as query-efficient comsumptions made in Lemma 3.4. Firstly, the boundedness of petitive benchmarks in the hard-label black-box setting;\nthe gradient S is achieved by construction of S out of layers SparseRS and SquareAttack are among the most efficient in\nwith the bounded gradients and by using activation func- the soft-label setting. At the same time, AdvViT and PAR\ntions with the bounded gradients, what is done in our case. are the state-of-the-art hard-label black-box attacks designed\nSecondly, the assumptions about the learning capabilities of specifically for transformer architectures. Additionally, we\nthe surrogate model formalized in Eq. 4 and the possibility evaluate CAC against combinations of HopSkipJump and\nto compute an adversarial example for the surrogate model SignOPT with PAR, where the latter is used as an initializaon each alternation iteration can be achieved simultaneously tion for the baseline methods. The hyperparameters of the\nby an appropriate choice of the architecture of S and its baseline methods are reported in the appendix.\ntraining; these two assumptions are practically verifiable.\n4.1.4. COMPARISON METHODOLOGY\n4. Experiments To align CAC with the baseline methods for comparison, we\nfix the maximum number of queries to the target model and\nIn this section, we provide technical description of experithe initial adversarial examples search space for each target\nments, datasets and model architectures, baseline methods,\npoint and evaluate the efficiency for each method by comand the comparison methodology.\nputing its attack success rate. We report average distances\nbetween the target point and the closest corresponding ad-\n4.1. Setup of Experiments versarial example, as well as the average number of queries,\n4.1.1. DATASETS AND TARGET MODELS AQN, required to compute an adversarial example at the\ntarget point. Average number of queries denotes the number\nIn our experiments, we use CIFAR-10 (Krizhevsky et al., of requests to the target model used by a method to gen-\n2009) and ImageNet (Deng et al., 2009) datasets to train erate an adversarial example for the target point, averaged\nthe surrogate models. For the baseline experiments, we over all target points. Attack success rate is the fraction of\nchoose ResNet-50 (He et al., 2016) and ViT-B (Dosovitskiy target points for which a method successfully computes an\net al., 2021) architectures of target models. The accuracy of adversarial example within the maximum number of queries. ResNet50 on ImageNet is 80.13%, on CIFAR-10 is 94.65%; For all the methods, except the CAC, we soften the maxthe accuracy of ViT-B on ImageNet is 85.21%, on CIFAR- imum number of queries to the target model: specifically,\n10 is 96.89%.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 14,
+    "total_chunks": 48,
+    "char_count": 2802,
+    "word_count": 434,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "85530b66-9701-49dc-96e0-60a6e77ddd83",
+    "text": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? Quantitative comparison of attack methods, hard-label setting, the target model is ResNet-50, the dataset is ImageNet. METHOD ASR AQN AVG l2 STD l2 AVG l∞ STD l∞ CAC (OURS) 1.00 487.95 35.074 18.833 0.153 0.080\nHOPSKIPJUMP l2 1.00 500.31 48.838 29.118 0.539 0.280\nHOPSKIPJUMP l∞ 1.00 500.01 73.255 35.856 0.361 0.202\nSIGNOPT 1.00 548.24 48.047 28.467 0.551 0.283\nGEODA 1.00 524.98 49.658 31.117 0.180 0.094 Quantitative comparison of attack methods, hard-label setting, the target model is ViT-B, the dataset is ImageNet. METHOD ASR AQN AVG l2 STD l2 AVG l∞ STD l∞ CAC (OURS) 1.00 488.91 49.282 26.488 0.165 0.091\nHOPSKIPJUMP l2 1.00 500.34 70.122 38.343 0.685 0.318\nHOPSKIPJUMP l∞ 1.00 500.01 106.142 48.455 0.563 0.292\nSIGNOPT 1.00 557.31 74.744 44.850 0.708 0.338\nGEODA 1.00 540.21 65.471 40.497 0.190 0.124\nPAR 1.00 322.38 38.751 25.745 0.889 0.233\nADVVIT 0.75 461.04 34.520 20.257 0.584 0.301\nSIGNOPT + PAR 1.00 467.64 51.468 37.941 0.625 0.276\nHOPSKIPJUMP l2 + PAR 1.00 500.36 56.514 40.454 0.665 0.328\nHOPSKIPJUMP l∞+ PAR 1.00 500.09 102.909 49.018 0.543 0.287 Quantitative comparison of attack methods, soft-label setting, the target model is ResNet-50, the dataset is ImageNet. METHOD ASR AQN AVG l2 STD l2 AVG l∞ STD l∞ CAC (OURS) 1.00 489.93 36.396 19.038 0.122 0.068\nSQUAREATTACK l∞ 0.98 500.00 89.292 4.953 0.250 0.000\nSPARSERS 0.94 500.00 44.470 2.574 0.994 0.017 Quantitative comparison of attack methods, soft-label setting, the target model is ViT-B, the dataset is ImageNet. METHOD ASR AQN AVG l2 STD l2 AVG l∞ STD l∞ CAC (OURS) 1.00 488.60 41.370 23.579 0.144 0.084\nSQUAREATTACK l∞ 0.26 500.00 90.103 4.602 0.250 0.000\nSPARSERS 0.79 500.00 44.335 2.444 0.993 0.017",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 15,
+    "total_chunks": 48,
+    "char_count": 1773,
+    "word_count": 285,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cda5dac2-8ccf-43d1-89ec-d29e3e8a7bf0",
+    "text": "we terminate the method after the iteration during which the results in terms of closeness of adversarial examples to the\nmaximum number of queries was exceeded. target points. From Tables 1 – 8 it can be seen that CAC\nyields adversarial examples closer to the initial target points\n4.2. Results of Experiments than other methods in experimental setups in terms of l∞\nnorm and almost all setups in terms of l2 norm. At the same\nWe report the results separately for soft-label and hard-label time, been supported by the convergence guarantee, the\ncase, different architectures of target models, and datasets. method shows a high attack success rate; it should be menIn Tables 1, 2, 3, 4 we report aforementioned quantities for tioned that although the other methods show high success\nthe subset of ImageNet and indicate, where applicable, what rates as well, they are not supported by formal guarantees.\ntype of norm constraint was used in internal procedures of\nthe methods (specifically, l2 or l∞). In Tables 5, 6, 7, 8\nwe report the results for CIFAR-10. We highlight the best Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? Quantitative comparison of attack methods, hard-label setting, the target model is ResNet-50, the dataset is CIFAR-10. METHOD ASR AQN AVG l2 STD l2 AVG l∞ STD l∞ CAC (OURS) 1.00 291.0 2.675 1.091 0.061 0.025\nHOPSKIPJUMP l2 1.00 300.07 2.704 2.634 0.174 0.161\nHOPSKIPJUMP l∞ 1.00 310.66 3.281 3.232 0.082 0.085\nSIGNOPT 0.92 288.59 3.642 3.351 0.242 0.209\nGEODA 0.96 300.81 3.388 3.440 0.071 0.071 Quantitative comparison of attack methods, hard-label setting, the target model is ViT-B, the dataset is CIFAR-10. METHOD ASR AQN AVG l2 STD l2 AVG l∞ STD l∞ CAC (OURS) 1.00 489.89 21.625 11.990 0.070 0.044\nHOPSKIPJUMP l2 0.99 496.30 40.160 33.460 0.417 0.281\nHOPSKIPJUMP l∞ 1.00 500.01 60.742 40.929 0.292 0.226\nSIGNOPT 0.96 532.76 40.653 33.664 0.426 0.265\nGEODA 0.94 604.32 25.871 23.517 0.071 0.078\nPAR 1.00 281.56 20.526 17.515 0.645 0.236\nADVVIT 0.96 530.21 17.741 16.191 0.319 0.215\nSIGNOPT + PAR 1.00 481.18 26.968 27.324 0.454 0.221\nHOPSKIPJUMP l2 + PAR 1.00 500.20 30.352 25.589 0.438 0.244\nHOPSKIPJUMP l∞+ PAR 1.00 500.04 53.656 33.299 0.253 0.180 Quantitative comparison of attack methods, soft-label setting, the target model is ResNet-50, the dataset is CIFAR-10. METHOD ASR AQN AVG l2 STD l2 AVG l∞ STD l∞",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 16,
+    "total_chunks": 48,
+    "char_count": 2385,
+    "word_count": 393,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "14c96a93-f30d-459e-a1d0-2caf76c56bd7",
+    "text": "CAC (OURS) 1.00 291.00 2.468 1.075 0.056 0.025\nSQUAREATTACK l∞ 0.82 300.00 13.028 0.637 0.250 0.000\nSPARSERS 0.96 300.00 4.371 0.348 0.920 0.065 Quantitative comparison of attack methods, soft-label setting, the target model is ViT-B, the dataset is CIFAR-10. METHOD ASR AQN AVG l2 STD l2 AVG l∞ STD l∞ CAC (OURS) 1.00 489.50 15.745 9.850 0.050 0.037\nSQUAREATTACK l∞ 0.85 500.00 92.182 3.57 0.250 0.000\nSPARSERS 0.98 500.00 43.198 1.86 0.974 0.032 Conclusion and Future Work a fixed number of iterations. Experimentally, we demonstrate that the method both shows a high attack success rate\nIn this paper, we propose Contract and Conquer, a frame- and yields adversarial examples from a smaller vicinity of\nwork to compute adversarial perturbations for black-box the target points than the concurrent methods. Future work\nneural networks with convergence guarantees.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 17,
+    "total_chunks": 48,
+    "char_count": 865,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "915e8734-9ce6-46d0-a616-fc5c7043fcba",
+    "text": "We con- includes the reduction of the influence of practical assumpduct an attack in the transfer-based paradigm. Specifically, tions, specifically, the possibility to compute an adversarial\nwe apply knowledge distillation to obtain a smaller surro- example for the surrogate model on each algorithm iteration,\ngate model to attack in the white-box setting. We theoret- to build a theoretical framework to assess the compliance of\nically show that, under mild assumptions on the surrogate AI models with the prospective robustness standards.\nmodel and controllable contraction of the adversarial examples search space, the method is guaranteed to yield an\nadversarial example for the target black-box model within Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? Impact Statement Chen, J., Jordan, M. I., and Wainwright, M. Hopskipjumpattack: A query-efficient decision-based attack. This paper presents work whose goal is to advance the field In 2020 IEEE Symposium on Security and Privacy (SP),\nof Machine Learning. There are many potential societal pp. 1277–1294. IEEE, 2020.\nconsequences of our work, none which we feel must be\nspecifically highlighted here.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 18,
+    "total_chunks": 48,
+    "char_count": 1203,
+    "word_count": 178,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "18b8161a-e880-4db0-a9fc-633252473e1f",
+    "text": "Chen, P.-Y., Zhang, H., Sharma, Y., Yi, J., and Hsieh, C.-\nJ. Zoo: Zeroth order optimization based black-box atReferences tacks to deep neural networks without training substitute\nmodels. In Proceedings of the 10th ACM Workshop on\nAldahdooh, A., Hamidouche, W., Fezza, S. A., and Artificial Intelligence and Security, pp. 15–26, 2017. Adversarial example detection for dnn models: A review and experimental comparison. Artificial Cheng, M., Singh, S., Chen, P. H., Chen, P.-Y., Liu, S., and\nIntelligence Review, 55(6):4403–4462, 2022.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 19,
+    "total_chunks": 48,
+    "char_count": 534,
+    "word_count": 79,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "930d08b5-baad-46fd-886c-921d15f81675",
+    "text": "Sign-opt: A query-efficient hard-label adversarial attack. In International Conference on Learning\nAllouah, Y., Guerraoui, R., Gupta, N., Jellouli, A., Rizk, Representations, 2020. Adaptive gradient clipping for robust federated learning. In The Thirteenth International Cheng, S., Miao, Y., Dong, Y., Yang, X., Gao, X.-S.,\nConference on Learning Representations, 2025. and Zhu, J. Efficient black-box adversarial attacks via\nbayesian optimization guided by a function prior.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 20,
+    "total_chunks": 48,
+    "char_count": 475,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7eab27fc-2692-4517-8ec0-82f6b9ec7dfe",
+    "text": "G., Ma, Z., Li, J., and Sojoudi, S. Towards ternational Conference on Machine Learning, pp. 8163–\noptimal branching of linear and semidefinite relaxations 8183. PMLR, 2024.\nfor neural network robustness certification. Journal of\nCohen, J., Rosenfeld, E., and Kolter, Z. Certified adver- Machine Learning Research, 26(81):1–59, 2025.\nsarial robustness via randomized smoothing. In InternaAndriushchenko, M., Croce, F., Flammarion, N., and Hein, tional Conference on Machine Learning, pp. 1310–1320. Square attack: a query-efficient black-box adversarial PMLR, 2019.\nattack via random search.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 21,
+    "total_chunks": 48,
+    "char_count": 590,
+    "word_count": 80,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2683a1c0-c6bc-47e5-ac0c-728bd0f942e8",
+    "text": "In European Conference on\nCroce, F., Andriushchenko, M., Singh, N. D., Flammarion, Computer Vision, pp. 484–501. Sparse-rs: a versatile framework for\nBai, T., Luo, J., Zhao, J., Wen, B., and Wang, Q. Re- query-efficient sparse black-box adversarial attacks. In\ncent advances in adversarial training for adversarial ro- Proceedings of the AAAI Conference on Artificial Intellibustness. In International Joint Conference on Artifi- gence, volume 36, pp. 6437–6445, 2022.\ncial Intelligence, pp. 4312–4321. ijcai.org, 2021. doi:\nCullen, A. C., Montague, P., Erfani, S. M., and Rubinstein, 10.24963/IJCAI.2021/591. Position: Certified robustness does not (yet) imply\nBai, Y., Zeng, Y., Jiang, Y., Wang, Y., Xia, S.-T., and Guo, model security. In Forty-second International Conference\nW. Improving query efficiency of black-box adversarial on Machine Learning Position Paper Track, 2025.\nattack.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 22,
+    "total_chunks": 48,
+    "char_count": 890,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aae02bca-cfde-413e-a6c9-0a40a447b8c8",
+    "text": "In European Conference on Computer Vision, pp. Debicha, I., Bauwens, R., Debatty, T., Dricot, J.-M., Kenaza, 101–116, 2020. Tad: Transfer learning-based multiBansal, A., Chiang, P.-y., Curry, M. J., Jain, R., Wiging- adversarial detection of evasion attacks against network\nton, C., Manjunatha, V., Dickerson, J. P., and Goldstein, intrusion detection systems. Future Generation Computer\nT.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 23,
+    "total_chunks": 48,
+    "char_count": 390,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b3f79f0e-149e-4700-93d2-02be93a4a0df",
+    "text": "Certified neural network watermarks with random- Systems, 138:185–197, 2023.\nized smoothing. In International Conference on Machine\nDeng, J., Dong, W., Socher, R., Li, L.-J., Li, K., and Fei-Fei, Learning, pp. 1450–1465. Imagenet: A large-scale hierarchical image database. Carlini, N. and Wagner, D.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 24,
+    "total_chunks": 48,
+    "char_count": 300,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "99e0a57b-b5c1-4d98-873e-8e7ad5444725",
+    "text": "Towards evaluating the robust- In 2009 IEEE Conference on Computer Vision and Patness of neural networks. In 2017 IEEE Symposium on tern Recognition, pp. 248–255. Security and Privacy (sp), pp. 39–57. Dong, Y., Liao, F., Pang, T., Su, H., Zhu, J., Hu, X., and\nChe, L., Wu, C., and Hou, Y. Large language model text ad- Li, J. Boosting adversarial attacks with momentum. In\nversarial defense method based on disturbance detection Proceedings of the IEEE Conference on Computer Vision\nand error correction. Electronics, 14(11):2267, 2025. and Pattern Recognition, pp. 9185–9193, 2018. Chen, H., Zhang, Y., Dong, Y., Yang, X., Su, H., and Zhu, Dosovitskiy, A., Beyer, L., Kolesnikov, A., Weissenborn,\nJ. Rethinking model ensemble in transfer-based adversar- D., Zhai, X., Unterthiner, T., Dehghani, M., Minderer,\nial attacks. In The Twelfth International Conference on M., Heigold, G., Gelly, S., Uszkoreit, J., and Houlsby,\nLearning Representations, 2024. An image is worth 16x16 words: Transformers for Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? image recognition at scale.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 25,
+    "total_chunks": 48,
+    "char_count": 1119,
+    "word_count": 170,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "35eec505-3413-4333-85ef-fefe52e8fa40",
+    "text": "In International Conference Krizhevsky, A., Hinton, G., et al. Learning multiple layers\non Learning Representations, 2021. of features from tiny images. 2009. Feng, C., Liu, Z., Zhi, Z., Bogunovic, I., Gerner-Beuerle, Lecuyer, M., Atlidakis, V., Geambasu, R., Hsu, D., and\nC., and Rodrigues, M. Prosac: Provably safe certification Jana, S. Certified robustness to adversarial examples with\nfor machine learning models under adversarial attacks. In differential privacy. In 2019 IEEE Symposium on Security\nProceedings of the AAAI Conference on Artificial Intelli- and Privacy (SP), pp. 656–672. IEEE, 2019.\ngence, volume 39, pp. 2933–2941, 2025. Li, Q., Guo, Y., Zuo, W., and Chen, H. Making substiGoodfellow, I. J., Shlens, J., and Szegedy, C.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 26,
+    "total_chunks": 48,
+    "char_count": 743,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5536f44b-19a3-4431-bcf7-bf52423f7aaf",
+    "text": "Explain- tute models more bayesian can enhance transferability\ning and harnessing adversarial examples. arXiv preprint of adversarial examples. In The Eleventh International\narXiv:1412.6572, 2014. Conference on Learning Representations, 2023. Boosting the local invarianceGowal, S., Dvijotham, K., Stanforth, R., Bunel, R., Qin,\nfor better adversarial transferability. arXiv preprint C., Uesato, J., Arandjelovic, R., Mann, T., and Kohli,\narXiv:2503.06140, 2025. On the effectiveness of interval bound propagation\nfor training verifiably robust models. arXiv preprint Liu, J., Zhang, W., Zhang, Y., Hou, D., Liu, Y., Zha, H., and\narXiv:1810.12715, 2018. Detection based defense against adversarial examples from the steganalysis point of view. In ProceedingsGuo, C., Rana, M., Cisse, M., and van der Maaten, L. Counof the IEEE/CVF Conference on Computer Vision and tering adversarial images using input transformations. In\nPattern Recognition, pp. 4825–4834, 2019. International Conference on Learning Representations,\n2018. Liu, Y., Chen, X., Liu, C., and Song, D. Delving into\ntransferable adversarial examples and black-box attacks.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 27,
+    "total_chunks": 48,
+    "char_count": 1135,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "97a7db95-ec2d-4ba8-8c61-a768502473ef",
+    "text": "Guo, C., Gardner, J., You, Y., Wilson, A. G., and Weinberger,\nIn International Conference on Learning Representations,\nK. Simple black-box adversarial attacks. In Interna-\n2017.\ntional Conference on Machine Learning, pp. 2484–2493. Ma, J., Li, Y., Xiao, Z., Cao, A., Zhang, J., Ye, C., and Zhao,\nJ. Jailbreaking prompt attack: A controllable adversarial\nHan, X., Li, Q., Cao, H., Han, L., Wang, B., Bao, X., Han,\nattack against diffusion models. In Findings of the AssoY., and Wang, W. Bfs2adv: black-box adversarial attack\nciation for Computational Linguistics: NAACL 2025, pp.\ntowards hard-to-attack short texts. Computers & Security,\n3141–3157, 2025.\n141:103817, 2024.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 28,
+    "total_chunks": 48,
+    "char_count": 671,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "767fb424-5536-4370-a805-117350f23121",
+    "text": "Madry, A., Makelov, A., Schmidt, L., Tsipras, D., and\nHe, K., Zhang, X., Ren, S., and Sun, J. Deep residual learn- Vladu, A. Towards deep learning models resistant to\ning for image recognition. In Proceedings of the IEEE adversarial attacks. In International Conference on LearnConference on Computer Vision and Pattern Recognition, ing Representations, 2018.\npp. 770–778, 2016. Maheshwary, R., Maheshwary, S., and Pudi, V. Generating\nHinton, G. Distilling the knowledge in a neural network. natural language attacks in a hard label black box setarXiv preprint arXiv:1503.02531, 2015. ting. In Proceedings of the AAAI Conference on Artificial\nIntelligence, volume 35, pp. 13525–13533, 2021.Huang, Q., Katsman, I., He, H., Gu, Z., Belongie, S., and\nLim, S.-N. Enhancing adversarial example transferability Maho, T., Furon, T., and Le Merrer, E. Surfree: a fast\nwith an intermediate level attack. In Proceedings of the surrogate-free black-box attack. In Proceedings of the\nIEEE/CVF International Conference on Computer Vision, IEEE/CVF Conference on Computer Vision and Pattern\npp. 4733–4742, 2019. Recognition, pp. 10430–10439, 2021. Kim, S. and Pilanci, M.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 29,
+    "total_chunks": 48,
+    "char_count": 1157,
+    "word_count": 170,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "240ff68c-ce97-42bf-87ad-5d91c22ea901",
+    "text": "Convex relaxations of relu neural Mao, Y., Mueller, M. N., Fischer, M., and Vechev, M. Unnetworks approximate global optima in polynomial time. derstanding certified training with interval bound propIn International Conference on Machine Learning, pp. agation. In The Twelfth International Conference on\n24458–24485.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 30,
+    "total_chunks": 48,
+    "char_count": 316,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6c9747ad-83d8-4ac1-b703-b0d0b6329577",
+    "text": "Learning Representations, 2024. Korzh, D., Karimov, E., Pautov, M., Rogov, O. Y., and Os- Moosavi-Dezfooli, S.-M., Fawzi, A., and Frossard, P. Certification of speaker recognition models to fool: a simple and accurate method to fool deep neuadditive perturbations.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 31,
+    "total_chunks": 48,
+    "char_count": 264,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "762ae0e6-5e62-452b-91c2-93316a236786",
+    "text": "In Proceedings of the AAAI Con- ral networks. In Proceedings of the IEEE Conference\nference on Artificial Intelligence, volume 39, pp. 17947– on Computer Vision and Pattern Recognition, pp. 2574–\n17956, 2025. 2582, 2016. Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? Naseer, M., Ranasinghe, K., Khan, S., Khan, F., and Porikli, AAAI Conference on Artificial Intelligence, volume 32,\nF. On improving adversarial transferability of vision 2018.\ntransformers. In International Conference on Learning\nRepresentations, 2022.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 32,
+    "total_chunks": 48,
+    "char_count": 563,
+    "word_count": 80,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f46e91ea-9257-4438-af72-a0525acfb0d0",
+    "text": "Shafahi, A., Najibi, M., Ghiasi, M. A., Xu, Z., Dickerson,\nJ., Studer, C., Davis, L. S., Taylor, G., and Goldstein,\nNesti, F., Biondi, A., and Buttazzo, G. Detecting adversarial T. Adversarial training for free! Advances in Neural\nexamples by input transformations, defense perturbations, Information Processing Systems, 32, 2019.\nand voting. IEEE Transactions on Neural Networks and\nLearning Systems, 34(3):1329–1341, 2021. Shi, Y., Han, Y., Tan, Y.-a., and Kuang, X. Decision-based\nblack-box attack against vision transformers via patchNie, W., Guo, B., Huang, Y., Xiao, C., Vahdat, A., and wise adversarial removal. Advances in Neural InformaAnandkumar, A. Diffusion models for adversarial purifi- tion Processing Systems, 35:12921–12933, 2022.\ncation. In International Conference on Machine Learning,\npp. 16805–16827. Shi, Z., Zhang, H., Chang, K.-W., Huang, M., and Hsieh,\nC.-J. Robustness verification for transformers. In InterPapernot, N., McDaniel, P., Goodfellow, I., Jha, S., Celik, national Conference on Learning Representations, 2020. Practical black-box attacks against\nmachine learning.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 33,
+    "total_chunks": 48,
+    "char_count": 1102,
+    "word_count": 151,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e36ffa1c-5939-43a1-9602-002fb3df85ee",
+    "text": "In Proceedings of the 2017 ACM on Stutz, D., Hein, M., and Schiele, B. Confidence-calibrated\nAsia Conference on Computer and Communications Se- adversarial training: Generalizing to unseen attacks.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 34,
+    "total_chunks": 48,
+    "char_count": 197,
+    "word_count": 28,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5fd3b546-8292-4c64-9736-b2a4735579d8",
+    "text": "In\ncurity, pp. 506–519, 2017. International Conference on Machine Learning, pp. 9155–\n9166. Park, J., Miller, P., and McLaughlin, N. Hard-label based\nsmall query black-box adversarial attack.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 35,
+    "total_chunks": 48,
+    "char_count": 191,
+    "word_count": 27,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "17b9855c-4551-497e-b385-70b248ff2ecf",
+    "text": "In Proceedings Szegedy, C., Zaremba, W., Sutskever, I., Bruna, J., Erhan,\nof the IEEE/CVF Winter Conference on Applications of D., Goodfellow, I. Intriguing properComputer Vision, pp. 3986–3995, 2024. ties of neural networks. In International Conference on\nLearning Representations, 2014.Pautov, M., Kuznetsova, O., Tursynbek, N., Petiushko, A.,\nand Oseledets, I. Smoothed embeddings for certified Tjeng, V., Xiao, K. Evaluating robustfew-shot learning. Advances in Neural Information Pro- ness of neural networks with mixed integer programming.\ncessing Systems, 35:24367–24379, 2022a. In International Conference on Learning Representations,\nPautov, M., Tursynbek, N., Munkhoeva, M., Muravev, N., 2019. Petiushko, A., and Oseledets, I. Cc-cert: A probabilistic\nUesato, J., O'donoghue, B., Kohli, P., and Oord, A. Adapproach to certify general robustness of neural networks.\nversarial risk and the dangers of evaluating against weak\nIn Proceedings of the AAAI Conference on Artificial Inattacks. In International Conference on Machine Learntelligence, volume 36, pp. 7975–7983, 2022b.\ning, pp. 5025–5034. Qi, G., Chen, Y., Zhu, Y., Hui, B., Li, X., Mao, X., Zhang,\nVoracek, V. Treatment of statistical estimation problems R., and Xue, H. Transaudio: Towards the transferable\nin randomized smoothing for adversarial robustness. Ad- adversarial audio attack via learning contextualized pervances in Neural Information Processing Systems, 37: turbations.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 36,
+    "total_chunks": 48,
+    "char_count": 1451,
+    "word_count": 198,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "023c53ab-d91e-4b56-828b-cfce88bc15fd",
+    "text": "In ICASSP 2023-2023 IEEE International\n133464–133486, 2024. Conference on Acoustics, Speech and Signal Processing\n(ICASSP), pp. 1–5. Wang, S., Zhang, H., Xu, K., Lin, X., Jana, S., Hsieh, C.-J.,\nQin, Z., Fan, Y., Liu, Y., Shen, L., Zhang, Y., Wang, J., and and Kolter, J. Beta-crown: Efficient bound propagaWu, B. Boosting the transferability of adversarial attacks tion with per-neuron split constraints for neural network\nwith reverse adversarial perturbation. Advances in Neural robustness verification. Advances in Neural Information\nInformation Processing Systems, 35:29845–29858, 2022. Processing Systems, 34:29909–29921, 2021a. Rahmati, A., Moosavi-Dezfooli, S.-M., Frossard, P., and Wang, X., Zhang, Z., Tong, K., Gong, D., He, K., Li, Z., and\nDai, H. Geoda: a geometric framework for black-box Liu, W. Triangle attack: A query-efficient decision-based\nadversarial attacks. In Proceedings of the IEEE/CVF adversarial attack. In European conference on computer\nConference on Computer Vision and Pattern Recognition, vision, pp. 156–174. Springer, 2022.\npp. 8446–8455, 2020. Wang, Z., Guo, H., Zhang, Z., Liu, W., Qin, Z., and Ren,\nRoss, A. and Doshi-Velez, F.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 37,
+    "total_chunks": 48,
+    "char_count": 1166,
+    "word_count": 167,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "acccdd77-7a51-47fb-958d-4918437dd659",
+    "text": "Improving the adversarial K. Feature importance-aware transferable adversarial\nrobustness and interpretability of deep neural networks by attacks. In Proceedings of the IEEE/CVF International\nregularizing their input gradients. In Proceedings of the Conference on Computer Vision, pp. 7639–7648, 2021b. Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? Wang, Z., Zhang, Z., Liang, S., and Wang, X. Diversifying Zhang, Y., Yuan, X., Li, J., Lou, J., Chen, L., and Tzeng,\nthe High-level Features for better Adversarial Transfer- N.-F. Reverse attack: Black-box attacks on collaboraability.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 38,
+    "total_chunks": 48,
+    "char_count": 627,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c29b631c-fee6-4e24-a1df-0a6b9ed1b571",
+    "text": "In Proceedings of the British Machine Vision tive recommendation. In Proceedings of the 2021 ACM\nConference, 2023. SIGSAC Conference on Computer and Communications\nSecurity, pp. 51–68, 2021. Wei, X., Kang, C., Dong, Y., Wang, Z., Ruan, S., Chen, Y.,\nand Su, H. Real-world adversarial defense against patch Zhang, Y., Tan, Y.-a., Chen, T., Liu, X., Zhang, Q., and Li,\nattacks based on diffusion model. IEEE Transactions on Y. Enhancing the transferability of adversarial examples\nPattern Analysis and Machine Intelligence, 2025. with random patch. In IJCAI, volume 8, pp. 13, 2022b. Weng, L., Chen, P.-Y., Nguyen, L., Squillante, M., Boopathy, Zhao, J., Xie, L., Gu, S., Qin, Z., Zhang, Y., Wang, Z., and\nA., Oseledets, I., and Daniel, L. Proven: Verifying ro- Hu, Y. Universal attention guided adversarial defense usbustness of neural networks with a probabilistic approach. ing feature pyramid and non-local mechanisms. Scientific\nIn International Conference on Machine Learning, pp. Reports, 15(1):5237, 2025.\n6727–6736.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 39,
+    "total_chunks": 48,
+    "char_count": 1022,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "99e66521-8726-4c02-97f7-0d810b545401",
+    "text": "Zhou, C., Shi, X., and Wang, Y.-G. Query-efficient hardWong, E., Rice, L., and Kolter, J. Fast is better than label black-box attack against vision transformers. Apfree: Revisiting adversarial training.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 40,
+    "total_chunks": 48,
+    "char_count": 202,
+    "word_count": 29,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c91ecd86-0277-439e-9f05-572487dc6003",
+    "text": "In International plied Soft Computing, 183:113686, 2025. Conference on Learning Representations, 2020. Zhu, K., Wang, J., Zhou, J., Wang, Z., Chen, H., Wang, Y.,\nWu, D., Xia, S.-T., and Wang, Y. Adversarial weight pertur- Yang, L., Ye, W., Zhang, Y., Gong, N., et al. Promptrobation helps robust generalization. Advances in Neural bust: Towards evaluating the robustness of large language\nInformation Processing Systems, 33:2958–2969, 2020. models on adversarial prompts. In Proceedings of the 1st\nACM Workshop on Large AI Systems and Models with\nXie, C., Zhang, Z., Zhou, Y., Bai, S., Wang, J., Ren, Z.,\nPrivacy and Safety Analysis, pp. 57–68, 2023.\nand Yuille, A. Improving transferability of adversarial\nexamples with input diversity. In Proceedings of the\nIEEE/CVF Conference on Computer Vision and Pattern\nRecognition, pp. 2730–2739, 2019. Xie, P., Bie, Y., Mao, J., Song, Y., Wang, Y., Chen, H.,\nand Chen, K.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 41,
+    "total_chunks": 48,
+    "char_count": 914,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "56f1eb7f-3880-4dd5-b8da-0ea35be3a255",
+    "text": "Chain of attack: On the robustness of\nvision-language models against transfer-based adversarial attacks. In Proceedings of the Computer Vision and\nPattern Recognition Conference, pp. 14679–14689, 2025. Xu, J., Li, L., Zhang, J., Zheng, X., Chang, K.-W., Hsieh,\nC.-J., and Huang, X.-J.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 42,
+    "total_chunks": 48,
+    "char_count": 284,
+    "word_count": 41,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "77a114e4-450c-4794-9234-3093e4523071",
+    "text": "Weight perturbation as defense\nagainst adversarial word substitutions. In Findings of\nthe Association for Computational Linguistics: EMNLP\n2022, pp. 7054–7063, 2022. Yang, G., Duan, T., Hu, J. E., Salman, H., Razenshteyn, I.,\nand Li, J.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 43,
+    "total_chunks": 48,
+    "char_count": 236,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "82fa2a38-073e-4b58-88f7-c1ced49c3650",
+    "text": "Randomized smoothing of all shapes and sizes. In International Conference on Machine Learning, pp.\n10693–10705. Yu, C., Chen, J., Xue, Y., Liu, Y., Wan, W., Bao, J., and Ma,\nH. Defending against universal adversarial patches by\nclipping feature norms. In Proceedings of the IEEE/CVF\nInternational Conference on Computer Vision, pp. 16434–\n16442, 2021. Zhang, J., Wu, W., Huang, J.-t., Huang, Y., Wang, W., Su,\nY., and Lyu, M. Improving adversarial transferability\nvia neuron attribution-based attacks. In Proceedings of\nthe IEEE/CVF conference on computer vision and pattern\nrecognition, pp. 14993–15002, 2022a. Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? Recall that K is the number of classes and let Sj be the instance of the surrogate model on j-th alternation iteration. Let {zj}∞j=1 be the sequence of adversarial examples, where zj is an adversarial example for Sj and z0 = x. Note that\nzj ∈Uδ(x) for all j ∈Z+. Since for all j ∈Z+, Sj is differentiable within Uδ(x), for any two points a, b ∈Uδ(x) we may\nwrite\nSj(a) −Sj(b) = ∇Sj(τ)⊤(a −b), (11) where τ ∈Uδ(x) and on the line segment between a and b. Specifically, for two subsequent adversarial examples, zj and\nzj−1, the expression becomes\nSj(zj) −Sj(zj−1) = ∇Sj(τj)⊤(zj −zj−1), (12)",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 44,
+    "total_chunks": 48,
+    "char_count": 1290,
+    "word_count": 209,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7331ae9f-3a85-4b76-b1c7-589754aea446",
+    "text": "where τj is on the line segment between zj and zj−1. Note that zj is adversarial example for Sj, whereas zj−1 was included\ninto distillation dataset D(S) on previous alternation iteration. By introducing ρj = ∥zj −zj−1∥∞, one can see that ρj ≤tρj−1 ≤t2ρj−2 ≤· · · ≤tj−1ρ1 =\ntj−1∥z1 −z0∥∞= tj−1∥z1 −x∥∞≤tj−1δ. (13) Note that when ρj is less than ε/γ, the norm of the difference between Sj(zj) −Sj(zj−1) is bounded from above. Specifically, let\nϕ : [0, 1] →[0, 1]K, ϕ(t) = Sj(zj + t(zj−1 −zj)) (14) and\nϕ′(t) = ∇Sj(zj + t(zj−1 −zj))(zj −zj−1). (15) Thus,\nZ 1 Z 1\nSj(zj−1) −Sj(zj) = ϕ(1) −ϕ(0) = ϕ′(t)dt = ∇Sj(zj + t(zj−1 −zj))(zj −zj−1)dt. (16)\n0 0 ∥∇Sjx∥∞\n∥∇Sj∥op,∞= sup =⇒∥∇Sjx∥∞≤∥∇Sj∥op,∞∥x∥∞ (17)\n∥x∦=0 ∥x∥∞ Z 1\n∥Sj(zj−1) −Sj(zj)∥∞= ∇Sj(zj + t(zj−1 −zj))(zj −zj−1)dt ≤\n0 ∞\nZ 1\n≤ ∥∇Sj(zj + t(zj−1 −zj))(zj −zj−1)∥∞dt ≤\nZ 1\n≤ ∥∇Sj(zj + t(zj−1 −zj))∥op,∞∥zj −zj−1∥∞dt ≤\nZ 1\n≤∥zj −zj−1∥∞ sup ∥∇Sj(zj + t(zj−1 −zj))∥op,∞ dt ≤\n≤γ∥zj −zj−1∥∞< γε/γ = ε (18) That yields\narg max Sj(zj)i = arg max Sj(zj−1)i (19)\ni∈[1,...,K] i∈[1,...,K] Recall that zj−1 is included into distillation dataset D(S) on iteration j −1, so arg max Sj(zj−1)i = T(zj−1) (20)\ni∈[1,...,K] Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model? Now observe that Algorithm 1 yielded an adversarial example, namely, zj for the model S on iteration j.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 45,
+    "total_chunks": 48,
+    "char_count": 1349,
+    "word_count": 237,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0442d922-19cf-470e-aa50-d4be85ddcdf1",
+    "text": "At the same time, the prediction of S for zj−1 and for zj are the same (see Eq. 19). That means that the predicted class label\nfor zj, say, cA = arg maxi∈[1,...,K] Sj(zj)i was assigned by T to the previous sample, zj−1: cA = arg max Sj(zj)i = T(zj−1). (21)\ni∈[1,...,K] Finally, for the values of j satisfying tj−1δ ≤ε/γ ←−−−→(jt∈(0,1) −1) ln t ≤ln ε −ln δ −ln γ, (22) the value ρj is less than ε/γ, what finalizes the proof. Hyperparameters of Baseline Methods In this section, we present the values of hyperparameters used in the methods with which we compare our approach. In all\nexperiments, the query budget was set to 500. The only exception is the ResNet50 model on the CIFAR-10 dataset, where\nthe query budget was limited to 300.",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 46,
+    "total_chunks": 48,
+    "char_count": 736,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f43e87e-8667-4848-b51c-110bd1660bff",
+    "text": "Hyperparameters of baseline methods METHOD HYPERPARAMETERS NUM SAMPLES FOR INIT = 100\nHOPSKIPJUMP l2 / l∞ NUM SAMPLES FOR GRAD EST = 100\nMAX ITER=100 NUM SAMPLES FOR INIT = 100\nSIGNOPT NUM SAMPLES FOR GRAD EST = 100\nMAX ITER = 100 SUB DIM = 150\nDB SEARCH STEPS = 200\nGEODA BIN SEARCH TOL = 0.0001\nλ = 0.6\nσ = 0.0002 INITIAL PATCH SIZE = 56\nPAR\nMIN PATCH SIZE = 7 NUM SAMPLES FOR INIT = 100\nINIT ATTEMPTS EXTRA = 100\nPATCH NUM = 14\nADVVIT\nDIM SIZE = 4\nα = 4.0\nK SIGN = 100\nε = 25532 SQUAREATTACK l∞\nP INIT = 0.05 NORM = ℓ0\nSPARSERS ε = 2000\nP INIT = 0.3",
+    "paper_id": "2603.10689",
+    "title": "Contract And Conquer: How to Provably Compute Adversarial Examples for a Black-Box Model?",
+    "authors": [
+      "Anna Chistyakova",
+      "Mikhail Pautov"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10689v1",
+    "chunk_index": 47,
+    "total_chunks": 48,
+    "char_count": 552,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  }
+]

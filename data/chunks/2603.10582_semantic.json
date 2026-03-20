@@ -1,0 +1,452 @@
+[
+  {
+    "chunk_id": "eb6fa4dc-9564-4257-a266-965929206675",
+    "text": "Jannis Maier jannis.maier@helmholtz-berlin.de\nHelmholtz-Zentrum Berlin\nTU Dortmund Lennart Purucker purucker@cs.uni-freiburg.de\nPrior Labs\nUniversity of Freiburg\n2026 Abstract Ensembling is commonly used in machine learning on tabular data to boost predictiveMar\nperformance and robustness, but larger ensembles often lead to increased hardware demand. We introduce HAPEns, a post-hoc ensembling method that explicitly balances accuracy11\nagainst hardware efficiency. Inspired by multi-objective and quality diversity optimization,\nHAPEns constructs a diverse set of ensembles along the Pareto front of predictive performance\nand resource usage. Existing hardware-aware post-hoc ensembling baselines are not available,\nhighlighting the novelty of our approach. Experiments on 83 tabular classification datasets\nshow that HAPEns significantly outperforms baselines, finding superior trade-offs for ensemble\nperformance and deployment cost. Ablation studies also reveal that memory usage is a[cs.LG]\nparticularly effective objective metric. Further, we show that even a greedy ensembling\nalgorithm can be significantly improved in this task with a static multi-objective weighting\nscheme. Standard Naive\nOurs Method Hardware-Aware Model 2\nModel 1 Model 1\nModel 4\nModel 2 Model 6 Hardware Hardware Requirement\nConstraint Model 3arXiv:2603.10582v1\n98.7% Accuracy 97.9% Accuracy 98.3% Accuracy Figure 1: Illustration of three ensemble selection strategies: a standard method ignoring hardware\nconstraints, a naive hardware-aware variant that sacrifices accuracy, and an advanced hardware-aware method\nthat balances accuracy and efficiency. Box size reflects model resource usage; the red dashed line indicates\nthe hardware resource constraint.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 1,
+    "total_chunks": 25,
+    "char_count": 1738,
+    "word_count": 225,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b41d120a-5d4b-49c3-85f9-78fc59cd872e",
+    "text": "Ensembling is a central technique in machine learning, used to improve predictive performance, stability, and\nrobustness across a wide range of applications. From boosting and bagging in classical supervised learning to\nstacking in modern deep learning workflows, ensembles are frequently adopted to combine the strengths of In many practical scenarios, models produced during training or exploratory analysis are later\ncombined into ensembles in a post-hoc fashion to substantially improve performance (Erickson et al., 2025;\nArango et al., 2025). This workflow has been further popularized by automated machine learning (AutoML)\nsystems for tabular data (Purucker & Beel, 2023; He et al., 2021; Erickson et al., 2020), where greedy ensemble\nselection (GES) by Caruana et al. (2004) has emerged as a widely used method to automatically build strong\nensembles from model libraries. While post-hoc ensembling generally improves predictive performance, larger ensembles lead to increased\nhardware demands at inference time. Each additional model increases prediction latency and resource\nconsumption, inducing higher costs.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 2,
+    "total_chunks": 25,
+    "char_count": 1121,
+    "word_count": 159,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e17240c7-ebdb-42ec-85dd-408ab9b9ab34",
+    "text": "While this matters greatly in production settings, it is ignored by\nstandard post-hoc ensembling methods. As machine learning is increasingly deployed in environments with\ntight resource constraints, the gap between high predictive accuracy and hardware feasibility has become\nmore pronounced. We address this challenge by introducing HAPEns, a post-hoc ensembling method that explicitly balances\npredictive performance against hardware costs. It improves on existing baselines by constructing Pareto\nfronts of ensembles that more effectively balance competing objectives. Thus, practitioners can select\nbetter models that satisfy both performance and deployment requirements under their specific hardware\nconstraints. Drawing inspiration from multi-objective optimization (Gunantara, 2018) and quality diversity\noptimization (Pugh et al., 2016), HAPEns maintains a diverse population of ensembles that vary in both\nhardware cost and predictive behavior, while optimizing for predictive performance. The result is a set of\ncandidate ensembles that offer distinct trade-offs between both objectives. To evaluate HAPEns, we performed experiments on 83 tabular classification datasets of varying size and\ncomplexity.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 3,
+    "total_chunks": 25,
+    "char_count": 1213,
+    "word_count": 161,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c72007fe-896a-4fbc-bbec-1e9a8a8f1ed9",
+    "text": "All cost metrics are concrete measurements taken on the same system, held fixed across methods\nfor fair comparison. We compare ensembles constructed by our method to those selected by baselines like\nGES and a novel multi-objective baseline. Our findings reveal that optimizing for memory footprint is a\nparticularly effective metric for deployment cost and that our method significantly outperforms competitors\nin balancing hardware costs and predictive performance. To our knowledge, this is the first systematic study\nof hardware-aware post-hoc ensemble selection. Prior hardware-aware work focuses on model search or NAS,\nnot ensemble construction from fixed model libraries. In this work, we: (i) Propose a novel post-hoc ensembling algorithm that explicitly\nincorporates hardware cost into the selection process; (ii) Demonstrate through extensive benchmarking\nthat our method achieves superior accuracy–cost trade-offs compared to existing baselines; (iii) Show that\nmemory-awareness yields substantial gains even in inference-time efficiency; (iv) Limitations, including the\ndependence on a single hardware configuration, are discussed, with directions for extending the method to\nheterogeneous devices. (v) Ensure reproducibility by open-sourcing all code1, results, and integration with\npopular ensembling frameworks. Ensembling—combining multiple pre-trained models—is an effective approach to improve predictive performance and robustness. Common strategies include bagging, stacking, and ensemble selection (ES). Bagging\nand stacking are typically integrated into the training process, whereas ES can be applied post hoc, that\nis, after model training has completed. ES might then also be referred to as post hoc ensembling. Figure 2\nprovides an overview of the research fields discussed in the following paragraphs.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 4,
+    "total_chunks": 25,
+    "char_count": 1828,
+    "word_count": 250,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8aaa4e41-a0d4-416a-8b69-7aea12f93d2e",
+    "text": "ES as introduced by Caruana et al. (2004) is a forward selection algorithm that greedily constructs an\nensemble by iteratively adding the model that improves the predictive performance of the ensemble the most. The resulting ensemble is defined by a weight vector derived from this superset of selected models. In this\nwork, we adopt a broader interpretation of ensemble selection: Any algorithm that produces such a weight\nvector from a pool of trained models qualifies as ES. To distinguish the classical algorithm of Caruana et al.,\nwe refer to it as greedy ensemble selection (GES). 1All code used for this publication is available at: https://anonymous.4open.science/r/C07F Multi-Objective\nAutoML Ensemble Selection\nOptimization Hardware Aware\nPost-Hoc Ensembling GES\nMachine Learning Hardware-Aware QDO-ES\nNAS Modality: Tabular Data Hardware-Aware Post-Hoc Ensembling Figure 2: Overview of the main research areas. HW-NAS (red) is shown as a parallel area, while the others\n(orange) directly influence HAPEns. This work focuses solely on tabular data (blue).",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 5,
+    "total_chunks": 25,
+    "char_count": 1064,
+    "word_count": 157,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bf56ddcf-ad50-47fb-af85-e21715a0c218",
+    "text": "Post-hoc ensembling is a widely adopted component in automated machine learning (AutoML) systems,\nparticularly for tabular data (Erickson et al., 2020; Feurer et al., 2015; Purucker & Beel, 2023). It enables\nthe reuse of models generated during training without retraining, making it a computationally attractive\nfinal optimization step. Although ensemble selection can theoretically be used during training, we reserve the\nterm ES for its post-hoc usage in this work. The term blending also appears in this context, but it specifically\nrefers to ensemble selection applied to a holdout validation set distinct from the training data. Recent years have seen the integration of multi-objective optimization (MOO) into various stages of the\nmachine learning and AutoML pipelines, including neural architecture search (NAS) (Benmeziane et al.,\n2021b;a). These methods optimize for trade-offs such as accuracy versus latency, energy consumption,\nor memory usage. However, the use of MOO techniques in post-hoc ensemble selection remains largely\nunexplored. Shen et al. (2022) introduced DivBO, a diversity-aware Bayesian optimization framework that\nincorporates ensemble selection during candidate evaluation to promote both accuracy and diversity. Although\ntheir approach targets the model search stage rather than post-hoc optimization, it highlights the potential\nof multi-objective formulations to improve ensemble composition. Nevertheless, to the best of our knowledge,\nno prior work systematically investigates the construction of Pareto-optimal ensembles that explicitly account\nfor hardware constraints such as inference time or memory usage. Modern implementations of GES—still the de facto standard in AutoML frameworks such as Autosklearn (Feurer et al., 2022) and AutoGluon (Erickson et al., 2020)—typically optimize only for predictive\nperformance and remain agnostic to deployment cost.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 6,
+    "total_chunks": 25,
+    "char_count": 1897,
+    "word_count": 264,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5a0057c4-3183-4508-bff3-65b218b9598b",
+    "text": "Consequently, they may produce ensembles that are\nunnecessarily large or infeasible for deployment due to hardware requirements. Our work addresses this identified gap by introducing a hardware-aware approach to ES, explicitly targeting\nthe trade-off between accuracy and resource usage. QDO-ES as developed by Purucker et al. (Purucker et al.,\n2023) inspired HAPEns and the inclusion cost metrics during ensemble construction. In doing so, we extend\nthe utility of ES beyond predictive performance to deployment and real-world use. One of the last steps in the ML pipeline is model generation, where human experts or AutoML systems\nexplore and evaluate various configurations. This process yields a set of candidate models, typically followed\nby the selection of the single best model for deployment. Post-hoc ensembling instead aims to improve the\nquality of the prediction by combining multiple candidates from this set. Let M = {M1, . . . , Mp} be the library of models and let cj be the number of times Mj is selected out of a\ntotal of T picks (with repetition). Define the weight vector w: 1 cj\nw = (w1, . . . , wp)⊤= (c1, . . . , cp)⊤, wj = , X wj = 1. (1)\nT T The ensemble predictor for input x is fens(x) = Ppj=1 wj fj(x). This formulation applies broadly: for regression,\neach fj(x) is a scalar prediction; for probabilistic classification, fj(x) is a vector of class probabilities, and\nfens(x) is the averaged probability vector. Although the ensemble predictor is ultimately defined by a weight vector, there are multiple ways to construct\nit. A common method is GES, which uses a forward selection strategy to iteratively build the ensemble by\ngreedily adding models that improve performance the most. In contrast, our work explores a population-based\napproach.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 7,
+    "total_chunks": 25,
+    "char_count": 1774,
+    "word_count": 295,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4c9c4d8f-7c0d-47af-bf30-4687576f9e72",
+    "text": "We begin by sampling an initial population of ensembles across a two-dimensional behavior space (e.g.,\nmemory footprint vs. average loss correlation). Each ensemble is evaluated and stored in a niche corresponding\nto its behavior and hardware costs. New ensembles are generated by selecting suitable parents from these\nniches and applying crossover and mutation (see Figure 3). This process repeats until convergence or a\ntime/iteration limit is reached, allowing us to explore a wide range of model combinations and discover\nPareto-optimal trade-offs between prediction quality and deployment cost. What follows now are detailed\ndefinitions of these concepts, similarly outlined by Purucker et al. (2023). Sample\nEnsemble\nNew Ensembles Sample\nEnsembles Correlation Memory Loss\nFootprint Average 2. Figure 3: Illustration of the HAPEns search process. Ensembles are sampled from bins over memory\nfootprint and average loss correlation, then evolved via crossover and mutation to explore the behavior space. Each ensemble E is assigned a two-dimensional descriptor b(E) = (ALC, HW), where\nALC is the mean Pearson correlation among the loss vectors of its constituent models and HW is a cost\nmetric aggregated over those models. Following prior work (Purucker et al., 2023), we divide this 2D space\ninto a 7 by 7 grid using a sliding bounding archive (Fontaine et al., 2019), creating 49 bins (niches).2 The\nalgorithm allows ensembles to compete only within the same niche. This ensures that different regions of 2The 7×7 grid follows the setup of Purucker et al. (2023), balancing behavior space coverage against niche sample density. Sensitivity to this choice is mitigated by the sliding boundaries archive (Fontaine et al., 2019), which adapts niche boundaries to\nthe observed solution distribution; a full sensitivity analysis is left for future work. the behavior space can retain their best solutions.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 8,
+    "total_chunks": 25,
+    "char_count": 1906,
+    "word_count": 291,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d4f1c218-d7d5-4033-b4f6-4e5b3dc0fa65",
+    "text": "Therefore, a diverse population across two objectives is\nmaintained while optimizing predictive performance. Here we found that memory as a cost metric produces\nensembles which are best at trading off predictive performance and hardware cost. Each ensemble E is scored by a scalar loss L(E) on cross-validation data. The behavior space is\npartitioned into fixed niches or bins, and each niche retains the lowest loss ensemble observed. The parents are selected from the archive using a combined dynamic strategy that balances\nexploration and exploitation. The method alternates between deterministic selection of the best solution\nand stochastic selection of random solutions, with the selection probability dynamically adjusted every ten\niterations based on which approach yields better results. Deterministic and tournament-based selection\nmethods are also available as alternatives. Two parent repetition vectors r and r′ are recombined using two-point crossover restricted\nto the index set S = {i | r[i] > 0} ∪{i | r′[i] > 0}, i.e., indices nonzero in either parent. If |S| < 3 or the\nresulting offspring is all-zero, average crossover is used instead, rounding counts up to the nearest integer to\nmaintain valid repetition counts. The procedure is detailed in Algorithm 1. A single element of the child repetition vector rchild is incremented by one, with the index\nj chosen uniformly at random from the model pool P of size p. Rejection sampling avoids re-evaluating\npreviously seen ensembles, allowing up to 50 retries; if all retries fail, an emergency brake increases the\nincrement magnitude or raises the mutation-after-crossover probability to 1.0 for the current iteration to\nescape the duplicate region.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 9,
+    "total_chunks": 25,
+    "char_count": 1716,
+    "word_count": 263,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f421b8f3-220a-4e4b-878a-b8a9fa58706b",
+    "text": "The main objective of this paper is to compare the proposed method and the baselines on how well they\ncan balance predictive performance and hardware costs. In this context, only Pareto optimal ensembles are\nrelevant. In addition, there is no best ensemble because choosing the right trade-off depends on the real\nworld scenario. Therefore, our main focus lies with the Pareto fronts of ensembles generated by each method. Our proposed method uses memory usage as its hardware-aware behavior metric.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 10,
+    "total_chunks": 25,
+    "char_count": 499,
+    "word_count": 79,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3a989356-3cb8-4e81-9334-7fae948e4702",
+    "text": "We compare it with four\nbaselines: • Single-Best: A naive baseline that selects the single model with the highest validation performance. Including Single-Best highlights the performance gains achieved through ensembling. • GES*: Our implementation of greedy ensemble selection (GES) enhanced to return the entire\nsequence of ensembles generated during its run. GES* therefore represents the best-case performance\nof the original widely used GES, providing a strong reference point for assessing improvements. • Multi-GES: Our implementation of novel multi-objective extensions of GES to enable the algorithm\nto balance predictive performance and inference time using a static weighting scheme; see Appendix A.1\nfor details on our implementation. Multi-GES introduces a naive approach to optimizing multiple\nobjectives in ensemble selection and allows us to assess the benefits of our more flexible formulation. • QDO-ES: The quality-diversity optimization ensemble selection method(Purucker et al., 2023),\nwhich optimizes for performance and behavioral diversity but is not hardware aware. This baseline\nisolates the effect of hardware awareness by comparing against a method that can already generate\nvarious Pareto-optimal ensembles without considering resource costs. To assess the quality of the generated Pareto fronts, we rely on two standard multi-objective indicators:\ninverted generational distance plus (IGD+) (Ishibuchi et al., 2015) and hypervolume (HV) (Zitzler & Thiele,\n1999). IGD+ quantifies how well a set of solutions approximates a reference front, which in our case is\nconstructed from the Pareto optimal solutions of all the methods under comparison. HV measures the portion\nof the objective space dominated by a set of solutions (see B for details). The set of solutions here is the\nset of ensembles constructed by one method for a given task and seed. Both HV and IGD+ are widely",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 11,
+    "total_chunks": 25,
+    "char_count": 1903,
+    "word_count": 281,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88d4bbb1-2397-444a-bba7-6a4512a8da19",
+    "text": "104 18\n103 14 Classes Features 12\nof of\n8 Number Number 102\n101 4\n102 103\nNumber of Samples Figure 4: Scatter plot of datasets over their number of features (y), number of samples (x), and the number\nof classes (color). used in multi-objective evaluation, and for our experiments we employ the pygmo (Biscani & Izzo, 2020)\nimplementation. We focus primarily on HV in the main analysis because we do not have a true Pareto front\nfor IGD+, and both metrics lead to the same conclusions.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 12,
+    "total_chunks": 25,
+    "char_count": 484,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "35dfac06-3d18-4733-9d6b-2484bd84ba40",
+    "text": "The ROC AUC and cost metrics were normalized per seed and task using min-max normalization over all\nmethods. This makes the results comparable across experiments even after selecting specific methods per\nexperiment. To ensure a comprehensive and reproducible evaluation, we organize our experiments into three\ngroups: (1) Main Results, (2) Details, and (3) Ablation (shown in Table 1). We conducted our experiments using TabRepo (Salinas & Erickson, 2023), which provides\nprecomputed model predictions for 1,530 model configurations across 211 tabular datasets, enabling largescale, reproducible simulation of post-hoc ensemble selection. We used the D244_F3_C1530_100 context,\na pre-configured evaluation setup that covers 100 of these datasets; after excluding regression tasks, 83\nclassification datasets remained. We aggregated results for 10 seeds to account for run-to-run variance. Their\ncharacteristics are shown in Figure 4, revealing a wide variety of class, sample, and feature counts. The available base models are plotted in Figure 5 with their inference times, illustrating the diversity of the\nmodel pool—from cheap linear and boosting methods to computationally expensive transformers—providing\na realistic and varied set of candidates for ensemble construction. Since each component model with non-zero\nweight must be evaluated independently at inference time, every such model incurs its full hardware cost. Therefore, the hardware cost of an ensemble under weight vector w equals the sum of the hardware costs of\nall models with non-zero weight, i.e., P j:wj̸=0 hj, where hj denotes the hardware cost of model Mj.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 13,
+    "total_chunks": 25,
+    "char_count": 1632,
+    "word_count": 238,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "57487ff0-8c1e-4411-9e41-686ea4cf26d0",
+    "text": "We first present the main results, followed by detailed analyses, and finally ablation studies. The central\nfocus is on the ability of each method to balance two objectives: predictive performance and hardware cost. In particular, identifying a single strong ensemble may be less effective than discovering several competitive\nensembles that trade off these objectives differently. In general, HAPEnsconsistently outperforms baselines\nin both Main Results (EXP1) and Details (EXP2, EXP3, EXP4), demonstrating its superior ability to produce\ncompetitive ensembles while incorporating hardware awareness. 2 Time10\n10 3\n10 4 Inference\n10 5\nKNeighborsCatBoostLinearRegressionRandomForestExtraTreesNeuralNetTorchLightGBMNeuralNetFastAIXGBoostFTTransformerTabPFN\nModel Type Figure 5: Comparison of TabRepos model types and their corresponding inference times for varying tasks. KNeighbours and linear regression are expectedly on the lower end of the spectrum, while transformers have\nincreased cost due to their complexity.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 14,
+    "total_chunks": 25,
+    "char_count": 1018,
+    "word_count": 131,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f787e231-9cfd-490b-85c7-d167cb8a7829",
+    "text": "CD CD\n5 4 3 2 1 5 4 3 2 1 Single-Best HAPEns Single-Best HAPEns\nQDO-ES Multi-GES(0.68) QDO-ES Multi-GES(0.68)\nGES* GES* Figure 6: HAPEns significantly outperforms the base- Figure 7: HAPEns significantly outperforms the baselines on HV. Single-Best is significantly outperformed lines on IGD+. Single-Best is significantly outperby all other methods. formed by all other methods.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 15,
+    "total_chunks": 25,
+    "char_count": 379,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b58d0a37-dae2-4b55-9657-d7884f404c8b",
+    "text": "EXP1 Figure 6 shows a critical difference (CD) diagram (Demšar, 2006; Herbold, 2020) summarizing the\naverage ranks of the methods evaluated based on their HV values. The HV was calculated from the inverted\nROC AUC on the test data and the averaged normalized3 cost metrics (inference time, memory, and disk\nusage)—collectively referred to as the hardware aggregate. Therefore, this figure provides an overview for all\nthe datasets, model configurations, and cost metrics we explored in our tests. To simplify the presentation\nand highlight the overall trade-off between predictive performance and hardware costs, we aggregate the\nthree hardware measures into a single score. This avoids overemphasizing any single metric, while keeping\nthe focus on the general notion of hardware efficiency. In the CD plot, methods connected by a horizontal bar are statistically indistinguishable according to the\nNemenyi post-hoc test.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 16,
+    "total_chunks": 25,
+    "char_count": 921,
+    "word_count": 138,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e1ef2369-9849-4327-a2e4-8cdc396575db",
+    "text": "HAPEns shows significantly superior performance to the baselines, which makes it\nthe best method to balance the trade-off between predictive performance and hardware costs. Between the\nbaselines, we do not see significant differences except for the single-best method, which simply picks the best\nmodel configuration based on its ROC AUC. A single-best model is not well suited for this setting because it\ncannot capture diverse trade-offs between predictive performance and different hardware costs, which multiple\nensembles can exploit more effectively. We see slight improvements in GES* over QDO-ES, which can be 3Min-max normalization applied after averaging over folds and seeds",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 17,
+    "total_chunks": 25,
+    "char_count": 684,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ba2a5d66-9996-446c-84ed-9c73c322b254",
+    "text": "CD CD\n5 4 3 2 1 5 4 3 2 1 Single-Best HAPEns Single-Best HAPEns\nQDO-ES Multi-GES(0.68) QDO-ES Multi-GES(0.68)\nGES* GES* (a) Disk usage. (b) Memory usage. Single-Best HAPEns\nQDO-ES Multi-GES(0.68)\nGES* Figure 8: Critical difference plots for the hypervolume across different hardware-aware objectives.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 18,
+    "total_chunks": 25,
+    "char_count": 300,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "30f695b8-9fe0-43ce-9d05-1d6eb708d5d9",
+    "text": "attributed to the modification of GES to return all intermediate ensembles, which generally leads to a higher\nnumber of ensembles produced (see Figure 14). This improvement over the standard procedure of returning\nthe final ensemble gives GES a strong edge here. Multi-GES performs slightly higher, but insignificantly so, by\nconstructing ensembles with reduced hardware costs while keeping their predictive performance comparable\nto GES*. A discussion on GES*'s overfitting problem and the corresponding cost-to-performance trade-off\nfollows in the Multi-GES ablation part of this section. Details (EXP2, EXP3, EXP4) EXP2 In Figure 7, the IGD+ results are generally consistent with the HV findings.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 19,
+    "total_chunks": 25,
+    "char_count": 699,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "89f9f6f3-7432-44ba-820c-76909b615c9d",
+    "text": "The main difference is\nthe stronger relative performance of Multi-GES, which now significantly outperforms GES and comes close to\nmatching HAPEns, to the point that HAPEns's superiority is no longer statistically significant. This effect\narises because Multi-GES constructs more efficient ensembles, while QDO-ES primarily improves predictive\nperformance (Figure 9) but at the cost of building more expensive ensembles on average. Since IGD+\nevaluates solutions with respect to a reference front, Multi-GES benefits disproportionately: a larger share of\nits efficient solutions lies on the reference Pareto front, reducing the relative advantage of HAPEnscompared\nto dominated HV. For this reason, we focus on HV in the remainder of the paper, while noting that Multi-GES\nis particularly strong at exploring the low-cost end of the Pareto front. EXP3 Looking at the HV results for the individual cost metrics in Figure 8, we see in more detail what was\nalready evident in the main results: HAPEns performs strongly across all metrics. The method demonstrates\nrobustness to different hardware considerations, even when the behavior space is defined solely by memory\nusage. Notably, Multi-GES shows a significant improvement over the other baselines when optimizing for\ninference time. This highlights its specialization toward the specific cost metric it uses during ensemble\nconstruction. It also raises the question of whether incorporating additional cost metrics could lead to further\nimprovements—but we will leave this for future work. Since our experiments abstract away from specific\nhardware configurations, these findings should be viewed as preliminary. Overall, these results point to an\ninteresting direction for future research that investigates hardware-aware behavior more directly under diverse\nconfigurations and cost measures.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 20,
+    "total_chunks": 25,
+    "char_count": 1844,
+    "word_count": 267,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f7a40644-2a59-4869-a7cd-3cfec5920a6b",
+    "text": "GES* HAPEns Multi-GES\n1.00 0.00 (lower QDO-ES Single-Best\n1.00 0.00\n0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 Normalized Test ROC AUC (inverted; lower is better) Figure 9: Comparison of constructed ensembles when including cost metrics in the ensembling process. The\nbaselines and the hardware-aware methods in the density plots, produce a clear trend, where the ensembles\nof the latter methods are more condensed toward the x-axis. Single-Best Memory\nQDO-ES Inference Time\nGES* Diskspace\nEnsemble Size Figure 10: Comparison of different cost metrics used for HAPEns. Memory and inference time perform\nstrongest, but ensemble size is still notable as a proxy cost metric, which does not need additional measurements. EXP4 Figure 9 shows a density plot of the ensembles constructed by the different methods. Compared to\nSingle-Best, all ensemble methods increase hardware costs but also yield clear gains in predictive performance. Multi-GES reduces hardware costs relative to GES*, confirming its intended effect. QDO-ES and HAPEns\nproduce similar overall trends, but the ensembles of HAPEns are more concentrated along the x-axis, indicating\nlower resource usage. These observations clarify and reinforce the improvements of HAPEns over QDO-ES in\nterms of hardware efficiency, and likewise of Multi-GES over GES*. Overall, the inclusion of cost metrics in\nthe ensemble construction process achieves the desired shift toward more efficient ensembles.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 21,
+    "total_chunks": 25,
+    "char_count": 1458,
+    "word_count": 217,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fdb9c192-f49b-4715-99fc-3f21d8fccf21",
+    "text": "GES* produces 10–15\nmore ensembles on average than HAPEns, yet fewer of them lie on the Pareto front, indicating that many\nof its ensembles are not useful in this context. QDO-ES and HAPEns both generate a high ratio of unique\nensembles, illustrating the effectiveness of the behavior space in promoting diversity. By contrast, Multi-GES\nproduces fewer ensembles overall and fewer unique ensembles than GES*, which aligns with the increased\ndifficulty of adding models once hardware costs are incorporated into the selection process.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 23,
+    "total_chunks": 25,
+    "char_count": 533,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f0bd999c-056b-4e58-a886-650c75da1438",
+    "text": "212019181716151413121110 9 8 7 6 5 4 3 2 1 Multi-GES(1.00) Multi-GES(0.68)\nSingle-Best Multi-GES(0.74)\nGES* Multi-GES(0.84)\nMulti-GES(0.05) Multi-GES(0.42)\nMulti-GES(0.95) Multi-GES(0.37)\nMulti-GES(0.11) Multi-GES(0.63)\nMulti-GES(0.16) Multi-GES(0.79)\nMulti-GES(0.53) Multi-GES(0.58)\nMulti-GES(0.21) Multi-GES(0.47)\nMulti-GES(0.89) Multi-GES(0.32)\nMulti-GES(0.26) Figure 11: Comparison of static weights for Multi-GES highlighting the trade-off between predictive performance and hardware costs. Ablation (EXP5, EXP6) EXP5 We further evaluated HAPEns with four different cost metrics: inference time, memory usage, disk\nusage, and ensemble size.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 24,
+    "total_chunks": 25,
+    "char_count": 645,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88326e85-3416-4b2a-828f-aaef11d33cb4",
+    "text": "The last serves only as a proxy cost metric, yet Figure 10 shows that it still\nprovides a competitive signal to balance the trade-off, without requiring additional measurements. Among the\ntrue cost metrics, memory usage and inference time consistently lead to the strongest results, with memory\nshowing a slight edge. These findings highlight that, while the size of the ensemble can act as a lightweight\napproximation, the use of actual cost metrics yields the most reliable improvements. EXP6 In Figures 11 and 15 we investigate the effect of different static weightings in Multi-GES. By gradually\nincreasing the weight on the inference time, the constructed ensembles shift from high-performing but more\nexpensive configurations toward ensembles with lower hardware costs. This transition is clearly visible in\nthe density plots, where the mass of ensembles moves closer to the origin of the objective space as the\nemphasis on inference time increases. The trade-off between predictive performance and efficiency becomes\napparent: a stronger emphasis on time reduces costs but slightly lowers predictive accuracy, while a weaker\nemphasis maintains accuracy at the expense of efficiency. In Figure 11 we see a sweet spot, where excessively\nhigh or low time weights yield sub-par performance relative to intermediate weightings. For comparison in\nthe main results, we chose the best performing weight: 0.68. These results confirm that Multi-GES allows\npractitioners to explicitly control the desired balance between performance and hardware costs through a\nweighting mechanism, highlighting its flexibility for different deployment scenarios. This work introduced HAPEns, a hardware-aware post hoc ensemble selection method that explicitly balances\npredictive performance and deployment efficiency. By integrating cost metrics into the ensemble construction\nprocess, HAPEns extends ensemble selection into a multi-objective framework that explores the Pareto front\nof accuracy and resource usage. Across 83 tabular classification datasets, HAPEns consistently outperforms\nexisting baselines, achieving superior trade-offs under controlled hardware measurement conditions and\ndemonstrating robustness across different cost metrics. Ablation studies reveal that memory usage is a\nparticularly effective objective, providing a stable optimization signal and leading to ensembles that generalize\nwell across cost measures. Additionally, our experiments show that even simple greedy methods like GES can\nbenefit substantially from static multi-objective weighting, emphasizing the broad potential of hardware-aware\nensemble construction.",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 25,
+    "total_chunks": 25,
+    "char_count": 2633,
+    "word_count": 367,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4f1729ad-3586-42b2-b1dc-ec4eb1a0ce79",
+    "text": "To our knowledge, this is the first systematic study of hardware-aware post hoc\nensemble selection, opening a new research direction for the AutoML and tabular ML communities. Future\nwork may explore dynamic weighting schemes, simultaneous optimization across multiple hardware objectives,\ntask-specific hardware profiling, real-device benchmarking, and integration into end-to-end AutoML pipelines. L.P. acknowledges funding by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation)\nunder SFB 1597 (SmallData), grant number 499552394",
+    "paper_id": "2603.10582",
+    "title": "HAPEns: Hardware-Aware Post-Hoc Ensembling for Tabular Data",
+    "authors": [
+      "Jannis Maier",
+      "Lennart Purucker"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10582v1",
+    "chunk_index": 26,
+    "total_chunks": 25,
+    "char_count": 549,
+    "word_count": 69,
+    "chunking_strategy": "semantic"
+  }
+]

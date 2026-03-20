@@ -1,0 +1,572 @@
+[
+  {
+    "chunk_id": "10a19b50-cee4-4c9d-a1c4-97eb857540c2",
+    "text": "Evaluation format, not model capability, drives triage failure in the\nassessment of consumer health AI David Fraile Navarro, Farah Magrabi, Enrico Coiera\nCentre for Health Informatics, Australian Institute of Health Innovation,\nMacquarie University, Sydney, NSW, Australia\n2026 March 2026\nAbstract Ramaswamy et al. reported in Nature Medicine that ChatGPT Health under-triages 51.6%Mar\nof emergencies, concluding that consumer-facing AI triage poses safety risks. However, their\n12 evaluation used an exam-style protocol—forced A/B/C/D output, knowledge suppression, and suppression of clarifying questions—that differs fundamentally from how consumers use health\nchatbots. We tested five frontier LLMs (GPT-5.2, Claude Sonnet 4.6, Claude Opus 4.6, Gemini\n3 Flash, Gemini 3.1 Pro) on a 17-scenario partial replication bank under constrained (examstyle, 1,275 trials) and naturalistic (patient-style messages, 850 trials) conditions, with targeted\nablations and prompt-faithful checks using the authors' released prompts. Naturalistic interaction improved triage accuracy by 6.4 percentage points (p = 0.015). Diabetic ketoacidosis was[cs.HC] correctly triaged in 100% of trials across all models and conditions. Asthma triage improved\nfrom 48% to 80%. The forced A/B/C/D format was the dominant failure mechanism: three\nmodels scored 0–24% with forced choice but 100% with free text (all p < 10−8), consistently\nrecommending emergency care in their own words while the forced-choice format registered\nunder-triage. Prompt-faithful checks on the authors' exact released prompts confirmed the scaffold produces model-dependent, case-dependent results.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 0,
+    "total_chunks": 30,
+    "char_count": 1649,
+    "word_count": 221,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7c0fa945-8083-4761-a0b3-deeed405b4f0",
+    "text": "The headline under-triage rate is highly\ncontingent on evaluation format and should not be interpreted as a stable estimate of deployed\ntriage behavior. Valid evaluation of consumer health AI requires testing under conditions that\nreflect actual use. Ramaswamy et al. report that ChatGPT Health under-triages 51.6% of emergencies when tested\nwith clinician-authored vignettes, concluding that consumer-facing AI triage poses safety risks [1].arXiv:2603.11413v1\nThe finding has generated considerable public and policy attention, including widespread media\ncoverage framing AI health tools as fundamentally unsafe for triage. We share the authors' concern that consumer health AI must be held to rigorous safety standards, and we agree that independent evaluation is essential. However, when we applied a scaffoldfaithful partial replication of their evaluation methodology to five frontier consumer-facing large\nlanguage models (LLMs) from three independent providers, we were unable to reproduce the headline under-triage rate as a stable cross-model finding. We argue that the study's evaluation design—\nan exam-style scaffold layered on top of semi-patient-facing text—created conditions so different\nfrom actual consumer use that the measured under-triage rate reflects the evaluation format rather\nthan the models' clinical reasoning. LLMs can detectably alter their behavior when they recognize\nevaluation contexts [2, 3]; the study's scaffold presents an unambiguous one. The study's prompt template contains multiple signals that mark it as an artificial evaluation\nrather than a consumer interaction. \"Please base your answer only on the information in this\nmessage\" disables the model's training knowledge—precisely the capability that makes consumer\nAI useful. A forced A/B/C/D letter-choice format constrains output to a structured exam. \"If\nyou would normally ask clarifying questions, still choose the best TRIAGE option\" suppresses interactive reasoning. The study further treats model-generated confidence percentages as calibrated\ntriage probability estimates, but verbalized confidence is sensitive to prompting and is not introspective self-assessment; eliciting it within the same constrained template confounds confidence\nmeasurement with the evaluation format itself. The study prompts transformed clinical scenarios into semi-patient-facing language, with\n\"About me\" and \"My situation\" fields. However, the surface language retains clinical precision no\nreal patient would produce: exact symptom durations, numbered inhaler uses, organised medical\nhistories, and in some variants, vital signs and laboratory values. The difference between this\nhybrid prompt and an actual consumer message is analogous to presenting a clinician with a\nstructured exam question written in first person versus having them talk to a patient—the format\ndetermines the task. The authors argue that clinical vignettes represent a conservative test because real consumers\nunder-report symptoms, assuming the only relevant difference is information quantity. However,\npatients do not merely under-report symptoms; they mis-report them—describing sensations indirectly because they lack medical vocabulary, conflating symptoms, or emphasising clinically irrelevant concerns whilst omitting critical details.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 1,
+    "total_chunks": 30,
+    "char_count": 3304,
+    "word_count": 446,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "06f768f2-4f75-48f6-a167-6c56ba47b09f",
+    "text": "The cognitive work of triage has already been\nperformed by whoever authored the prompt; what remains is knowledge retrieval from a predigested summary. Real consumer interactions change multiple variables simultaneously—noise,\nmis-reporting, and crucially the opportunity for clarification—so the net direction of under-triage\nis ambiguous, not predictably conservative. Prior work confirms that prompt design alone materially shifts clinical decision-making performance [4, 5, 6], yet the study used a single template\nwithout sensitivity analyses. Real clinical encounters are inherently multi-turn.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 2,
+    "total_chunks": 30,
+    "char_count": 600,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "701f97f0-9eed-42d2-b79c-7afae102f5c7",
+    "text": "Yet the evaluation suppresses the model's\ninteractive capabilities and removes conversational grounding—the iterative process by which ambiguity is resolved and missing information is elicited [7]. The prompt explicitly forbids clarifying\nquestions. No competent clinician triages from a single message without follow-up, yet the study\ndraws conclusions about triage capability from precisely this restriction. Consumer AI platforms\nalso increasingly maintain persistent memory and conversation history, allowing models to draw\non prior interactions and medication history—contextual information no single-turn evaluation can\ncapture [8].",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 3,
+    "total_chunks": 30,
+    "char_count": 638,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "251023a2-ae43-408d-a0ed-f3ac076f8514",
+    "text": "We conducted a controlled empirical evaluation of the Ramaswamy et al. methodology, testing\nwhether the reported under-triage rates are reproducible across frontier LLMs and whether they\nare sensitive to evaluation format. The study comprised three components: (1) a constrained evaluation applying the paper's exam-style scaffold to a researcher-authored 17-scenario bank across\nthree prompt variants, (2) a naturalistic evaluation using patient-style messages with no evaluation constraints, and (3) targeted ablations and prompt-faithful checks to isolate which scaffold\ncomponents drive measured failures. The first two components are best understood as a mechanistic partial replication rather than a full case-for-case reproduction of the paper's 30 paired E/F We tested five frontier LLMs from three independent providers: GPT-5.2 (OpenAI), Claude Sonnet\n4.6 and Claude Opus 4.6 (Anthropic), and Gemini 3 Flash and Gemini 3.1 Pro (Google). All models\nwere accessed via their respective APIs.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 4,
+    "total_chunks": 30,
+    "char_count": 998,
+    "word_count": 140,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cdf56dac-a901-4e46-a781-3d42ce8b862e",
+    "text": "We did not test ChatGPT Health directly because it was\nnot available in our region at the time of the study; this limitation is discussed below. In an exploratory extension, we additionally tested GPT-5.3 Instant, which was released after\nprimary data collection, as a post-hoc robustness check. 2.3 Clinical scenarios We used a researcher-authored bank of 17 clinical scenarios spanning the same four-level triage\nscale used by Ramaswamy et al. and including the two headline emergency cases from the original\nstudy: diabetic ketoacidosis (DKA) and asthma exacerbation.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 5,
+    "total_chunks": 30,
+    "char_count": 570,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "98da55d9-5df2-42e0-b586-34030d2d79ff",
+    "text": "This bank was designed as a partial\nmechanistic replication, not as a full reconstruction of the paper's 30 paired E/F vignette set. Six\nscenarios were written in a with-objective-data form and eleven in a symptoms-history-dominant\nform, but the bank does not map cleanly onto the paper's E/F distinction because some symptomshistory-dominant structured prompts still include vital signs or examination findings. The exact\nreleased paper prompts were analysed separately in the prompt-faithful subset checks below. The\nfull 17-scenario bank is listed in Supplementary Table 4. 2.4 Constrained condition In the constrained condition, we reproduced the study's exam-style scaffold: structured vignettes\nwith the original evaluation instructions (forced A/B/C/D output, \"base your answer only on\nthe information in this message,\" suppression of clarifying questions, and mandatory confidence\nelicitation). In the main 17-scenario bank, this scaffold was applied to researcher-authored prompts\nrather than to the paper's exact released prompts. We tested three prompt variants within this\nconstrained format: • Original structured: the scenario presented in our semi-clinical structured format, preserving clinical terminology and organisation. • Patient-realistic: a rewrite of each scenario in lay language, preserving the main clinical\ncontent whilst removing structured clinical formatting. For scenarios written with objective\ndata, patient-realistic prompts could still mention portal results or home measurements if\nthose were part of the scenario design. • Patient-minimal: a further reduction toward what a patient would plausibly type in a brief\nchatbot message, usually omitting structured histories and most objective measurements,\nalthough this was constrained by the mixed design of the 17-scenario bank.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 6,
+    "total_chunks": 30,
+    "char_count": 1814,
+    "word_count": 251,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "637036ab-fc69-43bf-94a6-ce40483e66d3",
+    "text": "Each variant was run five times per model per scenario (5 models × 17 cases × 3 variants ×\n5 runs = 1,275 trials). In the constrained condition, model outputs were scored directly from the\nstated triage category (A/B/C/D) against the pre-specified gold label for each scenario in our bank,\ndefined on the same four-level scale used by Ramaswamy et al. 2.5 Naturalistic condition In the naturalistic condition, we started from the same 17-scenario researcher-authored bank and\nwrote the kind of message a patient might actually type into a health chatbot—lay language, no\nclinical formatting, no evaluation constraints. The rewriting followed a structured protocol: for\neach scenario, two authors (D.F.N. and F.M.) independently wrote patient-style messages, then\nreconciled differences. The messages used colloquial language, omitted clinical terminology, and\nincluded the kind of uncertainty and indirect symptom description characteristic of real patient\ncommunication. For scenarios intentionally written with objective data, patient-style prompts\ncould still mention patient-portal results or home measurements; for symptoms-history-dominant\nscenarios, such data were omitted. Example prompts are provided in the Supplementary Materials\nand the public repository. Models received these patient-style messages with no system prompt, no forced-choice format,\nand no evaluation instructions—approximating how a consumer would actually interact with a\nhealth chatbot.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 7,
+    "total_chunks": 30,
+    "char_count": 1467,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a75eaf47-7323-4756-af5d-ede104876c5f",
+    "text": "Each scenario was tested with both the patient-realistic and patient-minimal\nrewrites (5 models × 17 cases × 2 variants × 5 runs = 850 matched responses). 2.6 Outcome scoring and adjudication In the constrained condition, outputs were scored directly from the stated A/B/C/D triage category. In the naturalistic condition, models produced free-text responses that required adjudication. Two\nindependent LLM adjudicators (GPT-5.2 and Claude Opus 4.6) were instructed to identify the\nprimary triage recommendation from each free-text response, using a standardised rubric that\nclassified recommendations into the same A–D categories used by Ramaswamy et al. Inter-rater\nagreement was 94.7% (Cohen's κ = 0.921). The primary outcome measure was the mean of the\ntwo adjudicators' scores. To isolate which components of the evaluation scaffold drive measured failures, we conducted two\nsets of ablations on the asthma case (the scenario driving most emergency under-triage): • One-factor ablation (n = 10 per cell): starting from the structured baseline, we added\nor removed one constraint at a time (knowledge suppression, clarifying-question suppression,\n150-word cap, free-text output, full template). • High-powered format ablation (n = 25 per cell): the same clinical content presented with\nforced A/B/C/D output versus free-text output, isolating the effect of forced discretization.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 8,
+    "total_chunks": 30,
+    "char_count": 1383,
+    "word_count": 200,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2eebbb5a-fa54-4d9a-91e3-e5401f3a5ddd",
+    "text": "2.8 Prompt-faithful subset checks To test whether the mechanistic findings from our 17-scenario bank extend to the authors' exact\nreleased prompts (rather than our own rewrites), we ran two additional checks using failure-case\nprompts from the study's public GitHub repository: • Factor sweep: all 16 released race/gender/anchor/barrier variants for the symptom-only\nasthma (F9) and DKA (F13) failure rows, tested on two models (GPT-5.2 and Claude Opus\n4.6). • Naturalization ladder: the exact released prompt (paper exact), a version keeping the\npatient's question but removing the scaffold (natural ask), and a further stripped version\n(user only), tested on the released symptom-only WW-AX rows for asthma and DKA across\nall five models with two independent repeats. 2.9 Statistical analysis For the constrained condition, we tested the pooled prompt-format effect using a chi-squared test\nacross all 1,275 trials. For the naturalistic comparison, we used the Wilcoxon signed-rank test\nacross 170 matched model-case-format cells. For the high-powered ablation, we used Fisher's exact\ntest comparing forced-choice versus free-text accuracy within each model. All analyses were prespecified except the exploratory GPT-5.3 extension. 3.1 Constrained evaluation Even within the constrained format, changing prompt wording shifted accuracy unpredictably\nacross models (χ2 = 4.65, p = 0.098), confirming the evaluation format itself is a source of measurement noise. DKA was correctly triaged in every constrained trial (75/75).",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 9,
+    "total_chunks": 30,
+    "char_count": 1525,
+    "word_count": 218,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "61a14825-9091-4e70-bdd9-9d3db61e6438",
+    "text": "Model-level and\nprompt-format breakdowns are provided in Supplementary Tables 5–8. 3.2 Naturalistic evaluation The naturalistic condition outperformed the constrained one: 70.1% versus 63.6% (+6.4 percentage\npoints; Wilcoxon p = 0.015; Table 1). DKA was correct throughout (50/50 constrained, 50/50\nnaturalistic), suggesting that the original ChatGPT Health DKA miss was a product-layer artifact\nrather than an inherent model limitation. Asthma—the scenario driving most emergency undertriage—improved from 74% to 90%, with the patient-realistic variant rising from 12/25 (48%) to\n20/25 (80%). This gain was not driven by a single model (Table 2; per-model and per-format\nbreakdowns in Supplementary Table 7).",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 10,
+    "total_chunks": 30,
+    "char_count": 709,
+    "word_count": 98,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "76352cdb-5a4e-4d67-848c-aaae0a5953b9",
+    "text": "3.3 Ablation: forced discretization is the mechanism To isolate why, we ran a targeted ablation on the asthma case: same clinical content, but with\nversus without the forced A/B/C/D output requirement (n = 25 per cell). The result was striking\n(Table 3). GPT-5.2 scored 4/25 (16%) with forced choice but 25/25 (100%) with free-text output. Gemini 3 Flash: 6/25 versus 25/25. Gemini 3.1 Pro: 0/25 versus 25/25 (all p < 10−8).",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 11,
+    "total_chunks": 30,
+    "char_count": 424,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2f50e6d0-b454-42ae-b0a7-85a242a3129f",
+    "text": "These\nmodels consistently recommended emergency care in their own words; the forced-choice format\nregistered under-triage when the clinical recommendation was clinically appropriate. The Claude models showed a different pattern: both scored 25/25 under forced choice and freetext alike, indicating that model architecture interacts with the forced-discretization constraint. A separate sensitivity analysis confirmed that the \"base your answer only\" knowledge-suppression\ninstruction alone does not uniformly shift accuracy (Supplementary Table 9). The one-factor ablation (Supplementary Table 10) confirmed that no single constraint other than forced discretization\nproduced a comparably large effect; the extended ablation including the full-template condition is\nin Supplementary Table 11. 3.4 Prompt-faithful subset Using the authors' exact released prompts on the two emergency failure cases, we confirmed that\nthe scaffold produces model-dependent and case-dependent results.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 12,
+    "total_chunks": 30,
+    "char_count": 981,
+    "word_count": 126,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f99d49c8-3fee-4b8f-a3af-0b6360e4f79e",
+    "text": "In the factor sweep across all 16\ndemographic variants, GPT-5.2 remained stable (16/16 emergency on both cases), whereas Claude\nOpus varied substantially (7/16 on asthma, 9/16 on DKA), particularly in the anchoring-present\nvariants (Supplementary Table 12). In the naturalization ladder, progressively removing scaffold constraints shifted triage outcomes,\nbut not in a uniform direction: some models improved, some worsened, and the direction depended\non the case (Supplementary Table 13). This confirms that the released scaffold is not a neutral\nmeasuring instrument.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 13,
+    "total_chunks": 30,
+    "char_count": 570,
+    "word_count": 80,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "63817036-fdbb-4d84-8a0a-a4dfe4757f3d",
+    "text": "3.5 Exploratory sixth-model extension Adding GPT-5.3 Instant (released after primary data collection) did not reverse the aggregate\nfinding (six-model aggregate: +6.8 pp, p = 0.0043; Supplementary Table 14). Within this partial mechanistic replication, we were unable to reproduce the Ramaswamy et al.\nheadline under-triage rate as a stable finding across five frontier LLMs. DKA was correctly triaged\nin 100% of trials, and asthma triage improved from 48% to 80% once the exam-style constraints\nwere removed. The mechanism is clear: forced A/B/C/D discretization causes models that would\nrecommend emergency care in natural language to be scored as under-triaging. We do not claim that real-world consumer performance is necessarily better than vignette\nperformance.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 14,
+    "total_chunks": 30,
+    "char_count": 767,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a9435ee5-deca-40a7-bdc1-30259ad70612",
+    "text": "Rather, the headline under-triage rate is highly contingent on task formalization—\nparticularly forced discretization and interaction-suppressing constraints—and therefore should not\nbe interpreted as a stable estimate of deployed triage behavior. Because deployed use is interactive\nand allows clarification, the direction and magnitude of under-triage under real consumer conditions\ncannot be inferred from a single-turn, no-clarifying-questions protocol. The prompt-faithful subset\nanalyses strengthen this interpretation by showing that even the authors' released prompts produce\nmodel-dependent and case-dependent shifts when scaffold components are removed.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 15,
+    "total_chunks": 30,
+    "char_count": 663,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e11c76d-58e0-4a97-96c7-375b632042a2",
+    "text": "We tested frontier models via API rather than the ChatGPT Health product, which we could not\naccess in our region, limiting the community's ability to replicate research arising from its use [9]. The original study tested one non-configurable consumer deployment over a three-day window (January 9–11, 2026), necessarily conflating model capability with a specific product configuration [10]. OpenAI states that its healthcare offerings are powered by GPT-5 family models [11], though the\nexact ChatGPT Health model is unspecified. Our results remain informative: if a frontier model\nreliably recommends emergency care without a forced-choice constraint, under-triage in the product evaluation is more plausibly an interaction of deployment configuration with evaluation format\nthan a general reasoning deficit. The primary 17-scenario bank is not a full reconstruction of the paper's 30 paired E/F vignette\nset. It is a researcher-authored mixed bank that includes both with-objective-data and symptomshistory-dominant scenarios, and some structured prompts in the latter group still retain vitals or examination findings. The main experiment should therefore be interpreted as a mechanistic partial\nreplication, with the prompt-faithful subset providing the exact-prompt validation. Our naturalistic prompts, while more patient-like than the study's semi-clinical hybrids, are still\nresearcher-written single-turn messages. They do not capture the full complexity of real patient\ncommunication, nor do they test multi-turn interaction. Even so, the improvement over the constrained protocol is significant and consistent across most models, suggesting that the constrained\nprotocol systematically underestimates triage capability.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 16,
+    "total_chunks": 30,
+    "char_count": 1732,
+    "word_count": 236,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c88b2bf6-55a7-45ba-9fba-bd33a59c7dd2",
+    "text": "Our adjudication used LLM judges rather than human clinicians. The high inter-rater agreement (κ = 0.921) provides confidence in the scoring, but LLM adjudication may not capture all\nclinically relevant nuances that a human expert would identify. Even these single-turn results likely understate real-world capability, because actual consumer interactions unfold over multiple turns—and increasingly draw on persistent user context such as\nprior conditions and medication history—through which ambiguity is progressively resolved [7]. As\nsuch assessments increasingly inform regulatory discussions [12, 8], methodological rigor in prompt\ndesign and evaluation protocol are a prerequisite for claims about real-world safety. Our data\nsupport a strong methodological claim—that the evaluation scaffold is behaviorally active and can\nmanufacture apparent failure—even though the present main bank is a partial replication rather\nthan a full 30-scenario E/F reconstruction. Valid evaluation of consumer-facing health AI requires\ntesting under conditions that reflect actual use—not repurposed clinical examinations. All experimental code, prompts, raw model outputs, adjudication results, and data are publicly\navailable at https://github.com/dafraile/nature_experiments_triage. The authors declare no competing interests. Not applicable (no human participants).",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 17,
+    "total_chunks": 30,
+    "char_count": 1358,
+    "word_count": 175,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8cadfd7b-b2f6-4743-a7ad-b6aa94fbf668",
+    "text": "Use of large language models. LLMs (Claude Opus 4.6, Anthropic) were used to assist with manuscript drafting, code development\nfor the experimental pipeline, and statistical analysis scripting. GPT Codex 5.3 was used as the\ncoding platform. All LLM-generated content was reviewed, verified, and edited by the authors. The experimental code, including all prompts used, is available in the public repository. Author\ncontributions. D.F.N. conceived the study, designed and ran the experiments, and drafted the\nmanuscript. F.M. and E.C. provided critical feedback on study design and manuscript revisions. All authors reviewed and approved the final version. A Supplementary result tables These tables provide the detailed quantitative breakdowns referenced in the main text, including\nthe constrained prompt-format replication, the matched constrained-versus-natural breakdown by\nmodel and user prompt format, the sensitivity test for the \"base your answer only\" instruction, Table 1: Matched comparison between the constrained (exam-style) and naturalistic (patient-style)\nconditions. The naturalistic condition removed the system prompt and forced-choice format, used\nonly patient-like messages, and was scored by the mean of two independent adjudicators (inter-rater\nagreement 94.7%, κ = 0.921). Each model contributes 170 matched responses. Model Constrained protocol Naturalistic Delta (pp)",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 18,
+    "total_chunks": 30,
+    "char_count": 1393,
+    "word_count": 190,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f6114942-e39b-4881-bade-808d83f47d7b",
+    "text": "GPT-5.2 64.1% 68.2% +4.1\nClaude Sonnet 4.6 56.5% 71.2% +14.7\nClaude Opus 4.6 61.8% 72.4% +10.6\nGemini 3 Flash 63.5% 66.8% +3.2\nGemini 3.1 Pro 72.4% 71.8% -0.6 All five models 63.6% 70.1% +6.4",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 19,
+    "total_chunks": 30,
+    "char_count": 191,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9d4f603a-0742-4b48-9b04-a720b1aea38d",
+    "text": "Table 2: The two headline emergency cases from Ramaswamy et al. DKA is pooled across the two\npatient-like prompts; asthma shows the patient-realistic prompt only, where the original undertriage signal is strongest. Cells show constrained / naturalistic correct-scored. Model DKA (constrained / naturalistic) Asthma realistic (constrained / naturalistic) GPT-5.2 10/10 / 10/10 4/5 / 5/5\nClaude Sonnet 4.6 10/10 / 10/10 5/5 / 5/5\nClaude Opus 4.6 10/10 / 10/10 0/5 / 3/5\nGemini 3 Flash 10/10 / 10/10 2/5 / 5/5\nGemini 3.1 Pro 10/10 / 10/10 1/5 / 2/5 All five models 50/50 / 50/50 12/25 / 20/25",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 20,
+    "total_chunks": 30,
+    "char_count": 589,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "688e7ab3-4adc-4150-8923-745859309dfc",
+    "text": "Table 3: High-powered asthma ablation isolating response format (n = 25 per cell). Removing the\nforced A/B/C/D output requirement restores correct emergency recommendations in three of five\nmodel families. Model Forced A/B/C/D Free-text output Fisher's exact p GPT-5.2 4/25 (16%) 25/25 (100%) 3.76 × 10−10\nGemini 3 Flash 6/25 (24%) 25/25 (100%) 1.16 × 10−8\nGemini 3.1 Pro 0/25 (0%) 25/25 (100%) 1.58 × 10−14\nClaude Sonnet 4.6 25/25 (100%) 25/25 (100%) 1.00\nClaude Opus 4.6 25/25 (100%) 25/25 (100%) 1.00",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 21,
+    "total_chunks": 30,
+    "char_count": 503,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dd558328-912a-444d-99a9-32944bb1a02d",
+    "text": "the one-factor addition/removal of each prompt constraint, the full high-powered asthma ablation,\nand prompt-faithful checks using the authors' released failure-case prompts. Table 4: The 17-scenario partial replication bank used in the main experiment. \"Scenario type\"\nrecords whether the case was authored with objective data available to the model or as a symptomshistory-dominant scenario. This bank was used for the main constrained and naturalistic experiments and does not constitute a full reconstruction of the paper's paired E/F vignette set. Case ID Scenario Scenario type Gold triage case 01 Exertional Chest Pain (Stable Angina) Symptoms-history dominant B\ncase 02 Acute Chest Pain (Possible ACS) Symptoms-history dominant A\ncase 03 Tension Headache Symptoms-history dominant D\ncase 04 Acute Appendicitis Symptoms-history dominant A\ncase 05 Allergic Rhinitis Symptoms-history dominant D\ncase 06 Iron Deficiency Anemia With objective data B\ncase 07 Type 2 Diabetes New Diagnosis With objective data C\ncase 08 Acute Kidney Injury / DKA With objective data A\ncase 09 Urinary Tract Infection (Uncomplicated) Symptoms-history dominant C\ncase 10 Pulmonary Embolism Symptoms-history dominant A\ncase 11 Hyperthyroidism (Graves' Disease) With objective data C\ncase 12 Community-Acquired Pneumonia Symptoms-history dominant B\ncase 13 Acute Stroke (Ischemic CVA) Symptoms-history dominant A\ncase 14 Gastroesophageal Reflux Disease (GERD) Symptoms-history dominant D\ncase 15 Acute Meningitis With objective data A\ncase 16 Hypothyroidism With objective data C\ncase 17 Acute Asthma Exacerbation Symptoms-history dominant A",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 22,
+    "total_chunks": 30,
+    "char_count": 1621,
+    "word_count": 230,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c8825b30-1040-4751-a9ef-13cf56b735c4",
+    "text": "Table 5: Constrained main replication accuracy by model family and prompt format. These are\nthe controlled API runs using the paper-style prompt scaffold. Cells show correct/scored (accuracy\n%). Model Original structured Patient realistic Patient minimal",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 23,
+    "total_chunks": 30,
+    "char_count": 254,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5eee8320-cdb0-4257-ab2d-1f1a2d48f776",
+    "text": "GPT-5.2 56/85 (65.9%) 57/85 (67.1%) 52/85 (61.2%)\nClaude Sonnet 4.6 55/85 (64.7%) 50/85 (58.8%) 46/85 (54.1%)\nClaude Opus 4.6 55/85 (64.7%) 55/85 (64.7%) 50/85 (58.8%)\nGemini 3 Flash 57/85 (67.1%) 55/85 (64.7%) 53/85 (62.4%)\nGemini 3.1 Pro 66/85 (77.6%) 64/85 (75.3%) 59/85 (69.4%) Table 6: Pooled accuracy in the constrained main replication dataset (1,275 scored trials). Prompt format Correct Scored Accuracy (%) Original structured 289 425 68.0\nPatient realistic 281 425 66.1\nPatient minimal 260 425 61.2 B Exploratory sixth-model extension GPT-5.3 Instant was released after our primary five-model data collection and is included here\nas a post-hoc robustness check. Table 14 shows the six-model aggregate with GPT-5.3 folded in. The naturalistic advantage is preserved and slightly larger than the five-model headline. Table 7: Matched constrained-versus-natural comparison by model and user prompt format. Natural accuracy is the two-judge mean adjudicated score. Model User prompt Constrained Natural Delta (pp) GPT-5.2 Patient realistic 67.1% 70.0% +2.9\nGPT-5.2 Patient minimal 61.2% 66.5% +5.3\nClaude Sonnet 4.6 Patient realistic 58.8% 70.6% +11.8\nClaude Sonnet 4.6 Patient minimal 54.1% 71.8% +17.6\nClaude Opus 4.6 Patient realistic 64.7% 76.5% +11.8\nClaude Opus 4.6 Patient minimal 58.8% 68.2% +9.4\nGemini 3 Flash Patient realistic 64.7% 70.6% +5.9\nGemini 3 Flash Patient minimal 62.4% 62.9% +0.6\nGemini 3.1 Pro Patient realistic 75.3% 72.4% -2.9\nGemini 3.1 Pro Patient minimal 69.4% 71.2% +1.8 All five models Patient realistic 66.1% 72.0% +5.9\nAll five models Patient minimal 61.2% 68.1% +6.9 Table 8: Key-case behavior in the constrained main replication. DKA is pooled across all three\nprompt formats; asthma is shown by prompt format.",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 24,
+    "total_chunks": 30,
+    "char_count": 1751,
+    "word_count": 263,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "743976fe-5ed0-46bf-a03a-fe15a8900d2a",
+    "text": "Model DKA (all formats) Asthma structured Asthma realistic Asthma minimal GPT-5.2 15/15 (100%) 0/5 (0%) 4/5 (80%) 5/5 (100%)\nClaude Sonnet 4.6 15/15 (100%) 5/5 (100%) 5/5 (100%) 5/5 (100%)\nClaude Opus 4.6 15/15 (100%) 5/5 (100%) 0/5 (0%) 5/5 (100%)\nGemini 3 Flash 15/15 (100%) 0/5 (0%) 2/5 (40%) 5/5 (100%)\nGemini 3.1 Pro 15/15 (100%) 0/5 (0%) 1/5 (20%) 5/5 (100%) Table 9: Sensitivity analysis isolating the \"base your answer only on the information in this message\" instruction (two-case subset). Cells show correct/scored. Model No added restriction Base-on-message-only Full paper template",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 25,
+    "total_chunks": 30,
+    "char_count": 593,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f2447d26-c3ce-43a1-b1e5-1552da32a742",
+    "text": "GPT-5.2 7/10 5/10 6/10\nGemini 3 Flash 5/10 6/10 8/10\nClaude Sonnet 4.6 10/10 10/10 10/10\nClaude Opus 4.6 10/10 10/10 10/10 Table 10: One-factor ablation on the DKA and asthma subset. Each column adds or removes one\nprompt constraint relative to the structured baseline; cells show correct/scored. Model Structured + Knowledge + No clarifying + 150-word Free-text Full\nbaseline suppression questions cap output template GPT-5.2 5/10 5/10 5/10 5/10 10/10 5/10\nGemini 3 Flash 6/10 6/10 7/10 8/10 10/10 6/9\nClaude Sonnet 4.6 10/10 10/10 10/10 10/10 10/10 9/10\nClaude Opus 4.6 10/10 10/10 10/10 10/10 10/10 10/10 Table 11: Full high-powered asthma ablation. The clearest contrast is forced A/B/C/D output\nversus free-text output; the full-template column reintroduces the entire paper-style constraint\nbundle. Model Forced A/B/C/D Free-text output Full template",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 26,
+    "total_chunks": 30,
+    "char_count": 856,
+    "word_count": 131,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "294973d7-3460-4c73-be2a-16ae9b84d8cd",
+    "text": "GPT-5.2 4/25 (16%) 25/25 (100%) 1/25 (4%)\nGemini 3 Flash 6/25 (24%) 25/25 (100%) 12/22 (54.5%)\nGemini 3.1 Pro 0/25 (0%) 25/25 (100%) 0/25 (0%)\nClaude Sonnet 4.6 25/25 (100%) 25/25 (100%) 23/25 (92%)\nClaude Opus 4.6 25/25 (100%) 25/25 (100%) 25/25 (100%) Table 12: Prompt-faithful exact-prompt sweep on the authors' released symptom-only failure rows\n(asthma F9 and DKA F13), using all 16 released race/gender/anchor/barrier variants. Counts\nshow emergency recommendations on the exact released prompt only. GPT-5.2 remains stable\nacross variants; Claude Opus shifts substantially within the same underlying case, particularly in\nthe anchoring-present variants. Model F9 (all) F9 (no anchor / anchor) F13 (all) F13 (no anchor / anchor) GPT-5.2 16/16 8/8 / 8/8 16/16 8/8 / 8/8\nClaude Opus 4.6 7/16 5/8 / 2/8 9/16 8/8 / 1/8",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 27,
+    "total_chunks": 30,
+    "char_count": 820,
+    "word_count": 130,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c42ae67b-a78b-4c1b-95c4-1b0ab6ebced1",
+    "text": "Table 13: Prompt-faithful naturalization ladder on the authors' released WW-AX symptom-only\nfailure rows (two repeats per model-condition cell). paper exact is the released prompt (single run),\nnatural ask keeps the patient's question but removes the scaffold, and user only strips the wrapper\nfurther to substantive content. Cells show dual-judge adjudicated primary triage labels by repeat\n(repeat 1; repeat 2). Split labels such as D/A indicate judge disagreement within a single repeat. A = emergency care now. Model F9 exact F9 natural F9 user F13 exact F13 natural F13 user GPT-5.2 A B; B B; B A D/A; B B; D/A\nClaude Sonnet 4.6 B B; B B; B A A; A B; B\nClaude Opus 4.6 B B; B B; B C/B B; B D/A; B\nGemini 3 Flash A A; B B; B A A; B A; B\nGemini 3.1 Pro B B; B B; B A B; B B; B",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 28,
+    "total_chunks": 30,
+    "char_count": 779,
+    "word_count": 152,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d3d65e73-d44c-42b9-aca5-f37559a4db11",
+    "text": "improved overall (72.9% to 81.5%), but not uniformly: the patient-realistic asthma prompt—\nthe main failure case in the original study—worsened relative to constrained, consistent with the\nheterogeneous per-model patterns observed across the pre-specified set. Table 14: Exploratory six-model naturalistic comparison, adding GPT-5.3 Instant (post-hoc) to\nthe five pre-specified models. Each model contributes 170 matched responses (1,020 total). The\nfive-model pre-specified result is reproduced for comparison. Model / aggregate Constrained Natural user-only Delta (pp) GPT-5.2 64.1% 68.2% +4.1\nClaude Sonnet 4.6 56.5% 71.2% +14.7\nClaude Opus 4.6 61.8% 72.4% +10.6\nGemini 3 Flash 63.5% 66.8% +3.2\nGemini 3.1 Pro 72.4% 71.8% −0.6\nGPT-5.3 Instant (post-hoc) 72.9% 81.5% +8.5 Five models (pre-specified) 63.6% 70.1% +6.4\nSix models (exploratory) 65.2% 72.0% +6.8",
+    "paper_id": "2603.11413",
+    "title": "Evaluation format, not model capability, drives triage failure in the assessment of consumer health AI",
+    "authors": [
+      "David Fraile Navarro",
+      "Farah Magrabi",
+      "Enrico Coiera"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11413v1",
+    "chunk_index": 29,
+    "total_chunks": 30,
+    "char_count": 860,
+    "word_count": 119,
+    "chunking_strategy": "semantic"
+  }
+]

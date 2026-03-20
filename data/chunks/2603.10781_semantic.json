@@ -1,0 +1,1242 @@
+[
+  {
+    "chunk_id": "3db1b7df-421c-48d9-860b-5a98a268fffc",
+    "text": "Taking Shortcuts for Categorical VQA Using\nSuper Neurons Pierre Musacchio1 , Jaeyi Jeong2 , Dahun Kim3 , and Jaesik Park1 1 Seoul National University\n2 EPFL\n3 Google Deepmind\n{pmusacchio, jaesik.park}@snu.ac.kr2026 Sparse Attention Vectors (SAVs) have emerged as an excellent training-free alternative to supervised finetuning or low-rank adap-Mar\ntation to improve the performance of vision-language models (VLMs). At\n11 theirest andheart,use themSAVs asselectclassifiers,a few accuraterather thanattentionrelyingheadson theformodel'sa task ofpredic-intertion. In a similar spirit, we find that directly probing the raw activations\nof the VLM, in the form of scalar values, is sufficient to yield accurate\nclassifiers on diverse visually grounded downstream tasks. Shifting focus\nfrom attention vectors to scalar activations dramatically increases the\nsearch space for accurate parameters, allowing us to find more discriminative neurons immediately from the first generated token. We call such[cs.CV]\nactivations Super Neurons (SNs). In this probing setting, we discover\nthat enough SNs appear in the shallower layers of the large language\nmodel to allow for extreme early exiting from the first layer of the model\nat the first generated token. Compared to the original network, SNs robustly improve the classification performance while achieving a speedup\nof up to 5.10\\times .",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 0,
+    "total_chunks": 62,
+    "char_count": 1380,
+    "word_count": 195,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0b649641-fc5f-4845-b169-267bc40fcc96",
+    "text": "Vision-language model (VLM) are frontier models extending the generative capabilities of large language model (LLM) via visual grounding [1,6,23,25]. Usually\nconsisting of billions of parameters, these models retain extensive knowledge\nfrom internet-scale pretraining [4, 8, 30, 33, 39]. Although remarkably effective,\ntheir complexity hinders attempts to understand how they operate at their core.arXiv:2603.10781v1 Current research on VLM explainability and efficiency improvement mainly\nfocuses on what could be called macro-level representations. That is, multidimensional representations that are learned through aggregating information\nfrom interactions of the tokens in the model. The most famous examples lie in\nlinear probing [35, 42] or attention map extraction [17, 27]. However, thanks to\nthe over-parameterization of current state of the art networks, we hypothesize\nthat models accumulate such a tremendous amount of information over training\nthat their individual activation scalars are sufficient to provide accurate answers\nto specific questions. We term these micro-level representations. Thus, we repurpose the Probing task-wise Super Neurons…\nneuron activations of the LLM\nmodel into predictions via ViT\na simple training-free strat- …\negy inspired by [27]. Anal- Tokenizer\nogously, we gather a probing dataset and perform an …Enables accurate extreme early exiting!\nend-to-end VLM inference on Light Predictor LLM\nit. During the process, we ViT\nstore activations from the …\nlarge language model (LLM) Tokenizer\nof the VLM. However, in-\n5.10× faster\nstead of clustering attention\nheads, we directly convert the Fig. 1: Overview of our approach. Our trainingraw activations into classifi- free scheme uncovers Super Neurons (SNs) via probcation predictions by thresh- ing data. They robustly outperform the base model\nolding them. We observe that on a variety of categorical VQA datasets. As a\nthis simple conversion scheme byproduct, they enable extreme early exiting at the\nfirst layer of the LLM on the first generated token.is enough for a subset of neuColored boxes in the LLM represent SNs for their\nrons to achieve high scores on\ndata types.\nconventional categorical visual question answer metrics for a wide diversity of datasets.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 1,
+    "total_chunks": 62,
+    "char_count": 2257,
+    "word_count": 330,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a394072-0149-458f-9719-f77acdff615a",
+    "text": "We subsequently\ndeem them Super Neurons (SNs). Surprisingly, SNs obtain even better performance than the models themselves on a diverse suite of unseen categorical\nVQA validation benchmarks. Since there are more raw activations than attention heads in the network (cf. Fig. 2b), there are more chances to find SNs that\nhave desirable properties, such as better performance and robustness. Specifically, we discover that some SNs located in shallower layers of the model preserve\ngreat performance even while the first token is being generated. This allows us\nto perform extreme early exit i.e. interrupt inference on the first layer of the\nLLM during the generation of the first token.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 2,
+    "total_chunks": 62,
+    "char_count": 685,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "42bd89f0-3faa-4fdd-82da-7b91ade62a1b",
+    "text": "Our contributions are summarized as follows: – We shift the analysis from macro-level representations (akin to attention\nvectors) to micro-level ones (scalar activations). By doing so, we present a\ntraining-free approach that identifies high-scoring neurons in the LLM of the\nVLMs,\n– We comprehensively benchmark the probed neurons and find that they can\nserve as strong categorical classifiers, outperforming the base models themselves on a diverse suite of VQA benchmarks. We therefore call them Super\nNeurons,\n– We thoroughly investigate SNs (discriminative power, location in the model,\nquantity, robustness) and introduce the agreement rate metric that quantifies\nthe divergence between SNs predictions and model predictions,\n– As a byproduct, SNs enable extreme early exit at inference time, providing\na speedup of up to 5.10\\times while maintaining model-level performance. A conventional approach to turn large VLMs to efficient\nmodels is to prune them at the parameter level, either by distillation [40] or\nby training a policy to search which weights to remove [22]. Pruning can also\noccur at the token level, usually via token similarity approaches [5, 14, 41, 43],\nby estimating visual contribution [24], or using scale-down approaches [25]. If\nthe final objective is to improve performance, training a robust visual encoder is\nalso a viable solution [9,37]. Some approaches diverge by considering early exit\nfrom the model, either in a supervised setting [2] or in a training-free manner\nby estimating layer-wise similarities [36]. Recently, task vectors [11] have been\nleveraged in VLMs in the form of sparse attention vectors to enable training-free\nimprovement of VLMs in classification tasks [27]. Single modality convnets and\nLSTMs can rely on some of their weights for accurate prediction [19,32], but this\nremains to be shown for transformers, specifically when processing multimodal\ntokens. While inspired by [27],\n(a) Architecture comparison between SAVs and SNs.\nwe elect neural activations SAVs Autoregressive LLM inferencerather than clustering attention heads, shifting the rep- …\nresentation of interest from\na macro- to a micro-level ………\n(cf. This shift continues to hold properties re- Answer\nported in [19, 27, 32] (e.g.\nbetter performance than the Single LLM forward pass\nmodel itself), while being ro- Answer\nbust to prompt variations\n…and distribution shifts, en- SNs aggregation (Π)\nabling inference on diverse\nVQA tasks and extreme early\nstopping. (b) Search space comparison. Although we solely focus Method Search target Search space size\non categorical VQA tasks, we SAVs [27] Attention vectors Layers \\times Heads = 32 \\times32= 1024\npropose a training-free ap- SNs (Ours) Activation scalars Layers \\times Dim. = 3 2 \\ti m es 4 096{131,072}\nproach that identifies expert\nFig. 2: Comparison between SAVs and ours.\nneural activations and estabWe show architectural divergences in Fig. 2a and\nlishes a set of SNs that solves resulting search spaces of the two approaches for\nthe task accurately and ro- LLaVA-v1.5-7b in Fig. 2b.\nbustly, without relying on token similarity or altering model weights. After discovery, we substantially improve the runtime performance of VLM using extreme early exit, as early as the\nfirst layer. Model explainability is a fundamental challenge for the\ndeployment of VLMs in the real world.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 3,
+    "total_chunks": 62,
+    "char_count": 3357,
+    "word_count": 516,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d40dc1f6-96e3-4329-a386-667581b70c2d",
+    "text": "Algorithm 1: Super Neurons Extraction\nData:\n\\mathData^{(\\mathTask)}, probing dataset for task \\Gamma;\nE_\\text{vis}and E_\\text{txt}, vision and text encoders of the VLM;\nf, LLM of the VLM;\n\\alpha, activation threshold parameter;\n\\mu , a function that computes a metric;\n\\mathbf{Y},ground-truths;\nSNt, super neurons threshold.\n1 \\mathb f \\mathProbing)}\\gets\\{\\}\n\\math 2 for I m gTaskPr o bingSampledo\n\\mathProbing)}_\\mathSampleIdx(\\mathImgEnc\\mathProbing)}_\\mathSampleIdx);\\mathTxtEnc\\mathProbing)}_\\mathSampleIdx 3 \\mathbf;\n{H}^{(\\mathTask ) 4 \\mathbf)}.Append(\\mathActTaskProbingSampleIdx ; \\math 5 A ctTask P robing\\gets\\mathActTaskProbing>\\mathActThresh;\n\\math r ric 6 S c o eTaskMe t ; = { 7 \\ mat hSn \\text\\ i ndexFntexFn{}}\\mathAct^{(\\mathTask,\\mathProbing)}[\\mathScoreTaskMetric\\text{\\snThresh{}}] ^{(\\mathTask)}[\\mathScoreTaskMetric{}}] ;\n8 return \\mathbf{\\Sigma;",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 5,
+    "total_chunks": 62,
+    "char_count": 870,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "50053a1c-7c88-49f2-9c8d-e4a180435bde",
+    "text": "adopted as master operators in robotics [3, 18, 44], guardrails must be set up\nto ensure the security of their behavior. Substantial work has led to a better\nunderstanding of how attention, which VLMs are usually built on, behaves. Notably, CLIP-Dissects proposes tagging each neuron in the transformer with a\nconcept [29], showing that transformers learn more complex patterns as the representation is forwarded down its layers. Efforts have also been directed towards\nunderstanding attention sinks [7,16,31]. Moreover, due to the extensive number\nof attention operations in the LLM of the VLM, the community has reported\nthe emergence of object-aligned attention maps in the transformer decoder of\nthe architecture [17]. Linear probing approaches tend to show that the VLM\ngenerates its answer based on different stages of reasoning [42], yet, these stages\ndo not seem to be monolithic [27,35]. Sparse autoencoders has shown that some\nspecific neurons hold object-specific concepts [13,38]. In our work, we propose studying the capabilities of individual neurons without adding a single learning component that could alter the understanding of\ntheir function. By repurposing raw activations as categorical predictions, we\nshow that VLMs possess expert neurons across a diverse set of tasks. Analyzing\nthe location of the emergence of these neurons helps us better understand that\nthe LLM is in principal capable of answering a question sometimes as early as\nin the first layer of the LLM when generating the first token of the answer.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 6,
+    "total_chunks": 62,
+    "char_count": 1536,
+    "word_count": 239,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e69b67e5-a070-480b-8fc5-c13e10ec32c0",
+    "text": "We also investigate to what extent SNs and the model disagree by introducing\nthe agreement rate (AR) metric. Robustness experiments suggest that SNs are\nnot exploiting spurious correlations of the input data and generalize to new distributions or neighboring prompts, suggesting the universality of our approach. Algorithm 2: Super Neurons Inference\nData:\nE_\\text{vis}and E_\\text{txt}, vision and text encoders of the VLM;\nf, LLM of the VLM;\n\\alpha, activation threshold parameter;\nSNt, super neurons threshold;\n\\mathbf},{\\Sigmaindexing of previously probed SNs;\n\\protect}, an aggregation function.\n1 \\mathb f )}\\gets\\{\\}\n\\math 2 for I m gTaskVa l Sampledo\n)}_\\mathSampleIdx(\\mathImgEnc)}_\\mathSampleIdx);\\mathTxtEnc)}_\\mathSampleIdx 3 \\mathAct;\n{H}^{(\\mathTask ) 4 \\mathbf)}.Append(\\mathActTaskProbingSampleIdx ; \\math 5 A ctTask V al\\gets\\mathActTaskVal>\\mathActThresh;\n{\\Pi[\\mathSn]) 6 return \\mathbf ; We define a VLM as the combination of vision and text encoders\nvi xt { eE_\\t\nf :to an LLM s\\mathbb}: \\mathbb{R}^{(\\{R}^{\\mathImgDim\\times\\mathLatentDimand E_\\tathImgSeqe xt + \\mathTxtSeq{txt}:\\times\\mathLatentDim\\times\\mathLatentDim}. Given{N}^s\\times\\mathLatentDimthata feedgroundingtheir outputimage m\\ athb f and a text prompt m \\ m athbf{N}^s, a VLM forward pass is defined asfollows:\n\\ma t hVLMOut ^{ s + 1} = \\mathLLM(\\mathImgEnc(\\mathImg);\\mathTxtEnc(\\mathTxt(1)\nHere, \\mathbf+1}can be auto-regressively fed into f.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 7,
+    "total_chunks": 62,
+    "char_count": 1428,
+    "word_count": 177,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3b4fc16c-fd5a-4448-8347-d51479010440",
+    "text": "This process ends when the LLM\nL LLM, we denotegenerates token. Moreover, given an an <eos> \\ in{N}layered activation extracted from the l-th layer. For clarity, we omit the\\m thbf{H}_\\mathLayerIdx\\in{R}^\\mathLatentDimthe asubscript when referring to the full set of L activations, i.e. \\ m athbf{H}\\in{R}^{\\mathNumLayers\\times\\mathLatentDim}.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 8,
+    "total_chunks": 62,
+    "char_count": 343,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e47a3dec-853b-4555-9ccb-6469b5a40ef4",
+    "text": "Conventional VLMs are built from an LLM architecture that contains\nbillions of parameters, processing both vision and text tokens. We hypothesize\nthat this parametric scale is reasonable for individual neurons to hold critical\ninformation about the answer for a given text-image pair and that we do not\nnecessarily need the full model to answer the question. Specifically, we claim\nthat some scalar activations are sufficient to provide a satisfactory answer, on\npar or even better than the full model itself. We call these hypothetical neuron\noutputs Super Neurons (SNs). Inspired by [27], our work provides a simple setup\nto discover such SNs for categorical VQA. Uncovering SNs can be thought of as a three-step process. First, we gather\na probing set. We then perform a forward pass of the network on the probing\nset to uncover neurons that have high activations on it based on a metric to\noptimize. Finally, we evaluate SNs on the validation set of the dataset to assess\ntheir performance. We provide the complete algorithm used to discover SNs in\nAlgorithm 1. Formally, we identify a task \\Gamma to solve and gather a probing\nt ^{(\\ athT\ndataset \\mathD a a m ask)}==0}^{\\mathNumSamples. Here, p stands for probing set. This probing set\nis typically built from training data used to optimize a model for \\Gamma . We gather\nthe full model activations for each of the vision-text pairs of the probing set\n\\ left ( \\ mathImg hTask\\mathProbing)}_\\mathSampleIdx^{(\\mathTask\\mathProbing)}_\\mathSampleIdx\\in\\mathProbingSet_\\mathSampleIdx : ^ {(\\mat \\mat A ct ^{(\\mathTas k , \\mathProbi ng )}_\\mathSampleIdx\\mathLLM(\\mathImgEnc(\\mathImg^{(\\mathTask\\mathProbing)}_\\mathSampleIdx);\\mathTxtEnc(\\mathTxt^{(\\mathTask\\mathProbing)}_\\mathSampleIdx\\in\\mathbb{R}^{\\mathNumLayers\\times\\mathLatentDim(2) h\nTaking into account all samples in the dataset, we note \\mathb f {H}^{(\\mathTask\\mathProbing)}\\in{R}^{\\mathNumSamples\\times\\mathNumLayers\\times\\mathLatentDimthetensor of all activations.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 9,
+    "total_chunks": 62,
+    "char_count": 1978,
+    "word_count": 271,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ca9c756d-79e4-436e-8eb9-1f0277dbe302",
+    "text": "Discovering Super Neurons. The key idea is to directly convert the raw\nactivations into binary predictions. Hence, we introduce a threshold variable\n\\ a lpha{R}responsible for binarizing the raw activations:\n\\lab e l {eq:act_thresh}\\mathActTaskProbing>\\mathActThresh(3) We detail how we instantiate this value in Sec. 4.2. We proceed to evaluate each neuron on the full probing set using a predetermined metric \\mu to acquire neuron-level statistics: \\mat o i\nh S c reTaskM e tr c = \\ma t h M e tric\\left\\mathAct^{(\\mathTask\\mathProbing)}_\\mathSampleIdx\\mathGt_\\mathSampleIdx\\right\\forall\\mathSampleIdx\\in\\dots\\mathNumSamples(4)\nwhere \\mathbf{Y}_\\mathSampleIdx is the ground-truth for the n-th data sample and \\mathSc o re ^{(\\mathTask\\mathProbing\\in1]^{\\mathNumSamples\\times\\mathNumLayersrepresents the neuron-wise scores for task \\Gamma on the probing set p with respect to\na metric \\mu. Conventional metrics are usually normalized from 0 to 1. Therefore,\nwe consider this formulation. At this stage, we identify neurons as super neurons if they fall above a specific\npredetermined metric threshold. We call this threshold \\protect\\text{\\snThresh\\in[0,1]t r otect\\text{\\snThresh\\in1].",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 10,
+    "total_chunks": 62,
+    "char_count": 1186,
+    "word_count": 152,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "abfc19d6-ceeb-4e87-8c9e-5f51118c7df2",
+    "text": "Thus, thefinal SNs are selected as follows: \\ma thSn = \\text{ \\ indexFntdexFn\\mathAct^{(\\mathTask,\\mathProbing)}[\\mathScoreTaskMetric\\text{\\snThresh{}}]. \\mathAct^{(\\mathTask\\mathProbing)}[\\mathScoreTaskMetric>\\text{\\snThresh(5) Hence, \\mathbf{\\Sigmarepresents the index map of the thresholded SNs for a given SNt and\nidx is a function that returns the indices of the tensor values that meet the\nthresholding requirement. Evaluating Super Neurons on validation data. Once \\mathbf{\\Sigmais obtained, we\nt ^{(\\ at\nperform the inference on the validation set of \\Gamma denoted \\mathD a a m hTask)}==0}^\\mathNumSamples,\nwhere v stands for validation set. As with the probing set, we extract \\mathbf{H}^{(\\mathTask)} and\nonly select SN activations from indexing on \\mathbf}:{\\Sigma \\ m athSnPred = \\mathActTaskVal[\\mathSn>\\mathActThresh(6) Best SN\n0.72 200\nModel acc. 0.70 150 accuracy activations\nMax. 0.68 100 0.66 Num. 50 012345678910111213141516171819202122232425262728293031 −3 −2 −1 0 1 2 3 0 Activation threshold α Layer (a) Accuracy w.r.t. the activation threshold \\alpha. (b) Number of SNs per layer. Fig. 3: Empirical analysis of SNs. Figure 3a shows the maximum accuracy on the\nprobing set with respect to different \\alpha. We evaluate \\alphaover the range \\ a lpha\\in3]. The\nmaximum accuracy peaks around \\ alpha=0.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 11,
+    "total_chunks": 62,
+    "char_count": 1322,
+    "word_count": 179,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e2bec61c-d757-472e-a8a4-023c97689874",
+    "text": "Figure 3b records the number of found SNs\nthat obtain a better accuracy than the model in each layer. We use LLaVA-v1.5-7b on\nVizWiz for both figures. where \\ma t hbf \\{0,1\\}^{\\mathNumSn} and K \\ in{N}denotes the number of selected SNs. Since Kis usually larger than 1, we finally aggregate all the SN predictions into a single\nfinal prediction using an aggregation function \\protect}.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 12,
+    "total_chunks": 62,
+    "char_count": 385,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "32fdc8a4-27e1-430d-a1fc-828f27272d33",
+    "text": "For this, we use two different\nstrategies. Either, we simply average all SN predictions or we perform majority\nvoting. We provide the inference routine in Algorithm 2. To measure how much SNs diverge from the predictions of the model, we introduce the agreement rate (AR) metric. Conceptually, AR aims at quantifying the\nfrequency at which SNs and the model have the same answers. We define AR as\nfollows:\nt r\nt = { \\ \\frac {1} mat hNumSamples\\mathNumSn_{\\mathSampleIdx0}^{\\mathNumSamples_{\\mathSnIdx0}^\\mathNumSn\\mathbbm\\left\\mathSnPred_{\\mathSampleIdx\\mathSnIdx\\mathVLMOut_\\mathSampleIdx\\right\\in(7) ex \\\n{\\a {}}\nHere, \\protect{1}is the indicator function and we subscript the SNs index by k, while\nsubscripting the data samples by n. Note that AR can be obtained for different\nSNt thresholds. Thus, we also denote the metric with a suffix specifying the\nSNt e.g. if \\protect\\text{\\snThresh{}}=0.8t r otect\\text{\\snThresh{}}=0.8, then AR@0.8 is the agreement rate across all SNs whose\naccuracy exceeds 0.8 on the set of interest.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 13,
+    "total_chunks": 62,
+    "char_count": 1031,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "abff1ac9-2e24-45c1-9567-a96e6e6fd91a",
+    "text": "We validate our approach on seven diverse categorical VQA datasets: – Pope, for object hallucination [21],\n– InstaOrder (Occ.), for occlusion understanding [20,28],\n– InstaOrder (Depth), for depth understanding,\n– VizWiz, for broad visual understanding [10], Table 1: Best probed SN on diverse categorical VQA datasets. We report\naccuracy and F1. We display the results obtained by the single best performing SN\nin the model. Best results are in bold. Baselines are highlighted in gray .",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 14,
+    "total_chunks": 62,
+    "char_count": 487,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2f7c94ad-dd89-47cc-be01-55ababc36cb5",
+    "text": "We use a\nprobing set size of 3,000 samples except for VizWiz, which only contains 942 binary\nquestions. Accuracy and F1 are optimized separately. SNs outperform the base models\nin all cases.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 15,
+    "total_chunks": 62,
+    "char_count": 190,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a6444b48-84c0-4921-a596-e2b26ac1fd4f",
+    "text": "InstaOrder Metric Method Pope InstaOrder VizWiz Clevr A-OKVQA ScienceQA (Depth) (Occ.) LLaVA-v1.5-7b 90.7 61.7 53.9 64.8 52.3 67.8 62.2\nSN 92.5(+1.8) 63.5(+1.8) 62.7(+8.8) 71.9(+7.1) 54.4(+2.1) 68.0(+0.2) 63.8(+1.6)\nAccuracy\nQwen3-VL-4b-Instruct 95.0 61.8 50.8 78.3 84.7 82.7 81.3\nSN 96.1(+1.1) 62.8(+1.0) 62.6(+11.8) 81.0(+2.7) 88.6(+3.9) 83.0(+0.3) 82.3(+1.0) LLaVA-v1.5-7b 91.1 67.7 46.1 72.0 61.7 74.5 70.0\nSN 92.3(+1.2) 69.1(+1.4) 69.0(+22.9) 74.8(+2.8) 66.9(+5.2) 73.8(-0.7) 70.7(+0.7)\nQwen3-VL-4b-Instruct 94.8 63.1 4.2 78.9 86.4 82.3 81.4\nSN 95.9(+1.1) 69.1(+6.0) 69.1(+64.9) 81.2(+2.3) 89.0(+2.6) 82.6(+0.3) 82.2(+0.8) – Clevr, a synthetic dataset for geometrical understanding [15],\n– A-OKVQA, a general knowledge multiple choice question (MCQ) dataset [34],\n– ScienceQa, an MCQ dataset for mathematics and scientific reasoning [26]. We provide details of each dataset, along with their respective prompt templates,\nin Appendix A. 4.2 Evaluation protocol We construct a prob- 1.00\ning set of size N = 3, 000 for 0.95 LLaVA-v1.5-7b Acc.\nall datasets, randomly sampled from Rate 0.90\ntheir respective training sets. By 0.85\nprobing samples from the training set, 0.80 Agreement\nwe ensure there is no overlap between 0.75\nthe probing and validation data. We 0.70\nmake a single exception for VizWiz, 50 55 60 65 70SNt 75 80 85 90\nwhich contains fewer than 1K categorical VQA in its train set. We convert Fig. 4: Agreement rate with respect to\nA-OKVQA and ScienceQa as a se- different SNt. We compute AR on Pope\nusing LLaVA-v1.5-7b. At lower accuracy,\nries of binary questions allowing our\nSNs largely agree with the model predicmethod to be applied indistinguish- tion. However, for SNs to obtain better reably as for other datasets. We bal- sults than the model, they have to disagree\nance the probing set of each dataset on some answers.\nto ensure that each categorical class\nis evenly represented to avoid biasing the selected SNs. We evaluate two well-established models in the VLM landscape to emphasize the universal plug-and-play nature of our approach.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 16,
+    "total_chunks": 62,
+    "char_count": 2066,
+    "word_count": 313,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "62e0fbe9-b59f-4bd7-8f3b-5819e2ce5479",
+    "text": "We choose LLaVAv1.5-7b since it is a cornerstone VLM and has been widely adopted and modSuper Neurons 9",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 17,
+    "total_chunks": 62,
+    "char_count": 103,
+    "word_count": 18,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "56d6f26a-86bf-49a4-9c05-31db7a4ef9ac",
+    "text": "Table 2: Evaluation of probed SNs on diverse categorical VQA validation\ndatasets. We report both the mean of SNs and the majority voting with respect\nto the SNt found from the probing data. All SNs were optimized for accuracy on the\nprobing set. For a given metric, best results are in bold and second best are underlined. Baselines are highlighted in gray . InstaOrder Metric Method Pope InstaOrder VizWiz Clevr A-OKVQA ScienceQA (Depth) (Occ.) SNs LLaVA-v1.5-7b 92% 63% 62% 71% 53% 67% 63%\nSNt\nSNs Qwen3-VL-4b-Instruct 95.8% 62.6% 62.0% 80.9% 88.3% 80.0% 82.0% LLaVA-v1.5-7b 89.8 65.0 64.9 65.6 51.3 54.8 53.5\nSNs (mean) 90.9(+1.1) 66.1(+1.1) 64.5(-0.4) 72.6(+7.0) 51.5(+0.2) 61.4(+6.6) 57.4(+6.9)\nSNs (maj. voting) 90.9(+1.1) 65.2(+0.2) 78.2(+13.3) 69.9(+4.3) 51.4(+0.1) 72.0(+17.2) 48.4(-5.1)\nAccuracy\nQwen3-VL-4b-Instruct 91.5 63.4 85.2 81.7 83.7 85.2 81.1\nSNs (mean) 93.4(+1.9) 63.6(+0.2) 78.1(-7.1) 81.2(-0.5) 88.3(+4.6) 85.2(+0.0) 82.9(+1.8)\nSNs (maj. voting) 93.7(+2.2) 64.9(+1.5) 77.2(-8.0) 80.1(-1.6) 88.3(+4.6) 85.2(+0.0) 82.4(+1.3) LLaVA-v1.5-7b 89.5 66.4 18.5 60.1 50.9 34.9 40.1\nSNs (mean) 92.6(+3.1) 68.8(+2.4) 23.5(+5.0) 73.9(+13.9) 51.0(+1.0) 37.7(+2.8) 42.4(+2.3)\nSNs (maj. voting) 91.0(+0.5) 66.4(+0.0) 30.4(+11.9) 64.1(+4.0) 50.9(+0.0) 44.7(+9.8) 38.3(-1.7)\nPrecision\nQwen3-VL-4b-Instruct 98.5 69.3 49.6 80.4 76.7 66.0 68.3\nSNs (mean) 97.6(-0.9) 70.1(+0.8) 31.3(-18.3) 76.9(-3.5) 87.9(+11.2) 66.0(+0.0) 71.7(+3.4)\nSNs (maj. voting) 96.5(-2.0) 69.2(-0.1) 29.2(-20.4) 79.8(-0.6) 85.3(+8.6) 66.0(+0.0) 72.9(+4.6) LLaVA-v1.5-7b 90.8 80.2 40.2 92.5 76.6 93.9 85.9\nSNs (mean) 89.5(-1.3) 75.9(-5.3) 61.8(+21.6) 69.9(-22.6) 75.8(-0.8) 83.7(-10.2) 84.5(-1.4)\nSNs (maj. voting) 91.4(+0.6) 80.9(+0.7) 36.5(-3.7) 90.3(-2.2) 77.5(+0.9) 51.8(-42.1) 94.9(+9.0)\nRecall\nQwen3-VL-4b-Instruct 84.9 66.0 2.7 83.9 96.8 83.8 78.7\nSNs (mean) 89.3(+4.4) 64.8(-1.2) 40.0(+37.3) 89.2(+5.3) 90.0(-6.8) 83.7(-0.1) 78.3(-0.4)\nSNs (maj. voting) 91.1(+6.2) 71.1(+5.1) 37.8(+35.1) 80.6(-3.3) 92.5(-4.3) 83.8(+0.0) 73.4(+5.3) LLaVA-v1.5-7b 90.2 72.6 25.3 72.9 61.1 50.9 54.7\nSNs (mean) 91.0(+0.8) 72.2(-0.4) 34.0(+8.7) 71.8(-1.1) 61.0(-0.1) 52.0(+0.1) 56.5(+1.8)\nSNs (maj. voting) 91.2(+1.0) 72.9(+0.3) 33.2(+7.9) 75.0(+2.1) 61.4(+0.3) 48.0(-2.9) 54.6(-0.1)\nQwen3-VL-4b-Instruct 91.2 67.6 5.1 82.1 85.6 73.8 73.1\nSNs (mean) 93.3(+2.1) 67.4(-0.2) 35.1(+30) 82.6(+0.5) 89.0(+3.4) 73.8(+0.0) 74.8(+1.7)\nSNs (maj. voting) 93.7(+2.5) 70.1(+2.5) 33.0(+27.9) 80.2(-1.9) 88.7(+3.1) 73.9(+0.1) 73.2(+0.1) We also experiment on the more recently released Qwen3-VL-4bInstruct as its capabilities are known to be better than LLaVA-v1.5-7b while\nbeing significantly smaller [1]. Finally, we conduct scaling-up experiments using\nLLaVA-v1.5-13b and Qwen3-VL-32b-Instruct. Unless specified otherwise, we use\nthe default model configuration in all cases.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 18,
+    "total_chunks": 62,
+    "char_count": 2825,
+    "word_count": 357,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "906b08ce-4771-42b5-8db8-4750b60785ba",
+    "text": "Further information can be found\nin appendix B. Experimental setting. Unless mentioned otherwise, we use NVIDIA RTX Table 3: Comparison of SNs and\nA6000 GPUs for our experiments. We benchmark LLaVA-v1.5-7b\ntraction of SNs is training-free and simply on VizWiz using the same number of\nrequires the collection of raw activations probing samples N. Best performing\nfrom the model.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 19,
+    "total_chunks": 62,
+    "char_count": 378,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3418facc-aac6-4f48-870f-54e61831d4cd",
+    "text": "Split across 8 GPUs, this method is in yellow .\nonly requires about 4 minutes of runtime Method N Acc. Recall F1\nfor LLaVA-v1.5-7b. To find the optimal\nSAVs [27] 40 51.8 50.6 95.7 66.1\n\\alphaactivation threshold, we first compute\nSNs (ours) 40 60.2 56.8 84.9 68.1\nthe mean activation across 3K randomly\nsampled VQA in the Pope-style format, yielding 0.0083. We also empirically\npick different \\alphavalues in the probing set of VizWiz in Fig. 3a. Table 4: Performances of SNs for scaled-up models. After probing SNs following our method, we report the validation results of LLaVA-v1.5-13b and Qwen3-\nVL-32b-Instruct on Pope and ScienceQa respectively. Best performances for a given\noptimized metric are in bold, baseline performance is in gray . (a) LLaVA-v1.5-13b on Pope. (b) Qwen3-VL-32b-Instruct on ScienceQA. Method Method\nMetric Acc. Recall F1 Metric Acc. Vanilla model 88.7 85.6 94.0 89.6 Vanilla model 81.4 67.5 82.9 74.4 SNs (mean) 88.8 85.7 94.1 89.7 SNs (mean) 84.9 75.5 79.4 77.4\nAccuracy Accuracy\nSNs (maj. voting) 87.6 83.4 94.9 88.8 SNs (maj. voting) 84.8 76.6 77.4 77.0 SNs (mean) 88.9 85.5 94.4 89.7 SNs (mean) 84.0 73.6 79.5 76.5\nF1 F1\nSNs (maj. voting) 85.9 85.7 87.2 86.4 SNs (maj. voting) 85.0 76.3 78.2 77.2",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 20,
+    "total_chunks": 62,
+    "char_count": 1229,
+    "word_count": 205,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cfe71672-a3c4-4938-aee9-42cd8097f5e7",
+    "text": "all tested values provide accuracy above the model itself. Nevertheless, this figure confirms that the maximum accuracy peaks around \\ alpha=0. Thus, we use\n\\ alpha=0 for all experiments. After running Algorithm 1 on the probing set of each\ndataset, we choose the appropriate SNt by sweeping across values that are up\nto 3 points lower using a step size of 1 for LLaVA-v1.5-7b and a step of 0.1 for\nQwen3-VL-4b-Instruct. We use 128 max. generated tokens, set temperature to\n0, use 1 beam, and don't leverage stop strings in all experiments, unless stated\notherwise. We detail the configurations of the models in appendix B.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 21,
+    "total_chunks": 62,
+    "char_count": 623,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b4eb9851-ceb5-4df2-9b74-b9a5984870b5",
+    "text": "To account for the fact that VQA benchmarks can be imbalanced, not\nonly do we report accuracy, as previous works do, but also compute precision,\nrecall, and F1 score. This allows us to better estimate the predictive capabilities\nof all benchmarked methods. We use a rule-based evaluation strategy for accurate and interpretable results. Accuracy, precision, recall and F1 are defined as\nfollows: \\text { c r a cy} & = \\ f rac\nNu m S ampl e s } \\ su\n{1}{\\mat h p leI\nm _ \\ math S am\nhb b m {1} \\ ef t ( dx \\ma t l r ed _\nm ath S nP \\\nt SampleIdx = \\mat \\m a h . (11)\nhGt _\\mat h SampleIdx\\right),\\text{Precision}\\frac\\sum_\\mathSampleIdx\\mathbbm{1}\\left(\\mathSnPred_\\mathSampleIdx1\\land\\mathGt_\\mathSampleIdx1\\right)}{\\sum_\\mathSampleIdx\\mathbbm{1}\\left(\\mathSnPred_\\mathSampleIdx1\\right)},\\text{Recall}\\frac\\sum_\\mathSampleIdx\\mathbbm{1}\\left(\\mathSnPred_\\mathSampleIdx1\\land\\mathGt_\\mathSampleIdx1\\right)}{\\sum_\\mathSampleIdx\\mathbbm{1}\\left(\\mathGt_\\mathSampleIdx1\\right)},\\text{F1}\\frac{2\\times\\text{Precision}\\times\\text{Recall}}{\\text{Precision}\\text{Recall}} Following the previously established notations, N denotes the size of the\ndataset, n a sample index, \\mathbf{Y}}^\\stara prediction made from an SN and \\mathbf{Y}the groundtruth label. At probing time, these metrics can serve as a choice of \\mu.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 22,
+    "total_chunks": 62,
+    "char_count": 1308,
+    "word_count": 163,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "10445779-ab5f-444c-83a5-bc0401efd66b",
+    "text": "Accuracy Precision Recall F1\n80 80 80\n(%) 80\n60 60 60 70\nScore 60 40 40 40 50 20 20 20\n10 100 500 1k 3k 5k 10 100 500 1k 3k 5k 10 100 500 1k 3k 5k 10 100 500 1k 3k 5k\nNum Samples Num Samples Num Samples Num Samples\nPOPE InstaOrder (Depth) InstaOrder (Occlusion) CLEVR Fig. 5: Super Neurons performances with respect to different probing set\nsizes. We compute accuracy, precision, recall and F1 on diverse benchmarks using\nLLaVA-v1.5-7b. Dashed lines (colors matching their respective datasets) indicate the\nperformance of the vanilla model. Overall, more data leads to performance improvements. compute them on the model output. During validation, we recompute these\nmetrics on the model and the elected SNs to obtain the numbers reported in the\nbenchmarks. We start\nby gathering SNs from the Table 5: Runtime benchmark on Pope. We report the benchmark the average runtime of LLaVA-v1.5-7b\nperformance of the single best on the full validation set using its official inferscoring neuron in Tab. 1. ence code. L^\\star indicates the inference exit layer. All\nIn this table, we optimize numbers are recorded using a single NVIDIA RTX\nfor two main metrics \\ m A6000. Best performances are in bold.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 23,
+    "total_chunks": 62,
+    "char_count": 1193,
+    "word_count": 206,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "028e465d-eb35-4332-b029-52647be71456",
+    "text": "Baseline is\nin gray , and best runtime is in yellow . = \\{\\tex reportu t {accuracy,F1}\\} andtheir respective results in Inference Strategy Autoreg. F1 Runtime (s.)\ndifferent rows. We observe Model LLaVA-v1.5-7b ✓ 32 89.8 90.2 0.78\nthat the highest-scoring neu- \\protect\\text{\\snThresh{}}=0.92t r otect\\text{\\snThresh{}}=0.92 (maj. vote) ✗ 15 90.9 91.2 0.16(-4.81\\times)\nSNs \\protect\\text{\\snThresh{}}=0.91t r otect\\text{\\snThresh{}}=0.91 (mean) ✗ 12 90.6 90.8 0.16(-4.87\\times)\nron surpasses the model on all \\protect\\text{\\snThresh{}}=0.90t rotect{}}=0.90 (maj. vote) ✗ 1 89.8 90.2 0.15(-5.10\\times)\nprobed datasets. We specifically note large differences on VizWiz and InstaOrder (Occ.), tasks that\nare most likely out-of-distribution relative to LLaVA and Qwen's pre-training\nmix. We remark a particular weakness of Qwen when prompted on InstaOrder\n(Occ.). We noted that the model consistently answered \"no\", resulting in an extremely low F1.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 24,
+    "total_chunks": 62,
+    "char_count": 945,
+    "word_count": 128,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6ef65651-ae05-4b87-aaec-abc7a9c9d103",
+    "text": "On the other hand, our SNs are able to robustly classify these\nexamples in the probing set. We highlight tricky cases where SNs are accurate\nin Fig. 6. Still in this figure, the A-OKVQA case shows that the model sometimes does not have a clear representation of the concept described in the image,\nas it replies equally for each type of pepper. On the other hand, SNs manage to\nsharply determine which type of pepper is sold. We investigate the quantity of probed neurons in Fig. 3b. Since we behave at\nthe scalar-level and not at the vector-level anymore, we observe a large amount of\naccurate SNs. It is especially interesting to note that these SNs are also revealed in the shallowest layers of the LLM, suggesting that individual neurons might\nbe involved in the decision process of the network earlier than expected [42]. To further attempt to understand\nhow SNs behave with respect to the Table 6: Impact of token selection\npredictions of the model, we plot the for SNs discovery on Pope. We use\nAR curve for different SNt in the prob- LLaVA-v1.5-7b. L^\\star is the first possiing test of Pope in Fig. 4. We observe ble early stopping layer. Best performing\na clear logarithmic trend in the agree- method is highlighted in yellow . Early exment between LLaVA and SNs until iting after the first token improves runtime\nand performances.they reach the same performance. Beyond this point, we observe a sharp AR Token Pos.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 25,
+    "total_chunks": 62,
+    "char_count": 1425,
+    "word_count": 247,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2588f2ef-e042-492c-a2d6-a25a73d685f6",
+    "text": "Recall F1 Runtime (s.)\ndrop, indicating that neurons must sig- Last 14 90.9 92.6 89.5 91.0 0.76\nnificantly disagree with the model to First 15 90.9 91.0 91.4 91.2 0.16(-4.75\\times)\nobtain more accurate answers. This makes sense: the base model provides a\nlower bound performance if the SNs only agree with it. They need to make more\naccurate predictions to surpass it, and therefore must disagree with it more often. We then evaluate\nthe probed SNs in the validation set of Table 7: Transfer capabilities of SNs\nour selected dataset suite in Tab. 2. We to a novel distribution. We use the\nobserve that SNs largely outperform Pope format.\nor perform competitively against the Method Probe Val.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 26,
+    "total_chunks": 62,
+    "char_count": 692,
+    "word_count": 117,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "27a3c4ca-ef95-4aa2-8b60-9acf28427a97",
+    "text": "Recall F1\nmodel from which they are extracted. LLaVA-v1.5-7b – Voc 91.8 88.1 96.7 92.2\nSuperior results on both LLaVA-v1.5- SNs Voc Voc 91.9 88.1 96.8 92.3\n7b and Qwen3-VL-4b-Instruct support SNs Coco Voc 91.6 87.2 97.6 92.1\nthe universality of our approach. Interestingly, Qwen performs extremely poorly on the occlusion understanding task,\nwhereas our method is sufficient to raise its F1 score above that of vanilla LLaVA. Our method continues to provide strong results for challenging MCQ datasets\n(A-OKVQA, ScienceQa), consistently outperforming the base model by a significant margin (Tab. 2). Comparison with baselines. We compare inference with SNs against n-shot\nprompting in Tab. 8. For both Pope and Clevr, n-shot prompting LLaVAv1.5-7b results in large performance degradation as previously observed in [27]. Our proposed SNs outperform or obtain on par results with all the baselines for\naccuracy and F1. We also compare SNs with SAVs [27] in Tab. 3. While SAVs\nwere originally evaluated on VizWiz's \"answerable\"-\"unanswerable\" questions,\nwe observed that this data was about 77% imbalanced towards \"unanswerable\"\nand that SAVs answers were biased towards it. Thus, we benchmark both SAVs\nand SNs on our balanced \"yes\"-\"no\" VizWiz validation set, such that the accuracy value becomes more representative of the predictive capabilities of each\napproach. We use the number of probing samples of SAVs (i.e. 40) for both\napproaches. We observe that SAVs' recall is effectively high but lower accuracy,\nindicating high answer bias. On all metrics, SNs compare positively to SAVs.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 27,
+    "total_chunks": 62,
+    "char_count": 1587,
+    "word_count": 245,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "76f19967-64b6-40ef-9e5c-7d6c75e62725",
+    "text": "POPE INSTAORDER (DEPTH) INSTAORDER (OCC.) A-OKVQA Is there a sink in the Is the sandwich in front of Is the surfboard occluding What is the street vendor in\nimage? the book from the viewer's the person from the viewer's back shirt and hat selling\nperspective? perspective? at her stand?\n(a) Green peppers 🤖: (a), (b), (c), (d)\n🤖: no 🤖: no 🤖: no (b) Mango peppers SNs: (c)\nSNs: yes SNs: yes SNs: yes (c)(d) HotBananapepperspeppers Fig. 6: Qualitative results of SNs. We show examples on diverse validation sets. We\nuse LLaVA-v1.5-7b on Pope and InstaOrder (Occ.) and Qwen3-VL-4b-Instruct on\nInstaOrder (Depth) and A-OKVQA.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 28,
+    "total_chunks": 62,
+    "char_count": 621,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "87a2ef9b-88d3-4060-aab9-511372380c20",
+    "text": "The robot icon symbolizes the model output. Green indicate that the answer matches the ground-truth and red indicates an incorrect\nanswer. We compare\nthe full model and SNs' inference Table 8: Comparing n-shot promptspeed in Tab. 5. By bypassing the au- ing and SNs. We benchmark LLaVAtoregressive process, SNs dramatically v1.5-7b. SNs are consistently more accureduces inference runtime while main- rate.\ntaining performance on par with the Num. shots 0 1 3 5 SNs\nbase model. We provide an in-depth Acc. 89.8 82.3 63.0 60.8 90.9\nprofiling using huggingface's inference Prec. 89.5 84.0 84.0 81.6 91.0\npipeline in Tab. 4 (appendix Sec. Pope Recall 90.8 81.3 81.3 31.0 91.4\nF1 90.2 83.6 82.6 44.9 91.2 Performance analysis con- Acc. 65.0 60.7 58.9 58.9 65.2\nfirms that SNs also emerge at larger Prec. 66.4 60.3 58.6 58.7 66.4\nRecall 80.2 93.9 98.7 97.9 80.9scale for both LLaVA-v1.5-13b (Tab. 4a) (Depth) InstaOrder F1 72.6 73.5 73.5 73.4 72.9\nand Qwen3-VL-32b-Instruct (Tab. 4b),\nAcc. 51.3 50.8 50.4 49.9 51.4solidifying the scalability and univerPrec. 50.9 50.7 50.4 49.9 50.9\nsality of our approach. Recall 76.6 59.2 51.2 50.7 77.5 Clevr\nF1 61.1 54.6 50.8 50.3 61.4",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 29,
+    "total_chunks": 62,
+    "char_count": 1167,
+    "word_count": 192,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "992ee20e-2ebe-41bd-a812-7530b2e0bcbb",
+    "text": "We evaluate the robustness of SNs with a transfer experiment\nin Tab. 7. We use the official Pope repository to build a Pope-Voc validation dataset. We probe on Pope built from Coco and evaluate on Pope-Voc.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 30,
+    "total_chunks": 62,
+    "char_count": 206,
+    "word_count": 36,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "53bd79e4-e4cc-4327-9d42-c29b594b34fa",
+    "text": "Although the validation distribution differs from the probing one, SNs remain\ncompetitive. We also discover that SNs are robust to prompt changes, providing\nevidence that they are not overfitting on probing data nor exploiting spurious\nbiases from the inputs (cf. appendix D). We consider which\ntoken provides the best performance Table 9: Impact of metric optimizafor our approach.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 31,
+    "total_chunks": 62,
+    "char_count": 382,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1f8fb571-5d1a-444c-a528-e093339fa371",
+    "text": "Contrary to SAVs [27], tion for SNs discovery. We use LLaVASNs perform better on the first token v1.5-7b on InstOrder (Occ.). Willingly\nof the sequence, opening the door to optimizing for a given metric \\mu results in\nsignificant performance improvements inextreme early exit by completely skipthe subsequent measure.\nping the autoregressive process of the\nLLM. We further stop at the first layer Metric Method Metric optimization (\\mu)\nof the model by lowering the SNt while Accuracy F1\nmaintaining model-level performances. Accuracy SNs (mean) 64.5 25.6\nSNs (maj. voting) 78.2 67.0\nIn that setting, inference runs\nSNs (mean) 23.5 16.4 5.10\\timesfaster than the original model. We be- Precision 24.6 SNs (maj. voting) 30.4\nlieve that this phenomenon arises from SNs (mean) 61.8 98.4\nthe larger search space of our approach Recall SNs (maj. voting) 36.5 59.7\n(cf. SNs (mean) 34.0 28.1\nSNs (maj. voting) 33.2 34.9",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 32,
+    "total_chunks": 62,
+    "char_count": 912,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "68cf5e91-b9d1-457a-8b6a-ed7ead3ef81f",
+    "text": "Although our approach is training-free, SNs need to be gathered using probing data. To understand how this ties to final SNs performance, we sample varying probing\nset sizes and plot their scores over the validation set Fig. 5. Overall, the more\ndata, the better. SNs surpass the base model performance when using more than\n100 data samples. This is the same order of magnitude as the data required by\nSAVs [27].",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 33,
+    "total_chunks": 62,
+    "char_count": 412,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "11202a63-5c0c-43ad-b4ce-e9b161415936",
+    "text": "Performance degrades at 5K samples, thus we default to 3K. We optimize SNs for different metrics \\mu in table Tab. 1. We then use the probed SNs to validate performance in Tab. 9. This strongly\ninfluences the results on the validation data. This can be critical for sensitive\napplications where negative predictions can have more impact than positive (or\nvice-versa), such as cancer classification, where false negatives can endanger\npatients and erode human-machine trust. We highlight that scalar activations deemed Super Neurons can serve as strong\nand robust categorical classifiers while improving runtime efficiency of VLMs. SNs compare favorably with the base models they are extracted from and sparse\nattention vectors, while enabling discovery of a large amount of accurate scalars\nin shallower layers of the LLM. This enables extreme early exiting during the\ngeneration of the first token and in the first layer of the LLM, substantially\nreducing inference time. We plan to apply our method for vision language action\nmodels, in which accurate discrete action decisions could be taken faster. Future research should be conducted to determine whether Super\nNeurons are able to provide useful signals on complex open-ended prompts and\nreasoning and if robustness and early exiting still hold in these contexts. We would like to thank Ryan Teehan, Vivian Lee and Kyunghyun Cho for the\nhelpful discussions and advice on improving this manuscript. We thank NYU for\nproviding some of the GPU resources to support this work. Bai, S., Cai, Y., Chen, R., Chen, K., Chen, X., Cheng, Z., Deng, L., Ding, W., Gao,\nC., Ge, C., Ge, W., Guo, Z., Huang, Q., Huang, J., Huang, F., Hui, B., Jiang, S.,\nLi, Z., Li, M., Li, M., Li, K., Lin, Z., Lin, J., Liu, X., Liu, J., Liu, C., Liu, Y.,\nLiu, D., Liu, S., Lu, D., Luo, R., Lv, C., Men, R., Meng, L., Ren, X., Ren, X.,\nSong, S., Sun, Y., Tang, J., Tu, J., Wan, J., Wang, P., Wang, P., Wang, Q., Wang,\nY., Xie, T., Xu, Y., Xu, H., Xu, J., Yang, Z., Yang, M., Yang, J., Yang, A., Yu,\nB., Zhang, F., Zhang, H., Zhang, X., Zheng, B., Zhong, H., Zhou, J., Zhou, F.,\nZhou, J., Zhu, Y., Zhu, K.: Qwen3-VL Technical Report. CoRR abs/2511.21631\n(2025). https://doi.org/10.48550/ARXIV.2511.21631, https://doi.org/10.\n48550/arXiv.2511.21631 1, 9\n2. Bajpai, D.J., Hanawal, M.K.: FREE: Fast and Robust Vision Language Models\nwith Early Exits (2025), https://arxiv.org/abs/2506.06884 3\n3.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 34,
+    "total_chunks": 62,
+    "char_count": 2415,
+    "word_count": 399,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bfb52e26-5a74-4008-8974-225369622d48",
+    "text": "Black, K., Brown, N., Driess, D., Esmail, A., Equi, M., Finn, C., Fusai, N., Groom,\nL., Hausman, K., Ichter, B., et al.: π: A vision-language-action flow model for\ngeneral robot control. CoRR, abs/2410.24164, 2024. doi: 10.48550. arXiv preprint\n4. Brown, T.B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A.,\nKrueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D.M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray, S., Chess, B., Clark,\nJ., Berner, C., McCandlish, S., Radford, A., Sutskever, I., Amodei, D.: Language\nModels are Few-Shot Learners. In: NeurIPS (2020) 1\n5. Cao, Q., Paranjape, B., Hajishirzi, H.: PuMer: Pruning and merging tokens for\nefficient vision language models. In: Proceedings of the 61st Annual Meeting of the\nAssociation for Computational Linguistics (Volume 1: Long Papers). pp. 12890–\n12903. Association for Computational Linguistics, Toronto, Canada (Jul 2023),\nhttps://aclanthology.org/2023.acl-long.721 3\n6. Cheng, A., Yin, H., Fu, Y., Guo, Q., Yang, R., Kautz, J., Wang, X., Liu, S.: SpatialRGPT: Grounded Spatial Reasoning in Vision-Language Models. In: NeurIPS\n(2024) 1\n7. Darcet, T., Oquab, M., Mairal, J., Bojanowski, P.: Vision Transformers Need Registers. CoRR abs/2309.16588 (2023) 4\n8.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 35,
+    "total_chunks": 62,
+    "char_count": 1349,
+    "word_count": 203,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bfba48e0-e02e-40e5-a5c0-8d1a6ce9d6a5",
+    "text": "Dubey, A., Jauhri, A., Pandey, A., Kadian, A., Al-Dahle, A., Letman, A., Mathur,\nA., Schelten, A., Yang, A., Fan, A., et al.: The llama 3 herd of models. arXiv\ne-prints pp. arXiv–2407 (2024) 1\n9. Fu, X., Hu, Y., Li, B., Feng, Y., Wang, H., Lin, X., Roth, D., Smith, N.A., Ma,\nW., Krishna, R.: BLINK: Multimodal Large Language Models Can See but Not\nPerceive. Lecture Notes in Computer Science, vol. 15081, pp. 148–\n166. Gurari, D., Li, Q., Stangl, A.J., Guo, A., Lin, C., Grauman, K., Luo, J., Bigham,\nJ.P.: Vizwiz grand challenge: Answering visual questions from blind people. In:\nProceedings of the IEEE conference on computer vision and pattern recognition.\npp. 3608–3617 (2018) 7, 1\n11. Hojel, A., Bai, Y., Darrell, T., Globerson, A., Bar, A.: Finding Visual Task Vectors. Lecture Notes in Computer Science, vol. 15101, pp. 257–273. Springer, Springer (2024) 3\n12. Hu, E.J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., Chen, W.,\net al.: Lora: Low-rank adaptation of large language models. ICLR 1(2), 3 (2022)\n13.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 36,
+    "total_chunks": 62,
+    "char_count": 1037,
+    "word_count": 176,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "786daf08-f0d1-4499-a06c-8cf22f084747",
+    "text": "Huben, R., Cunningham, H., Smith, L.R., Ewart, A., Sharkey, L.: Sparse Autoencoders Find Highly Interpretable Features in Language Models. OpenReview.net (2024) 4\n14. Jeddi, A., Baghbanzadeh, N., Dolatabadi, E., Taati, B.: Similarity-Aware Token\nPruning: Your VLM but Faster (2025), https://arxiv.org/abs/2503.11549 3\n15. Johnson, J., Hariharan, B., Van Der Maaten, L., Fei-Fei, L., Lawrence Zitnick, C.,\nGirshick, R.: Clevr: A diagnostic dataset for compositional language and elementary visual reasoning. In: Proceedings of the IEEE conference on computer vision\nand pattern recognition. pp. 2901–2910 (2017) 8, 1\n16. Kang, S., Kim, J., Kim, J., Hwang, S.J.: See What You Are Told: Visual Attention Sink in Large Multimodal Models. In: The Thirteenth International Conference on Learning Representations (2025), https://openreview.net/forum?id=\n7uDI7w5RQA 4\n17. Kang, S., Kim, J., Kim, J., Hwang, S.J.: Your Large Vision-Language Model Only\nNeeds A Few Attention Heads For Visual Grounding. In: CVPR. pp. 9339–9350. Computer Vision Foundation / IEEE (2025) 1, 4\n18. Kim, M.J., Pertsch, K., Karamcheti, S., Xiao, T., Balakrishna, A., Nair, S.,\nRafailov, R., Foster, E., Lam, G., Sanketi, P., et al.: Openvla: An open-source\nvision-language-action model. arXiv preprint arXiv:2406.09246 (2024) 4\n19. Le, Q.V., Ranzato, M., Monga, R., Devin, M., Corrado, G., Chen, K., Dean, J.,\nNg, A.Y.: Building high-level features using large scale unsupervised learning. In:\nProceedings of the 29th International Conference on Machine Learning, ICML\n2012, Edinburgh, Scotland, UK, June 26 - July 1, 2012 (2012), http://icml.cc/\n2012/papers/73.pdf 3\n20. Lee, H., Park, J.: Instance-wise Occlusion and Depth Orders in Natural Scenes. In:\nCVPR. pp. 21178–21189.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 37,
+    "total_chunks": 62,
+    "char_count": 1745,
+    "word_count": 252,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "059ebf87-c9b8-47a6-b163-7262a6594b30",
+    "text": "Li, Y., Du, Y., Zhou, K., Wang, J., Zhao, W.X., Wen, J.R.: Evaluating Object\nHallucination in Large Vision-Language Models. In: Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing. pp. 292–305 (2023)\n7, 1, 2\n22. Liang, Y., Wang, Z., Xu, X., Zhou, J., Lu, J.: Efficientllava: Generalizable autopruning for large vision-language models. In: Proceedings of the Computer Vision\nand Pattern Recognition Conference. pp. 9445–9454 (2025) 3\n23. Liu, H., Li, C., Wu, Q., Lee, Y.J.: Visual Instruction Tuning.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 38,
+    "total_chunks": 62,
+    "char_count": 534,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2260f406-30ab-459d-86cd-a97a1735c28b",
+    "text": "In: NeurIPS (2023)\n1, 9, 3\n24. Liu, Y., Wang, Y., Shi, B., Zhang, X., Dai, W., Li, C., Xiong, H., Tian, Q.: Meteor:\nMulti-encoder collaborative token pruning for efficient vision language models. In:\nProceedings of the IEEE/CVF International Conference on Computer Vision. pp.\n21492–21504 (2025) 3 Liu, Z., Zhu, L., Shi, B., Zhang, Z., Lou, Y., Yang, S., Xi, H., Cao, S., Gu, Y., Li,\nD., et al.: Nvila: Efficient frontier visual language models. In: Proceedings of the\nComputer Vision and Pattern Recognition Conference. pp. 4122–4134 (2025) 1, 3,\n26. Lu, P., Mishra, S., Xia, T., Qiu, L., Chang, K., Zhu, S., Tafjord, O., Clark,\nP., Kalyan, A.: Learn to Explain: Multimodal Reasoning via Thought Chains\nfor Science Question Answering. In: Advances in Neural Information Processing Systems 35: Annual Conference on Neural Information Processing Systems 2022, NeurIPS 2022, New Orleans, LA, USA, November 28 - December 9, 2022 (2022), http://papers.nips.cc/paper_files/paper/2022/hash/\n11332b6b6cf4485b84afadb1352d3a9a-Abstract-Conference.html 8, 2\n27. Mitra, C., Huang, B., Chai, T., Lin, Z., Arbelle, A., Feris, R., Karlinsky, L., Darrell,\nT., Ramanan, D., Herzig, R.: Enhancing Few-Shot Vision-Language Classification\nwith Large Multimodal Model Features. In: Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV). pp. 2760–2772 (October 2025)\n1, 2, 3, 4, 5, 9, 12, 14\n28. Musacchio, P., Lee, H., Park, J.: Holistic Order Prediction in Natural Scenes. In:\nThe Thirty-ninth Annual Conference on Neural Information Processing Systems\n(2025), https://openreview.net/forum?id=RVkuARTXet 7, 1, 2\n29. Oikarinen, T., Weng, T.W.: Clip-dissect: Automatic description of neuron representations in deep vision networks. OpenAI: ChatGPT (2023), https://chat.openai.com, large language model developed by OpenAI, based on the GPT-4 architecture 1\n31. Oquab, M., Darcet, T., Moutakanni, T., Vo, H.V., Szafraniec, M., Khalidov, V.,\nFernandez, P., Haziza, D., Massa, F., El-Nouby, A., Assran, M., Ballas, N., Galuba,\nW., Howes, R., Huang, P., Li, S., Misra, I., Rabbat, M., Sharma, V., Synnaeve, G.,\nXu, H., J'egou, H., Mairal, J., Labatut, P., Joulin, A., Bojanowski, P.: DINOv2:\nLearning Robust Visual Features without Supervision. Res.\n2024 (2024) 4\n32.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 39,
+    "total_chunks": 62,
+    "char_count": 2267,
+    "word_count": 331,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f2ce559f-4f6c-486c-8b05-e7f01b796a5c",
+    "text": "Radford, A., Józefowicz, R., Sutskever, I.: Learning to Generate Reviews and\nDiscovering Sentiment. CoRR abs/1704.01444 (2017), http://arxiv.org/abs/\n1704.01444 3\n33. Radford, A., Kim, J.W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry,\nG., Askell, A., Mishkin, P., Clark, J., Krueger, G., Sutskever, I.: Learning Transferable Visual Models From Natural Language Supervision. Proceedings\nof Machine Learning Research, vol. 139, pp. 8748–8763. Schwenk, D., Khandelwal, A., Clark, C., Marino, K., Mottaghi, R.: A-OKVQA: A\nBenchmark for Visual Question Answering Using World Knowledge. In: Computer\nVision - ECCV 2022 - 17th European Conference, Tel Aviv, Israel, October 23-27,\n2022, Proceedings, Part VIII. pp. 146–162 (2022). https://doi.org/10.1007/\n978-3-031-20074-8_9, https://doi.org/10.1007/978-3-031-20074-8_9 8, 1, 2\n35. Skean, O., Arefin, M.R., Zhao, D., Patel, N., Naghiyev, J., LeCun, Y., ShwartzZiv, R.: Layer by Layer: Uncovering Hidden Representations in Language Models. CoRR abs/2502.02013 (2025) 1, 4\n36.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 40,
+    "total_chunks": 62,
+    "char_count": 1029,
+    "word_count": 139,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8d5ca50a-20fd-460b-80d4-8aba5ed5adaf",
+    "text": "Tang, S., Wang, Y., Kong, Z., Zhang, T., Li, Y., Ding, C., Wang, Y., Liang, Y.,\nXu, D.: You need multiple exiting: Dynamic early exiting for accelerating unified\nvision language model. In: Proceedings of the IEEE/CVF conference on computer\nvision and pattern recognition. pp. 10781–10791 (2023) 3\n37. Tang, Z., Lian, L., Eisape, S., Wang, X., Herzig, R., Yala, A., Suhr, A., Darrell, T., Chan, D.M.: TULIP: Towards Unified Language-Image Pretraining. CoRR\nabs/2503.15485 (2025) 3",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 41,
+    "total_chunks": 62,
+    "char_count": 479,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "42034e6a-103b-4471-a920-75a101dacf78",
+    "text": "Templeton, A., Conerly, T., Marcus, J., Lindsey, J., Bricken, T., Chen, B., Pearce,\nA., Citro, C., Ameisen, E., Jones, A., Cunningham, H., Turner, N.L., McDougall,\nC., MacDiarmid, M., Freeman, C.D., Sumers, T.R., Rees, E., Batson, J., Jermyn,\nA., Carter, S., Olah, C., Henighan, T.: Scaling monosemanticity: Extracting interpretable features from claude 3 sonnet. Transformer Circuits Thread (2024),\nhttps://transformer-circuits.pub/2024/scaling-monosemanticity/index.\nhtml 4\n39. Touvron, H., Martin, L., Stone, K., Albert, P., Almahairi, A., Babaei, Y., Bashlykov, N., Batra, S., Bhargava, P., Bhosale, S., Bikel, D., Blecher, L., CantonFerrer, C., Chen, M., Cucurull, G., Esiobu, D., Fernandes, J., Fu, J., Fu, W.,\nFuller, B., Gao, C., Goswami, V., Goyal, N., Hartshorn, A., Hosseini, S., Hou, R.,\nInan, H., Kardas, M., Kerkez, V., Khabsa, M., Kloumann, I., Korenev, A., Koura,\nP.S., Lachaux, M., Lavril, T., Lee, J., Liskovich, D., Lu, Y., Mao, Y., Martinet,\nX., Mihaylov, T., Mishra, P., Molybog, I., Nie, Y., Poulton, A., Reizenstein, J.,\nRungta, R., Saladi, K., Schelten, A., Silva, R., Smith, E.M., Subramanian, R., Tan,\nX.E., Tang, B., Taylor, R., Williams, A., Kuan, J.X., Xu, P., Yan, Z., Zarov, I.,\nZhang, Y., Fan, A., Kambadur, M., Narang, S., Rodriguez, A., Stojnic, R., Edunov,\nS., Scialom, T.: Llama 2: Open Foundation and Fine-Tuned Chat Models. CoRR\nabs/2307.09288 (2023) 1\n40. Wang, T., Zhou, W., Zeng, Y., Zhang, X.: EfficientVLM: Fast and Accurate\nVision-Language Models via Knowledge Distillation and Modal-adaptive Pruning.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 42,
+    "total_chunks": 62,
+    "char_count": 1545,
+    "word_count": 230,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "08fb1cbf-14ec-4422-9717-d0e078739a70",
+    "text": "In: ACL (Findings). pp. 13899–13913. Association for Computational Linguistics\n(2023) 3\n41. Ye, X., Gan, Y., Ge, Y., Zhang, X.P., Tang, Y.: Atp-llava: Adaptive token pruning\nfor large vision language models. In: Proceedings of the Computer Vision and\nPattern Recognition Conference. pp. 24972–24982 (2025) 3\n42. Yu, Z., Lee, Y.J.: How Multimodal LLMs Solve Image Tasks: A Lens on Visual Grounding, Task Reasoning, and Answer Decoding. CoRR abs/2508.20279\n(2025) 1, 4, 12\n43.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 43,
+    "total_chunks": 62,
+    "char_count": 474,
+    "word_count": 73,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1fa77465-0a67-44d3-8b5a-f54f202b81a6",
+    "text": "Zhang, Q., Cheng, A., Lu, M., Zhuo, Z., Wang, M., Cao, J., Guo, S., She, Q., Zhang,\nS.: [CLS] Attention is All You Need for Training-Free Visual Token Pruning: Make\nVLM Inference Faster. arXiv preprint arXiv:2412.01818v1 (2024) 3\n44. Zitkovich, B., Yu, T., Xu, S., Xu, P., Xiao, T., Xia, F., Wu, J., Wohlhart, P.,\nWelker, S., Wahid, A., et al.: Rt-2: Vision-language-action models transfer web\nknowledge to robotic control. In: Conference on Robot Learning. pp. 2165–2183. Taking Shortcuts for Categorical VQA Using\nSuper Neurons\nSupplementary Materials Pierre Musacchio1 , Jaeyi Jeong2 , Dahun Kim3 , and Jaesik Park1 1 Seoul National University\n2 EPFL\n3 Google Deepmind\n{pmusacchio, jaesik.park}@snu.ac.kr A Datasets and prompts We describe the dataset along with the prompts used for probing and validation\nin more detail in this section. Pope is a dataset designed to evaluate the degree of hallucinations of\nVLMs. Built on top of Coco, it consists of 2.9K VQA that relate to the presence\nor absence of objects in images. Broadly speaking, to visual hallucinations [21]. InstaOrder also stems from Coco and consists of\ninstance-wise ordering annotations.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 44,
+    "total_chunks": 62,
+    "char_count": 1158,
+    "word_count": 184,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d331e838-42ab-4a91-83c7-5ed3c02b484e",
+    "text": "Recent work converted this dataset into\na B-VQA format and observed that LLaVA-v1.5-7b struggles to answer such\ngeometry-related prompts. This split of the dataset tests the models' understanding of instance-wise occlusions [20,28]. Second split of InstaOrder, the questions contained in this challenge test the models' abilities to reason about instance-wise\ndepth order. Created by people with visual impairments, VizWiz is a general\nbenchmark aiming at testing models' capacities to reason under constrained\nvisual inputs.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 45,
+    "total_chunks": 62,
+    "char_count": 525,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "40f13736-a6ab-4dae-acfb-6271ea948446",
+    "text": "We filter the dataset on \"yes\"-\"no\" answers and only keep such\nquestions for both the probing and validation sets [10]. To test our method's generalization capabilities on synthetic data,\nwe select Clevr. This dataset evaluates the spatial understanding of the model\nthrough questions that span from counting to positional understanding. We filter\nthis dataset to only retain classification questions for probing and validation [15]. A-OKVQA is an MCQ dataset of with four answer choices consisting of general visual world knowledge. Questions require commonsense reasoning\ngrounded in the scene in order to be accurately answered [34]. Table 1: Prompt templates. We detail the templates used for some of the VQA\ndatasets. {} indicates variables, obj indicates the object category, loc indicates the\nlocation of the object in a bounding box format and. For MCQ data, q indicates the\noriginal question and a_i indicates the i-th MCQ answer. Pope [21] Is there a {obj} in the image? InstaOrder (Occ.) [28] Is the {obj} at position {loc} obstructing\nthe {obj} at position {loc}? Answer the\nquestion using a single word. InstaOrder (Depth.) [28] Is the {obj} in front of the {obj} at\nposition {loc} from the viewer's perspective?",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 46,
+    "total_chunks": 62,
+    "char_count": 1225,
+    "word_count": 195,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1a60b4f9-34ea-4bfd-ad3f-7b1d52ab17e5",
+    "text": "Answer the question using a single word. A-OKVQA [34] {q} Is it {a_i}? Answer with yes or no. ScienceQa [26] {q} Is it {a_i}? Answer with yes or no.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 47,
+    "total_chunks": 62,
+    "char_count": 148,
+    "word_count": 29,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "912a6040-d2d6-439a-9290-e12a7cc70aab",
+    "text": "Table 2: Default configurations of the LLaVA-v1.5-7b and Qwen3-VL-4b-Instruct we\nuse for all the experiments throughout our work. (a) LLaVA-v1.5-7b configuration. (b) Qwen3-VL-4b-Instruct configuration. dtype float16 dtype float16\nmodel_type llava model_type qwen3_vl\nhead_dim 128 head_dim 128\nhidden_act silu hidden_act silu\nhidden_size 4096 hidden_size 2560\nmodel_type llama model_type qwen3_vl_text\nnum_attention_heads 32 num_attention_heads 32\nnum_hidden_layers 32 num_hidden_layers 36\nnum_key_value_heads 32 num_key_value_heads 8\nvocab_size 32064 vocab_size 151936",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 48,
+    "total_chunks": 62,
+    "char_count": 569,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e271afef-73e4-4d66-9449-708a5c6a36c9",
+    "text": "We benchmark our approach on this high school science dataset. The ScienceQa dataset contains 26 topics, 127 categories, and 379 skills [26]. We convert this MCQ data to a series of binary visual question answer and\nperform inference in the same way as on the other datasets. For Clevr and VizWiz, we do not apply any prompt template and\nsimply filter the dataset to retain only \"yes\"-\"no\" VQA in both the training and\nvalidation sets. We prompt the model with the filtered samples. For the other\ndatasets, we report the prompt templates we use in Tab. 1.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 49,
+    "total_chunks": 62,
+    "char_count": 555,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c7cdba70-fba6-4c8b-a360-1c034e294708",
+    "text": "Note that for InstaOrder, the location of the object is only specified if there\nare multiple same object categories in the image. This allows disambiguation of\nthe target object. Otherwise, only the object category is specified.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 50,
+    "total_chunks": 62,
+    "char_count": 228,
+    "word_count": 36,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e272cab2-013b-4667-b924-3e18392b0752",
+    "text": "Table 3: SNs compared to finetuned LLaVA alternatives on InstaOrder. Given an annotation budget N, we compare both training time and task performances. We use the pretrained model of [23] as our baseline and their official finetuning script\nwithout altering any of the hyperparameters. For our approach, we report the results\nfrom the method obtaining the best F1 based on Tab. 2. Best results are in bold. Baseline is highlighted in gray , while our super neurons are in yellow .",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 51,
+    "total_chunks": 62,
+    "char_count": 480,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e0390372-e7a2-46a9-9818-6f793baf685c",
+    "text": "Occlusion performances Depth performances Data\nMethod N Training time Acc. Precision Recall F1 Acc. Precision Recall F1\ngeneralization LLaVA-v1.5-7b 753k 8 h. [23] ✗ 64.9 18.5 40.2 25.3 65.0 66.4 80.2 72.6\nLLaVA-v1.5-7b-sft 3k 2m. ✗ 14.8 14.8 100.0 25.8 57.9 57.9 100.0 73.4\nLLaVA-v1.5-7b-sft 10k 5m. ✗ 82.1 43.5 71.2 54.0 75.1 83.1 71.5 76.9\nLLaVA-v1.5-7b-sft 100k 49m. ✗ 83.7 47.1 81.8 59.8 79.8 83.8 80.8 82.3\nLLaVA-v1.5-7b-LoRA 3k 2m. ✗ 67.5 23.9 54.7 33.3 55.4 58.8 76.4 66.5\nLLaVA-v1.5-7b-LoRA 10k 5m. ✗ 83.0 45.2 69.8 54.8 75.1 84.8 69.5 76.4\nLLaVA-v1.5-7b-LoRA 100k 41m. ✗ 84.4 48.5 81.2 60.7 80.2 84.1 81.3 82.7\nSuper Neurons 3k 0m. ✓ 64.5 23.5 61.8 34.0 65.2 66.4 80.9 72.9 Baseline configurations. We report the configurations of LLaVA-v1.5-7b and\nQwen3-VL-4b-Instruct used in our experiments in Tab. 2a and Tab. 2b. We do\nnot alter these configurations unless specified otherwise in the paper.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 52,
+    "total_chunks": 62,
+    "char_count": 905,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e3b456be-7e2a-4571-bc74-04c596817715",
+    "text": "Finetuned baselines comparison. We compare Super Neurons to fully finetuned and LoRA-tuned [12] LLaVA [23] at different dataset scales in Tab. 3. We use a dataset on which LLaVA is known to struggle to clearly identify the\ndata scale at which finetuning begins to outperform SNs. For a small annotated\nfinetuning budget, SNs obtain better results than finetuned alternatives while\nbeing training-free. On the other hand, as the annotation budget grows, fully\nfinetuning the model becomes a better alternative if the goal is to improve performance for a single task. In fact, finetuning the model on a single task can lead\nto significant degradation on other tasks. In contrast, our training-free approach\nmaintains the model's general capabilities by preserving the pretrained weights. We run an in-depth profiling benchmark using finer-grained measurements on an\nNVIDIA A100 GPU while varying the maximum generated token of the model\n(Tab. 4). We use LLaVA-v1.5-7b from the huggingface library.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 53,
+    "total_chunks": 62,
+    "char_count": 995,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "54daef6a-eb03-45a3-9d60-d079df0bce3a",
+    "text": "SNs, by skipping\nthe autoregressive process of the network, dramatically decreases the wall time to\nobtain an answer. Most of the gain comes from bypassing (i) the autoregressive\nnature of the transformer, and (ii) avoiding the huggingface's post-processing\nroutine. Our approach is still 1.8\\times faster than the base model when capping themodel's maximum number of generated tokens at 1. Table 5: Prompt robustness.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 54,
+    "total_chunks": 62,
+    "char_count": 418,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a51b11c2-7f56-42de-957a-500326100a34",
+    "text": "We use LLaVA-v1.5-7b on InstaOrder (Occ.). We replace the comparative word in the prompt template with alternative words and\nevaluate compare the base model performances to the SNs performances. Comparative word obstructing hiding occluding Random",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 55,
+    "total_chunks": 62,
+    "char_count": 247,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cc08a51b-8f8d-4a1b-8f95-bb3e37e2b728",
+    "text": "Split Metric Base SNs Base SNs Base SNs Base SNs Acc. 53.9 62.7 45.6 62.6 48.8 64.2 49.5 60.0\nProbe\nF1 46.1 69.0 61.6 67.9 64.3 67.6 65.0 67.0 Acc. 64.9 78.2 16.2 68.1 18.3 66.8 17.9 66.9\nPrec. 18.5 30.4 13.9 24.2 14.6 23.8 14.7 22.2\nValidation\nRecall 40.2 36.5 89.8 54.1 92.8 56.5 94.3 49.2\nF1 25.3 33.2 24.1 33.5 25.2 33.5 25.4 30.6 After\ninvestigating the robustness Table 4: Profiling LLaVA-v1.5-7b on an NVIDIA\nto dataset transfer in Sec. 4.4, A100 GPU using the huggingface's inference routine\nwe investigate the sensitivity (in s.). Ours is benchmarked on the first layer of the\nof SNs to prompts. On the In- LLM.\nstaOrder (Occ.) dataset, Model Max new toks. Embedding Prefill Decoding Wall time\nthe prompt template involves LLaVA-v1.5-7b 128 0.032 0.085 0.025 1.01\na relational word between LLaVA-v1.5-7bSNs 11 0.0320.032 0.0850.086 0.0020.024 0.119(-1.9\\times0.223 )\nthe two compared instances\n(cf. We replace that relational word with alternatives and report the\nresults in Tab. 5. We find that SNs are robust to the choice of initial prompt, as\nshown by their similar F1 scores. To push this idea, we also create a dataset that consists of random comparative strings formed by sampling 3-10 characters at random. Interestingly, SNs\nperform better than the vanilla model on this set as well suggesting that SNs\nencode general in-domain knowledge for a given task. This is due to the fact that\nwe are directly extracting SNs from a metric that evaluates the task of interest.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 56,
+    "total_chunks": 62,
+    "char_count": 1484,
+    "word_count": 251,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "149fa21b-421b-4e34-80da-8562bc40a820",
+    "text": "Adversarial prompting. On the other hand, these numbers might hint that\nSNs could be overfitting or exploiting spurious bias from input data to produce\ntheir answers. To verify this, we lead two experiments using LLaVA-v1.5-7b on\nPope. We choose Pope since performance on this dataset is already saturated\nand revolves around questions related to class recognition that can be subject\nto dataset class imbalance, allowing us to better perceive potential overfitting. We create two adversarial datasets: – Pope-Im: we shuffle all the images of the validation set of Pope,\n– Pope-Txt: we shuffle all the prompts of the validation set of Pope. We evaluate SNs on these datasets in Tab. 6. Results show that when the prompt\nis not grounded in the image (and vice versa), SNs fail to answer accurately, and Table 6: Adversarial prompting. We evaluate LLaVA-v1.5-7b on adversarial PopeIm and Pope-Txt validation datasets containing shuffled VQA pairs. SNs results on the\noriginal dataset is highlighted in gray . Dataset\nMetric Method\nPope-Im Pope-Txt Pope SNs (mean) 60.4 60.4 90.9\nAccuracy\nSNs (maj. voting) 60.3 61.6 90.9 SNs (mean) 71.2 71.4 92.6\nPrecision\nSNs (maj. voting) 68.2 69.9 91.0 SNs (mean) 38.9 38.9 89.5\nRecall\nSNs (maj. voting) 43.2 44.9 91.4",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 57,
+    "total_chunks": 62,
+    "char_count": 1253,
+    "word_count": 203,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db86b6a6-6b78-4812-86e3-467c8086fe07",
+    "text": "This indicates that while the prompt must have a degree of\nrelevance to the image, SNs are likely not leveraging spurious biases or overfitting\nto either the prompt or the image to come up with their decisions. This claim is\nemphasized by the fact that SNs can generalize to novel distributions as shown\nin Tab. 7 of the main paper. 0 0\n0 500 1000 1500 2000 2500 3000 3500 4000 0 500 1000 1500 2000 2500 3000 3500 4000\nActivation Activation\n(a) Location of SNs on Pope. (b) Location of SNs on Vizwiz. Fig. 1: Visualization of SNs on different datasets. We use LLaVA-v1.5-7b.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 59,
+    "total_chunks": 62,
+    "char_count": 574,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "63994970-881f-4142-9f45-3e8ff1d29bde",
+    "text": "We\nonly visualize SNs that obtain better performances than the model itself. Few SNs\nemerge on the datasets that are already very well answered by the model, while we\nobserve a significant amount of SNs on harder datasets. We visualize the location of SNs for different datasets in Fig. 1. We use LLaVA-v1.5-7b and only report SNs that perform better than the network itself. In Fig. 1a, we observe that a few SNs perform better than the model. We hypothesize that this is because the model already answers Pope correctly.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 60,
+    "total_chunks": 62,
+    "char_count": 522,
+    "word_count": 90,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c4f04290-2dce-401a-a371-966e861c3769",
+    "text": "Yet, results in Tab. 2 show that these SNs are still useful for improving the\nmodel's performance while dramatically reducing runtime Tab. 5. On the other hand, we observe that datasets for which LLaVA-v1.5-7b struggles naturally result in the emergence of many more SNs (Fig. 1b). Interestingly,\na lot of them appear to be located in the shallower layers of the model. To observe if some neurons share multiple types of expertise,\nwe plot a heatmap of overlapping SNs on different datasets in Fig. 2. We only\nconsider the neurons that exceed the model's performance on all of the indicated\ndatasets. We observe that some neurons indeed capture useful information across\nmultiple tasks, suggesting they are part of an underlying decision process within\nthe network. Moreover, this allows us to hypothesize potential links between\ndifferent types of questions. Such a heatmap offers a new lens for understanding\ntask relations and task proximity. In the future, we plan to explore the correlation\nbetween task proximity and SNs overlap. Of particular interest, we note that InstaOrder (Occ.) and Clevr share\nthe largest number of SNs.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 61,
+    "total_chunks": 62,
+    "char_count": 1133,
+    "word_count": 183,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bf00b72e-d339-4097-bd61-e2261cec8e6a",
+    "text": "This can be explained by the similarity between the\nquestions in the two datasets that both target object-wise geometric understanding (Fig. 2b), but also because the base LLaVA-v1.5-7b does not perform well on\nthese benchmarks. We find cases of SNs that surpass the model's performance\non three datasets at the same time (Fig. 2e) and a surprising case where a single\nneuron obtains better performances than LLaVA-v1.5-7b on all four benchmarks\nin Fig. 2f. This indicates that sparse activations in the form of Super Neurons\nconstitute a lightweight and powerful representation that can generalize across\ndiverse types of data.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 62,
+    "total_chunks": 62,
+    "char_count": 628,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8a352636-6190-4d2a-8311-c115465aa642",
+    "text": "0 0\n0 500 1000 1500 2000 2500 3000 3500 4000 0 500 1000 1500 2000 2500 3000 3500 4000\nActivation Activation\n(a) Overlapping SNs between Vizwiz and Clevr. (b) Overlapping SNs between InstaOrder\n(Occ.) and Clevr. 0 0\n0 500 1000 1500 2000 2500 3000 3500 4000 0 500 1000 1500 2000 2500 3000 3500 4000\nActivation Activation\n(c) Overlapping SNs between InstaOrder (d) Overlapping SNs between InstaOrder\n(Depth.) and Clevr. (Occ.), Vizwiz and Clevr. 0 0\n0 500 1000 1500 2000 2500 3000 3500 4000 0 500 1000 1500 2000 2500 3000 3500 4000\nActivation Activation\n(e) Overlapping SNs between InstaOrder (f) Overlapping SNs between InstaOrder\n(Occ.), InstaOrder (Depth.) and Clevr. (Occ.), InstaOrder (Depth.), Vizwiz and\nClevr. Fig. 2: SNs overlap between different datasets. We visualize the probed neurons\nthat surpass the model's performance on all the indicated datasets. We use LLaVAv1.5-7b. x-axis indicate neuron index while y-axis indicates layer index. Depending on\nthe dataset pair, many SNs can overlap. We also find a quadruplet of datasets sharing\nSNs.",
+    "paper_id": "2603.10781",
+    "title": "Taking Shortcuts for Categorical VQA Using Super Neurons",
+    "authors": [
+      "Pierre Musacchio",
+      "Jaeyi Jeong",
+      "Dahun Kim",
+      "Jaesik Park"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10781v1",
+    "chunk_index": 63,
+    "total_chunks": 62,
+    "char_count": 1052,
+    "word_count": 171,
+    "chunking_strategy": "semantic"
+  }
+]

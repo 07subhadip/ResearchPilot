@@ -1,0 +1,686 @@
+[
+  {
+    "chunk_id": "b8817e7b-f477-4b20-88c9-2ea450ba429e",
+    "text": "Received 26 March, 2025; revised 26 August, 2025; accepted XX Month, XXXX; Date of publication XX Month, XXXX; date of\ncurrent version March 12, 2026. Digital Object Identifier 10.1109/TMLCN.XXXX.XXXXXXX",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 0,
+    "total_chunks": 36,
+    "char_count": 203,
+    "word_count": 29,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7a9a40c1-5caa-4581-8f54-3feb965db128",
+    "text": "Towards Intelligent Spectrum\nManagement: Spectrum Demand\nEstimation Using\nGraph Neural Networks Mohamad Alkadamani1,2, Amir Ghasemi1, and Halim Yanikomeroglu2\n1Communications Research Centre Canada, Ottawa, ON, Canada\n2Carleton University, Ottawa, ON, Canada Corresponding author: Mohamad Alkadamani (email: mohamad.alkadamani@ised-isde.gc.ca).2026 ABSTRACT The growing demand for wireless connectivity, combined with limited spectrum resources,\ncalls for more efficient spectrum management. Spectrum sharing is a promising approach; however,Mar regulators need accurate methods to characterize demand dynamics and guide allocation decisions. This\n11 paper builds and validates a spectrum demand proxy from public deployment records and uses a graph attention network in a hierarchical, multi-resolution setup (HR-GAT) to estimate spectrum demand at fine\nspatial scales. The model captures both neighborhood effects and cross-scale patterns, reducing spatial\nautocorrelation and improving generalization. Evaluated across five Canadian cities and against eight\ncompetitive baselines, HR-GAT reduces median RMSE by roughly 21% relative to the best alternative\nand lowers residual spatial bias.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 1,
+    "total_chunks": 36,
+    "char_count": 1192,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0ea2f856-431d-46a8-85eb-e22becc57312",
+    "text": "The resulting demand maps are regulator-accessible and support spectrum\nsharing and spectrum allocation in wireless networks.[cs.NI] INDEX TERMS Wireless communications, spectrum management, spectrum sharing, spatial modeling,\ngraph neural networks, demand estimation. Introduction well-suited because they encode neighborhood structure and\nHE growing demand for mobile broadband, the rise of can mitigate spatial autocorrelation that limits generalization\nsmart cities, and the move toward 6G have intensified in conventional ML [8]. Explicit spatial modeling makes T\ncompetition for radio spectrum [1]. Mobile data traffic is GNNs a practical basis for demand estimation in regulatory\nprojected to nearly triple by 2030 [2], reinforcing the need contexts.\nfor efficient spectrum management. Dynamic spectrum ac- This work develops a three-stage pipeline. First, a tilecess and sharing are key strategies [3], [4], however, these level deployment-based indicator is constructed from pub-arXiv:2603.10802v1 approaches require fine-grained, spatially localized estimates lic records (deployed bandwidth) and statistically validated\nto guide allocation and sharing decisions. against busy-hour downlink throughput from a mobile netConventional spectrum estimation relies on theoretical work operator (MNO). The validated deployment-based inmodels or broad indicators (e.g., population density), can dicator is then produced across all study geographies and\nmiss variations arising from contextual, behavioral, and used as a regulator-accessible supervisory proxy for specsocio-economic dynamics [5].",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 2,
+    "total_chunks": 36,
+    "char_count": 1597,
+    "word_count": 206,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4bffbed1-5381-49a3-bb40-133239addab0",
+    "text": "Moreover, proprietary traffic trum demand. Second, heterogeneous open datasets are comeasurements are rarely available to regulators, limiting registered to a multi-resolution tiled grid and used to build a\ndirect analysis of real-world usage and hindering compa- hierarchical graph that exposes both local neighborhoods and\nrability across regions. These gaps motivate data-driven cross-scale structure. Third, a hierarchical, multi-resolution\napproaches that leverage open datasets to identify congestion graph attention model (HR-GAT) is trained on this graph;\nand underutilization, thereby supporting adaptive spectrum spatially disjoint evaluation protocols curb geospatial inforallocation [6]. mation leakage and assess transferability across cities. The\nRecent advances in AI/ML enable learning at scale from contributions are threefold:\ngeospatial data [7]. Graph neural networks (GNNs) are",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 3,
+    "total_chunks": 36,
+    "char_count": 898,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "94ea4718-6226-4c70-85d2-5256376fe5af",
+    "text": "This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/ • Validated public proxy for spectrum demand: modeling on irregular geographies, limiting their ability to\nA regulator-accessible, tile-level proxy derived from capture spatial dependencies.\npublic deployed bandwidth and statistically validated\nagainst MNO busy-hour throughput. Graph Neural Networks (GNNs) for Spatial Modeling\n• Hierarchical, multi-resolution graph attention: A GNNs represent geography as graphs and capture adjacencycross-scale graph design with node-adaptive fusion that based dependencies, which is well-suited to spatial recaptures intra- and inter-scale dependencies, improving gression. A spatial regression GCN bridged deep learning\ngeneralization under strong geospatial correlation. and spatial analytics in [19], and spatial GNNs have been\n• Demand drivers for policy: A policy-facing attribu- used for demand forecasting in marketplace settings [20].\ntion analysis identifies the most influential geospatial, For cellular networks, recent work models spatial and\ndemographic, mobility, and economic factors associated temporal fluctuations for traffic prediction [21]; a survey\nwith spectrum demand. highlights deep models' ability to capture spatio-temporal\nstructure [22]. While single-resolution graphs can suffice\nThe remainder of the paper is organized as follows:\nwhen targets vary smoothly at that scale, regulatory demand\nSection II reviews related work; Section III formulates the\nmapping at fine tiles exhibits strong cross-scale coupling\nproblem; Section IV details the methodology; Section V\n(e.g., supply planned at coarser units spilling into smaller\npresents the proxy development and validation; Section VI\ntiles). In such cases, adjacent signals at one resolution can\ndescribes the modeling framework (HR-GAT); Section VII\nbe misleading without multi-resolution context. In contrast,\nreports results and policy-facing analysis; and Section VIII\nthe present study applies graph attention in a hierarchical,\nconcludes the paper.\nmulti-resolution, regulator-aligned setting supervised by a\nvalidated public proxy. Traditional Approaches III. Problem Formulation\nSpectrum demand estimation has traditionally relied on theo- This study targets long-term spectrum demand estimation\nretical models and broad demographic indicators. The Inter- at fine spatial granularity to inform licensing and regulatory\nnational Telecommunication Union (ITU) methodology [9] planning. The focus is on persistent patterns that drive multiuses market data, service usage, and projected traffic dis- year decisions rather than short-term traffic fluctuations.\ntributions; the Federal Communications Commission (FCC) Persistent capacity pressure in cellular systems manifests\napplies empirical models [10] incorporating traffic growth, during the busy hour and is routinely used for capacity\ninfrastructure expansion, and spectral efficiency. The GSMA provisioning. Aggregating busy-hour throughput at suitable\nmid-band report [11] estimates demand for 36 cities via horizons reduces stochastic fluctuations and reveals persisdata-rate assumptions, peak concurrency, and offloading. tent load levels. At the operator level, the principal lever\nOther works employ statistical trends and capacity-based to meet such demand is the amount of actively deployed\nmethods tied to site utilization [12], as well as queuing and spectrum in a locality; therefore, deployed bandwidth should\ntraffic models that often assume uniform demand, missing increase monotonically with sustained busy-hour load.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 4,
+    "total_chunks": 36,
+    "char_count": 3655,
+    "word_count": 480,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a42c287-f37e-46db-aa5b-4e123d8adf98",
+    "text": "This\nreal spatial variability [13]. A recent time-series approach relationship is validated by regressing tile-level busy-hour\nprojects spectrum efficiency based on average per-site met- traffic on a public, tile-level deployment measure. Once valrics for several countries [14]. These methods provide useful idated, that measure serves as a regulator-accessible demand\nbaselines but generally lack fine spatial granularity and often proxy across all study geographies. The proxy reflects active\ndepend on proprietary inputs, limiting their use for high- deployment rather than nominal holdings and aligns with\nresolution, regulator-accessible estimation. regulatory spatial resolution. Formally, let the study area be partitioned into grid tiles g.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 5,
+    "total_chunks": 36,
+    "char_count": 749,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "59e2dd6a-07fe-4f15-a2bf-27e2f7a3fd70",
+    "text": "ML Approaches For each tile, the goal is to estimate a demand proxy yg from\nMachine learning methods leverage geospatial and infras- non-technical geospatial covariates xg (e.g., population, land\ntructure datasets to estimate demand when direct traffic is use, mobility, economic indicators) with spatial context:\nunavailable. A tower-count proxy with geospatial factors was yg = f xg, N(g), sg + ϵ,\nintroduced in [15], but with limited scope and no validation. A follow-up emphasized interpretability [16] but did not test where N(g) denotes the spatial neighborhood of g, sg inscalability across diverse urban settings. A proxy derived dexes the spatial scale (resolution) at which g is represented,\nfrom licensed holdings was validated against real traffic in and ϵ is residual error. Estimation is performed on a multitwo Canadian cities [17], improving confidence yet leaving resolution grid with three nested spatial scales to expose\ncross-region generalization open. Deep learning has also cross-scale structure.\nbeen explored. DeepSpectrum [18] applies CNNs and multitask learning to open data, reducing the need for feature IV. Methodology\nengineering; however, CNNs lack explicit neighborhood The methodology comprises three stages, as shown in Fig. 1. Overview of the proposed methodology. 1) Proxy Development and Validation: Public deployment d ∈D.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 6,
+    "total_chunks": 36,
+    "char_count": 1361,
+    "word_count": 201,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "acc38260-21f7-4723-9429-ee5e1169d612",
+    "text": "The average busy-hour throughput per cell is\nrecords are distilled into a tile-level signal that re- 1\nflects actively deployed spectrum bandwidth. Busy- ¯Ti = X max ti,h,d. |D| h∈H\nhour MNO traffic is aligned to the same grid and d∈D\nused to validate that signal as a regulator-accessible Coverage is estimated using the e-Hata model [23]. Let cig ∈\nproxy for sustained demand.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 7,
+    "total_chunks": 36,
+    "char_count": 378,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ad85f161-e082-44c9-83cb-02b6edb19fd8",
+    "text": "Validation is performed [0, 1] denote the fraction of tile g ∈G covered by cell i (area\nvia standard correlation and regression analysis; once overlap). The load of cell i is distributed proportionally over\nvalidated, the proxy is produced across all study ge- its covered tiles:\nographies and used as the supervisory target yg for  cig , Pg′ cig′ > 0,\nsubsequent modeling. πig =  Pg′∈G cig′\n2) Spectrum Demand Modeling: Open geospatial datasets 0, otherwise.\nare harmonized to the grid and aligned with the\nThe tile-level traffic target is then validated proxy. Features from multiple sources are\nspatially aligned and aggregated to capture both local Tg = X ¯Ti πig, g ∈G.\ncontext and broader regional patterns. These inputs are i∈I\norganized into a hierarchical, multi-resolution graph\nTiles with LTE coverage below 50% (Pi cig < 0.5) are that links tiles across scales, enabling representation\nexcluded to ensure reliability. Figure 2 illustrates: (a) LTE\nof neighborhood effects and cross-scale dependencies.\nsites (yellow) and modeled sector coverage (dark green) over\nA hierarchical graph attention network (HR-GAT) is\nthe zoom-15 tile; (b) the resulting tile heatmap of cumulative\ntrained on this structure to learn relationships between\ndaily busy-hour throughput (darker red = higher demand).\ngeospatial features and the proxy signal, providing\nlocalized spectrum demand estimates. Constructing the Deployment-Based Proxy 3) Model Evaluation and Interpretation: The trained HRLet S be the set of public deployment records (sites/sectors). GAT model is evaluated using spatially disjoint valiFor site s ∈ S, let BWs denote allocated bandwidth dation schemes to assess its generalization across difand, where available, Ps the average EIRP. Because sector ferent geographies. Model outputs are further analyzed\nazimuths and beamwidths were not provided in the public to identify the main drivers of spectrum demand and\ndataset at the time of the study, coverage is approximated to extract insights relevant to regulatory planning and\nwith an omnidirectional pattern to obtain ˜csg ∈[0, 1], the adaptive licensing.\nfraction of tile g covered by site s. A per-site weighting factor ϕs incorporates transmit-power\ninformation when present:V. Proxy Development and Validation\nThis section constructs a regulator-accessible target yg at the (Ps/ |S|1 Ps′ Ps′ , if Ps is available,\ntile level by validating a public deployment signal against ϕs =\n1, otherwise.\noperator busy-hour traffic. The procedure consists of (i)\nmapping mobile network operator (MNO) traffic to tiles, (ii) Allocate each site's bandwidth proportionally over its covconstructing a deployment-based proxy on the same grid, ered tiles:\nand (iii) validating the proxy via regression.  ˜csg ϕs\n, Pg′ ˜csg′ > 0,  Pg′∈G ˜csg′ ωsg =\n0, otherwise. Mapping Operator Traffic to Tiles\nThe tile-level deployment proxy (used later as yg) isLet I be the set of LTE cells, G the set of tiles (zoom 15), D\nthe set of days, and H the set of hours. For each cell i ∈I, BWg = X BWs ωsg, g ∈G.\nlet ti,h,d denote downlink throughput at hour h ∈H on day s∈S characterization provides essential insights into regional disparities in spectrum allocation and network provisioning.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 8,
+    "total_chunks": 36,
+    "char_count": 3235,
+    "word_count": 510,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "73c85bdf-a5b7-4683-a380-73367efb7413",
+    "text": "Each zoom level represents a different spatial granularity\nat which demand drivers (features) and spectrum demand\nproxy (target variable) are mapped. Given that different data\nsources exhibit varying spatial distributions, multi-resolution\nrepresentation allows the model to optimize feature aggregation while mitigating information loss. Feature Geospatial Processing\nFIGURE 2. Geospatial processing for proxy validation: (a) LTE cell The framework ingests heterogeneous geospatial datasets\nlocations and estimated coverage areas; (b) aggregated busy-hour that act as potential demand drivers. All inputs are projected\nthroughput per grid tile.\nonto a uniform Bing-tile grid at zoom levels 13, 14, and 15\nto align spatial support and limit aggregation loss. Validation via Regression Input types: Inputs fall into three categories: (1) pointThe proxy is validated against the operator traffic target based (e.g., households, POIs) aggregated by summing\nusing ordinary least squares (OLS) on the set of reliable points within each tile; (2) polygon-based with metrics (e.g.,\ntiles Gval ⊆G: census areas with counts) distributed to overlapping tiles\nusing area-weighted interpolation; and (3) polygon-based\nTg = β0 + β1 BWg + εg, g ∈Gval.\nwithout metrics (e.g., roads, building footprints) from which\nModel fit is assessed by the coefficient of determination tile-level features are derived. R2; overall significance is evaluated via the F-statistic and Data quality: For point-based inputs, invalid coordinates\np-value.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 9,
+    "total_chunks": 36,
+    "char_count": 1519,
+    "word_count": 215,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e37d972b-dbcc-4b86-897e-fa0851dba27d",
+    "text": "The resulting statistics (reported in Section VII) are removed, duplicates within a tile are deduplicated, empty\nconfirm that the deployment-based signal tracks busy-hour tiles are set to zero, and isolated gaps are smoothed with a\ndemand and can serve as a regulator-accessible supervisory local neighborhood mean. For polygon-based with metrics,\ntarget across cities. For subsequent modeling, the validated attributes are checked for plausibility; missing values at a\ndeployment-based proxy BWg is denoted yg and used as the lower administrative unit are imputed from the enclosing\nsupervisory target at tile g. higher-level unit (e.g., lower/upper census units such as\ndissemination areas (DA) and aggregate dissemination areas\nVI. Spectrum Demand Modeling (ADA) in Canada), then any remaining gaps are smoothed\nFollowing the proxy development, the AI-based modeling using adjacent-tile means after interpolation. For polygonframework is applied across five major urban areas in based without metrics, geometries are validated and reCanada: Vancouver, Calgary, Greater Toronto Area (GTA), paired, lightly simplified or snapped to the grid if needed,\nOttawa, and Montreal. These cities were selected to ensure tile metrics are computed, empty intersections are set to\ngeneralizability, as they exhibit distinct demographic, eco- zero, and geometry-induced outliers are clipped. Figure 4\nnomic, and mobility characteristics [24].",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 10,
+    "total_chunks": 36,
+    "char_count": 1430,
+    "word_count": 202,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b3e72309-18c3-4caf-af01-74c7565284f1",
+    "text": "The objective is to overviews the end-to-end processing and harmonization of\ndevelop an interpretable AI model that estimates spectrum inputs onto the multi-resolution grid. A summary of all\ndemand across different spatial resolutions. processed features appears in Table 1. As detailed in Section III, the modeling framework adopts\na hierarchical, multi-resolution grid structure using Bing\nB. Graph Construction for Multi-Resolution\nMaps tiles. This design enables model training and inference\nRepresentation\nat varying spatial granularities. In total, 50,679 grid tiles are\nThe geospatial layout of the study area is structured as a\nused across the five cities, capturing both dense urban cores\nhierarchical graph G = (V, E), where each grid tile serves\nand surrounding suburban regions.\nas a node and spatial relationships define the edges. The\nTo illustrate the spatial distribution of the deployed bandmulti-resolution representation is based on Bing tiles at the\nwidth, Fig. 3 presents heatmaps for the five study areas at\nthree zoom levels, where:\nthe highest spatial resolution (zoom level 15). The maps\ndepict spatial variation in estimated bandwidth deployment, • Nodes (V ): Represent grid tiles at different zoom levels,\nhighlighting regions of high and low spectrum supply. The each associated with a feature vector.\nvariation across cities underscores differences in network • Edges (E): Capture spatial adjacency and hierarchical\ninfrastructure deployment, urban density, and economic ac- relationships between grid tiles.\ntivity. Notably, the GTA, Vancouver, and Montreal exhibit\nextensive high-demand regions, whereas Calgary and Ottawa Each node vi is associated with a feature vector xi ∈\ndisplay more localized concentrations of high-deployment Rd containing geospatial attributes. The hierarchical graph\nareas, particularly around their urban cores. This spatial connectivity consists of two types of edges:",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 11,
+    "total_chunks": 36,
+    "char_count": 1929,
+    "word_count": 280,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fc05995d-14e8-4b60-9f95-a31dcf0fc9c2",
+    "text": "Deployed bandwidth heatmaps at zoom level 15 for Calgary, Montreal, GTA, Vancouver, and Ottawa. Summary of features processed for demand modeling Feature Category Description (per grid tile) Population & Residents by age, income, and worker\nDemographics type Daytime Population Workers/visitors present during working\nhours (non-residents included) Households Number of dwelling units Mobility (trip distance) Counts/shares traveling in distance bands\n(e.g., 0–3, 3–7, 7–10, 10–15 km) Economic Activity Business counts by sector (e.g., NAICS) and estimated employees Built Environment Building count, total built-up area, and\n(Buildings) building density Points of Interest (POIs) Counts of POIs by category (e.g., retail,\neducation, health, recreation) Road Network Total road length and segment count Transit Accessibility Number of bus stops and rail/transit\nFIGURE 4. Feature processing pipeline for geospatial demand modeling.\nstations Nighttime Lights (NTL) Mean nighttime light intensity derived\nfrom NASA satellite imagery, used as a\n• Intra-Zoom Edges (i, j) ∈Eintra: connect nodes within\nproxy for economic and commercial\nthe same zoom level based on spatial adjacency.\nactivity\n• Inter-Zoom Edges (i, j) ∈Einter: connect corresponding\nnodes across different zoom levels to encode hierarchical dependencies. where wij is the edge weight, computed using a Gaussian\nkernel:\nTo formulate the connectivity, adjacency matrices were\nwij = exp −∥si −sj∥2 , (2)defined as follows: σ2\nwhere si and sj are the spatial coordinates of tiles i and j,\nAintra = {wij | (i, j) ∈Eintra}, (1) and σ controls the edge strength.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 12,
+    "total_chunks": 36,
+    "char_count": 1618,
+    "word_count": 237,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fde80cbd-25e1-40d4-8887-d2c3381ccd23",
+    "text": "node-specific gates that determine the relative importance of\nAinter = {wij | (i, j) ∈Einter}, (3) each resolution for each tile:\nexp{q⊤tanh(Wzh(z)i )} , (7)where wij = 1 is used for parent-child links. The graph α(z)i =\nconstruction is hierarchical, ensuring that lower-resolution Pz′∈{13,14,15} exp{q⊤tanh(Wz′h(z′)i )}\nnodes (e.g., zoom 13) aggregate information from finerhfinali = X α(z)i h(z)i , (8)resolution nodes (e.g., zoom 15). The final hierarchical\ngraph structure is illustrated in Fig. 5 (a), where gray solid z∈{13,14,15}\nedges indicate intra-zoom connections and red dashed edges Here:\nrepresent inter-zoom dependencies.\n• h(z)i is the embedding of node i at zoom level z,\n• Wz and q are learnable projection and query parameC. HR-GAT Model Architecture ters,\nHR-GAT applies graph attention to regulatory geographies • α(z)i ≥0 with Pz α(z)i = 1, forming a softmax over\nin a hierarchical, multi-resolution setup, modeling both lo- scales, and\ncal (intra-scale) and cross-scale dependencies for spectrum • tanh(·) provides non-linear gating between resolutions.\ndemand estimation. The architecture is composed of the\nfollowing components: This formulation makes the fusion node-adaptive: the\ninformative scale varies by location. If the weights α(z)i were\n• Input layer: Embeds raw geospatial feature inputs for constant across nodes, the formulation would reduce to a\neach grid tile into a higher-dimensional latent space. fixed, global weighted sum. The Gaussian edge weights wij\n• Graph attention layers: Apply attention-based mes- used in graph construction define fixed intra-scale adjacency\nsage passing within each resolution (zoom level) to and are independent of the node-adaptive fusion mechanism,\ncapture neighborhood dependencies. which operates across scales. The overall HR-GAT architec-\n• Cross-scale fusion (node-adaptive): Learns how to ture is illustrated in Fig. 5(b), showing hierarchical attention\ncombine information from multiple resolutions through layers and the final demand estimation output.\nnode-specific attention weights.\n• Output layer: Predicts the final spectrum demand\nD. Training and Evaluation\nestimate for each grid tile. To ensure robust model generalization, two validation strateThe input to HR-GAT is the node feature matrix gies are employed: (1) clustering-based cross-validation (CBCV) to mitigate spatial autocorrelation, and (2) leave-oneX = [x1, x2, . . . , xN] ∈RN×d, (4) city-out cross-validation (LOCO-CV) to assess generalizawhere xi is the feature vector of node vi, and d is the feature tion across different urban environments. These partitioning\ndimension. strategies are followed by model training, where the HREach graph attention layer (GATConv) follows the stan- GAT model is optimized using a spatially-aware loss funcdard attention-based message passing formulation: tion and evaluated using multiple performance metrics.  \n(5) 1) CB-CV h(l+1)i = σ X α(l)ij W (l)h(l)j ,\nj∈N(i) A two-stage clustering scheme is used to curb spatial\nwhere: information leakage and mitigate overfitting. Guided by\nMoran's I [25], the analysis in Fig. 6 shows strong spatial\n• h(l)i is the embedding of node i at layer l, autocorrelation among nearby tiles that decays with distance.\n• W (l) is a learnable weight matrix, This motivates forming compact spatial groups via k-nearest\n• α(l)ij is the attention coefficient determining the influ- neighbors as the basis for cross-validation. The subsequent\nence of neighbor j, stage organizes these groups into folds to maintain spatial\n• N(i) is the neighborhood of node i, and separation while preserving contextual balance.\n• σ(·) is a non-linear LeakyReLU activation. The two-stage clustering process proceeds as follows:\nThe attention coefficients are computed as: • Stage 1 - spatial proximity clustering (zoom 14):\nexp LeakyReLU a⊤[Whi ||",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 13,
+    "total_chunks": 36,
+    "char_count": 3852,
+    "word_count": 570,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6381fc87-1cd1-4a6d-915b-57ef4255f6d6",
+    "text": "Whj] Tiles are grouped on the zoom-14 grid using k-nearest\nαij = (6) neighbors with k = 6 by geodesic centroid distance, Pk∈N(i) exp (LeakyReLU(a⊤[Whi || Whk])), producing compact, contiguous clusters. Edge tiles may\nwhere a is a learnable attention vector, W is the shared form smaller clusters when fewer than six neighbors\ntransformation matrix, and || denotes concatenation. exist. These clusters are treated as indivisible spatial\nAfter intra-scale message passing, embeddings from all units in Stage 2 to prevent adjacent tiles from being\nzoom levels (z ∈{13, 14, 15}) are combined using learnable, split across train and validation. (a) Illustration of the HR-GAT hierarchical graph construction. (Left) Geospatial organization of grid tiles across\nmultiple zoom levels. (Right) The corresponding network representation. (b) HR-GAT Architecture for Multi-Zoom Spectrum Demand Estimation. Visualization of HR-GAT. (a) Hierarchical graph construction across multiple zoom levels. (b) Model architecture for spectrum demand\nestimation. validation folds that (i) maximize spatial separation between train and validation sets to limit leakage, and (ii)\nbalance land-cover representation. Each cluster receives\na dominant land-cover label using ESA WorldCover\n(10 m, 2020 v100) [26], and labeled clusters are packed\ninto five folds to approximate stratified coverage while\npreserving inter-fold distance. Adjacent tiles are never\nsplit across train and validation within a fold, yielding\nspatially disjoint yet contextually diverse splits that\nbetter reflect geospatial generalization. Moran's I analysis of spatial autocorrelation across different Using this two-stage clustering method, each city's dataset\ncities. is divided into five folds where adjacent tiles are never\nsimultaneously included in both training and validation sets,\n• Stage 2 - context-aware cluster folding: Spatial and all major land cover classes are well represented in each\nclusters from Stage 1 are grouped into five cross- fold. This promotes better generalization and more realistic model evaluation, particularly in geospatial contexts where Metrics are aggregated as the median across evaluation\nspatial patterns dominate feature distributions. tiles and folds.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 14,
+    "total_chunks": 36,
+    "char_count": 2243,
+    "word_count": 317,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1ccde229-5c46-46e4-8f8b-5a4542a0f6b6",
+    "text": "Performance Evaluation\n2) LOCO-CV This section evaluates HR-GAT under two regimes: (i) CBTo assess generalization to unseen cities, a separate LOCO- CV within cities and (ii) a single-city LOCO-CV. In this setting: training routine used in both regimes is summarized in\nAlgorithm 1.\n• The model is trained on four cities and tested on the\nfifth city, which is entirely unseen. Algorithm 1 Training procedure for HR-GAT with node-\n• Ottawa is selected as the test city to evaluate perforadaptive fusion\nmance on a new urban environment. Require: Multi-resolution graph G = (V, Aintra, Ainter),\nThis approach complements CB-CV by measuring how node features X, target y, learning rate η, loss weight\nwell the model generalizes to different spatial distributions λ, and epochs E.\nand urban morphologies. 1: Initialize model parameters {W (l), a(l), Wz, q}.\n2: for each epoch e = 1 to E do\nE. Loss Function 3: (1) Intra-scale attention: Update embeddings h(z)i\nThe HR-GAT model is trained using a combination of Mean for each zoom level z using GAT message passing\nSquared Error (MSE) for demand estimation and a spatial over Aintra.\nregularization term to smooth predictions across connected 4: (2) Cross-scale fusion: Compute node-specific fusion\nnodes in the hierarchical graph: weights α(z)i and obtain hfinali = Pz α(z)i h(z)i .\n5: (3) Prediction: Estimate ˆyi = fout(hfinali ). N\n1 X (yi −ˆyi)2 , (9) 6: (4) Loss: Compute L as defined in Sec. LMSE =\nN 7: (5) Parameter update: Apply gradient descent with\ni=1\nrate η to minimize L. To prevent excessive local fluctuations in predictions, a\n8: end for\nspatial regularization term is introduced:\n9: return trained HR-GAT model. Lspatial = X (ˆyi −ˆyj)2 , (10)\n|E|\n(i,j)∈E\nA.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 15,
+    "total_chunks": 36,
+    "char_count": 1723,
+    "word_count": 287,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "74e80814-77ce-45d3-9b9b-7f9c2397f601",
+    "text": "Proxy Validation Results\nThe final objective function is a weighted sum of both\nThis subsection presents the OLS regression results evaluatterms:\ning the relationship between deployed bandwidth and MNO\ntraffic demand in the study region. L = LMSE + λLspatial. (11) Table 2 summarizes the results. The coefficient of dewhere: termination R2 = 0.727 indicates that deployed bandwidth\nexplains 72.7% of the variance in traffic demand. The overall\n• yi is the ground-truth target for tile (node) i,\nregression is significant (F = 4477, p < 0.001), supporting\n• ˆyi is the model estimate for tile i,\nthe reliability of the proxy and its use as the supervisory\n• N is the number of tiles (nodes),\ntarget in HR-GAT.\n• E is the set of graph edges (intra- and inter-zoom), with\n|E| its size, TABLE 2. ols regression results for proxy validation\n• (i, j) ∈E are adjacent tiles connected in the hierarchical graph, and Proxy Variable R² F-Statistic p-Value\n• λ > 0 is the weight on the spatial smoothness term. Deployed Bandwidth (BWg) 0.727 4477 < 0.001 Model Evaluation Metrics\nThe model is evaluated using the following metrics:\nB. Comparison with Alternative ML Models Using CB-CV\n1) Mean Absolute Error (MAE): Measures absolute The proposed HR-GAT model is evaluated against multiple\nprediction accuracy by averaging the absolute differ- ML baselines, including LightGBM [27], gradient boosting\nences between predicted and actual values. [28], XGBoost [29], decision tree [30], random forest [31],\n2) Root Mean Squared Error (RMSE): Measures the a linear model, a vanilla CNN [32], and a plain GAT [33].\nstandard deviation of the residuals (prediction errors), The comparison uses three metrics: MAE, RMSE, and R2,\npenalizing larger errors more heavily than MAE. as summarized in Table 3.\n3) R-Squared (R2) Score: Evaluates how well the model Two neural-network baselines are included: a vanilla\nexplains the variance in spectrum demand. CNN, which processes each tile independently (no spatial edges), and a plain GAT, which introduces same-resolution\nadjacency but no cross-resolution transfer. HR-GAT achieves the best overall performance, with an\nRMSE of 29.30, an MAE of 10.93, and R2 = 0.91. This indicates that explicitly modeling spatial adjacency and\nhierarchical structure substantially improves accuracy when\ndemand exhibits strong spatial dependencies.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 16,
+    "total_chunks": 36,
+    "char_count": 2358,
+    "word_count": 371,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0fc15786-659d-4465-aa55-47a32a82aba4",
+    "text": "Among the alternatives, the plain GAT ranks second\nby RMSE (RMSE 37.30; R2 = 0.83). Although graphbased learning helps, the absence of multi-resolution coupling limits its effectiveness relative to HR-GAT. XGBoost\nand gradient boosting perform competitively (RMSE ≈44;\nR2 = 0.86) but lack explicit spatial awareness, which can\nhinder generalization under geographic correlation. LightGBM performs slightly worse (RMSE 55.70). The vanilla\nCNN underperforms tree-based models (RMSE 69.30; R2 =\n0.63), suggesting that added depth without spatial edges does\nnot help. Tree-based baselines (decision tree, random forest)\nperform poorly (RMSE > 77), and the linear model is worst\n(RMSE 89.31; R2 = 0.43). A detailed breakdown is shown FIGURE 7. Scatter plot of actual vs. predicted spectrum demand values\nin Table 3. for HR-GAT. TABLE 3. performance comparison of hr-gat vs. alternative ml models Model Median MAE ↓ Median RMSE ↓ R² ↑ Gradient Boosting 23.44 44.27 0.86 XGBoost 23.53 44.72 0.86\nLightGBM 30.78 55.70 0.80\nDecision Tree 41.60 79.92 0.53\nRandom Forest 45.89 77.48 0.55\nLinear Model 55.50 89.31 0.43\nVanilla CNN 44.23 69.30 0.63 Plain GAT 24.88 37.30 0.83\nHR-GAT (Proposed) 10.93 29.30 0.91 Figure 7 presents a scatter plot comparing actual and\npredicted values using the HR-GAT model. Each point\nrepresents a grid tile, with the x-axis indicating actual values FIGURE 8.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 17,
+    "total_chunks": 36,
+    "char_count": 1378,
+    "word_count": 214,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dc28e405-2a24-4a7f-837c-74e92ae3a80f",
+    "text": "Empirical cumulative distribution function (eCDF) of RMSE\nand the y-axis representing model estimates. The red dashed values across all models.\nline denotes the ideal 1:1 correspondence, where estimates\nperfectly match actual values.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 18,
+    "total_chunks": 36,
+    "char_count": 233,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "00cefecc-b661-4641-9fc7-422cd05e65b3",
+    "text": "Results indicate that HR-GAT exhibits strong performance but does not match HR-GAT,\nachieves strong predictive performance, with most points reinforcing the impact of hierarchical multi-resolution learnclosely aligning along the diagonal. However, some devi- ing. gradient boosting and XGBoost show comparable error\nation is observed at higher demand levels, indicating slight distributions and perform tree-based models such as decision\nunderestimation in high-traffic regions. This suggests that tree and random forest.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 19,
+    "total_chunks": 36,
+    "char_count": 521,
+    "word_count": 69,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5dce4fb1-591f-4d83-b7e7-f72809e0cc48",
+    "text": "The linear model performs the worst,\nwhile HR-GAT effectively captures spatial demand patterns, with a broad RMSE distribution, highlighting its limited\nfurther refinements could improve its handling of extreme ability to capture complex spatial patterns.\nvalues. The improved error distribution observed in the eCDF of\nFigure 8 presents the empirical cumulative distribution RMSE highlights HR-GAT's ability to achieve lower estifunction (eCDF) of RMSE values for all evaluated models. mation errors compared to other models. However, beyond\nThe eCDF provides insight into the distribution of estimation overall accuracy, it is crucial to assess whether residual errors\nerrors, illustrating the proportion of test samples that achieve exhibit spatial autocorrelation, as high spatial dependency in\na given RMSE or lower. The HR-GAT model (black dashed residuals can indicate biases in estimation across different\nline) demonstrates a significantly steeper curve, indicating regions.\nthat a higher proportion of its estimates fall within lower To further assess the spatial behavior of model errors,\nRMSE values compared to other models. Plain GAT also Moran's I is computed on the residuals of HR-GAT, plain GAT, and vanilla CNN [34]. While Moran's I was previously achieves the lowest median MAE of 18.74, significantly\nused to characterize spatial dependence in the data (Sec.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 20,
+    "total_chunks": 36,
+    "char_count": 1379,
+    "word_count": 203,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a6b6394-f04e-4d2f-a628-8f61c039dfbe",
+    "text": "VI outperforming all other baselines. The Plain GAT model,\n(D)), here it measures residual spatial autocorrelation, in- which lacks hierarchical resolution transfer, also performs\ndicating whether prediction errors are spatially clustered relatively well with a median MAE of 23.30, reinforcing the\nor random. Lower Moran's I values correspond to more importance of spatial awareness in predictive modeling.\nspatially independent residuals. Among the tree-based models, Gradient Boosting and\nThe results indicate that HR-GAT achieves the lowest XGBoost exhibit the best performance, achieving MAE\nspatial autocorrelation in residuals (Moran's I = 0.0202), values of 37.34 and 39.49, respectively. LightGBM peroutperforming both plain GAT (0.0253) and vanilla CNN forms slightly worse (MAE = 47.20), but still outperforms\n(0.0370).",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 21,
+    "total_chunks": 36,
+    "char_count": 830,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4a456ba6-b374-4568-9255-c8e1f900fd9e",
+    "text": "These findings suggest that introducing hierarchical simpler tree-based approaches. Decision Tree and Random\nedges and multi-resolution knowledge transfer effectively Forest show substantial degradation in performance (MAE >\nreduces spatial bias in the predictions. Although the absolute 50), demonstrating their limited ability to generalize across\ndifferences in Moran's I appear small, they represent 20.2% regions with distinct spatial characteristics.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 22,
+    "total_chunks": 36,
+    "char_count": 456,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d7a9dfe0-1bd7-43af-ac45-55ff16a99485",
+    "text": "Similarly, the\nand 45.4% reductions relative to the plain GAT and vanilla Linear Model records the worst MAE of 60.93, reinforcing\nCNN, respectively. A paired t-test across cross-validation the limitations of models that fail to capture the complex spafolds indicates that the reduction in spatial autocorrelation tial and nonlinear interactions inherent in spectrum demand\nis statistically significant when compared to both baseline estimation. Overall, these findings confirm that HR-GAT's\nmodels (p < 0.05). explicit integration of hierarchical spatial relationships sigThis improvement in generalizability is further supported nificantly enhances predictive generalization.\nby the residual error distribution across different cities, as\nshown in Fig. 9. Log-scaled residuals indicate that HR- TABLE 4. median mae comparison for ottawa as the test set\nGAT maintains a consistent error distribution across all five\nModel Median MAE (Ottawa) ↓\ncities, suggesting that the model does not exhibit locationGradient Boosting 37.34\nspecific biases. While minor variations exist due to local\nXGBoost 39.49\nurban characteristics, the comparable interquartile ranges and\nLightGBM 47.20\nmedian errors across cities reinforce the model's ability to\nDecision Tree 52.47\ngeneralize effectively beyond the training data. Random Forest 50.66\nLinear Model 60.93\nVanilla CNN 48.22\nPlain GAT 23.30\nHR-GAT (Proposed) 18.74 Key Factors Influencing Spectrum Demand\nInterpreting estimates from complex ML models, such as\nHR-GAT, requires techniques that explain the contributions\nof individual features. Since HR-GAT is a black-box model,\nthe SHapley Additive exPlanations (SHAP) method is used\nto quantify the impact of each feature on the model's\nFIGURE 9. Log-scaled residual error distribution across cities. estimations [35]. SHAP assigns an importance value to each\nfeature per estimation, enabling an understanding of how\ngeospatial, demographic, and economic factors contribute to\nC.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 23,
+    "total_chunks": 36,
+    "char_count": 1971,
+    "word_count": 277,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "adb85945-59fe-412c-9b34-e738e075a059",
+    "text": "Performance on an Unseen City Using LOCO-CV spectrum demand. Figure 10 presents the ten most influential\nTo further evaluate generalization, a LOCO-CV is conducted features out of 30 input features used in the model.\nin which Ottawa is excluded from training and used only for Urban infrastructure and density play a crucial role in\ntesting. This experiment assesses the ability to generalize to shaping spectrum demand. Features such as building cova completely unseen city, simulating a real-world scenario erage, road segment count, and total number of buildings\nwhere spectrum regulators may need to transfer knowledge indicate the extent of urban development, with higher values\nfrom one set of urban regions to another. Unlike standard generally correlating with increased mobile traffic due to\ncross-validation, this setup provides a more stringent test of dense commercial and residential activities. Similarly, daymodel robustness, ensuring that estimation is not biased by time population and small-business density highlight areas of\nspatial dependencies within the training set. concentrated human presence, reinforcing the that business\nTable 4 presents the median MAE results for all models districts and commercial centers sustain high network loads\nwhen evaluated on Ottawa as an unseen city. HR-GAT during peak hours.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 24,
+    "total_chunks": 36,
+    "char_count": 1334,
+    "word_count": 197,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d31f2c1b-993e-4e35-8c91-943681711791",
+    "text": "Mobility patterns also exhibit a strong influence on spec- cess, informing protection contours, coordination zones,\ntrum demand. The number of people traveling 7–10 km and and secondary-use eligibility.\n10–15 km capture inter-zonal commuting behavior, where • Timing and phasing of releases—Cross-city contrasts\nhigh movement levels correspond to dynamic variations in support phasing of future awards and renewals, alignnetwork traffic, particularly in transit corridors and suburban- ing auction or assignment timing with demonstrated\nurban interfaces. regional need. Demographic factors provide additional insights into de- Scope considerations and planned extensions\nmand variations. The presence of senior citizens (65+) and\nchildren (<14) contributes to household-driven network us- • The model does not yet capture diurnal or seasonal\nage patterns, albeit with a lower overall influence compared variation or multi-year trends; adding temporal condito commercial and commuting-related factors. tioning will inform when, as wel as where, sharing or\nFinally, commercial activity, approximated through night- new awards are necessary.\ntime lights (NTL) [36], emerges as a significant determinant, • Sparse-node geographies may weaken graph signals;\ncapturing economic hotspots where high levels of business a rural-aware graph is planned to improve estimates\nand commercial interactions drive sustained mobile service in low-density areas and support differentiated rural\nconsumption. licensing. These findings demonstrate that spectrum demand is in- • The target is a validated public-data proxy rather than\nfluenced by a combination of urban infrastructure, popula- direct traffic; ongoing proxy refinement and crosstion distribution, mobility patterns, and economic activity, source validation will tighten confidence bounds for\nemphasizing the need for data-driven spectrum allocation licensing and sharing decisions.\nstrategies. Concluding Remarks\nThis work develops a regulator-accessible framework for\nfine-grained spectrum demand estimation by validating a\npublic-data proxy against operator traffic and scaling it\nacross cities, and by applying a hierarchical, multi-resolution\ngraph attention formulation (HR-GAT) tailored to tiled regulatory geographies. The framework integrates open geospatial, demographic, and economic indicators to learn stable\nspatial patterns that underlie capacity needs. Empirically, the approach outperforms tree-based models,\nCNNs, and single-resolution GNNs across five Canadian\ncities (median RMSE 29.30; R2 = 0.91) and yields the\nlowest residual spatial autocorrelation (Moran's I), indicating\nstronger generalization and reduced spatial bias. An ablation\nwith a single-resolution GAT indicates that multi-resolution\nFIGURE 10. SHAP summary plot illustrating the relative importance of the coupling and node-adaptive fusion materially improve accutop 10 features in predicting mobile spectrum demand. Higher absolute racy and robustness.SHAP values indicate stronger influence on the model estimates. For policy, the resulting high-resolution demand maps\nprovide reproducible, non-proprietary evidence to (a) target\nE. Implications for Spectrum Policy licensing and band refarming where need is most acute,\nand (b) identify credible candidates for localized or sharedHR-GAT produces regulator-accessible, high-resolution deaccess with defensible protection contours. By combiningmand maps that support long-term policy choices. Although\na validated public proxy with a hierarchical application ofthe present study analyzes a single snapshot and focuses on\ngraph attention, the framework offers a practical, scalable,urban settings, it provides actionable geospatial evidence for\nand transparent basis for spectrum planning and sharinglicensing and sharing decisions.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 25,
+    "total_chunks": 36,
+    "char_count": 3812,
+    "word_count": 500,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "91854a2e-5343-4c85-9661-3e34b229f050",
+    "text": "Temporal dynamics and rudecisions.ral sparsity will be addressed next to strengthen longitudinal\nand nationwide applicability. Acknowledgment\nPolicy-facing implications (current model)\nThe authors thank Sarah Dumoulin and Colin Brown, Com-\n• Targeted licensing and band planning—Fine-grained munications Research Centre Canada (CRC), for providing\ndemand maps help identify where additional autho- valuable feedback and comments.\nrizations or refarming are most warranted and where\nexisting assignments appear sufficient. Conflict of Interest\n• Evidence for spectrum sharing—Spatial gradients high- The authors declare that they have no conflict of interest to\nlight candidate areas for localized or licensed-shared ac- disclose. Fischer, \"Spatial regression graph\n[1] M. Matinmikko-Blue and S.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 26,
+    "total_chunks": 36,
+    "char_count": 794,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a3b98515-1702-42e6-ad56-051b3a7769eb",
+    "text": "Yrjölä, \"Spectrum management in the convolutional neural networks: A deep learning paradigm for spatial\n6G era: The role of regulation and spectrum sharing,\" in Proc. IEEE multivariate distributions,\" GeoInformatica, vol. 26, 2021. Conference on Spectrum Management, 2020. [20] J. Zhou, \"Product demand\n[2] Ericsson, \"Ericsson mobility report, November 2024,\" prediction with spatial graph neural networks,\" Applied Sciences,\nEricsson, Kista, Sweden, White Paper, Nov. 2024, accessed: vol. 14, no. 16, p. 6989, 2024. March 7, 2025. [Online].",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 27,
+    "total_chunks": 36,
+    "char_count": 541,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "498369dd-da20-464b-bddb-5afb0eaf0e74",
+    "text": "Available: https://www.ericsson.com/ [21] J. Qin, \"Graph construction\n4adb7e/assets/local/reports-papers/mobility-report/documents/2024/ with flexible nodes for traffic demand prediction,\" 2024. [Online].\nericsson-mobility-report-november-2024.pdf Available: https://arxiv.org/abs/2403.00276\n[22] X. Al.Qasrawi, \"Proposed technologies for solving future 5G het-\n\"A survey on deep learning for cellular traffic prediction,\" Intelligent erogeneous networks challenges,\" International Journal of Computer\nComputing, vol. 3, 2024. Applications, vol. 142, pp. 1–8, May 2016.\n[23] M. Hata, \"Empirical formula for propagation loss in land mobile radio [4] G. Cerutti, \"On the application of machine\nservices,\" IEEE Transactions on Vehicular Technology, vol. 29, no. 3, learning/deep learning in spectrum sharing,\" European\npp. 317–325, 1980. Conference of Postal and Telecommunications Administrations\n[24] Statistics Canada, \"Table 17-10-0148-01: Population estimates, july (CEPT), Tech.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 28,
+    "total_chunks": 36,
+    "char_count": 981,
+    "word_count": 113,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "47f04654-0c10-4a62-ac1f-530d79234200",
+    "text": "Rep., 2020. [Online]. Available: https:\n1, by census metropolitan area and census agglomeration, 2021 //www.cept.org/files/2379/S2%20-%20Baldini%20and%20Cerutti%\nboundaries,\" 2023, accessed: March 7, 2025. [Online]. Available: 20-%20AI%20and%20ML%20for%20spectrum%20sharing.pdf\nhttps://doi.org/10.25318/1710014801-eng\n[5] Telecommunication Engineering Centre, \"AI in spectrum manage-\n[25] Y. Li, \"Application of\nment,\" Telecommunication Engineering Centre, Study Paper, 2020.\nimproved moran's I in the evaluation of urban spatial development,\"\n[6] M. Arslan, \"Machine learning-based\nSpatial Statistics, vol. 54, p. 100736, 2023.\nspectrum occupancy prediction: A comprehensive survey,\" Frontiers\n[26] D. Souverijns,\nin Communications and Networks, vol. 1, 2025. Nepal, \"Systematic literature review of AI- S. Ramoino, and\nenabled spectrum management in 6G and future networks,\" arXiv, vol.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 29,
+    "total_chunks": 36,
+    "char_count": 888,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "45d8e26a-0e7f-4add-946e-27205a2aa170",
+    "text": "Arino, \"Esa worldcover 10 m 2020 v100,\" 2021, worldCover 2020\nabs/2407.10981, Jun. 2024. v100. [Online]. Available: https://doi.org/10.5281/zenodo.5571936\n[8] J. Ye, and T.-Y.\n\"Spatiotemporal modeling and prediction in cellular networks: A big Liu, \"LightGBM: A highly efficient gradient boosting decision tree,\"\ndata enabled deep learning approach,\" in Proc. IEEE INFOCOM, May in Advances in Neural Information Processing Systems (NeurIPS),\n2017, pp. 1–9. vol. 30, 2017.\n[9] International Telecommunication Union, \"IMT traffic estimates for [28] J. Friedman, \"Greedy function approximation: A gradient boosting\nthe years 2020 to 2030,\" International Telecommunication Union, machine,\" The Annals of Statistics, vol. 29, no. 5, pp. 1189–1232,\nTech. Rep., 2020, accessed: March 7, 2025. [Online]. Available: https: 2001.\n//www.itu.int/dms_pub/itu-r/opb/rep/r-rep-m.2370-2015-pdf-e.pdf [29] T. Guestrin, \"XGBoost: A scalable tree boosting system,\"\n[10] Federal Communications Commission, \"Mobile broadband: The CoRR, vol. abs/1603.02754, 2016.\nbenefits of additional spectrum,\" Federal Communications [30] J. Quinlan, \"Induction of decision trees,\" Machine Learning, vol. 1,\nCommission, Tech. Rep., 2020, accessed: March 7, 2025. no. 1, pp. 81–106, Mar. 1986.\n[Online]. Available: https://transition.fcc.gov/national-broadband-plan/ [31] L. Breiman, \"Random forests,\" Machine Learning, vol. 45, no. 1, pp.\nmobile-broadband-paper.pdf 5–32, Oct. 2001.\n[11] GSMA and Coleago Consulting, \"Estimating mid-band spectrum [32] K. Nash, \"An introduction to convolutional neural\nneeds in the 2025–2030 time frame,\" GSMA and Coleago Consulting, networks,\" CoRR, vol. abs/1511.08458, 2015. Rep., 2025, accessed: March 7, 2025. [Online].",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 30,
+    "total_chunks": 36,
+    "char_count": 1722,
+    "word_count": 220,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "adc188e1-466d-4e11-a27e-60500155305b",
+    "text": "Liò,\nhttps://www.gsma.com/connectivity-for-good/spectrum/wp-content/ and Y. Bengio, \"Graph attention networks,\" arXiv preprint\nuploads/2021/07/Estimating-Mid-Band-Spectrum-Needs.pdf arXiv:1710.10903, 2017.\n[12] G. Elian, \"Design of spectrum estimation model [34] W. Reder, \"Power calculations for global\nfor mobile broadband in Indonesia,\" in IEEE European Modelling and local moran's I,\" Computational Statistics & Data Analysis,\nSymposium (EMS), 2015, pp. 43–48. vol. 53, pp. 2859–2872, 2009.\n[13] T. Walke, \"Spectrum estimation methodology for next [35] S. Lee, \"A unified approach to interpreting\ngeneration wireless systems,\" in Proc. Personal, model predictions,\" CoRR, vol. abs/1705.07874, 2017. Indoor and Mobile Radio Commun. (PIMRC), vol. 3, Barcelona, Spain, [36] X. Zhao, \"A harmonized global nighttime\n2004, pp. 1957–1962. light dataset 1992–2018,\" Scientific Data, vol. 7, no. 1, p. 168, 2020.\n[14] I. Ergen, \"Time series forecasting model of future spectrum\ndemands for mobile broadband networks in Malaysia, Turkey, and\nMohamad Alkadamanireceived the M.A.Sc. de- Oman,\" Alexandria Engineering Journal, vol. 61, no. 10, pp. 8051–\ngree in Electrical and Computer Engineering from 8067, 2022. Carleton University in 2019. He is currently pursu-\n[15] J.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 31,
+    "total_chunks": 36,
+    "char_count": 1265,
+    "word_count": 169,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "38ba4f60-b261-42b1-b4f3-030ed6e3d4d6",
+    "text": "Yanikomeroglu, \"Moding a Ph.D. in Electrical and Computer Engineereling local demand for mobile spectrum using large crowdsourced\ning at Carleton University. He is also a Research\ndatasets,\" in 2023 IEEE Future Networks World Forum (FNWF), 2023,\nEngineer with the Data Science Group at the Compp. 1–5.\nmunications Research Centre Canada, where his\n[16] J. Yanikomeroglu, \"Data-driven modelling\nwork focuses on advancing data-driven methodof mobile network demand for efficient spectrum management,\" in\nologies for intelligent spectrum management and\n2023 IEEE 34th Annual International Symposium on Personal, Indoor\noptimization. His research interests include maand Mobile Radio Communications (PIMRC), 2023, pp. 1–6.\nchine learning for wireless networks, geospatial\n[17] M. Yanikomeroglu, \"Towards flex- data analysis, and spectrum sharing strategies to enhance the efficiency and\nible spectrum access: Data-driven insights into spectrum demand,\" in adaptability of modern wireless communication systems.\n2024 IEEE 100th Vehicular Technology Conference (VTC2024-Fall),\n2024, pp. 1–7.\n[18] J. Yanikomeroglu, \"Deepspectrum: A\nlocalized demand estimation model for mobile spectrum using deep\nlearning,\" in 2024 IEEE 100th Vehicular Technology Conference\n(VTC2024-Fall), 2024, pp. 1–6.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 32,
+    "total_chunks": 36,
+    "char_count": 1283,
+    "word_count": 172,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c64c8988-02db-47bf-a13e-2ea9a36e21c3",
+    "text": "Amir Ghasemireceived the M.A.Sc. and Ph.D.\ndegrees in electrical and computer engineering\nfrom the University of Toronto. He is a Senior Research Scientist at the Communications Research\nCentre Canada. He has contributed to several international wireless communications standards and\nauthored more than 30 research papers on dynamic\nspectrum access, cognitive radio, and wireless\ncoexistence. He has held adjunct professorships\nwith Queen's University as well as Ontario Tech\nUniversity. His current research is focused on datadriven intelligent wireless networking. In 2014, he received the Governor\nGeneral's \"Public Service Award of Excellence for Innovation.\"",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 33,
+    "total_chunks": 36,
+    "char_count": 663,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4be03975-c2fe-428d-a5e0-baa61b550128",
+    "text": "Halim Yanikomeroglu(Fellow, IEEE) received\nthe B.A.Sc. degree in electrical and electronics\nengineering from Middle East Technical University, Ankara, Türkiye, in 1990, and the M.A.Sc.\ndegree in electrical engineering and the Ph.D.\ndegree in electrical and computer engineering from\nthe University of Toronto, Toronto, ON, Canada,\nin 1992 and 1998, respectively. Since 1998, he\nhas been with the Department of Systems and\nComputer Engineering, Carleton University, Ottawa, ON, Canada, where he is now a Chancellor's\nProfessor. He has delivered more than 110 invited seminars, keynotes, panel\ntalks, and tutorials in the last five years. He has supervised or hosted over\n160 postgraduate researchers in his laboratory at Carleton University. Yanikomeroglu's extensive collaborative research with industry resulted in\n40 granted patents. His research interests cover many aspects of wireless\ncommunications and networks, with a special emphasis on non-terrestrial\nnetworks (NTN) in the recent years.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 34,
+    "total_chunks": 36,
+    "char_count": 997,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "da41dade-b724-4971-b8e1-c6a498571b79",
+    "text": "Yanikomeroglu is a Fellow of Engineering Institute of Canada (EIC), the Canadian Academy of Engineering\n(CAE), and the Asia–Pacific Artificial Intelligence Association (AAIA). He\nis a member of the IEEE ComSoc Governance Council, IEEE ComSoc\nGLOBECOM/ICC Management and Strategy (GIMS), IEEE ComSoc Conference Council, and IEEE International Symposium on Personal, Indoor,\nand Mobile Radio Communications (PIMRC), and IEEE Future Networks\nWorld Forum (FNWF) Steering Committees. He is a Distinguished Speaker\nof the IEEE Communications Society and the IEEE Vehicular Technology\nSociety, and an Expert Panelist of the Council of Canadian Academies\n(CCA|CAC). He is currently serving as the Chair of the Steering Committee\nfor the IEEE's Flagship Wireless Event, Wireless Communications and\nNetworking Conference (WCNC). He served as the General Chair and the\nTechnical Program Chair for several IEEE conferences. He has also served\non the editorial boards for various IEEE periodicals. He received several\nawards for his research, teaching, and service, including the IEEE ComSoc\nSatellite and Space Communications TC Recognition Award in 2023,\nIEEE ComSoc Fred W. Ellersick Prize in 2021, IEEE VTS Stuart Meyer\nMemorial Award in 2020, and IEEE ComSoc Wireless Communications\nTC Recognition Award in 2018. He received best paper awards at the IEEE\nCompetition on Non-Terrestrial Networks for B5G and 6G in 2022 (Grand\nPrize), IEEE ICC 2021, and IEEE WISEE 2021 and 2022.",
+    "paper_id": "2603.10802",
+    "title": "Towards Intelligent Spectrum Management: Spectrum Demand Estimation Using Graph Neural Networks",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Amir Ghasemi",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10802v1",
+    "chunk_index": 35,
+    "total_chunks": 36,
+    "char_count": 1469,
+    "word_count": 220,
+    "chunking_strategy": "semantic"
+  }
+]

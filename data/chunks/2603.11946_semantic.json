@@ -1,0 +1,1388 @@
+[
+  {
+    "chunk_id": "c72d9876-0067-48b8-844b-e8038cbc27b9",
+    "text": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Sahil Sidheekh 1 Sriraam Natarajan 1",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 0,
+    "total_chunks": 77,
+    "char_count": 100,
+    "word_count": 12,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2d1f77df-52ff-4cf9-a1ba-ca36ff35af1f",
+    "text": "In many real-world distributions, the underlying\nProbabilistic circuits (PCs) enable exact and structure varies across regions of the input space, exhibiting\ntractable inference but employ data independent piecewise behavior or locality that cannot be adequately\nmixture weights that limit their ability to cap- modeled using globally shared mixture weights.\nture local geometry of the data manifold. We A natural question that arises is: Can we introduce geometrypropose Voronoi tessellations (VT) as a natural aware, input dependent routing into PCs while maintaining2026 way to incorporate geometric structure directly tractable inference? Voronoi tessellations (VT) (Aurenhaminto the sum nodes of a PC.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 1,
+    "total_chunks": 77,
+    "char_count": 706,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "deec212b-3209-4d5c-97b8-2921044d566d",
+    "text": "However, na¨ıvely in- mer, 1991) offer an appealing geometric mechanism for\ntroducing such structure breaks tractability. We such routing and have been studied in the context of otherMar formalize this incompatibility and develop two generative models such as normalizing flows (Chen et al.,\ncomplementary solutions: (1) an approximate in- 2022). By partitioning the input space into convex polyhe-\n12 ference framework that provides guaranteed lower dral regions based on proximity to a learned set of centroids,\nand upper bounds for inference, and (2) a struc- Voronoi cells provide a principled way to assign the inputs to\ntural condition for VT under which exact tractable local experts. Incorporating VT within PCs could thus help\ninference is recovered. Finally, we introduce a dif- achieve geometric interpretability and adaptive routing,\nferentiable relaxation for VT that enables gradient- making it a promising approach for modeling distributions\nbased learning and empirically validate the result- with spatially varying structure.[cs.LG] ing approach on standard density estimation tasks. However, naively incorporating Voronoi-based gating into\nprobabilistic circuits creates a fundamental conflict with\n1. Introduction tractable inference: Voronoi cells are defined by oblique\nhalf-space intersections that couple multiple input dimenProbabilistic circuits (PCs) have emerged as a powerful sions. Computing integrals over such convex polyhedron\nclass of generative models that can learn and reason about is #P-hard (Dyer & Frieze, 1988) and do not decompose\ncomplex data distributions under uncertainty. By enforcing along the variable partitions encoded by the circuit's prodstructural properties, PCs enable exact and linear time infer- uct nodes. Even when expert distributions are fully factorence of likelihoods, marginals and conditionals (Darwiche, ized, marginalization over Voronoi-gated regions cannot be\n2003; Poon & Domingos, 2011; Choi et al., 2020), making performed recursively. In deep circuits, these geometric\nthem valuable for applications requiring reliable probabilis- constraints compound across layers, making exact inference\ntic reasoning, such as density estimation, out-of-distribution intractable even for simple queries.\ndetection (Braun et al., 2025), causal/counterfactual reasoning (Zeˇcevi´c et al., 2021), multimodal fusion (Sidheekh In this work, we formalize this incompatibility between\net al., 2025; 2024) and structured prediction, among others. Voronoi-based routing and tractable inference in PCs, andarXiv:2603.11946v1 develop two complementary strategies to address it. First,\nDespite recent advances in building expressive PCs, most we present a certified approximate inference framework that\nexisting architectures share an important limitation: the preserves the reliability guarantees of PCs by computing\nmixture weights associated with sum nodes are typically provable lower and upper bounds on partition functions,\ndata-independent. This means that the routing decisions marginals, and conditionals.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 2,
+    "total_chunks": 77,
+    "char_count": 3061,
+    "word_count": 417,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5a6b7c1b-c2c1-45f3-a237-6f4c4b1ec4fc",
+    "text": "We achieve this by replacwithin the circuit are fixed globally and do not adapt to indi- ing Voronoi cells with tractable axis-aligned box approxividual inputs. While this design choice is often important mations and propagating bounds through the circuit. Secfor preserving tractability, it restricts the ability of PCs to ond, we identify a structural condition under which exact\ncapture and adapt to the local geometric structure in the data tractable inference can be recovered. By factorizing the\n1The University of Texas at Dallas. Correspondence to: Sahil Voronoi tessellation in a manner that aligns with the circuit\nSidheekh <sahil.sidheekh@utdallas.edu>. decomposition, we obtain a class of geometry-aware circuits\nthat support exact inference. This construction, which we",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 3,
+    "total_chunks": 77,
+    "char_count": 782,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f77f7251-430f-4cda-a93c-9d3a97a72cd4",
+    "text": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations refer to as Hierarchical Factorized Voronoi (HFV) prob- scope(n) = S c∈ch(n) scope(c).\nabilistic circuits, enforces a shared factorization between\nthe gating mechanism and the expert distributions, thereby Exact tractable inference in a PC hinges on enforcing strucrestoring recursive integrability. Learning Voronoi tessel- tural constraints that make marginalization compatible with\nlated PCs introduces an additional challenge: hard region the circuit factorization. Two key structural properties are:\nassignments are typically non-differentiable. To enable end- Definition 2.3 (Smoothness). A PC is smooth if for evto-end gradient-based learning, we introduce a soft gating ery sum node n, all children share the same scope so that\nmechanism based on temperature-scaled distance weight- scope(c) = scope(c′) for all c, c′ ∈ch(n).\ning and employ annealing during training.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 4,
+    "total_chunks": 77,
+    "char_count": 939,
+    "word_count": 128,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "46525979-05c7-444d-aa16-0a3fba2de797",
+    "text": "At test time we\nDefinition 2.4 (Decomposability). A PC is decomposable ifrevert to hard Voronoi assignments, recovering the exact\nfor every product node n with children c1, . . . , ck the scopesinference guarantees. We prove that this soft-to-hard transiare disjoint so that scope(ci) ∩scope(cj) = ∅for all i ̸= j.tion is well-behaved, with exponentially fast convergence\nas temperature decreases. Smoothness ensures that mixtures are well defined over\nOverall, we make the following contributions: (1) We consistent variable sets, while decomposability ensures that\npresent the first geometric approach based on Voronoi tessel- product nodes combine distributions over independent varilations for training PCs; (2) We formalize the incompatibil- able sets, which allows integrals to factor. Together, decomity between Voronoi-based routing and tractable inference posability and smoothness enable efficient exact marginal\nin PCs and outline two different solutions: one based on and conditional inference (Poon & Domingos, 2011; Darcertified approximate inference and the other based on hi- wiche, 2003). A third property is:\nerarchical factorizations; (3) For both cases and general\nDefinition 2.5 (Determinism). A PC is deterministic if for\ngeometric modeling, we theoretically analyze the properties\nevery sum node (s) and input (x) at most one of its child\nof the algorithms and identify the potential gaps; (4) Finally,\nhas positive output i.e. { c ∈ch(s) : fc(x) > 0 } ≤1.\nwe perform proof-of-concept experiments to validate the\neffectiveness and efficiency of the algorithms. Determinism enables efficient MAP inference and yields\nNext, we present the necessary background and position our sparse and interpretable routing behavior, and is achieved,\nwork in the context of the related work. We then outline for example in cutset networks (Rahman et al., 2014), via\nthe geometric formulation and present the two different axis aligned splits of the input space.\nstrategies for learning. Finally, we present our experiments One of the key research themes within the field of PCs\nbefore concluding by outlining areas of future research. is improving their expressivity to match the performance\nof deep generative models, while preserving tractability\n2. Background & Related Work (Sidheekh & Natarajan, 2024).",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 5,
+    "total_chunks": 77,
+    "char_count": 2314,
+    "word_count": 346,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bc83dfcc-7612-464b-aa49-68d0f75d9f08",
+    "text": "This has led to tensorized\nformulations of PCs (Peharz et al., 2020b;a; Liu et al., 2024;\nWe begin by introducing the core concepts behind tractable Loconte et al., 2025a; Zhang et al., 2025) that can be scaled\nprobabilistic models (Poon & Domingos, 2011; Darwiche, to millions of parameters and trained efficiently via par-\n2003; Kisa et al., 2014; Rahman et al., 2014) collec- allelized computations on GPUs using backpropagation,\ntively known as probabilistic circuits(Choi et al., 2020).Al- similar to deep neural networks. However, achieving exthough we focus on continuous random variables X = pressivity through larger circuits or more mixture compo-\n{X1, . . . , XD} with joint domain Ω⊆RD, the definitions nents often leads to diminishing returns (Liu et al., 2023a).\nnaturally extend to discrete and mixed-variable settings. As the number of mixture components grow, optimization\nDefinition 2.1. A probabilistic circuit C over variables X is becomes harder, parameter redundancy increases, and ima rooted DAG in which each node n is one of the following. provements in likelihood saturate, even though inference\nA leaf node represents a tractable univariate distribution remains tractable.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 6,
+    "total_chunks": 77,
+    "char_count": 1199,
+    "word_count": 184,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0bfaab91-e76c-47b0-8729-d32f38daca2b",
+    "text": "To address this, recent works have expn(xi) over a single variable Xi. A product node computes plored alternative learning paradigms such as latent variable\nfn(x) = Qc∈ch(n) fc(x). A sum node computes fn(x) = distillation (Liu et al., 2023a;b), where structural or semanPc∈ch(n) πn,cfc(x) with πn,c ≥0 and Pc πn,c = 1. The tic information about the data manifold, extracted using\ncircuit output is fC(x) = fr(x) where r is the root. a more expressive teacher model (often a deep generative\nmodel), is used as auxiliary supervisory signal to learn a\nEach node n in a PC is associated with a scope, the set student PC, guiding the latent variables associated with its\nof variables it depends on.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 7,
+    "total_chunks": 77,
+    "char_count": 693,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "87efc584-64ed-4a46-8dc8-7f3bdfa2023a",
+    "text": "Sum nodes represent mixtures sum node to be meaningful. Along similar lines, better regwhile product nodes represent factorizations. ularization (Vergari et al., 2015; Shih et al., 2021; Liu &\nDefinition 2.2 (Scope). The scope of node n, denoted Van den Broeck, 2021; Dang et al., 2022) and optimization\nscope(n) ⊆X, is defined recursively. If n is a leaf over strategies (Suresh et al., 2026; Karanam et al., 2025) have\nXi then scope(n) = {Xi}. If n is an internal node then also been proposed to improve generalization. Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 8,
+    "total_chunks": 77,
+    "char_count": 585,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0bdb24eb-249b-4165-b0dc-24174ee4e422",
+    "text": "A complementary direction to increase the expressivity of ditional benefits beyond likelihood improvement. It can\nPCs involves relaxing classical assumptions and extending enable interpretability through explicit regions of responsitheir representational language. This has resulted in hybrid bility, support editability and knowledge incorporation by\nmodels that integrate PCs with neural components (Correia modifying local components without retraining the entire\net al., 2023; Gala et al., 2024), invertible transformations model, and is naturally suited for online or continual learn-\n(Sidheekh et al., 2023), or non-standard mixture construc- ing scenarios (Veness et al., 2021) where new regions of\ntions (Loconte et al., 2024; 2025b). While these models the space may appear and require minimal adaptation. This\nhave expanded the representational scope of PCs, they also motivates the development of geometry-aware PCs, and we\nreveal a recurring challenge: introducing additional depen- aim to build principled theoretical foundation in this work.\ndencies or operations inside the circuit can silently break\ntractability unless they are carefully aligned with the cir- 3. Geometry-Aware Probabilistic Circuits\ncuit's factorization structure. For example, in Sidheekh et\nal. 2023, tractability is recovered by enforcing the neural A natural way to equip PCs with geometry awareness is\ntransformations to satisfy decomposability. to replace the constant (global) sum node weights with\ngeometry-aware gating, so that different expert subcircuits\nAllowing mixture weights to depend on the input is a natural\nspecialize to different regions of the data manifold. Voronoi\nway to increase model expressivity and enable local spetessellations (Aurenhammer, 1991) provide a principled\ncialization, for example, mixture-of-experts (MoE) models\nmechanism for such routing. Formally, given centroids\n(Jacobs et al., 1991; Shazeer et al., 2017), where a learned\n{c1, . . . , cK} ⊂Rd, the Voronoi cell of ck is defined as\ngating function routes inputs to specialized subnetworks.\nnWithin the PC literature, prior approaches have explored Vk = u ∈Rd : ∥u −ck∥22 ≤∥u −cj∥22 ∀j o (1)\nsimilar directions: CSPNs (Shao et al., 2022) parameterize\nsum-node weights as neural functions of observed features, Voronoi cells partition space into convex polyhedra with\nenabling conditional density estimation over target variables, disjoint interiors and boundaries of measure zero, defined\nbut sacrificing tractable inference over the conditioning vari- by the intersection of half spaces. This assigns inputs to\nables.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 9,
+    "total_chunks": 77,
+    "char_count": 2601,
+    "word_count": 373,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "69c1d33f-5258-4e21-ba13-6ee032366702",
+    "text": "SPQNs (Sharir & Shashua, 2018) introduce quo- regions based on proximity to learned prototypes, naturally\ntient nodes to encode conditionals directly, gaining expres- capturing spatial structure, and has been successfully used\nsive efficiency but restricting tractable marginalization to in clustering (Du et al., 1999), density estimation (Poliansubsets agreeing with an induced variable ordering (Sharir skii et al., 2022; Marchetti et al., 2023), and likelihood\n& Shashua, 2018). Probabilistic neural circuits (PNCs) based generative models (Chen et al., 2022). The resulting\n(Dos Martires, 2024) generalize this idea further by defining routing is deterministic, interpretable, and naturally conthe mixing weights as neural functions of ancestor variables, nects to mixture-of-experts formulations. Thus, we define a\nagain trading off general tractable marginalization for in- geometry-aware sum node by gating mixture components\ncreased expressivity. While conceptually related and similar using a Voronoi partition defined over the node's scope.\nin essence, these approaches differ fundamentally from the Definition 3.1. A Voronoi-gated sum node (S) over scope\nsetting we study – CSPNs condition on external observed XS consists of centroids {c1, . . . , cK} ⊂R|XS| inducfeatures rather than the modeled variables themselves. Thus, ing Voronoi cells {Vk}, mixture weights {π1, . . . , πK}\nrouting is driven by auxiliary information that remains fixed with πk ≥0 and Pk πk = 1, and child subcircuits\nduring inference, not on the spatial structure of the data {p1, . . . , pK} each with scope XS. It computes f(xS) =\nbeing modeled. SPQNs and PNCs impose implicit variable PKk=1 gk(xS) πk pk(xS), where gk(xS) = I[xS ∈Vk]\norderings without geometric interpretation, so routing decisions follow graph-theoretic dependencies rather than spatial Since the Voronoi cells partition R|XS|, exactly one gate is\nproximity or geometric regions, and they sacrifice general active for almost every xS, so the node is deterministic up to\nany order marginalization capabilities of a PC. Similarly, measure-zero boundaries. However, as we show below, even\nintegral circuits and continuous mixtures extend mixture a single Voronoi-gated sum node can break the factorization\nrepresentations using latent variables that are integrated out, of integrals in a PC, making inference intractable.\nrather than inducing explicit geometric partitions of the in- Proposition 3.2 (Single-Layer Intractability). Let f(x) =\nput space.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 10,
+    "total_chunks": 77,
+    "char_count": 2508,
+    "word_count": 370,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e405e477-d632-40ce-8df7-24ed2da33fa7",
+    "text": "However, many real-world distributions exhibit PKk=1 gk(x) πk pk(x) be a Voronoi-gated sum node overstrong locality and piecewise structure: different regions of\nX = {X1, . . . , XD}. Suppose each child is fully factorized,\nthe input space may follow distinct statistical patterns and\npk(x) = QDi=1 p(i)k (xi). Then the partition function Z =dependencies. From a modeling perspective, this suggests\nrouting inputs to local experts based on geometry, rather R f(x) dx = PKk=1 πk R Vk pk(x) dx requires integrating\nthan relying on globally shared mixture weights. pk over Voronoi cells Vk, which are convex polytopes with\noblique boundaries. In general, R Qi p(i)k (xi) dx does VkWe posit that such a geometry-aware routing can offer ad- not factor into a product of one-dimensional integrals. Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Definition 3.1 places centroids directly in the 3.1.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 11,
+    "total_chunks": 77,
+    "char_count": 908,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a2800342-b62f-4fc1-aa86-8240ce931538",
+    "text": "Certified Approximate Inference\ninput space, which corresponds to an identity embedding. We can also use a learned embedding ϕ : R|XS| →Rd with Though geometric gating breaks exact tractability, it is possicentroids in Rd and gates gk(xS) = I[ϕ(xS) ∈Vk]. The ble retain the reliability of PCs via inference procedures that\nproduce certificates, i.e. provable lower and upper bounds\nnegative results shows that the obstruction is the geometry\non partition functions, marginals, and conditionals. In this\nof the gating regions rather than embedding complexity.\nsection, we develop a general certified inference framework\nfor Voronoi-Tessellated PCs. The main idea is to replaceExact tractable inference in smooth decomposable PCs rests\nintractable polyhedral regions with tractable axis-alignedon a simple recursion: integrals factor at product nodes\nregions for which integration is compatible with decompos-because scopes are disjoint, and integrals distribute over\nability, and to propagate the resulting local bounds throughsums because mixture weights are constant. Voronoi gating\nthe circuit.disrupts this recursion by introducing cell-restricted integrals of the form R Vk pk(xS) dxS. Even if pk factorizes Bounding Cell-Restricted Integrals with Boxes. Let Vk ⊂\nacross variables, the region Vk generally does not, as its Rd be a Voronoi cell and Ω⊆Rd a bounded domain. An inoblique facets couple variables that the circuit attempts ner box B−k and outer box B+k satisfy B−k ⊆Vk ∩Ω⊆B+k ,\nto separate. When applied to deep PCs (see appendix), where both are axis-aligned: B±k = Qdi=1[a±i , b±i ]. In\nVoronoi gating at multiple scopes induces intersections and practice, the domain Ωmay be the full space or a dataprojections of such polyhedral constraints across the circuit dependent bounding box (e.g., per-variable min/max or\nhierarchy, further preventing the bottom-up factorization high-probability truncation). The nesting property yields\nneeded for exact inference. This is the core incompatibility immediate bounds for any non-negative integrand.\nbetween geometric routing and circuit factorization. HowLemma 3.6 (Cell Integral Bounds). Let p : Rd →R≥0ever, geometrically aligning the regions w.r.t a PC's variable\nbe a non-negative density and let B−k ⊆Vk ⊆B+k .",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 12,
+    "total_chunks": 77,
+    "char_count": 2275,
+    "word_count": 335,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "77a99152-28ca-4f6d-b70b-4584c5fb57d2",
+    "text": "Thendecomposition can help retain tractability, as we show next. R p(x) dx ≤ R Vk B−k p(x) dx ≤ R B+k p(x) dxDefinition 3.4 (Geometric Alignment). Consider a partition\nXS = XS1 ⊔XS2. A collection of gating regions {Rk} Thus, the hard part becomes: (i) constructing useful boxes\nis aligned w.r.t this partition if each region decomposes B±k , and (ii) integrating circuit outputs over axis-aligned\nas Rk = R(1)k × R(2)k with R(i)k ⊆R|XSi|. Equivalently, boxes efficiently. We now describe how we construct box\nmembership in Rk can be decided independently as xS ∈ approximations for Voronoi cells, optionally restricted to a\nRk if and only if xS1 ∈R(1)k and xS2 ∈R(2)k . bounded domain Ω= Qi[ℓi, ui]. Consider a voronoi gated sum node f(xS) = Proposition 3.7 (Outer Box Computation). Let Pk = Vk ∩\nPk I[xS ∈Rk] πk pk(xS) on a variable partition Ω⊆Rd where Ω= Qdi=1[ℓi, ui] is a box domain. The\nXS = XS1 ⊔XS2, where each expert factors as pk(xS) = tightest axis-aligned outer box containing Pk is given by\n. Each bound isp(1)k (xS1) p(2)k (xS2). If {Rk} is aligned with the partition, B+k = Qdi=1 h minx∈Pk xi, maxx∈Pk xi i\nthen the partition function decomposes as R f(xS) dxS = thus the optimum of a linear program over the polytope Pk. Pk πk R R(1)k p(1)k (xS1) dxS1 R R(2)k p(2)k (xS2) dxS2 . The LP constraints follow directly from the half-space representation of Voronoi cells together with the box constraints\nA simple way to satisfy Definition 3.4 is to use axis-aligned\nfrom Ω. We can construct a valid inner box B−k by centeringpartitions, where each Rk is a Cartesian product of intervals\nit at the centroid ck and choosing per-coordinate radii so that\n(or, more generally, a product of lower-dimensional sets).\nthe box remains inside all Voronoi half-space constraints. This includes rectangular boxes, and recovers the tractable\nWe provide a closed-form conservative construction below.\nregion decompositions used implicitly by cutset-style splits\n(Rahman et al., 2014).",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 13,
+    "total_chunks": 77,
+    "char_count": 1982,
+    "word_count": 335,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4667f392-b9f7-4ae1-9f5e-bace025a9c78",
+    "text": "However, axis-aligned regions are Proposition 3.8 (Inner Box Construction). Assume Ω=\nRd for simplicity. Let δk := minj̸=k ∥ck −cj∥2 be thesubstantially less expressive than general convex polytopes\nand often require many rectangles to approximate a single nearest-centroid distance.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 14,
+    "total_chunks": 77,
+    "char_count": 283,
+    "word_count": 39,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "330f5c18-6c60-4669-9b14-6f4fd99e9e23",
+    "text": "Then the axis-aligned box B−k =\nslanted facet. This motivates two complementary direc- Qdi=1[ck,i −r, ck,i + r], with r = 2δk √d, satisfies B−k ⊆Vk.\ntions. We can (1) design geometry-aware gating mechanisms that align with the circuit decomposition so that When Ωis bounded, we can simply intersect B−k with Ωto\nthe induced constraints factor compatibly with the circuit preserve containment within Vk ∩Ω:B−k ←B−k ∩Ω. This\nstructure and exact tractability is recovered. Alternatively, construction trades tightness for simplicity and robustness.\nwe can (2) accept intractability to obtain additional ex- If tighter inner boxes are needed we can optimize radii ri\npressiveness and derive certified lower and upper bounds on per dimension subject to the Voronoi half-space constraints.\nthe partition function, which enables an approximate inference with guarantees. We now present both approaches. 3.1.1.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 15,
+    "total_chunks": 77,
+    "char_count": 902,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6f16caf5-cd71-4c00-b9d5-81b79047675a",
+    "text": "ANYTIME BOUND REFINEMENT Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Algorithm 1 Adaptive Anytime Bound Refinement Algorithm 2 Certified Bound Computation\nRequire: Voronoi-PC C, target gap ϵ, max iters T, dom. Ω Require: Voronoi-gated PC C, box approximations\nEnsure: Bounds (Z−, Z+) with Z+ −Z−≤ϵ when {(B−k , B+k )} for each Voronoi cell\nachievable Ensure: Bounds (Z−, Z+) on Z = R fC(x) dx\n1: Initialize partition P ←{Ω} and classify all boxes for 1: for each node n in reverse topological order do\neach cell 2: if n is a leaf then\n2: (Z−, Z+) ←CERTIFIEDBOUNDS(C, P) 3: I−n ← R pn; I+n ← R pn\n3: for t = 1 to T do 4: else if n is a product node then\n4: if Z+ −Z−≤ϵ then 5: I−n ←Qc∈ch(n) I−c ; I+n ←Qc∈ch(n) I+c\n5: return (Z−, Z+) 6: else if n is a standard sum node then\n6: end if 7: I−n ←Pc πn,cI−c ; I+n ←Pc πn,cI+c\n7: // Select boundary box with largest gap contribution 8: else if n is a Voronoi-gated sum node then\n8: (n∗, k∗, B∗) ←arg max gap contribution over 9: for each cell k do\nBOUNDARY boxes 10: J−k ←INTEGRATEBOX(pk, B−k )\n9: // where wn,k is weight in global bound computation 11: J+k ←INTEGRATEBOX(pk, B+k )\n10: j∗←arg maxj(bj −aj) for B∗= Qj[aj, bj] 12: end for\n// Longest dimension 13: I−n ←Pk πkJ−k ; I+n ←Pk πkJ+k\n11: Bisect B∗along dimension j∗into BL, BR 14: end if\n12: Remove B∗from P; add BL, BR to P 15: end for\n13: Reclassify BL, BR for all cells using memb. tests 16: return (I−root, I+root)\n14: (Z−, Z+) ←CERTIFIEDBOUNDS(C, P)\n15: end for\n16: return (Z−, Z+)\noritizing boxes with largest gap contribution. Algorithm 1\noutlines the refinement, and the below theorem establishes\nits monotone tightening and convergence properties. The basic box approximations above provide valid certiTheorem 3.9. Let Pt denote the partition after t refinementfied bounds but may be loose, particularly in high dimensteps with bounds (Z−t , Z+t ). Then (i) Z−t ≤Z ≤Z+t ∀tsions. We thus develop an anytime refinement algorithm\n(ii) Z−t ≤Z−t+1 and Z+t+1 ≤Z+t for all t (iii) if refinementthat monotonically tightens the bounds through recursive\ndrives the boundary volume µ(Vk+ (Pt) \\ V k− (Pt)) →0 forbox subdivision, enabling flexible trade-offs between comeach cell, then limt→∞Z±t = Z. Under uniform refine-putational cost and bound quality. The core idea is to rement, the gap scales as Z+t −Z−t = O(2−t/d)(Z+0 −Z−0 ),cursively bisect boxes and test sub-boxes for containment\nrequiring depth O(d log(1/ϵ)) to achieve target gap ϵ.or intersection with Voronoi cells. For outer boxes, we can\ndiscard sub-boxes that don't intersect the cell, and for inner\n3.1.2. PROPAGATING BOUNDS THROUGH THE CIRCUIT.boxes, we retain sub-boxes fully contained within the cell. Formally, we maintain a disjoint axis-aligned partition P We next show how to propagate local cell bounds through\nof domain ΩS = Qi∈S[ℓi, ui] where each box B ∈P is the sum and product structure of the circuit. We first focus\nlabeled for each Voronoi cell Vk as: INSIDE if B ⊆Vk, on the partition function (Z), and later discuss how the same\nOUTSIDE if B ∩Vk = ∅, or BOUNDARY otherwise. This in- machinery applies to marginals and conditionals.\nduces approximations V k− (P) := S B: labk(B)=INSIDE B and\n+ − Theorem 3.10 (Bound Propagation).",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 16,
+    "total_chunks": 77,
+    "char_count": 3235,
+    "word_count": 565,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c0bcf247-dfdd-413a-9fe2-cb364b969905",
+    "text": "Let C be a VoronoiV k (P) := S B: labk(B)̸=OUTSIDE B satisfying V k (P) ⊆\n+ gated PC. For each node n let In = R fn(x) dx denote the\nVk ∩ΩS ⊆Vk (P). Since P is disjoint, integration decom- integral of the subcircuit rooted at n, and let (I−n , I+n ) deposes additively with node bounds Pk πkI±k (P) propagat- note certified bounds on In. We can compute bounds bottom\ning via Theorem 3.10. Classification can be done using the\nup as follows.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 17,
+    "total_chunks": 77,
+    "char_count": 440,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "959764d4-0df2-44a8-b410-a325d2a0e39b",
+    "text": "If n is a leaf, then I−n = I+n = R pn(x) dx.\nhalf-space representation Vk = T j̸=k{x : (cj −ck)⊤x ≤ If n is a product node with children {cj} and disjoint\n2(∥cj∥21 −∥ck∥2)}. For box B = Qi[li, ui] and half-space scopes, then I−n = Qj I−cj, I+n = Qj I+cj. If n is a\nnormal a, the extrema maxx∈B a⊤x and minx∈B a⊤x are standard sum node with children {cj} and weights {πn,cj},\ncomputed by selecting ui (resp. li) when ai ≥0 for the max- then I−n = Pj πn,cjI−cj, I+n = Pj πn,cjI+cj. If n is a\nimum, and vice versa for the minimum. Then B ⊆Vk iff all Voronoi-gated sum node with children {pk} and cell boxes\npk(x) dx; I+n =half-space maxima satisfy the constraint, and B ∩Vk = ∅if {(B−k , B+k )}, then I−n = Pk πk R B−kany half-space minimum violates its constraint. Refinement\nPk πk R B+k pk(x) dx. At the root, we obtain boundsbisects BOUNDARY boxes at midpoints, replaces them with\ndisjoint children, reclassifies, and recomputes bounds, pri- (Z−, Z+) satisfying Z−≤Z ≤Z+. Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Algorithm 2 summarizes the bound computation. The only sists of a factorized Voronoi partition with Ki cells on factor\nnon-standard operation is integrating a decomposable sub- i, mixture weights {πk}k∈[K1]×···×[Km] with Pk πk = 1,\ncircuit over a box, which as we show in Theorem3.14 can and factor subcircuits {p(i)ki } where p(i)ki has scope XSi. The\nbe implemented recursively by applying interval integration\nnode computes f(xS) = Pk gk(xS) πk Qmi=1 p(i)ki (xSi),at leaves and factorization at product nodes. We can apply\nthe same machinery to bound marginals and conditionals. where gk(xS) = Qmi=1 g(i)ki (xSi). Corollary 3.11 (Marginal Bounds). For p(xA) = The critical design choice is that the gate and the expert\nR p(x) dxA¯ we obtain bounds (p−(xA), p+(xA)) by prop- share the same factorization pattern. This alignment reagating box restricted bounds through the circuit after re- stores the ability to apply Fubini's theorem 1 to reduce highstricting each box approximation to the ¯A dimensions. dimensional integrals into products of lower-dimensional\nCorollary 3.12 (Conditional Bounds).",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 18,
+    "total_chunks": 77,
+    "char_count": 2137,
+    "word_count": 359,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1c3f87e7-6b4c-4bab-b540-e76da90a5e21",
+    "text": "For disjoint A, B integrals. To obtain a full circuit over X = {X1, . . . , XD},\nand p(xA | xB) = p(xA, xB)/p(xB), if we have bounds we align HFV gating with a variable tree (vtree), so that at\np−(xA, xB) ≤p(xA, xB) ≤p+(xA, xB) and p−(xB) ≤ each internal vtree node the gate factors across its left/right\np−(xA,xB) child scopes. This yields a hierarchical (multi-resolution)\np(xB) ≤p+(xB) with p−(xB) > 0, then p+(xB) ≤ geometric partition: coarse routing happens at higher scopes,\n. while finer routing refines decisions within smaller scopes.p(xA | xB) ≤p+(xA,xB)p−(xB)\nWe now show that HFV restores exact tractable inference. Certified bounds provide guaranteed inference in settings The result mirrors standard PC tractability, but incurs an\nwhere exact computation is intractable, but they have clear additional multiplicative factor that reflects the number of\nlimitations. In high dimensions the initial inner boxes may joint Voronoi cell combinations at each gated sum.\ncapture only a small fraction of each Voronoi cell, leading to\nTheorem 3.14 (Tractability of HFV-PCs). Let C be an HFVloose initial bounds. Tight bounds require many refinements,\nPC with |C| nodes, maximum factorization degree m, and at\nand the refinement cost grows quickly with dimension and\nmost K Voronoi cells per factor. Then the partition function,\nthe number of cells.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 19,
+    "total_chunks": 77,
+    "char_count": 1354,
+    "word_count": 218,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9aa1916e-cfa2-4d31-8a4d-c856fa620880",
+    "text": "Finally, while refinement can approxmarginals, and conditionals are computable exactly in time\nimate exact inference arbitrarily well, it does not restore\nO(|C|Km). For binary HFV-PCs the time is O(|C|K2).\nexactness at finite computation. This motivates designing\nVoronoi gating mechanisms that align with circuit decom- HFV intentionally restricts geometry to preserve decomposposition and recover exact tractable inference. ability: it can represent rich piecewise structure within each\nscope block and refine it hierarchically, but it cannot realize\n3.2. Hierarchical Factorized Voronoi PCs arbitrary oblique polytopes spanning variables across different blocks at a given node. When such geometry is essential,Next, we show how to enforce geometric alignment by\nwe can revert to general Voronoi gating and still preservedesign through hierarchical factorization of Voronoi tesreliability via certified approximate inference.sellations to retain tractable inference. The key idea is to\npartition the Voronoi centroids in a manner that mirrors\n3.3. Learning via Soft Gatingthe circuit's vtree structure, ensuring that at each product\nnode, the induced Voronoi cells decompose into independent Both geometry-aware constructions we have introduced in\nfactors over disjoint variable subsets. Let a scope XS be this paper rely on hard routing, where inputs activate a single\npartitioned into disjoint blocks XS = Fmi=1 XSi. This yields crisp locality and interpretability and enblock i, choose centroids {c(i)1 , . . . , c(i)Ki} ⊂R|XSi| and let ables exact inference in HFV-PCs as well as certified bounds\n{V ki(i) }Kiki=1 be the induced Voronoi cells in R|XSi|. These for general VT-PCs. However, hard Voronoi assignments\ninduce a joint partition of R|XS| into product cells indexed are non-differentiable, preventing gradient-based learning\n(1) (m) of the centroids together with the PC parameters. We thus\nby k = (k1, . . . , km) as: Vk = V k1 × · · · × Vkm . The introduce a smooth relaxation that supports standard backcorresponding hard gate factors along blocks: gk(xS) =\n(i) propagation during training, and revert to hard gating at test\nI[xS ∈Vk] = Qmi=1 I[xSi ∈Vki ] = Qmi=1 g(i)ki (xSi), time to recover the desired inference guarantees.\nso membership can be decided independently within each\nDefinition 3.15 (Soft Voronoi Gate).",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 20,
+    "total_chunks": 77,
+    "char_count": 2338,
+    "word_count": 355,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "72318ce7-83cf-4bcc-89f2-f2310bef0180",
+    "text": "Given centroidsblock. The defining feature is that each joint cell is a Carte-\n{c1, . . . , cK} ⊂Rd and an inverse temperature α > 0,sian product of lower-dimensional Voronoi cells, which is\nwe define the soft Voronoi gateexactly the geometric analogue of decomposability. We can\nnow define a gated sum node that uses a factorized Voronoi exp −α∥u −ck∥2\npartition and couples it to a matching factorized expert. wk(u; α) = . (2)\nPKj=1 exp −α∥u −cj∥2\nDefinition 3.13 (HFV-Gated Sum Node). An HFV-gated sum node over scope XS con- 1Proofs are given in the appendix. Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Family Variant\nEinsumNet HCLT Baseline VT HFV 0 Log-Likelihood\nTest Alphabet CheckerBoard Pinwheel Spiral BentLissajous InterlockedCircles knotted TwistedEight",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 21,
+    "total_chunks": 77,
+    "char_count": 787,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d7c8bcb0-ccaa-4ae9-9f3e-e66379ab6f39",
+    "text": "Mean Test Log-likelihood (↑) on synthetic 2D and 3D density estimation tasks achieved by EinsumNet and HCLT along with\ntheir geometry-aware extensions using Voronoi tessellations (VT) and hierarchical factorized Voronoi (HFV), averaged across 3 trials. For\nVT, values correspond to the lower bound on the log-likelihood obtained via our certified approximate inference framework. For any u, the weights satisfy wk(u; α) > 0 and The gap γ(u) quantifies how much closer u is to its nearest\nPKk=1 wk(u; α) = 1 and are smooth in both u and {ck} centroid than to the runner-up. Larger margins mean the\nsoftmax ratios exp(−α(dj −dk∗)) decay faster, so routing becomes effectively hard at smaller α. The exponen-The temperature parameter controls the sharpness of routtial bound formalizes this geometric picture and justifiesing. When α is small the weights are diffuse, and when\nannealing: as training progresses, increasing α sharpensα is large the weights concentrate on the nearest cenrouting while remaining stable on points that are alreadytroid. Correspondingly, a soft Voronoi-gated sum node\ncomputes: f(xS; α) = PKk=1 wk(xS; α)πkpk(xS). For well-separated by the current centroids.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 22,
+    "total_chunks": 77,
+    "char_count": 1184,
+    "word_count": 181,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5dec16a7-7bf8-44b8-996c-7863c9a15c33",
+    "text": "HFV-PCs, factorization can be maintained by applying soft Training. We thus train soft HFV-PCs and VT-PCs via\ngates per factor. Given partition XS = Fmi=1 XSi, de- maximum-likelihood, gradually increasing α so that routfine a factorized soft gate wk(xS; α) = Qmi=1 w(i)ki (xSi; α) ing sharpens over time. This annealing schedule avoids\nearly training instabilities where centroids collapse or as-where each factor uses centroids in R|XSi|. This ensures\nsignments become overly brittle before the experts havegradient signals to factor-i centroids depend only on variables in XSi, preserving the decomposition structure dur- adapted. We use softmax projection to enforce πk ≥0 and\nPk πk = 1. After training we use the learned centroids toing optimization. For any α > 0, the soft gates are\nsmooth and the circuit likelihood is differentiable with re- define a Voronoi tessellation and perform inference in one of\nspect to all parameters. The centroid gradient has the form two modes. Hard-gated inference, which replaces w(i)ki with\n∇ckwk(u; α) = 2αwk(u; α)(1 −wk(u; α))(u −ck) The g(i)ki and recovers the exact tractability guarantees. This is\nfactor wk(1 −wk) peaks when the gate is uncertain (near the default mode we use in experiments because it preserves\ndecision boundaries), and vanishes when routing is already exact partition functions and exact marginals. Soft-gated inconfident (wk ≈0 or 1). Thus centroids are primarily up- ference uses a finite α. This yields a fully smooth model, but\ndated in regions where the current tessellation is contested. exact marginalization generally requires integrating smooth\ngate functions, which typically forfeit the exact HFV guar-Soft-to-Hard Convergence. We train VT-PCs and HFVantees.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 23,
+    "total_chunks": 77,
+    "char_count": 1736,
+    "word_count": 266,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e4e8a1b3-a023-484b-ab57-9aabb04d6f4c",
+    "text": "We therefore treat soft gating primarily as a trainingPCs via soft gates but ultimately require the exact inference\ndevice and hard gating as the inference-time model.guarantees of hard HFV gating. The next result highlights\nthat increasing α recovers hard Voronoi assignments, with\nan exponential rate governed by a geometric margin. 4.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 24,
+    "total_chunks": 77,
+    "char_count": 337,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "76f700d4-3dfa-40ab-92f3-3b71dd4afe60",
+    "text": "Experiments & Results Theorem 3.16 (Soft-to-Hard Convergence). Let gk(u) = To validate our theoretical framework, we consider eight synI[u ∈Vk] be the hard Voronoi gate induced by {ck} and thetic distributions where geometric structure is explicit and\nlet wk(u; α) be the soft gate in (2). Then for any u not exact verification is feasible: four 2D (Alphabet, Checkerlying on a Voronoi boundary, limα→∞wk(u; α) = gk(u). Board, Pinwheel, Spiral) and four 3D (BentLissajous, InMoreover, if k∗(u) = arg mink ∥u −ck∥and the mar- terlockedCircles, Knotted, TwistedEight) (Sidheekh et al.,\ngin γ(u) = minj̸=k∗(u) ∥u −cj∥2 −∥u −ck∗∥2 is 2022; 2023), each with 10k train, 5k validation, and 5k\npositive, then 1 −wk∗(u; α) ≤(K −1)e−α γ(u). We compare two notable base PC archither, if p is integrable, then wk(·; α) →gk(·) also implies tectures: EinsumNet (random binary region graph) (Pelimα→∞ R wk(u; α) p(u) du = R Vk p(u) du. harz et al., 2020a) and HCLTs (Chow-Liu trees) (Liu & Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Visualization of the distribution and voronoi tessellations Figure 3. Learning curves on the 2D spiral dataset. Vallearned by a VT-EinsumNet (left) and HFV-EinsumNet (right) on idation log-likelihood across epochs for EinsumNet (left) and\nthe 2D pinwheel dataset. The axis aligned boxes in the left figure HCLT (right), averaged over 3 trials. VT models report a cerrepresent the Inner Boxes computed for estimating the lower bound tified log-likelihood lower bound while baselines and HFV use\non the partition function using our conservative construction. exact tractable evaluation. Van den Broeck, 2021) against their geometry-aware vari- responsibility to local experts; the axis-aligned inner boxes\nants: VT-EinsumNet/HCLT using Voronoi tessellations shown are the conservative subsets used by our certified\nat root sum nodes with certified approximate inference, lower-bound computation, and we see that in practice they\nand HFV-EinsumNet/HCLT using hierarchical factorized capture the majority of the modeled probability mass within\nVoronoi gating aligned with circuit decomposition for exact each cell on this dataset. In HFV (right), the partition is\ninference. We use Gaussian leaves and Tucker sum-product hierarchical and factorized, yielding axis-aligned regions\nlayers in all models (Loconte et al., 2025a), keeping the base that preserve exact tractability by construction.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 25,
+    "total_chunks": 77,
+    "char_count": 2427,
+    "word_count": 363,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "30350ce6-be0a-4022-8ed6-9ea0b56ef2dc",
+    "text": "Together,\narchitecture same, with 10 input and sum units for 3D (and these overlays offer an interpretable view of where spe-\n5 each for 2D) datasets, for a fair comparison. We employ cialization occurs and help explain why geometry-aware\nmaximum likelihood via stochastic gradient descent to learn routing is effective on distributions with strong locality.\nthe parameters of the PC and VT, by training using an Adam\nFigure 3 shows validation learning curves of EinsumNet\noptimizer with a leatning rate of 0.01 and batch size of 500\nand HCLT on the 2D spiral dataset. For VT we plot the\nfor 100 epochs. For VT and HFV variants, we employ soft\ncertified lower bound (solid red) together with the certified\ngating with linear temperature annealing for and k-means\ninterval induced by the partition function Z ∈[Z−, Z+]\ncentroid initialization (100 iterations), and switch to hard\n(shaded region). As training proceeds and the temperature\ngating at test time.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 26,
+    "total_chunks": 77,
+    "char_count": 957,
+    "word_count": 156,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aae58894-8c01-4af5-90cc-b5c0c2d96acb",
+    "text": "VT models report certified lower bounds\nannealing sharpens the gates, the lower bound increases\nusing inner box approximations without refinement.\nsteadily and the envelope stabilizes reflecting improved fit\nResults. Figure 1 depicts the mean test log-likelihoods of local experts and tighter normalization bounds as the\nacross all datasets and model variants. VT models (triangles) learned partitions align with the data support. HFV remains\nconsistently achieve strong performance, with their certified tractable throughout, and its curve corresponds to exact likelower bounds often exceeding baseline exact log-likelihoods, lihood under the aligned factorized gating. Overall, these\ndemonstrating that the increased expressivity from uncon- results suggest that VT offers substantial gains while remainstrained geometry-aware routing captures structure missed ing certifiable, and that soft-gate training with temperature\nby input-independent weights, even when accounting for annealing yields stable learning dynamics.\nconservative approximation gaps. HFV models (squares)\nachieve performance comparable to baselines (circles). Conclusion\nis expected in our low-dimensional, shallow-circuit regime,\nas the alignment constraints required for exact tractabil- We developed a principled foundation for introducing geoity in HFV induce fully deterministic, factorized partitions, metric awareness into PCs, by replacing constant sum-node\nwhich can reduce expressive power relative to smooth de- weights with geometry driven gates induced via Voronoi\ncomposable PCs. The advantage of HFV here however, is tessellations. Our key message is that retaining tractable\nconceptual and algorithmic: it retains exact tractable in- inference requires geometric alignment with the circuits facference while providing an explicit geometric interpretation torization, as general Voronoi partitioning breaks recursive\nthat can be useful for downstream tasks such as continual marginalization. We addressed this tension in two ways:\nlearning.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 27,
+    "total_chunks": 77,
+    "char_count": 2027,
+    "word_count": 267,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "47dbbb26-7ee1-4c60-84ec-7e3ef762187c",
+    "text": "Figure 2 visualizes the learned routing structure first, we developed a theoretically grounded certified apon the 2D pinwheel dataset. In VT (left), the Voronoi cells proximate inference framework that preserved geometric\nadapt to the arms of the distribution and assign regions of expressivity while providing reliable inference. Geometry-Aware Probabilistic Circuits via Voronoi Tessellations we identified structural properties on the tessellation un- Du, Q., Faber, V., and Gunzburger, M. Centroidal voronoi\nder which tractable inference was recovered. Finally, we tessellations: Applications and algorithms. SIAM review,\npresented a soft relaxation with convergence guarantees 41(4):637–676, 1999.\nthat enabled stable gradient based learning, and empirically\nvalidated the resulting model on low dimensional geomet- Dyer, M. On the complexity of comric manifolds.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 28,
+    "total_chunks": 77,
+    "char_count": 868,
+    "word_count": 117,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6af15945-ce8d-4612-8c40-d1e706849bd7",
+    "text": "Future work includes extending the frame- puting the volume of a polyhedron. SIAM Journal on\nwork to learned embeddings, developing tighter certification Computing, 17(5):967–974, 1988.\nschemes for scaling to higher dimensional data, and leveragGala, G., de Campos, C., Peharz, R., Vergari, A., anding geometric awareness for continual learning, controlled\nQuaeghebeur, E. Probabilistic integral circuits. In Interna-generation and interpretable anomaly detection using PCs.\ntional Conference on Artificial Intelligence and Statistics,\npp. 2143–2151.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 29,
+    "total_chunks": 77,
+    "char_count": 550,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bab082f7-835e-4073-8f5b-8fb5ad8921f7",
+    "text": "Acknowledgements\nJacobs, R. The authors gratefully acknowledge the generous support\nAdaptive mixtures of local experts. Neural computation,\nby the AFOSR award FA9550-23-1-0239, the ARO award\n3(1):79–87, 1991. W911NF2010224 and the DARPA Assured Neuro Symbolic\nLearning and Reasoning (ANSR) award HR001122S0039. Karanam, A., Mathur, S., Sidheekh, S., and Natarajan, S.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 30,
+    "total_chunks": 77,
+    "char_count": 367,
+    "word_count": 49,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "df228f7f-677e-4c71-bd21-6c871855dc2b",
+    "text": "A unified framework for human-allied learning of probaReferences bilistic circuits. In Proceedings of the AAAI Conference\non Artificial Intelligence, volume 39, pp. 17779–17787,\nAurenhammer, F. Voronoi diagrams—a survey of a funda-\n2025.\nmental geometric data structure. ACM Computing Surveys\n(CSUR), 23(3):345–405, 1991. Kisa, D., Van den Broeck, G., Choi, A., and Darwiche, A. Probabilistic sentential decision diagrams. In Fourteenth\nBraun, S., Sidheekh, S., Vergari, A., Mundt, M., NataraInternational Conference on the Principles of Knowledge\njan, S., and Kersting, K. Tractable representation learnRepresentation and Reasoning, 2014.\ning with probabilistic circuits. Transactions on Machine\nLearning Research, 2025. A. cirkit, October 2024. URL https://github.\ncom/april-tools/cirkit. T., Amos, B., and Nickel, M.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 31,
+    "total_chunks": 77,
+    "char_count": 819,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c1bdaf5-7e03-477e-9ecd-511b6c4c328e",
+    "text": "Semi-discrete normalizing flows through differentiable tessellation. Advances Liu, A. and Van den Broeck, G. Tractable regularization\nin Neural Information Processing Systems, 35, 2022. of probabilistic circuits. Advances in Neural Information\nProcessing Systems, 34:3558–3570, 2021. Choi, Y., Vergari, A., and Van den Broeck, G. Probabilistic\ncircuits: A unifying framework for tractable probabilistic Liu, A., Zhang, H., and den Broeck, G. Scaling up probmodels. Rep, 2020. abilistic circuits by latent variable distillation. In The\nEleventh International Conference on Learning RepreCorreia, A. H., Gala, G., Quaeghebeur, E., De Campos, C., sentations, 2023a.\nand Peharz, R. Continuous mixtures of tractable probabilistic models. In Proceedings of the AAAI Conference Liu, A., Ahmed, K., and Van den Broeck, G. Scaling\non Artificial Intelligence, volume 37, pp. 7244–7252, tractable probabilistic circuits: A systems perspective.\n2023. In Proceedings of the 41th International Conference on\nMachine Learning (ICML), jul 2024. Dang, M., Liu, A., and Van den Broeck, G.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 32,
+    "total_chunks": 77,
+    "char_count": 1070,
+    "word_count": 150,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7506f1d9-77d7-4c6d-b79b-775087c7435b",
+    "text": "Sparse probabilistic circuits via pruning and growing. Advances Liu, X., Liu, A., Van den Broeck, G., and Liang, Y. Unin Neural Information Processing Systems, 35:28374– derstanding the distillation process from deep genera-\n28385, 2022. tive models to tractable probabilistic circuits. In International Conference on Machine Learning, pp. 21825–\nDarwiche, A. A differential approach to inference in 21838. PMLR, 2023b.\nbayesian networks. Journal of the ACM (JACM), 50\n(3):280–305, 2003. Loconte, L., Sladek, A. M., Mengel, S., Trapp, M., Solin,\nA., Gillis, N., and Vergari, A. Subtractive mixture models\nDos Martires, P. Probabilistic neural circuits. In Proceed- via squaring: Representation and learning. In The Twelfth\nings of the AAAI Conference on Artificial Intelligence, International Conference on Learning Representations,\nvolume 38, pp. 17280–17289, 2024. 2024. Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Loconte, L., Mari, A., Gala, G., Peharz, R., de Campos, C., Shih, A., Sadigh, D., and Ermon, S.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 33,
+    "total_chunks": 77,
+    "char_count": 1032,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "798112c0-6209-47c4-9b17-e301afa49b42",
+    "text": "Hyperspns: Compact\nQuaeghebeur, E., Vessio, G., and Vergari, A. What is and expressive probabilistic circuits. Advances in neural\nthe relationship between tensor factorizations and circuits information processing systems, 34:8571–8582, 2021.\n(and how can we exploit it)? Transactions on Machine\nSidheekh, S. and Natarajan, S.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 34,
+    "total_chunks": 77,
+    "char_count": 325,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3c56d38f-1bf5-49f9-b518-2028642052d4",
+    "text": "Building expressive and Learning Research, 2025a. ISSN 2835-8856.\ntractable probabilistic generative models: A review. In\nLoconte, L., Mengel, S., and Vergari, A. Sum of squares cir- Proceedings of the Thirty-Third International Joint Concuits. In Proceedings of the AAAI Conference on Artificial ference on Artificial Intelligence, 2024, pp. 8234–8243,\nIntelligence, volume 39, pp. 19077–19085, 2025b. 2024. L., Polianskii, V., Varava, A., Pokorny, F. T., Sidheekh, S., Dock, C. B., Jain, T., Balan, R., and Singh,\nand Kragic, D. An efficient and continuous voronoi den- M. Vq-flows: Vector quantized local normalizing\nsity estimator. In International Conference on Artificial flows.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 35,
+    "total_chunks": 77,
+    "char_count": 684,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "210fb25d-1eb2-404b-acb1-b9f32e7ebf36",
+    "text": "In Uncertainty in Artificial Intelligence, pp. 1835–\nIntelligence and Statistics, pp. 4732–4744. Peharz, R., Lang, S., Vergari, A., Stelzner, K., Molina, A., Sidheekh, S., Kersting, K., and Natarajan, S. Probabilistic\nTrapp, M., Van den Broeck, G., Kersting, K., and Ghahra- flow circuits: Towards unified deep models for tractable\nmani, Z. Einsum networks: Fast and scalable learning probabilistic inference. In Uncertainty in Artificial Intelof tractable probabilistic circuits. In International Con- ligence, pp. 1964–1973. PMLR, 2023.\nference on Machine Learning, pp. 7563–7574. Sidheekh, S., Tenali, P., Mathur, S., Blasch, E., and Natarajan, S. On the robustness and reliability of late multiPeharz, R., Vergari, A., Stelzner, K., Molina, A., Shao, X., modal fusion using probabilistic circuits. In 2024 27th\nTrapp, M., Kersting, K., and Ghahramani, Z.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 36,
+    "total_chunks": 77,
+    "char_count": 858,
+    "word_count": 123,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8fc0ec52-7700-437b-acc6-ebab8d10a02b",
+    "text": "Random International Conference on Information Fusion (FUsum-product networks: A simple and effective approach SION), pp. 1–8. IEEE, 2024.\nto probabilistic deep learning. Sidheekh, S., Tenali, P., Mathur, S., Blasch, E., Kersting, K.,\nPolianskii, V., Marchetti, G. L., Kravberg, A., Varava, A., and Natarajan, S.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 37,
+    "total_chunks": 77,
+    "char_count": 312,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8eab5fef-6cd8-4012-bbd8-79d80dd798ee",
+    "text": "Credibility-aware multimodal fusion\nPokorny, F. Voronoi density estima- using probabilistic circuits. In The 28th International\ntor for high-dimensional data: Computation, compact- Conference on Artificial Intelligence and Statistics, 2025.\nification and convergence. In Uncertainty in Artificial\nIntelligence, pp. 1644–1653. Suresh, H., Sidheekh, S., Shreeram M.P, V., Natarajan, S.,\nand Krishnan, N.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 38,
+    "total_chunks": 77,
+    "char_count": 401,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7f3b30a4-a4a7-4677-9b30-3d959ddeed45",
+    "text": "Tractable sharpness-aware learning\nPoon, H. and Domingos, P. Sum-product networks: A new\nof probabilistic circuits. In Proceedings of the 40th AAAI\ndeep architecture. In 2011 IEEE International Conference\nConference on Artificial Intelligence, 2026.\non Computer Vision Workshops (ICCV Workshops), pp.\n689–690, 2011. Veness, J., Lattimore, T., Budden, D., Bhoopchand, A., Mattern, C., Grabska-Barwinska, A., Ozair, S., G´omez, S.,\nRahman, T., Kothalkar, P., and Gogate, V. Cutset networks:\nGuez, A., Hassabis, D., et al. Gated linear networks. A simple, tractable, and scalable approach for improving\nProceedings of the AAAI Conference on Artificial Intellithe accuracy of chow-liu trees.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 39,
+    "total_chunks": 77,
+    "char_count": 687,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "50e96ccc-01ef-4764-857e-85299d347f57",
+    "text": "In ECML PKDD, 2014.\ngence, 35(11):10015–10023, 2021. Shao, X., Molina, A., Vergari, A., Stelzner, K., Peharz, R.,\nVergari, A., Di Mauro, N., and Esposito, F. Simplifying, reg- Liebig, T., and Kersting, K. Conditional sum-product netularizing and strengthening sum-product network struc- works: Modular probabilistic circuits via gate functions.\nture learning. In Joint European conference on machine International Journal of Approximate Reasoning, 2022.\nlearning and knowledge discovery in databases, pp. 343–\nSharir, O. and Shashua, A. Sum-product-quotient networks. 358. In Storkey, A. and Perez-Cruz, F. (eds.), Proceedings of\nthe Twenty-First International Conference on Artificial Zeˇcevi´c, M., Dhami, D., Karanam, A., Natarajan, S.,\nIntelligence and Statistics, volume 84 of Proceedings of and Kersting, K. Interventional sum-product networks:\nMachine Learning Research, pp. 529–537. PMLR, 09–11 Causal inference with tractable probabilistic models. Advances in neural information processing systems, 34: Apr 2018.\n15019–15031, 2021. Shazeer, N., Mirhoseini, A., Maziarz, K., Davis, A., Le,\nQ., Hinton, G., and Dean, J. Outrageously large neural Zhang, H., Dang, M., Wang, B., Ermon, S., Peng, N.,\nnetworks: The sparsely-gated mixture-of-experts layer. and den Broeck, G. Scaling probabilistic circuits via\nIn International Conference on Learning Representations, monarch matrices. In Forty-second International Confer-\n2017. ence on Machine Learning, 2025.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 40,
+    "total_chunks": 77,
+    "char_count": 1464,
+    "word_count": 197,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "002a674c-c5fd-4545-bc32-5385e1091218",
+    "text": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Proofs of Main Results Intractability of Voronoi-Gated PCs We begin by establishing why unconstrained Voronoi gating breaks tractable inference, even in the simplest case of a single\nsum node with fully factorized experts. Proposition A.1 (Single-Layer Intractability). Let f(x) = PKk=1 gk(x) πk pk(x) be a Voronoi-gated sum node over\nvariables X = {X1, . . . , XD} where gk(x) = I[x ∈Vk] with Voronoi cells {Vk} induced by centroids {c1, . . . , cK} ⊂RD. Suppose each expert is fully factorized: pk(x) = QDi=1 p(i)k (xi). Then the partition function Z Z\nZ = f(x) dx = X πk pk(x) dx\nk=1 Vk requires integrating pk over Voronoi cells Vk, which are convex polytopes with oblique boundaries. In general, the integral\nR Qi p(i)k (xi) dx does not factor into a product of one-dimensional integrals.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 41,
+    "total_chunks": 77,
+    "char_count": 857,
+    "word_count": 144,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8b2d05fb-c198-428a-ac92-0d59500d33da",
+    "text": "Each Voronoi cell Vk is defined as the region of points closer to centroid ck than to any other centroid: Vk = x ∈RD : ∥x −ck∥2 ≤∥x −cj∥2 for all j . Equivalently, Vk is the intersection of K −1 half-spaces: where H−kj = {x : (cj −ck)⊤x ≤12(∥cj∥2 −∥ck∥2)}. The boundary hyperplane between cells Vk and Vj is n 1 o Hkj = x : (cj −ck)⊤x = 2(∥cj∥2 −∥ck∥2) . For generic centroids (i.e., centroids not satisfying special symmetries), the normal vector cj −ck has multiple nonzero\ncomponents. This means the boundary hyperplane is not aligned with any coordinate axis, it is oblique with respect to the\nstandard coordinate system. Consider the integral:",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 42,
+    "total_chunks": 77,
+    "char_count": 648,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "20392833-0359-4ccc-bf4c-6b10dffc6868",
+    "text": "Even though the integrand factors across variables, the region Vk does not. Specifically, Vk is not a Cartesian product of the\nform I1 × · · · × ID where each Ii ⊆R is an interval. The oblique boundaries couple the coordinates: whether a point x lies\nin Vk depends on the joint configuration of all coordinates, not on independent conditions on each coordinate separately. To apply Fubini's theorem and factor the integral as Qi R Ii p(i)k (xi) dxi, we would need the integration domain to be a\nproduct of univariate domains. Since Vk is not such a product, Fubini does not reduce the D-dimensional integral to a\nproduct of D one-dimensional integrals.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 43,
+    "total_chunks": 77,
+    "char_count": 652,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "328d560f-a433-46fb-9fcc-c657aa5b2bb5",
+    "text": "Concrete Example (2D): Let D = 2 with centroids c1 = (0, 1) and c2 = (1, 0). The Voronoi boundary between V1 and V2\nsatisfies\n∥(x1, x2) −(0, 1)∥2 = ∥(x1, x2) −(1, 0)∥2,\nwhich simplifies to x21 + (x2 −1)2 = (x1 −1)2 + x22, yielding x1 = x2. Thus V1 = {(x1, x2) : x2 > x1} (the region above the diagonal). p(1)1 (x1)p(2)1 (x2) dx1 dx2. Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Integrating first over x2 for fixed x1: Z Z ∞ Z ∞\np(1)1 (x1)p(2)1 (x2) dx1 dx2 = p(1)1 (x1) p(2)1 (x2) dx2 dx1. The inner integral has lower limit x1, which depends on the outer integration variable. This prevents factorization into\nR p(1)1 (x1)dx1 R p(2)1 (x2)dx2 , and the dependence persists regardless of how simple the univariate densities p(i)1\nare. Thus, the oblique geometry of Voronoi cells couples variables in a way that is fundamentally incompatible with the\nfactorization exploited by decomposable probabilistic circuits. DEEP CIRCUITS AND CONSTRAINT ACCUMULATION Proposition A.2 (Constraint Accumulation). In a deep circuit of depth L with Voronoi gating at multiple levels, each\ncontribution is integrated over a region determined by the active Voronoi cell at every ancestor sum node. The feasible set is\nan intersection of Voronoi regions restricted to different scopes. At the root, routing selects Vkroot over full scope X.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 44,
+    "total_chunks": 77,
+    "char_count": 1340,
+    "word_count": 225,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d3d77765-d9e6-4625-ac04-d5ca9211af4b",
+    "text": "At an internal node with scope S ⊂X, routing selects VkS over XS. After marginalizing out variables not in S, the root constraint projects onto XS in a way that generally doesn't align with\nVkS. The resulting region is an intersection of projected polytopes, which can be arbitrarily complex.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 45,
+    "total_chunks": 77,
+    "char_count": 292,
+    "word_count": 49,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "74760412-22eb-4e19-8fb6-24a186688cda",
+    "text": "Example A.3 (Two-Level Interaction). Consider vtree root scope {X1, X2, X3, X4} with children {X1, X2} and {X3, X4}. • Root gate imposes x1 + x2 + x3 + x4 ≤c1. • Left child gate imposes x1 −x2 ≤c2. To integrate over {X1, X2}, we need both the local constraint x1 −x2 ≤c2 and the projected root constraint. After\nmarginalizing out {X3, X4}, the root constraint becomes context-dependent, preventing independent marginalization. Thus, in deep circuits, unconstrained Voronoi gating introduces hierarchical geometric constraints that interact in complex\nways after marginalization, compounding intractability. HFV-PCs avoid this by ensuring geometric constraints factor along\ncircuit variable partitions at every level. Geometric Alignment and Tractability Recovery The preceding result shows that unconstrained Voronoi cells break tractability. We now prove that alignment with the\ncircuit's variable decomposition is sufficient to restore it. Theorem A.4 (Alignment Enables Factorization). Consider a gated sum node f(xS) = PKk=1 gk(xS) πk pk(xS) over\nscope XS = XS1 ⊔XS2 (disjoint partition). Suppose each gating region Rk satisfies the alignment condition: there exist\nR(1)k ⊆R|XS1| and R(2)k ⊆R|XS2| such that\nRk = R(1)k × R(2)k ,\nand suppose each expert factors as pk(xS) = p(1)k (xS1)p(2)k (xS2). Then the partition function decomposes:",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 46,
+    "total_chunks": 77,
+    "char_count": 1340,
+    "word_count": 200,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6aea8a5f-8459-4b90-aab5-de98f10cebee",
+    "text": "K ! ! Z Z Z\nf(xS) dxS = X πk p(1)k (xS1) dxS1 p(2)k (xS2) dxS2 .\nk=1 R(1)k R(2)k Start with the definition of f and substitute the gate and expert factorizations: Z Z\nf(xS) dxS = X I[xS ∈Rk] πk pk(xS) dxS = X πk pk(xS) dxS.\nk=1 Rk Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 47,
+    "total_chunks": 77,
+    "char_count": 294,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2957d54a-57f8-48b3-ae98-ef7460ca130d",
+    "text": "By the alignment condition, xS ∈Rk if and only if xS1 ∈R(1)k and xS2 ∈R(2)k simultaneously. Since XS1 and XS2 are\ndisjoint, we can write dxS = dxS1 dxS2 and apply Fubini's theorem: Z Z\npk(xS) dxS = p(1)k (xS1)p(2)k (xS2) dxS1 dxS2\nRk R(1)k ×R(2)k\n! ! Z Z\n= p(1)k (xS1) dxS1 p(2)k (xS2) dxS2 . Substituting back completes the proof. This result generalizes immediately to m-way partitions XS = Fmi=1 XSi with regions Rk = Qmi=1 R(i)k and\nexperts pk(xS) = Qi p(i)k (xSi). The key requirement is that both the gating regions and the expert distributions respect the\nsame factorization structure.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 48,
+    "total_chunks": 77,
+    "char_count": 592,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0d9cb2d0-7ef0-46a7-bf0d-583473c9b428",
+    "text": "Certified Approximate Inference INNER BOX CONSTRUCTION\nProposition A.6 (Conservative Inner Box). Let {Vk} be Voronoi cells induced by centroids {ck} ⊂Rd. Define the\nnearest-centroid distance\nδk := min ∥ck −cj∥2.\nj̸=k Then the axis-aligned box centered at ck with radius satisfies B−k := Qdi=1[ck,i −r, ck,i + r] ⊆Vk. Take any point x ∈B−k . By construction, |xi −ck,i| ≤r for all i, so v d\nu √ √ δk\n∥x −ck∥2 = utX(xi −ck,i)2 ≤ d · r2 = d r = . 2\ni=1 Now consider any other centroid cj with j ̸= k. By the triangle inequality: ∥x −cj∥2 ≥∥ck −cj∥2 −∥x −ck∥2 ≥δk −δk = δk .\n2 2 Thus ∥x −ck∥2 ≤δk2 ≤∥x −cj∥2 for all j ̸= k, which means x is closer to ck than to any other centroid. By the definition\nof Voronoi cells, x ∈Vk. Since this holds for every x ∈B−k , we have B−k ⊆Vk.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 49,
+    "total_chunks": 77,
+    "char_count": 773,
+    "word_count": 156,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f58ce0ef-825a-492e-aa7f-0190920314ba",
+    "text": "The factor 1/(2 d) ensures containment but is conservative. A tighter construction can be obtained by\noptimizing the per-dimension radii ri subject to the half-space constraints defining Vk, but this requires solving a constrained\noptimization problem for each cell. The simple formula above trades tightness for computational convenience and robustness. Remark A.8 (Extension to bounded domains). If the domain is a box Ω= Qi[ℓi, ui], intersect: B−k ←B−k ∩Ω. This\npreserves B−k ⊆Vk ∩Ωbecause intersection with Ωonly removes points outside the domain.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 50,
+    "total_chunks": 77,
+    "char_count": 551,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b06a664c-8d45-46f8-b7cb-e3f10680f060",
+    "text": "ANYTIME REFINEMENT: CONVERGENCE ANALYSIS Theorem A.9 (Monotone Tightening and Convergence). Let Pt denote the partition after t refinement steps with bounds\n(Z−t , Z+t ). Then (i) Z−t ≤Z ≤Z+t ∀t (ii) Z−t ≤Z−t+1 and Z+t+1 ≤Z+t for all t (iii) if refinement drives the boundary\nvolume µ(Vk+ (Pt) \\ V k− (Pt)) →0 for each cell, then limt→∞Z±t = Z. Under uniform refinement, the gap scales as\nZ+t −Z−t = O(2−t/d)(Z+0 −Z−0 ), requiring depth O(d log(1/ϵ)) to achieve target gap ϵ. Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 51,
+    "total_chunks": 77,
+    "char_count": 539,
+    "word_count": 89,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2399f4d2-36ed-4c7f-92bd-6c594a20d34b",
+    "text": "We formalize the refinement scheme and then prove each claim. Fix a Voronoi-gated sum node n with scope S\nand bounded domain ΩS ⊂R|S|. Let {Vk}Kk=1 be the Voronoi cells intersected with ΩS (so each Vk is measurable and\nS k Vk = ΩS up to boundaries of measure zero). At refinement step t, we maintain a disjoint axis-aligned partition Pt of\nΩS into boxes, i.e., ΩS = U B∈Pt B (disjoint union). For each cell k, define the inner/outer approximations induced by Pt: V k− (Pt) := [ B, Vk+ (Pt) := [ B. (3)\nB∈Pt: B⊆Vk B∈Pt: B∩Vk̸=∅ By construction, V k− (Pt) ⊆Vk ⊆Vk+ (Pt) for every t. Let pk(xS) ≥0 denote the expert density (subcircuit) attached to cell k. Define the node-level cell integrals and their bounds Z Z Z\nIk := pk(xS) dxS, I−k,t := − pk(xS) dxS, I+k,t := + pk(xS) dxS. (4)\nVk Vk (Pt) Vk (Pt) Because Pt is disjoint and V k− (Pt) (resp. V k+ (Pt)) is a union of boxes from Pt, we can write these integrals as sums of box\nintegrals (no overlap): I−k,t = X INTEGRATEBOX(pk, B),\nB∈Pt: B⊆Vk\nI+k,t = X INTEGRATEBOX(pk, B). The node-level mixture integral at n is I := PKk=1 πkIk and its bounds are I−t := Pk πkI−k,t and I+t := Pk πkI+k,t, where\nπk ≥0 and Pk πk = 1. Circuit-level bounds (Z−t , Z+t ) are obtained by propagating node-level bounds upward via the\nsame sum/product rules as in Theorem 3.10.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 52,
+    "total_chunks": 77,
+    "char_count": 1306,
+    "word_count": 251,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e057d7d5-82e7-46f1-acfc-2601abd1a35d",
+    "text": "We first establish node-level validity at every Voronoi-gated node n. For each k,\nsince V k− (Pt) ⊆Vk ⊆Vk+ (Pt) and pk ≥0, monotonicity of integration gives Multiplying by πk ≥0 and summing over k yields I−t ≤I ≤I+t at node n. For standard sum nodes, linearity and nonnegative weights preserve inequalities; for product nodes, decomposability implies\nintegrals factor and multiplying nonnegative bounds preserves inequalities. Thus, by induction in reverse topological order\n(as in Theorem 3.10), every node integral is sandwiched by its bounds, in particular at the root Z−t ≤Z ≤Z+t . Claim (ii): Monotonic tightening.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 53,
+    "total_chunks": 77,
+    "char_count": 619,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5d6ac54c-f3be-4367-aad5-81fcaf00c6a2",
+    "text": "By definition, Pt+1 is obtained from Pt by refining (bisecting) a subset of boxes and\nreclassifying. Refinement preserves disjointness and refines the partition: every box B′ ∈Pt+1 is contained in some box\nB ∈Pt, and every B ∈Pt is the disjoint union of its descendants in Pt+1. We show set inclusions: V k− (Pt) ⊆Vk− (Pt+1), Vk+ (Pt+1) ⊆Vk+ (Pt). (5) For the inner sets: take any B ∈Pt with B ⊆Vk. Under refinement, B is either unchanged or replaced by disjoint children\n{B′r} ⊆B. In either case, every descendant B′r satisfies B′r ⊆B ⊆Vk, hence all of B's mass remains INSIDE and is\nincluded in V k− (Pt+1). Therefore the union of INSIDE boxes can only expand, proving the first inclusion in (5). For the outer sets: take any B′ ∈Pt+1 such that B′ ∩Vk ̸= ∅. Let B ∈Pt be its (unique) ancestor box with B′ ⊆B. Then\nnecessarily B ∩Vk ̸= ∅as well, hence B ⊆Vk+ (Pt). Since B′ is contained in B, we have B′ ⊆Vk+ (Pt), and taking unions\nover all such B′ gives the second inclusion in (5). Now apply monotonicity of integration (using pk ≥0) to (5): Z Z\nI−k,t = − pk ≤ − pk = I−k,t+1\nVk (Pt) Vk (Pt+1) Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 54,
+    "total_chunks": 77,
+    "char_count": 1161,
+    "word_count": 215,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9f4f1ceb-c8da-4ed2-9201-e9e330238176",
+    "text": "Z Z\nI+k,t+1 = + pk ≤ + pk = I+k,t. Vk (Pt+1) Vk (Pt)\nWeighting by πk ≥0 and summing yields node-level monotonicity I−t ≤I−t+1 and I+t+1 ≤I+t . Finally, the circuit-level\nbounds follow by propagating inequalities through the circuit: standard sums preserve monotonicity by linearity with\nnonnegative weights, and products preserve monotonicity because all integrals are nonnegative and multiplication is\nmonotone in each argument. Hence Z−t ≤Z−t+1 and Z+t+1 ≤Z+t . Claim (iii): Convergence under vanishing boundary volume. Fix a Voronoi-gated node n and a cell k. Define the\nundecided region\nUk,t := Vk+ (Pt) \\ V k− (Pt),\nso that V k− (Pt) ⊆Vk ⊆Vk+ (Pt) implies 0 ≤I+k,t −I−k,t = pk(xS) dxS. (6)\nUk,t Assume that the boundary volume µ(Uk,t) →0 as t →∞. Since pk is integrable over ΩS (it is a density component on a\nbounded domain), the Lebesgue integral is absolutely continuous with respect to the measure: for any ε > 0 there exists\nδ > 0 such that µ(A) < δ implies R A pk < ε.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 55,
+    "total_chunks": 77,
+    "char_count": 979,
+    "word_count": 175,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ddd0eb0-aa1e-4136-9b4a-f21b8367ad68",
+    "text": "Applying this to A = Uk,t yields R Uk,t pk →0, hence I+k,t −I−k,t →0 by (6). Therefore I−k,t →Ik and I+k,t →Ik (squeezing with validity from (i)). Multiplying by πk and summing over k shows that the node-level bounds converge to the true node integral. Applying\nthe same inductive argument up the circuit—using continuity of addition and multiplication on R≥0 and the fact that all\nintermediate quantities are finite—yields convergence at the root: Z−t →Z and Z+t →Z. The convergence-rate statement Z+t −Z−t = O(2−t/d)(Z+0 −Z−0 ) under uniform refinement is an informal geometric\nbound that depends on regularity of the density and the surface-area-to-volume behavior of Voronoi facets. A sufficient\ncondition is, for example, that each expert density is bounded on ΩS by ∥pk∥∞< ∞and that the undecided region Uk,t lies\nin a tubular neighborhood of the cell boundary whose thickness scales with the maximum box diameter. Under uniform refinement, after t steps the maximum box side length is O(L · 2−t/d) where L is the initial domain diameter. The undecided region Uk,t lies in a neighborhood of thickness O(2−t/d) around the (d −1)-dimensional boundary ∂Vk. Thus\nµ(Uk,t) = O(surface area × thickness) = O(2−t/d). Assuming bounded density ∥pk∥∞< ∞: I+k,t −I−k,t ≤∥pk∥∞· µ(Uk,t) = O(2−t/d). Summing over k and propagating through the circuit gives Z+t −Z−t = O(2−t/d)(Z+0 −Z−0 ). To achieve gap ϵ, we need t ≥d log2((Z+0 −Z−0 )/ϵ) = O(d log(1/ϵ)). Remark A.10 (Curse of dimensionality).",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 56,
+    "total_chunks": 77,
+    "char_count": 1486,
+    "word_count": 242,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "122c8a6f-cbee-4ccc-8d36-75360355eea9",
+    "text": "The factor d in the refinement depth makes certified bounds impractical in high\ndimensions. For example, achieving ϵ = 0.01 in d = 10 requires roughly 10 log2(100) ≈66 refinement levels, leading to\nexponential blowup. This motivates the HFV-PC construction in Section 3.2.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 57,
+    "total_chunks": 77,
+    "char_count": 272,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "90c5a558-ff1a-48d1-9d00-c793edfd87ae",
+    "text": "COMPUTATIONAL COMPLEXITY OF REFINEMENT Proposition A.11 (Per-Iteration Complexity). Each iteration of Algorithm 1 requires: • O(|C| · Kmax) to compute certified bounds via bottom-up propagation. • O(K · d · 2d) to test box-polytope containment/intersection for K cells in dimension d. Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Total per-iteration cost: O(|C| · Kmax + K · d · 2d). Bound computation: The circuit has |C| nodes. At each Voronoi-gated node, we integrate the expert subcircuit over\nat most K boxes. Assuming box integration over a subcircuit is linear in subcircuit size, the total cost is O(|C| · Kmax). Box classification: To determine whether box B = Qi[li, ui] ⊆Rd satisfies B ⊆Vk or B ∩Vk = ∅, we use the half-space\nrepresentation:\nVk = \\ {x : (cj −ck)⊤x ≤cjk}.\nj̸=k For each half-space, compute extremal values of a⊤x over box B. This takes O(d) per half-space. There are K −1\nhalf-spaces, so testing one box against one cell takes O(K · d). Testing all K cells takes O(K2 · d).",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 58,
+    "total_chunks": 77,
+    "char_count": 1019,
+    "word_count": 171,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "52b97ff3-1272-4405-8bed-9ed9d02be1ee",
+    "text": "Alternatively, testing\nall 2d corners of B against all K centroids takes O(2d · K · d). The dominant term is O(2d) for large d. The 2d factor in corner evaluations reinforces the curse of dimensionality. In practice, for d ≤5, adaptive\nrefinement is effective; for higher dimensions, HFV-PCs are preferable.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 59,
+    "total_chunks": 77,
+    "char_count": 307,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f1f343b8-80cb-4abb-9ffe-4e8e8eceaeb5",
+    "text": "MARGINALS AND CONDITIONALS The certified bound framework extends naturally to marginals and conditionals. To compute p(xA) = R p(x) dxA¯ where ¯A = X \\ XA, propagate bounds through the circuit while\nmarginalizing out ¯A. At each Voronoi-gated node: • If the scope S includes variables in ¯A, restrict box approximations to dimensions being integrated (project boxes onto\nsubspace X A∩S)¯ and integrate over those dimensions. • If the scope is entirely within A, no change needed.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 60,
+    "total_chunks": 77,
+    "char_count": 479,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "411e6ef3-d781-4824-9123-7b766e5730ea",
+    "text": "The result is bounds (p−(xA), p+(xA)) satisfying p−(xA) ≤p(xA) ≤p+(xA) for all xA. For disjoint A, B and p(xA | xB) = p(xA, xB)/p(xB), we have bounds on numerator and\ndenominator. Assuming p−(xB) > 0, apply interval arithmetic: p−(xA, xB) xB) ≤p(xA | xB) ≤p+(xA, .\np+(xB) p−(xB) These bounds are valid because division is monotone in the numerator and antitone in the denominator when all quantities\nare positive. Practical considerations.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 61,
+    "total_chunks": 77,
+    "char_count": 439,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ddc384e9-aa55-4b36-9421-cfddf939f9d3",
+    "text": "If p−(xB) is very small or zero, the upper bound becomes loose or undefined. Refining the\npartition to tighten p−(xB) away from zero is necessary for meaningful conditional bounds. Hierarchical Factorized Voronoi PCs FACTORIZED VORONOI CELLS The key idea of HFV-PCs is to replace a single high-dimensional Voronoi tessellation with a product of lower-dimensional\ntessellations that align with the circuit's variable decomposition. Definition A.13 (Factorized Voronoi Partition). Let XS = Fmi=1 XSi be a partition of scope S into m disjoint blocks. For\neach block i, choose centroids {c(i)1 , . . . , c(i)Ki} ⊂R|XSi| and let {V ki(i) }Kiki=1 be the induced Voronoi cells in R|XSi|. Define\nthe joint product cell indexed by k = (k1, . . . , km) ∈[K1] × · · · × [Km]: Vk := Vk1(1) × · · · × Vkm(m) ⊆R|XS|. Geometry-Aware Probabilistic Circuits via Voronoi Tessellations The corresponding hard gate factors as: m m\ngk(xS) = I[xS ∈Vk] = Y I[xSi ∈Vki(i) ] = Y g(i)ki (xSi).\ni=1 i=1 Membership in Vk can be decided independently for each block. This is exactly the geometric analogue of decomposability.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 62,
+    "total_chunks": 77,
+    "char_count": 1096,
+    "word_count": 187,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eea27fd0-de45-4e59-b617-520ff7b1a6d5",
+    "text": "Proposition A.14 (Factorized Gate Decomposition). For a factorized cell Vk, the hard gate decomposes as gk(xS) = Y g(i)ki (xSi).\ni=1 By definition, xS ∈Vk if and only if xSi ∈V ki(i) for all i. Since the conditions involve disjoint variable sets, the\nindicator of their conjunction factors: # \"\\ I[xS ∈Vk] = I {xSi ∈Vki(i) } = Y I[xSi ∈Vki(i) ].\ni i HFV-GATED SUM NODES AND TRACTABILITY Theorem A.15 (Tractability of HFV-PCs). Let C be an HFV-PC with |C| nodes, maximum factorization degree m, and at\nmost K Voronoi cells per factor. Then the partition function, all marginals, and all conditionals are computable exactly in\ntime O(|C|Km). We prove the partition function claim. The marginal and conditional claims follow by the same bottom-up evaluation\nused for standard smooth decomposable PCs.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 63,
+    "total_chunks": 77,
+    "char_count": 797,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e284a3d9-0bde-45af-a802-8e2d2efd7590",
+    "text": "For each node n we consider In = R fn(xscope(n)) dxscope(n). If n is a leaf, In is a univariate integral and is tractable by assumption. If n is a product node, decomposability implies that children have disjoint scopes, so the integral factors as In = Qc∈ch(n) Ic. If n is a standard sum node, linearity gives In = Pc πcIc. It remains to handle an HFV-gated sum node n with scope XS = Fmi=1 XSi. Using (??) and exchanging summation and\nintegration we obtain In = X gk(xS) πk Y p(i)ki (xSi) dxS\nk i=1\n= X πk Y g(i)ki (xSi) p(i)ki (xSi) dxS. (7)\nk i=1 Since the scopes XSi are disjoint and each factor depends only on xSi, we apply Fubini to factor the integral, Y g(i)ki (xSi) p(i)ki (xSi) dxS (8)\ni=1\n= Y g(i)ki (xSi) p(i)ki (xSi) dxSi. (9)\ni=1 Substituting g(i)ki (xSi) = I[xSi ∈Vki(i) ] yields In = X πk Y I(i)ki , I(i)ki = (i) p(i)ki (xSi) dxSi.\nk i=1 Vki Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Each I(i)ki is the integral of an HFV subcircuit over a lower-dimensional Voronoi cell, so we compute it recursively by the\nsame argument. This establishes exact tractability. For complexity, at an HFV-gated sum node we compute Pi Ki factor integrals and then evaluate the sum over at most\nQi Ki ≤Km joint indices, each term requiring O(m) arithmetic operations.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 64,
+    "total_chunks": 77,
+    "char_count": 1286,
+    "word_count": 234,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dd439af6-79ed-44ad-95c8-4b1ad2aff939",
+    "text": "Summing over all circuit nodes yields\nO(|C|Km) time. Cell-Restricted Integrals and the Recursion Base Case The recursion requires that we can evaluate integrals of the\nform R p(i)ki at every level. In an HFV-PC the same factorization property ensures that cell restrictions are handled locally V (i)\nat the appropriate scope. The recursion bottoms out at univariate leaves, where Voronoi cells are intervals and integration is\nstraightforward. Proposition A.16 (Univariate Voronoi Cells). In R1, let c1 < · · · < cK be centroids. The induced Voronoi tessellation\nconsists of intervals\n(−∞, c1+c22 ] k = 1\n ck−1+ck ck+ck+1\nVk = ( 2 , 2 ] 1 < k < K\n( cK−1+cK2 , ∞) k = K. For standard univariate leaf families such as Gaussians, mixtures of Gaussians, exponentials, and bounded distributions,\nintegrating over an interval is tractable by closed form CDF evaluation or simple numerical routines.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 65,
+    "total_chunks": 77,
+    "char_count": 897,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6c2672e2-d424-4177-9228-df473e73ca2b",
+    "text": "Definition A.17 (Binary HFV-PC). A binary HFV-PC over variables X with vtree T is a probabilistic circuit in which\neach internal vtree node v with children vL and vR induces HFV-gated sum nodes over scope Xv = XvL ⊔XvR. Each\nHFV-gated sum uses the binary partition (XvL, XvR) and computes: f(xv) = X g(L)kL (xvL) g(R)kR (xvR) πkL,kR p(L)kL (xvL) p(R)kR (xvR).\nkL,kR",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 66,
+    "total_chunks": 77,
+    "char_count": 365,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "de17aff5-0d2f-4733-aa72-f8e379840845",
+    "text": "Learning via Soft Gating DIFFERENTIABILITY AND GRADIENTS\nProposition A.18 (Differentiability). Let C be a soft Voronoi gated PC with parameters Θ = {{c(i)ki }, {πk}, θleaf}. For any\nfinite temperature α > 0, the likelihood p(x; Θ, α) is differentiable with respect to all parameters. Each soft gate\nexp(−α∥u −ck∥2)\nwk(u; α) =\nPj exp(−α∥u −cj∥2) is a composition of smooth operations: squared Euclidean distance (polynomial), exponential, and softmax normalization\n(ratio of positive smooth functions). The circuit output is built from sums and products of smooth gates and leaf densities,\nhence differentiable in all parameters. Proposition A.19 (Centroid Gradient). For soft gate wk(u; α), the gradient with respect to centroid ck is: ∇ckwk(u; α) = 2α wk(u; α) 1 −wk(u; α) (u −ck). Let dj = ∥u −cj∥2 and Z = Pj exp(−αdj). Then wk = exp(−αdk)/Z. Taking the derivative with respect to ck: ∇ck[exp(−αdk)] −exp(−αdk) ∇ck[Z] . ∇ckwk =\nZ Z2 We have ∇ckdk = −2(u −ck), so:",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 67,
+    "total_chunks": 77,
+    "char_count": 966,
+    "word_count": 159,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "73d5ed9f-34a6-4bfa-9664-1cbe596d2fb7",
+    "text": "∇ck[exp(−αdk)] = 2α exp(−αdk)(u −ck). Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 68,
+    "total_chunks": 77,
+    "char_count": 101,
+    "word_count": 11,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2da27411-1a21-45ec-91a5-8d3f82c1e4dc",
+    "text": "Since only the k-th term in Z depends on ck: ∇ck[Z] = 2α exp(−αdk)(u −ck). 2α exp(−αdk)(u −ck) −exp(−αdk) · 2α exp(−αdk)(u −ck) ∇ckwk =\nZ Z2\n= 2α wk (1 −wk) (u −ck). The factor wk(1 −wk) is largest when wk ≈1/2 (near decision boundaries where the model is uncertain). The gradient\nmagnitude peaks in regions of ambiguity and vanishes where routing is confident, naturally focusing centroid updates on\nimproving contested region geometry. SOFT-TO-HARD CONVERGENCE\nTheorem A.20 (Soft-to-Hard Convergence). Let {Vk} be Voronoi cells induced by centroids {ck} and let gk(u) = I[u ∈Vk]\nbe the hard gate. Let wk(u; α) be the soft gate. (i) For any u not on a Voronoi boundary, limα→∞wk(u; α) = gk(u).\n(ii) If k∗(u) = arg minj ∥u −cj∥and margin γ(u) := minj̸=k∗(∥u −cj∥2 −∥u −ck∗∥2) > 0, then 1 −wk∗(u; α) ≤(K −1) exp(−αγ(u)). (iii) If p is integrable, then limα→∞ R wk(u; α)p(u) du = R Vk p(u) du. Proof. (i) Pointwise convergence: Let u be a point not on any Voronoi boundary. Then there exists unique nearest centroid\nck∗with dk∗:= ∥u −ck∗∥2 < dj := ∥u −cj∥2 for all j ̸= k∗. Rewrite:\nwk∗(u; α) = 1 + Pj̸=k∗exp(−α(dj −dk∗)). Since dj −dk∗> 0 for all j ̸= k∗, as α →∞, each term exp(−α(dj −dk∗)) →0 exponentially.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 69,
+    "total_chunks": 77,
+    "char_count": 1208,
+    "word_count": 219,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "98893764-9b33-4617-9a93-708aeedce606",
+    "text": "α→∞wk∗(u;lim α) = 1 = gk∗(u). For j ̸= k∗, we have limα→∞wj(u; α) = 0 = gj(u).\n(ii) Exponential rate: Define margin γ(u) = minj̸=k∗(dj −dk∗) > 0. Then for all j ̸= k∗: exp(−α(dj −dk∗)) ≤exp(−αγ(u)). Summing:\nX exp(−α(dj −dk∗)) ≤(K −1) exp(−αγ(u)).\nj̸=k∗ Therefore:\nwk∗≥ 1 + (K −1) exp(−αγ), implying\n1 −wk∗≤(K −1) exp(−αγ(u)).",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 70,
+    "total_chunks": 77,
+    "char_count": 326,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9e1accd4-4c5c-460c-ae89-08cb0f8217c8",
+    "text": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations Algorithm 3 Soft Gating Training with Annealing\nRequire: Dataset D = {x(n)}Nn=1, schedule {αt}Tt=1, learning rate η\nEnsure: Trained parameters Θ\n1: Initialize:\n2: Centroids {c(i)ki } via k-means (per factor for HFV)\n3: Mixture weights {πk} uniformly on simplex\n4: Leaf parameters θleaf randomly or from prior\n5: for t = 1 to T do\n6: Set inverse temperature α ←αt\n7: for each minibatch B ⊂D do\n8: L ←−1|B| Px∈B log p(x; Θ, α)\n9: Θ ←Θ −η ∇ΘL\n10: Enforce π on simplex (projection or softmax)\n11: end for\n12: end for\n13: return Θ (iii) Integral convergence: We have 0 ≤wk ≤1 for all u, α. Pointwise limit gives wk →gk except on measure-zero\nboundaries. By dominated convergence: Z Z Z\nlim wk(u; α)p(u) du = gk(u)p(u) du = p(u) du.\nα→∞ Vk The margin γ(u) quantifies how much closer u is to its nearest centroid compared to second-nearest. Large margins yield\nfaster convergence. Small margins (near decision boundaries) require larger α for hard-like behavior. Synthetic Dataset Construction Figure 4 visualizes the synthetic 2D/3D benchmarks used in our experiments. These datasets were designed to emphasize\ngeometric structure (e.g., curved manifolds, crossings, knots, and disconnected supports) that can be difficult to capture\nwith input-independent mixture weights, making them well-suited for evaluating geometry-aware routing. All datasets\nwere generated following a unified protocol: (1) generate raw samples from a geometric structure as defined below, (2)\nadd Gaussian noise N(0, σ2I) with σ = 0.01, (3) standardize to zero mean and unit variance per dimension, (4) split into\n10k/5k/5k train/val/test sets. Two-Dimensional Datasets",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 71,
+    "total_chunks": 77,
+    "char_count": 1703,
+    "word_count": 270,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "612cda75-db60-4cb2-b5c6-91b66a692c7b",
+    "text": "Nine Gaussian clusters at grid positions {−1.5, 0, 1.5}2. Each cluster samples uniformly from a square\n[ck −0.6, ck + 0.6] then adds Gaussian noise σ = 0.15 and clips to bounds.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 72,
+    "total_chunks": 77,
+    "char_count": 177,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8ef4485b-ba56-47be-a89d-72ddf56aad82",
+    "text": "Five radial arms at angles 2πk/5 for k = 0, . . . , 4. Each sample: radius r ∼N(1.0, 0.32), angular offset\nδθ ∼N(0, 0.22), then convert to Cartesian (r cos(θk + δθ), r sin(θk + δθ)). Two interleaved Archimedean spirals. For each spiral: sample θ ∼Uniform(0, 2π), set θ ← θ · 2π (arc-length\ncorrection), radius r = 2θ, convert to (±r cos θ, ±r sin θ) (opposite signs for two spirals), add noise σ = 0.1. Samples uniformly from pixel-based 7 × 5 binary grids representing uppercase letters arranged spatially. The\nresults reported are for the letter W.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 73,
+    "total_chunks": 77,
+    "char_count": 550,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3b069ea5-21bb-4245-99d2-ebc4b1161fcc",
+    "text": "Active pixels are converted to continuous coordinates (cell size 0.2), positioned in a\ngrid layout with letter gap 0.4. Three-Dimensional Datasets All 3D datasets were generated by sampling a parameter t ∼Uniform([−π, π]), apply a parametric curve as defined below,\nscaling by 4, adding noise σ = 0.01, foloowing (Sidheekh et al., 2022; 2023) Geometry-Aware Probabilistic Circuits via Voronoi Tessellations (a) Alphabets (2D) (b) Checkerboard (2D) (c) Pinwheel (2D) (d) Spiral (2D) (e) Bent Lissajous (3D) (f) Interlocked Circles (3D) (g) Knotted (3D) (h) Twisted Eight (3D)",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 74,
+    "total_chunks": 77,
+    "char_count": 574,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aa14166a-ffa6-440f-b5bc-8e43c426870f",
+    "text": "Synthetic 2D/3D density estimation benchmarks. Top row: 2D datasets with diverse local geometry and disconnected\nsupport. Bottom row: 3D manifold-like datasets exhibiting crossings, interlocks, and knotting. These benchmarks stress-test whether\ngeometry-aware routing can specialize locally while maintaining reliable inference (VT via certification; HFV via alignment).",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 75,
+    "total_chunks": 77,
+    "char_count": 370,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa660ec8-6f23-4734-80b7-308d3af9f662",
+    "text": "Lissajous curve: (x, y, z) = (sin(2t), cos(t), cos(2t)). Two circles in orthogonal planes: Circle 1 in xy-plane (sin t, cos t, 0), Circle 2 in xz-plane (1 +\nsin t, 0, cos t). Trefoil knot: (x, y, z) = (sin t + 2 sin 2t, cos t −2 cos 2t, sin 3t). Two circles in orthogonal planes: (sin t, cos t, 0) and (2 + sin t, 0, cos t). Implementation Details All models were implemented in PyTorch using the CirKit package (Lab, 2024) and trained with Adam (lr 0.01, batch size\n500, 100 epochs) on a single 24GB NVIDIA L4 GPU. VT and HFV gating were implemented as drop-in replacements for\nsum layers, with learnable centroids initialized via k-means and optimized jointly with circuit parameters. We annealed\nthe soft-gating inverse temperature linearly, α : 1 →50, to transition from smooth routing to near-hard assignments. For\nVT models, evaluation and model selection used the certified normalization bounds produced by our box-based inference\nroutine (reporting the log-likelihood lower bound), whereas HFV models preserved exact tractable inference throughout. For all models, the best performing epoch in terms of validation performance was saved and loaded for testing.",
+    "paper_id": "2603.11946",
+    "title": "Geometry-Aware Probabilistic Circuits via Voronoi Tessellations",
+    "authors": [
+      "Sahil Sidheekh",
+      "Sriraam Natarajan"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11946v1",
+    "chunk_index": 76,
+    "total_chunks": 77,
+    "char_count": 1167,
+    "word_count": 195,
+    "chunking_strategy": "semantic"
+  }
+]

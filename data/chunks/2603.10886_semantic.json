@@ -1,0 +1,2144 @@
+[
+  {
+    "chunk_id": "da202514-5751-4348-b1d2-7ab08a16fdcf",
+    "text": "KERNEL TESTS OF EQUIVALENCE Xing Liu Axel Gandy\nQuantCo Department of Mathematics\nLondon, UK Imperial College London\nxingliu97@outlook.com London, UK\na.gandy@imperial.ac.uk\nMar March 12, 2026 ABSTRACT\n11 We propose novel kernel-based tests for assessing the equivalence between distributions. Traditional\ngoodness-of-fit testing is inappropriate for concluding the absence of distributional differences,\nbecause failure to reject the null hypothesis may simply be a result of lack of test power, also known\nas the Type-II error. This motivates equivalence testing, which aims to assess the absence of a\nstatistically meaningful effect under controlled error rates. However, existing equivalence tests are\neither limited to parametric distributions or focus only on specific moments rather than the full\ndistribution. We address these limitations using two kernel-based statistical discrepancies: the kernel\nStein discrepancy and the Maximum Mean Discrepancy. The null hypothesis of our proposed tests[stat.ML] assumes the candidate distribution differs from the nominal distribution by at least a pre-defined\nmargin, which is measured by these discrepancies. We propose two approaches for computing the\ncritical values of the tests, one using an asymptotic normality approximation, and another based on\nbootstrapping. Numerical experiments are conducted to assess the performance of these tests. Keywords Equivalence testing · hypothesis testing · goodness-of-fit testing · kernel methods Goodness-of-fit (GOF) testing aims to use observed data to draw statistical conclusions on how well some nominal\ndistribution approximates an unknown underlying data-generating process.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 0,
+    "total_chunks": 119,
+    "char_count": 1674,
+    "word_count": 229,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7aa2e854-eadb-43e5-b1ae-21613578c373",
+    "text": "Denote by P the set of probability measures\non Rd, and let Q, P ∈P. Given observations Xn := {Xi}ni=1 ⊂Rd drawn independently from Q, a GOF test aims to\nuse Xn to test\nH∗0 : Q = P against H∗1 : Q ̸= P . (1) Depending on the assumed knowledge about the nominal distribution P, the GOF testing literature can be categorizedarXiv:2603.10886v1\ninto two main settings. The first is one-sample testing, where samples from Q are observed, and P is often specified via\na probability density function, whose normalizing constant is usually unknown. This is the case when, e.g., P belongs to\na probabilistic model, such as general exponential family models (Casella and Berger, 2002, Chapter 3.4), energy-based\nmodels (Cho et al., 2013) and probabilistic graphical models (Koller and Friedman, 2009). Another setup is two-sample\ntesting, where P is specified implicitly through a sampling procedure and does not admit tractable likelihood functions,\nbut simulating from P is possible. Examples include generative adversarial networks (Goodfellow et al., 2014) and\nmany scientific models based on simulators (Beaumont, 2010; Riesselman et al., 2018; Bharti et al., 2022).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 1,
+    "total_chunks": 119,
+    "char_count": 1160,
+    "word_count": 186,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "86bc304d-c91f-45a9-ad37-8b4a7f52b9a4",
+    "text": "In both\nsettings, the null hypothesis H∗0 is rejected if there is statistically significant evidence that the data do not comply to the\nnominal distribution P. In many applications, however, the goal is not to establish that a statistically significant difference exists between some\ndistributions, but rather that the distributions are practically equivalent. Examples include comparative bioequivalence\ntrials (Metzler, 1974; Schuirmann, 1987; Cade, 2011), drug stability assessment (Liu et al., 2007), pharmacokinetics\nstudies (Hauck and Anderson, 1984; Gsteiger et al., 2011), and validation of statistical models (Dette and Munk, 1998; Kernel Tests of Equivalence A PREPRINT Equivalence Test Discrepancy Setting Method Reference E-KSD-Normal KSD One-sample CLT Theorem 2\nE-KSD-Boot KSD One-sample Bootstrapping Theorem 4\nE-MMD-Normal MMD Two-sample CLT Chen et al. (2023) and Theorem 6\nE-MMD-Boot MMD Two-sample Bootstrapping Theorem 8 Table 1: Summary of kernel-based equivalence tests proposed in this paper, and their connections to existing literature. Dette et al., 2018; Carlini and Wagner, 2017). In those cases, hypotheses of the form (1) are no longer appropriate\nfor two reasons. First, failure to reject the null hypothesis H∗0 does not provide a probabilistic guarantee for Q = P;\ninstead, it can simply be due to the lack of test power (Inman, 1994; Siebert and Ellenberger, 2020). Second, it is\nwell-known that, in practice, the null hypothesis H∗0 will eventually always be rejected as the data size grows. This is\nbecause \"all models are wrong\", so a very large sample would \"invariably produce statistically significant lack of fit\"\n(Härdle and Simar, 2019, pp. 189). Equivalence testing (Burt, 2013) aims to resolve this issue by considering a different null hypothesis, where Q and\nP are sufficiently different by a pre-specified margin. The notion of distributional difference is often quantified by a\nstatistical discrepancy D. Given a positive number θ > 0, known as the equivalence margin (Wellek, 2021) or minimal\nmeaningful distance (Meyners, 2012), we define B(P; θ) := {Q ∈P : D(Q, P) ≤θ} to be the closed ball centred at\nP with radius θ, and Bc(P; θ) = P\\B(P; θ) its complement.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 2,
+    "total_chunks": 119,
+    "char_count": 2211,
+    "word_count": 343,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ead39c03-8a76-4f3a-bc2b-0450bdbe3acb",
+    "text": "We consider testing the following hypotheses H0 : Q ∈Bc(P; θ) against H1 : Q ∈B(P; θ) . (2) Unlike the standard hypotheses (1), rejection of H0 now suggests that there is sufficient evidence that Q and P are\nsimilar. This allows the probability of falsely concluding that Q and P are identical to be rigorously controlled. Equivalence testing was initially employed in the field of pharmacokinetics (Hauck and Anderson, 1984) for determining\nwhether new, cheaper drugs exhibit comparable efficacy to existing, more expensive ones (Senn, 2008).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 3,
+    "total_chunks": 119,
+    "char_count": 543,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bef22f58-00fb-4081-ad1f-0e70458f3248",
+    "text": "For a review, see\nBurt (2013); Lakens (2017). In the statistics literature, equivalence tests have been developed for comparing parametric\nmodels (Dette and Munk, 1998; Dette et al., 2018), for assessing independence (Chen et al., 2023), and for improving\nthe test-then-pool framework in causal inference (Li et al., 2020). However, most existing methods are restricted to\nparametric models or specific moments. A recent non-parametric method by Chen et al. (2023) uses the Maximum\nMean Discrepancy (Müller, 1997; Gretton et al., 2012) to avoid model-specific assumptions. However, their method\nrelies on an asymptotic normal approximation, which, as we show numerically in Section 3.2, may break down when\nthe equivalence margin θ is small, resulting in uncontrolled Type-I error. We propose two families of equivalence tests, one based on an asymptotic normal approximation as in Chen et al.\n(2023), and the other on a bootstrapping technique. Each family contains two variants, one employing Kernel Stein\nDiscrepancies, suitable for one-sample testing, and the other employing Maximum Mean Discrepancies, suitable for\ntwo-sample testing. Our tests do not make any parametric assumptions about the underlying distributions and are not\nlimited to specific moments.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 4,
+    "total_chunks": 119,
+    "char_count": 1265,
+    "word_count": 188,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8601b94c-b65a-4ddf-8555-8194c938ee0b",
+    "text": "Our contributions are summarized as follows and in Table 1: We first propose two equivalence tests for the one-sample setting. The first test, called the E-KSD-Normal\ntest, is motivated by Chen et al. (2023) and leverages a Central Limit Theorem for the KSD statistic. We then\ndemonstrate that this test, despite achieving high power, can result in uncontrolled Type-I error, especially\nwith small equivalence margins. We then propose an alternative equivalence test, called the E-KSD-Boot test,\nwhich is based on bootstrapping and can achieve better Type-I error control with finite samples regardless of\nthe size of the equivalence margin, albeit at the cost of a lower test power. Next, we propose two equivalence tests for the two-sample setting. These tests, called the E-MMD-Normal and\nE-MMD-Boot tests, respectively, mirror the aforementioned one-sample tests and leverage MMD to adapt them\nto the two-sample setting. In particular, our E-MMD-Normal test resembles the homogeneity-equivalence test\nof Chen et al. (2023) and generalizes it to allow non-identical sample sizes. For the two bootstrapping tests, we propose a data-driven approach for selecting the equivalence margin θ,\nwhich computes θ as the minimal effect size given a pre-specified test power.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 5,
+    "total_chunks": 119,
+    "char_count": 1267,
+    "word_count": 193,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "223fabcc-ca9b-418b-a205-217525782a79",
+    "text": "The rest of this work is organized as follows. Section 2 reviews the equivalence testing framework and the two statistical\ndiscrepancies we will use to construct our tests. Section 3 and Section 4 introduce our proposed equivalence tests that\nare suitable for one-sample and two-sample testing, respectively. Section 5 discusses how to select the equivalence\nmargin in practice. Section 6 provides numerical experiments showing the validity and power of the proposed tests.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 6,
+    "total_chunks": 119,
+    "char_count": 473,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9f613f17-d501-4dbd-8b14-c2f21b588533",
+    "text": "Kernel Tests of Equivalence A PREPRINT Figure 1: Comparison of different types of hypothesis testing. The shaded area depicts the space of distributions of\ninterest. The null sets are colored in orange, and the alternative sets are colored in grey. Left. standard testing with a\npoint null hypothesis. Robust testing based on a statistical discrepancy D. This section provides the necessary background on the kernel-based divergences and metrics that we adopt in our\ntests, as well as the relevant literature. Throughout, we denote by P(Rd) the set of probability measures on Rd. Given\nx ∈Rd, we denote by δx the Dirac delta measure with point mass at x.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 7,
+    "total_chunks": 119,
+    "char_count": 654,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d4673c93-59f4-4729-aa4a-2b77e4fcfd26",
+    "text": "2.1 Equivalence Testing Our goal is to design non-parametric tests targeting the equivalence hypotheses of the form (2), with appropriate choices\nof D to be introduced later. Tests targeting equivalence hypotheses of the form (2) are known as equivalence testing (ET,\nBurt, 2013; Lakens, 2017) or negligible effect testing (Beribisky and Cribbie, 2024). In classic GOF testing, the null\nhypothesis typically assumes no meaningful statistical difference, namely H∗0 : Q = P. Consequently, GOF testing\ncan only conclude the presence of model mis-alignment, because failing to reject H∗0 does not suggest any statistical\nevidence that it holds true. In contrast, for ET, the null hypothesis assumes instead that Q and P are sufficiently\ndifferent by some margin. This means that, for a well-calibrated ET, the probability of falsely concluding the absence\nof meaningful statistical differences can be controlled. ET has found applications in a wide range of areas, including pharmacokinetics (Hauck and Anderson, 1984;\nSchuirmann, 1987) and psychology (Quertemont, 2011; Rogers et al., 1993).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 8,
+    "total_chunks": 119,
+    "char_count": 1089,
+    "word_count": 164,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6282baa3-ed50-442d-8f15-227b69fa57b4",
+    "text": "The simplest equivalence test is the\ntwo one-sided test (TOST, Schuirmann, 1987; Seaman and Serlin, 1998). In TOST, two one-sided hypotheses of the\nform H0 : D > θu and H0 : ∆< −θl are tested, where D is some measure of effect (potentially negatively valued)\nand θl, θu are two thresholds for significant effect size. One then one conclude −θl < ∆< θu if both hypotheses\nare rejected. However, TOST is often found to suffer from low test power due to the use of two auxiliary hypotheses\n(Boulaguiem et al., 2024; Neuhäuser and Ruxton, 2024). Various ETs targeting directly an equivalence hypothesis have been proposed. Rogers et al. (1993); Wellek (2002)\nproposed tests for equivalence of means. Dette and Kokot (2021) studied the problem of testing equivalence of means\nand variances in a two-sample setup. Dette and Munk (1998) used the L2 distance to test the equivalence between\nobservations and parametric models. Dette et al. (2018) used both L2 and L∞distances to test the equivalence of two\nparametric models. Baringhaus et al. (2017) used a weighted L2 distance. Freitag et al. (2007) proposed an equivalence\ntest for comparing the marginals of multivariate distributions. Yuan et al. (2016); Beribisky and Cribbie (2024) studied\nequivalence testing for structural equation models.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 9,
+    "total_chunks": 119,
+    "char_count": 1290,
+    "word_count": 209,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e354bf6d-2ab9-4da9-8667-5070da370704",
+    "text": "These tests are limited to either specific moments of the distributions,\nor to certain parametric models. In contrast, our proposed tests are non-parametric and capable of testing for the\nhomogeneity of the full distributions, thus providing more flexibility. Closest to our work is Chen et al. (2023), who used the characteristic functions to construct tests for distributional\nhomeogeneity, independence, and symmetry. Although not mentioned explicitly in their paper, their measure of\ndissimilarity is effectively an MMD. Our normality-based methods are similar to their approach, except that they assume\nthe two samples to have equal sizes, whereas we allow them to be different, thus providing more generality. Moreover,\nour bootstrap-based methods differ fundamentally from their approach—while Chen et al. (2023) rely on an asymptotic\nnormality result for the MMD estimator, our bootstrapped tests leverage the triangle inequality of MMD or KSD to\nconstruct a test statistic. As we will show numerically in Section 6, with small sample sizes, the normality-based tests,\nincluding that of Chen et al. (2023), performs poorly in controlling the Type-I error when the sample size is small,\nwhereas the bootstrap-based tests remain well-calibrated even with small samples. Kernel Tests of Equivalence A PREPRINT 2.2 Kernel-based Discrepancies The equivalence hypotheses (2) are specified by a statistical discrepancy D. Hence, changing D would result in a\ndifferent null set, thus also a different hypothesis. It is therefore important to select a statistical discrepancy that is both\ncomputationally convenient for the problem at hand, and also statistically meaningful to quantify the type of model\ndeviation of interest. We propose to use KSD and MMD, two kernel-based statistical discrepancies with desirable\ncomputationally and statistical properties. We will review KSD and MMD in this section. Throughout, we assume the\nkernel k is characteristic (Sriperumbudur et al., 2011).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 10,
+    "total_chunks": 119,
+    "char_count": 1986,
+    "word_count": 295,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "51eeacee-8727-4adc-91af-af3dd014cbe0",
+    "text": "2.2.1 Kernel Stein Discrepancy KSD is a statistical divergence based on kernel methods and Stein's method. Assume P admits a Lebesgue density\np on Rd and p(x) > 0 that is continuously differentiable, and define its score function sp(x) := ∇x log(x). Let Hk\nbe the reproducing kernel Hilbert space (RKHS; Saitoh et al., 2016) associated with a reproducing kernel k, and let\nHdk = {f = (f1, . . . , fd)⊤: fj ∈H} be the product space equipped with the norm ∥f∥Hdk = (Pdj=1 ∥fj∥2Hk)1/2. The\n(Langevin) kernel Stein discrepancy (KSD; Chwialkowski et al., 2016; Liu et al., 2016; Oates et al., 2017) between Q\nand P is defined as\nKSD(Q, P) = sup EX∼Q[Apf(X)] ,\nf∈Hdk;∥f∥k≤1\nwhere Ap is an operator acting on vector-valued functions, defined as (Apf)(x) = sp(x)⊤f(x) + ∇⊤f(x). Under\nmild regularity conditions on sp, the operator Ap, called Langevin Stein operator, maps sufficiently regular functions to\nzero-mean functions under the probability measure P, namely EX∼Q[Apf(X)] = 0. Loosely speaking, this means that\nthe KSD takes small values when Q is \"close\" to P, and large values otherwise. This can be made rigorous by showing\nthat KSD is P-separating, namely KSD(Q, P) = 0 if Q = P and KSD(Q, P) > 0 otherwise, whenever the kernel\nk is characteristic (Barp et al., 2024, Theorem 3). This property suggests that KSD is a valid statistical discrepancy,\nmotivating Chwialkowski et al. (2016); Liu et al. (2016) to use it as a test statistic for the standard GOF null hypothesis\n(1), where H∗0 is rejected for large estimates of KSD(Q, P). When EX∼P [∥sp(X)∥22] < ∞, the squared KSD admits a double-expectation form, allowing it to be efficiently\nestimated by Monte Carlo. Indeed, Barp et al. (2024, Corollary 1) shows that 1/2\nKSD(Q, P) = EX,X′∼Q[up(X, X′)] ,\nwhere\nup(x, x′) = sp(x)⊤sp(x′)k(x, x′) + sp(x)⊤∇2k(x, x′) + sp(x′)⊤∇1k(x, x′) + ∇⊤∇k(x, x′) ,\nand ∇⊤∇k(x, y) := Pdj=1 ∂xj∂yjk(x, y). Let Qn be an empirical distribution formed by independent random\nvariables X1, . . . , Xn. a natural estimator is the following V-statistic, formed by substituting Qn for Q\nKSD2(Qn, P) = X up(Xi, Xj) . (3)\n1≤i,j≤n\nThis estimator possesses desirable computational advantages. Firstly, it does not require samples from P, which can be\ndifficult to generate. Secondly, it depends on P only through the score function sp, which can be evaluated even if the\nnormalizing constant is unknown.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 11,
+    "total_chunks": 119,
+    "char_count": 2375,
+    "word_count": 406,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb9157df-81c3-4776-835e-ba28d836a431",
+    "text": "These make KSD suitable for testing the GOF of many probabilistic models that are\nbeyond the reach of traditional GOF tests, such as general exponential family models (Barndorff-Nielsen, 1978; Canu\nand Smola, 2006), energy-based models (Cho et al., 2013), and probabilistic graphical models (Koller and Friedman,\n2009). In comparison, classic GOF tests, such as likelihood ratio tests (Hogg et al., 1977, Chapter 8.7), chi-square\ntests (Hogg et al., 1977, Chapter 9.1), Komogorov-Smirnov tests (Kolmogorov, 1933), either require the normalizing\nconstant to be known, or can struggle for multivariate models. GOF tests based on KSD proceed by first using empirical samples to compute the KSD estimate, and rejecting the null\nhypothesis (1) if it exceeds a critical value. This critical value does not admit a closed-form, but can be estimated using\nwild bootstrapping (Leucht and Neumann, 2013; Shao, 2010) or weighted bootstrapping (Arcones and Gine, 1992;\nJanssen, 1994) (Liu and Briol, 2025). Both approaches are found to achieve similar empirical performance for the KSD\ntest (Liu and Briol, 2025). In our proposed tests, we will use weighted bootstrapping since our theoretical results are\nbuilt upon their existing theory studied in Arcones and Gine (1992). In weighted bootstrapping, the distribution of KSD2(Qn, P) is approximated using bootstrap samples of the form\nD2Wn(Xn; up) := X (Wni −1)(Wnj −1)up(xi, xj) , (4) n2\n1≤i,j≤n Kernel Tests of Equivalence A PREPRINT where Wn = (Wn1, . . . , Wnn) ∼Multinomial(n; 1/n, . . . , 1/n). Let {KSD2n,b}Bb=1 denote the bootstrap sample (4)\nbased on B i.i.d. copies of Wn, and let {KSDn,b}Bb=1 be their square-roots. The standard KSD test rejects H∗0 if\nKSD2(Qn, P) > γB1−α, where γB1−α is the (1 −α)-th quantile of {KSDn,b}Bb=1, namely γB1−α = inf u ∈R : X 1{KSDn,b ≤u} ≥1 −α . (5)\nb=1 Beyond the original KSD test of Liu et al. (2016); Chwialkowski et al. (2016), various extensions have been proposed to\nspecialize in different model families, such as discrete distributions (Xu and Matsuda, 2020), survival models Fernandez\net al. (2020), graphical models (Xu and Reinert, 2021), and biological sequences (Amin et al., 2023). However, existing\nmethods focus primarily on testing the standard point null hypothesis (1). As a result, these tests are only suitable for\ndetecting the presence of model deviation, but not for concluding model equivalence.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 12,
+    "total_chunks": 119,
+    "char_count": 2403,
+    "word_count": 384,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "00f739be-9194-4fa7-820e-3f4b2bad27eb",
+    "text": "Liu and Briol (2025) proposed a\nrobust KSD test for null hypotheses of the form H0 : D(Q, P) ≤θ, which accounts for mild model mis-specification,\nbut this is still not suitable for testing model equivalence. 2.2.2 Maximum Mean Discrepancy Another closely related family of kernel discrepancies is the MMD. The MMD between two probability measures\nQ, P ∈P is defined as the maximal discrepancy between the means of functions under Q and P over all functions in\nthe unit ball of H, i.e.,\nMMD(Q, P) := sup EQ[f] −EP [f] . (6)\nf∈H: ∥f∥H≤1 With bounded kernels, the MMD can be rewritten as a distance between the kernel mean embeddings of two distributions\n(Gretton et al., 2012, Lemma 4). The kernel mean embedding (Smola et al., 2007; Sriperumbudur et al., 2010) is a\nmapping from P to H, denoted as µP (·) := R k(x, ·)P(dx) for any P ∈P. One can show that (Gretton et al., 2012,\nTheorem 5) the MMD can be expressed in closed-form as 1/2\nMMD(Q, P) = ∥µP −µQ∥H = EX,X′∼Q[k(X, X′)] + EY,Y ′∼P [k(Y, Y ′)] −2EX∼Q,Y ∼P [k(X, Y )] .\n(7) When k is characteristic, the kernel mean embedding is injective, and the MMD is a metric on P (Sriperumbudur, 2016;\nSimon-Gabriel et al., 2023). Many well-known kernels are characteristic, such as Gaussian, Inverse Multi-Quadric and\nMatérn kernels, while an example of non-characteristic kernels is linear kernels. Equation (7) suggests a natural estimator for the squared MMD (Gretton et al., 2012, Eq. 5). Given independent random\nsamples Xn = {Xi}ni=1 from Q and Ym = {Yj}mj=1 from P, the squared MMD, MMD2(Q, P), can be estimated by\nsubstituting the empirical measures Qn = n−1 Pni=1 δXi and Pm = m−1 Pmj=1 δYj, i.e., n m\n1 1 2\nMMD2(Qn, Pm) = X k(Xi, Xj) + X k(Yi, Yj) − X X k(Xi, Yj) . (8)\nn2 m2 nm\n1≤i,j≤n 1≤i,j≤m i=1 j=1 The above estimator MMD(Qn, Pm)2 is biased but consistent (Gretton et al., 2012). Moreover, (8) can be equivalently\nexpressed as a two-sample V-statistic (Hoeffding, 1948; Kim et al., 2022) of degree (2, 2)",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 13,
+    "total_chunks": 119,
+    "char_count": 1964,
+    "word_count": 355,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f8bdf5f0-e53a-47d4-84f7-9cc03d6e9280",
+    "text": "MMD2(Qn, Pm) = X X h(Xi, Xi′, Yj, Yj′) , (9)\nn2m2\n1≤i,i′≤n 1≤j,j′≤m where h(x, x′, y, y′) = k(x, x′)+k(y, y′)−k(x, y′)−k(x′, y).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 14,
+    "total_chunks": 119,
+    "char_count": 128,
+    "word_count": 25,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "155e0cc2-f77c-49f5-bb0c-a118de56e0b4",
+    "text": "Expressing the MMD estimator as (9) offers theoretical\nadvantages, as it allows us to use well-established results on V-statistics to construct our tests. In practice, however, (8)\nshould be used for computation, since it is more efficient with cost O((n + m)2). In this work, we focus on the general\ncase where n, m can be different. In the special case when n = m, the estimator (8) can be simplified to a one-sample\nV-statistic (Gretton et al., 2012; Lloyd and Ghahramani, 2015; Ramdas et al., 2015). The MMD test rejects the standard null hypothesis (1) if the MMD estimate exceeds a critical value. Common\napproaches for computing the critical value includes permutation and wild bootstrapping (Gretton et al., 2012; Schrab\net al., 2023). In the hypothesis testing literature, MMD has been studied extensively both with standard point null\nhypotheses (Gretton et al., 2012; Lloyd and Ghahramani, 2015; Shekhar et al., 2022; Schrab et al., 2023) and with\nrobust hypotheses (Sun and Zou, 2023; Key et al., 2025; Schrab and Kim, 2024). Kernel Tests of Equivalence A PREPRINT 2.3 Other Related Work",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 15,
+    "total_chunks": 119,
+    "char_count": 1099,
+    "word_count": 182,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "56c0ee87-ea35-4f84-b918-54f508a339b4",
+    "text": "Equivalence testing is closely connected with robust testing (Fauß et al., 2021), which often targets hypotheses of the\nform H0 : Q ∈B(P; θ) against H1 : Q ̸∈B(P; θ). That is, their null and alternative hypotheses are interchanged\ncompared with (2); see Figure 1 for an illustration. Robust tests based on both MMD and KSD have been studied (Sun\nand Zou, 2023; Liu and Briol, 2025). Compared with standard GOF where the null hypothesis is a singleton, robust\ntests hypothesize that the model is close enough, rather than identical, to the data-generating distribution. This allows\none to ignore mild model deviations, so that a model would not be rejected only due to minor lack-of-fit effects that are\nnot scientifically interesting. However, since the null set in a robust test still assumes that Q and P are close, they are\nalso not appropriate for concluding the absence of model deviation. Another related line of work is credal tests (Chau et al., 2024), which aim to detect the relationship between two\narbitrary distributional simplexes. Chau et al. (2024) proposed various MMD-based tests covering a range of scenarios. For example, their \"specification test\" targets null hypotheses where P lies inside a probability simplex, and thus it can\nbe viewed as an instance of robust tests.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 16,
+    "total_chunks": 119,
+    "char_count": 1293,
+    "word_count": 213,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d113a0be-d627-4940-b3b3-81ab7a2b0e18",
+    "text": "However, none of their tests target the equivalence hypothesis in (2). 3 One-Sample Equivalence Tests with KSD We first focus on one-sample testing, where we assume an i.i.d. sample Xn = {Xi}ni=1 from Q is observed, and\nsampling from P is either infeasible or prohibitively expensive. Instead, we assume we can evaluate the score function\nsp(x) of P at any given x ∈Rd.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 17,
+    "total_chunks": 119,
+    "char_count": 369,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6ed49bc4-2c0a-4693-96b1-faadc27ab3df",
+    "text": "We will use KSD to construct equivalence tests for this setting and show their\ncalibration and consistency. We will assume the following conditions, which together ensure the Stein kernel up has a finite second moment, which\nis sufficient for KSD to be P-separating and for the KSD estimator (3) to have well-defined asymptotic distributions. The reproducing kernel k is C10-universal (Carmeli et al., 2010, Definition 4.1). The kernel k ∈C(1,1)b satisfies EX∼Q[|∇⊤1 ∇2k(X, X)|2] < ∞.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 18,
+    "total_chunks": 119,
+    "char_count": 484,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0aca4c89-5db5-4a27-b486-c13d82df5aa7",
+    "text": "Assumption 2 and 3 are for simplicity rather than necessity and can be weakened. For example, they can be replaced by\nthe sufficient condition VarX∼Q[|up(X, X′)|2] < ∞, which will be made clear in the proof of Theorem 1 below. Under these assumptions, the asymptotic distributions of the KSD estimator (3) is well-known by using classic results\non V-statistics (Serfling, 2009, Section 5.5). We summarize it in the following result, which is proven in Section B.1.1. Proposition 1 (KSD asymptotics). Suppose Assumption 1, 2 and 3 hold.\n1. If Q ̸= P, then √n(KSD2(Qn, P) −KSD2(Q, P)) d−→N(0, σ2KSD) as n →∞, where σ2KSD =\n4VarX∼Q(EX′∼Q[up(X, X′)]).\n2. If Q = P, then σ2KSD = 0, and √n · KSD2(Qn, P) →0 in probability. A similar result is also shown in Liu et al. (2016, Theorem 4.1) but under stronger assumptions. For example, they\nassumed the data-generating distribution Q also admits a Lebesgue density, a condition we do not assume in Theorem 1. Moreover, in fact, when Q = P, the V-statistic KSD2(Qn, P) becomes degenerate of order one (Arcones and Gine,\n1992, Section 2), and it can be shown that n · KSD2(Qn, P) (scaled by n instead of √n) converges weakly to an infinite\nsum of weighted chi-squares (Serfling, 2009, Theorem 6.4.1 B). 3.1 A Normal Test\nTheorem 1 states that √nKSD2(Qn, P) is asymptotically normal when Q ̸= P, and converges to 0 when Q = P. This motivates an equivalence test based on normal approximations, where we reject H0 : KSD(Q, P) > θ if\nKSD(Qn, P) is smaller than some critical values computed from a normal quantile. We name it the E-KSD-Normal\ntest. Mathematically, this test rejects H0 : KSD(Q, P) > θ if SKSD,θn < zα, with\nSKSD,θn := (KSD2(Qn, P) −θ2) , (10)\nˆσKSD",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 19,
+    "total_chunks": 119,
+    "char_count": 1701,
+    "word_count": 301,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2d1661cb-f24e-4fb1-b52d-ba19e54fe35f",
+    "text": "Kernel Tests of Equivalence A PREPRINT Algorithm 1 Normal equivalence testing with KSD.\n1: Inputs: Observations Xn = {xi}ni=1; test level α; bootstrap sample size B.\n2: Compute the test statistic SKSD,θn using (10).\n3: Reject H0 if SKSD,θn < zα, where zα is the α-th quantile of N(0, 1). Algorithm 2 Bootstrapped equivalence testing with KSD.\n1: Inputs: Observations Xn = {xi}ni=1; test level α; bootstrap sample size B.\n2: Compute the test statistic T nKSD,θ = θ −KSD(Qn, P).\n3: for b = 1, . . . , B do\n4: Draw independent copies W nb ∼Multinomial(n; 1/n, . . . , 1/n). KSD,θ\nb up) using (4). 5: Compute bootstrap samples T n,b = θ −DW n(Xn;\n6: end for\n7: Compute the (1 −α)-th empirical quantile, γB1−α, using (5), and reject H0 if T nKSD,θ > γB1−α. where zα is the α-th quantile of N(0, 1), and ˆσKSD is the square root of the following leave-one-out Jackknife estimator\nfor σ2KSD\nn n 2\n4 1\nX ri′ , ri = X up(xi, xi′) . (11) ˆσ2KSD = X ri −1 n −1 n n −1\ni=1 i′=1 i′̸=i Variance estimators similar to the above form have been used in the goodness-of-fit testing literature to approximate the\npower of KSD test (Liu et al., 2020; Schrab et al., 2022; Liu et al., 2023). Using Theorem 1, the validity and consistency\nfor this test can be shown. The proof is in Section B.1.3 and follows a similar argument in Chen et al. (2023, Section\n2.3). Theorem 2 (E-KSD-Normal test). Suppose Assumption 1 holds. Then, for all Q satisfying Assumption 2 and 3, 0 , KSD(Q, P) > θ ,\nlim n > γ1−α) = α , KSD(Q, P) = θ , n→∞Pr(SKSD,θ \n1 , KSD(Q, P) < θ . Theorem 2 immediately implies that the Type-I error, namely limn→∞Pr(SKSD,θn > γ1−α), is bounded by α under the\nnull hypothesis H0 : KSD(Q, P) ≥θ, while converges to 1 under the alternative hypothesis H1 : KSD(Q, P) < θ.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 20,
+    "total_chunks": 119,
+    "char_count": 1761,
+    "word_count": 341,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "236c60b4-9b15-4941-b546-6047418ad0c7",
+    "text": "These combined mean that the E-KSD-Normal test is both well-calibrated and consistent. Our proof follows a standard technique in the equivalence testing literature, applicable when the test\nstatistic is asymptotically normal; see, e.g., Freitag et al. (2007); Dette et al. (2018); Chen et al. (2023); Baíllo and\nCárcamo (2024). Most closely related to our result is Chen et al. (2023, Section 2.3).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 21,
+    "total_chunks": 119,
+    "char_count": 398,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a3b31059-79fb-40ed-aecb-c1992bafd965",
+    "text": "They constructed their test using\nMMD and assumed they have access to samples of equal size from both Q and P. The equal-sample-size assumption\nallows the test statistic to be expressed as a one-sample V-statistic, similar to our formulation with KSD. Our proof can\ntherefore be viewed as a direct counterpart to theirs, with MMD replaced by KSD. Nevertheless, we highlight that the\nbootstrapped test introduced in the next section is a fundamentally novel and distinct approach.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 22,
+    "total_chunks": 119,
+    "char_count": 479,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "778f64f5-edaf-49ec-9982-e6b527366521",
+    "text": "The Type-I control in Theorem 2 is pointwise over the null set, namely the limit over n is taken for a\nfixed null distribution. In general, for hypothesis tests targeting a composite null set, it is more desirable to have a\nuniform Type-I error control, namely lim supn→∞sup{Q:KSD(Q,P )≥θ} Pr(SKSD,θn > γ1−α) ≤α; see Lehmann and\nRomano (2022, Chapter 11) for a detailed discussion. However, most work in the equivalence testing literature concerns\npointwise control (Dette et al., 2018; Chen et al., 2023), which is why we also prove pointwise control for our proposed\ntests in this work. 3.2 A Bootstrapped Test The E-KSD-Normal test proposed in Section 3.1 is guaranteed to control Type-I error in the infinite sample size limit,\nas shown in Theorem 2. However, as will be shown empirically in Section 6.1, the E-KSD-Normal test can have poor\nType-I error control when the margin θ is small, even if the sample size is moderately large. This is because the KSD estimator has different limiting distributions in the two regimes Q = P and Q ̸= P. Too see\nthis, assume KSD(Q, P) = θ, so that Q is on the boundary of the null set. Theorem 1 shows that the (scaled) KSD Kernel Tests of Equivalence A PREPRINT estimator (3) is asymptotically normal when θ > 0, while it converges to 0 when θ = 0. In fact, it is well-known\nthat in the latter case, (3) converges to an infinite sum of weighted chi-squares at rate n−1; see, e.g., Liu et al. (2016,\nTheorem 4.1) and Huang et al. (2023b). In particular, when θ is small (but non-zero), the normal approximation of\n(3) would deteriorate. Moreover, the variance estimator (11), although a common choice in the kernel-based testing\nliterature (Bounliphone et al., 2016; Jitkrittum et al., 2018), can underestimate the actual variance (Kanagawa et al.,\n2023, Appendix C4). These issues combined can result in an inflated Type-I error.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 23,
+    "total_chunks": 119,
+    "char_count": 1873,
+    "word_count": 322,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e90daaff-f315-4b23-8679-d7d19fae6c51",
+    "text": "Notably, such Type-I error inflation\nis not unique to our kernel-based test. Other equivalence tests constructed with asymptotic normality have also found to\nsuffer from this issue; see, e.g., the discussions in Dette et al. (2018, Section 3) and Chen et al. (2023, Section 4). Motivated by this observation, we propose an alternative test based on bootstrapping. This bootstrapping-based test is\nconstructed using a completely different principle from the E-KSD-Normal test. In particular, it does not rely on normal\napproximations to the KSD estimator. Instead, it uses a triangle inequality for the KSD (Shi and Mackey, 2024; Liu\nand Briol, 2025) to derive a more conservative (yet still consistent) upper bound, thus achieving a better Type-I error\ncontrol, especially with small θ. We first present the test procedure and provide intuition later. This test, which we call the E-KSD-Boot test, rejects\nH0 : KSD(Q, P) ≥θ if TnKSD,θ > γB1−α, where\nT nKSD,θ := θ −KSD(Qn, P) , (12)\nand rejects H0 : KSD(Q, P) ≥θ if T nKSD,θ > γB1−α, where γB1−α is defined in (5).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 24,
+    "total_chunks": 119,
+    "char_count": 1064,
+    "word_count": 177,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "82df2541-4eea-4ae2-aed0-c05cdb8b9e05",
+    "text": "The full procedure is summarized\nin Algorithm 2. We now provide some intuition for the E-KSD-Boot test. The test statistic T nKSD,θ quantifies how close the KSD value\nis from the pre-specified margin θ. Since the null hypothesis H0 assumes that KSD(Q, P) > θ, we should reject H0\nfor small values of KSD(Qn, P), or, equivalently, for large values of T nKSD,θ . A natural question is then how to choose a critical value? This critical value must control the Type-I error rate for every\npossible Q under the equivalence null hypothesis. In the standard KSD test reviewed in Section 2.2.1, where the test\nstatistic is KSD(Qn, P), the critical value is its (1 −α)-th quantile, γ1−α, under the point null hypothesis (1), and\nweighted bootstrapping is used to approximate γ1−α. However, it is unclear whether a similar approach can be used in\nthis case, as the null set under the equivalence null hypothesis H0 : KSD(Q, P) ≥θ is no longer a singleton, but an\nequivalence set containing sufficiently distinct distributions. Our major contributions of this section are to show that γ1−α is a valid critical value even for such equivalence null\nhypothesis, and that the same weighted bootstrap approached can be used as an approximation. We first present\nthe following lemma, which shows that the bootstrap samples (4) approximate the distribution of an MMD statistic\nMMD(Qn, Q; k). The proof is in Section B.1.4. Let X∞= {Xi}∞i=1 be a random sample where Xi ∼Q ∈P are independent, and for any n let Qn be the\nempirical measure based on Xn = {Xi}ni=1. Let k be a positive definite kernel such that EX,X′∼Q[|k(X, X′)|2] < ∞. Then, for all Q-almost-sure sequences X∞, the following holds\nsup Pr(√nDWn(Xn; k) ≤t | X∞) −Pr(√nMMD(Qn, Q; k) ≤t) →0 .\nt∈R",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 25,
+    "total_chunks": 119,
+    "char_count": 1738,
+    "word_count": 300,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "385a4f6e-c9b1-41b8-9d28-9446529beb43",
+    "text": "Liu and Briol (2025, Lemma 20) showed this result for the special case where k is a Stein reproducing\nkernel. The authors referred to MMD(Qn, Q; up) as the P-KSD. We follow a similar proof strategy by noting that\ntheir proof directly extends to a general reproducing kernel k. The proof is included in Section B.1.4 for completeness.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 26,
+    "total_chunks": 119,
+    "char_count": 333,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "918459aa-1698-4460-ae57-07a11b85cfdb",
+    "text": "This generalization will also become helpful later when we study a similar equivalence test based on MMD. Theorem 3 is a consequence of the bootstrapping results for each term in the Hoeffding decomposition\nof V-statistics (Hoeffding, 1948; Arcones and Gine, 1992). As previously mentioned, this is not a direct application\nof standard bootstrapping results for the degenerate V-statistics MMD2(Qn, Q), since the bootstrapping statistic so\nobtained would involve intractable expectations and thus cannot be computed. In the literature, the result in Theorem 3\nwas presented in Dehling and Mikosch (1994, Theorem 2.1) in a slightly modified form, but their proof only applies to\nunivariate distributions. The general case for multivariate distributions is implicitly shown in the proof of Arcones and\nGine (1992, Theorem 2.4). We provide a clearer exposition and close the gap.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 27,
+    "total_chunks": 119,
+    "char_count": 876,
+    "word_count": 133,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1f2e103a-0568-421f-b59c-16782a6c6260",
+    "text": "It turns out that Theorem 3 is sufficient to establish the validity and consistency of the E-KSD-Boot test, which is\nsummarized in the following result. Intuitively, this is because, under the equivalence null hypothesis, the test statistic\n(12) can be bounded using statistics of the form MMD(Qn, Q; k), an observation that will be made clear in the proof in\nSection B.1.6. Theorem 4 (E-KSD-Boot test). Let α ∈(0, 1) and, for any n, let W ∼Multinomial(n, 1/n, . . . , 1/n). Denote by\nγ∞1−α the (1 −α)-quantile of the conditional distribution of D2W , defined in (4), given Xn. Suppose Assumption 1, 2 Kernel Tests of Equivalence A PREPRINT Algorithm 3 Normal equivalence testing with MMD.\n1: Inputs: Observations Xn = {xi}ni=1 and Ym = {yj}mj=1; test level α; bootstrap sample size B.\n2: Compute the test statistic SMMD,θn,m using (14).\n3: Reject H0 if SMMD,θn < zα, where zα is the α-th quantile of N(0, 1). Algorithm 4 Bootstrapped equivalence testing with MMD.\n1: Inputs: Observations Xn = {xi}ni=1 and Ym = {yj}mj=1; test level α; bootstrap sample size B.\n2: Compute the test statistic T n,mMMD,θ = θ −MMD(Qn, Pm).\n3: for b = 1, . . . , B do\n4: Draw independent copies W nb ∼Multinomial(n; 1/n, . . . , 1/n) and Wfmb ∼Multinomial(m; 1/m, . . . , 1/m). MMD,θ\nb b using (17). 5: Compute bootstrap samples T n,m,b = θ −Sbn,m = θ −DW n(Xn) W n(Ym) −Df\n6: end for\n7: Compute the (1 −α)-th empirical quantile, ηB1−α, using (19), and reject H0 if T nMMD,θ > ηB1−α.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 28,
+    "total_chunks": 119,
+    "char_count": 1462,
+    "word_count": 269,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0617bbaf-0a3d-431e-aac5-48d3af9bef30",
+    "text": "Then, for all Q ∈P(Rd) with EX∼Q[∥sp(X)∥2] < ∞, there exists a ∈(0, α] such that 0 , KSD(Q, P) > θ ,\nKSD,θ  n > γ∞1−α) = a , KSD(Q, P) = θ , n→∞Pr(Tlim\n1 , KSD(Q, P) < θ . In other words, Theorem 4 implies that the probability of rejection is asymptotically no larger than a ≤α under\nH0 : KSD(Q, P) ≥θ, while it converges to 1 under H1 : KSD(Q, P) < θ. Key to the proof of Theorem 4 is the following upper bound of KSD using MMD and P-KSD (see\nRemark 3.1) KSD(Q, P) = MMD(Q, P; up) ≤MMD(Q, Qn; up) + MMD(Qn, P; up)\n= MMD(Q, Qn; up) + KSD(Qn, P) . (13) The first equality uses the fact that KSD can be rewritten as an MMD with kernel up, namely KSD(Q, P) =\nMMD(Q, P; up), and the inequality leverages the triangle inequality for MMD. A more rigorous proof for (13) is given\nin Section B.1.6. This inequality resembles a triangle inequality for KSD. Similar inequalities have been studied in Shi\nand Mackey (2024) to study the convergence rate of kernel-based interacting particle systems, and in Liu and Briol\n(2025, Appendix A.4) to construct robust GOF tests with KSD. Our proof is motivated by Liu and Briol (2025) and is\nadjusted to equivalence hypotheses. The E-KSD-Boot test bears similarity with the robust-KSD test of Liu and Briol (2025). In Liu and Briol (2025), they\ntarget robust hypotheses of the form HR0 : KSD(Q, P) ≤θ versus HR1 : KSD(Q, P) > θ, and their test rejects HR0 if\nKSD(Qn, P)−θ > γB1−α, where γB1−α is the bootstrapped quantile (5). Notably, we consider the \"reversed\" hypotheses\n(2), and our test statistic (12) differs by a negative sign to reflect the fact that the equivalence null hypothesis in (2) now\nshould be rejected for small, rather than large, values of KSD(Qn, P). The theoretical proofs for our E-KSD-Boot test\nessentially shows that the same threshold used in the test of Liu and Briol (2025) remains valid after such reversal. 4 Two-Sample Equivalence Tests with MMD",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 29,
+    "total_chunks": 119,
+    "char_count": 1912,
+    "word_count": 354,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c73062ca-dabc-4d54-8225-a77fe88a1618",
+    "text": "In Section 3, we assumed that the target distribution P is accessible through its score function. In some cases, however,\neven evaluation of the score function can be infeasible; instead, it is straightforward to draw finite samples from P\nas an approximation. Many generative models, such as generative adversarial networks (GANs, Goodfellow et al.,\n2014) and many simulator-based models (Cranmer et al., 2020), are defined via data-generating processes and do not\nnecessarily have a tractable score function.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 30,
+    "total_chunks": 119,
+    "char_count": 510,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "983e11b1-f92f-4dcb-9f6e-3acd50f4c225",
+    "text": "In such cases, KSD is no longer an appropriate statistical divergence, and\nthe KSD-based equivalence tests are no longer applicable. To address these challenges, we propose equivalence tests based on Maximum Mean Discrepancy. As discussed in\nSection 2.2.2, MMD can be estimated efficiently given finite samples from both Q and P, and it does not require\nevaluations of the score function of P. The proposed tests still target hypotheses (2), except that the discrepancy D is\nnow chosen to be MMD. Importantly, since D has changed, the null set is now different from that considered in the",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 31,
+    "total_chunks": 119,
+    "char_count": 588,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "67510e1d-2fef-4b80-ac22-42457eff28e6",
+    "text": "Kernel Tests of Equivalence A PREPRINT previous section, and in particular it might include vastly different distributions. Similarly to Section 3, two equivalence\ntests are studied, one using a normal approximation, and the other using a bootstrapping approach. We make the following assumptions in this section. Assumption 4 ensures the MMD estimator (8) has well-defined\nasymptotic distributions and is common in MMD-based tests (Gretton et al., 2012; Shekhar et al., 2022); in particular, it\nholds when the kernel is bounded. Assumption 5 is a mild condition requiring the two sample sizes to grow at a specific\nrate.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 32,
+    "total_chunks": 119,
+    "char_count": 621,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a45101d1-d91a-4a83-a9b4-2a6ffd7c01cd",
+    "text": "EX,X′∼Q[|k(X, X′)|2] < ∞and EY,Y ′∼P [|k(Y, Y ′)|2] < ∞. There exists ν ∈(0, 1) such that n/N →ν as n →∞. Under these assumptions, the asymptotics of the finite-sample estimator (9), which is a two-sample V-statistics of\ndegree (2, 2), are well-known. We summarize them in the next result for completeness. Its proof is in Section B.2.1.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 33,
+    "total_chunks": 119,
+    "char_count": 337,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fc1ec8f0-090f-4f2a-a5a6-707c9de88e06",
+    "text": "Proposition 5 (MMD asymptotics). Suppose Assumption 4 and Assumption 5 hold. If Q ̸= P, then N 1/2(MMD2(Qn, Pm) −MMD2(Q, P)) d−→N(0, σ2MMD) as N →∞, where σ2MMD =\n4N(n−1σ21 + m−1σ22) is positive, and\nσ21 = VarX∼Q(EX′∼Q,Y,Y ′∼P [h(X, X′, Y, Y ′)]) , σ22 = VarY ∼P (EX,X′∼Q,Y ′∼P [h(X, X′, Y, Y ′)]) . If Q = P, then σ2MMD = 0, and N · MMD2(Qn, Pm) →0 in probability. Theorem 5 combined with the separability of MMD implies that, under H0 : Q ∈Bc(P; θ), the statistic√\nN(MMD(Qn, Pm) −MMD(Q, P)) is asymptotically normal. We can hence follow the same principle in Section 3.1 to construct an equivalence test based on normal approximations. A special case of Theorem 5 with n = m\nmotivated the equivalence test of Chen et al. (2023). Our test can be viewed as a generalization of theirs to n ̸= m. Such\nextension is natural, since m, which is the sample size for the empirical sample drawn from the target distribution P,\noften needs to be considerably larger than n to ensure minimal error due to finite-sample approximation of P. However,\nit is typically infeasible to augment the sample size n, because Xn is typically an observed sample whose size is limited\ndue to computational budget or has already been pre-determined by, for example, experimental design.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 34,
+    "total_chunks": 119,
+    "char_count": 1260,
+    "word_count": 225,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4147824d-da27-41b3-8aaa-544acd896317",
+    "text": "The proposed test, which we call the E-MMD-Normal test, rejects H0 if SMMD,θn,m < zα, where\nSMMD,θn,m := (MMD2(Qn, Pm) −θ2) , (14)\nˆσMMD\nand zα is the α-th quantile of N(0, 1), and ˆσMMD is the square root of an estimator for σ2MMD defined as ˆσ2MMD =\nN(4n−1ˆσ2MMD,1 + 4m−1ˆσ2MMD,2), with n n 2 m m 2\n1 1\nX pj′ , (15) X qi′ , ˆσ2MMD,2 = X pi −1 ˆσ2MMD,1 = X qi −1 n −1 n m −1 m\ni=1 i′=1 j=1 j′=1 n m m\nqi = X X X h(xi, xi′, yj, yj′)\n(n −1)m(m −1)\ni′=1 j=1 j′=1\ni′̸=i j′̸=j\nn n m\npj = X X X h(xi, xi′, yj, yj′) .\nn(n −1)(m −1)\ni=1 i′=1 j′=1\ni′̸=i j′̸=j In particular, ˆσ2MMD,1 and ˆσ2MMD,2 are leave-one-out Jackknife estimators for σ21, σ22, respectively. The studentized\nstatistic SMMD,θn,m is known to converge weakly to a standard Gaussian distribution (Chang et al., 2016). Moreover, these\nJackknife estimators can be computed in quadratic time; see Section C for details. The next result shows that the E-MMD-Normal test, summarized in Algorithm 3, is well-calibrated and consistent. Its\nproof is in Section B.2.2.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 35,
+    "total_chunks": 119,
+    "char_count": 1019,
+    "word_count": 196,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "81fdb0aa-130d-4c2b-a162-def81293e24a",
+    "text": "Kernel Tests of Equivalence A PREPRINT Theorem 6 (E-MMD-Normal test). Suppose Assumption 4 and Assumption 5 hold. Let θ > 0 and let zα be the α-th\nquantile of a standard normal distribution.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 36,
+    "total_chunks": 119,
+    "char_count": 190,
+    "word_count": 33,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "12e3fedb-d90d-4b75-b488-4dad91f4ef69",
+    "text": "Then, for all Q, P ∈P(Rd), 0 , MMD(Q, P) > θ ,\nlim n,m > γ1−α) = α , MMD(Q, P) = θ , N→∞Pr(SMMD,θ \n1 , MMD(Q, P) < θ . Remark 6.1 (Comparison to Chen et al. (2023)). Our proposed E-MMD-Normal test resembles the homogeneityequivalence test of Chen et al. (2023) in that both are constructed using the asymptotic normality of MMD, and that\nboth aim to test equivalence hypotheses of the form (2). However, Chen et al. (2023) assume equal sample size m = n,\nso their test statistic is a one-sample U-statistic. In contrast, we allow the more general case where m and n may differ,\nand thus our test statistic are two-sample V-statistics. On the other hand, the difference between using U-statistics and\nV-statistics is minor, and the same proof technique used in Theorem 6 can be applied to establish a similar result for\ntwo-sample U-statistics. 4.2 A Bootstrapped Test Since the test proposed in the previous section is based on an asymptotical normal approximation of its test statistic,\nit suffers from the same issue as the normality-based KSD equivalence test proposed in Section 3.1, namely it can\nfail to control Type-I error when the equivalence margin θ is small. Next, we describe a bootstrapped test, which\nis a counterpart of the E-KSD-Boot test proposed in Section 3.2 for MMD. The following bootstrapped test, called\nE-MMD-Boot, rejects H0 if T n,mMMD,θ > η, where\nT n,mMMD,θ := θ −MMD(Qn, Pm) , (16)\nand η > 0 is a critical value chosen to control the Type-I error. The intuition behind the construction of the E-MMD-Boot is similar to the E-KSD-Boot test—the equivalence null\nhypothesis H0 : MMD(Q, P) ≥θ is rejected for large values of T n,mMMD,θ . One difference is that the test statistic\nT n,mMMD,θ now involves an MMD statistic, rather than a KSD statistic. Consequently, the bootstrapping approach\ndescribed in Section 3.2 needs to be adjusted to compute the critical value.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 37,
+    "total_chunks": 119,
+    "char_count": 1897,
+    "word_count": 330,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e60fa1a6-024b-498b-98dc-0f6793696150",
+    "text": "We will first discuss how to choose such η,\nand then prove the validity and consistency of this test at the end of this section. Our key observation is that it suffices to choose the critical value as the (1 −α)-th quantile η1−α of Sn,m =\nMMD(Qn, Q) + MMD(Pm, P). Since η1−α is also tractable, we introduce a bootstrapping approach to estimate it. First, Theorem 3 implies that each of the terms MMD(Qn, Q) and MMD(Pm, P) can be individually bootstrapped\nby the square-root of the bootstrap sample (4) with the Stein kernel up replaced by k. Specifically, the distribution of\nMMD(Qn, Q) can be approximated using bootstrap samples of the form\nD2Wn(Xn) := X (Wni −1)(Wnj −1)k(xi, xj) , (17) n2\n1≤i,j≤n\nwhere Wn = (Wn1, . . . , Wnn) ∼Multinomial(n; 1/n, . . . , 1/n). The distribution of MMD(Pm, P) can be estimated similarly. Therefore, given two sets of i.i.d. copies {W n}Bb b=1 and {fW m}Bb b=1 of size B drawn from\nMultinomial(n; 1/n, . . . , 1/n), we can compute the following bootstrap samples for Sn\nb , (18) Sbn,m := DW n(Xn) W m(Ym) b + Df\nfor b = 1, . . . , B. We then approximate the quantile η1−α of the distribution of Sn,m by the quantile ηB1−α of the\nbootstrap samples {Sbn,m}Bb=1, i.e., ηB1−α = inf u ∈R : X 1{Sbn,m ≤u} ≥1 −α . (19)\nb=1\nThe validity of this bootstrap approach is justified by the following result, which is a direct consequence of Theorem 3. Its proof is included in Section B.2.4. The full testing procedure is summarized in Algorithm 4.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 38,
+    "total_chunks": 119,
+    "char_count": 1470,
+    "word_count": 276,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5a95c932-741b-49d6-ac5e-16e729f5d8c7",
+    "text": "Let Z∞= {(Xi, Yi)}∞i=1 be a random sample where Xi ∼Q and Yi ∼P are independent. For any\nn, m, let Qn and Pm be the empirical measure based on Xn = {Xi}ni=1 and Ym = {Yj}mj=1, respectively. Assume\n0 ≤k(x, y) ≤K for some constant K > 0, and suppose Assumption 5 holds. Define S∗n,m := DWn(Xn)+DfWm(Ym),\nwhere DWn(Xn) and DfWm(Ym) are defined in (17) and Wn and Wmf are independent.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 39,
+    "total_chunks": 119,
+    "char_count": 380,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b88b4cfa-65e2-4f26-b694-839f4326f8d2",
+    "text": "Then, for all (Q × P)-almostsure sequences Z∞, it holds\n√ √\nsup Pr( NS∗n,m ≤t | Z∞) −Pr( NSn,m ≤t) →0 .\nt∈R Kernel Tests of Equivalence A PREPRINT Having introduced the bootstrap approach required to estimate the critical value, we now show our claim that, with this\nchoice, the E-MMD-Boot test is both well-calibrated and consistent.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 40,
+    "total_chunks": 119,
+    "char_count": 334,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5c5dd72b-533e-45cc-ab1d-5b097e16919e",
+    "text": "The proofs is in Section B.2. Theorem 8 (E-MMD-Boot test). Denote by η∞1−α the (1 −α)-quantile of the conditional distribution\nof S∗n,m := DWn(Xn) + DfWm(Ym) given Xn and Ym, where DWn(Xn) and DfWm(Ym) are defined in (17) and Wn\nand Wm are independent. Suppose Assumption 4 and Assumption 5 hold.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 41,
+    "total_chunks": 119,
+    "char_count": 296,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "01e0b4a5-bd71-41c1-9102-9dca60aa36e7",
+    "text": "Then, for all Q, P ∈P(Rd), there exists f\na ≤α such that 0 , MMD(Q, P) > θ ,\nMMD,θ  n,m > η∞1−α) = a , MMD(Q, P) = θ , n→∞Pr(Tlim\n1 , MMD(Q, P) < θ . 5 A Minimal-Effect Approach for Selecting the Equivalence Margin The equivalence margin θ is a crucial design choice. Intuitively, it needs to be chosen so that the KSD or MMD balls\nincludes the distributions that the user is willing to tolerate.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 42,
+    "total_chunks": 119,
+    "char_count": 399,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ae1c853b-4fb6-4b10-97c0-adcdaf0d64e8",
+    "text": "In other words, it can be viewed as a form of model\nuncertainty. In general, designing an appropriate θ is a challenging task that has received ongoing attention from not\nonly the equivalence testing literature (Simonsohn, 2015; Lakens, 2017; Dette et al., 2018), but also the closely related\nfield of robust testing (Fauß et al., 2021; Liu and Briol, 2025). In this section, we propose a data-driven approach, where\nθ is chosen to be the smallest effect size that the test can detect with a pre-specified power. Given Q ∈B(P; θ) (i.e., the alternative hypothesis is true), the power of the E-KSD-Boot test is defined as Pr(Tn,mKSD,θ >\nγ), where γ is an appropriate critical value controlling the Type-I error rate. The power of the other tests can be\ndefined similarly. We address the following question: Given β ∈(0, 1) and observed samples Qn (or Qn and Pm for\ntwo-sample testing), how can we choose the equivalence bound θ so that we can reject specific alternative distributions\nwith power at least 1 −β? We consider alternatives that are at most θ′ away from P for some θ′ < θ, i.e., KSD(Q, P) ≤θ′. In this case, the\ninequality (13) implies\nT nKSD,θ = θ −KSD(Qn, P) ≥θ −MMD(Q, Qn; up) −KSD(Q, P) ≥θ −θ′ −MMD(Q, Qn; up) ,\nwhere the last inequality holds since KSD(Q, P) ≤θ′. Writing for simplicity that ξn := MMD(Q, Qn; up)\nPr(TnKSD,θ > γ1−α) ≥Pr(θ −θ′ −ξn > γ1−α) = Pr(ξn < θ −θ′ −γ1−α) . In particular, for the RHS to be at least 1 −β, we should choose θ so that θ −θ′ −γ1−α ≥γ1−β, where γ1−β is the\n(1 −β)-quantile of the distribution of ξn. In practice, such γ1−β can be approximated using bootstrap samples as\ndescribed in Section 3.2. To summarize, choosing θ = θ′ +γ1−α +γ1−β guarantees an asymptotic test power of at least\n1 −β for all Q with MMD(Q, P) ≤θ′. The following result shows that, assuming the exact quantiles are used (namely,\nignoring bootstrap approximation errors), the test with θ so selected achieves the desired power if KSD(Q, P) ≤θ′,\nwhile it still controls asymptotic Type-I error if KSD(Q, P) > θ′. Its proof is in Theorem 9. Denote by γρ the ρ-th quantile of the distribution of MMD(Qn, Q; up), where ρ ∈(0, 1).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 43,
+    "total_chunks": 119,
+    "char_count": 2146,
+    "word_count": 388,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e2b33895-9597-46fb-8d05-4de56ee806aa",
+    "text": "For any θ′ and\nKSD(Q, P) ≤θ′, letting θ = θ′ + γ1−α + γ1−β, we have\nPr(TnKSD,θ > γ1−α) ≥1 −β . (20)\nMoreover, if instead KSD(Q, P) > θ′, then\nPr(TnKSD,θ > γ1−α) →0 . (21)\nRemark 9.1. For example, when θ′ = 0, the induced equivalence margin is θ = γ1−α + γ1−β, and Theorem 9 shows\nthat the power guarantee (20) holds when KSD(Q, P) = 0, or equivalently Q = P, while the calibration (21) holds\nwhen KSD(Q, P) > 0, or equivalently Q ̸= P. Theorem 9 does not account for approximation errors due to the bootstrap step, since it concerns the\n(unknown) quantiles γ1−α, γ1−β instead of their bootstrap approximation. Consequently, the power guarantee (20)\nmight not hold with finite samples in practice. However, we find in our experiments in Section 6 that such power\nguarantee does hold with finite samples. In fact, it can sometimes be conservative, in the sense that it can yield a larger\npower by choosing an unnecessarily large θ. We will discuss this further in Section 6.1. This practice of choosing θ based on a desired power has been adopted widely in applications such as\npsychology studies (Lakens, 2014, 2017), sometimes under the name the \"small-telescopes\" approach (Simonsohn,\n2015). In that context, θ is also called the smallest effect size of interest (SESOI).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 44,
+    "total_chunks": 119,
+    "char_count": 1272,
+    "word_count": 225,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6a158691-c5b7-4e63-a50c-0741906146aa",
+    "text": "In some applications such as clinical\ntrials, one might be able to infer an appropriate equivalence bound from pre-set regulations (Piaggio et al., 2006;\nMeyners, 2012; Dette et al., 2018). Kernel Tests of Equivalence A PREPRINT n=200 n=500 n=1000 n=2000\n1.0\n0.8 E-KSD-Boot\nE-KSD-Normal\n0.6 probability\nRejection 0.40.2 0.0\n0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7\nKSD KSD KSD KSD Figure 2: Gaussian mean-shift experiments with varying sample sizes. The black dotted vertical line is the equivalence\nmargin θ.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 45,
+    "total_chunks": 119,
+    "char_count": 588,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "57b0028a-6d5e-41e8-83a3-b4539fa5beb2",
+    "text": "The same idea can be applied to the MMD-based bootstrapping test in a straightforward manner. The only difference is\nthat the critical value should be the (1 −β)-th quantile of Sn,m := MMD(Qn, Q) + MMD(Pm, P) instead of ξn. We\nsummarize this in the following result, proven in Section B.2.6. For any ρ ∈(0, 1), denote by ηρ the ρ-th quantile of the distribution of Sn = MMD(Qn, Q) +\nMMD(Pn, P). For any θ′ and MMD(Q, P) ≤θ′, letting θ = θ′ + η1−α + η1−β, we have Pr(Tn,mMMD,θ > η1−α) ≥1 −β . (22) Moreover, if instead MMD(Q, P) > θ′, then Pr(Tn,mMMD,θ > η1−α) →0 . (23)",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 46,
+    "total_chunks": 119,
+    "char_count": 569,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "189bcd80-3560-4fcc-9784-2e46b7368626",
+    "text": "We now evaluate the proposed equivalence tests on numerical experiments. We use the IMQ kernel for the KSD-based\ntests and the RBF kernel for the MMD-based tests; these are standard choices in the literature; see, e.g., Gorham and\nMackey (2017); Anastasiou et al. (2023) for KSD and Gretton et al. (2012); Muandet et al. (2017) for MMD. All kernel\nbandwidths are selected using the median heuristic (Gretton et al., 2012), defined as λ2med = Median ∥x −y∥22 : x, y ∈D, x ̸= y , where D = {xi}ni=1 for KSD, and D = {xi}ni=1 ∪{yi}ni=1 for MMD. Each experiment is repeated 100 times, and we\nreport the proportion of rejections as well as the 95% confidence intervals. All tests have nominal level α = 0.05.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 47,
+    "total_chunks": 119,
+    "char_count": 703,
+    "word_count": 126,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6bd2e78c-99a4-47f1-83cb-e12a774ea1dd",
+    "text": "6.1 Gaussian Mean-Shift Models We illustrate the proposed tests with a Gaussian mean-shift example. We draw samples from the standard Gaussian\nQ = N(0, 1), and the nominal distribution is P = N(µ, 1) with some µ ∈R. The score function of such P is\nsp(x) = −x + µ. We perform the E-KSD-Normal and E-KSD-Boot tests and compare their Type-I error and power. Sample size We first evaluate the effect of sample sizes in Figure 2.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 48,
+    "total_chunks": 119,
+    "char_count": 424,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "667781c0-8f6c-40fc-9471-fbe641b71e69",
+    "text": "We fix the equivalence margin θ to be the\npopulation KSD value when µ = 0.3. We can see that both tests correctly controls the Type-I error when the KSD\nis greater than θ. When the KSD equals θ, namely Q lies at the boundary of the null set, E-KSD-Boot still controls\nType-I error, even with a moderate sample size. In comparison, E-KSD-Normal fails to do so, even though both tests\nare shown to be valid asymptotically by Theorem 2 and Theorem 4. This is because E-KSD-Normal is based on a CLT,\nwhich is only a good approximation when KSD(Q, P) > 0. As KSD(Q, P) tends to 0, the limiting distribution of the\nKSD estimator is no longer Gaussian, as shown in Theorem 1. Instead, in this case, (3) becomes degenerate with an\nasymptotic distribution that is an infinite sum of weighted chi-squares (see the discussion after Theorem 1). Therefore,\nthe normal approximation will have non-negligible errors when KSD(Q, P) is close to zero. This poor Type-I error\ncontrol is also found in other equivalence tests based on asymptotic normality (Chen et al., 2023, Section 4).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 49,
+    "total_chunks": 119,
+    "char_count": 1067,
+    "word_count": 187,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "80f751aa-64b6-4510-bf6e-73425a3df317",
+    "text": "In contrast,\nE-KSD-Boot does not suffer from this issue, as it does not rely on any normal approximations. When the KSD is smaller than θ, namely we are under H1, both tests have non-trivial power, with the E-KSD-Normal\ntest having the higher power. Importantly, the power of both tests converge to 1 as the sample sizes tend to infinity,\nwhich is expected given their consistency shown in Theorem 2 and Theorem 4. Kernel Tests of Equivalence A PREPRINT =0.084 =0.165 =0.251 =0.500\n1.0\n0.8 E-KSD-Boot\nE-KSD-Normal\n0.6 probability\nRejection 0.40.2 0.0\n0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.0 0.1 0.2 0.3 0.4 0.5 0.6\nKSD KSD KSD KSD Figure 3: Gaussian mean-shift experiments with varying equivalence margins θ, selected to be the population KSD\nvalues for different mean shifts. n=200 n=500 n=1000 n=2000\n1.0",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 50,
+    "total_chunks": 119,
+    "char_count": 854,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8a9c0d0c-a292-4d3b-b065-cd7df11c7693",
+    "text": "0.6 E-KSD-Boot probability 0.8\nE-KSD-Normal\nRejection 0.40.2 1 0.0\n0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7\nKSD KSD KSD KSD\nn=200 n=500 n=1000 n=2000\n1.0 0.6 E-MMD-Boot probability 0.8\nE-MMD-Normal\nRejection 0.40.2 1 0.0\n0.0 0.2 0.4 0.6 0.0 0.2 0.4 0.6 0.0 0.2 0.4 0.6 0.0 0.2 0.4 0.6\nMMD MMD MMD MMD Figure 4: Gaussian mean-shift experiments with θ selected using a power guarantee with β = 0.2. KSD-based\nequivalence tests. MMD-based equivalence tests. Equivalence margin Next, we investigate the impact of equivalence margin in Figure 3. We fix the sample size to be\nn = 200, and set the equivalence margin θ to be the population KSD value with µ = 0.1, 0.2, 0.3, 0.6, respectively. For\nall θ, the E-KSD-Normal test has a higher power, although it has poor Type-I error control near the equivalence margin,\nespecially when θ is small. As discussed before, this is because the normal approximation deteriorates as θ →0.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 51,
+    "total_chunks": 119,
+    "char_count": 1000,
+    "word_count": 181,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "afa1d50f-0630-4421-91a8-dab53bdd776d",
+    "text": "On\nthe other hand, the E-KSD-Boot test has a better Type-I error control at the expense of a lower test power. Power-selected θ We then evaluate the approach proposed in Section 5, where θ is selected by a power guarantee\nwith a Type-II error control of β = 0.2 and θ′ = 0. In words, we select the θ with which the E-KSD-Boot test would\nachieve a power of at least 1 −β = 0.8 when Q = P. The results, shown in the top row of Figure 4, confirm that this\napproach indeed gives the desired power guarantee with E-KSD-Boot for all sample sizes. More importantly, this does\nnot sacrifice the validity, as E-KSD-Boot still has a well-calibrated Type-I error rate. In comparison, E-KSD-Normal\nfails to control the Type-I error for Q near the boundary of the null set, due to reasons discussed before. We repeat the same experiment for the MMD-based equivalence tests, E-MMD-Boot and E-MMD-Normal, in the\nbottom of Figure 4. The same conclusion can be drawn.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 52,
+    "total_chunks": 119,
+    "char_count": 950,
+    "word_count": 170,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa5fce7c-42f9-4047-b5d6-864032052ba2",
+    "text": "In particular, with the power-selected θ, the E-MMD-Boot\ntest is well-calibrated when MMD(Q, P) ≥θ, whereas when Q = P, it achieves the desired power of 1 −β = 0.8. However, unlike for the KSD-based bootstrapping test, the power of E-MMD-Boot at Q = P is close to 1, far higher\nthan 1 −β. Intuitively, this is because the θ derived for the MMD tests rely on a lower bound using two triangle\ninequalities (see the proof of Theorem 10), whereas the KSD counterpart only uses one. As a result, the power-selected\nmargin for E-MMD-Boot is more conservative, thus the higher power.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 53,
+    "total_chunks": 119,
+    "char_count": 576,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88fae296-4a54-451e-b985-a06e81f24475",
+    "text": "6.2 Gaussian-Bernoulli Restricted Boltzmann Machine We use the proposed KSD-based equivalence tests to assess the goodness-of-fit of Gaussian-Bernoulli Restricted\nBoltzmann Machines (GB-RBM) (Welling et al., 2004; Hinton and Salakhutdinov, 2006). GB-RBM is a latentvariable model with joint density p(x, h) ∝exp( 2x⊤Bh1 + b⊤x + c⊤h −12∥x∥22), where x ∈Rd is a vector of Kernel Tests of Equivalence A PREPRINT 0.6 E-KSD-Boot probability 0.8\nE-KSD-Normal\nRejection 0.40.2 0.0\n0 10 2 10 1 100 101 0 10 2 10 1 100 101\nKSD Standard deviation of Perturbation Figure 5: Gaussian-Bernoulli RBM experiment with θ selected using a Type-II error guarantee with β = 0.2. The same\nresults are plotted against the KSD values (left) and the standard deviations of the noise (right).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 54,
+    "total_chunks": 119,
+    "char_count": 767,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "97b1ea24-3a75-47b1-8e50-37dc96310137",
+    "text": "n=100 n=200 n=500 n=1000\n1.0\n0.8 E-MMD-Boot\nE-MMD-Normal\n0.6 probability\nRejection 0.40.2 0.0\n0.0 0.2 0.4 0.6 0.8 1.0 0.0 0.2 0.4 0.6 0.8 1.0 0.0 0.2 0.4 0.6 0.8 1.0 0.0 0.2 0.4 0.6 0.8 1.0\nMMD MMD MMD MMD Figure 6: Testing equivalence of MNIST samples.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 55,
+    "total_chunks": 119,
+    "char_count": 253,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aa39db41-f004-4da8-a618-01f1d78da05f",
+    "text": "The θ is selected using a power guarantee with β = 0.2. observed variables, h ∈{±1}d′ is a binary hidden variable of latent dimension d′, and the model parameters are\nB ∈Rd×d′, b ∈Rd, c ∈Rd′. The normalizing constant of a GB-RBM is in general intractable, because marginalizing\nover the hidden variable requires computing a sum of 2d′ terms, which is computationally prohibitive when d′ is\nlarge. Nevertheless, its score function admits a closed form: sp(x) = b −x + B tanh(B⊤x + c), where tanh is\napplied entry-wise. This makes GB-RBMs a common benchmark for assessing KSD-based GOF tests (Liu et al., 2016;\nJitkrittum et al., 2017; Schrab et al., 2022; Liu and Briol, 2025). We set d = 50 and d′ = 10.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 56,
+    "total_chunks": 119,
+    "char_count": 703,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c79479a3-77f7-48b9-a4cd-e7fd73cf669c",
+    "text": "The target distribution P is formed with randomly initialized B, b, c, where each entry\nof b, c is drawn independently from N(0, 1), and the entries of B are drawn from {±1} with equal probability. The\nsampling distribution Q has the same B, c, but the parameter b is replaced with the perturbed version ˜b ∼N(b, σ2Id),\nfor some σ > 0. We draw samples of size n = 500 from Q using block Gibbs sampling as done in Cho et al. (2013);\nJitkrittum et al. (2017). We then perform E-KSD-Normal and E-KSD-Boot by setting θ using a Type-II error control of\nβ = 0.2 and θ′ = 0.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 57,
+    "total_chunks": 119,
+    "char_count": 567,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c329ca31-b52a-479b-b2e6-3cd8fa325320",
+    "text": "Figure 5 shows the results with increasing noise levels σ. We plot the rejection probability against both the KSD values\nKSD(Q, P) and the noise levels on the x-axis; the purpose of the first plot is to demonstrate the calibration and power of\nthe tests by showing θ. Both tests have the correct Type-I error when KSD(Q, P) ≥θ. For sufficiently small σ such that\nthe alternative hypothesis holds, both tests achieve non-trivial power, with the E-KSD-Normal test being more powerful\nthan E-KSD-Boot. Moreover, at σ = 0, namely when Q = P, E-KSD-Boot has power slightly larger than 1 −β = 0.8.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 58,
+    "total_chunks": 119,
+    "char_count": 591,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3d27e406-3988-4a42-a0c4-8d9e428ef571",
+    "text": "This is expected given that θ is selected using the smallest effect-size approach. In comparison, E-KSD-Normal achieves\na perfect power of 1, suggesting that such θ selected is conservative for this example. Nevertheless, we note that\nE-KSD-Normal may fail to control the Type-I error in some cases, as demonstrated in Section 6.1, and thus a direct\npower comparison between E-KSD-Normal and E-KSD-Boot can be unfair. We now evaluate the MMD-based equivalence tests using the MNIST dataset (LeCun et al., 2010). Denote by Pl all\nimages of digit l, for l ∈{0, . . . , 9}. The nominal distribution P = P1 is all images of digit 1, and the sampling\ndistribution Q = (1 −ϵ)P1 + ϵP3 is a mixture of images of digit 1 and 3, with mixing ratio ϵ ∈[0, 1].",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 59,
+    "total_chunks": 119,
+    "char_count": 747,
+    "word_count": 134,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "31a402d8-eb33-412a-86ff-0790436a02cd",
+    "text": "The purpose\nof this example is to assess the proposed MMD-based tests in high dimensions and under the presence of outliers. Similarly as before, we select θ using a Type-II error guarantee of β = 0.2 and θ′ = 0. Figure 6 shows the results as the mixing ratio ϵ increases from 0 to 1. Under the null hypothesis, where MMD(Q, P) ≥θ,\nthe E-MMD-Normal test has poor Type-I error control.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 60,
+    "total_chunks": 119,
+    "char_count": 384,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d53e1d7f-f1a6-42cb-8840-aa773c7ceeee",
+    "text": "We again attribute this to the degraded normal approximation\ndue to the high dimensional nature of this example (each image is represented by a vector of 784 dimensions). Kernel Tests of Equivalence A PREPRINT contrast, the E-KSD-Boot test is well-calibrated. Moreover, the E-KSD-Boot is not overly conservative, as it achieves\nnon-trivial power for small values of MMD(Q, P). In particular, when MMD(Q, P) = 0, the realized power is close\nto 1. This again shows that the smallest effect-size approach is able to select a meaningful margin θ, although in this\ncase it is rather conservative, as the power is higher than the prescribed value of 1 −β = 0.8.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 61,
+    "total_chunks": 119,
+    "char_count": 655,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cdf90944-632d-43bb-b407-215d3f7eaf68",
+    "text": "We propose kernel-based equivalence tests that are suitable for evaluating the equivalence between distributions. Standard goodness-of-fit testing is only designed to assess the lack of goodness-of-fit, but cannot draw conclusions\non the equivalence between observed data and the nominal distribution with probabilistic guarantees on the error rate. Our proposed tests, on the other hand, are shown to be asymptotically valid against null hypotheses that the data and\nthe nominal distribution differ at least by some equivalence margin. Leveraging kernel-based statistical discrepancies,\nnamely the kernel Stein discrepancy and the maximum mean discrepancy, our proposed suit of tests covers both the\none-sample and two-sample testing scenarios. Since one challenge with these equivalence tests is the selection of an\nappropriate equivalence margin, we introduce a data-driven approach where an equivalence margin is selected to be the\nminimal effect size for achieving a pre-specified power against some certain alternatives.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 62,
+    "total_chunks": 119,
+    "char_count": 1026,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b8f0a5e3-dd33-47d2-858a-f21774ff47cb",
+    "text": "We conclude with a discussion on some future directions. • Extension to other statistical discrepancies. Our proof techniques extend naturally to generic one-sample\nand two-sample V-statistics. It would therefore be interesting to investigate other statistical discrepancies that\nadmit such estimators when constructing similar equivalence tests. Examples include energy distance (Székely\nand Rizzo, 2004) and the Hilbert-Schmidt independence criterion (HSIC, Gretton et al., 2005, 2007), both of\nwhich are closely connected to MMD (Sejdinovic et al., 2013).\n• Partial V-statistics. As discussed in Section 4.2 and Section 3.2, the normality-based tests can have uncontrolled Type-I error rates when θ is small, because the CLT approximation of the KSD and MMD estimators\ndeteriorates when KSD(Q, P) and MMD(Q, P) are close to zero. One potential solution is to use alternative\nestimators that retain asymptotic normality even when KSD(Q, P) = 0 or MMD(Q, P) = 0, such as those\nbased on incomplete U-statistics (Kim and Ramdas, 2024; Shekhar et al., 2022). Understanding whether these\nalternative estimators can improve the Type-I error control of these normality-based tests is another possible\ndirection.\n• Selection of equivalence margin. Finally, it is important to provide a more intuitive interpretation of the\nequivalence margin θ selected using the minimal-effect approach. This is particularly relevant in fields such\nas bioequivalence studies, where statistical equivalence is often defined through explicit biological criteria\n(Berger and Hsu, 1996; Dette and Kokot, 2021; Meyners, 2012). Relating these criteria to the value of θ chosen\nvia the minimal-effect approach in Section 5 may improve the interpretability and practical applicability of\nkernel-based equivalence tests. The authors would like to thank Linying Yang for helpful discussions.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 63,
+    "total_chunks": 119,
+    "char_count": 1859,
+    "word_count": 271,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b9b25cd5-95a9-43e7-8573-3d8b5c19c58e",
+    "text": "A kernelized Stein discrepancy for biological sequences. In\nInternational Conference of Machine Learning, pages 718–767. Anastasiou, A., Barp, A., Briol, F.-X., Ebner, B., Gaunt, R. E., Ghaderinezhad, F., Gorham, J., Gretton, A., Ley, C.,\nLiu, Q., Mackey, L., Oates, C. J., Reinert, G., and Swan, Y. (2023). Stein's method meets computational statistics: a\nreview of some recent developments. Statistical Science, 38(1):120 – 139. A. and Gine, E. (1992). On the bootstrap of U and V statistics. The Annals of Statistics, 20(2):655–674. Jackknifing U-statistics. The Annals of Mathematical Statistics, 40(6):2076–2100. Baíllo, A. and Cárcamo, J. (2024). Almost goodness-of-fit tests. arXiv preprint arXiv:2410.20918. Baringhaus, L., Ebner, B., and Henze, N. (2017).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 64,
+    "total_chunks": 119,
+    "char_count": 764,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f25d99e4-6fee-440e-8723-8da83a3a0b98",
+    "text": "The limit distribution of weighted L 2-goodness-of-fit statistics under\nfixed alternatives, with applications. Annals of the Institute of Statistical Mathematics, 69(5):969–995. Barndorff-Nielsen, O. (1978). Information and Exponential Families: In Statistical Theory. Kernel Tests of Equivalence A PREPRINT Barp, A., Simon-Gabriel, C.-J., Girolami, M., and Mackey, L. (2024). Targeted separation and convergence with kernel\ndiscrepancies. Journal of Machine Learning Research, 25(378):1–50. Approximate Bayesian computation in evolution and ecology. Annual review of ecology,\nevolution, and systematics, 41(1):379–406. Bioequivalence trials, intersection-union tests and equivalence confidence sets. Statistical Science, 11(4):283–319. Beribisky, N. and Cribbie, R.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 65,
+    "total_chunks": 119,
+    "char_count": 766,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a7abe782-57a5-4644-97ee-767c812f6120",
+    "text": "Evaluating the performance of existing and novel equivalence tests for fit\nindices in structural equation modelling. British Journal of Mathematical and Statistical Psychology, 77(1):103–129. Bharti, A., Briol, F.-X., and Pedersen, T. (2022). A general method for calibrating stochastic radio channel models with\nkernels. IEEE Transactions on Antennas and Propagation, 70(6):3986–4001. Boulaguiem, Y., Quartier, J., Lapteva, M., Kalia, Y. N., Victoria-Feser, M.-P., Guerrier, S., and Couturier, D.-L. (2024). Finite sample corrections for average equivalence testing. Statistics in Medicine, 43(5):833–854. Publisher: Wiley\nOnline Library. Bounliphone, W., Belilovsky, E., Blaschko, M. B., Antonoglou, I., and Gretton, A. (2016). A test of relative similarity\nfor model selection in generative models. In Bengio, Y. and LeCun, Y., editors, 4th International Conference on\nLearning Representations, ICLR 2016, San Juan, Puerto Rico, May 2-4, 2016, Conference Track Proceedings. Testing statistical hypotheses of equivalence and noninferiority.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 66,
+    "total_chunks": 119,
+    "char_count": 1042,
+    "word_count": 138,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8e1ee19f-6e07-4762-a380-4990dde8099a",
+    "text": "Ecological Applications, 21(1):281–289. Canu, S. and Smola, A. (2006). Kernel methods and the exponential family. Neurocomputing, 69(7-9):714–720. Carlini, N. and Wagner, D. (2017).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 68,
+    "total_chunks": 119,
+    "char_count": 181,
+    "word_count": 23,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0cd29094-c30b-45aa-a7bc-48c199543418",
+    "text": "Adversarial examples are not easily detected: Bypassing ten detection methods. In\nProceedings of the 10th ACM workshop on artificial intelligence and security, pages 3–14. Carmeli, C., De Vito, E., Toigo, A., and Umanitá, V. (2010). Vector valued reproducing kernel Hilbert spaces and\nuniversality. Analysis and Applications, 8(01):19–61. Publisher: World Scientific. Casella, G. and Berger, R. (2002). Statistical inference.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 69,
+    "total_chunks": 119,
+    "char_count": 425,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a5ff35c2-e679-4510-9a7d-56ebddb6ba88",
+    "text": "CRC Press, 2 edition. Chang, J., Shao, Q.-M., and Zhou, W.-X. (2016). Cramér-type moderate deviations for Studentized two-sample\nU-statistics with applications. The Annals of Statistics, 44(5):1931 – 1956. L., Schrab, A., Gretton, A., Sejdinovic, D., and Muandet, K. (2024). Credal two-sample tests of epistemic\nuncertainty. arXiv preprint arXiv:2410.12921. Chen, F., Meintanis, S. G., and Zhu, L. (2023). Testing semiparametric model-equivalence hypotheses based on the\ncharacteristic function. Journal of Statistical Computation and Simulation, pages 1–33. H., Raiko, T., and Ilin, A. (2013).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 70,
+    "total_chunks": 119,
+    "char_count": 594,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f7c72265-095a-43e6-b6ba-a1cc3d200618",
+    "text": "Gaussian-Bernoulli deep Boltzmann machine. In The 2013 International\nJoint Conference on Neural Networks (IJCNN), pages 1–7. Chwialkowski, K., Strathmann, H., and Gretton, A. (2016). A kernel test of goodness of fit. F. and\nWeinberger, K.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 71,
+    "total_chunks": 119,
+    "char_count": 238,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dd6254b1-d61a-4a80-a0d7-fca6a2530cd1",
+    "text": "Q., editors, International Conference on Machine Learning, volume 48 of Proceedings of Machine\nLearning Research, pages 2606–2615, New York, New York, USA. Cranmer, K., Brehmer, J., and Louppe, G. (2020). The frontier of simulation-based inference. Proceedings of the\nNational Academy of Sciences, 117(48):30055–30062. Dehling, H. and Mikosch, T. (1994). Random quadratic forms and the bootstrap for U-statistics. Journal of Multivariate\nAnalysis, 51(2):392–413. Dette, H. and Kokot, K. (2021). Bio-equivalence tests in functional data by maximum deviation. Biometrika, 108(4):895–\n913. Dette, H., Möllenhoff, K., Volgushev, S., and Bretz, F. (2018). Equivalence of regression curves. Journal of the\nAmerican Statistical Association, 113(522):711–729. Dette, H. and Munk, A. (1998). Validation of linear regression models.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 72,
+    "total_chunks": 119,
+    "char_count": 822,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "12260e92-8d53-4a27-873d-9a4295c019a7",
+    "text": "Minimax robust detection: Classic results and recent advances. IEEE\nTransactions on Signal Processing, 69:2252–2283. Fernandez, T., Rivera, N., Xu, W., and Gretton, A. (2020). Kernelized Stein discrepancy tests of goodness-of-fit for\ntime-to-event data. In International Conference on Machine Learning, pages 3112–3122. Freitag, G., Czado, C., and Munk, A. (2007). A nonparametric test for similarity of marginals — With applications to\nthe assessment of population bioequivalence. Journal of statistical planning and inference, 137(3):697–711. Kernel Tests of Equivalence A PREPRINT Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A., and Bengio, Y. (2014). Generative adversarial nets. In Ghahramani, Z., Welling, M., Cortes, C., Lawrence, N., and Weinberger, K., editors,\nAdvances in neural information processing systems, volume 27. Curran Associates, Inc. Gorham, J. and Mackey, L. (2017). Measuring sample quality with kernels.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 74,
+    "total_chunks": 119,
+    "char_count": 979,
+    "word_count": 134,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "874efb6c-87b4-47f0-81c5-36fda5580c4e",
+    "text": "F. and Serfling, RJ. (1973). Convergence rates for U-statistics and related statistics. The Annals of Statistics,\npages 153–160. Gretton, A., Borgwardt, K. J., Schölkopf, B., and Smola, A. (2012). A kernel two-sample test. The\nJournal of Machine Learning Research, 13(1):723–773. Gretton, A., Bousquet, O., Smola, A., and Schölkopf, B. (2005). Measuring statistical dependence with Hilbert-Schmidt\nnorms. In International conference on algorithmic learning theory, pages 63–77. Gretton, A., Fukumizu, K., Teo, C., Song, L., Schölkopf, B., and Smola, A. (2007). A kernel statistical test of\nindependence. In Platt, J., Koller, D., Singer, Y., and Roweis, S., editors, Advances in Neural Information Processing\nSystems, volume 20. Curran Associates, Inc.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 76,
+    "total_chunks": 119,
+    "char_count": 752,
+    "word_count": 107,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "34939113-c2bb-4598-bb95-7e5126c87297",
+    "text": "Gsteiger, S., Bretz, F., and Liu, W. (2011). Simultaneous confidence bands for nonlinear regression models with\napplication to population pharmacokinetic analyses. Journal of Biopharmaceutical Statistics, 21(4):708–725. K. and Simar, L. (2019). Applied Multivariate Statistical Analysis. Springer International Publishing, Cham,\n5th ed. 2019. edition. W. and Anderson, S. (1984). A new statistical procedure for testing equivalence in two-group comparative\nbioavailability trials. Journal of pharmacokinetics and biopharmaceutics, 12(1):83–91. E. and Salakhutdinov, R.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 77,
+    "total_chunks": 119,
+    "char_count": 568,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0f2a3f76-03ad-411d-a3f2-53474e9d446f",
+    "text": "Reducing the dimensionality of data with neural networks. science,\n313(5786):504–507. Hoeffding, W. (1948). A class of statistics with asymptotically normal distribution. The Annals of Mathematical\nStatistics, 19(3):293–325. A., and Zimmerman, D. Probability and statistical inference, volume 993. Huang, B., Liu, Y., and Peng, L. (2023a). Weighted bootstrap for two-sample u-statistics. Journal of Statistical Planning\nand Inference, 226:86–99. H., Liu, X., Duncan, A., and Gandy, A. (2023b). A high-dimensional convergence theorem for U-statistics\nwith applications to kernel-based testing. In Neu, G. and Rosasco, L., editors, Conference on Learning Theory,\nvolume 195, pages 3827–3918. Huskova, M. and Janssen, P. (1993). Consistency of the generalized bootstrap for degenerate U-statistics. The Annals of\nStatistics, 21(4):1811–1823.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 78,
+    "total_chunks": 119,
+    "char_count": 838,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3a948274-9a69-4792-a42e-e30fa10b9165",
+    "text": "Karl pearson and RA fisher on statistical tests: A 1935 exchange from nature. The American\nStatistician, 48(1):2–11. Weighted bootstrapping of U-statistics. Journal of Statistical Planning and Inference, 38(1):31–41. Bootstrapping U-statistics. South African Statistical Journal, 31(2):185–216. Jitkrittum, W., Kanagawa, H., Sangkloy, P., Hays, J., Schölkopf, B., and Gretton, A. (2018). Informative features for\nmodel comparison. Advances in neural information processing systems, 31. Jitkrittum, W., Xu, W., Szabó, Z., Fukumizu, K., and Gretton, A. (2017). A linear-time kernel goodness-of-fit test. In Advances in Neural Information Processing Systems, volume 30, pages 261–270, Red Hook, NY, USA. Curran\nAssociates Inc. Number of pages: 10 Place: Long Beach, California, USA.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 79,
+    "total_chunks": 119,
+    "char_count": 779,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c789049f-3dfd-43ac-bbe0-8abfc1790844",
+    "text": "Kanagawa, H., Jitkrittum, W., Mackey, L., Fukumizu, K., and Gretton, A. (2023). A kernel Stein test for comparing\nlatent variable models. Journal of the Royal Statistical Society Series B: Statistical Methodology, 85(3):986–1011. Key, O., Gretton, A., Briol, F.-X., and Fernandez, T. (2025). Composite goodness-of-fit tests with kernels. Journal of\nMachine Learning Research, 26(51):1–60. Kim, I., Balakrishnan, S., and Wasserman, L. (2022). Minimax optimality of permutation tests. The Annals of Statistics,\n50(1):225–251. Kim, I. and Ramdas, A. (2024). Dimension-agnostic inference using cross u-statistics. Bernoulli, 30(1):683–711. Rates of convergence in the strong law of large numbers for degenerate U-statistics. Statistics &\nprobability letters, 5(5):371–374. Kernel Tests of Equivalence A PREPRINT",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 80,
+    "total_chunks": 119,
+    "char_count": 807,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ad866d5-2ae9-48f8-a670-30a4698ee2d8",
+    "text": "Koller, D. and Friedman, N. (2009). Probabilistic graphical models: principles and techniques. Kolmogorov, A. (1933). Sulla determinazione empirica di una legge didistribuzione. Giorn Dell'inst Ital Degli Att,\n4:89–91.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 81,
+    "total_chunks": 119,
+    "char_count": 218,
+    "word_count": 28,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "809b7e29-24c7-4251-b3d6-a25c9b4f0fa0",
+    "text": "Performing high-powered studies efficiently with sequential analyses. European Journal of Social\nPsychology, 44(7):701–710. Equivalence tests: A practical primer for t tests, correlations, and meta-analyses. Social psychological\nand personality science, 8(4):355–362. LeCun, Y., Cortes, C., and Burges, C.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 82,
+    "total_chunks": 119,
+    "char_count": 305,
+    "word_count": 37,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e763bdd6-331b-4706-a26d-db7fccbff6a0",
+    "text": "MNIST handwritten digit database. Testing Statistical Hypotheses. Springer Cham, fourth edition. Leucht, A. and Neumann, M. Dependent wild bootstrap for degenerate U- and V-statistics. Journal of\nMultivariate Analysis, 117:257–280. Li, W., Liu, F., and Snavely, D. (2020). Revisit of test-then-pool methods and some practical considerations.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 83,
+    "total_chunks": 119,
+    "char_count": 341,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e2ca3652-701e-41bd-b7d4-1a833da76a3a",
+    "text": "Pharmaceutical statistics, 19(5):498–517. Publisher: Wiley Online Library. Liu, F., Xu, W., Lu, J., Zhang, G., Gretton, A., and Sutherland, D. Learning deep kernels for non-parametric\ntwo-sample tests. In International conference on machine learning, pages 6316–6326. Liu, Q., Lee, J., and Jordan, M. (2016). A kernelized Stein discrepancy for goodness-of-fit tests. F. and\nWeinberger, K.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 84,
+    "total_chunks": 119,
+    "char_count": 388,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e6953d93-9f94-44b0-ba01-268b84135206",
+    "text": "Q., editors, International Conference on Machine Learning, volume 48, pages 276–284, New York,\nNew York, USA. Liu, W., Jamshidian, M., Zhang, Y., Bretz, F., and Han, X. (2007). Pooling batches in drug stability study by using\nconstant-width simultaneous confidence bands. Statistics in medicine, 26(14):2759–2771. Liu, X. and Briol, F.-X. (2025). On the robustness of kernel goodness-of-fit tests. Journal of Machine Learning\nResearch, 26(262):1–72. B., and Gandy, A. (2023).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 85,
+    "total_chunks": 119,
+    "char_count": 475,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "822bc242-a01b-4658-a376-07984fdfc7c5",
+    "text": "Using perturbation to improve goodness-of-fit tests based on kernelized\nStein discrepancy. In International conference on machine learning, pages 21527–21547. R. and Ghahramani, Z. (2015). Statistical model criticism using kernel two sample tests. In Cortes, C.,\nLawrence, N., Lee, D., Sugiyama, M., and Garnett, R., editors, Advances in Neural Information Processing Systems,\nvolume 28. Curran Associates, Inc.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 86,
+    "total_chunks": 119,
+    "char_count": 411,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "05473090-f581-4044-a8e8-6aba666015c8",
+    "text": "Bioavailability–a problem in equivalence. Journal of the International Biometric\nSociety, pages 309–317. Equivalence tests–A review. Food quality and preference, 26(2):231–245. Muandet, K., Fukumizu, K., Sriperumbudur, B., Schölkopf, B., and others (2017). Kernel mean embedding of\ndistributions: A review and beyond. Foundations and Trends® in Machine Learning, 10(1-2):1–141. Integral probability metrics and their generating classes of functions. Advances in Applied Probability,\n29(2):429–443. Neuhäuser, M. and Ruxton, G. Perspective on statistical power and equivalence tests. American Journal of\nPhysiology-Heart and Circulatory Physiology, 326(6):H1420–H1423. J., Girolami, M., and Chopin, N. (2017).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 87,
+    "total_chunks": 119,
+    "char_count": 708,
+    "word_count": 88,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "19f43c74-ee9b-474c-9664-4d84977ba74f",
+    "text": "Control functionals for Monte Carlo integration. Journal of the\nRoyal Statistical Society Series B: Statistical Methodology, 79(3):695–718. Publisher: Oxford University Press.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 88,
+    "total_chunks": 119,
+    "char_count": 175,
+    "word_count": 21,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a3393dbe-c0b3-41f6-9121-b5773b187129",
+    "text": "Piaggio, G., Elbourne, D. J., the CONSORT Group, f., et al. (2006). Reporting of noninferiority and equivalence randomized trials: An extension of the CONSORT statement. JAMA :\nthe journal of the American Medical Association, 295(10):1152–1160. Quertemont, E. (2011). How to statistically show the absence of an effect. Psychologica belgica, 51(2).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 89,
+    "total_chunks": 119,
+    "char_count": 348,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e1e20177-7dc1-4dfe-82c1-4bfcb0dc1651",
+    "text": "Ramdas, A., Reddi, S. J., Póczos, B., Singh, A., and Wasserman, L. (2015). On the decreasing power of kernel and\ndistance based nonparametric hypothesis tests in high dimensions. In Proceedings of the AAAI conference on artificial\nintelligence, volume 29. Deep generative models of genetic variation capture the\neffects of mutations. Nature methods, 15(10):816–822. Using significance tests to evaluate equivalence between two\nexperimental groups.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 90,
+    "total_chunks": 119,
+    "char_count": 447,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3150ebb7-2ce7-4084-86c3-46d7787f5e20",
+    "text": "Psychological bulletin, 113(3):553. Saitoh, S., Sawano, Y., and others (2016). Theory of reproducing kernels and applications. Kernel Tests of Equivalence A PREPRINT Schrab, A., Guedj, B., and Gretton, A. (2022). KSD aggregated goodness-of-fit test. In Advances in Neural Information\nProcessing Systems, volume 35, pages 32624–32638. Schrab, A. and Kim, I. (2024). Robust kernel hypothesis testing under data corruption. arXiv preprint arXiv:2405.19912. Schrab, A., Kim, I., Albert, M., Laurent, B., Guedj, B., and Gretton, A. (2023). MMD aggregated two-sample test. Journal of Machine Learning Research, 24(194):1–81.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 91,
+    "total_chunks": 119,
+    "char_count": 618,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "da839761-d463-4c75-83f1-7dba5556f393",
+    "text": "A comparison of the two one-sided tests procedure and the power approach for assessing the\nequivalence of average bioavailability. Journal of pharmacokinetics and biopharmaceutics, 15(6):657–680. Equivalence confidence intervals for two-group comparisons of means. Psychological methods, 3(4):403. Sejdinovic, D., Sriperumbudur, B., Gretton, A., and Fukumizu, K. (2013). Equivalence of distance-based and RKHSbased statistics in hypothesis testing. The Annals of Statistics, 41(5):2263–2291. Statistical Issues in Drug Development, volume 69. Approximation Theorems of Mathematical Statistics. The dependent wild bootstrap. Journal of the American Statistical Association, 105(489):218–235. Shekhar, S., Kim, I., and Ramdas, A. (2022). A permutation-free kernel two-sample test. Advances in Neural\nInformation Processing Systems, 35:18168–18180. Shi, J. and Mackey, L. (2024).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 92,
+    "total_chunks": 119,
+    "char_count": 876,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6051c445-322b-47c0-ba41-58731156661f",
+    "text": "A finite-particle convergence rate for stein variational gradient descent. Advances in\nNeural Information Processing Systems, 36. Siebert, M. and Ellenberger, D. (2020). Validation of automatic passenger counting: introducing the t-test-induced\nequivalence test. Transportation, 47(6):3031–3045.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 93,
+    "total_chunks": 119,
+    "char_count": 295,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3b501cde-03cd-4322-a702-583880718e4e",
+    "text": "Simon-Gabriel, C.-J., Barp, A., Schölkopf, B., and Mackey, L. (2023). Metrizing weak convergence with maximum\nmean discrepancies. Journal of Machine Learning Research, 24(184):1–20. Simonsohn, U. (2015). Small telescopes: Detectability and the evaluation of replication results.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 94,
+    "total_chunks": 119,
+    "char_count": 278,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e861a6ef-b0b1-46b7-a513-cec898b4803e",
+    "text": "Psychological science,\n26(5):559–569. Smola, A., Gretton, A., Song, L., and Schölkopf, B. (2007). A Hilbert space embedding for distributions. In International\nConference on Algorithmic Learning Theory, pages 13–31. Sriperumbudur, B. (2016).",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 95,
+    "total_chunks": 119,
+    "char_count": 241,
+    "word_count": 31,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "526d69dd-51b5-44db-bead-d2969b1c360b",
+    "text": "On the optimal estimation of probability measures in weak and strong topologies. Official Journal of the Bernoulli Society for Mathematical Statistics and Probability, 22(3):1839–1893. K., Fukumizu, K., and Lanckriet, G. Universality, characteristic kernels and RKHS\nembedding of measures. Journal of Machine Learning Research, 12(7). K., Gretton, A., Fukumizu, K., Schölkopf, B., and Lanckriet, G. Hilbert space embeddings\nand metrics on probability measures. Journal of Machine Learning Research, 11:1517–1561. Steinwart, I. and Christmann, A. (2008). Support Vector Machines. Springer Science & Business Media. Sun, Z. and Zou, S. (2023). Kernel robust hypothesis testing. IEEE Transactions on Information Theory. Testing for equal distributions in high dimension.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 96,
+    "total_chunks": 119,
+    "char_count": 767,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ba9dded-63c6-4b91-b0ca-6c36ab2fbebe",
+    "text": "InterStat, 5(16.10):1249–1272. Asymptotic Statistics. Cambridge Series in Statistical and Probabilistic Mathematics. Cambridge University Press.\nvan der Vaart, A. Asymptotic Statistics, volume 3. Cambridge University Press. Testing Statistical Hypotheses of Equivalence. Chapman and Hall/CRC. Testing for goodness rather than lack of fit of continuous probability distributions.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 97,
+    "total_chunks": 119,
+    "char_count": 378,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "49a1d0b6-4a76-4d1d-882d-ba7bd64f2631",
+    "text": "Plos one,\n16(9):e0256499. Welling, M., Rosen-Zvi, M., and Hinton, G. Exponential family harmoniums with an application to\ninformation retrieval. Advances in neural information processing systems, 17. Xu, W. and Matsuda, T. (2020). A Stein goodness-of-fit test for directional distributions. In International Conference\non Artificial Intelligence and Statistics, pages 320–330. Xu, W. and Reinert, G. (2021). A Stein goodness-of-test for exponential random graph models.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 98,
+    "total_chunks": 119,
+    "char_count": 469,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cd22da2e-1a4d-453b-b50a-9e65cf1ce5c3",
+    "text": "In International\nConference on Artificial Intelligence and Statistics, pages 415–423. Yuan, K.-H., Chan, W., Marcoulides, G. Assessing structural equation models by\nequivalence testing with adjusted fit indexes. Structural Equation Modeling: A Multidisciplinary Journal, 23(3):319–\n330. Kernel Tests of Equivalence A PREPRINT A Supplementary Background and Results We include auxiliary results that will become useful in the proofs in Section B. • Section A.1 studies the weak limit of statistics of the form MMD(Qn, Q). • Section A.2 presents a general framework for the normality-based equivalence tests that applies to both KSD\nand MMD. A.1 Large-Sample Asymptotics We present the asymptotic distribution of MMD(Qn, Q), where Qn is an empirical distribution based on random\nsamples from Q. This type of statistics appear in the bootstrap validity results Theorem 3 and Theorem 7. It is not a\ntypical MMD statistic, as the second argument is a population distribution, and thus this statistic is not computable. Nevertheless, we show that it converges to a weak limit at rate √n. This is not surprising, since MMD2(Qn, Q) can be\nshown to be a degenerate (one-sample) V-statistics, and thus converges weakly at rate n.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 99,
+    "total_chunks": 119,
+    "char_count": 1219,
+    "word_count": 189,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5bf74f94-c43f-45f6-ae7a-0b7e22414843",
+    "text": "Its proof is in Section B.1.5\nLemma 11. Let Qn be an empirical distribution based on an i.i.d. random sample {Xi}ni=1 drawn from Q. Assume k is\na reproducing kernel with EX,X′∼Q[|k(X, X′)|2] < ∞. Then √nMMD(Qn, Q) converges weakly to a non-degenerate\ndistribution. A.2 Normality-based Equivalence Test: A General Framework Both Theorem 2 and Theorem 6 are kernel equivalence tests based on normal approximations, with the main difference\nbeing that the former uses KSD as the statistical divergence, while the latter uses MMD. Nonetheless, the proof for their\nvalidity and consistency follows a similar approach. This section presents a general framework for their proofs, which\nwill be tailored to show their individual cases in Section B.1.3 and Section B.2, respectively. The proof relies on the following assumption on the asymptotic distributional limit of estimators for the statistical\ndivergences used. It holds for both KSD and MMD.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 100,
+    "total_chunks": 119,
+    "char_count": 941,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf4931a0-e2b9-4e7e-a87b-277395230cff",
+    "text": "Let {Ql}∞l=1 and {Pl}∞l=1 be two sequences of probability measures. Let k be a reproducing kernel. For\neach l, define ˆDl := MMD(Ql, Pl; k) and D := MMD(Q, P; k), and assume they are well-defined. Suppose {ˆσl}∞l=1\nis a sequence of non-negative numbers such that ˆσl →σ for some σ ≥0. Furthermore, assume\n1. When Q ̸= P, then σ > 0, and l(ˆDl −D) →N(0, σ2).\n2. When Q = P, then σ = 0, and l ˆDl →0 in probability.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 101,
+    "total_chunks": 119,
+    "char_count": 413,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "025e886a-ed6b-4f5c-9c7d-ed7491883620",
+    "text": "We are now ready to present the following result for the validity and consistency of the normality-based test. Its proof is\nin Section B.1.2. Suppose Assumption 6 holds. Define ˆSθl = l(ˆD2l −θ2)/ˆσl, where θ > 0, and ˆσ2l →σ2 in probability. Further assume that EX,X′∼Q[|k(X, X′)|2] < ∞. 0 , D > θ ,\nl > γ1−α) = α , D = θ , l→∞Pr(lim ˆSθ\n1 , D < θ . A.3 Intuition behind the Proposed Bootstrapping Approach We provide intuition for the choice of the bootstrap sample (17). To understand why this is the correct bootstrap statistic,\nwe introduce the concept of degeneracy (Serfling, 2009, Chapter 5). A symmetric function u : Rd × Rd →R (or its\ncorresponding V-statistic) is said to be Q-degenerate if the function g(x; Q) := EY ∼Q[u(x, Y )] −EX,Y ∼Q[u(X, Y )]\nis zero, i.e., g(x; Q) ≡0, and non-degenerate otherwise. Crucially, the asymptotic behaviour of V-statistics varies\ndepending on the degeneracy of u, and bootstrapping methods for each case have been well-studied (Arcones and Gine,\n1992; Janssen, 1997). A natural approach to construct a bootstrap sample for MMD2(Qn, Q) is then to identify it as a\nV-statistic and use the corresponding bootstrap statistic according to its degeneracy. Kernel Tests of Equivalence A PREPRINT Using the closed-form expression for MMD, we can write MMD2(Qn, Q) = X EY,Y ′∼Q h (xi, Y ), (xj, Y ′)\n1≤i,j≤n\n= X k(xi, xj) −EY ∼Q[k(xi, Y )] −EY ′∼Q[k(Y ′, xj)] + EY,Y ′∼Q[k(Y, Y ′)]\n1≤i,j≤n\n= X k(xi, xj; Q) ,\n1≤i,j≤n",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 102,
+    "total_chunks": 119,
+    "char_count": 1456,
+    "word_count": 262,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1c4a3c90-0dad-40ae-b760-9fa1cf13205e",
+    "text": "where the second line follows by substituting the definition of the MMD kernel h (x, y), (x′, y′) := k(x, x′) +\nk(y, y′) −k(x, y′) −k(x′, y), and EY,Y ′∼Q[k(Y, Y ′)] = R Rd R Rd k(x, y)Q(dx)Q(dy), and in the last line we have\ndefined\nk(x, y; Q) := k(x, y) −EY ∼Q[k(x, Y )] −EX∼Q[k(X, y)] + EY,Y ′∼Q[k(Y, Y ′)] . It is straightforward to see that a generic k is not Q-degenerate, whereas k(x, y; Q) is. To construct bootstrap samples\nfor V-statistic MMD2(Qn, Q), a naive approach would be to follow the classic construction for degenerate V-statistics\n(Huskova and Janssen, 1993), which would correspond to replacing k(xi, xj) in (17) by k(xi, xj; Q). However, this is\nnot feasible in practice, as k(xi, xj; Q) involves expectations over Q, which are intractable.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 103,
+    "total_chunks": 119,
+    "char_count": 762,
+    "word_count": 139,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e1b22058-11ae-4d8f-b733-0a809bfb1f08",
+    "text": "Instead, we observe that MMD2(Qn, Q) is the second-order term in the Hoeffding decomposition (see, e.g., Arcones\nand Gine, 1992, Eq. (2.6)) of a non-degenerate V-statistic defined by n−2 P1≤i,j≤n k(xi, xj). Classic bootstrapping\nresults for each term in the Hoeffding decomposition (Arcones and Gine, 1992, Lemma 2.3) then suggest that the\ncorrect bootstrap statistic for this term is (17). This section contains proofs for our theoretical contributions. Proofs relevant to the KSD-based tests are held in\nSection B.1, while those relevant to the MMD-based tests are held in Section B.2. B.1 Proofs for KSD Equivalence Tests This subsection holds proofs for the results on the E-KSD-Normal and E-KSD-Boot tests. B.1.1 Proof of Theorem 1 Since (3) is a V-statistic, classic results on the asymptotics of V-statistics show that (i)\nif VarX∼Q(EX′∼Q[up(X, X′)]) > 0, then √n(KSD2(Qn, P) −KSD2(Q, P)) d−→N(0, σ2KSD), and (ii) if\nVarX∼Q(EX′∼Q[up(X, X′)]) = 0, then n · KSD2(Qn, P) converges weakly to an infinite sum of weighted chisquares, so in particular √n · KSD(Qn, P) →0 in probability; see, for example, Serfling (2009, Section 6.4.1). Therefore, it is sufficient to show that Q = P if and only if VarX∼Q(EX′∼Q[up(X, X′]) = 0. Define ξp(x, ·) := sp(x)k(x, ·) + ∇1k(x, ·). It can be shown that the Stein reproducing kernel can be rewritten as up(x, x′) = ⟨ξp(x, ·), ξp(x′, ·)⟩Hdk (see, for example, the proof of Gorham and Mackey, 2017, Proposition\n2). Under Assumption 1, 2 and 3, Gorham and Mackey (2017, Proposition 1) shows that\nEX′∼Q[ξp(X′, ·)] ≡0. This implies that\nVarX∼Q(EX′∼Q[up(X, X′)]) = VarX∼Q(EX′∼Q[⟨ξp(x, ·), ξp(x′, ·)⟩Hdk])\n= VarX∼Q(⟨ξp(x, ·), EX′∼Q[ξp(x′, ·)]⟩Hdk)\n= 0 . We now assume Q ̸= P and suppose for a contradiction that VarX∼Q(EX′∼Q[up(X, X′)]) = 0. Then we must have\nEX′∼Q[up(x, X′)] = 0 for Q-almost-sure x, and hence KSD2(Q, P) = EX,X′∼Q[up(X, X′)] = 0.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 104,
+    "total_chunks": 119,
+    "char_count": 1881,
+    "word_count": 310,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "481e9fe3-843f-4583-b6cb-3d23f2158ad2",
+    "text": "On the other hand,\nunder Assumption 1, 2 and 3, Theorem 13 shows that EX,X′∼Q[|up(X, X′)|2] < ∞, and hence Barp et al. (2024,\nTheorem 3) shows that KSD(Q, P) = 0 if and only if Q = P, for all Q with EX∼Q[∥sp(X)∥2] < ∞. We have\ntherefore shown that Q = P, a contradiction. Hence, we must have VarX∼Q(EX′∼Q[up(X, X′)]) > 0. Suppose Assumption 1, 2 and 3 hold. Then EX,X′∼Q[|up(X, X′)|2] < ∞. Kernel Tests of Equivalence A PREPRINT Barp et al. (2024, Theorem 1) shows that the Stein reproducing kernel up is indeed a reproducing\nkernel. We can hence apply the reproducing property and a Cauchy-Schwarz inequality as done in Liu and Briol (2025,\nEq. 30) to yield up(x, x′) ≤up(x, x)1/2up(x′, x′)1/2. Moreover, we can write up(x, x′) = ⟨ξp(x, ·), ξp(x′, ·)⟩Hdk,\nwhere ξp(x, ·) := sp(x)k(x, ·) + ∇1k(x, ·); see, for example, the proof of Gorham and Mackey (2017, Proposition 2). We can then further bound up(x, x) as (a)\nup(x, x) = ∥ξp(x, ·)∥2Hdk ≤2∥sp(x)∥22 + 2∥∇1k(x, ·)∥2Hdk = 2∥sp(x)∥22 + 2∇⊤1 ∇2k(x, x) ,\nwhere (a) holds since (a + b)2 ≤2a2 + 2b2 for all constants a, b, and in the last step we have used Steinwart and\nChristmann (2008, Lemma 4.34). Therefore,\nEX,X′∼Q[|up(X, X′)|2] ≤ EX∼Q[|up(X, X)|2] 2 (b) 2 2\n≤ EX∼Q 2∥sp(X)∥22 + 2∇⊤1 ∇2k(X, X)\n≤ EX∼Q 8∥sp(X)∥42 + 8 ∇⊤1 ∇2k(X, X) 2 2\n= 8EX∼Q ∥sp(X)∥42 + 8EX∼Q ∇⊤1 ∇2k(X, X) 2 2 ,\nwhere in (b) we have again used the inequality (a + b)2 ≤2a2 + 2b2. Finally, the RHS of the last line is finite under\nAssumption 1, 2 and 3, thus finishing the proof. B.1.2 Proof of Theorem 12",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 105,
+    "total_chunks": 119,
+    "char_count": 1525,
+    "word_count": 290,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3d967f34-541e-4de4-9411-3d717c9410cb",
+    "text": "Under Assumption 6, using the weak consistency ˆσ2l →σ2l and Slutsky Lemma gives\nˆD2 −D2 d−→N(0, 1) .\nˆσl\nThe probability of rejecting H0 is\n√ √ 0, D > θ ,\nl l  Pr(ˆSθl > zα) = Pr (ˆD2 −D2) > zα + (θ2 −D2) → α, D = 0 , ,\nˆσl ˆσl\n1, D < θ . where the last line holds because ˆσl →σ > 0, and thus\n√ ∞, D > θ ,\nl  (θ2 −D2) → 0, D = 0 ,\nˆσl\n−∞, D < θ . It then remains to show that Pr(ˆSθl > zα) →0 when Q = P. In this case,\n√ √\nl l √ Pr(ˆSθl > zα) = Pr ˆDl > zα + θ2 = Pr l ˆD2l > zαˆσl + θ2√ l →0 ,\nˆσl ˆσl\nwhere the convergence holds because l ˆD2l →0 and ˆσ2 →0 by Assumption 6, whereas θ2√ l diverges to +∞since\nθ > 0. B.1.3 Proof of Theorem 2 It suffices to verify that the conditions in Theorem 12 for KSD. We consider the sequences\n{Ql}∞l=1, where each Ql is an empirical measure based on independent samples {Xi}li=1 from Q, and Pl = P,\nand choose k = up to be the reproducing Stein kernel so that ˆDl = MMD(Ql, P; up) = KSD(Ql, P) and D =\nMMD(Q, P; up) = KSD(Q, P). In particular, KSD(Q, P) is well-defined under the assumed moment conditions. Moreover, choose ˆσl = ˆσKSD as defined in (11). Under Assumption 1, 2 and 3, Theorem 13 shows that EX,X′∼Q[|up(X, X′)|2] < ∞. Therefore, the asymptotics\ncondition Assumption 6, which is assumed in Theorem 1, holds for ˆDl = KSD(Ql, P), where in particular σKSD > 0\nwhen Q ̸= P and σKSD = 0 when Q = P. It then remains to show that ˆσKSD →σKSD in probability. Again since\nEX,X′∼Q[|up(X, X′)|2] < ∞, we can invoke Arvesen (1969, Theorem 6) to conclude that the Jackknife estimator of\nthe variance converges weakly, namely ˆσ2KSD →σ2KSD in probability. Kernel Tests of Equivalence A PREPRINT B.1.4 Proof of Theorem 3",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 106,
+    "total_chunks": 119,
+    "char_count": 1670,
+    "word_count": 353,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c42ced10-7f00-4c2d-b2f4-7b22394ab762",
+    "text": "We will show the result for a U-statistic counterpart and use the fact that U- and V-statistics have similar asymptotic\nbehaviour to conclude the proof. In particular, we will show that nD2Wn(Xn; k) and nMMD2(Qn, Q; k) converges\nweakly to the same limit, which is sufficient to prove the desired result by applying the Mann–Wald Theorem (also\nknown as Continuous Mapping Theorem; cf. van der Vaart, 2000, Theorem 2.3) and noting that the function x 7→√x is\neverywhere continuous on [0, ∞). For each n, let X∗n1, X∗n2, . . . , X∗nn denote independent draws from Qn conditional on {Xi}∞i=1. Given a probability\nmeasure R, define the symmetric function\nk(x, x′; R) = k(x, x′) + EZ,Z′∼R[k(Z, Z′)] −EZ′∼R[k(x, Z′)] −EZ∼R[k(Z, x′)] . We begin by writing the bootstrap sample as\nMMD2Wn = X (Wni −1)(Wnj −1)k(xi, xj) n2\n1≤i,j≤n\n= X WniWnjk(xi, xj) −Wnjk(xi, xj) −Wnik(xi, xj) + k(xi, xj)\n1≤i,j≤n\nd= X k(X∗ni, X∗nj) −k(xi, X∗nj) −k(X∗ni, xj) + k(xi, xj) n2\n1≤i,j≤n\n= X k(X∗ni, X∗nj; Qn) n2\n1≤i,j≤n\nn −1 ∗\n= Un + Rn ,\nwhere the third line should be understood as quality in distribution, and we have defined 1 1\nX k(Xni, Xni; Qn) . Un∗ = X k(X∗ni, X∗nj; Qn) , Rn := n(n −1) n2\n1≤i̸=j≤n i=1 Since k is bounded by assumption, with Jensen's inequality, it is straightforward to see that Rn →0 in probability, and\nso D2Wn and Un∗ have the same asymptotic distribution (if it exists) by Slutsky's theorem. It then suffices to show the\nclaimed result holds for Un∗ in place of D2Wn.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 107,
+    "total_chunks": 119,
+    "char_count": 1466,
+    "word_count": 267,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb140f2f-d538-4313-b183-9f2e919f22d9",
+    "text": "To proceed, we define the following U-statistic\nUn := X k(xi, xj) ,\nn(n −1)\n1≤i̸=j≤n\nand define µQ := EX,Y ∼Q[k(X, Y )] and gk(·; Q) := EY ∼Q[k(·, Y )] −µQ. Direct computation gives 2 1\nUn := µQ + X gk(xi, Q) + X k(xi, xj; Q) =: µQ + T1n + T2n ,\nn n(n −1)\ni=1 1≤i̸=j≤n which is known as the Hoeffding's decomposition of (not necessarily degenerate) one-sample U-statistics; see, e.g.,\nArcones and Gine (1992, Eq. 2.6). Notably, the last term T2n in the Hoeffding's decomposition is the U-statistic\ncounterpart of MMD2(Qn, Q), and is degenerate, so in particular the asymptotic distribution of nT2n exists (Serfling,\n2009, Theorem 5.5.2). Under the assumed condition EX,X′∼Q[|k(X, X′)|2] < ∞, results on the bootstrap statistic for\neach term in the Hoeffding's decomposition (Arcones and Gine, 1992, Lemma 2.3, applied with r = m = 2) show that\na correct bootstrap statistic for T2n is Un,∗ i.e.,\nsup Pr(nUn∗ ≤t | Xn) −Pr(nT2n ≤t) →0 .\nt∈R\nMoreover, T2n is the U-statistic counterpart of MMD2(Qn, Q), which is obvious by noting that n n n n\n1MMD2(Qn, Q) = X X k(xi, xj) + EX,X′∼Q[k(X, X′)] −1 X EX′∼Q[k(xi, X′)] −1 X EX∼Q[k(X, xj)]\nn2 n n\ni=1 j=1 i=1 j=1\nn n\n= X X k(xi, xj; Q); .\ni=1 j=1 Kernel Tests of Equivalence A PREPRINT Under the moment condition EX,X′∼Q[|k(X, X′)|2] < ∞, Grams and Serfling (1973, Theorem 5.1) shows that\nEX,X′∼Q[|T2n −MMD2(Qn, Q)|2] = O(n−2) . This implies that T2n and MMD2(Qn, Q) converges in probability, thus also in distribution, to the same limit, i.e.,\nsup Pr(nMMD2(Qn, Q) ≤t) −Pr(nT2n ≤t) →0 .\nt∈R\nCombining these observations and using a triangle inequality, we have shown that\nsup Pr(nD2Wn(Xn; k) ≤t|X∞) −Pr(nMMD2(Qn, Q) ≤t) →0 ,\nt∈R\nwhich completes the proof by applying the Mann-Wald Theorem. B.1.5 Proof of Theorem 11\nFirst, the assumption EX,X′∼Q[|k(X, X′)|2] < ∞implies\nVarX,X′∼Q(k(X, X′)) ≤EX,X′∼Q[|k(X, X′)|2] < ∞. (24)\nWe first write\nMMD2(Qn, Q) = X EY,Y ′∼Q h (xi, Y ), (xj, Y ′)\n1≤i,j≤n\n= X k(xi, xj) −EY ∼Q[k(xi, Y )] −EY ′∼Q[k(Y ′, xj)] + EY,Y ′∼Q[k(Y, Y ′)]\n1≤i,j≤n\n= X k(xi, xj; Q) ,\n1≤i,j≤n\nwhere the second line follows by substituting the definition of the MMD kernel h (x, y), (x′, y′) := k(x, x′) +\nk(y, y′) −k(x, y′) −k(x′, y), and in the last line we have defined\nk(x, x′; Q) := k(x, x′) −EY ∼Q[k(x, Y )] −EX∼Q[k(X, x′)] + EY,Y ′∼Q[k(Y, Y ′)] . It is easy to verify that the function (x, x′) 7→k(x, x′; Q) is symmetric and Q-degenerate, meaning that\nEY ∼Q[k(x, Y ; Q)] = 0 for all Q-almost sure x (see, e.g., Serfling, 2009, Chapter 5). Therefore, MMD2(Qn, Q)\nis a degenerate one-sample V-statistic (not to be confused with degenerate distributions). With this observation and the\nmoment condition (24), we can apply the asymptotics of degenerate one-sample V-statistics (Serfling, 2009, Theorem\n6.4.1 B) to show that, as n →∞, the random variable nMMD2(Qn, Q) converges weakly to an infinite weighted sum\nof Chi-square distributions, which is non-degenerate.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 108,
+    "total_chunks": 119,
+    "char_count": 2916,
+    "word_count": 524,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "58a06ad1-5ed8-4b50-80e0-72d638552560",
+    "text": "Moreover, since the square-root function x 7→√x is continuous\non [0, ∞) and continuous functions preserve weak limits by the Continuous Mapping Theorem (van der Vaart, 2000,\nTheorem 2.3), the statistic √nMMD(Qn, Q) also converges weakly to a non-degenerate distribution. B.1.6 Proof of Theorem 4 We will show that the claimed result holds with γ∞1−α replaced by the (1 −α)-th quantile, γ1−α, of the (unconditional)\ndistribution of MMD(Qn, Q; up). This will be sufficient to show the claimed result, since the following bootstrap error\nvanishes by Theorem 3\nPr T nKSD,θ > γ∞1−α | Xn −Pr T nKSD,θ > γ1−α →0 . We first prove the case (i), namely when KSD(Q, P) > θ. We first show the inequality (13), restated below\nKSD(Q, P) = MMD(Q, P; up) ≤MMD(Q, Qn; up) + MMD(Qn, P; up)\n= MMD(Q, Qn; up) + KSD(Qn, P) . (25)\nThe first step holds by rewriting KSD as an MMD (Barp et al., 2024, Theorem 1), and the inequality follows from\nthe triangle inequality of MMD (see, e.g., Gretton et al., 2012, Lemma 4). Using this inequality, we can bound the\nprobability of rejecting H0 : KSD(Q, P) ≥θ as\nPr T nKSD,θ > γ1−α = Pr θ −KSD(Qn, P) > γ1−α\n= Pr KSD(Q, P) −KSD(Qn, P) > γ1−α + KSD(Q, P) −θ\n≤Pr MMD(Qn, Q; up) > γ1−α + KSD(Q, P) −θ\n= Pr √nMMD(Qn, Q; up) > √nγ1−α + √n(KSD(Q, P) −θ) , (26) Kernel Tests of Equivalence A PREPRINT",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 109,
+    "total_chunks": 119,
+    "char_count": 1312,
+    "word_count": 247,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5380e677-538b-437d-acb3-201a8542413b",
+    "text": "By Theorem 11, the term √nMMD(Qn, Q; up) converges weakly to a non-degenerate distribution. In particular, its\nscaled quantile √nγ1−α also converges to some real number (Vaart, 1998, Lemma 21.2). On the other hand, the term\n√n(KSD(Q, P) −θ) diverges to ∞when KSD(Q, P) > θ. Combining these arguments, we conclude that, when\nKSD(Q, P) > θ,\nlim √nMMD(Qn, Q; up) > √nγ1−α + √n(KSD(Q, P) −θ) = 0 . n→∞Pr We now consider the case (ii), namely KSD(Q, P) = θ. In particular, this implies that Q ̸= P, and so the following\nlimit holds by Theorem 1\n√n(KSD(Qn, P) −KSD(Q, P)) = √n(KSD(Qn, P) −θ) →N(0, σ2KSD) . Moreover, as argued before, √nγ1−α →c for some constant c. c Pr θ −KSD(Qn, P) > γ1−α = Pr √n(KSD(Qn, P) −θ) < −√nγ1−α →Φ − =: a ,\nσKSD where Φ denotes the CDF of the standard normal distribution. In particular, we must have a > 0, as −c/σKSD is a real\nnumber. Applying the inequality (25) again, we have the following bound on the probability of\nrejecting H0 Pr θ −KSD(Qn, P) > γ1−α ≤Pr θ + MMD(Qn, Q; up) −KSD(Q, P) > γ1−α\n= Pr MMD(Qn, Q; up) > γ1−α + KSD(Q, P) −θ\n= Pr MMD(Qn, Q; up) > γ1−α\n= α . Taking the limit n →∞on both sides then implies a ≤α, and so a ∈(0, α]. To prove the case (iii), we write Pr θ −KSD(Qn, P) > γ1−α\n= Pr KSD(Qn, P) < θ −γ1−α\n= Pr KSD2(Qn, P) < (θ −γ1−α)2 (27)\n= Pr √n KSD2(Qn, P) −KSD2(Q, P) < √n(θ −γ1−α)2 −√nKSD2(Q, P) . (28)",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 110,
+    "total_chunks": 119,
+    "char_count": 1358,
+    "word_count": 275,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f6fdd870-b081-4352-a9f1-5ef818815c1e",
+    "text": "Assuming first that 0 < KSD(Q, P) < θ, then EX∼Q[up(X, ·)] ̸≡0, and thus KSD2(Qn, P) is a non-degenerate\nV-statistic; see, e.g., the proof of Liu et al. (2016, Theorem 4.1) for a proof for U-statistics; extensions to Vstatistics is straightforward. Asymptotics of non-degenerate V-statistics (Serfling, 2009, Theorem 6.4.1 B) then\ngives √n KSD2(Qn, P) −KSD2(Q, P) →N(0, σ2KSD) in distribution, where σ2KSD > 0. On the other hand, the\nRHS of the inequality within the probability in (28) can be simplified as\n√n(θ −γ1−α)2 −√nKSD2(Q, P) = √n(θ2 −KSD2(Q, P)) + √nγ21−α −2√nθγ1−α . By Theorem 11, the scaled quantile √nθγ1−α converges to a positive constant, while √nγ21−α →0. Since also\nKSD(Q, P) < θ, the RHS of the above equality diverges to ∞. We have therefore showed that, inside the probability\nof (28), the LHS converges weakly to a Gaussian limit, while the RHS diverges to ∞. This implies that Pr θ −\nKSD(Qn, P) > γ1−α →1. It then remains to prove (iii) when KSD(Q, P) = 0. In this case, nKSD2(Qn, P) converges weakly to a non-degenerate\ndistribution by Theorem 1. In particular, KSD2(Qn, P) →0 in probability. On the other hand, γ1−α →0 in probability\nby Theorem 11, and so (θ −γ1−α)2 →θ > 0. In other words, inside the probability in (27), the LHS converges to 0 in\nprobability, while the RHS converges to a non-zero constant. This implies that (27) converges to 1, thus showing the\ncase (iii) when KSD(Q, P) = 0. B.2 Proofs for MMD Equivalence Tests This subsection holds proofs for the results on the E-MMD-Normal and E-MMD-Boot tests.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 111,
+    "total_chunks": 119,
+    "char_count": 1545,
+    "word_count": 270,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c8636a14-3eaf-4332-b80c-b1fd3b05170e",
+    "text": "Kernel Tests of Equivalence A PREPRINT B.2.1 Proof of Theorem 5 This is a well-known result and a consequence of classic asymptotic theory for two-sample U-statistics; see, e.g., Huang\net al. (2023a). For completeness, we provide a proof for the first limit in Theorem 5 when Q ̸= P. Convergence in the\nother case, namely when Q = P, follows directly from Gretton et al. (2012, Theorem 12), which showed that, in this\ncase, N · MMD(Qn, Pm) converges to a infinite sum of weighted chi-squares. When Q ̸= P, we suppose for a contradiction that σ1 = VarX∼Q(EX′∼Q,Y,Y ′∼P [h(X, X′, Y, Y ′)]) = 0. Then we must have EX′∼Q,Y,Y ′∼P [h(·, X′, Y, Y ′)] = 0 almost surely. Taking expectation over Q gives 0 =\nEX,X′∼Q,Y,Y ′∼P [h(X, X′, Y, Y ′)] = MMD(Q, P), and hence Q = P, a contradiction. We thus conclude that\nσ1 > 0. Huang et al. (2023a, Proposition 1) then imply that the first asymptotic limit in Theorem 5 holds. B.2.2 Proof of Theorem 6 We again verify the assumptions in Theorem 12 for MMD, which is sufficient to conclude the claimed results. For\nnotational convenience, we define the sample sizes n = nl and m = ml to be functions of l. Let {Xi}∞i=1 and {Yj}∞j=1\nbe independent draws from Q and P, respectively. We consider the sequences {Ql}∞l=1 and {Pl}∞l=1, where Ql, Pl are\nempirical measures based on {Xi}nli=1 and {Yj}mlj=1, respectively.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 112,
+    "total_chunks": 119,
+    "char_count": 1345,
+    "word_count": 244,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "27ed999c-a9d1-4d82-ae06-05c38742ed11",
+    "text": "Moreover, choose ˆσl = ˆσMMD as defined below (14). Under Assumption 5 and Assumption 4, Theorem 5 shows that the assumed asymptotics hold for ˆDl = MMD(Ql, Pl; k),\nwhere in particular σMMD > 0 when Q ̸= P and σMMD = 0 when Q = P. It then remains to show that ˆσMMD →\nσMMD in probability. Under the assumed condition EX,X′∼Q[|k(X, X′)|2] < ∞, we can invoke Arvesen (1969,\nTheorem 6) to conclude that the Jackknife estimator of the variance converges weakly, namely ˆσ2MMD →σ2MMD in\nprobability. B.2.3 Proof of Theorem 8 Using a similar argument as in the proof in Section B.1.6, it suffices to show the claimed result with η∞1−α replaced by\nthe (1 −α)-th quantile, η1−α, of Sn,m, due to the bootstrap validity shown in Theorem 7. We first prove the case (i), namely when MMD(Q, P) > θ. Using the symmetry and triangle inequality of MMD (see,\ne.g., Müller, 1997; Gretton et al., 2012) twice, we have MMD(Q, P) ≤MMD(Q, Qn) + MMD(Qn, Pm) + MMD(Pm, P) = Sn,m + MMD(Qn, Pm) . (29)\nUsing this inequality, we can bound the probability of rejecting H0 : Q ∈Bc(P; θ) as\nPr T n,mMMD,θ > η1−α = Pr θ −MMD(Qn, Pm) > η1−α\n= Pr MMD(Q, P) −MMD(Qn, Pm) > η1−α + MMD(Q, P) −θ\n≤Pr Sn,m > η1−α + MMD(Q, P) −θ\n√ √ √\n= Pr NSn,m > Nη1−α + N(MMD(Q, P) −θ) . (30)\nWe claim that NSn,m converges weakly to a non-degenerate distribution. Indeed, by Assumption 5 and the √\ndefinition of Sn,m, we can write NSn,m = ν−1/2n √nMMD(Qn, Q) + (1 −νn)−1/2√mMMD(Pm, P), where\nνn := n/N →ν by Assumption 5, and both √nMMD(Qn, Q) and √mMMD(Pm, P) converges weakly to some\nnon-degenerate distributions by Theorem 11. By the independence of MMD(Pn, P) and MMD(Qm, Q), the statistic√ √\nNSn,m converges weakly to a non-degenerate distribution. In particular, its scaled quantile Nη1−α also converges √\nto some real number (Vaart, 1998, Lemma 21.2). On the other hand, the term N(MMD(Q, P) −θ) diverges to ∞\nwhen MMD(Q, P) > θ. Combining these arguments, we conclude that, when MMD(Q, P) > θ,\n√ √ √\nN→∞Prlim NSn,m > Nη1−α + N(MMD(Q, P) −θ) = 0 . We now consider the case (ii), namely MMD(Q, P) = θ.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 113,
+    "total_chunks": 119,
+    "char_count": 2054,
+    "word_count": 387,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1251e3ab-f927-4eb1-99c8-508caf07845a",
+    "text": "In particular, Q ̸= P, and Theorem 5 implies that the\nfollowing weak limit holds\n√ √\nN MMD(Qn, Pm) −MMD(Q, P) = N MMD(Qn, Pm) −θ →N(0, σ2MMD) . Moreover, since Nη1−α →c for some constant c as argued before, we have\n√ √ c\nPr θ −MMD(Qn, Pm) > η1−α = Pr N(MMD(Qn, Pm) −θ) < − Nη1−α →Φ − =: a ,\nσMMD Kernel Tests of Equivalence A PREPRINT where Φ denotes the CDF of the standard normal distribution.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 114,
+    "total_chunks": 119,
+    "char_count": 395,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b9c46807-1a95-4333-b88d-f3e43443b931",
+    "text": "In particular, we must have a > 0. We now claim that\na ≤α. Applying the inequality (29) again, we have the following bound on the probability of rejecting H0\nPr θ −MMD(Qn, Pm) > η1−α ≤Pr θ + Sn,m −MMD(Q, P) > η1−α\n= Pr Sn,m > η1−α + MMD(Q, P) −θ\n= Pr Sn,m > η1−α\n= α . Taking the limit N →∞on both sides then implies a ≤α. To prove the case (iii), we write\nPr θ −MMD(Qn, Pm) > η1−α\n= Pr MMD(Qn, Pm) < θ −η1−α\n= Pr MMD2(Qn, Pm) < (θ −η1−α)2 (31)\n√ √ √\n= Pr N MMD2(Qn, Pm) −MMD2(Q, P) < N(θ −η1−α)2 − NMMD2(Q, P) . (32)\nAssuming first that 0 < MMD(Q, P) < θ, then MMD2(Qn, Pm) is a non-degenerate V-statistic (Huang et al.,\n2023a, Proposition 1). Asymptotics of non-degenerate V-statistics (Huang et al., 2023a, Proposition 1 (i)) then gives√\nN MMD2(Qn, Pm) −MMD2(Q, P) →N(0, σ2) in distribution, for some σ2 > 0. On the other hand, the RHS\nof the inequality within the probability in (32) can be simplified as\n√ √ √ √ √\nN(θ −η1−α)2 − NMMD2(Q, P) = N(θ2 −MMD2(Q, P)) + Nη21−α −2 Nθη1−α .\n√ √\nBy Theorem 11, the scaled quantile Nθη1−α converges to a positive constant, while Nη21−α →0. Since\nalso MMD(Q, P) < θ, the RHS of the above equality diverges to ∞. We have therefore showed that, inside the\nprobability of (32), the LHS converges weakly to a Gaussian limit, while the RHS diverges to ∞. This implies that\nPr θ −MMD(Qn, Pm) > η1−α →1. It then remains to prove (iii) when MMD(Q, P) = 0. In this case, the V-statistics MMD2(Qn, Pn) is degenerate\nof order 2 (see, e.g., Huang et al., 2023a, Section 2), and the asymptotics of 2-degenerate V-statistics (Huang\net al., 2023a, Proposition 1 (ii)) imply that NMMD2(Qn, Pn) converges weakly to a non-degenerate distribution. In\nparticular, MMD2(Qn, Pm) →0 in probability. On the other hand, η1−α →0 in probability by Theorem 11, and so\n(θ −η1−α)2 →θ > 0. In other words, inside the probability in (31), the LHS converges to 0 in probability, while\nthe RHS converges to a non-zero constant.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 115,
+    "total_chunks": 119,
+    "char_count": 1935,
+    "word_count": 372,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0c53290d-38be-4141-b126-b877b36bbc0a",
+    "text": "This implies that (31) converges to 1, thus showing the case (iii) when\nMMD(Q, P) = 0. B.2.4 Proof of Theorem 7\nAs argued in the proof for Theorem 3, the conditional distribution of Un∗ := NDWn(Xn) = √nDWn(Xn) given\nX∞and the unconditional distribution of Un := √nMMD(Qn, Q) converge weakly to the same distribution, say\nR. That is, given a random variable U ∼R, we have Un∗ →U and Un →U weakly. Similarly, denote by R′ the\nlimiting distribution of V n∗ := √nDWn(Yn) given Y∞and of Vn := √nMMD(Pn, P), and let V ∼R′. We then have\nV n∗ →V and Vn →V . It suffices to show that Un∗ + Vn∗ →U + V and Un + Vn →U + V weakly and apply a triangle\ninequality to conclude the claimed result. For a (real-valued) random variable Z, denote by ϕZ(t) := E[exp(itZ)] its characteristic function, where i denotes\n∗ = E[exp(itUn)∗ | The weak convergence ofthe imaginary unit. In particular, ϕU(t) = E[exp(itU)] and ϕU n(t) ∗ ∗ (t) →Un∗ and V n∗ then implies ϕU n(t) ∗ →ϕU(t) and ϕVn ∗ (t) →ϕV (t) pointwise in t. Hence, the product ϕU n(t)ϕV n\nϕU(t)ϕV (t) also converges pointwise by the independence of U and V . Since by assumption Un∗ and V n∗ are independent\n∗ ∗ ∗ (t) and ϕU(t)ϕV (t) = ϕU+V (t), and therefore Un∗ + V n∗ →given Xn and Yn, this implies ϕU n(t)ϕV n ∗ (t) = ϕU n+V n\nU + V weakly by Lévy's Continuity Theorem (van der Vaart, 2000, Theorem 2.13). A similar argument shows that\nUn + Vn also converges weakly to the same limit, and hence the claimed result follows. B.2.5 Proof of Theorem 9 First assume KSD(Q, P) ≤θ′.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 116,
+    "total_chunks": 119,
+    "char_count": 1517,
+    "word_count": 296,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1a98c2cc-4c8b-4b60-ad49-ac683e4802ff",
+    "text": "Inequality (13) implies\nT n,mKSD,θ = θ −KSD(Qn, P) ≥θ −MMD(Qn, Q; up) −KSD(Q, P) ≥θ −θ′ −ξn , (33)\nwhere the last inequality holds since KSD(Q, P) ≤θ′, and we have defined ξn := MMD(Qn, Q; up). KSD,θ (i) (ii) Pr(Tn > η1−α) ≥Pr(θ −θ′ −ξn > η1−α) = Pr(ξn < η1−β) = 1 −β , Kernel Tests of Equivalence A PREPRINT where (i) holds since θ = θ + η1−α + η1−β by definition, and (ii) holds as η1−β is the (1 −β)-th quantile of ξn. This\nshows the first claim.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 117,
+    "total_chunks": 119,
+    "char_count": 449,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "52772f64-37e2-472f-b219-0e1366cfbd25",
+    "text": "Now assume KSD(Q, P) > θ′. The probability of rejection can be bounded as Pr(TnKSD,θ > η1−α) = Pr(θ −KSD(Qn, P) > η1−α)\n= Pr(θ′ + η1−α + η1−β −KSD(Qn, P) > η1−α)\n= Pr(KSD(Qn, P) < θ′ −η1−β) . (34) The statistic ξn = MMD(Qn, Q; up) →MMD(Q, Q; up) = 0 almost surely by the strong law of large numbers for\nV-statistics (Kokic, 1987). Hence, its quantile η1−β also converges to 0.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 118,
+    "total_chunks": 119,
+    "char_count": 376,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1e740ab8-d829-4573-b2a5-997b023dcad9",
+    "text": "On the other hand,\nKSD(Qn, P) →KSD(Q, P) > θ′ , where the convergence is again by the law of large numbers. Combining these argument shows that the RHS of (34)\nconverges to 0, thus showing the claimed result. B.2.6 Proof of Theorem 10 An inequality similar to (33) can be derived for MMD as follows\nT n,mMMD,θ = θ −MMD(Qn, Pm) ≥θ −MMD(Qn, Q) −MMD(Q, P) −MMD(Pm, P) ≥θ −θ′ −Sn,m ,\nwhere the last inequality holds since MMD(Q, P) ≤θ′, and Sn,m := MMD(Qn, Q) + MMD(Pm, P). The rest of\nthe proof is the same as that of Theorem 10 by replacing (33) with the above inequality, and using the quantiles of Sn,m\ninstead of ξn.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 119,
+    "total_chunks": 119,
+    "char_count": 617,
+    "word_count": 119,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f5073879-43aa-48d3-8c80-b73bff7d6682",
+    "text": "C Computation of the MMD Asymptotic Variance We show how (15) can be computed in O((n+m)2) time. We provide a discussion for ˆσ2MMD,1, and the same argument\napplies to ˆσ2MMD,2. The key observation is that qi, defined below (15), can be simplified to double sums using the definition of the MMD\nkernel h(x, x′, y, y′) = k(x, x′) + k(y, y′) −k(x, y′) −k(x′, y). n m m\n(n −1)m(m −1)qi = X X X h(xi, xi′, yj, yj′)\ni′=1 j=1 j′=1\ni′̸=i j′̸=j\nn m m\n= X X X k(xi, xi′) + k(yj, yj′) −k(xi, yj′) −k(xi′, yj)\ni′=1 j=1 j′=1\ni′̸=i j′̸=j\nn m m m\n= m(m −1) X k(xi, xi′) + (n −1) X X k(yj, yj′) −(n −1)(m −1) X k(xi, yj′)\ni′=1 j=1 j′=1 j′=1\ni′̸=i j′̸=j\nn m\n−(m −1) X X k(xi′, yj) .\ni′=1 j=1\ni′̸=i Computing the first and third terms for all {qi}ni=1 requires O(n2 + nm). The second term requires O(m2) and only\nneeds to be computed once for all qi. For the last term, we can rewrite it as",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 120,
+    "total_chunks": 119,
+    "char_count": 873,
+    "word_count": 184,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f5b148d6-2db2-4cd7-9ffd-f0abb40baa75",
+    "text": "n m n m m\nX X k(xi′, yj) = X X k(xi′, yj) − X k(xi, yj) = T1 + Ti,2 .\ni′=1 j=1 i′=1 j=1 j=1\ni′̸=i Computing Ti,2 for all qi requires O(nm), while T1 only needs to be computed once, which also costs O(nm). Therefore, all {qi}ni=1 can be computed in O((n + m)2) time. Since ˆσ2MMD,1 is the sample variance of {qi}ni=1, it can\nalso be computed in O((n + m)2) time.",
+    "paper_id": "2603.10886",
+    "title": "Kernel Tests of Equivalence",
+    "authors": [
+      "Xing Liu",
+      "Axel Gandy"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10886v1",
+    "chunk_index": 121,
+    "total_chunks": 119,
+    "char_count": 361,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  }
+]

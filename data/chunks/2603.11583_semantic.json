@@ -1,0 +1,274 @@
+[
+  {
+    "chunk_id": "627d25ee-1040-4298-8fce-fd9f0f31d765",
+    "text": "UTILITYMAX PROMPTING: A FORMAL FRAMEWORK FOR\nMULTI-OBJECTIVE LARGE LANGUAGE MODEL OPTIMIZATION Ofir Marom\nIndependent Researcher\nofiremarom@gmail.com\nABSTRACT",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 0,
+    "total_chunks": 16,
+    "char_count": 158,
+    "word_count": 17,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9cde33a2-1007-42bd-aa4e-9626e12d46c5",
+    "text": "The success of a Large Language Model (LLM) task depends heavily on its prompt. Most use-casesMar specify prompts using natural language, which is inherently ambiguous when multiple objectives\n12 mustthat specifiesbe simultaneouslytasks usingsatisfied.formal mathematicalIn this paper welanguage.introduceWeUtilityMaxreconstructPrompting,the task as aanframeworkinfluence\ndiagram in which the LLM's answer is the sole decision variable. A utility function is defined over\nthe conditional probability distributions within the diagram, and the LLM is instructed to find the\nanswer that maximises expected utility. This constrains the LLM to reason explicitly about each\ncomponent of the objective, directing its output toward a precise optimization target rather than a\nsubjective natural language interpretation. We validate our approach on the MovieLens 1M dataset\nacross three frontier models (Claude Sonnet 4.6, GPT-5.4, and Gemini 2.5 Pro), demonstrating[cs.CL]\nconsistent improvements in precision and Normalized Discounted Cumulative Gain (NDCG) over\nnatural language baselines in a multi-objective movie recommendation task. Prompt engineering is crucial in directing Large Language Models (LLMs) to solve specific tasks. Various prompt\nengineering techniques have been proposed in recent years [1]. In particular, zero-shot prompting is attractive due to its\nsimplicity since it does not require external exemplars to construct the prompt [2, 3].",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 1,
+    "total_chunks": 16,
+    "char_count": 1453,
+    "word_count": 195,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c2d910a4-9cd6-4e2e-b69b-71bc10d850c4",
+    "text": "One line of research focuses on restructuring how the model reasons within a single inference pass. With zero-shot\nChain-of-Thought (CoT) prompting, the LLM is instructed to reason \"step-by-step\" about the solution before producing\nan answer [4, 5]. In the few-shot CoT setting, exemplars of similar questions and answers are provided so that the LLM\ncan observe the reasoning patterns it should follow [4]. In Program of Thoughts (PoT) prompting, the LLM translates\na natural language prompt into a programming language such as Python, which is then executed to produce the final\nanswer [6]. In Chain-of-Symbol (CoS) prompting, a task is converted into a symbolic representation that assists thearXiv:2603.11583v1 LLM in solving spatial reasoning and planning tasks [7]. A second line of research treats the prompt itself as the optimization target. For example, Optimization by Prompting\n(OPRO) uses an LLM as an iterative optimizer, generating candidate prompts, evaluating them against a labeled dataset,\nand refining them across multiple passes [8]. While effective, this approach requires a scoring function for the task so\nthat proposed answers can be evaluated as better or worse. Such evaluation signals are not always available, or are\nexpensive to obtain in many real-world deployment settings. These methods have demonstrated significant improvements in LLM performance across a range of benchmarks.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 2,
+    "total_chunks": 16,
+    "char_count": 1411,
+    "word_count": 212,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "df8489b3-5ade-49fe-87ef-e983bf08e424",
+    "text": "However, they share a common assumption: the task objective is specified in natural language. While this is not a\nlimitation in domains with a single objective, such as solving mathematical problems, it becomes a challenge when\nmultiple dependent objectives must be optimized simultaneously. For example, consider a trading agent that wants to maximise profit at a given level of risk tolerance. These objectives\nnaturally compete with each other as the most profitable strategy may require taking a level of risk that could result in\nsignificant losses. Balancing both objectives therefore becomes key, but a natural language prompt that says: \"maximise UtilityMax Prompting TECHNICAL REPORT profit subject to a medium level of risk\" is inherently ambiguous. The LLM has to interpret what \"medium\" means here. While a more carefully crafted natural language prompt could partially resolve this kind of ambiguity, a task like this is\nbest specified in formal mathematical language that eliminates ambiguity entirely. In this paper we introduce UtilityMax Prompting, a zero-shot framework that takes a complementary approach: rather\nthan restructuring the reasoning process or iterating over candidate prompts, we replace the natural language objective\nitself with a formal mathematical specification. The LLM is instructed to maximise the expected utility given its\nanswer, constraining it to reason about each component of the objective individually and directing its output toward a\nwell-defined optimization target. This approach requires neither exemplars nor a scoring function.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 3,
+    "total_chunks": 16,
+    "char_count": 1583,
+    "word_count": 233,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5a668810-ff64-44ae-80c8-8f4e0535953c",
+    "text": "The rest of this paper is organized as follows: in Section 2 we cover the general methodology behind the UtilityMax\nframework; in Section 3 we extend the framework to handle dependencies between binary chance nodes; in Section\n4 we provide a prompting template under UtilityMax that practitioners can use; in Section 5 we validate UtilityMax\non a multi-objective movie recommendation task using the MovieLens 1M dataset [9], demonstrating consistent\nimprovements in precision and Normalized Discounted Cumulative Gain (NDCG) over natural language baselines\nacross three frontier models (Claude Sonnet 4.6, GPT-5.4, and Gemini 2.5 Pro); and we conclude with final remarks\nand directions for future research in Section 6. Let K represent the LLM's knowledge. This includes all internal knowledge stored through its parameters as well as\nexternal knowledge such as context through chat history or online research.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 4,
+    "total_chunks": 16,
+    "char_count": 910,
+    "word_count": 137,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "39acedf8-3510-4e8c-be89-4afda47ecbc5",
+    "text": "Given K, we define the following influence\ndiagram: K be a decision node that represents the space of all possible LLM's answers given K. An answer a ∈A is\ndecided by the LLM. Let {X1, X2, X3, ..., Xn} be a set of chance nodes with n ≥1. The dependency structure over {A, X1, ..., Xn} forms a directed acyclic graph (DAG) with A as the singular\nroot node.\n2. Each Xi is conditionally independent given A. Suppose further that we define a multiplicative utility function U(X1, ..., Xn) = Qni=1 fi(Xi). Then the expected\nutility factorizes as: This setup is shown visually in Figure 1. Figure 1: Influence diagram for UtilityMax Prompting showing decision node A, chance nodes {X1, X2, X3, ..., Xn},\nand utility node U. Then the task of the LLM is to find a∗∈A that maximises E[U | UtilityMax Prompting TECHNICAL REPORT",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 5,
+    "total_chunks": 16,
+    "char_count": 817,
+    "word_count": 146,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6ea4c452-62a8-41c0-92f7-65bd1764c5b8",
+    "text": "3 Binary Chance Nodes In the special case where the chance nodes {X1, X2, . . . , Xn} are all binary random variables, we can relax the\nconditional independence assumption. Let pa(Xi) denote the parents of Xi in the DAG, and suppose that if any Xj = 0\nfor Xj ∈pa(Xi) then P(Xi = 1 | pa(Xi), A) = 0. That is, each node is deterministically gated by its parents so that\na child node can only be active if all its parents are active.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 6,
+    "total_chunks": 16,
+    "char_count": 430,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "859cdd23-c8f5-479d-88e5-cf2e3a068a25",
+    "text": "Denote by pa(Xi) = 1 the event that Xj = 1 for all Xj ∈pa(Xi). Under the gating assumption, all terms in the\nexpectation where any parent takes the value zero vanish, and the expected utility reduces to: A] = Y P(Xi = 1 | pa(Xi) = 1, A) (2)\ni=1 where we define fi(Xi) = Xi so that E[Xi | pa(Xi) = 1, A] = P(Xi = 1 | pa(Xi) = 1, A). Each term is estimated\nindependently by the LLM, preserving tractability without requiring conditional independence.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 7,
+    "total_chunks": 16,
+    "char_count": 448,
+    "word_count": 88,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "435e8ac5-be46-4206-8811-6b71cf137925",
+    "text": "Given the framework outlined in Section 2, we can construct a prompt to maximise the given utility. A template for\nsuch a prompt is given below for two random variables X1 and X2 . I want you to solve the following task: [TASK DESCRIPTION]. Formally, let K represent your knowledge. This includes all your internal knowledge\nstored through your parameters as well as any external knowledge provided in this prompt\nor chat history. K) represent your probability distribution over answers given K. Let a be an\nanswer in A. A=a be a random variable representing [DESCRIPTION OF X1] given answer a. A=a be a random variable representing [DESCRIPTION OF X2] given answer a. Your task is to use your domain expertise to find the optimal answer a* that maximises\nO(a) = E[X1 | Generate a set of candidate answers.\n2. For each candidate answer, estimate E[X1 | A=a] individually using\nyour internal knowledge then compute O(a) for that candidate.\n3. Return the answer a* that maximises O.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 8,
+    "total_chunks": 16,
+    "char_count": 980,
+    "word_count": 167,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7e733115-113d-448c-8fb8-7ea49784fd15",
+    "text": "To validate our prompting framework we run experiments on the MovieLens 1M dataset [9]. Given the first 100 movies\nthat a user has rated between 1 and 5, the LLM's task is to recommend the top 10 movies for that user from the next 50\nin their watched list. To cast the problem as a multi-objective task, we further condition that the user is only interested in movies in the\ncomedy and romance genres. To ensure sufficient signal in the test set, we only select users that have at least 5 movies\nin the test window that belong to both genres and carry a rating of 4 or higher, and that have a total watch history of at\nleast 150 movies. We randomly select 20 users and for each user we run 20 queries to account for stochasticity in LLM\noutputs. We evaluate three prompt types: Basic: The LLM is told that the user is in the mood for comedy and romance movies.\n2. Harsh: The LLM is told that the user is only interested in comedy and romance movies and that it should not\nsuggest anything outside of these genres. UtilityMax Prompting TECHNICAL REPORT UtilityMax: A prompt is constructed based on the template of Section 4 with three random variables - a\ncategorical random variable S for the predicted score, a binary random variable G1 for the comedy genre, and\na binary random variable G2 for the romance genre. Therefore, the objective is: The LLM is not given the test movie scores, nor the genre labels for any movie in either the training or test set.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 9,
+    "total_chunks": 16,
+    "char_count": 1458,
+    "word_count": 267,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5446baa2-f4c1-40ed-87b4-a598cab116d2",
+    "text": "Under\nUtilityMax, the LLM must therefore estimate E[S | A = a), and P(G2 = 1 | A = a) for each\ncandidate movie using only its title and the user's training history. The recommended list is evaluated against the test set, where a movie is considered a positive match only if it carries a\nrating of 4 or higher and belongs to both the comedy and romance genres. We report Precision@10 and Normalised\nDiscounted Cumulative Gain (NDCG@10) averaged across all users and runs. Experiments are conducted across three\nfrontier models: Claude Sonnet 4.6, GPT-5.4, and Gemini 2.5 Pro.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 10,
+    "total_chunks": 16,
+    "char_count": 574,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e6bbb70b-f56e-406f-8060-02ca84ad6da5",
+    "text": "Our results are summarized in Table 1. UtilityMax outperforms both Basic and Harsh prompt types across all three\nmodels on both metrics. For example, with Claude Sonnet 4.6 we observe a 12.7% and 16.5% improvement in\nPrecision@10 and NDCG@10 respectively over the Basic prompt, and a 11.9% and 18.8% improvement over the\nHarsh prompt. Model Prompt Precision@10 NDCG@10 Basic 0.418 (0.054) 0.570 (0.070)\nClaude Sonnet 4.6 Harsh 0.421 (0.067) 0.559 (0.083)\nUtilityMax 0.471 (0.060) 0.664 (0.064) Basic 0.532 (0.052) 0.739 (0.056)\nGPT-5.4 Harsh 0.518 (0.050) 0.712 (0.060)\nUtilityMax 0.578 (0.047) 0.788 (0.050) Basic 0.417 (0.073) 0.575 (0.098)\nGemini 2.5 Pro Harsh 0.449 (0.086) 0.601 (0.108)\nUtilityMax 0.496 (0.079) 0.667 (0.103) Table 1: Precision@10 and NDCG@10 averaged over 20 users and 20 queries per user. Standard deviations are shown\nin parentheses. It is interesting to note that the Harsh prompt type does not consistently outperform Basic across models. Harsh\nunderperforms Basic on NDCG@10 for Claude Sonnet 4.6 (0.559 vs 0.570) and on both metrics for GPT-5.4. This\ninconsistency suggests that increasing the forcefulness of a natural language objective does not reliably resolve the\nunderlying ambiguity in how multiple objectives are weighted.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 11,
+    "total_chunks": 16,
+    "char_count": 1259,
+    "word_count": 190,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "93ab8176-1110-4861-a249-a14fa2a1ec13",
+    "text": "UtilityMax eliminates this ambiguity entirely through\nformal mathematical specification, which we believe accounts for its consistent superiority across all models and\nmetrics. GPT-5.4 achieves substantially higher absolute scores across all prompt types compared to the other two models. This\nmay reflect training data overlap between GPT-5.4 and the MovieLens dataset, which is widely used and publicly\navailable. However, the key finding for this paper is that UtilityMax continues to outperform both natural language\nbaselines even for GPT-5.4, suggesting that the formal objective provides genuine additional signal regardless of model\ncapability. To assess statistical significance we apply a one-sided paired Wilcoxon signed-rank test on per-user mean NDCG@10,\ncomparing UtilityMax against each baseline independently. The null hypothesis is that UtilityMax and the baseline\nproduce equal NDCG scores; the alternative is that UtilityMax is superior. As shown in Table 2, UtilityMax significantly\noutperforms both baselines across all three models (p < 0.01 in all cases). Finally, we note that the effectiveness of UtilityMax depends on the underlying model's ability to produce wellcalibrated probability estimates. A model that cannot reliably estimate the objective components may not benefit from\nthis framework, and may even perform worse than natural language prompting. The results presented here suggest that\ncurrent frontier models are capable enough to leverage the formal objective effectively, but we anticipate that weaker\nmodels may fall below this capability threshold. We leave a systematic investigation of this threshold to future work. UtilityMax Prompting TECHNICAL REPORT Model vs Basic vs Harsh",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 12,
+    "total_chunks": 16,
+    "char_count": 1723,
+    "word_count": 245,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f77a8ce9-3684-402c-8e66-65a2b69785a5",
+    "text": "Claude Sonnet 4.6 0.0028 0.0006\nGPT-5.4 0.0068 0.0042\nGemini 2.5 Pro 0.0014 0.0032 Table 2: One-sided paired Wilcoxon signed-rank test p-values for UtilityMax vs each baseline on NDCG@10. All\nresults are significant at the p < 0.01 level.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 13,
+    "total_chunks": 16,
+    "char_count": 238,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "64bfcc44-a054-4236-893f-435d3d393884",
+    "text": "This paper has introduced UtilityMax, a formal zero-shot prompting framework for multi-objective LLM optimization. The key insight is that by representing the task as a formal optimization objective, the LLM is constrained to reason\nexplicitly about each component of that objective, rather than relying on a natural language interpretation that may be\nambiguous. The effectiveness of UtilityMax depends on two key factors. First, the underlying model must be expressive enough\nto produce well-calibrated probability estimates for the objective components. Our experiments suggest that current\nfrontier models meet this requirement, at least on the MovieLens recommendation task. Second, the optimization objective must be carefully designed so that its variables capture the most important components of the underlying task. Including irrelevant variables introduces redundancy and increases computational cost,\nwhile omitting important variables will cause the framework to optimize a proxy that does not fully reflect the true goal. The designer must therefore exercise judgement in selecting variables that are both necessary and sufficient for the task\nat hand. Several directions for future research present themselves. Perhaps the most practically important is automating the\nconstruction of the UtilityMax prompt. Specifically, developing a method by which an LLM can extract the relevant\nvariables from a natural language task description and format them into the UtilityMax framework automatically. This\nwould remove the requirement for a human designer to manually specify the optimization objective. A second important direction is further relaxing the conditional independence assumption on the chance nodes given\nA. While this assumption yields a tractable objective and is sufficient to capture a wide range of tasks, it precludes\ndependencies between chance nodes that may be necessary in certain domains. Extending the framework beyond the\ngating mechanism introduced in Section 3 to handle such dependencies while preserving tractability remains an open\nproblem.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 14,
+    "total_chunks": 16,
+    "char_count": 2080,
+    "word_count": 297,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "612db1a9-414c-4ee1-9a90-8b058bd46bfe",
+    "text": "Finally, a systematic investigation of the capability threshold below which UtilityMax ceases to be beneficial would\nhelp practitioners identify which models are suitable for this framework. Overall, UtilityMax is a promising approach to improving LLM task performance through formal objective specification. Our experimental evidence across three frontier models demonstrates consistent improvements over natural language\nbaselines, and we hope this work motivates further research into the formal specification of LLM objectives as a\ncomplement to existing prompt engineering techniques.",
+    "paper_id": "2603.11583",
+    "title": "UtilityMax Prompting: A Formal Framework for Multi-Objective Large Language Model Optimization",
+    "authors": [
+      "Ofir Marom"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11583v1",
+    "chunk_index": 15,
+    "total_chunks": 16,
+    "char_count": 589,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  }
+]

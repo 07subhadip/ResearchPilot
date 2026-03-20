@@ -1,0 +1,306 @@
+[
+  {
+    "chunk_id": "c3142e89-4262-4448-b522-bc9cb9ddc769",
+    "text": "AI-Enhanced Spatial Cellular Traffic Demand\nPrediction with Contextual Clustering and Error\nCorrection for 5G/6G Planning Mohamad Alkadamani, Colin Brown, and Halim Yanikomeroglu",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 0,
+    "total_chunks": 16,
+    "char_count": 178,
+    "word_count": 22,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "99035330-e6fb-43ca-9df6-4c3aabe39085",
+    "text": "Abstract—Accurate spatial prediction of cellular traffic de- to handle spatial autocorrelation to avoid biased evaluation. A\nmand is essential for 5G NR capacity planning, network densifi- central concern is spatial information leakage: nearby samples\ncation, and data-driven 6G planning. Although machine learning are statistically dependent, so naive train/test splitting can yield\ncan fuse heterogeneous geospatial and socio-economic layers to\nover-optimistic accuracy and misleading generalization claims. estimate fine-grained demand maps, spatial autocorrelation can\ncause neighborhood leakage under naive train/test splits, inflating Prior work on traffic-demand proxy modeling provides a2026\naccuracy and weakening planning reliability. This paper presents starting point. In [7], diverse geospatial inputs were studied\nan AI-driven framework that reduces leakage and improves alongside a demand proxy, and location-based clustering was\nspatial generalization via a context-aware two-stage splitting used to improve train/test independence; [6] advanced the\nstrategy with residual spatial error correction. Experiments usingMar proxy and interpretability aspects. Spatio-temporal traffic pre- crowdsourced usage indicators across five major Canadian cities\n11 showto location-onlyconsistent meanclustering,absolutesupportingerror (MAE)more reliablereductionsbandwidthrelative dictionwith geo-referencedhas also beentrafficstudiedmeasurementsusing recurrentto captureneural networkstemporal\nprovisioning and evidence-based spectrum planning and sharing dynamics and geographic variability [8]. From the leakageassessments. mitigation perspective, spatial cross-validation techniques are\nIndex Terms—5G NR, 6G, cellular traffic demand predic- surveyed in [9], [10], and related fields propose cluster-based\ntion, spectrum planning, spatial autocorrelation, spatial cross- and hybrid splitting strategies [11], [12]. However, many\nvalidation clustering-based splits remain context-blind, relying mainly on[cs.LG] location (or generic clustering) without explicitly enforcing\nI. INTRODUCTION representativeness in land-use and functional context; consequently, dependence can still leak across folds and evaluation\nA key capability for AI-enabled wireless networks and may remain optimistic.\ncognitive spectrum management is characterizing how cellular This paper proposes a context-aware framework for spatial\ntraffic demand varies across space, particularly in dense urban cellular traffic-demand prediction that improves spatial genregions. For 5G and beyond, spatial demand hotspots influence eralization under spatial autocorrelation and supports reliable\ncarrier bandwidth selection, small-cell deployment, capacity 5G/6G planning. Contributions include a context-aware twoexpansion, and the feasibility of spectrum access mechanisms. stage splitting strategy that combines spatial clustering with\nSpatial demand prediction can also help regulators and plan- land-use/context clustering to form representative folds and\nners identify regions at risk of under- or over-provisioning and reduce leakage relative to location-only clustering, and a fivescreen spectrum-sharing feasibility in longer-horizon planning. city Canadian evaluation with planning-oriented mappings\nEstimating cellular traffic demand, especially for commer- that translate prediction error into bandwidth-dimensioning\ncial mobile applications, is complex and shaped by inter- error and congestion-risk screening for carrier bandwidth and\nrelated factors such as technological evolution, regulations, spectrum-provisioning assessments.\nusage trends, and socio-economic conditions. Traditionally,arXiv:2603.10800v1 The remainder of the paper is organized as follows.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 1,
+    "total_chunks": 16,
+    "char_count": 3744,
+    "word_count": 442,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1cfe3052-1d90-4a13-8d63-0a2661f944be",
+    "text": "Secplanning studies relied on expert assessments in industry tion II describes the data model and feature mapping. Secwhitepapers [1] or simplified models [2]. Increasing system tion III characterizes spatial dependency using Moran's I.\ncomplexity and data availability have accelerated interest in Section IV presents the proposed two-stage splitting strategy.\ndata-driven planning and resource-allocation methods [3]– Section V reports performance results, Section VI links errors\n[5]. These approaches, including ML and advanced analytics, to 5G/6G planning metrics, and Section VII concludes.\ncan infer spatial demand distributions and support planning\ndecisions via predictive traffic-demand maps [6]. DATA-DRIVEN SPATIAL TRAFFIC DEMAND MODELING\nData-driven spatial traffic-demand prediction faces chal- Spatial traffic-demand prediction is formulated as superlenges specific to geospatial wireless data, including hetero- vised learning over heterogeneous geospatial features by mapgeneous feature resolutions, high dimensionality, and the need ping both feature layers and a traffic-demand proxy to a\ncommon geographic unit. Alkadamani is with Innovation, Science and Economic Development Canada (ISED) and Carleton University, Ottawa, Canada (e-mail:\nmohamad.alkadamani@ised-isde.gc.ca). Grid-cell representation and study areas\nC.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 2,
+    "total_chunks": 16,
+    "char_count": 1339,
+    "word_count": 170,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c44b98f7-49de-4270-9076-2b817c6b5f19",
+    "text": "Brown is with the Communications Research Centre (CRC), Ottawa,\nOntario, Canada. The study region is partitioned into uniform square grid\nH. Yanikomeroglu is with Carleton University, Ottawa, Ontario, Canada. cells of approximately 1.5 km × 1.5 km. analysis unit used to align datasets to a common spatial\nresolution. Five major Canadian cities are considered: Montreal, Vancouver, Greater Toronto, Ottawa, and Calgary.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 3,
+    "total_chunks": 16,
+    "char_count": 419,
+    "word_count": 61,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "18940eab-c9c5-4091-857e-594522dc1c40",
+    "text": "Let\nS = {s1, . . . , sn} denote the set of n grid cells. Each si has a\nfeature vector xi ∈Rm and a target yi representing a trafficdemand proxy, with learning objective ˆyi = fθ(xi). Traffic demand proxy from crowdsourced measurements\nDirect traffic measurements are typically restricted to mobile\nnetwork operators and are unavailable for public studies. A\ntraffic-demand proxy yi is therefore derived from crowdsourced mobile usage indicators collected via applicationembedded SDKs and aggregated to the grid-cell level. Modeling pipeline.\ndataset comprises approximately 15 million measurements\nacross the five cities over one month in 2023.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 4,
+    "total_chunks": 16,
+    "char_count": 644,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a1ee11db-a032-45d5-8a65-2857021a4ad4",
+    "text": "In the 4G/5G transition regime, the indicators reflect combined activity and represent total traffic intensity rather than\ngeneration-specific load. The proxy increases with the number\nand persistence of observed user connections within a grid\ncell and, although bytes transferred are not explicitly encoded,\ncaptures the dominant busy-hour spatial structure (dense connections imply higher load, while sparse activity implies lower\ndemand). After filtering and aggregation, each grid cell si is\nassigned yi paired with xi for supervised learning. Feature layers and grid-cell mapping\nInput features originate from heterogeneous sources and are\nstandardized to the grid-cell representation. Feature layers may\nbe defined on administrative units (e.g., census subdivisions\nand dissemination areas), as points (e.g., points of interest Fig. 2. Moran's I versus distance (grid cells).\nand businesses), or as polygons (e.g., land-use/land-cover). Geometry-aware mapping assigns each grid cell si a consistent A. Global Moran's I for spatial autocorrelation\nfeature vector xi. Global Moran's I quantifies city-wide spatial autocorrelation\nFeature layers are temporally aligned to overlap with the in yi [13]. For N grid cells,\nsame one-month window of the crowdsourced dataset; some\nlayers have coarser temporal granularity than others but still N PNi=1 PNj=1 wij(yi −¯y)(yj −¯y)\nI = , (1)\noverlap the analysis period. For areal datasets, grid-cell values W PNi=1(yi −¯y)2\nare obtained by spatial overlay using area-weighted allocation\nwhere ¯y is the mean demand proxy, wij is a spatial weight,from source polygons to intersecting grid cells. For categorical\nand W = PNi=1 PNj=1 wij.polygon layers (e.g., land-use), the dominant class within each\nA distance-threshold neighborhood is used with wij = 1grid cell is used; point-based layers are mapped via counts or\nif centroid distance dij ≤dthreshold and wij = 0 otherwise;density estimates (normalized by cell area).\nvarying dthreshold reveals the correlation range. Figure 2 plots Mapped features include socio-economic variables (populaI versus distance (in grid cells) to identify the dominanttion density and related census indicators), urban infrastructure\ncorrelation range that split boundaries should exceed to reduce(counts/densities of businesses, roads, and points of interest),\nleakage; inter-city differences further indicate that a singleland-use type (land-use/land-cover attributes), and network\nfixed split radius can be suboptimal.infrastructure (an indicator of cellular infrastructure presence). All layers are aligned to the grid and combined into xi,\nB. Local Moran's I for spatial clusters and outliersyielding {(xi, yi)}ni=1.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 5,
+    "total_chunks": 16,
+    "char_count": 2696,
+    "word_count": 381,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a0890abf-93f2-43bf-a122-b6a1e965c7df",
+    "text": "Local Moran's I localizes spatial clusters and outliers. SPATIAL DEPENDENCY CHARACTERIZATION grid cell si,\nUrban traffic-demand maps exhibit spatial dependence: N\nneighboring areas often share land use, socio-economic condi- Ii = (yi −¯y) X wij(yj −¯y), (2)\ntions, and mobility-driven usage, producing correlated demand j=1\nvalues. Quantifying spatial dependence (i) motivates leakage- where wij defines the neighborhood.\naware splitting and (ii) informs the spatial scale required Local Moran's I yields four spatial association types: Highto separate neighborhoods and obtain realistic generalization High (HH), high yi with high neighbors; Low-Low (LL), low\nestimates. yi with low neighbors; High-Low (HL), high yi with low where σℓis the standard deviation of feature ℓ. Categorical\nland-use can be represented via one-hot encoding so that\ndissimilarity reflects context changes. Stage 2 produces sub-clusters that remain spatially contained within Stage-1 blocks and are more homogeneous in\ncontext. Sub-clusters are assigned to folds to preserve Stage-1\nspatial separation while ensuring each fold contains a mixture\nof contexts.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 7,
+    "total_chunks": 16,
+    "char_count": 1135,
+    "word_count": 160,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "33794fe6-dcc1-4a5d-93dd-6ab97e4ae512",
+    "text": "Figure 5 illustrates the effect in Montreal. As\nshown, the location-only k-Means partition uses five folds,\nwhereas the two-stage procedure yields three folds because\nrefinement and fold construction merge sub-clusters into the\nsmallest set of folds that remains spatially separated and\nsufficiently distinct in land-use context. Learning model and spatial error correction\nFig. 3. Local Moran's I clusters across five Canadian cities.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 8,
+    "total_chunks": 16,
+    "char_count": 435,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "676b026c-91eb-44cf-bbc5-64d079a006ce",
+    "text": "XGBoost is used as the base predictor due to strong\nperformance on structured tabular features and nonlinear inneighbors; and Low-High (LH), low yi with high neighbors. teractions. Let ˆyi denote the prediction and ei = yi −ˆyi the\nFigure 3 visualizes these associations, with dark red indicating residual. Even under leakage-reduced splitting, residuals can\nHH clusters (persistent hotspots) and light red indicating LL remain spatially correlated due to unmodeled neighborhood\nclusters (persistent low-demand regions). Transitional areas effects and latent variables, creating geographically coherent\noften exhibit HL/LH behavior and can be challenging for bias. A Spatial Error Model (SEM) is applied to the residual\ngeneralization when neighbors are split across folds. process y = Xβ + ϵ, ϵ = λWϵ + u, (5)\nIV.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 9,
+    "total_chunks": 16,
+    "char_count": 814,
+    "word_count": 123,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "18318c8f-50a7-4bb3-8cc3-2b0b50632d53",
+    "text": "TWO-STAGE DATA SPLITTING AND SPATIAL ERROR\nwhere W is a spatial weights matrix (distance threshold or k- CORRECTION\nnearest neighbors), λ captures residual spatial dependence, and\nSpatial autocorrelation makes random splitting unreliable u is i.i.d. noise. The SEM represents residuals as a spatially\nbecause adjacent grid cells can share near-duplicate context,\nfiltered process.\ninflating validation accuracy when neighbors fall in differ- SEM refinement is implemented as post-processing: XGent folds. Location-only clustering reduces leakage but can Boost is trained on two-stage folds, residuals are computed\nproduce context-imbalanced folds (e.g., commercial versus on training data, λ is estimated given W, and the spatial filter\nresidential); the proposed two-stage procedure enforces spatial is applied to correct predictions. A regularized objective that\nseparation and context diversity and is followed by spatial penalizes spatially structured residuals is\nerror correction as shown in Fig. 4. L(θ, λ) = X(ˆyi−yi)2+α∥θ∥22+β∥(I−λW)−1ϵ∥22, (6)\nA.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 10,
+    "total_chunks": 16,
+    "char_count": 1056,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "975d9a4d-a225-4dbe-ad36-6f6de5a6b640",
+    "text": "Stage 1: spatial clustering for leakage reduction N i=1\nStage 1 partitions the study area into spatially cohesive where θ denotes XGBoost parameters. The third term discourblocks by applying k-Means to grid-cell centroids ages residual autocorrelation, improving robustness in unseen\nk geographic regions.\nmin X X ∥pj −µi∥2, (3)\n{Ci}ki=1 i=1 sj∈Ci V. PERFORMANCE EVALUATION\nwhere pj is the coordinate vector of sj, Ci is the ith spatial This section evaluates predictive performance and spatial\ncluster, and µi is its centroid. The parameter k controls cluster generalization under the proposed splitting strategy using\ndiameter and the extent to which correlated neighbors are MAE and R2, with learning curves assessing leakage-driven\nseparated across folds; Fig. 2 guides selection by indicating overfitting under spatially structured validation.\nthe dominant correlation range (up to r grid cells) that most\ntrain/validation boundaries should exceed.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 11,
+    "total_chunks": 16,
+    "char_count": 953,
+    "word_count": 139,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2364b188-88cf-4d49-a0e4-35689581334b",
+    "text": "Cross-city evaluation\nTable I reports two evaluations. A leave-one-city-out configB. Stage 2: context-aware refinement within spatial clusters uration assesses transferability by holding each city out as an\nunseen test set while training on the remaining cities. An \"All Stage 2 refines each spatial cluster using context features\nCities\" configuration performs splits across the pooled dataset(e.g., land-use/land-cover and related attributes) to improve\nto reflect within-distribution performance.representativeness in feature space and avoid folds dominated\nAcross both configurations, two-stage splitting consistentlyby a single context type. A normalized dissimilarity between\nreduces MAE relative to location-only clustering, indicatingsa and sb within the same spatial cluster is\nthat context-aware folds better reflect deployment hetero- m\n|xaℓ−xbℓ| geneity. SEM provides additional MAE reductions, consistent , (4) d(sa, sb) = X\nσℓ with residual spatial structure not fully captured by the base\nℓ=1 Two-stage clustering and spatial error correction framework. Comparison of clustering techniques for Montreal. Although R2 gains are smaller, the systematic MAE\nreduction improves absolute demand estimates, which is the Fig. 6.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 12,
+    "total_chunks": 16,
+    "char_count": 1235,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fcba6ff1-e380-41e3-943e-a339c0d0b2f1",
+    "text": "Learning curves comparison for different clustering strategies.\ncritical quantity for downstream planning.\ndimensioning and congestion-risk metrics. TABLE I\nPERFORMANCE RESULTS ACROSS FIVE CANADIAN CITIES Mean Absolute Error (MAE) City R2 Gain (%) A. Bandwidth dimensioning k-Means Two-Stage Two-Stage +\nSEM\nToronto 1532.8 1012.3 845.2 3.85 Offered downlink traffic demand (bps) in grid cell si is\nMontreal 1621.5 1123.6 825.0 2.87\nOttawa 1475.4 987.2 808.3 3.86 mapped from the proxy yi as\nVancouver 1398.6 953.5 783.4 4.88\nCalgary 1450.7 1001.9 795.7 3.86 Di = κyi, (7)\nAll Cities 1432.7 989.9 806.7 3.66 where κ is the busy-hour traffic per proxy unit; κ = 50 kbps\nper proxy unit is used across all methods. Let γi denote the downlink SINR random variable over theB. Learning curves\ngeographic area represented by si. A planning-level spectralFigure 6 compares learning curves for location-only clusterefficiency abstraction is η(γ) = (1 −ρoh) log2(1 + γ), where\ning, two-stage spatial+context splitting, and two-stage splitting η(·) is in bps/Hz and ρoh ∈[0, 1) captures fractional overwith SEM refinement. The training–validation gap indicates head loss. An outage-constrained effective spectral efficiency\noverfitting under the chosen split, and shaded bands reflect\nis defined as η(δ)i = Q1−δ(η(γi)), where Q1−δ(·) is thefold variability.\n(1−δ)-quantile and δ is the allowable outage probability. The\nLocation-only clustering shows a large training–validation\nbandwidth required to serve si is approximated by\ngap, indicating limited transfer to spatially distinct regions.\n. (8)Two-stage splitting reduces this gap and improves validation B(δ)i,req =\nMAE, while SEM refinement further lowers validation error η(δ)i\nby correcting residual spatial dependence. For a predicted proxy ˆyi, the induced per-cell bandwidthVI. WIRELESS PLANNING LINK FOR 5G/6G error magnitude follows ˆB(δ)i,req −B(δ)i,req = (κ/η(δ)i ) |ˆyi −yi|. This section presents a 5G NR mid-band (3.5 GHz) case Under a constant planning assumption η(δ)i = η(δ), the mean\nstudy mapping the prediction errors in Section V to bandwidth- absolute bandwidth dimensioning error (BDE) is proportional TABLE II\nSENSITIVITY TABLE: \"ALL CITIES\" BDE (MHZ) FOR 3.5 GHZ. η(δ) (bps/Hz) k-Means Two-Stage Two-Stage + SEM\n2.0 35.8 24.7 20.2\n3.0 23.9 16.5 13.4\n3.5 20.5 14.1 11.5",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 13,
+    "total_chunks": 16,
+    "char_count": 2335,
+    "word_count": 347,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c1a07502-6b9c-4331-8c92-f30b2c4fcc90",
+    "text": "All Cities: Pcong(B) versus B under observed and predicted demand. Case study: bandwidth dimensioning error (BDE). Evaluation across five major Canadian cities shows consisto MAE: tent MAE reductions relative to location-only clustering, with\nκ additional gains from SEM correction. A planning-oriented BDE(δ) = · MAE. (9)\nη(δ) 5G NR mid-band case study demonstrates how the predictive\nTable II reports the resulting \"All Cities\" BDE sensitivity gains translate into more reliable carrier bandwidth selection\nfor η(δ) ∈{2, 3, 3.5} bps/Hz using the MAE in Table I, and and provisioning assessments while controlling leakage and\nFig. 7 illustrates the city-wise BDE mapping for the baseline geographically coherent bias.\nsetting η(δ) = 2 bps/Hz. [1] GSMA and Coleago Consulting, \"Estimating Mid-band Spectrum Needs\nB. Congestion risk versus candidate carrier bandwidth in the 2025-2030 Time Frame: Global Outlook,\" [Online]. Available:\nhttps://www.gsma.com/connectivity-for-good/spectrum/wp-content/upl\nFeasibility screening of candidate carrier bandwidths B oads/2021/07/Estimating-Mid-Band-Spectrum-Needs.pdf, 2021.\n(e.g., 40–100 MHz at 3.5 GHz) is captured by the congested [2] International Telecommunication Union, \"Methodology for Calculation\nof Spectrum Requirements for the Terrestrial Component of IMT - Rfraction REC-M.1768-1,\" [Online]. Available: https://www.itu.int/dms pubrec/it\nN u-r/rec/m/R-REC-M.1768-1-201304-I!!PDF-E.pdf, 2013. Pcong(B) = X I Di > B η(δ)i , (10) [3] wald,K. Doke,andA.K.Abedi,Gremban,M. Hollingsworth,\"Towards data-drivenM.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 14,
+    "total_chunks": 16,
+    "char_count": 1557,
+    "word_count": 198,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6ede0739-b9b4-48f2-ac2c-476a02ed47cc",
+    "text": "Sahai,in D.spectrumGrun- N\ni=1 management,\" in 2024 IEEE International Symposium on Dynamic\nwhere Pcong(B) is the share of grid cells whose offered Spectrum Access Networks (DySPAN), 2024, pp. 163–168.\n[4] Federal Communications Commission (FCC - USA), \"Advancing Undemand exceeds supported capacity B η(δ)i and N is the derstanding of Non-Federal Spectrum Usage,\" [Online]. Available: https:\nnumber of grid cells in the evaluation set. //docs.fcc.gov/public/attachments/FCC-23-63A1.pdf, 2023.\n[5] C. Alkadamani, \"Geospatial Insights in\nFigure 8 compares Pcong(B) under the reference surface Spectrum Management: An Adaptive Data-Driven Licensing Approach,\"\nDi (\"Observed demand\") and predicted surfaces ˆDi, where in 2024 IEEE International Conference on Communications Workshops\ndeviations from the reference quantify planning risk (over- (ICC Workshops), 2024, pp. 2113–2118.\n[6] J. Yanikomeroglu, \"Modestimation/underestimation of congestion). Leakage-reduced eling Local Demand for Mobile Spectrum Using Large Crowdsourced\nsplitting and SEM refinement improve spatial generalization Datasets,\" in 2023 IEEE Future Networks World Forum (FNWF), 2023,\nand shift the inferred congestion curve toward the observed pp. 1–5.\n[7] J. Yanikomeroglu, \"Data-Driven Modelling\ncurve across B. For illustration without operator traffic traces, of Mobile Network Demand for Efficient Spectrum Management,\" in\nFig. 8 uses an \"All Cities\" case study combining a heavy- 2023 IEEE 34th Annual International Symposium on Personal, Indoor\ntailed spatial demand distribution (log-normal proxy field) and Mobile Radio Communications (PIMRC), 2023, pp. 1–6.\n[8] C. Cui, \"Spatio-temporal\nwith prediction-error models calibrated to the MAE values in wireless traffic prediction with recurrent neural network,\" IEEE Wireless\nTable I, highlighting how moderate MAE differences translate Communications Letters, vol. 7, no. 4, pp. 554–557, Aug. 2018.\ninto meaningful shifts in estimated congested area. [9] S. Li, Geospatial Artificial Intelligence, 1st ed. CRC Press, 2023.\n[10] J. Pyrcz, \"Fair train-test split\nin machine learning: Mitigating spatial autocorrelation for improved\nVII. CONCLUSION prediction accuracy,\" Journal of Petroleum Science and Engineering,\nvol. 209, p. 109885, 11 2021. This paper presented an AI-driven framework for spatial cel- [11] H. Gao, \"Information\nlular traffic-demand prediction to support data-driven 5G/6G leakage in deep learning-based hyperspectral image classification: A\ncapacity and spectrum planning. The framework addresses survey,\" remote Sensing, 2023; 15(15):3793.\n[12] W.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 15,
+    "total_chunks": 16,
+    "char_count": 2595,
+    "word_count": 347,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3fb99854-f7c6-4314-9e09-e87d7bc7cf53",
+    "text": "Mahdi and Z-M., Ra´ul, \"Spatial+: A new cross-validation\nspatial autocorrelation, which can inflate evaluation when method to evaluate geospatial machine learning models,\" international\ntraining and validation sets are not properly separated, via a Journal of Applied Earth Observation and Geoinformation. vol 121,\ncontext-aware two-stage splitting strategy that reduces leakage 2023.\n[13] H. Cressie, \"Beyond moran's i: Testing for spatial\nwhile preserving functional representativeness across folds, dependence based on the spatial autoregressive model,\" Geographical\nand SEM refinement that mitigates residual spatial errors. Analysis, vol. 39, pp. 357 – 375, 10 2007.",
+    "paper_id": "2603.10800",
+    "title": "AI-Enhanced Spatial Cellular Traffic Demand Prediction with Contextual Clustering and Error Correction for 5G/6G Planning",
+    "authors": [
+      "Mohamad Alkadamani",
+      "Colin Brown",
+      "Halim Yanikomeroglu"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10800v1",
+    "chunk_index": 16,
+    "total_chunks": 16,
+    "char_count": 671,
+    "word_count": 90,
+    "chunking_strategy": "semantic"
+  }
+]

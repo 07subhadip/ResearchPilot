@@ -1,0 +1,362 @@
+[
+  {
+    "chunk_id": "f8cdc6c2-65a3-4572-832d-0050609443bd",
+    "text": "CUAAudit: Meta-Evaluation of Vision-Language Models as\nAuditors of Autonomous Computer-Use Agents Marta Sumyk Oleksandr Kosovan\nsumyk.pn@ucu.edu.ua o.kosovan@ucu.edu.ua\nUkrainian Catholic University Ukrainian Catholic University\nLviv, Ukraine Lviv, Ukraine",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 0,
+    "total_chunks": 20,
+    "char_count": 256,
+    "word_count": 27,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a0d32aad-2222-4ff7-8381-78aeb8f88daf",
+    "text": "Abstract From a Human–Computer Interaction (HCI) perspective, CUAs\nComputer-Use Agents (CUAs) are emerging as a new paradigm extend a long line of work on interface agents and intelligent user\nin human-computer interaction, enabling autonomous execution interfaces, where users attribute intent, agency, and social meaning\nof tasks in desktop environment by perceiving high-level natural- to interactive systems rather than viewing them as purely funclanguage instructions. As such agents become increasingly capable tional tools [7]. Recent systems further demonstrate that large\nand are deployed across diverse desktop environments, evaluating vision-language models can act as unified controllers for complex2026 their behavior in a scalable and reliable manner becomes a critical desktop environments, generalizing across applications, tasks, and\nchallenge. Existing evaluation pipelines rely on static benchmarks, operating systems without relying on handcrafted rules [26]. As\nrule-based success checks, or manual inspection, which are brittle, a result, CUAs offer a service-agnostic alternative to traditional\ncostly, and poorly aligned with real-world usage. In this work, we robotic process automation, reducing brittleness and maintenanceMar\nstudy Vision-Language Models (VLMs) as autonomous auditors for costs while supporting a broader range of real-world tasks [21]. Beyond automation, CUAs hold particular promise for accessibil- assessing CUA task completion directly from observable interac-11 and inclusive interaction. When paired with natural-language or tions and conduct a large-scale meta-evaluation of five VLMs that ity\njudge task success given a natural-language instruction and the final voice interfaces, they enable users with motor, visual, or cognitive\nenvironment state. Our evaluation spans three widely used CUA impairments to complete multi-step tasks through language alone\nbenchmarks across macOS, Windows, and Linux environments [25, 28]. More broadly, CUAs can reduce cognitive and interaction\nand analyzes auditor behavior along three complementary dimen- burdens for non-technical users, older adults, and individuals facing\nsions: accuracy, calibration of confidence estimates, and inter-model language or executive-function challenges [3].[cs.AI] agreement. We find that while state-of-the-art VLMs achieve strong As CUAs are increasingly deployed in real-world settings, rigoraccuracy and calibration, all auditors exhibit notable performance ous evaluation prior to deployment becomes essential. However,\ndegradation in more complex or heterogeneous environments, and assessing CUA behavior remains a fundamental challenge. Existing\neven high-performing models show significant disagreement in evaluation pipelines rely on static benchmarks, rule-based success\ntheir judgments. These results expose fundamental limitations of checks, or manual inspection, all of which are costly to maintain,\ncurrent model-based auditing approaches and highlight the need to brittle to interface changes, and poorly aligned with real-world usexplicitly account for evaluator reliability, uncertainty, and variance age [27]. Such approaches typically yield coarse success signals and\nwhen deploying autonomous CUAs in real-world settings. provide limited insight into partial task completion, user-acceptable\nfailures, or performance under realistic UI variation.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 1,
+    "total_chunks": 20,
+    "char_count": 3391,
+    "word_count": 445,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "94326165-7999-4a9b-9d8d-19144a31e701",
+    "text": "These limitaCCS Concepts tions are especially concerning given that CUAs act autonomously\non users' behalf, often across multiple applications and involving\n• Human-centered computing →Human computer interac- sensitive data.\ntion (HCI); • Computing methodologies →Artificial intel- In this work, we study Vision-Language Models (VLMs) as auligence; Natural language processing; Computer vision; Machine tonomous auditors for CUAs. Rather than relying on internal agent\nlearning. states or handcrafted evaluation logic, VLM-based auditors assess task completion directly from observable evidence by judg-arXiv:2603.10577v1 Keywords ing whether a natural-language instruction has been satisfied in\nComputer-Use Agents, Vision-Language Models, Human-Computer the final GUI state. We conduct a large-scale meta-evaluation of\nInteraction, Auditing, Task Completion, Evaluation VLM auditors across multiple operating systems and benchmarks,\nanalyzing their accuracy, confidence calibration, and inter-model\nagreement. By treating evaluation as a first-class problem, our study\n1 Introduction\ncharacterizes the reliability and limitations of model-based auditing\nRecent advances in large language models and multimodal percep- and highlights key challenges for the safe and robust deployment\ntion have given rise to Computer-Use Agents (CUAs): autonomous of CUAs in real-world settings.\nsystems that can operate Graphical User Interfaces (GUIs) by translating high-level natural-language instructions into sequences of 2 Related Works\nactions such as clicking, typing, scrolling, and dragging [21].\n2.1 Computer-Use Agents and GUI Automation\nThis work has been accepted to appear at the AAAI 2026 Workshop on Trust and Research on CUAs builds on a long history of GUI automation,\nControl in Agentic AI (TrustAgent). robotic process automation (RPA), and intelligent user interfaces. Conference'17, July 2017, Washington, DC, USA Marta Sumyk and Oleksandr Kosovan",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 2,
+    "total_chunks": 20,
+    "char_count": 1955,
+    "word_count": 261,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "59919815-3c1a-4235-a141-3a64d2329bb0",
+    "text": "Early systems relied on handcrafted rules, application-specific scripts, data, misaligned or unsafe behavior may have immediate and costly\nDOM trees, or accessibility APIs to automate repetitive tasks. While consequences, amplifying the need for reliable evaluation and aueffective in controlled settings, these approaches were brittle to diting mechanisms.\ninterface changes, required substantial manual maintenance, and\nfailed to generalize across applications or operating systems [3]. 2.3 Agents Audit\nRecent work has shifted toward learning-based approaches that As autonomous agents are increasingly deployed in real-world setoperate directly on multimodal observations of the interface, typ- tings, systematically auditing their behavior has become a central\nically combining screenshots with natural-language task instruc- concern. Agent auditing broadly refers to evaluating correctness, retions. This paradigm enables agents to interact with graphical user liability, safety, and alignment with intended objectives, particularly\ninterfaces through the same perceptual and control channels avail- in sequential and interactive environments [1, 6].\nable to human users. Systems such as SeeAct [29], InfiGUIAgent Traditional agent evaluation has focused on structured envi-\n[16], SEAGENT [24], and UI-TARS [26] demonstrate that large ronments such as simulators or benchmarks with explicit reward\nvision-language models can act as general-purpose GUI controllers functions or success criteria. Related work on verification and testin a wide range of desktop and mobile environments. ing explores formal methods, constraint checking, and adversarial\nCollectively, these results show that CUAs can achieve substan- stress testing, but similarly relies on structured state representatial cross-application and cross-platform generalization without tions and predefined safety properties [10]. These assumptions\nrelying on application-specific APIs or predefined workflows. By often break down in open-ended, real-world interfaces.\ntreating the GUI as an executable visual environment rather than With the rise of large language models and tool-using agents, rea structured programmatic interface, CUAs represent a departure cent work has explored evaluation under less structured conditions\nfrom traditional automation pipelines and enable more flexible, using human judgment, preference learning, or learned reward\nservice-agnostic interaction with existing software ecosystems. models [5, 19]. While effective in some contexts, these approaches\noften require human-in-the-loop supervision or access to agent internals, limiting scalability and applicability to complex GUI-based\n2.2 CUA as a New HCI Concept\nenvironments. CUAs introduce an emerging interaction paradigm in which users More recently, a small number of studies have begun to examine\ndelegate high-level goals to autonomous agents that perceive, rea- autonomous evaluation of CUAs [13, 23]. These works demonstrate\nson, and act directly within existing GUIs. Unlike traditional inter- the feasibility of model-based evaluators in realistic desktop setaction models based on direct manipulation [22], CUAs function as tings, but remain limited in scope—typically focusing on a narrow\nintermediaries that execute tasks on the user's behalf through the set of tasks, metrics, or operating systems. As a result, key chalsame visual and control channels available to humans. lenges such as cross-platform generalization, evaluator reliability,\nFrom an HCI perspective, CUAs build upon earlier work on in- and robustness under diverse interaction patterns remain underexterface agents and intelligent user interfaces, which explored how plored.\nsoftware agents could assist users through recommendations, re- Overall, CUAs expose a critical gap in existing agent auditing\nminders, or adaptive behavior [12, 17]. These systems, however, methodologies. They operate within unconstrained GUIs, intertypically played a supportive or advisory role and relied on struc- act with arbitrary third-party applications, and rely primarily on\ntured application access, predefined workflows, or handcrafted visual perception rather than structured environment states.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 3,
+    "total_chunks": 20,
+    "char_count": 4218,
+    "word_count": 565,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "64dcaf9f-ee56-4aca-bae6-e39dc6a3fb04",
+    "text": "In contrast, modern CUAs are designed for end-to-end task quently, standard evaluation signals—such as environment rewards,\nexecution: given a natural-language instruction, the agent must API-level logs, or deterministic success checks—are often unavailinterpret user intent, observe the current interface state, plan a se- able or unreliable. Given the potential for immediate and costly\nquence of actions, and adapt its behavior in dynamic and partially consequences from misaligned behavior [11, 18], these characterobservable environments. istics motivate the need for autonomous, scalable, and interfaceThis shift places CUAs within the tradition of mixed-initiative aware auditing approaches that evaluate CUA behavior directly\ninteraction and human–automation collaboration, where control is from observable interactions.\nshared between humans and autonomous systems [8, 9, 15]. How- Unlike prior work that evaluates a single auditor or a single\never, CUAs push this paradigm further by substantially reducing platform, our study is the first to systematically analyze crossdirect user oversight during task execution. The graphical user platform generalization, confidence calibration, and inter-model\ninterface becomes an executable environment rather than a passive disagreement of VLM auditors at scale.\ndisplay, and interaction is reframed as a sequential decision-making\nprocess over perceptual inputs and actions such as clicking, typing, 3 Methodology\nscrolling, or dragging. This framing aligns CUAs with agent-based\nmodels of perception–action loops in interactive systems [20]. 3.1 Vision-Language Model–Based Auditors\nAt the same time, increased autonomy introduces challenges We study VLMs used as autonomous auditors for evaluating the\ncentral to HCI research on trust, safety, and usability. Prior work task completion of CUAs. Given a task instruction and the final GUI\nshows that reduced human control can lead to loss of transparency, state produced by an agent, a VLM auditor is prompted to assess\nover-reliance on automation, and difficulty diagnosing or recov- whether the task has been successfully completed. The auditor\nering from failures [11, 18].",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 4,
+    "total_chunks": 20,
+    "char_count": 2180,
+    "word_count": 304,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a0e10e06-ddd2-42c1-aa36-0ce822d569a8",
+    "text": "Because CUAs act directly on users' outputs a binary judgment (done or not done) together with an\nbehalf, often across multiple applications and involving sensitive associated confidence score. CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents Conference'17, July 2017, Washington, DC, USA Formally, for each task instance 𝑖, the auditor observes a tuple 3.3 Calibration and Confidence Assessment\n(𝑥𝑖,𝑑𝑖), Beyond binary correctness, we evaluate how well VLM auditors'\nconfidence scores align with ground-truth task outcomes. Each\nwhere 𝑥𝑖denotes the final screenshot of the GUI environment and𝑑𝑖 auditor produces (i) a predicted probability of task success and (ii) a\nis the natural-language task description. The auditor then predicts corresponding binary decision. Specifically, for each task instance 𝑖\na probability and auditor 𝑚, the model outputs a probability\n𝑝(𝑚)𝑖 ∈[0, 1], 𝑝(𝑚)𝑖 ∈[0, 1],\nrepresenting the model's confidence that the task was successfully\nwhich is thresholded to obtain a predicted labelcompleted, where 𝑚indexes the auditor model. And the corresponding predicted done/not done label is defined ˆ𝑦(𝑚)𝑖 ∈{0, 1},\nas:\nwhere ˆ𝑦(𝑚)𝑖 = 1 denotes a prediction of done and ˆ𝑦(𝑚)𝑖 = 0 denotes\nˆ𝑦(𝑚)𝑖 ∈{0, 1}, not done. The ground-truth label provided by the benchmark is\ndenoted as\nWe evaluate five VLMs as autonomous auditors, spanning both\n𝑦𝑖∈{0, 1}.\nproprietary and open-source families. Among proprietary models,\nwe consider GPT-4o2 and Claude 3.5 Sonnet3, selected for their state- We measure calibration using the Brier score, a strictly proper\nof-the-art multimodal perception and reasoning capabilities. For scoring rule defined as\nopen-source auditors, we evaluate LLaVA-v1.5-7B [14], InternVL- 𝑁\n2-8B [4], and Qwen2-VL-7B [2], which represent strong publicly Brier𝑚= 1 ∑︁ 𝑝(𝑚)𝑖 −𝑦𝑖 2 , 𝑁available alternatives with diverse architectural designs and train- 𝑖=1\ning regimes.\nwhere 𝑁is the total number of evaluated tasks. These models span both proprietary and open-source systems\nand differ substantially in architecture size, training data, and mul-\n𝑁 vuttimodal reasoning capabilities, enabling a broad analysis of auditor 1 ∑︁ Std𝑚= 𝑝(𝑚)𝑖 −𝑦𝑖 2 −Brier𝑚 2 .behavior. 𝑁\n𝑖=1\n3.2 Benchmarks Since the Brier score is a squared-error metric, lower values\ncorrespond to better calibration. Likewise, a lower Std𝑚indicates\nWe evaluate VLM auditors using three widely adopted benchmarks\nmore stable calibration across tasks.\nfor CUAs: Windows Agent Arena, OSWorld, and macOSWorld. Together, these benchmarks cover a diverse set of real-world tasks\n3.4 Inter-Model Agreementacross major desktop operating systems, including Windows, Linux,\nand macOS, and span a broad range of applications, interaction Beyond correctness and calibration, we analyze the extent to which\npatterns, and task complexities. different VLM auditors agree in their judgments of task compleEach benchmark defines tasks via natural-language instructions tion. Inter-model agreement captures the consistency of auditing\nand evaluates agent behavior based on task completion in realistic decisions across models and provides insight into task ambiguity\nGUI environments. While the underlying environments differ in and evaluator subjectivity, particularly in settings where success\noperating system and application ecosystem, all three benchmarks criteria may not be fully observable from the final GUI state.\nprovide a binary notion of task success, indicating whether a task For each pair of auditors (𝑚,𝑚′), we measure agreement on the\nwas successfully completed or not at the end of an episode. binary predictions ˆ𝑦(𝑚)𝑖 ∈{0, 1} using Cohen's 𝜅coefficient.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 5,
+    "total_chunks": 20,
+    "char_count": 3698,
+    "word_count": 536,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a59634e9-278e-4b6d-beff-10afc1c75b12",
+    "text": "CoIn our study, we adopt this binary done / not done task outcome hen's 𝜅accounts for agreement occurring by chance and is defined\nprovided by each benchmark as ground-truth supervision. Formally, as\n𝑝𝑜−𝑝𝑒for each task instance 𝑖, the benchmark assigns a ground-truth label 𝜅= ,\n1 −𝑝𝑒\n𝑦𝑖∈{0, 1}, where 𝑝𝑜denotes the observed agreement rate between two audiwhere 𝑦𝑖= 1 denotes that the task is deemed done by the bench- tors and 𝑝𝑒denotes the expected agreement under independence.\nmark's official evaluation protocol, and 𝑦𝑖= 0 denotes not done. Values of 𝜅range from −1 to 1, with higher values indicating\nThese labels serve as the reference against which we assess the stronger agreement and 𝜅= 0 corresponding to chance-level agreecorrectness, calibration, and agreement of VLM-based auditors. ment. By relying on benchmark-provided success signals rather than We compute pairwise 𝜅scores separately for each benchmark\nhuman annotations, we ensure scalability and reproducibility of our and operating system, enabling an analysis of how agreement varies\nevaluation while enabling systematic comparison across operating across environments and task distributions. High inter-model agreesystems and task domains. ment suggests that task completion is visually and semantically unambiguous in the final GUI state, whereas low agreement indicates\n2https://openai.com/index/hello-gpt-4o/ cases where success is difficult to infer, multiple interpretations are\n3https://claude.com/product/overview plausible, or auditors rely on different implicit assumptions. Conference'17, July 2017, Washington, DC, USA Marta Sumyk and Oleksandr Kosovan",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 6,
+    "total_chunks": 20,
+    "char_count": 1637,
+    "word_count": 229,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "42cff03a-5ba5-498b-9655-14a3d98460a9",
+    "text": "Agreement is highest between proprietary auditors, indicating relatively consistent judgments in assessing task completion. Agreement between proprietary and open-source models is\nmarkedly lower, while agreement among open-source models remains moderate. Across all auditor pairs, agreement decreases on Windows Agent\nArena and OSWorld, suggesting that harder or more ambiguous\ntasks amplify subjective differences in auditor judgments. These\nresults indicate that even high-performing auditors may disagree\nsubstantially in complex environments, underscoring the imporFigure 1: Accuracy of VLM auditors across benchmarks, ortance of studying auditor variance rather than relying on a single\ndered by increasing mean accuracy across macOSWorld, Winmodel.\ndows Agent Arena, and OSWorld. By explicitly analyzing inter-model agreement, we move beyond 5 Discussion and Limitations\nsingle-model evaluation and characterize the variance and uncer- Our results indicate that while VLM-based auditing of CUAs is\ntainty inherent in model-based auditing of CUAs. feasible, auditor outputs should be interpreted as uncertain signals\nrather than definitive judgments. In particular, calibration quality\n4 Results and inter-model agreement provide critical information about audiIn this section, we present evaluation of 5 VLMs as an auditors of tor reliability that is not captured by accuracy alone. In practical\nCUA across three operating systems (macOS, Windows and Linux). settings, auditor confidence is often used to guide downstream deOur analysis focuses on three complementary aspects: (i) accu- cisions such as whether to request user confirmation, abstain from\nracy of task completion assessment, (ii) calibration of confidence judgment, or trigger fallback behaviors. Auditors that achieve high\nestimates, and (iii) inter-model agreement. accuracy but exhibit poor calibration may therefore still introduce\nrisk by overstating certainty in ambiguous cases. Accuracy of Task Completion Assessment. Table 1 reports the accuInter-model disagreement further highlights the inherent difracy of VLM auditors in predicting benchmark-provided done / not\nficulty of inferring task completion from a final GUI state alone.\ndone labels. Overall, proprietary models outperform open-source\nMany CUA tasks depend on hidden system state, background effects,\nalternatives across all benchmarks, with GPT-4o and Claude 3.5 Sonor transient interface changes that may not be visible in a single\nnet achieving the highest accuracy. Performance varies substanscreenshot. As a result, different auditors may rely on different imtially across operating systems: all auditors perform best on macOSplicit assumptions when judging success, leading to divergent but\nWorld, while accuracy drops notably on Windows Agent Arena and\nindividually plausible decisions. Rather than being treated purely\nOSWorld.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 7,
+    "total_chunks": 20,
+    "char_count": 2877,
+    "word_count": 393,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "59e28955-5e5b-4792-8e66-ba44e49ee71c",
+    "text": "This suggests that auditing difficulty is strongly influas noise, such disagreement can serve as a signal of task ambiguity\nenced by environment complexity and interaction diversity, rather\nor insufficient observability, suggesting that additional evidence\nthan by auditor architecture alone.\nmay be required for reliable evaluation. Among open-source models, InternVL-2-8B and Qwen2-VL-7B\nThis study has several limitations. We restrict auditors to observconsistently outperform LLaVA-v1.5-7B, but still lag behind propriing only the task instruction and final GUI state, which reflects a\netary models. These results indicate that while open-source VLMs\nscalable and deployment-relevant setting but may underestimate\ncan function as auditors, their reliability remains limited in more\nperformance for tasks where intermediate actions or temporal concomplex or heterogeneous environments.\ntext are essential. Our calibration analysis relies on model-reported\nCalibration and Confidence Reliability. Beyond accuracy, reliable confidence elicited through standardized prompting, since tokenauditing requires that confidence scores meaningfully reflect un- level log probabilities are not consistently accessible across VLMs;\ncertainty. Table 2 reports Brier scores (mean ± standard deviation) consequently, we evaluate the reliability of reported uncertainty\nfor each auditor, where lower values indicate better calibration. rather than intrinsic probabilistic calibration. Finally, we focus\nProprietary models exhibit substantially lower Brier scores across exclusively on binary task completion and do not address other\nall benchmarks, indicating more reliable confidence estimates. In important auditing dimensions such as safety, policy compliance,\ncontrast, open-source models tend to be overconfident or poorly privacy, or harmful side effects, which are critical for real-world\ncalibrated, particularly on Windows Agent Arena and OSWorld. deployment of autonomous agents. Notably, calibration quality does not always track accuracy: some\nmodels with comparable accuracy exhibit significantly different\nBrier scores. This highlights that binary correctness alone is insuffi- 6 Conclusions\ncient to characterize auditor reliability, especially in safety-critical\nWe conducted a large-scale meta-evaluation of VLMs as autonomous\nor deployment settings where confidence estimates inform downauditors for CUAs across three widely used benchmarks spanning\nstream decisions.\nmacOS, Windows, and Linux. Our results reveal several consistent\nInter-Model Agreement. To assess consistency across auditors, patterns that have important implications for how model-based\nwe computed pairwise inter-model agreement using Cohen's 𝜅 evaluation should be designed, reported, and used in practice. CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents Conference'17, July 2017, Washington, DC, USA Table 1: Accuracy of task competion assesment by VLM auditors across benchmarks.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 8,
+    "total_chunks": 20,
+    "char_count": 3008,
+    "word_count": 389,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8555532c-a98b-4d25-a6ff-3ed7761fa891",
+    "text": "GPT-4o 0.91 0.71 0.77\nClaude 3.5 Sonnet 0.89 0.75 0.79 InternVL-2-8B 0.85 0.69 0.72\nLLaVA-v1.5-7B 0.82 0.66 0.68\nQwen2-VL-7B 0.87 0.68 0.73 Table 2: Calibration of VLM auditors measured by Brier score (mean ± std) across benchmarks. Auditor macOSWorld WindowsAgentArena OSWorld Proprietary Auditors\nGPT-4o 0.058 ± 0.003 0.091 ± 0.006 0.074 ± 0.004\nClaude 3.5 Sonnet 0.063 ± 0.004 0.099 ± 0.007 0.081 ± 0.005 Open-Source Auditors\nInternVL-2-8B 0.097 ± 0.007 0.142 ± 0.010 0.118 ± 0.008\nLLaVA-v1.5-7B 0.112 ± 0.008 0.159 ± 0.012 0.134 ± 0.009\nQwen2-VL-7B 0.105 ± 0.008 0.167 ± 0.011 0.141 ± 0.010 Table 3: Pairwise inter-model agreement of VLM auditors measured using Cohen's 𝜅across benchmarks. Model A Model B macOSWorld WindowsAgentArena OSWorld GPT-4o Claude 3.5 Sonnet 0.76 0.66 0.71 Proprietary vs Open-Source Auditors",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 10,
+    "total_chunks": 20,
+    "char_count": 822,
+    "word_count": 128,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e5f0c465-99fd-4549-a2b5-3c67a7cf8db5",
+    "text": "GPT-4o InternVL-2-8B 0.64 0.57 0.61\nGPT-4o LLaVA-v1.5-7B 0.61 0.54 0.59\nGPT-4o Qwen2-VL-7B 0.66 0.58 0.63\nClaude 3.5 Sonnet InternVL-2-8B 0.67 0.59 0.64\nClaude 3.5 Sonnet LLaVA-v1.5-7B 0.63 0.56 0.66\nClaude 3.5 Sonnet Qwen2-VL-7B 0.69 0.61 0.6 InternVL-2-8B LLaVA-v1.5-7B 0.62 0.55 0.60\nInternVL-2-8B Qwen2-VL-7B 0.68 0.60 0.65\nLLaVA-v1.5-7B Qwen2-VL-7B 0.64 0.67 0.61 First, auditor performance is strongly environment-dependent. reporting and testing that reflects realistic domain shift rather than\nAll evaluated models achieve substantially higher accuracy on ma- averaged metrics alone.\ncOSWorld than on Windows Agent Arena and OSWorld, indicating Second, confidence calibration emerges as a critical and indethat auditing difficulty is shaped not only by auditor architecture pendent axis of auditor reliability. Proprietary VLMs exhibit conbut also by interface heterogeneity, visual ambiguity, and task diver- sistently lower Brier scores and more stable confidence estimates,\nsity across operating systems and applications. As a result, single while open-source models are often poorly calibrated, particularly\naggregated performance scores can obscure meaningful failure on more challenging benchmarks. Importantly, calibration does\nmodes. Reliable auditing therefore requires environment-specific not always correlate with accuracy: auditors may make correct Conference'17, July 2017, Washington, DC, USA Marta Sumyk and Oleksandr Kosovan",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 11,
+    "total_chunks": 20,
+    "char_count": 1449,
+    "word_count": 191,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "53f6ea96-abcd-4488-8d87-e918e448a82d",
+    "text": "judgments while expressing overconfident or unreliable probabili- arXiv:2510.18596 [cs.SE] https://arxiv.org/abs/2510.18596\nties. This distinction is essential for downstream use, where auditor [14] Haotian Liu, Chunyuan Li, et al. 2024. LLaVA 1.5: Improved Multimodal Reasoning\nand Instruction Following. arXiv preprint arXiv:2401.02410 (2024).\nconfidence may guide decisions such as when to request user con- [15] Yang LIU. 2025. A new human-computer interaction paradigm: Agent interaction\nfirmation, defer execution, or trigger safer fallback policies. model based on large models and its prospects. Virtual Reality & Intelligent\nThird, we observe substantial inter-model disagreement, espe- Hardware 7, 3 (2025), 237–266. doi:10.1016/j.vrih.2025.04.001 [16] Yuhang Liu, Pengxiang Li, Zishu Wei, Congkai Xie, Xueyu Hu, Xinchen Xu,\ncially on Windows Agent Arena and OSWorld. This disagreement Shengyu Zhang, Xiaotian Han, Hongxia Yang, and Fei Wu. 2025. InfiGUIAreflects the inherent ambiguity of judging task completion from gent: A Multimodal Generalist GUI Agent with Native Reasoning and Reflection.\na final GUI state alone. Many tasks involve hidden state changes, [17] Pattie Maes. 1994. Agents that Reduce Work and Information Overload. Commun.\nbackground effects, or success criteria that are not fully observ- ACM 37, 7 (1994), 30–40.\nable in a single screenshot, leading different auditors to resolve [18] Donald A. The Design of Everyday Things. Doubleday, New York.\n[19] Long Ouyang, JeffWu, Xu Jiang, Diogo Almeida, Carroll L.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 12,
+    "total_chunks": 20,
+    "char_count": 1542,
+    "word_count": 216,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "05416d84-a04d-44fa-a0de-d917d9755720",
+    "text": "Wainwright, Pamela\nuncertainty differently. Rather than being treated as noise, disagree- Mishkin, Chong Zhang, Sandhini Agarwal, et al. 2022. Training Language Models\nment can serve as an informative signal, highlighting ambiguous to Follow Instructions with Human Feedback. Advances in Neural Information\ntasks, implicit benchmark assumptions, or cases where additional Processing Systems (NeurIPS) 35 (2022).\n[20] Stuart Russell and Peter Norvig. 2010. Artificial Intelligence: A Modern Approach\nevidence beyond the final state is required. (3rd ed.). Taken together, these findings suggest concrete implications [21] Pascal J. Sager, Benjamin Meyer, Peng Yan, Rebekka von Wartburg-Kottler, Layan\nEtaiwi, Aref Enayati, Gabriel Nobel, Ahmed Abdulkadir, Benjamin F. Grewe,\nfor both benchmarking and deployment. Benchmarks would ben- and Thilo Stadelmann. 2025.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 13,
+    "total_chunks": 20,
+    "char_count": 861,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "615bd70c-4da5-4696-98ef-d73a12580c78",
+    "text": "A Comprehensive Survey of Agents for Computer\nefit from providing richer, verifiable evidence of success—such as Use: Foundations, Challenges, and Future Directions. arXiv:2501.16150 [cs.AI]\nstructured logs, intermediate states, or checkable artifacts, for tasks https://arxiv.org/abs/2501.16150\n[22] Ben Shneiderman. 1983. Direct Manipulation: A Step Beyond Programming Lanwhere the final GUI state is insufficient. In deployment, oriented guages. Ablex Publishing, Norwood, NJ.\nevaluation, metrics aligned with safety and reliability, such as cal- [23] Marta Sumyk and Oleksandr Kosovan. 2025. \"Are We Done Yet?\": A Visionibration quality, robustness under domain shift, and consistency Based Judge for Autonomous Task Completion of Computer Use Agents. arXiv:2511.20067 [cs.AI] https://arxiv.org/abs/2511.20067\nacross evaluators, should be prioritized over accuracy alone. [24] Zeyi Sun, Ziyu Liu, Yuhang Zang, Yuhang Cao, Xiaoyi Dong, Tong Wu, Dahua\nOverall, while VLM-based auditing of CUAs is feasible and pro- Lin, and Jiaqi Wang. 2025. SEAgent: Self-Evolving Computer Use Agent with\nAutonomous Learning from Experience. arXiv:2508.04700 [cs.AI] https://arxiv.\nprietary models currently provide the strongest accuracy and cali- org/abs/2508.04700\nbration, our results show substantial degradation and disagreement [25] Minh Duc Vu, Han Wang, Zhuang Li, Jieshan Chen, Shengdong Zhao, Zhenin more complex environments. These findings underscore that chang Xing, and Chunyang Chen. 2024.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 14,
+    "total_chunks": 20,
+    "char_count": 1491,
+    "word_count": 196,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "246ca04f-f209-4e42-a9a5-eb7932d6d12c",
+    "text": "GPTVoiceTasker: Advancing Multi-step\nMobile Task Efficiency Through Dynamic Interface Exploration and Learning.\nevaluation itself is a central bottleneck for dependable CUA deploy- arXiv:2401.14268 [cs.HC] doi:10.1145/3654777.3676356\nment and must be treated as a first-class research problem, with [26] Haoming Wang, Haoyang Zou, Huatong Song, Jiazhan Feng, Junjie Fang, Junting\nexplicit modeling of evaluator uncertainty, variance, and ambiguity. Lu, Longxiang Liu, Qinyu Luo, Shihao Liang, Shijue Huang, Wanjun Zhong,\nYining Ye, Yujia Qin, Yuwen Xiong, Yuxin Song, Zhiyong Wu, Aoyan Li, Bo Li,\nChen Dun, Chong Liu, Daoguang Zan, Fuxing Leng, Hanbin Wang, Hao Yu,\nReferences HaobinPeiyao Zhao,Chen,PengfeiHongyiLiu,Guo,QinghaoJing Su,Ye,JingjiaRenjieHuang,Zheng,KaiShulinShen,Xin,KaiyuWayneShi,XinLinZhao,Yan,\n[1] Dario Amodei, Chris Olah, Jacob Steinhardt, Paul Christiano, John Schulman, and Wen Heng, Wenhao Huang, Wenqian Wang, Xiaobo Qin, Yi Lin, Youbin Wu,\nDan Mané. 2016. Concrete Problems in AI Safety. arXiv preprint arXiv:1606.06565 Zehui Chen, Zihao Wang, Baoquan Zhong, Xinchun Zhang, Xujing Li, Yuanfan\n(2016). Li, Zhongkai Zhao, Chengquan Jiang, Faming Wu, Haotian Zhou, Jinlin Pang,\n[2] Shuai Bai et al. 2024. Qwen2-VL: A Versatile Vision-Language Model for Under- Li Han, Qi Liu, Qianli Ma, Siyao Liu, Songhua Cai, Wenqi Fu, Xin Liu, Yaohui\nstanding and Generation. arXiv preprint arXiv:2409.12191 (2024). Wang, Zhi Zhang, Bo Zhou, Guoliang Li, Jiajun Shi, Jiale Yang, Jie Tang, Li Li,\n[3] Jeffrey P.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 15,
+    "total_chunks": 20,
+    "char_count": 1518,
+    "word_count": 208,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fc722e24-d53f-45d3-9e63-7798fd78884e",
+    "text": "Accessibility and Assistive Technology. ACM Qihua Han, Taoran Lu, Woyu Lin, Xiaokang Tong, Xinyao Li, Yichi Zhang, Yu\n63, 4 (2020), 54–63. doi:10.1145/3386296 Miao, Zhengxuan Jiang, Zili Li, Ziyuan Zhao, Chenxin Li, Dehua Ma, Feng Lin,\n[4] Xiaoyi Chen et al. 2024. InternVL 2.0: Scaling Up Vision-Language Pretraining Ge Zhang, Haihua Yang, Hangyu Guo, Hongda Zhu, Jiaheng Liu, Junda Du, Kai\nand Benchmarking. arXiv preprint arXiv:2405.07961 (2024). Cai, Kuanye Li, Lichen Yuan, Meilan Han, Minchao Wang, Shuyue Guo, Tianhao\n[5] Paul F. Christiano, Jan Leike, Tom B. Brown, Miljan Martic, Shane Legg, and Cheng, Xiaobo Ma, Xiaojun Xiao, Xiaolong Huang, Xinjie Chen, Yidi Du, Yilin\nDario Amodei. 2017.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 16,
+    "total_chunks": 20,
+    "char_count": 700,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fcadf747-aa8b-4a0d-b61f-27ad4a7c424b",
+    "text": "Deep Reinforcement Learning from Human Preferences. Chen, Yiwen Wang, Zhaojian Li, Zhenzhu Yang, Zhiyuan Zeng, Chaolin Jin, Chen\nAdvances in Neural Information Processing Systems (NeurIPS) 30 (2017). Li, Hao Chen, Haoli Chen, Jian Chen, Qinghao Zhao, and Guang Shi. 2025. UI-\n[6] Finale Doshi-Velez and Been Kim. 2017. Towards a Rigorous Science of Inter- TARS-2 Technical Report: Advancing GUI Agent with Multi-Turn Reinforcement\npretable Machine Learning. arXiv preprint arXiv:1702.08608 (2017). Learning. arXiv:2509.02544 [cs.AI] https://arxiv.org/abs/2509.02544\n[7] Jodi Forlizzi, John Zimmerman, Vince Mancuso, and Sonya Kwak. 2007. How [27] Tianbao Xie, Danyang Zhang, Jixuan Chen, Xiaochuan Li, Siheng Zhao, Ruisheng\ninterface agents affect interaction between humans and computers. In Pro- Cao, Toh Jing Hua, Zhoujun Cheng, Dongchan Shin, Fangyu Lei, Yitao Liu, Yiheng\nceedings of the 2007 Conference on Designing Pleasurable Products and Inter- Xu, Shuyan Zhou, Silvio Savarese, Caiming Xiong, Victor Zhong, and Tao Yu.\nfaces. Association for Computing Machinery, New York, NY, USA, 209–221. 2024. OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in\ndoi:10.1145/1314161.1314180 Real Computer Environments. arXiv:2404.07972 [cs.AI] https://arxiv.org/abs/\n[8] Marti A. Mixed-Initiative Interaction. IEEE Intelligent Systems 14, 5 2404.07972\n(1999), 14–23. [28] Chaoyun Zhang, Shilin He, Jiaxu Qian, Bowen Li, Liqun Li, Si Qin, Yu Kang,\n[9] Eric Horvitz. 1999. Principles of Mixed-Initiative User Interfaces. Proceedings Minghua Ma, Guyue Liu, Qingwei Lin, Saravan Rajmohan, Dongmei Zhang,\nof the ACM SIGCHI Conference on Human Factors in Computing Systems (1999), and Qi Zhang. 2025. Large Language Model-Brained GUI Agents: A Survey.\n159–166. arXiv:2411.18279 [cs.AI] https://arxiv.org/abs/2411.18279\n[10] Guy Katz, Clark Barrett, David L.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 17,
+    "total_chunks": 20,
+    "char_count": 1859,
+    "word_count": 252,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a7de5fee-e427-4c27-84a8-54fb8bae0740",
+    "text": "Dill, Kyle Julian, and Mykel J. Kochenderfer. [29] Boyuan Zheng, Boyu Gou, Jihyung Kil, Huan Sun, and Yu Su. 2024.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 18,
+    "total_chunks": 20,
+    "char_count": 114,
+    "word_count": 20,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88a8eb4f-8709-40e2-b1f8-cccd30590603",
+    "text": "Reluplex: An Efficient SMT Solver for Verifying Deep Neural Networks. In is a Generalist Web Agent, if Grounded. arXiv:2401.01614 [cs.IR] https://arxiv. Proceedings of the 29th International Conference on Computer Aided Verification org/abs/2401.01614\n(CAV). Springer, 97–117.\n[11] John D.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 19,
+    "total_chunks": 20,
+    "char_count": 289,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bd88548f-f5ce-417e-ae25-32ab64280314",
+    "text": "Trust in Automation: Designing for\nAppropriate Reliance. Human Factors 46, 1 (2004), 50–80.\n[12] Henry Lieberman. 1997. Autonomous Interface Agents. Proceedings of the ACM\nConference on Computers and Human Interaction (CHI) (1997), 67–74.\n[13] Haojia Lin, Xiaoyu Tan, Yulei Qin, Zihan Xu, Yuchen Shi, Zongyi Li, Gang Li,\nShaofei Cai, Siqi Cai, Chaoyou Fu, Ke Li, and Xing Sun. 2025. CUARewardBench: A Benchmark for Evaluating Reward Models on Computer-using Agent.",
+    "paper_id": "2603.10577",
+    "title": "CUAAudit: Meta-Evaluation of Vision-Language Models as Auditors of Autonomous Computer-Use Agents",
+    "authors": [
+      "Marta Sumyk",
+      "Oleksandr Kosovan"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10577v1",
+    "chunk_index": 20,
+    "total_chunks": 20,
+    "char_count": 464,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  }
+]

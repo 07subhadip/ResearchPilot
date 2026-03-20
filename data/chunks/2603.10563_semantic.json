@@ -1,0 +1,306 @@
+[
+  {
+    "chunk_id": "fb687547-cdbb-4983-b063-05b23ca12d22",
+    "text": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data\nAugmentation Viktorija Pol,aka1, Ivo Pascal De Jong1, Andreea Ioana Sburlea1 1Faculty of Science and Engineering, University of Groningen, Groningen, The Netherlands E-mail: victoria_polaka@proton.me",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 0,
+    "total_chunks": 16,
+    "char_count": 270,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "59332693-6e96-4dd4-87da-1f48ae88f6cc",
+    "text": "ABSTRACT: This paper addresses the challenge of gen- and generate diverse yet plausible synthetic samples that\nerating synthetic electroencephalogram (EEG) covari- extend beyond the convex hull.\nance matrices for motor imagery brain-computer inter- However, standard VAEs assume Euclidean geometry,\nface (MI-BCI) applications. We aim to de- creating a conflict when working with the Riemannian\nvelop a generative model capable of producing high- SPD manifold structure of EEG covariance matrices; ap-2026\nfidelity synthetic covariance matrices while preserving plying standard Euclidean operations on this curved mantheir symmetric positive-definite nature. We ifold causes geometric distortions (e.g., the \"swelling efpropose a Riemannian geometry-preserving variational fect\") [5]. We address this by proposing the RiemannianMar autoencoder (RGP-VAE) integrating geometric mappings geometry-preserving VAE (RGP-VAE) designed to pre-\n11 with a composite loss function combining Riemannian serve geometric integrity, utilizing parallel transport [8] distance, tangent space reconstruction accuracy and gen- to align data and thus enable the model to learn subjecterative diversity. The model generates valid, invariant features. The focus is specifically on the chalrepresentative EEG covariance matrices, while learning lenging and practically relevant problem of cross-subject\na subject-invariant latent space. Synthetic data proves generalization, with the aim to reduce the need for extenpractically useful for MI-BCI, with its impact depend- sive calibration [1]. Accordingly, this paper aims to: (1)\ning on the paired classifier. This work establish if a Riemannian geometry-preserving VAE can[cs.LG] introduces and validates the RGP-VAE as a geometry- generate valid synthetic EEG covariance matrices, and\npreserving generative model for EEG covariance matri- (2) evaluate whether this synthetic data improves crossces, highlighting its potential for signal privacy, scalabil- subject MI-BCI performance.\nity and data augmentation. METHODS\nINTRODUCTION\nData and Preprocessing: We use the dataset from\nWhile Riemannian geometry-based classifiers currently Faller et al. [9], containing 13-channel EEG recordings\ndominate MI-BCI competitions, their advancement to- from 12 subjects performing a two-class motor imagery\nwards mainstream applications is hindered by data task (right hand versus both feet). The data loading procescarcity and inter-subject variability, which necessitates dure, using the \"Mother of All BCI Benchmarks\" framelengthy calibration sessions [1–4]. Deep learning alterna- work [10], resulted in a total of 5572 trials across the 12\ntives have yet to surpass these geometric pipelines, possi- subjects (398 or 597 trials per individual).\nbly explained by the limited availability of subject-level The EEG trials are bandpass filtered (8–30 Hz) to capture\ndata [3]. To overcome these limitations, we propose a sensorimotor rhythms.",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 1,
+    "total_chunks": 16,
+    "char_count": 2959,
+    "word_count": 401,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0ed18b3c-bc2a-42a3-b833-3e242210d5f7",
+    "text": "The raw voltage signals were thenarXiv:2603.10563v1\nnovel data augmentation framework tailored to the spe- scaled to microvolts (106). To address non-stationarity,\ncific geometric properties of EEG covariance matrices, exponential moving standardization (EMS) [11] is apwhich are symmetric positive-definite (SPD), i.e., sym- plied. EMS can be seen applied to data for training deep\nmetric with strictly positive eigenvalues. learning models as these models tend to be sensitive to\nPrevious work exploring data augmentation directly on the input scale [12]. Finally, trials are converted into\nthe SPD manifold by geometrically interpolating between spatial covariance matrices in R13×13 using the oracle\nexisting covariance matrices of the same class has suc- approximating shrinkage estimator [13], yielding wellcessfully boosted BCI classification accuracy in data- conditioned SPD matrices.\nscarce scenarios for SSVEP and ERP tasks [5]. However, To address the inherent variability between individuals'\nthis approach is fundamentally limited to the convex hull EEG signal characteristics, which manifests as geometric\nof the original data and thus cannot generate plausible differences in their location on the Riemannian manifold,\nvariations that exist in unexplored regions of the man- parallel transport [8] was applied. This technique geoifold. A variational autoencoder (VAE) [6], which can metrically transports matrices from each subject-specific\nlearn a latent representation of a manifold [7], may of- reference mean to a global (class) reference mean via a\nfer an alternative to overcome this convex-hull limitation congruence transformation. Figure 1: An overview of the proposed RGP-VAE, illustrating the integration of a standard VAE with geometric operations on the SPD\nmanifold. An input SPD matrix Xi is first projected onto the tangent space at a reference point Pref using the logarithmic map logPref\n(Eq. 3). This tangent representation Si is then vectorized to serve as the encoder input Htangent. The encoder maps this input to a\nlatent distribution parameterized by µ and log(σ2), from which a latent vector zi is sampled and passed to the decoder to produce the\nreconstructed vector Hdecoded. The vector is unvectorized back into a tangent space representation ˆSi, which is finally mapped back\nonto the SPD manifold via the exponential map (expPref) (Eq. 4) to produce the reconstructed SPD matrix ˆXi. Model Architecture: Conceptually building on prior rithmic map [1, 2]:\nwork on Riemannian variational autoencoders for\nP1/2ref log P−1/2ref XiP−1/2ref P1/2ref . (3)manifold-valued data [14], the modified VAE (Fig. 1) Si = logPref(Xi) =\nlearns a latent representation z from SPD matrices by\nThis is implemented via batched whitening followed bybridging the curved manifold M and the Euclidean space\nthe matrix logarithm to support numerical stability byrequired by neural networks. The manifold of symmetric\ncentring operations around the identity.positive-definite matrices is defined as M = {X ∈RN×N | The resulting batch S = {S1,...,SB} consists of sym-X = X⊤,X ≻0}, where N is the number of EEG channels\nmetric matrices in the tangent space at Pref and each Siand X ≻0 indicates that the matrix is composed of strictly\nis vectorized by using only the upper-triangular elementspositive eigenvalues [2].",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 2,
+    "total_chunks": 16,
+    "char_count": 3334,
+    "word_count": 497,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "54504e78-a399-419c-be42-b453628ea935",
+    "text": "The proposed architecture reforming the batch of vectors Htangent ∈RB×Dspd (withlies on a class-specific reference point Pref, calculated as\nDspd = N(N +1)/2) as input to the encoder.the Riemannian Fréchet mean of the training class. UnThe encoder maps this batch of vectors to the param-like arithmetic mean, which may not yield a valid SPD\neters (M,logσ2) of the latent distribution, where M =matrix, the Fréchet Mean guarantees a valid point on the\nmanifold by minimizing the sum of squared Riemannian {µ1,...,µB} and logσ2 = {logσ21,...,logσ2B}. The encoder consists of five sequential blocks (linear →batchdistances to all other matrices in a set {Xi}Mseti=1 : normalization →LeakyReLU [17]) with dimensions\nMset Dspd →32 →64 →16 →32 →64, followed by two sepaG = argmin ∑ d2r (P,Xi) (1) rate linear projections to produce µi,logσ2i ∈RDlat where\nP∈M i=1 Dlat = 64. Batch normalization stabilizes training by reducing internal covariate shift [18], while LeakyReLUwhere P is the candidate SPD matrix over which the minactivations are used to preserve the network's represen-imization occurs and dr(P,Xi) is the affine-invariant Rietational capacity for tangent space vectors preventingmannian metric (AIRM)[5, 15, 16] which defines the dispermanently inactive neurons [17]. The batch of latenttance between two SPD matrices as:\nvectors Z = {z1,...,zB} ∈RB×Dlat is sampled via the\ndr(P1,P2) = ∥log(P−1/21 P2P−1/21 )∥F (2) reparameterization trick: zi = µi +εi ⊙exp(0.5·logσ2i ),\nwhere εi ∼N (0,I), allowing gradients to flow back\nThe model processes a batch of aligned SPD covariance through M and logΣ2 during training.\nmatrices X = {X1,...,XB}, with batch size B = 128, se- The decoder MLP mirrors the encoder structure, mapping\nlected as a balance between computational load and the the batch of latent vectors Z back to a batch of decoded\nrequirements for the diversity loss. Each Xi is projected vectors Hdecoded ∈RB×Dspd, which is subsequently unvecto the tangent space—a local Euclidean approximation— torized into a batch of symmetric matrices ˆS′ ∈RB×N×N.\nat the class-specific reference point Pref using the loga- The decoder output ˆS′i is explicitly re-symmetrized via ˆS′′i = (ˆS′i +(ˆS′i)T)/2 to eliminate any asymmetries. To return to the manifold, we apply the Exponential Map to\neach matrix:\nexp P−1/2ref ˆS′iP−1/2ref P1/2ref (4) ˆXi = expPref(ˆS′i) = P1/2ref",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 3,
+    "total_chunks": 16,
+    "char_count": 2378,
+    "word_count": 366,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0a072d68-b509-4019-a4ee-930d75874df3",
+    "text": "Numerical instability caused by floating-point arithmetic\ncan violate the strict SPD constraints, therefore validity\nis enforced throughout the model architecture and parallel transport. During the matrix exponential computation,\neigenvalues are conditionally scaled (threshold T = 20) to\nprevent overflow: if λmax > T, all eigenvalues are scaled\nby T/λmax. Throughout all geometric operations, we\nFigure 2: 2D UMAP visualization of the latent space of the\nmaintain a numerical threshold ε = 10−6. If the minimum RGP-VAE for right-hand movement data. Points are colored by\neigenvalue λmin of any intermediate or output matrix falls Subject ID; their significant overlap indicates the learning of a\nbelow ε, we add (ε −λmin)I to shift all eigenvalues above subject-invariant representation.\nthe threshold, ensuring positive-definiteness. Training and Optimization: The network is optimized 10−4 and a weight decay parameter of 1 × 10−6. Trainusing a loss function Ltotal balancing reconstruction accu- ing is further regularized with gradient clipping (max\nracy, latent space regularization, and diversity: norm=1.0) and learning rate reduction (factor=0.5) after\n20 epochs of stagnation. Ltotal = (Lmanifold +Ltangent)+βLKL +γLdiversity (5)\nData Generation and Evaluation Protocol: leave-oneThe reconstruction term combines Lmanifold which en- subject-out cross-validation (LOSO-CV) is employed;\nforces geometric fidelity using the AIRM distance in each fold, class-specific RGP-VAEs are trained on\n(Eq. 2): aligned data from N −1 subjects to test generalization to\n1 B unseen individuals. Two synthetic generation strategies\nLmanifold = ∑ dr(Xi, ˆXi) (6) are evaluated: Posterior sampling encodes each training B i=1\nmatrix Xi, samples zi via reparameterization, and decodes\nand Ltangent, which minimized the normalized Euclidean to create variations preserving core characteristics of each\nerror between original and decoded tangent vectors: sample (1:5 real-to-synthetic ratio). Prior sampling draws\nz ∼N (0,I) directly to generate novel samples beyond\n1 B ∑j(hdecoded,i,j −htangent,i,j)2 training convex hull (5000 per class). (7) the Ltangent = ∑ ∑j h2tangent,i,j +ε B i=1 Three classifiers—minimum distance to mean (MDM),\nk-nearest neighbors (KNN), and support vector classifier\nwhere ε = 10−6 for numerical stability. Meanwhile, la- (SVC)—are trained and evaluated on held-out test subtent space regularization is achieved through KL diver- jects under three conditions: (1) baseline using only origgence LKL toward a standard Gaussian prior: inal training data, (2) augmented with synthetic data, and\n(3) synthetic-only training to assess standalone quality. B \" Dlat # 1 accuracy, averaged across all folds, serves asLKL = ∑ −0.5 ∑ (1+logσ2i,k −µ2i,k −exp(logσ2i,k)) Balanced B i=1 k=1 the primary metric due to its robustness against class im-\n(8) balances from potential artifact removal. We apply KL cost annealing [19], linearly increasing β Synthetic data quality is assessed by verifying SPD propfrom 0.0001 to 0.2 during training to prevent posterior erties (symmetry and positive-definiteness), comparing\ncollapse while maintaining reconstruction fidelity. statistical variance (element-wise and global) between\nThe diversity loss Ldiversity encourages sample diversity real and synthetic matrices, and measuring geometric\nby maximizing the geometric volume of generated tan- spread via mean pair-wise Riemannian distances within\ngent vectors. Since the determinant of a covariance ma- each class. A scrambled-label diagnostic test confirms\ntrix quantifies the generalized variance (i.e., the volume that performance degrades to chance level, indicating no\nspanned by data points), maximizing it promotes wider spurious correlations.\nspatial coverage in the tangent space.",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 4,
+    "total_chunks": 16,
+    "char_count": 3789,
+    "word_count": 535,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bfa54a00-0fe6-48a4-ac50-9008238416ab",
+    "text": "The loss minimizes\nthe negative log-determinant of the batch covariance of Source code and additional information can be found at\ndecoded tangent space vectors Hdecoded ∈RB×Dspd: https://641e16.github.io/RGP-VAE/. Ldiversity = −logdet(Cov(HTdecoded)+εcovI) (9)\nRESULTS\nwith εcov = 10−6 for numerical stability, weighted by an\nempirically determined γ = 0.035 . We validate the proposed RGP-VAE through an assessThe AdamW optimizer [20] is employed for a fixed 100 ment of the generated synthetic data fidelity, addressing\nepochs with an empirically found learning rate of 1 × the fundamental question of whether the model can pro- Figure 3: Distribution of accuracy improvement for each classifier using the prior generator. The plot shows the percentage point\ndifference between the 'Augmented' and 'Synthetic-Only' conditions relative to the 'Baseline' across all subjects. The red line signifies\nthe mean whilst the blue line is the median.",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 5,
+    "total_chunks": 16,
+    "char_count": 943,
+    "word_count": 138,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1efbdc95-0796-418d-83ef-8d29b7229fa4",
+    "text": "Figure 4: Distribution of accuracy improvement for each classifier using the posterior generator, showing similar trends to the prior\ngenerator but with more pronounced fluctuations. duce valid and realistic covariance matrices, and with a sen γ maintained statistical variance close to the origicomparison against a standard VAE approach. To address the lower geometric diversity of synthetic\nnal analysis quantifies the impact of this data on cross- samples, the noise vector is scaled by εi = 2.2 during\nsubject classification performance to determine the prac- generation, increasing the mean intra-class Riemannian\ntical value of the proposed method. distance to ≈1.95, closely matching the original data's\nLatent Space Structure: UMAP [21] visualization spread (2.03) without distorting statistical properties.\n(Fig. 2) reveals that latent codes organize into a unified Cross-Subject Classification Performance: The impact\nstructure where subjects are heavily intermingled rather of data augmentation was evaluated by comparing classithan clustered by individual. This suggests the model fication accuracies under different augmentation condilearned a largely subject-invariant representation—a crit- tions using Wilcoxon signed-rank tests with Bonferroni\nical property enabled by parallel transport alignment— correction (p < 0.0083). As detailed in Tab. 2, data\nimplying generated samples will reflect generalized task augmentation produced divergent effects. For the KNN\npatterns rather than subject-specific details. classifier, augmentation consistently and significantly\nFidelity Assessment: Across all folds, 100% of syn- improved performance. Posterior-based synthetic-only\nthetic matrices from both prior and posterior generators training yielded the largest gain (+3.49%, p = 0.002),\npassed symmetry and positive-definiteness verification while augmented training provided +2.45% (p = 0.002).\nchecks, confirming the effectiveness of the architecture's Prior generation produced similar but slightly smaller\ngeometric constraints and numerical stabilisation steps. significant benefits (+3.00% synthetic-only, p < 0.001;\nTab. 1 compares the statistical variance and geometric +2.19% augmented, p = 0.003). In contrast, SVC perforspread of synthetic data relative to the original. The cho- mance significantly degraded with augmentation (up to",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 6,
+    "total_chunks": 16,
+    "char_count": 2357,
+    "word_count": 314,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fcfa3616-c017-4919-ad70-a31bc8fc73e0",
+    "text": "Table 1: Fidelity analysis of synthetic data averaged across 12 folds. The table compares the statistical variance ratio and the mean\nintra-class Riemannian distance, showing that the synthetic data distribution is valid. Generator Statistical Variance Geometric Diversity Original Synthetic (Ratio) Original Synthetic Prior 0.208 0.221 (1.061) 2.032 1.946\nPosterior 0.208 0.221 (1.063) 2.032 1.918 Table 2: Average balanced accuracy (%) across 12 subjects for all training conditions and generators with corresponding p-values. Baseline Augmented Scenario Synthetic-Only Scenario\nGenerator Classifier\nAcc. (%) Acc. (%) Improvement p-value Acc. (%) Improvement p-value",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 7,
+    "total_chunks": 16,
+    "char_count": 668,
+    "word_count": 89,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9ff79d4f-a2b8-45ee-9da9-5218bd15bcd5",
+    "text": "MDM 59.52±5.52 58.92±5.40 -0.59% 0.092 58.36±5.03 -1.16% 0.043\nPrior KNN 53.19±4.00 55.38±4.17 +2.19% 0.003 56.19±4.19 +3.00% < 0.001\nSVC 60.67±5.33 57.43±6.32 -3.24% 0.016 56.75±6.37 -3.92% 0.002 MDM 59.52±5.52 58.83±5.29 -0.69% 0.092 58.95±5.51 -0.57% 0.151\nPosterior KNN 53.19±4.00 55.64±4.13 +2.45% 0.002 56.68±4.06 +3.49% 0.002\nSVC 60.67±5.33 57.18±6.57 -3.48% 0.007 56.66±6.25 -4.01% 0.002 -4.01%, p = 0.002), while MDM remained largely unaf- means rather than spanning the full outlier range of realfected.",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 8,
+    "total_chunks": 16,
+    "char_count": 513,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "55a78e4b-c181-4ba7-addc-7a39be55d558",
+    "text": "Figs. 3 and 4 illustrate subject-wise distributions, world data.\nrevealing high variability: KNN augmentation yielded Classifier-Dependent Utility: The impact of the syngains up to +7.8% for subject no.3 (prior generation, syn- thetic data was highly divergent, revealing that data augthetic only condition). A scrambled label test confirmed mentation utility is not universal but classifier-dependent.\nclassifiers learned meaningful features, yielding chance- Augmentation yielded statistically significant improvelevel accuracy (≈50%) on randomized data. ments for the KNN classifier, with posterior sampling\nStandard VAE Comparison: To validate the Rieman- boosting performance up to +3.49% (p = 0.002). KNN\nnian framework, we compared the proposed RGP-VAE likely benefits because the prototypical synthetic samples\nagainst a standard Euclidean VAE. The standard VAE densify the class manifolds, creating more dense and refailed to generate valid data, with > 40% of outputs in liable local neighbourhoods for distance-based classificaevery fold violating positive-definiteness. Conversely, performance significantly degraded for\naugmenting with the valid portion of its data significantly the SVC (up to −4.01%, p = 0.002). The reduced didegraded MDM performance (−9.49%, p < 0.001) and versity of synthetic data likely caused the SVC to learn\noffered no statistically significant benefit to KNN or decision boundaries too narrowly fitted around class cenSVC. This confirms that the proposed architecture's ge- tres, reducing generalization to boundary-case real samometric constraints are essential for generating valid and ples. Meanwhile, performance for the MDM classifier reuseful SPD matrices in this domain. mained stable—a positive result compared to the standard\nVAE, which caused a massive degradation (−9.49% unDISCUSSION der posterior, synthetic-only condition). Unlike the naive\nEuclidean approach that failed to even generate valid\nThis study investigated whether the proposed RGP-VAE SPD matrices, the RGP-VAE preserved the SPD validity\ncould generate high-fidelity EEG covariance matrices to and successfully learnt Riemannian class means. Beyond\nimprove cross-subject MI-BCI classification. immediate classification impacts, synthesizing this data\nGenerative Fidelity and Validity: A primary contribu- holds broader practical value; it provides a mechanism to\ntion of this work is confirming that the RGP-VAE frame- test pipeline scalability, mitigates data scarcity—possibly\nwork inherently generates valid SPD matrices—a non- for data hungry models—and enables privacy protection\ntrivial task where standard Euclidean VAEs failed (pro- by avoiding raw signal sharing.\nducing > 40% invalid matrices). This success is at- Future Research Directions: This study provides a\ntributable to the underlying Riemannian geometry that foundational proof of concept that opens avenues for fuenforces the SPD constraint by design. Parallel Trans- ture research. Building on these findings, future work\nport enabled the model to learn a subject-invariant latent may explore advanced manifold sampling techniques,\nspace, a critical property for cross-subject generalization. such as Riemannian Hamiltonian VAEs or Riemannian\nWhile valid, the synthetic data exhibited a slightly ele- Monte Carlo sampling, to capture complex latent disvated statistical variance (ratio ≈1.06) but reduced geo- tributions more faithfully [22, 23]. Additionally, as\nmetric diversity (ratio ≈0.95). With the chosen parame- demonstrated by vEEGNet [24], integrating the RGPters (γ = 0.035, εi = 2.2), the model generated more pro- VAE's geometric constraints and subject-invariance with\ntotypical samples concentrated near the class geometric discriminative frameworks could potentially yield la-",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 9,
+    "total_chunks": 16,
+    "char_count": 3782,
+    "word_count": 517,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "05d3fba9-35be-497b-a551-d560d6831afd",
+    "text": "Deep learning with convosubject-invariant and class-discriminative. lutional neural networks for brain mapping and decoding\nof movement-related information from the human EEG. CONCLUSION CoRR. 2017;abs/1703.05051.\n[12] Zhu H, Forenzo D, He B. On the deep learning modThis paper developed and validated a novel Rieman- els for EEG-based brain-computer interface using motor\nnian Geometry-Preserving VAE (RGP-VAE) for generat- imagery. IEEE Transactions on Neural Systems and Reing synthetic EEG covariance matrices in the challenging habilitation Engineering. 2022:1–1.\ncross-subject MI-BCI context. The RGP-VAE is not only [13] Chen Y, Wiesel A, Eldar YC, Hero AO. Shrinkcapable of consistently generating valid SPD matrices— age algorithms for MMSE covariance estimation. IEEE\novercoming the limitations of standard VAEs—but also Transactions on Signal Processing. 2010;58(10).\nclosely matches the original data diversity. The high- [14] Miolane N, Holmes SP.",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 11,
+    "total_chunks": 16,
+    "char_count": 960,
+    "word_count": 130,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8a44244d-314a-4f27-8c74-59fce7d4a854",
+    "text": "Learning weighted subfidelity synthetic data can maintain or even significantly manifolds with variational autoencoders and riemannian\nimprove classification performance for specific classi- variational autoencoders. 2020 IEEE/CVF Conference\nfiers. However, divergent classifier results highlight gen- on Computer Vision and Pattern Recognition (CVPR).\nerative capabilities on the SPD manifold do not guarantee 2019:14491–14499.\nuniversal downstream improvements. [15] Fletcher PT, Lu C, Pizer SM, Joshi S. Principal geodesic analysis for the study of nonlinear statisREFERENCES tics of shape. IEEE Transactions on Medical Imaging.\n2004;23(8):995–1005.\n[16] Moakher M. A differential geometric approach to\n[1] Congedo M, Barachant A, Bhatia R. Rieman- the geometric mean of symmetric positive-definite matrinian geometry for EEG-based brain-computer inter- ces. SIAM Journal on Matrix Analysis and Applications.\nfaces; a primer and a review. Brain-Computer Interfaces. 2005;26(3):735–747.\n2017;4(3):155–174. [17] Maas AL, Hannun AY, Ng AY. Rectifier nonlinear-\n[2] Yger F, Berar M, Lotte F. Riemannian approaches ities improve neural network acoustic models. In: Proin brain-computer interfaces: A review. IEEE Transac- ceedings of the 30th International Conference on Mations on Neural Systems and Rehabilitation Engineering. chine Learning. 2013.\n2017;25(10):1753–1762. [18] Ioffe S, Szegedy C. Batch normalization: Accelerat-\n[3] Chevallier S et al. The largest eeg-based bci repro- ing deep network training by reducing internal covariate\nducibility study for open science: The moabb benchmark. shift. CoRR. 2015;abs/1502.03167.\n2024. arXiv: 2404.15319 [eess.SP]. [19] Bowman SR, Vilnis L, Vinyals O, Dai A, Jozefow-\n[4] Blankertz B, Dornhege G, Krauledat M, Müller KR, icz R, Bengio S.",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 12,
+    "total_chunks": 16,
+    "char_count": 1790,
+    "word_count": 241,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "84d8dbac-b5da-4fa1-a7a6-8f2b51f62339",
+    "text": "The non-invasive Berlin Brain-Computer In- space. In: Proceedings of the 20th SIGNLL Conference\nterface: fast acquisition of effective performance in un- on Computational Natural Language Learning. Associtrained subjects. NeuroImage. 2007;37(2):539–550. ation for Computational Linguistics: Berlin, Germany,\n[5] Kalunga E, Chevallier S, Barthélemy Q. Data aug- Aug. 2016, 10–21.\nmentation in Riemannian space for Brain-Computer In- [20] Loshchilov I, Hutter F. Fixing weight decay reguterfaces. In: STAMLINS 2015 proceedings.",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 14,
+    "total_chunks": 16,
+    "char_count": 525,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e88dd35-02c4-4b6a-9f13-1422cd23f618",
+    "text": "Lille, France, larization in adam. CoRR. 2017;abs/1711.05101. Jun. 2015. [21] McInnes L, Healy J, Melville J. Umap: Uni-\n[6] Kingma DP, Welling M. Auto-encoding variational form manifold approximation and projection for dibayes. 2013. arXiv: 1312.6114 [stat.ML]. [Online]. mension reduction. Journal of Open Source Software. Available: https://arxiv.org/abs/1312.6114 2018;3(29):861.\n[7] Shao H, Kumar A, Fletcher PT. The rieman- [22] Chadebec C, Allassonnière S. Data augmentation\nnian geometry of deep generative models. CoRR. with variational autoencoders and manifold sampling. In:\n2017;abs/1711.08014.",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 15,
+    "total_chunks": 16,
+    "char_count": 606,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "75679800-afcc-4fda-b389-d77be2fb9e99",
+    "text": "Deep Generative Models, and Data Augmentation, La-\n[8] Yair O, Ben-Chen M, Talmon R. Parallel trans- belling, and Imperfections. Springer, 2021, 184–192.\nport on the cone manifold of SPD matrices for do- [23] Chadebec C, Thibeau-Sutre E, Burgos N, Allassonmain adaptation. IEEE Transactions on Signal Process- nière S.",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 16,
+    "total_chunks": 16,
+    "char_count": 318,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "585584e2-4e04-409b-9e86-2a139383f4c1",
+    "text": "Data augmentation in high dimensional low saming. 2019;67(7):1797–1811. ple size setting using a geometry-based variational au-\n[9] Faller J, Vidaurre C, Solis-Escalante T, Neuper C, toencoder. IEEE Transactions on Pattern Analysis and\nScherer R. Autocalibration and recurrent adaptation: To- Machine Intelligence. 2023;45(3):2879–2896.\nwards a plug and play online ERD-BCI. IEEE Transac- [24] Zancanaro A, Cisotto G, Zoppis I, Manzoni SL.\ntions on Neural Systems and Rehabilitation Engineering. Veegnet: Learning latent representations to reconstruct\n2012;20(3):313–319. eeg raw data via variational autoencoders. In: Informa-\n[10] Aristimunha B et al. Mother of all BCI Benchmarks. tion and Communication Technologies for Ageing Well\nVersion 1.0.0. 2023. [Online]. Available: https : / / and e-Health. Springer Nature Switzerland: Cham, 2024,\ngithub.com/NeuroTechX/moabb 114–129.",
+    "paper_id": "2603.10563",
+    "title": "Riemannian Geometry-Preserving Variational Autoencoder for MI-BCI Data Augmentation",
+    "authors": [
+      "Viktorija PoÄ¼aka",
+      "Ivo Pascal de Jong",
+      "Andreea Ioana Sburlea"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10563v1",
+    "chunk_index": 17,
+    "total_chunks": 16,
+    "char_count": 881,
+    "word_count": 117,
+    "chunking_strategy": "semantic"
+  }
+]

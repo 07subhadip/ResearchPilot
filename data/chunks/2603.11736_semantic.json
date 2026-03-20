@@ -1,0 +1,282 @@
+[
+  {
+    "chunk_id": "5fedd719-04fc-4d58-be48-87a34a6ca11c",
+    "text": "Gender Bias in Generative AI-assisted Recruitment\nProcesses Martina Ullasci, Marco Rondina, Riccardo Coppola and Antonio Vetr`o\nDepartment of Control and Computer Engineering\nPolitecnico di Torino, Italy\nTurin, Italy\n{martina.ullasci, marco.rondina, riccardo.coppola, antonio.vetro}@polito.it Abstract—In recent years, generative artificial intelligence and male candidates. The purpose of this research is to verify\n(GenAI) systems have assumed increasingly crucial roles in selec- the dependence of the model output on candidates' gender, to\ntion processes, personnel recruitment and analysis of candidates' assess its influence in suggesting specific social roles.\nprofiles. However, the employment of large language models\nThe remainder of the paper is organized as follows: Section (LLMs) risks reproducing, and in some cases amplifying, gender2026 stereotypes and bias already present in the labour market. II provides background about the definition of Gender Bias\nThe objective of this paper is to evaluate and measure and the application of LLMs in the labor market; Section III\nthis phenomenon, analysing how a state-of-the-art generative describes the methodology used in the experiment; section\nmodel (GPT-5) suggests occupations based on gender and workMar IV describes the results of the experimentation; Section V\nexperience background, focusing on under-35-year-old Italian\nanalyzes potential threats to the validity of the study; Section\n12 graduates.simulated candidateThe modelprofiles,has beenwhichpromptedare balancedto suggestinjobstermsto 24of VI discusses the findings and identifies possible future research\ngender, age, experience and professional field. directions. All the results of the experimentation have been\nAlthough no significant differences emerged in job titles and made available as an online resource1.\nindustry, gendered linguistic patterns emerged in the adjectives\nattributed to female and male candidates, indicating a tendency II. BACKGROUND\nof the model to associate women with emotional and empathetic\ntraits, while men with strategic and analytical ones. The research Gender Bias is a form of inequality coming from patriarchal[cs.AI]\nraises an ethical question regarding the use of these models in systems that have historically given men greater power and\nsensitive processes, highlighting the need for transparency and representation than women [6]. This influence extends pervafairness in future digital labour markets.\nsively to the technological domain. Feminist scholars, such as\nIndex Terms—Generative AI, AI Fairness, AI Ethics, Large\nLanguage Models Judy Wajcman [2], argue that technology is not neutral, but\nit reflects social discriminations. In the artificial intelligence\nfield, these asymmetries are perpetuated by generative models I. INTRODUCTION\nthat exacerbate the biases present in the historical data used\nGenerative artificial intelligence (GenAI) technologies are for their training [7].",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 0,
+    "total_chunks": 14,
+    "char_count": 2959,
+    "word_count": 403,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "294e080d-7586-4faf-9692-04ef02e33238",
+    "text": "This mechanism is observable in AIrapidly shaping society, redefining economic structures, social generated textual and visual contents, which perpetuate gender\ndynamics and everyday life. Large Language Models (LLMs) segregation [5] and consolidate social stereotypes, by associare increasingly employed in decision-making processes, in ating men with authority and serious facial expressions and\nthe selection of personnel and in the evaluation procedures, women with submissiveness and warmth [8]. In particular, this\npromising greater efficiency than human-administered pro- issue is critical in the human resources (HR) sector, where the\ncedures [1]. Since these models are trained using data that utilisation of GenAI is rapidly increasing [9]. GenAI tools are\nreflects the inequalities present in society, there is a risk that used as they promise cost reduction and greater efficiency thanarXiv:2603.11736v1\nthey might reproduce and even amplify [2] gender stereotypes manual procedures [9]. However, their application carries ethand biases in the labour market environment. In the AI context, ical challenges about fairness, transparency and accountability\na bias is defined as a systematic distortion in the results of [9]. Moreover, its significant computational demands raise\na model [3], which reproduces unfair representations or treat- concerns about the long-term environmental sustainability of\nments for specific individuals or groups, due to the information widespread AI adoption [10]. Additionally, GenAI systems\nlearned in the training phase [4]. Particularly, gender bias may reproduce gender bias in candidate evaluations, reinforcrefers to a form of inequality able to exacerbate occupational ing stereotypical traits for men and women [9].\nsegregation and wage disparities [5]. The Fairness principle Budhwar et al. showed that GenAI is transforming HRM\nrepresents a key challenge: it is necessary to prevent AI by automating tasks and improving efficiency [11]. Howfrom reinforcing gender roles and hierarchies. This study ever, its adoption also raises significant concerns regarding\ninvestigates the presence of gender bias in the context of job bias, misinformation, privacy, and ethical issues. The paper\nsuggestions, asking a Generative AI (GenAI) model to propose\noccupations and job descriptions to a population of female 1https://doi.org/10.5281/zenodo.18242470 TABLE I to candidates with similar experience backgrounds based on\nGOAL-QUESTION-METRIC TEMPLATE FOR THE STUDY their gender.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 1,
+    "total_chunks": 14,
+    "char_count": 2521,
+    "word_count": 352,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1576e7bd-f974-4d85-b4df-b8d6ea85565d",
+    "text": "Analyze Occupational suggestions proposed by a state-of- The experiment design combines prompt-based evaluations\nthe-art GenAI system\nFor the purpose of Identifying whether gender bias emerges in AI- and qualitative and quantitative analysis of AI-generated outassisted job suggestions and candidate descriptions puts. ChatGPT-5 is the central chatbot for the study, and\nWith respect to Differences in suggested job titles, industries and it is used for generating job and industry suggestions and descriptive adjectives\nFrom the viewpoint of Researchers interested in fairness, ethics, and bias descriptions starting from fictitious job-seeker profiles. Chatin GenAI\nIn the context of Simulated job-seeker profiles of Italian graduates GPT was selected for the study for its frequent use in both\nunder 35 years old. the academic and industrial landscapes. All the requests are\nsubmitted through the ChatGPT web interface, keeping the\nhighlights that AI systems used in recruitment have shown default settings defined by OpenAI for the specific version of\ngender bias, including evidence of tendencies against female GPT-5 available at the time of data collection.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 2,
+    "total_chunks": 14,
+    "char_count": 1164,
+    "word_count": 169,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ec37ee6b-b513-4469-9c72-4febd23dfbbe",
+    "text": "The data was\ncandidates, underscoring the need for responsible and trans- collected between August and September 2025.\nparent deployment [11]. Therefore, the role of AI in such The study population consists of 24 simulated job-seeker\nsensitive areas has to be questioned, taking into account profiles, 12 women and 12 men, under the age of 35, Italian\nboth efficiency growth and the risk of reproducing social and graduated, designed to ensure variability across the key\ninequalities [12]. Recent studies have investigated gender independent variables. Non-binary people were not selected in\nand nationality biases in LLMs applied to recruitment and the study due to the small sample size (N = 24). Three distinct\nsoftware engineering contexts.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 3,
+    "total_chunks": 14,
+    "char_count": 744,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4fd49646-689d-4ddd-a6e1-ff74ae519147",
+    "text": "Nakano et al. analyzed how trials are performed for each profile. LLMs evaluate profiles of candidates coming from different The background of each candidate has been defined using\nregions of the world [13]. The study shows how gender and the International Standard Classification of Occupations 2008\nnationality biases influence the model's responses, affecting (ISCO-08)2, which organises professions primarily based on\nthe perception of competencies for certain roles. Similarly, the concepts of skill level and skill specialisation [16]. Among\nTreude et al. explored gender bias in the LLM-assignment of the ten occupational groups the Armed Forces group was\nsoftware engineering roles, proving that the model has a strong excluded as not relevant to the scope of the study. The retendency to associate male pronouns with technically intensive maining nine civilian occupations were grouped into 3 macrotasks, while tasks involving coordination and communication areas based on the principal skill requirements and nature\nskills shows weaker male associations, highlighting gender of the roles: Cognitive (Managers and Professionals, roles\nstereotypes embedded in LLMs [14]. focused on high-level strategic thinking and problem-solving),\nSocio-Relational (Technicians and Associate Professionals, III. METHODOLOGY\nClerical Support Workers, Service and Sales Workers, roles\nThis research aims to evaluate and measure how GenAI concerning administrative support and direct interaction with\nsystems may replicate, or even amplify, gender bias in the customers) and Technical (Skilled Agricultural, Forestry and\nlabour market. We describe the goal of the research by using Fishery Workers, Craft and Related Trades Workers, Plant and\nthe Goal-Question-Metric template [15], in table I. Machine Operators and Assemblers, Elementary Occupations,\nAs AI tools are becoming more involved in the hiring roles involving manual work, machinery operations, and fixed\nand job advertising processes thanks to their time-saving procedures). The mapping of the occupational groups was\ncapabilities [1], it is crucial to understand whether gender bias performed by one of the authors, drawing on the official ISCOis being replicated in this field. The research focuses on young 08 descriptions2. Each synthetic profile was assigned a macroItalian university graduates under the age of 35 - as young area in order to ensure a balanced representation across all the\ngraduates are the most affected people in the labour market macro-areas and genders. Finally, each profile is given a level\ndigitisation - representing junior and senior career job-seekers. of work experience: Junior (from 0 to 5 years) and Senior\nWe looked at this group to maintain the feasibility of a full (more than 5 years).\nfactorial design. We focused on the early stages of a career\nA standardised textual prompt is developed and submitbecause it is at this point that bias in algorithms can act as a\nted to the model three times for each of the 24 candidate\nmain gatekeeper. This also helped us to reduce the impact of\nprofiles, resulting in 72 total observations.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 4,
+    "total_chunks": 14,
+    "char_count": 3124,
+    "word_count": 469,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f7f1620-a733-4512-a404-c1626c7d6182",
+    "text": "The model is\nthe different career paths.\nassigned the role of an expert career advisor, and it is\nThe study is organised around the following RQs:\nasked to produce the output following a structured format\n• RQ1: Do GenAI models suggest different job title sug- to facilitate the data collection: \"Hello! You are an expert\ngestions depending on the gender of the job-seeker? career advisor. Your task is to analyse a candidate's profile\n• RQ2: Do GenAI models suggest different job industry and suggest an ideal job and its relative sector, justifying\nclasses depending on the gender of the job-seeker? your choice. Gender: [Male/Female], Age: [Precise Age, e.g.,\n• RQ3: Do GenAI models suggest different adjectives to 23], Educational Level: Graduated, Nationality: Italian, Field\ndescribe job-seekers, depending on their gender? These questions aim at investigating whether AI systems 2https://www.ilo.org/publications/international-standard-classificationprovide different job and industry suggestions and descriptions occupations-2008-isco-08-structure Sample input and results of the interaction with the GenAI TABLE II\nRESULTS OF THE STATISTICAL ANALYSIS Hypothesis p-value Decision\nFig. 2. Distribution of suggested Job title classes by Gender\nH10: The gender of the job-seeker has no impact on 0.27 Accept\nthe suggested job\nH20: The gender of the job-seeker has no impact on 0.38 Accept\nthe suggested job category\nH30: The gender of the job-seeker has no impact on 0.002 Reject\nthe suggested candidate adjectives of Experience: [Cognitive/Socio-Relational/Technical], Work\nExperience Level: [Junior/Senior]. Provide your response following this exact format: Job Suggested: [Job Title], Industry:\n[Working Sector], Adjectives: [List of 3 adjectives that could\ndescribe this person]\"\nThis standardised input generates three output variables,\nextracted from LLM outputs: suggested job, suggested in- Fig. 3. Distribution of suggested industry classes by Gender\ndustry and adjectives. A schematic example of input and\ngenders systematically, but it reproduces subtle asymmetries\noutput is reported in Fig. 1. For each category, the frequencies\nreflecting cultural patterns present in training data.\nare collected and analysed separately for female and male\nprofiles.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 5,
+    "total_chunks": 14,
+    "char_count": 2270,
+    "word_count": 323,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1f95ed07-2b37-4111-a2e2-4ea0b45a3cbf",
+    "text": "All the unique occurrences of job titles, industries and B. Industry Suggestions\nadjectives are grouped in homogeneous categories based on Similarly, the analysis of the suggestions of Industry shows\ntheir functional or semantic similarity through the application a polarisation in the Human Resources sector, where women\nof open coding [17]. The procedure of open coding was are over-represented (5 women against 1 man), while other\nconducted by an author of the paper, and all codes were industries, such as Manufacturing & Industrial (12 women\nmanually inspected and verified by the other authors until a and 12 men) and Technology (7 women and 5 men), appear\nconsensus was reached. generally balanced. With p −value = 0.38, these results do\nThese categories, converted into dependent variables, are not lead to the rejection of the null hypothesis, stating that,\ncompared with the independent variable Gender through χ2 even though the model reproduces slight gender asymmetries,\ntest, to investigate any significant gender difference in the re- it does not present a systematic pattern in Industry suggestion.\nsults distribution. This process allowed the qualitative outputs\nof the model to be translated into comparable data, enabling C.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 6,
+    "total_chunks": 14,
+    "char_count": 1243,
+    "word_count": 191,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bcf412b1-31bf-4d05-826a-9efaf9a041d7",
+    "text": "Adjectives Suggestions\nthe statistical evaluation of the presence of gender bias. The analysis of Adjectives reveals clear gender differences\nin descriptive traits assigned to the candidates. RESULTS AND DISCUSSION\nmostly described through Relational & Emotional traits (27\nIn this section, we report our findings divided by research female vs. 11 male candidates), including adjectives as apquestion. In table II we report the results of the statistical proachable, empathetic and supportive. while men are strongly\nanalysis for the hypothesis used to answer the three RQs. associated with Leadership & Influence characteristics (25\nmen vs. 13 women) - as influential, persuasive and ambitious\nA. Job Title Suggestions - and Practical & Reliability traits (37 men vs. 21 women),\nThe analysis of the suggested job titles shows some ten- as determined, experienced and responsible. The χ2 test of\ndencies coherent with gender stereotypes. Female candidates independence, leading to p −value = 0.00176, confirms the\nare over-represented in HR & People Operations roles (5 statistical significance of these differences and the presence of\nwomen and 1 man), while male profiles prevail in Operations, gender bias in the model-generated language, thus reproducing\nTechnical & Manufacturing (6 men and 3 women). Despite traditional schemes.\nthese findings, the χ2 test of independence does not allow for\nV. THREATS TO VALIDITYthe rejection of the null hypothesis (p = 0.27). More balanced\ncategories, such as Product, Data & Research (12 female and We describe the threats to the validity of our study according\n12 male candidates) show that the model does not segregate to the classification provided by Feldt et al. [18]. hetero-normative gender identities, the manual coding may\nreflect subjective bias, and the use of a single model - GPT-\n5 - limits the generalisation of the results. Future research\nshould address these limits, including different models and\nextending the analysis to non-hetero-normative identities and\nother socio-economic variables. Furthermore, the results of this\nstudy pave the way to a second phase of the experiment -\ncurrently in progress - that aims to investigate gender bias in\ntextual and visual descriptions of ideal candidates starting from\nreal-world job advertisements.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 7,
+    "total_chunks": 14,
+    "char_count": 2304,
+    "word_count": 350,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb231bfa-202d-4da7-8bce-0e44fcad6d30",
+    "text": "To conclude, only through an\ninterdisciplinary approach, which combines computer science,\nFig. 4. Distribution of suggested adjective classes by Gender sociology and gender studies, it could be possible not only to\ndevelop AI tools capable of promoting equality and justice in Threats to construct validity principally lie in the set of\nthe digital labour market, but above all to question the actual24 profiles used for the study. The set of profiles may not\nadvisability of using these technologies in high-risk areas.capture the complexity of real job-seekers. Job titles, industries\nand adjectives were grouped through qualitative open coding, REFERENCES\nthus introducing a source of subjectivity. We mitigated such [1] J.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 8,
+    "total_chunks": 14,
+    "char_count": 726,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "32eff0ea-73d6-4803-9aa2-4ad708938166",
+    "text": "Laszlo, \"A literature review: Artificial intelligence impact\nsubjectivity by following established procedures for grounded on the recruitment process,\" International Journal of Engineering and\ntheory studies. Gender was operationalised as a binary variable Management Sciences, vol. 6, no. 1, pp. 108–119, May 2021.\n[2] J. Wajcman, Feminism Confronts Technology. University Park, PA:\n(male/female), which does not reflect the full spectrum of Penn State University Press, 1991.\ngender identities. Larger sets of profiles might allow the [3] E. Ferrara, \"Fairness and bias in artificial intelligence: A brief survey\ninclusion of additional values for the gender variable. of sources, impacts, and mitigation strategies,\" Sci, 2023.\n[4] S. Noble, Algorithms of Oppression: How Search Engines Reinforce\nThreats to internal validity are related to the utilisation Racism. New York: NYU Press, 2018.\nof the ChatGPT 5 model, with default parameters, for data [5] E. Inc. (n.d.) Gender segregation an overview.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 9,
+    "total_chunks": 14,
+    "char_count": 1003,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "42421a32-cdef-4ad8-85e0-315ff064e3a6",
+    "text": "Accessed via\ncollection. Possible model updates could influence consistency ScienceDirect Topics. [Online]. Available: https://www.sciencedirect.\ncom/topics/psychology/gender-segregation\nor replicability. The inherent variability in the output provided [6] I. Galster, Le deuxi`eme sexe de Simone de Beauvoir.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 10,
+    "total_chunks": 14,
+    "char_count": 309,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "05e72c52-c9db-419c-9c3b-706bdef7cb83",
+    "text": "Presses Paris\nby the GenAI model can affect the stability of results. Threats to external validity are related to the focus of the [7] K. Crawford, Atlas of AI: Power, Politics, and the Planetary Costs of\nArtificial Intelligence. New Haven: Yale University Press, 2021.\nstudy on Italian, under-35 and graduate job-seekers, which [8] L. Yang, \"Smiling\nnarrows the applicability of the results to broader populations. women pitching down: auditing representational and presentational\nAdditionally, the evaluation was limited to one LLM model gender biases in image-generative ai,\" Journal of Computer-Mediated\nCommunication, vol. 29, no. 1, Nov 2023.\nand one prompting strategy. [9] R. Balassa, \"The role of generative ai in\nimproving the sustainability and efficiency of hr recruitment process,\"\nVI. CONCLUSION AND FUTURE WORK Discover Sustainability, 2025.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 11,
+    "total_chunks": 14,
+    "char_count": 856,
+    "word_count": 126,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "313072d5-6718-4064-bfb3-03c1bbc74f10",
+    "text": "This research systematically examines the behaviour of the [10] I. Alnafrah, \"The two tales of ai: A global assessment of the environmental impacts of artificial intelligence from a multidimensional\ngenerative model GPT-5 in the generation of occupational policy perspective,\" Journal of Environmental Management, vol. 392,\nsuggestions, aiming to investigate the presence of gender bias p. 126813, sep 2025.\nin GenAI-assisted requirements processes. This study focused [11] P. Wood et al., \"Human resource management in the age of generative artificial intelligence: Perspectives and\non a simulated population composed of 12 female and 12 male research directions on chatgpt,\" Human Resource Management, 2023.\ncandidates, showing that even though the Job title and Industry [12] S. Budhwar et al., \"Generative artificial intelligence in\nsections did not reveal any statistically significant differences business: Towards a strategic human resource management framework,\"\nBritish Journal of Management, 2024.\nbetween genders, the Adjectives showed differences. Cheong, and\ncandidates were described with relational, empathetic and K.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 12,
+    "total_chunks": 14,
+    "char_count": 1132,
+    "word_count": 157,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "63d9ffa1-3690-470a-9553-afc13990b3c3",
+    "text": "Matsumoto, \"Nigerian software engineer or american data scientist?\ncooperative traits, while men were characterised by elements github profile recruitment bias in large language models,\" in 2024\nIEEE International Conference on Software Maintenance and Evolution\nrelated to rationality, leadership and analytical skills, reinforc- (ICSME). IEEE, oct 2024, p. 624–629.\ning social stereotypes. The results of this preliminary work [14] C. Hata, \"She elicits requirements and he tests: Software\nquestion the appropriateness of employing algorithmic tools in engineering gender bias in large language models,\" 2023. [Online]. Available: https://arxiv.org/abs/2303.10131\nsensitive tasks, such as recruitment. While human bias remains [15] R. Rombach, \"Goal\nby definition individual and with clear responsibility, the use question metric approach,\" Encyclopedia of software engineering, 2002.\nof these systems risks transforming individual bias into large- [16] International Labour Office. (2012) International standard classification\nof occupations: Isco-08. volume i: Structure, group definitions and\nscale algorithmic harm [19]. Therefore, the solution lies not correspondence tables.\nonly in developing ethics guidelines for the use of GenAI in [17] S. Khandkar, \"Open coding,\" University of Calgary, vol. 23, no.\nthe HR sector, but also in a critical upstream assessment of 2009, p. 2009, 2009.\n[18] R. Magazinius, \"Validity threats in empirical software\ntheir role in sensitive decision-making processes. engineering research-an initial survey.\" in Seke, 2010, pp. 374–379. This current study has some methodological limitations: the [19] C. O'Neil, Weapons of Math Destruction. Crown Publishing Group\nsmall sample size and the binary representation exclude non- (NY), 2016.",
+    "paper_id": "2603.11736",
+    "title": "Gender Bias in Generative AI-assisted Recruitment Processes",
+    "authors": [
+      "Martina Ullasci",
+      "Marco Rondina",
+      "Riccardo Coppola",
+      "Antonio Vetrò"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11736v1",
+    "chunk_index": 13,
+    "total_chunks": 14,
+    "char_count": 1775,
+    "word_count": 242,
+    "chunking_strategy": "semantic"
+  }
+]

@@ -1,0 +1,512 @@
+[
+  {
+    "chunk_id": "f8b4e07c-2128-4e03-9c10-53d6970cdcdb",
+    "text": "Causal Prosody Mediation for Text-to-Speech:\nCounterfactual Training of Duration, Pitch, and Energy in FastSpeech2 Suvendu Sekhar Mohanty\nArlington, Virginia, USA",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 0,
+    "total_chunks": 30,
+    "char_count": 162,
+    "word_count": 20,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f81edd24-6133-4d1c-952c-491cf37ee600",
+    "text": "Abstract\nWe propose a novel causal prosody mediation framework for expressive text-to-speech (TTS) synthesis. Our approach augments the\nFastSpeech2 architecture with explicit emotion conditioning and introduces counterfactual training objectives to disentangle emotional\nprosody from linguistic content. By formulating a structural causal model of how text (content), emotion, and speaker jointly influence\nprosody (duration, pitch, energy) and ultimately the speech waveform, we derive two complementary loss terms: an Indirect Path Constraint\n(IPC) to enforce that emotion affects speech only through prosody, and a Counterfactual Prosody Constraint (CPC) to encourage distinct\nprosody patterns for different emotions. The resulting model is trained on multi-speaker emotional corpora (LibriTTS, EmoV-DB, VCTK)\nwith a combined objective that includes standard spectrogram reconstruction and variance prediction losses alongside our causal losses. In\nevaluations on expressive speech synthesis, our method achieves significantly improved prosody manipulation and emotion rendering, with\nhigher mean opinion scores (MOS) and emotion accuracy than baseline FastSpeech2 variants. We also observe better intelligibility (low\nWER) and speaker consistency when transferring emotions across speakers. Extensive ablations confirm that the causal objectives\nsuccessfully separate prosody attribution, yielding an interpretable model that allows controlled counterfactual prosody editing (e.g. \"same\nutterance, different emotion\") without compromising naturalness. We discuss the implications for identifiability in prosody modeling and\noutline limitations such as the assumption that emotion effects are fully captured by pitch, duration, and energy. Our work demonstrates how\nintegrating causal learning principles into TTS can improve controllability and expressiveness in generated speech. primarily by modulating prosody (e.g. anger might increase\n1. Introduction pitch and volume, sadness might slow down tempo), which\nin turn affects the acoustic realization of the given text. InRecent advances in end-to-end TTS have achieved\nother words, prosody is a mediator of the emotion → speechremarkable speech naturalness (Ren et al., 2021; Wang et al.,\neffect. We formalize this intuition with a Structural Causal2017).",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 1,
+    "total_chunks": 30,
+    "char_count": 2312,
+    "word_count": 306,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7b69aec1-0a28-4ca4-b534-ffda7229761e",
+    "text": "However, generating expressive speech—conveying\nModel (SCM) and design a counterfactual training strategy tonuances of prosody (rhythm, intonation) and emotion—\nenforce it in a neural TTS model. By explicitly simulatingremains challenging. In conventional TTS, a given text can\n\"what-if\" scenarios during training (e.g. \"What if the samebe spoken in many plausible ways (the one-to-many mapping\nsentence were spoken in a different emotion?\"), our methodproblem), and controlling how it is spoken (e.g. happily vs\nlearns to separate why the speech sounds a certain waysadly) is an open research problem. Modern non-\n(emotion-driven prosody) from what is being said (linguisticautoregressive models like FastSpeech2 (FS2) tackle one-tocontent) and who is speaking (speaker identity).many mapping by introducing variance predictors for\nduration, pitch, and energy. These features inject prosodic Concretely, we augment FastSpeech2 with an emotion\nvariation into the generated speech and have been shown to conditioning mechanism and introduce two novel loss terms\ncorrelate with expressive aspects (e.g. pitch is a key feature derived from causal inference principles: an Indirect Path\nto convey emotions). Nonetheless, out-of-the-box FS2 is not Constraint (IPC) that minimizes the direct effect of emotion\nexplicitly emotion-aware—it does not use emotion labels on speech (forcing emotion to work through prosody), and a\nduring training, and any expressiveness must emerge Counterfactual Prosody Constraint (CPC) that maximizes the\nimplicitly. prosody differences corresponding to different emotions\nwhile preserving the spoken content. Through these, the To explicitly model and control emotional expression in\nmodel learns to generate speech where emotion-specificTTS, prior works have conditioned synthesis on emotion\nprosody (duration, pitch, energy patterns) can be controlledidentifiers or reference samples. For example, some\nindependently of content and speaker characteristics.approaches add a learned emotion embedding (categorical or\ncontinuous) to the network inputs, or use Global Style Tokens We evaluate our approach on multi-speaker, multi-\n(GST) to capture speaking style from a reference audio in an emotion English datasets: the LibriTTS corpus (neutral\nunsupervised manner. These methods can enable emotion- audiobook speech), the EmoV-DB emotional database, and\nconditioned TTS, but they often lack a principled way to VCTK (multi-speaker voice dataset). Both objective metrics\nensure that the intended emotion is expressed only through and subjective listening tests demonstrate that our Causal\nappropriate prosodic changes, rather than inadvertently Prosody Mediation (CPM) method outperforms baseline\naltering the speaker's voice or the linguistic content. models. In particular, it achieves higher MOS for naturalness\nUncontrolled interactions between emotion and other factors and emotional expressiveness, lower word error rate (WER)\ncan lead to degraded intelligibility or speaker consistency. indicating intact intelligibility, and better speaker similarity\nwhen transferring emotions across voices. Additionally, a In this paper, we take a causal perspective on prosody in\npost-hoc analysis using counterfactual generation shows thatTTS. We hypothesize that emotion influences speech\nour model cleanly separates emotional prosody—we can manipulate pitch/energy/duration to alter emotion without used as additional inputs to the model and as targets for the\nchanging the verbal content, unlike standard FS2 where such predictors. At inference, the model predicts these prosodic\ninterventions are entangled or require cumbersome fine- features and uses them to generate the mel-spectrogram.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 2,
+    "total_chunks": 30,
+    "char_count": 3716,
+    "word_count": 508,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "43bd0688-21fd-461a-a378-142cea466ed2",
+    "text": "This\ntuning. design injects rich prosody information into FS2's output and\nsignificantly improves naturalness and expressiveness overOur contributions are summarized as follows:\nthe original FastSpeech. Pitch in particular is highlighted as\n• Causal Modeling of Prosody in TTS: We introduce a \"a key feature to convey emotions\" while energy affects\nstructural causal model for emotional TTS, positing volume and speaking style. FastSpeech2 leaves open the\nprosody (duration, pitch, energy) as the mediator of incorporation of higher-level prosody factors like emotion\nemotion's effect on speech. We explicitly incorporate this and style, noting that these could be added to the variance\nmodel into the FS2 architecture. adaptor in future work.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 3,
+    "total_chunks": 30,
+    "char_count": 743,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8efcf37f-10ef-4f9a-a9ba-11a412df229f",
+    "text": "Our work builds on this idea by\n• Counterfactual Training Objective: We derive two adding emotion as an explicit conditioning and by ensuring\nnovel training losses (IPC and CPC) based on prosody predictors leverage it in a causally consistent\ncounterfactual reasoning that enforce full mediation of manner.\nemotion through prosody and ensure content Emotion-Conditioned TTS: Modeling and controlling\npreservation. To our knowledge, this is the first emotional expression in speech synthesis has long been\napplication of counterfactual intervention training in a pursued. Early approaches (e.g. on HMM-based TTS) used\nTTS context. fixed style codes for a handful of speaking styles or emotions.\n• Emotion-Augmented FastSpeech2: We develop an In end-to-end neural TTS, initial works injected emotion\nenhanced FS2 backbone that conditions on emotion (and labels or embeddings into models like Tacotron. For\nspeaker) and implement a combined objective function. example, Latif et al. (2018) conditioned Tacotron 2 on\nThe approach is general and does not require additional categorical emotion embeddings, concatenating the emotion\nreference encoders or adversarial training. code with encoder or decoder inputs to generate emotional\n• Experimental Validation: We conduct comprehensive speech. The emergence of Global Style Tokens (GST) by\nevaluations on multiple datasets, demonstrating Wang et al. (2018) provided an unsupervised way to learn a\nsignificant improvements in prosody control and emotion latent style space. GSTs are a set of trainable vectors in a\nrendering over strong baselines (vanilla FS2, FS2 with Tacotron-like model; a reference encoder encodes a reference\nemotion embedding, and a post-hoc editing method). We audio's style, which is then matched against these tokens to\nalso provide ablation studies and qualitative analysis of produce a style embedding that conditions the TTS output.\nthe learned prosody representations. This technique allows modeling of emotion or speaking style\nwithout explicit labels, and subsequent works extended it • Identifiability and Prosody Disentanglement: We\nwith fine-grained control (e.g. by interpolating between style discuss how our causal constraints relate to identifiability\ntokens to adjust emotion intensity). More recent approaches of prosodic factors and present evidence that our model\ncondition TTS on descriptive text prompts specifying achieves a cleaner separation between prosody and other\nemotion (e.g. \"angry tone\") or use prosody transfer from a speech factors, yielding more interpretable and\ngiven reference audio to an input text. controllable synthesis. While these methods can achieve emotional The rest of the paper is organized as follows. Section 2\nexpressiveness, they often suffer from entanglement: thereviews related work on FastSpeech2, prosody modeling,\nmodel might entangle emotion with speaker identity or mightemotion-conditioned TTS, counterfactual editing, and causal\nrequire manual tuning to get the desired prosody. A simplerepresentation learning. Section 3 defines our structural\nlabel-conditioned model (like FS2 with an added emotioncausal model and its assumptions. Section 4 describes our\nembedding) may learn to express emotions, but nothingmethod in detail, including the emotion-augmented FS2\nguarantees how the emotion is realized in terms of prosody—architecture and the derivation of IPC and CPC losses, with\nthe model could, for instance, alter timbre or add distortionstheoretical remarks. Section 5 covers training procedure and\nto simulate emotion if trained naively.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 4,
+    "total_chunks": 30,
+    "char_count": 3577,
+    "word_count": 510,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb28d170-c29d-42bb-b2c9-a02c6be61e95",
+    "text": "In contrast, ourimplementation details. In Section 6 we present evaluation\napproach enforces that emotion manifests throughmetrics, baseline systems, and ablation studies. Section 7\ninterpretable prosodic changes (pitch, energy, timing), whichreports the results and analysis. Section 8 provides discussion\naligns with how human expressive speech is characterized inof limitations and future work. Finally, Section 9 concludes\nstudies (e.g. anger tends to higher pitch and intensity, sadnessthe paper.\nto lower pitch and slower tempo). This leads to more\n2.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 5,
+    "total_chunks": 30,
+    "char_count": 557,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7880571e-ec67-464c-8d0b-68b818388414",
+    "text": "Related Work controllable emotion synthesis and avoids unintended\ndeviations in speaker voice or pronunciation. FastSpeech2 and Prosody Modeling: FastSpeech2 (Ren et\nPost-hoc Prosody and Speech Editing: There is growingal., 2021) is a fast, non-autoregressive TTS model that\ninterest in editing speech outputs after synthesis to fine-tunemitigates the one-to-many mapping issue by explicitly\nprosody or correct errors without retraining the TTS model.modeling variance in speech. It introduces a variance adaptor\nOne notable method is Counterfactual Activation Editingconsisting of predictors for phoneme duration, fundamental\n(CAE) proposed by Lee et al. (2025). CAE is a model-frequency (pitch), and energy. During training, ground-truth\nagnostic framework that allows post-hoc manipulation of aduration, pitch, and energy extracted from recordings are pre-trained TTS model's internal hidden activations to of emotion on speech that we aim to eliminate through our training\nachieve desired prosodic changes or fix mispronunciations. (i.e., we want emotion to affect Y only via prosody M). By posing counterfactual questions like \"What would the In this SCM: Text (X) directly influences the speech\ninternal representation look like if the model aimed for a output Y (it determines the words and phonetic content) and\nhigher pitch?\", their method finds shifts in the hidden states also influences prosody M. Even without emotion, different\nthat yield the desired change in output (e.g. increasing overall texts have different intrinsic prosody (e.g. a question versus\npitch) without retraining the model. CAE demonstrates that a statement, or punctuation cues affecting pauses). Thus, X\nprosodic attributes can be adjusted at inference-time by → M and X → Y are fundamental. Speaker (S) influences the\nintervening on the model's representations, which is output Y (the voice characteristics, such as timbre, are\nconceptually related to causal interventions. However, CAE determined by the speaker). We allow that different speakers\ndoes this in a post-hoc fashion on a trained model, and it might have different prosodic tendencies (S → M)—for\ndoesn't explicitly disentangle prosody during training. Our example, one speaker's neutral speaking rate might be faster\nwork differs in that we bake the counterfactual reasoning into than another's—but in our data we consider speaker as mostly\ntraining: instead of editing activations after the fact, we train affecting voice/timbre rather than prosody patterns. In our\nthe model itself to respond correctly to counterfactual model implementation, S will be an embedding that affects\nconditions (like a different emotion) in a controlled manner. primarily the vocal characteristics in Y.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 6,
+    "total_chunks": 30,
+    "char_count": 2734,
+    "word_count": 400,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "78633651-b650-4f4b-b736-27461f6e1656",
+    "text": "Causal Representation Learning: Our approach connects Emotion (E) influences prosody (M): this is the core of\nwith the broader field of causal representation learning, expressive synthesis. Emotion E (e.g. \"angry\", \"sad\",\nwhich aims to learn latent factors corresponding to causal \"amused\") modulates durations, pitch contour, and energy.\nvariables or mechanisms in data. Traditional deep learning We assume E does not alter the linguistic content (words)—\noften learns entangled representations that do not align with it only changes how the content is spoken.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 7,
+    "total_chunks": 30,
+    "char_count": 561,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6b32d4af-2e62-447f-bf12-1bc7e165b786",
+    "text": "In the causal\ncausally meaningful factors. By incorporating causal graph, this means there should ideally be no direct arrow from\nstructure (e.g. enforcing that certain variables influence E to Y that bypasses M. Any effect of emotion on the actual\nothers but not vice versa), one can achieve more interpretable speech signal Y should be mediated by changes in M.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 8,
+    "total_chunks": 30,
+    "char_count": 363,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "293e30c4-b66d-462f-b1fd-8437ba260328",
+    "text": "If the\nand generalizable models. In vision and fairness domains, for model had a direct E → Y pathway, it could potentially\ninstance, researchers have used counterfactual data change the speech in ways unrelated to prosody (e.g. altering\naugmentation or constraints to enforce that changing one segment pronunciations or adding voice quality changes that\nfactor (like background) does not affect another (like are not captured by our M features). Prosody (M) in turn\nclassification output), achieving disentanglement. Our work influences Y: given the same text, the prosodic features (how\nbrings similar ideas to speech: we treat prosody as a causal long each phoneme is held, what pitch each syllable is uttered\nmediator, and we intervene on it (and on emotion) during at, how loud or with what energy) will shape the resultant\ntraining. This can be seen as a form of disentangled speech waveform or spectrogram.\nrepresentation learning: separating emotional prosody from\nBased on this SCM, the total effect of emotion E on speechthe lexical content and speaker identity in the learned\nY should be carried by the indirect path E → M → Y. By drawing on causal inference concepts (like\nideal scenario of full mediation, the direct path E → Y is zeromediation analysis and path-specific effects), we ensure our\n(the dashed arrow is removed). This implies conditionalmodel's latent variables have a clearer meaning.\nindependence: Y ⊥ E | (X, M, S). In words, if we fix the text,\n3.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 9,
+    "total_chunks": 30,
+    "char_count": 1478,
+    "word_count": 242,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b1748ec2-57a1-4671-8677-3b3d20e8e7a2",
+    "text": "Structural Causal Model speaker, and prosody, changing emotion should not change\nthe output. We aim to enforce this property in our TTS model. To formalize our assumptions, we define a Structural Causal\nHowever, achieving this in practice is non-trivial.Model (SCM) for the process by which text is converted to\nStandard TTS models would implicitly allow E to influencespeech with certain prosody and emotion. Figure 1 illustrates\nY through any available means (any parameter or hidden stateour causal graph.\nthat conditions the decoder could carry emotion information). Even if we don't explicitly feed E into the decoder, the model\nmight still find ways to entangle emotion in hidden features.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 10,
+    "total_chunks": 30,
+    "char_count": 695,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c69611e4-a617-4b07-bdff-af7d9fc9b74c",
+    "text": "Therefore, we incorporate counterfactual training to actively\ndiscourage any direct E→Y influence and to ensure the\ndesired mediation via M. Counterfactual Reasoning in This SCM: A hallmark of\ncausal modeling is the ability to imagine counterfactuals—\n\"what if\" scenarios that did not happen in the original data. In\nour context, a counterfactual query might be: \"Given an\nFigure 1: Assumed structural causal model for emotional TTS. X observed utterance where a text X was spoken by speaker S\n= textual input (linguistic content); E = emotion (intended with emotion E, what would the speech sound like if the same\nstyle/mood); S = speaker identity; M = prosody features (duration,\nX and S were instead spoken with a different emotion E'?\"pitch, energy); Y = synthesized speech.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 11,
+    "total_chunks": 30,
+    "char_count": 778,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e987b8d6-0220-4716-be67-2f9c8598c1a0",
+    "text": "Solid arrows denote causal\nThe SCM provides a recipe: to construct this counterfactual,influences. The dashed arrow from E to Y represents a direct effect\nwe keep X and S the same, set E to E', and also consider how M would change due to this new E. We leverage this idea in of mel-spectrogram frames. In our model, we avoid\ntraining: by generating counterfactual pairs (original vs. with feeding emotion directly into the decoder. We want the\nemotion toggled) and enforcing certain decoder to rely on the prosody features (which have\nsimilarities/differences, we teach the model the correct emotion influence baked in) rather than an explicit\nmediated behavior. emotion signal. In practice, we found it beneficial to\ninclude speaker embedding in the decoder (to ensure\n4. Method correct timbre), but to exclude direct emotion embedding\nin the decoder to minimize any direct path.Our method consists of: (1) an emotion-augmented\nFastSpeech2 backbone that integrates emotion and speaker • Vocoder: Although not a focus of our work, we use a\nconditioning into the TTS model, and (2) two novel loss pretrained neural vocoder (e.g. HiFi-GAN) to convert the\nterms, IPC and CPC, which realize the causal objectives predicted mel-spectrogram to a waveform for audio\ndiscussed. We also formulate the combined training objective evaluations. All training is done on mel-spectrogram\nand provide theoretical insights on identifiability and prosody prediction; the vocoder is kept fixed.\ndisentanglement. Overall, the architecture ensures that emotion can\ninfluence the intermediate prosody features explicitly. By not\n4.1 Emotion-Augmented FastSpeech2 Backbone directly feeding emotion to the decoder, we align with our\nWe build upon the standard FastSpeech2 architecture, aim that emotion's effect goes through prosody. However, the\nextending it to a multi-speaker, multi-emotion setting model could still potentially encode emotion information in\n(sometimes referred to as an expressive TTS model). The key the encoder output that persists into the decoder.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 12,
+    "total_chunks": 30,
+    "char_count": 2048,
+    "word_count": 310,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6bb3891d-cc44-4bb2-83fb-33284b4d1a7d",
+    "text": "Our loss\ncomponents are: design will address this by penalizing any undesired\noutcomes. • Phoneme Encoder: This module encodes the input text\nsequence (after converting words to phonemes) into a 4.2 IPC Loss (Indirect Path Constraint)\nsequence of hidden representations. We use 4 FeedForward Transformer (FFT) blocks in the encoder as per The Indirect Path Constraint (IPC) implements the idea of\nthe FS2 configuration (each block consists of self- removing the direct emotion → speech effect. We simulate a\nattention and 1-D convolution layers). We modify the scenario where the prosody mediator is fixed while the\nencoder input to include speaker and emotion emotion is changed, and we demand that the speech output\ninformation: for each input phoneme, we add learned not change.\nembeddings for the speaker s and emotion e. This means Concretely, consider a training example with text X,\nthe encoder can produce different hidden representations speaker S, and emotion E. We have the ground truth prosody\nfor the same text depending on who is speaking and with features M = (d, p, u) and ground truth mel Y. During\nwhat emotion. training, we feed the model with the correct emotion E to\n• Variance Adaptor with Prosody Predictors: Following predict the mel and prosody features, which we match to\nFS2, we have predictors for duration, pitch, and energy. ground truth as usual. Now, for the same example, we\nEach predictor takes the encoder output and outputs a construct a counterfactual pass: pick an alternative emotion\nsequence: predicted phoneme durations, predicted pitch E' (different from E). We feed the model with this E' only in\n(pitch contour or pitch embedding per frame/phoneme), the decoder, while keeping the prosody fixed to the original.\nand predicted energy (energy per frame or phoneme). Any difference between the outputs can be attributed to the\nThese predictors are 1-D conv networks with outputs direct influence of emotion on the decoder. According to our\nadded to the sequence as in FS2. We condition these desired SCM, this should be zero.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 13,
+    "total_chunks": 30,
+    "char_count": 2066,
+    "word_count": 336,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "52c8df23-3db0-4c25-b4f7-02c0b0a5caf9",
+    "text": "Therefore, we define the\npredictors on emotion by concatenating or adding the IPC loss:\nemotion embedding e before it goes into each predictor. L_IPC = E[(X,S,E)][ ||Ŷ_direct(X,S,E→E') -\nIntuitively, this allows the duration predictor to output Ŷ_orig(X,S,E)||₁ ] (1)\nlonger durations for \"sad\" emotion, or the pitch predictor\nto output higher values for \"happy,\" if appropriate. The In practice, we randomly sample a different emotion E' for\neach training example (from the set of emotions in our data) predictors are trained with ground-truth supervision\nusing extracted actual durations, pitch, and energy from to serve as the counterfactual emotion. Minimizing L_IPC\nthe training audio. pressures the decoder to ignore any mismatched emotion\nsignal. The easiest way for the model to satisfy this loss is to\n• Length Regulator: Using the predicted or ground-truth not rely on a direct emotion pathway at all.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 14,
+    "total_chunks": 30,
+    "char_count": 911,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db11fcdd-11d5-4fa2-b169-985e7d9cefae",
+    "text": "In other words,\ndurations, the hidden sequence is expanded (each the model will learn to make the output almost entirely\nphoneme's hidden state is repeated according to its determined by the encoder output (which encodes text,\nduration) to match the length of the target mel- speaker, and whatever prosody info is passed) and the\nspectrogram frames. prosody embeddings, rather than any lingering effect of the\n• Mel-Spectrogram Decoder: Another stack of 4 FFT original emotion code.\nblocks acts as a decoder that takes the expanded\nsequence (now augmented with pitch & energy\nembeddings as per FS2 design) and produces a sequence 4.3 CPC Loss (Counterfactual Prosody Constraint) weights during training: initially focusing more on getting the\nbase TTS quality, and then increasing β to enforce causalWhile IPC removes direct effects, we also need to ensure that\nconstraints once the model has reasonable predictions. In ourthe indirect path (E → M → Y) genuinely captures the\nexperiments, we found that a moderate weight (e.g. 0.5–1.0)emotional variations. The Counterfactual Prosody Constraint\nfor both IPC and CPC from the start worked well.(CPC) is designed to encourage the model to use prosody to\ndifferentiate emotions, and to ensure that changing emotion The counterfactual training roughly doubles the\ndoes lead to appropriate changes in prosody and hence in computation per sample (since we do extra forward passes).\noutput speech. We mitigate this by using a smaller batch size or by sharing\ncomputation when possible.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 15,
+    "total_chunks": 30,
+    "char_count": 1528,
+    "word_count": 239,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e986eaf9-6670-440c-aace-7f4eac067e04",
+    "text": "Training time increased by For CPC, we consider the full counterfactual generation:\n~1.5× compared to baseline FS2, which is acceptable givenwhat if we both change the emotion and allow prosody to\nour scale.change accordingly? We want the resulting speech to reflect\nthe target emotion while keeping the verbal content the same. 4.5 Theoretical Remarks on Identifiability\nWe break the CPC objective into two parts reflecting these Imposing the above constraints has an interesting\nexpectations: interpretation: it aims to make the model's internal\n(a) Content Consistency: The linguistic content of the representation of prosody an identifiable causal factor. In\ncounterfactual output should be the same as the original. conventional training, the mapping from emotion to speech\nSince both runs use the same text input X, any large deviation can be distributed across many parameters and features,\nlikely means the model mispronounced or skipped something making it hard to say \"this part of the model controls prosody\ndue to the emotion change. We enforce content consistency for emotion.\" By structuring the model (with explicit M\nby ensuring the phonetic sequence in the counterfactual features) and using IPC/CPC, we concentrate the effect of\noutput matches that of the original. We define a Content emotion into those features. In causal terms, we are enforcing\nConsistency Score (CCS) as the similarity between the that the Natural Direct Effect (NDE) of emotion on output is\noriginal and counterfactual outputs in terms of content, zero, and the Natural Indirect Effect (NIE) through M equals\nmeasured as 1 - WER. the total effect.\n(b) Emotion-Specific Prosody Change: We want the Our approach relates to the concept of disentanglement in\nprosody predicted under emotion E' to align with how real representation learning: we want the model to have a factor\nspeech in emotion E' would sound. We cannot directly (the prosody features) that account for emotion differences,\nsupervise this with ground truth (since that would require a independent of other factors. While perfect disentanglement\npaired sample), but we can use distributional or is theoretically challenging, especially without explicit labels\nclassification-based constraints. In our approach, we train an for the factors, our use of labels (emotion categories) and\nauxiliary emotion classifier on prosody features or on the strong inductive bias (the mediator design) gets us closer to\ngenerated mel to check if E' is recognizable. We then add a that goal.\nclassification loss: One limitation in our assumption is that all relevant\nL_emo-cls = -log P(E' | Ŷ_cf) (2) emotion effects are captured by M. In reality, some aspects\nlike voice quality (breathiness, roughness) or spectral tilt can\nCombining these, the CPC loss is: change with emotion but are not reflected in\nL_CPC = E[(X,S,E,E')][ L_content(Y, Ŷ_cf) + λ_emo · pitch/energy/duration alone. Our model currently doesn't\nL_emo-cls(Ŷ_cf, E') ] (3) explicitly capture those, so it may not synthesize such\nnuances. This is a known limitation—we focus on gross In effect, L_CPC forces the model to use the prosody\nprosody, which is a major part of expressiveness, and leavedegrees of freedom to reflect emotion differences, since\nfiner acoustic details for future extensions.content must stay fixed. The model cannot satisfy the\nemotion classifier by changing words (content loss would\n5. Training and Implementation Detailscatch that), nor by any direct trick (the direct path is already\nsuppressed by IPC).",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 16,
+    "total_chunks": 30,
+    "char_count": 3533,
+    "word_count": 546,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ba992909-b015-439b-bfc0-8ad4db07a467",
+    "text": "The only way is to adjust durations, We implemented our model in PyTorch, extending an openpitch, energy appropriately.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 17,
+    "total_chunks": 30,
+    "char_count": 119,
+    "word_count": 18,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "755922f5-0cfd-42e5-ba9c-98d894bee510",
+    "text": "Thus, CPC complements IPC: source FastSpeech2 codebase. Below we detail the data,\nIPC says \"don't let emotion directly change the voice output training procedure, and hyperparameters.\nexcept via M,\" and CPC says \"when emotion changes, M Datasets: We used three English speech datasets to cover\nshould change enough to show in the output as that emotion.\" neutral and emotional speech from multiple speakers:\n4.4 Combined Training Objective • LibriTTS: (Zen et al., 2019): A multi-speaker TTS\ncorpus derived from LibriSpeech. We used the \"train-The total loss for training our model is the sum of all the\nclean-360\" subset (approximately 245 hours of speechcomponents described:\nfrom 921 speakers) for pre-training. This dataset contains\nL_total = L_TTS-base + β_IPC · L_IPC + β_CPC · L_CPC neutral read speech (audiobook style) with high-quality\n(4) recordings. We treated all LibriTTS samples as having a\nwhere β_IPC and β_CPC are hyperparameters controlling neutral emotion label.\nthe strength of the causal constraints.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 18,
+    "total_chunks": 30,
+    "char_count": 1022,
+    "word_count": 156,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9aef697a-4d3b-4769-a953-588212efcd10",
+    "text": "• VCTK: (Yamagishi et al., 2019): A multi-speaker dataset • Mean Opinion Score (MOS): We conducted MOS tests\nwith 109 English speakers (various accents) reading where human listeners (n=20) rated the naturalness of the\nsentences (about 44 hours total). We used VCTK to synthesized speech on a 5-point scale (1 = completely\nincrease the diversity of speaker voices and speaking unnatural, 5 = indistinguishable from a human). We also label VCTK utterances as neutral report the average MOS for each system, with 95%\nemotion. confidence intervals.\n• EmoV-DB: (Adigwe et al., 2018): The Emotional Voices • Word Error Rate (WER): To objectively assess\nDatabase, which contains recorded lines in five emotions intelligibility, we transcribed the synthesized speech\n(neutral, amused, angry, disgusted, sleepy) by four actors using a pre-trained ASR model (Google Speech-to-Text)\n(2 male, 2 female). It has about ~7k utterances (~8 hours) and computed WER against the reference text. We used EmoV-DB as the source of explicit WER indicates that the model pronounced words clearly\nemotion variation. We mapped the EmoV labels to our and correctly. We report WER (%) on a set of 100\nmodel's emotion categories: Neutral, Amused (\"Happy\" synthesis outputs.\nstyle), Angry, Disgusted, Sleepy (\"sad/tired\"). • Speaker Similarity: We used two measures: (a) speaker\nPre-training and Fine-tuning: We first trained the model on embedding cosine similarity—we extracted x-vector\nthe combined LibriTTS + VCTK data (all as neutral) for 200k embeddings from a speaker verification model for\nsteps. This gave us a strong multi-speaker neutral TTS synthesized vs. reference audio of the same target\nbaseline. Then, we fine-tuned on the EmoV-DB data for speaker; (b) ABX test: listeners were given a real sample\nanother 50k steps, with the emotion labels and our causal of a target speaker and two synthesized samples and\nlosses turned on. We found that if we train from scratch on asked which sounds more like the target speaker.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 19,
+    "total_chunks": 30,
+    "char_count": 2005,
+    "word_count": 315,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5b9073c7-a849-454e-8512-76a835e72961",
+    "text": "EmoV-DB, the model may overfit (given limited data) or not • Content Consistency Score (CCS): We define CCS as 1\ngeneralize to other speakers. Using the large neutral corpora - WER_diff, where WER_diff is the WER between the\nfor base training ensured the model had good linguistic and transcript of a neutral synthesis and the transcript of an\nspeaker modelling, and fine-tuning allowed it to learn emotional synthesis of the same sentence by the same\nemotion prosody. model. A higher CCS (closer to 1) means content is\nHyperparameters: Model size: We used 4 FFT blocks each invariant to the style change.\nfor encoder and decoder (hidden dimension 256, 2 attention • Emotion Classification Accuracy: We check if a preheads, and 1024 FFN inner dim), similar to FS2 configs. trained emotion classifier (different from the one used in\nSpeaker embedding size = 128, Emotion embedding size = training) can correctly identify the intended emotion\n64. Duration predictor and pitch/energy predictor each are 2 from the synthesized audio. This is a proxy for how well\nconvolution layers of kernel size 3 and hidden size 256.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 20,
+    "total_chunks": 30,
+    "char_count": 1115,
+    "word_count": 183,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "63f80b08-9cdb-4d7b-aeed-9c26839755c1",
+    "text": "Loss the emotion is rendered.\nweights: λ_d = λ_p = λ_u = 1.0 for the predictor losses. β_IPC\n= 1.0 and β_CPC = 0.5 in fine-tuning. Optimizer: AdamW 6.2 Baselines\nwith initial learning rate 1e-4 for pre-training, then 5e-5 for • Baseline A: FastSpeech2 without emotion\nfine-tuning. We used gradient clipping at conditioning. This is the vanilla FS2 model (with multinorm 1.0. speaker support) trained on the same data but ignoring\nInference: At inference time, the user can input a text, select emotion labels. This baseline tests if the model can at\na speaker (if multi-speaker) and an emotion. The model will least produce intelligible speech and maybe some\ngenerate a mel spectrogram using the duration/pitch/energy averaged prosody, but it has no explicit emotion control.\npredictors and decoder. Notably, because of our training, the • Baseline B: FastSpeech2 + Emotion (naive). This\nuser can reliably manipulate prosody: if they want a more baseline is FS2 augmented with emotion embedding (like\nintense expression, one could scale the pitch or energy our backbone) but without the IPC/CPC losses. The\noutputs (since they have semantic meaning in our model) emotion embedding is fed to the encoder and variance\nbefore feeding to decoder. The final waveform is produced predictors, and also to the decoder in this baseline. This\nby a pre-trained HiFi-GAN vocoder fine-tuned on our data represents a conventional approach to emotional TTS.\nfor higher quality. • Baseline C: Post-hoc CAE editing. We apply the\nCounterfactual Activation Editing method to the outputs\n6. Evaluation of Baseline B. At inference time, we use CAE to adjust\nWe evaluate our Causal Prosody Mediation (CPM) approach prosody by nudging internal layer activations that\nagainst several baselines on emotional speech synthesis. We correlate with pitch or energy.\nfocus on the following aspects: naturalness and audio quality,\n6.3 Evaluation Setupintelligibility, speaker consistency, and emotional\nexpressiveness/prosody.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 21,
+    "total_chunks": 30,
+    "char_count": 1994,
+    "word_count": 307,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8644ac87-93b5-481a-8d88-afcfdda80bbd",
+    "text": "Both objective and subjective We synthesized a test set of 50 utterances (not seen in\nmetrics are used. training), each in 5 emotions (so 250 samples) for each\nmodel. These utterances included short and long sentences,\n6.1 Metrics some with challenging punctuation to test prosody. For multispeaker evaluation, we did this for 2 voices: one female and one male (speakers that were in EmoV-DB). Listeners in MOS (it's still an FS2 model with emotion input), but some\nMOS and DMOS tests were presented samples in random samples were marked down due to either slightly inconsistent\norder and were blind to which system produced them. Each prosody or minor muffled sounds on certain emotions.\nsample got at least 15 ratings. In DMOS for emotion similarity, on a scale of 1 (wrong\nemotion) to 5 (perfect match), our model's average was 4.3,\n7. Results and Analysis Baseline B's was 3.8, and CAE's was 4.0.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 22,
+    "total_chunks": 30,
+    "char_count": 900,
+    "word_count": 152,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "501b0e9b-67cf-4516-b2ce-e266565ecae3",
+    "text": "So humans found\nour model best at conveying the target emotion. Notably,7.1 Objective Results\nCAE could sometimes exaggerate an emotional cue (like\nModel WER↓ SS↑ CCS↑ EA↑\nmake pitch very high for \"happy\"), which made it detectable FS2 (no emo) 3.5 0.90 — —\nFS2 + Emotion 4.0 0.87 0.90 80% but occasionally unnatural (reflected in MOS drop). Our\nFS2 + CAE 4.2 0.79 0.92 88% model balanced naturalness with recognizability. Ours (CPM) 3.1 0.88 0.96 94%\nListeners particularly noted that our model's \"angry\" had\nTable 1: Objective evaluation metrics. WER = Word Error Rate a sharper, more clipped tone and higher volume that matched\n(lower is better), SS = Speaker Similarity (higher better), CCS =\nhuman angry speech, and \"sad\" had a slower, lower-pitched Content Consistency Score (higher better), EA = Emotion\ndelivery, while baseline's versions were more subtle or Accuracy (higher better).\nsometimes ambiguous. This validates that our prosody\nOur model achieves the lowest WER (3.1%) among the TTS mediation did capture expected patterns.\nsystems, outperforming Baseline B (FS2+Emotion) which\nhad 4.0% WER, and Baseline A (vanilla FS2) at 3.5%. The 7.3 Ablation Studies\ndifference is small, indicating all models produce intelligible Model Variant MOS DMOS Notes\nspeech, but the slight edge for our model suggests that Full CPM (ours) 4.45 4.3 —\nenforcing content consistency (via CPC) did not harm and w/o IPC loss 4.35 4.1 Direct effects reappear\nw/o CPC loss 4.33 3.2 Weak emotion\nperhaps even improved clarity. w/o either (FS2+E) 4.21 3.5 Baseline B\nFor speaker similarity, our model maintains very high Table 2: Ablation study results showing the contribution of each\ncosine similarity (average 0.88) to the target speaker component.\nembeddings, comparable to FS2+Emotion (0.87) and much\nRemoving IPC loss (but keeping CPC and using emotionhigher than CAE-edited outputs (0.79). The ABX test showed\nconditioning) led to a model where the decoder didthat listeners preferred our model's speaker identity match in\nsometimes latch onto emotion cues. This ablated model85% of trials when compared to CAE outputs.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 23,
+    "total_chunks": 30,
+    "char_count": 2116,
+    "word_count": 333,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2a19412a-5ef8-48c5-962f-714d16bc523b",
+    "text": "This\nshowed a slight drop in CCS (content not as perfectlyunderscores that post-hoc editing can sometimes alter voice\npreserved). Also, emotion classifier accuracy dropped tocharacteristics, whereas our approach, by design, keeps\n~88%. This suggests some direct effect was creeping in (thespeaker features intact when changing emotion.\nmodel perhaps learned to alter timbre to convey emotion). The Content Consistency Score (CCS) for our model was MOS also decreased by 0.1, likely because of some\nabove 0.95 for all emotion pairs (e.g. neutral→angry, inconsistent timbre.\nneutral→sad, etc.), meaning almost no words were lost or\nRemoving CPC loss (keeping IPC) resulted in a model thathallucinated when switching emotions. Baseline B\npreserved content well but often under-expressed the(FS2+Emotion) had slightly lower CCS, around 0.90, with\nemotion. Its emotion classifier accuracy was only ~75%, andsome specific issues: e.g., in a few cases when switching to\nin subjective listening it sounded more monotonic or closerthe \"sleepy\" emotion, the baseline model lengthened pauses\nto neutral even when asked for an emotion. This is expected:so much that the ASR thought a word was missing.\nwithout CPC's pressure, the model has no strong incentive to\nImportantly, the emotion classification accuracy on utilize the prosody degrees of freedom fully for emotion.\nsynthesized speech for our model was 94%, whereas for Interestingly, MOS for this model was still decent (~4.3)\nBaseline B it was 80%. This means our model's outputs were since naturalness was fine, but it failed at the primary goal of\nmuch more often recognized as the intended emotion by an expressiveness.\nexternal classifier. The CAE-edited outputs achieved 88%\naccuracy—showing that CAE can adjust prosody somewhat 7.4 Case Study: Counterfactual Prosody Manipulation\nsuccessfully, but not as consistently as our model which was To illustrate our model's capabilities, we generated some\ntrained from the ground up to do so. counterfactual samples: take a single neutral recording and\nsynthesize it in multiple emotions. Figure 4 (Appendix) plots7.2 Subjective Results (MOS and DMOS)\nthe pitch contour of the sentence \"I couldn't believe how\nOur CPM model achieved an average MOS of 4.45 ± 0.05, bright and cheerful she sounded\" as synthesized by our model\nwhich is statistically significantly higher than Baseline B in neutral, happy, and sad styles (same female voice). The\n(FS2+Emotion) at 4.21 ± 0.06, Baseline A (FS2 neutral) at happy version has a noticeably higher overall F0 and a wider\n4.10 ± 0.07, and CAE-edited at 4.00 ± 0.06. In particular, pitch range (excursions on \"bright\" and \"cheerful\"), whereas\nlisteners rated our emotional samples more natural and the sad version is flatter and lower in pitch, with a slower\nhuman-like. Many commented that the expressiveness felt cadence (longer pauses between phrases). Listeners correctly\nmore authentic and not \"forced\". Baseline B did fairly well in identified which waveform was which emotion by just",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 24,
+    "total_chunks": 30,
+    "char_count": 3026,
+    "word_count": 463,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "43fc70a5-12af-4498-8200-b74349dd2ae1",
+    "text": "The content and voice remained constant. This of intensity, combinations, etc.). Our method would\ndemonstrates qualitatively that our model achieved the benefit from continuous or multi-dimensional emotion\nintended prosody control. descriptors (arousal, valence).\n• Computational Cost: The counterfactual training7.5 Error Analysis\nroughly doubles training time and memory.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 25,
+    "total_chunks": 30,
+    "char_count": 373,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e904dcd0-feed-4e3d-8550-6514b9734f5f",
+    "text": "For largeThough our model performs well, we noted some limitations: scale models, this is a consideration. For the \"disgusted\" emotion (which is somewhat ambiguous • Generality to Other Languages: We primarily showed\nand less represented in training data), the model's outputs results in English. The approach itself is languagesometimes sounded closer to angry or had a strange tone. The agnostic, but things like alignment extraction and\nemotion classifier also confused disgust vs anger prosody patterns may vary in other languages (tones in\noccasionally. This may be due to limited training examples Mandarin, for example).\nor the fact that our prosody features (pitch/energy) can't fully\ncapture the nuances of disgust (which might involve voice Ethical Considerations: Improved controllable TTS can be\nquality like creaky voice). In some very long sentences (30+ used for positive applications (e.g., personalized speech aids,\nwords), the model occasionally under-ran or over-ran the more natural virtual assistants). However, it also can be\nintended duration by a small amount.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 26,
+    "total_chunks": 30,
+    "char_count": 1084,
+    "word_count": 161,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9e75abdf-a2ef-467b-a824-3dded069f09c",
+    "text": "When transferring misused for deepfakes or manipulative content (emotionally\nemotion to a speaker that rarely expressed it in training, the persuasive fake speech). Our method doesn't inherently make\nmodel still attempted it but sounded less intense. cloning voices easier—we still rely on training on a target\nspeaker. But as we can transfer emotions, one could portray\n8. Discussion and Limitations someone saying something in an emotion they never actually\nused. It's important to consider watermarking synthesized\nOur results show that causal prosody mediation training is speech or otherwise preventing misuse.\neffective for controllable, expressive TTS. We believe this\napproach has several implications: 9.",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 27,
+    "total_chunks": 30,
+    "char_count": 713,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bc0f1f81-76a1-4249-b277-a40e0b0cd450",
+    "text": "Conclusion\n• Interpretability: By enforcing a causal graph, the We presented a causal approach to modeling prosody in textmodel's behavior becomes more interpretable. One could to-speech, introducing Causal Prosody Mediation (CPM)\ninspect the intermediate prosody outputs to see why a with counterfactual training of duration, pitch, and energy in\ncertain emotion sounds the way it does. This could help a FastSpeech2-based system. By leveraging a structural\ndebug or further improve emotion rendering. causal model of how emotion affects speech through prosody,\n• Flexibility: A model trained in this manner can be used and by enforcing this via novel loss functions (IPC and CPC),\nnot just for the discrete emotions in training, but we achieved a clear separation of linguistic content and\npotentially for interpolations. Because it isolates prosody, emotional style in the generated speech. Our experiments\na user could manually adjust pitch or energy to create demonstrated that this approach produces more expressive\nintermediate emotions (like halfway between sad and and controllable speech, improving emotion rendering while\nneutral) without breaking the words. preserving intelligibility and speaker identity. We showed\n• Counterfactual analysis: We enforced certain that counterfactual reasoning is a powerful tool for training\ncounterfactual equalities during training (via IPC). At generative models to follow desired causal patterns, and we\ntest time, one can also perform counterfactual believe this concept can be extended beyond TTS to other\nexperiments on the model. For example, one can multi-factor generation problems.\ngenerate an utterance with and without a particular In future work, we plan to explore richer prosodic\nemotional input and analyze the difference to quantify representations and to handle multiple simultaneous style\nthe emotional effect. factors (e.g., emotion + speaking speed as independent\nHowever, there are important limitations and future controls). We also aim to integrate this with neural\ndirections: architecture search to discover optimal mediator features. Ultimately, we hope this research contributes to building TTS • Coverage of Prosody Features: Our mediator M is\nsystems that not only sound natural, but also give users fine- limited to duration, pitch, energy. This covers a lot, but\ngrained control over how the text is spoken, in a predictable not everything. Emotions can also affect voice quality\nand interpretable manner. (spectral features like formant dispersion for fear, or\ncreakiness for tiredness) and speech rhythm beyond\nImpact Statement phoneme-level duration.\n• Assumption of No Direct Effect: In reality, completely This paper presents work whose goal is to advance the field\neliminating direct effects might not be optimal. For of Machine Learning for speech synthesis. There are potential\ninstance, some subtle aspects of emotion might bypass societal consequences of controllable TTS technology,\nthe simplistic prosody features—if we disallow direct including both positive applications (personalized speech\ninfluence, the model might not capture them at all. aids, more natural virtual assistants) and potential misuse\n(deepfakes, manipulative content).",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 28,
+    "total_chunks": 30,
+    "char_count": 3231,
+    "word_count": 469,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cc8a316a-cc60-43e7-9c01-c9e6c9749fe6",
+    "text": "We encourage the\n• Emotion Label Quality: We used categorical labels from\ndevelopment of watermarking techniques and ethical\nEmoV-DB which are somewhat coarse (\"amused\" vs\nguidelines for synthesized speech.\n\"neutral\"). Emotions are more nuanced (there are degrees",
+    "paper_id": "2603.11683",
+    "title": "Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2",
+    "authors": [
+      "Suvendu Sekhar Mohanty"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11683v1",
+    "chunk_index": 29,
+    "total_chunks": 30,
+    "char_count": 263,
+    "word_count": 37,
+    "chunking_strategy": "semantic"
+  }
+]

@@ -1,0 +1,1370 @@
+[
+  {
+    "chunk_id": "5ebf9d52-10b0-4b61-8eee-29db69adc9f8",
+    "text": "Learning in chemical reaction networks Chemical Reaction Networks Learn Better than\nSpiking Neural Networks",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 0,
+    "total_chunks": 76,
+    "char_count": 107,
+    "word_count": 14,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "705914d7-b0f8-438a-b233-76f4801716ea",
+    "text": "Sophie Jaffard jaffard@mpi-cbg.de\nMax Planck Institute of Molecular Cell Biology and Genetics\nCenter for Systems Biology Dresden\nDresden, Germany Sbalzarini sbalzarini@mpi-cbg.de\nDresden University of Technology, Faculty of Computer Science2026\nMax Planck Institute of Molecular Cell Biology and Genetics\nCenter for Systems Biology DresdenMar Dresden, Germany\nEditor: My editor We mathematically prove that chemical reaction networks without hidden layers[cs.LG] can solve tasks for which spiking neural networks require hidden layers. Our\nproof uses the deterministic mass-action kinetics formulation of chemical reaction\nnetworks. Specifically, we prove that a certain reaction network without hidden\nlayers can learn a classification task previously proved to be achievable by a\nspiking neural network with hidden layers. We provide analytical regret bounds\nfor the global behavior of the network and analyze its asymptotic behavior\nand Vapnik–Chervonenkis dimension. In a numerical experiment, we confirm\nthe learning capacity of the proposed chemical reaction network for classifying\nhandwritten digits in pixel images, and we show that it solves the task more\naccurately and efficiently than a spiking neural network with hidden layers. This provides a motivation for machine learning in chemical computers and a\nmathematical explanation for how biological cells might exhibit more efficient\nlearning behavior within biochemical reaction networks than neuronal networks. Keywords: Chemical Reaction Networks, Spiking Neural Networks, SupervisedarXiv:2603.12060v1 Learning, Classification, Mass-Action Kinetics, Statistical Learning Theory,\nRegret Bounds, Model Complexity Living cells process information through biochemical reaction networks (Bray,\n1995). This has been verified experimentally both in gene regulation networks,\nwhere different network topologies give rise to different logical functions (Guet et al.,\n2002), and in cell signaling networks, where the temporal dynamics of signaling Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 1,
+    "total_chunks": 76,
+    "char_count": 2030,
+    "word_count": 272,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "adfa0f76-4403-4396-be3c-dca1a71425e5",
+    "text": "proteins encode information that cells decode into distinct fate decisions (Purvis\nand Lahav, 2013). A natural question is whether biochemical networks are capable\nof not only processing information but also learning from past inputs. In biology,\nthe concept of learning has so far mostly been reserved for electrical signals between\nneurons, mainly in the brain. However, it could be much more widespread, with\nevery cell performing its own learning using chemically encoded signals. It is\nthen interesting to compare learning in neuronal networks with learning occurring\nwithin cells through biochemical reaction networks. The expectation that individual cells can learn via chemical signals is wellfounded from a theoretical standpoint. Chemical reaction networks (CRNs)\nare known to be strongly Turing complete, even in the continuum mass-action\nformulation (Fages et al., 2017). Learning is a computational task, so CRNs are\nin principle able to solve it. The interesting question is therefore not whether\nCRNs can learn, but how and when: under what structural conditions does a\nCRN exhibit learning behavior, and what are the necessary components? How\ncan learning be mathematically defined and guaranteed both asymptotically and\nfor finite time? How powerful are CRNs as learning machines, i.e., how does their\ncomplexity scale in comparison to neuronal networks? Any reaction network that\npossesses the required components is then—in principle—capable of learning. Several machine-learning models have already been successfully implemented\nas CRNs, providing initial indications that supervised learning may be feasible. For\ninstance, Hjelmfelt et al. (1991) designed a CRN implementing a McCulloch–Pitts\nneuron, Banda et al. (2013) introduced a chemical perceptron, and further examples\ninclude Neural ODEs (Nagipogu and Reif, 2025) and Boltzmann machines (Poole\net al., 2017). While these studies occasionally prove that the proposed CRNs\ncorrectly implement the intended models, they generally do not provide formal\nmathematical guarantees or definitions of learning behavior.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 2,
+    "total_chunks": 76,
+    "char_count": 2088,
+    "word_count": 302,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f09a277-bdaf-4f98-93f6-cee7c65e3d9f",
+    "text": "Similarly, online\nlearning frameworks such as multi-armed bandit algorithms and reinforcement\nlearning methods have been used as external tools for the optimization and control\nof CRNs—for example, to predict reaction conditions (Wang et al., 2024) and to\nimprove reaction performance (P´erez et al., 2020)—but the explicit implementation\nof such algorithms within CRNs themselves remains largely unexplored. Here, we address this gap by introducing a CRN for which supervised learning\nis established through rigorous theoretical proof. Our construction rests on a\nstructural analogy between stochastic chemical kinetics and stochastic models\nof spiking neural networks (SNNs) and thus enables comparing the two learning\nframeworks. In stochastic chemical kinetics, reactions between molecular species\noccur randomly at rates that depend on species counts; each reaction event updates\nthese counts and thereby alters the rates of subsequent reactions. SNNs can be\nmathematically modeled using multivariate Hawkes processes (Hawkes, 1971;\nGerhard et al., 2017; Bonnet et al., 2022; Lambert et al., 2018), in which each Learning in chemical reaction networks neuron emits spikes according to a stochastic intensity that depends on the past\nactivity of its presynaptic neurons. The connection between the two frameworks\nis particularly apparent at the level of simulation: Gillespie's algorithm (Gillespie,\n1976, 1977) for CRNs is closely related to Ogata's thinning algorithm (Ogata,\n1981) for Hawkes processes. Building on this analogy, our CRN is inspired by the\nSNN introduced by Jaffard et al. (2026), for which learning guarantees have been\nestablished. Even though the analogy is inspired by stochastic chemical kinetics, we here\nconsider the continuous mass-action limit in order to support deterministic computation. In this formulation, each chemical input and output species functions\nas a neuron, with continuous concentrations playing the role of firing rates. This\nresults in a simple ordinary differential equation description of the CRN, for which\nwe derive theoretical guarantees that are comparable to those known for the SNN. Surprisingly, the CRN turns out to be a more powerful learning machine than the\nSNN: we show that it achieves the same performance bounds without requiring\nspecies analogous to hidden neurons. Instead, in a CRN, information is directly\ntransmitted from input to output species, and the learning guarantees hold under\nweaker assumptions. We hypothesize that this is because multiplication is intrinsic\nin the physics of mass-action kinetics, whereas it needs to be approximated by\nsequences of layer-wise operations in neuronal networks.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 3,
+    "total_chunks": 76,
+    "char_count": 2678,
+    "word_count": 392,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "401f5986-163b-4c30-b286-b03e9982ed09",
+    "text": "Concretely, the CRN proposed here solves a supervised classification task in\nwhich items are to be assigned to one of several classes based on environmental\ninformation encoded in the concentrations of catalytic input species, while classes\nare represented by output species. The system evolves through two consecutive\nphases. In the selection phase, sets of input species with high flux are selected. In the subsequent learning phase, the selected input species act as catalysts and,\ntogether with designated weight species, drive the production of output species\nthrough reactions analogous to the layered computations of a SNN. The weight\nspecies play the role of connection weights and evolve according to an expert\naggregation algorithm (Cesa-Bianchi and Lugosi, 2006): each set of selected input\nspecies acts as an expert providing information about the environment to each\noutput species. Weight concentrations are updated based on the evolution of\nthe expert fluxes over time. Importantly, species associated with different classes\nevolve independently, interacting neither directly nor indirectly through chemical\nreactions. This system allows us to establish the following mathematical results: first, we\nderive local regret bounds for each output species (Proposition 13), establishing\nthat each output species locally behaves so as to have higher-than-average concentration when presented with an item belonging to the class it encodes. Second, we\nestablish an oracle inequality for the global behavior of the network (Theorem 14),\ndemonstrating that the average network performance during learning is asymp- Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 4,
+    "total_chunks": 76,
+    "char_count": 1646,
+    "word_count": 241,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6cce5812-eebf-4e91-933e-d03ad0986643",
+    "text": "Since output species behave independently of one another, this\ncontributes to a theoretical understanding of emergence in systems in which global\nbehavior arises from local interactions among components. Third, we compute\nthe asymptotic weight concentrations in a more restricted setting, where we are\nable to give convergence rates (Theorem 15), and characterize the classes that\nthe network can learn under these asymptotic weights (Theorem 18). We then\ndetermine the VC-dimension of the network in this setting (Proposition 19) as\na task- and model-complexity measure. In Section 5.4, we discuss the role of\neach component in these theoretical results, highlighting the key mechanisms\nthat enable the emergence of learning behavior in CRNs. Finally, in Section 6,\nwe present numerical experiments on handwritten digits data set, showing that\nthe deterministically simulated CRN achieves satisfactory test accuracy in lowcomplexity configurations and outperforms SNNs of comparable model complexity. This also experimentally confirms that CRNs without hidden layers can be more\npowerfull than SNNs with hidden layers.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 5,
+    "total_chunks": 76,
+    "char_count": 1119,
+    "word_count": 162,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d8606e8b-c401-46fc-82e0-5d0b3d039b06",
+    "text": "A chemical species is denoted by a capital letter X, and its concentration by the\ncorresponding lowercase letter x. For a quantity xe indexed by e ∈E, we use the 1\nPe∈E xe. This notation is |E|following notation: xE = (xe)e∈E and ⟨xe⟩e∈E =\nalso used if the index is in superscript. For n ∈N∗, we denote [n] = {1, . . . , n}. For a finite set E, we denote by PE the set of probability distributions over the\nset E. We study our proposed CRN in the framework of mass-action kinetics and\ndeterministic rate equations. We consider a supervised classification setting where the goal is to assign items\nto classes k ∈K using a CRN. More precisely, the CRN learns through sequential\nexposure to M training samples. Each training sample om for m ∈[M] altersthe concentrations of catalytic chemical species (Xi)i∈I in a given time interval\n[T m,0 Tm]:1 these species can be interpreted as input species describing features of\nthe presented sample om, and the set I represents the set of input species as well as\nthe set of features they encode. In other words, the CRN aims to learn a mapping\nfrom a set of concentrations (xi)i∈I in a given time interval to the set of classes K. For example, in a biological cell, a gene regulatory network might be tasked\nwith distinguishing among a set K of possible cell states. In this case, a sample om\ncorresponds to measured environmental concentrations, the set I contains relevant\ntranscription factors, and the xi are their concentrations. In a conventional\nimage-classification example, the om would be images, where each concentration\nxi represents the intensity of a given pixel. For each presented sample om, the decision of the CRN is encoded in the\nconcentrations of the chemical species Xk associated with each class k ∈K. Learning in chemical reaction networks",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 6,
+    "total_chunks": 76,
+    "char_count": 1803,
+    "word_count": 312,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e3767604-a756-4889-92d1-585196665c43",
+    "text": "sample om is assigned to the class corresponding to the species Xk with highest\nconcentration at time T m.1 The species (Xk)k∈K, which we call output species,\ninteract with the input species (Xi)i∈I through intermediary species, which we\nintroduce in Section 3.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 7,
+    "total_chunks": 76,
+    "char_count": 261,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "504cccb5-4029-4ac3-b90a-ad2f936e3a8c",
+    "text": "2.1 Network architecture\nThe depth of the CRN is defined by an integer n ∈{1, . . . , |I|}. Let Jn be the\nset of all subsets of I of size n. For certain sets j ∈Jn, our CRN has equations\ninvolving the term Pi∈j Xi. We then define the flux of a set j as follows. Definition 1 (Flux of a set j) The flux of a set j ∈Jn is the product Φj :=\nQ i∈j xi. It represents the flux (total propensity) of a reaction with Pi∈j Xi as its\nleft (reactant) side. The flux Φj can be interpreted as the strength of the combination of all features\ni ∈j. For instance, in the context of a gene regulatory network, a high value of Φj\nat time t indicates that the transcription factors associated with set j are present\nat elevated concentrations simultaneously at this time. This condition may reflect\ncoordinated activation of multiple genes. The larger the value of the depth n, the\nmore complex the combination of features captured by the flux Φj for the input\nspecies j. In order to allow for supervised training, our CRN implements an online\nlearning framework using expert aggregation (Cesa-Bianchi and Lugosi, 2006). We\nconsider the classic expert aggregation problem: over M rounds, a forecaster has\naccess to a set E of experts. At each round m ∈[M], every expert e ∈E obtains\nan unknown gain gem ∈R. Based on past observations, the forecaster chooses a\nprobability distribution pm ∈PE over the experts and subsequently receives the\naggregated gain gm := pm · gEm, where gE m := (gem)e∈E and · is the standard scalarproduct on R|E|. This aggregated gain can be interpreted as the expected gain\nthat the forecaster would obtain when selecting an expert at random according to\npm.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 8,
+    "total_chunks": 76,
+    "char_count": 1665,
+    "word_count": 303,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a79b1493-fada-4f71-8220-503f51983927",
+    "text": "Experts accumulate gains GEm := (Gem)e∈E where Gem := Pmm′=1 gem′, and the\nforecaster similarly accumulates Gm := Pmm′=1 gm′. The regret of the forecaster quantifies how far its strategy is from optimality. It is defined as:\nRM := max X q gEm . q∈PE · −Gm\nm=1 Thus, RM compares the best cumulative gain obtained by a fixed distribution over\nexperts with the cumulative gain actually achieved by the forecaster. In the present context, an expert aggregation algorithm is defined by a map\nφ : R →R+ such that for each m, maxe∈E φ(Gem) > 0. The rule to update the Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 9,
+    "total_chunks": 76,
+    "char_count": 586,
+    "word_count": 107,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e23dcf9d-c72b-4e41-9787-0148d0aacf09",
+    "text": "Selection phase Learning phase Tsel Trenorm Tlearn Trenorm … …\n0 Tsel T01 T0m T1m T2m = T0m+1 T2M\nSelection network (2): Renormalization Presentation of item om: • Renormalization\nselection of sets j with network (3): • Forward pass equations network (7):\nrenormalization of (4): production of output renormalization of high flux Φj through\nthe production of weight concentrations weight species Xk weight\nconcentrations wj→k weight species Wj wj • EWA network (5) :\ncomputation of φ(G mj→k ) • Output species • Item classification in decay (8)\narg max xk(T1m) k∈K Figure 1: Schematic representation of the time evolution of the chemical reaction network\nduring the selection and learning phases. forecaster's probability distribution over experts e is φ(Gem) pem+1 = . (1)\nPe′∈E φ(Ge′m)\nThis guarantees regret bounds of order √ M. Here, we use the classic EWA\nalgorithm. EWA (Exponentially Weighted Average) (Littlestone and Warmuth, 1994). The probability of selecting expert e at round m + 1 is exp(ηGem) pem+1 = ,\nPe′∈E exp(ηGe′m)",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 10,
+    "total_chunks": 76,
+    "char_count": 1034,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "78fc8a19-eecf-488e-a6af-79181cbb4a5c",
+    "text": "where η > 0 is the learning rate, which determines the sensitivity of the forecaster\nto past performance. See Appendix 8.1 for details on the regret bound achieved\nby this algorithm for different choices of η. 3 Description of the chemical reaction network",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 11,
+    "total_chunks": 76,
+    "char_count": 256,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5a8e0d55-195f-4daa-9a4b-f9e780dddb2d",
+    "text": "During training, the CRN evolves over two consecutive phases: a selection phase\nand a learning phase. The selection phase performs unsupervised feature selection,\nidentifying informative feature subsets and adjusting the network connectivity\naccordingly. The subsequent learning phase adjusts the concentrations of special\nweight species in the network using labeled training data. These phases, along with\nthe reactions occurring during them, are illustrated in Figure 1. The mass-action\nrate equations for the network are given in Appendix 8.2.1. Learning in chemical reaction networks",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 12,
+    "total_chunks": 76,
+    "char_count": 587,
+    "word_count": 82,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cc8100b2-1d74-42db-ad8f-6797b5aa6b8f",
+    "text": "The selection phase is divided in two parts. The aim of the first part is to induce\nthe production of chemical species W j only for sets j ∈Jn that exhibit a significantflux Φj during a portion of a time interval [0, Tsel]. For example, during [0, Tsel],\nthe network may be exposed sequentially to a certain number of training samples\nthat may or may not be incorporated into the learning phase.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 13,
+    "total_chunks": 76,
+    "char_count": 395,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "325476e4-db0a-4c05-a184-aa5a99941558",
+    "text": "The species W j are\ncalled weight species. The concentrations (xi)i∈I are assumed to be continuous on\n[0, Tsel]. The reactions occurring during the selection phase are called the selection\nnetwork on [0, Tsel], defined as:",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 14,
+    "total_chunks": 76,
+    "char_count": 222,
+    "word_count": 36,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d9004c85-aefb-4968-b79e-5f5117e394b4",
+    "text": "X Xi f j + X Xi , (2) ∀j ∈Jn, −→W\ni∈j i∈j where f is a continuous sigmoidal function defined on R+ such that there exist\nθ, ρ > 0 with f ≡0 on [0, θ], f is increasing on (θ, θ + ρ), and f ≡∥f∥∞on\n[θ + ρ, +∞). The rate of this reaction at time t ∈[0, Tsel] is f(Φj(t)). Let\n¯Jn := j ∈J | ∃[t0, t1] ⊂[0, Tsel] with t0 < t1 such that Φj > θ on [t0, t1] . Reaction (2) happens only for indexes j ∈¯Jn, where the set ¯Jn contains selected\nsets of species with fluxes surpassing the threshold θ during at least a sub-intervall\nof the selection phase, and for which weight species W j are produced. Therefore,\nthe selection network is composed of | ¯Jn| reactions. During the second part of the selection phase, the concentrations of the\nproduced weight species are renormalized over a time interval [Tsel, T10 ] (Trenorm :=\nT 10 −Tsel) according to the following set of reversible reaction equations that we\ncall the renormalization network: b1 j\n∀j ∈¯Jn A −→A + W (3)\nj b2\n∀j ∈¯Jn A + W −→A using a catalytic species A whose concentration stays constant at a positive initial\nvalue.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 15,
+    "total_chunks": 76,
+    "char_count": 1077,
+    "word_count": 214,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4f1b6db6-0dd6-4300-bba7-11afff61a4ee",
+    "text": "The selection phase is followed by a learning phase during which the network\nlearns to perform the classification task. The learning phase occurs during the\ntime interval [T subdivided into 2M intervals 1 T10 < T 11 < T 12 = T 20 < 0 , TM],2\n0 1 2 0 0 1 2 0 · · · 1< <T m < T m M < T M < T M. All the intervals [T m, Tm] T m = T m+1 < · · · < T 1 2\n(resp. [T m, Tm]) have the same length Tlearn (resp. See Figure 1 for an\nillustration. Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 16,
+    "total_chunks": 76,
+    "char_count": 461,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8d060f5e-5e07-49ab-a362-101297ed32d5",
+    "text": "At each iteration m ∈[M] of the 0learning1 phase, a training sample om is\npresented during the time interval [T m, Tm], at the end of which the network\nclassifies the sample into the class arg maxk∈K xk(T m).1 This involves the input\nspecies (Xi)i∈I, the weight species (W j)j∈J, the output species (Xk)k∈K, as well\nas several additional species. Output species start with initial concentrations equal\nto zero. The additional species include the species (W j→k)j∈J,k∈K, referred to as\noutput weight species. They quantify the influence of a set of input species j ∈¯Jn\non the output species k. Further additional species are the gain-function species\n(Hj→k)j∈¯Jn,k∈K, which record the sensitivity of species i to class k and are used\nto implement the expert-aggregation EWA algorithm. All Hj→k share a common\npositive initial concentration, and the W j→k share a common initial concentration\nequal to b1¯Jn|. The concentrations (xi)i∈I are assumed to be continuous on b2|\n[T m,0 Tm].1 This yields the following forward-pass learning reactions on [Tm,0 Tm]:1\n+ W j→k + W j + X Xi . (4) ∀j ∈¯Jn, k ∈K, W j + W j→k + X Xi −→Xka1\ni∈j i∈j These reactions are called \"forward pass\" due to their analogy with classic forward\nequations of artificial neural networks and SNN, describing how the combination\nof the weights (W j)j∈¯Jn and (W j→k)j∈¯Jn,k∈K and inputs (Xi)i∈j impacts output\nXk. Chemically, the weight and input species act as catalysts. These reactions\nare illustrated in the right half of Figure 2. Simultaneously to the forward-pass reactions, the reactions corresponding to\nthe EWA network occur. Let k⋆be the true class of training sample om. Mk M and ck := η MkM × |K|−1,1 where η > 0 is a constant and Mkk ∈K, let dk := η\nis the number of training samples that belong to class k from a total of M samples.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 17,
+    "total_chunks": 76,
+    "char_count": 1816,
+    "word_count": 316,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9853464b-ce0e-4787-86e4-79d4af70c396",
+    "text": "The following reactions then implement the EWA network on [Tm,0 Tm]:1 W j + X Xi , W j + X Xi −−→2Hj→k⋆+dk⋆ ∀j ∈¯Jn, Hj→k⋆+\ni∈j i∈j\nk k⋆, Hj→k + W j + X Xi ck j + X Xi , ∀j ∈¯Jn, ̸= −→W (5) i∈j i∈j dk⋆ S + Hj→k⋆ + 2Hj→k⋆, ∀j ∈¯Jn, −−→S\n∀j ∈¯Jn, k ̸= k⋆ S + Hj→k −→S + 2Hj→k . The catalytic species S is included to ensure that the concentrations of the gainfunction species remain positive. Each output species Xk is a forecaster, and the\nm of the set of inputexperts are the sets of input species j ∈¯Jn. The gain gj→k\nspecies j w.r.t. output species k during round m is  1 Tm1 M R Φj wj(T 0 ) Mk Tm0 + s0Tlearn × if om ∈k , 1 gj→km :=  M 1 Tm 1\nMk′ 0 ) R Tm  −wj(T 0 Φj + s0Tlearn × × |K|−1 if om ∈k′ ̸= k . Learning in chemical reaction networks Therefore, if the presented training sample om belongs to class k, then species Xk\nattributes a positive gain to the set of input species j that grows linearly with its\nintegrated flux. Conversely, if the presented sample om belongs to another class,\nthen species Xk attributes a negative gain, i.e., a loss, to the set j that decreases\nlinearly with its flux. Then, the cumulated gain of the set j w.r.t. class k is Gj→km := X gj→km′ , (6)\nm′=1 and the rate equations associated with the EWA network (5) (see Appendix 8.2.1\nfor details) provide that hj→k(T m)1 = φ(Gj→km ), where φ : x is the →exp(ηx)\nfunction in Eq. (1). Note that, in principle, it is possible to implement expert\naggregation other than EWA by suitably modifying the reactions in Eq. (5).",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 18,
+    "total_chunks": 76,
+    "char_count": 1510,
+    "word_count": 311,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7ec2aba5-4ccb-426f-add8-31bfd2887177",
+    "text": "Just like in the selection phase, the learning phase is also followed by weight\nrenormalization during the time interval [T m,1 Tm].2 During this time interval, the\nfollowing renormalization network is active: b1 j→k\n∀j ∈¯Jn, k ∈K, Hj→k −→Hj→k + W (7)\nj′ k Hj′→k + W j→k b2 . ∀j, ∈¯Jn, ∈K −→Hj′→k\nSimilarly to Eq. (3), this renormalizes the output-weight species so that, at\nequilibrium, for every j∈¯Jn wj→k = b1b2 . In addition, during the\n1 k ∈K2 we have P\nsame time interval [T m, Tm], the output species decay as\nXk a2 (8) ∀k ∈K, −→∅. This resets the output species' concentrations to be close to zero before the\nbeginning of the training round for the next training sample m + 1. Note that the equations of the learning phase are designed such that each output\nspecies Xk receives information from the input species (forward-pass equations (4))\nand runs its own expert aggregation algorithm through the EWA network (5) and\nrenormalization network (7), independently from the other output species: there\nis no equation involving species Xk, W j→k, or Hj→k from two different classes. Therefore, this CRN can be seen as a collection of local equations for each class After the learning phase, the CRN can perform inference on new data by fixing\nthe output weight concentrations to their final values (wj→k(T M))j∈¯Jn,k∈K2 and\nevolving only according to the forward-pass Eq. (4) when presented with a new\ndata sample, followed by the output species decay in Eq. (8) between two sample\npresentations. In the numerical results reported in Section 6, this procedure is\nused to evaluate the network's accuracy on test data. Sophie Jaffard and Ivo F. 3.4 Network complexity\nThe total number of reactions for the selection and learning phases is |¯Jn|(3+3|K|). These reactions involve 2+|I|+|¯Jn|+|K|+2|¯Jn||K| chemical species.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 19,
+    "total_chunks": 76,
+    "char_count": 1825,
+    "word_count": 305,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0a758d42-947b-4bf6-a46b-4c84997a452d",
+    "text": "Consequently,\nthe choice of the threshold θ, which appears in the rate of the selection network\n(2) and defines the set ¯Jn, is crucial. Increasing θ reduces |¯Jn|; however, as will be\nshown in Proposition 19, the value of |¯Jn| directly governs the complexity of the\nclasses that the CRN can learn and, therefore, its statistical power. This defines\nthe usual trade-off between network complexity and the capacity to represent\ncomplex class boundaries. The total duration of each reaction is also important for the computational\ncost of implementing such a network. The selection network (2) operates for a\nduration Tsel, and the renormalization network (3) for Trenorm. The forward pass\nin Eq. (4) and the EWA network in Eq. (5) operate during M time intervals of\nduration Tlearn, hence for a total duration of MTlearn. Finally, the renormalization\nnetwork (7) and the output species decay (8) happen during M time intervals of\nlength Trenorm, for a total duration of MTrenorm. To obtain the classification results, it is necessary to account for the concentrations of all output species at the end of each sample presentation. These\nconcentrations evolve according to the forward-pass equations (4). In addition, the\nweight concentrations wj→k must be renormalized after each presented training\nsample by implementing the renormalization network (7). However, if the network is to be evaluated only after training has concluded,\ni.e., for inference, then it is not necessary to produce output species during the\nlearning phase, nor to renormalize the weights at each step m. In this case, it is\nsufficient to run the renormalization network (7) once, after all learning passes,\nfor a single duration Trenorm.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 20,
+    "total_chunks": 76,
+    "char_count": 1711,
+    "word_count": 273,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1396fcfe-3f89-4d38-8468-3f7ea5988514",
+    "text": "The output species can then be generated using\nthe forward-pass reactions (4) for an arbitrary duration corresponding to the\npresentation of test samples, as described in Section 3.3. Within this simplified\nnetwork, the asymptotic analysis presented in Section 5.3 remains valid. 3.5 Analogy with spiking neural networks The proposed CRN architecture is inspired by the spiking neural network (SNN)\nintroduced by Jaffard et al. (2026). The analogy between the two models is\nillustrated in Figure 2. In those SNN, the input layer consists of neurons that\nencode a set of features I describing the training samples. The hidden layers are\norganized such that each hidden neuron j represents correlations between two\npresynaptic neurons. Consequently, a neuron in the final hidden layer effectively\nencodes correlations among 2L input neurons, where L is the number of hidden\nlayers. The output layer contains neurons coding for each class. Learning in chemical reaction networks Every hidden layer initially contains neurons encoding all possible pairs of\npresynaptic neurons. The layer is subsequently trained using an expert-aggregation\nalgorithm to detect correlations between neuron pairs, after which neurons whose\nencoded correlations are below a certain threshold are pruned. Once all hidden\nlayers have undergone training and pruning, the output layer is trained, again using\nexpert aggregation, to perform the classification task. The analysis by Jaffard\net al. (2026) provides theoretical guarantees on the learning performance of such\nSNN. In the present CRN setting, each input and output species (Xl)l∈I∪K functions\nanalogously to a SNN neuron, with its concentration interpreted as the firing\nrate.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 21,
+    "total_chunks": 76,
+    "char_count": 1709,
+    "word_count": 256,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e028fac0-6f85-4f9a-b489-ac3cd9772c12",
+    "text": "The set ¯Jn plays the role of the final hidden layer in the SNN. However,\ninformation is encoded more efficiently in the CRN than in the SNN: there is no\nneed to introduce species corresponding to hidden neurons, as the input species\ndirectly influence the output species through the forward-pass equations (4). The\nselection mechanism is also more efficient. Rather than enumerating every possible\nsubset j of input species of size n and pruning the outputs, the CRN begins empty,\nand whenever a flux Φj exceeds the threshold θ, a weight species W j is produced. This efficiency arises from the intrinsic capacity of CRNs to implement product\noperations: chemical mass-action reactions containing the term Pi∈j Xi yields\na flux Φj = Q i∈j xi in its propensity. In contrast, SNNs do not have a direct\nmechanism for computing products of presynaptic activities. Moreover, the CRN\nnetwork depth n, which corresponds to the size of the correlations encoded in the\nlast hidden layer in the SNN, may be any integer and is not restricted to powers\nof two as in the SNN case. In section 5, we show that thanks to these differences,\nthe same learning guarantees can be proven for CRN as for SNN, but that the\npresent CRN achieves them more efficiently and within a less restrictive framework\nof assumptions. 3.6 Links to artificial neural networks The presented CRN and the learning task that it is designed to solve are deeply\nrooted in the field of machine learning, and the supervised classification setting\ndescribed above is canonical. Moreover, since artificial neural networks (ANNs) and\nspiking neural networks (SNNs) are closely related and have historically informed\none another, the proposed CRN exhibits structural similarities to a conventional\nANN. In particular, the input and output species function analogously to input\nand output neurons, while the weight species play a role comparable to connection\nweights (see Figure 2). The forward-pass reactions (4) therefore resemble the\ncomputation performed across multiple layers of an ANN. Machine learning methods are also central to our theoretical analysis. In\nparticular, we use regret bounds associated with the expert-aggregation algorithm\nimplemented within our CRN to establish guarantees on classification accuracy.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 22,
+    "total_chunks": 76,
+    "char_count": 2279,
+    "word_count": 363,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2212ee29-e5e7-4612-8d4a-57eca9c5ee15",
+    "text": "SNN after selection phase CRN after selection phase Xi1 i1 wi1→{i1,i2} Synaptic weights w{i1,i2}→{i1,i2,i3,i4} Xi2 Weight species i2 i1, i2 W{i1,i2,i3,i4}, W{i1,i2,i3,i4}→k i1, i2 w{i1,i2,i3,i4}→k Xk i3, i4 k Forward pass equation (4)\nOutput specie i3, i4 Output neuron Xi3 i3\nHidden neurons\ni4 Xi4\nInput neurons Input species Figure 2: Analogy between the structure of the SNN proposed by Jaffard et al. (2026) (left)\nand the present CRN (right). ditionally, in Theorem 18, we establish a result that is analogous to the Perceptron\nConvergence Theorem (Rosenblatt et al., 1962).",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 24,
+    "total_chunks": 76,
+    "char_count": 579,
+    "word_count": 90,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "064dd2bc-0071-4b3f-9d55-788c8080ad03",
+    "text": "4 Performance measures We derive guarantees about the above CRN's ability to solve the classification\ntask defined in Section 2 in terms of local and global discrepancy measures. Definition 2 (Species discrepancy) The species discrepancy of species Xk is\ndefined as\ndisckM := D xk(T m)1 E D xk(T m)1 E k′̸=k . m, om∈k − m, om∈k′ The species discrepancy measures the difference between the average concentration of species Xk at the end of the presentation of a training sample of\nits own class, and its average concentration at the end of the presentation of a\nsample of one of the other classes. This provides information about how much\nthe concentration of species Xk is larger than average after being exposed to a\ntraining sample of its own class. It is a local measure, because it involves only\nthe species k itself. A useful variant of the species discrepancy is the discrepancy with constant\nweights. Definition 3 (Species discrepancy with constant weights) For a family qk ∈ b1\nb2 P¯Jn, the concentration discrepancy of species Xk with output weight concentra- Learning in chemical reaction networks",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 25,
+    "total_chunks": 76,
+    "char_count": 1107,
+    "word_count": 186,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "20558482-8964-45b2-8ddd-2608a654dc98",
+    "text": "tions qk is defined as Tm1\nDa1b1 Z X qj→kΦj(t) dtE disckM(qk) :=\n0 m, om∈k b2 Tm j∈¯Jn\nTm1\nDa1b1 Z X qj→kΦj(t) dtE k′̸=k .\n0 − b2 Tm j∈¯Jn m, om∈k′ This is the species discrepancy that Xk would have if the weight concentrations\nwk = (wj→k)j∈¯Jn were all equal to qk, the input weight concentrations wj were\nall at equilibrium b1 , and if the initial concentrations xk(T m)0 were zero for every b2\nm. This quantity measures the performance of a constant-weight family qk in\nrecognizing samples of class k in the ideal case where the renormalization network\n(3) and output species decay equation (8) have reached equilibrium. It therefore\nprovides a baseline for the species discrepancy of Xk, the latter depending on the\nnetwork's weight concentrations wj and wk. To compare the overall classification performance of the network, one has to\ncompare the concentrations of all output species. This is a global measure, which\nwe call network discrepancy. Definition 4 (Network discrepancy) The network discrepancy is defined as D 1 1 E . m) k⋆∈K DiscM := xk⋆(T m) −xk(T k̸=k⋆\nm, om∈k⋆",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 26,
+    "total_chunks": 76,
+    "char_count": 1080,
+    "word_count": 189,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ff1d27b7-a8a7-43aa-b2c2-2d4f04d9c54b",
+    "text": "The network discrepancy measures the average difference between the concentration\nof a species Xk⋆and the concentration of the other output species at the end of the\npresentation of a training sample of class k⋆. A network discrepancy larger than\n1 means that, on average, the concentration of the species coding for the correct\nclass is higher than the concentrations of the other output species. Therefore,\nthis measure quantifies the classification contrast of the CRN, providing a global\nmeasure that involves the concentration of all output species Xk for k ∈K. Similar to above, one can also define the version with constant weights. Definition 5 (Network discrepancy with constant weights) For a family b2qK ∈(b1 P¯Jn)|K|, the network discrepancy with constant weights qK is defined as\nTm1 Tm1\nDiscM(qK) := a1b1 D Z X qj→k⋆Φj(t) dt Z X qj→kΦj(t) dtE k⋆∈K .\n0 k̸=k⋆ b2 Tm 0 − Tm j∈¯Jn j∈¯Jn m, om∈k⋆ This represents the discrepancy that the CRN would have if the weight concentrations wK = (wk)k∈K were all equal to qK, the input weight concentrations wj Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 27,
+    "total_chunks": 76,
+    "char_count": 1086,
+    "word_count": 183,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "596c9192-a93b-4034-b53a-d6e77614ea9c",
+    "text": "were at equilibrium b1 , and if the initial concentrations xk(T m)0 were zero for all b2 Some of the theoretical results below are derived for a more specific setting of\nthe CRN fulfilling the following assumption. Assumption 6 (Repetitive training samples) There exists a set of sample\ntypes O such that the family of training samples (om)1≤m≤M consists of repetitions\nof types o ∈O: for every m ∈[M], there exists o ∈O such that om = o, and\ntwo training samples m1 and m2 can share the same type om1 = om2 = o ∈O. Moreover, during the learning phase, each type of sample o ∈O is presented to the\nnetwork equally many times. For instance, in the context of image classification, this assumption means\nthat the network is learning to classify a (possibly small) set of images O by\nseeing them repeatedly during training. This is a generalization of the usual\nepoch-wise training in ANNs, where each sample is presented multiple times over\nepochs. Consequently, under this assumption, for each object type o ∈O the 0 1concentrations (xi)i∈I are the same in every interval [T m, Tm] such that om = o. 1For a subset j ∈¯Jn ofTminput species, we then denote by R o Φj the common valueof all the integrals R Φj(u) du where om = o. Tm0\nUnder Assumption 6, we define the notion of flux discrepancy as follows. Definition 7 (Flux discrepancy) The flux discrepancy of a set j ∈¯Jn of input\nspecies w.r.t. class k ∈K is defined as\nD Z D Z . Φj→kdisc := ΦjE ΦjE k′̸=k o o∈k − o o∈k′ This compares the average flux of a set of input species j when presented with a\nsample of class k to the average flux when presented with samples of other classes. The flux discrepancy thus indicates the extent to which the set of input species j\nis sensitive to samples of class k. 4.1 Optimal weight family Under Assumption 6, we define optimal output weight concentration families to\nwhich we can compare the weights learned by the CRN. ¯Jn be an out- b2Definition 8 (Optimal weight family) Let qK = (qk)k∈K ∈b1 P\nput weight family on the whole network.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 28,
+    "total_chunks": 76,
+    "char_count": 2029,
+    "word_count": 371,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e669c545-51cc-4b7f-96d9-8b5efb297ef3",
+    "text": "Then, qK is said to be an optimal family\n∀k ∈K, o ∈O, X qj→k o Φj > 0 if and only if o ∈k. j∈¯Jn Learning in chemical reaction networks In other words, an optimal weight family is a family of output weight concentrations such that each output species Xk encodes exactly one class k: its\nconcentration is positive if and only if the presented sample belongs to class k. This requirement is stronger than assuming that a weight concentration family\nenables to correctly classify every sample, as it additionally imposes that the\nconcentration xk remain exactly zero whenever the presented sample does not\nbelong to class k.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 29,
+    "total_chunks": 76,
+    "char_count": 621,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2bd52f67-22a7-41e7-b20a-0bf1fc6dfd5a",
+    "text": "5 Theoretical results We prove theoretical guarantees for the CRN's ability to solve the classification\ntask defined in Section 2. This includes the derivation of error bounds that depend\non the network parameters. For ease of notation, however, we make explicit only\nthe dependence on the cardinalities |I|, |¯Jn|, and |K|, which determine the number\nof reactions and species in the system, as well as on the renormalization network\nduration Trenorm and the number of training samples M. We show that the error\nbound vanishes if these last two parameters are large. The time durations Tsel\nand Tlearn are treated as user-defined fixed constants.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 30,
+    "total_chunks": 76,
+    "char_count": 646,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bdd1ac3d-ec0f-43c8-bdab-e15384583f9c",
+    "text": "They are not required to be\nasymptotically large, and their dependence is thus omitted. The same applies to\nthe reaction rate constants and the initial concentrations. All terms are, however,\nmade explicit in the proofs available in Appendix 8.2. In section 5.4, we discuss\nthe role of each component of the CRN in deriving the theoretical results. We start by proving that the renormalization network (3) of the selection phase\nachieves its purpose, which is to renormalize all the concentrations of the produced\nweight species W j to a common value. Proposition 9 There exist positive constants C1 and C2, independent of |I|, |¯Jn|, |K|, 0\n1 ) satisfiesTrenorm, and M, such that for every j ∈¯Jn the concentration wj(T wj(T 10 ) −b1b2 ≤C1e−C2Trenorm. . 1 b2Consequently, for Trenorm →∞, we have wj(T 0 ) →b1 The explicit values of the constants are given in the proof of the proposition\nin Appendix 8.2.3. This result states that after long renormalization Trenorm, all\nweight concentrations wj(T 10 ) are approximately equal to the shared value b1b2 ,\nwhich depends solely on the reaction rates of the renormalization network. Note that the deterministic framework of reaction rate equations provides\nfor a simpler analysis of the selection phase than the stochastic framework of Sophie Jaffard and Ivo F. SNNs (Jaffard et al., 2026): here, we do not need to prove that the selected sets j\nare the ones whose fluxes surpass a certain threshold; this is automatically the\ncase. Moreover, as was discussed in Section 3.5, information is encoded more\nefficiently in the CRN than in the SNN, because we start with an empty set of\nselected sets j. A weight species W j is created and the index j is added to the\nsystem whenever the flux Φj exceeds the threshold.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 31,
+    "total_chunks": 76,
+    "char_count": 1760,
+    "word_count": 300,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7f262194-9eb4-4891-a1fd-7cf503062453",
+    "text": "We next prove that the presented CRN correctly implements expert aggregation\nalgorithm EWA, and that it solves the learning task on average.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 32,
+    "total_chunks": 76,
+    "char_count": 140,
+    "word_count": 22,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e2d2ba5d-cd21-4fcf-9b55-c18c4d0a7dbe",
+    "text": "For k we define the family (¯wj→km )j∈¯Jn,m∈[M+1] by ∈K, ¯wj→k1 = ∀j ∈¯Jn, b2|¯Jn|\nand for m ≥1\nexp Gj→km b1\n¯wj→km+1 = ∀j ∈¯Jn, b2 P j′∈¯Jn exp(Gj′→km )\nwhere Gj→km is defined in Eq. (6). Then, the probability distribution generated by\nm )j∈¯Jn,m∈[M]. In the follow-the EWA algorithm with gains (gj→km )j∈¯Jn is ( b2b1 ¯wj→k\ning proposition, we prove that the weight concentrations (wj→k(T m))j∈¯Jn,m∈[M]2\napproximate this distribution. Assumption 10 (Bounded flux) There exists a constant α > 0, independent\nα b2of M, such that supj∈¯Jn,t∈[T0 1 ,TM]2 Φj(t) ≤α. Besides, the quantity δ := s0 −2b1\nis positive. Proposition 11 Under Assumption 10 (bounded flux), there exist positive constants C3, C4, and C5, independent of |I|, |¯Jn|, |K|, Trenorm, and M, such that if\nTrenorm ≥C3 then for every j ∈¯Jn, k ∈K, and m ∈[M] we have\n|wj→k(T m)2 −¯wj→km+1| ≤C4e−C5| ¯Jn|Trenorm. m+1.Therefore, for Trenorm →∞, we have wj→k(T m)2 →¯wj→k The exact error term is given in the proof of the proposition in Appendix 8.2.4.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 33,
+    "total_chunks": 76,
+    "char_count": 1012,
+    "word_count": 172,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dc214c5b-4ae4-4e57-94e6-913cff790016",
+    "text": "This result shows that in each training round m, the EWA network (5) and the\nrenormalization network (7) are effectively implementing the expert aggregation\nalgorithm EWA. Note that for the approximation to hold, we only need the\nduration Trenorm of the renormalization network to be large. Learning in chemical reaction networks",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 34,
+    "total_chunks": 76,
+    "char_count": 329,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7bfae715-48d4-44a3-bfde-df13be4a0157",
+    "text": "Assumption 12 (ξ-balanced) There exists a constant ξ > 0, independent of\nM, such that for every k ∈K, Mk/M ≥ξ. This assumption requires that the fraction of training samples om of any class\nis at least ξ. This ensures that the CRN is exposed to a significant number of\nsamples from each class during training.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 35,
+    "total_chunks": 76,
+    "char_count": 309,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c286bc26-5ea2-4582-8b92-8d39b343ad2a",
+    "text": "In the following proposition, we derive a\nregret bound on the species discrepancy of Xk under this assumption. Proposition 13 (Regret bound of species Xk) Let k ∈K. Suppose Assump- ξ q ¯Jn|) .tions 10 (bounded flux) and 12 (ξ-balanced) hold, and let η = 8ln(|M 2Tlearns0\nThen, there exist positive constants C6, C7, and C8, independent of |I|, |¯Jn|, |K|,\nTrenorm, and M, such that if Trenorm ≥C6 we have\ndisckM ≥maxq∈b1 PI disckM(qk) −C7 |¯Jn|e−C8Trenorm + ln(|¯Jn|)1/2M−1/2 . b2 The exact error term with explicit constants is provided in the proof of the\nproposition in Appendix 8.2.5. The specific choice of η minimizes the regret bound\nof the expert aggregation algorithm EWA (see Appendix 8.1 for details). This\nproposition states that the species discrepancy of every species Xk exceeds the\nmaximally achievable discrepancy under constant weights, up to an error term\nwith two components. The first component, of order O(e−C2Trenorm), arises from\nthe approximation error to the true expert aggregation algorithm as derived in\nproposition 11, and from the distance to equilibrium in the output species decay\n(8). The second component, of order O(M−1/2), comes from the regret bound\nof the expert aggregation algorithm EWA itself, as detailed in Appendix 8.1. Consequently, for Trenorm →∞and M →∞, the total error tends to zero. The above results establish that for sufficiently long renormalization duration\nTrenorm and sufficiently many training samples M, the species discrepancies Xk are\nclose to their optimal values. This guarantees that, on average, the concentration\nof species Xk is higher after the network has been presented with a sample of class\nk. This result, however, is local to the behavior of species Xk during learning. The following theorem provides the global result for the whole network. Theorem 14 (Oracle inequality) Suppose Assumptions 10 (bounded flux) and\nξ q ¯Jn|)\n12 (ξ-balanced) hold, let η = and C6, C7, and C8 be the constants 8ln(|M 2Tlearns0\ndefined in Proposition 13. Then, if Trenorm ≥C6 we have\n−C7 |¯Jn|e−C8Trenorm ln(|¯Jn|)1/2M−1/2 DiscM ≥ qK∈(maxb1 DiscM(qK) + .",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 36,
+    "total_chunks": 76,
+    "char_count": 2109,
+    "word_count": 338,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0e9ac3ce-f0ca-4cb9-8cfc-005e17aff6ff",
+    "text": "The error term is identical to that in Proposition 13. The theorem is proven\nin Appendix 8.2.6. It asserts that the network discrepancy of the CRN exceeds Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 37,
+    "total_chunks": 76,
+    "char_count": 180,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f5bb0aa-1ddc-450b-9efa-55624e0a8652",
+    "text": "the maximally achievable discrepancy under constant weights, up to this error\nterm. The family qK = (qk)k∈K achieving this maximum acts as an oracle with\nglobal knowledge of the behavior of each output species Xk, while the CRN\nitself is designed so that species associated with different classes do not interact. Consequently, the inequality implies that the average classification performance of\nour CRN—as quantified by the network discrepancy—is, up to an error term that\nvanishes as Trenorm →∞and M →∞, comparable to that of the oracle. This theorem can be related to Corollary 12 of Jaffard et al. (2026), which\nestablished an analogous result for a SNN. However, the assumptions on the SNN\nwere more restrictive and included Assumption 6 (repetitive training samples). The results for the CRN are less restrictive due to the simpler structure of the\nselection phase and the fact that input species directly influence the output species\nthrough the forward-pass reactions (4). Achieving the same in a SNN requires the\ntreatment of multiple hidden layers (see Figure 2). Consequently, the above theorem constitutes a first step toward demonstrating\nthat CRNs can learn in a manner comparable to networks of biological neurons,\nwhile relying on a simpler structural framework. Moreover, the proof of the\ntheorem allows us to identify the role each component of the CRN plays (see\nSection 5.4). An important remark is that all species associated with a given class\nk (i.e., the species Xk, (Hj→k)j∈¯Jn, and (W j→k)j∈¯Jn) evolve independently of\nspecies associated with other classes. Proposition 13 is obtained by considering\nonly the dynamics corresponding to a single class, yielding a local regret bound\nfor the species Xk. The central contribution of Theorem 14 is to derive a global\nresult for the entire network by aggregating these local bounds. This points at a\ntheoretical understanding of emergence in learning networks, whereby complex,\nglobal behavior arises from the interaction of simple components.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 38,
+    "total_chunks": 76,
+    "char_count": 2016,
+    "word_count": 318,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "805962e5-303e-4743-bee3-4e6442f25d22",
+    "text": "Nevertheless, although the proposed CRN is shown to asymptotically attain\nperformance comparable to that of the oracle, this does not guarantee that the\noracle itself achieves satisfactory performance. In particular, if the input species\nXi do not encode information that is relevant to the classification task, the oracle's\nperformance will necessarily be poor. For example, in the context of a gene\nregulatory network designed to discriminate among different cell states, if the set\nof input species I consists of transcription factors entirely unrelated to those states,\nthe learning problem becomes unsolvable regardless of the values of the weight\nconcentrations. In the following subsection, we therefore analyze the asymptotic\nnetwork performance under more restrictive assumptions and provide explicit\nconditions under which the classification task is solvable by the CRN. Learning in chemical reaction networks 5.3 Asymptotic analysis Under Assumption 6 (repetitive training samples), we can extend the previous\nanalysis by computing explicit asymptotic weight concentrations. Note that\nAssumption 6 implies Assumption 12 (ξ-balanced) with ξ = |O|.1 Theorem 15 (Asymptotic output weight concentrations) Suppose Assumptions 6 (repetitive training samples) and 10 (bounded flux) hold, and let C6 be the\nconstant defined in Proposition 13. For k let ¯Jkn := arg maxj∈¯Jn Φj→kdisc and ∈K,\n¯Jn by b2 Pdefine the family ¯wk ∈b1 ∀j ∈¯Jn, ¯wj→k := . b2|¯Jkn|1j∈¯Jkn\nThen, there exist positive constants C9, C10 and C11, independent of |I|, |¯Jn|, |K|,\nTrenorm, and M, such if Trenorm ≥C6 then for every k ∈K, at the end of the\nlearning phase the weight concentrations satisfy wk(T M)2 −¯wk 2 ≤C9 |¯Jn| ln(|¯Jn|)M 1/2 e−C10Trenorm + |¯Jn|3/2e−C11 ln(| ¯Jn|)1/2M1/2 . ln(M)Therefore, for M →∞and Trenorm →∞, we have wk(T M)2 →¯wk. The exact form of the error term with explicit constants is given in the proof\nof the theorem in Appendix 8.2.7. This theorem provides the asymptotic behavior\nof the output weight concentrations at the end of the learning phase.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 39,
+    "total_chunks": 76,
+    "char_count": 2058,
+    "word_count": 318,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5b126503-4eea-43e3-aaea-d5147a0d1868",
+    "text": "In the\nlimit, the concentration weight ¯wj→k is nonzero only for those sets j that achieve\nthe maximal flux discrepancy Φj→kdisc , and the concentrations are identical for all\nsuch maximizing sets. Consequently, in the asymptotic regime, the forward-pass\nequations (4) imply that the species Xk is produced exclusively through reactions\ninvolving sets j of input species that exhibit higher-than-average flux when samples\nof class k are presented.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 40,
+    "total_chunks": 76,
+    "char_count": 447,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2cdf72f9-8560-4729-b09a-09d13a0795cf",
+    "text": "During inference, the weight concentrations are fixed\nto their values at the end of the learning phase (see Section 3.3). The above\nresult therefore characterizes the network's inference behavior for large M and\nTrenorm/ ln(M). The error term has two components. The first part, in O(M1/2e−O(Trenorm)),\ncomes from approximations in the two renormalization networks. The second\npart, in O(exp(−O(M1/2)), comes from the specific expert-aggregation algorithm,\nEWA. This theorem can be related to Theorem 14 of Jaffard et al. (2026), which\nestablishes a similar asymptotic analysis for the output synaptic weights of a SNN. However, the present framework is more general, and the above error bounds are\ntighter, owing to the simplifications enabled by the use of a CRN. Sophie Jaffard and Ivo F. Even if the limit output-weight concentration family (¯wk)k∈K has a clear and\nrelevant interpretation from a machine-learning point of view, one cannot know\nfor sure whether it can solve the task, since the set of input species could code for\nfeatures that are not relevant for the classification task. To finally conclude on\nthe network's asymptotic performance, the more refined analysis in the following\nsubsection closes this gap. 5.3.1 When classes are defined by feature correlations",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 41,
+    "total_chunks": 76,
+    "char_count": 1281,
+    "word_count": 199,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1ec39881-3794-4b9a-9433-17b1ace8ca04",
+    "text": "We start by stating some additional assumptions that we will need. Assumption 16 (Binary flux) There exist a threshold θ > 0 and a constant\no Φj = p we say thatp > 0 such that for all j ∈¯Jn and o ∈O, R o Φj ∈{0, p}. If R\nitem o has features j. Besides, for j ∈¯Jn, let Oj := {o ∈O, R o Φi = p} the set of\nitem types with features j. Then, all Oj have the same cardinality.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 42,
+    "total_chunks": 76,
+    "char_count": 373,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8397bb1c-bd16-4c60-897c-33a515b89cf3",
+    "text": "The first part of this assumption is fulfilled if, for instance, the concentrations\nxi are either zero or equal to a common function x, such that each flux is either 0\nor R o xn. The second part is a technical assumption that we make to facilitate the\nderivations. Assumption 17 (Class decomposition) The threshold θ in Assumption 16\n(binary flux) is such that for every k ∈K, there exists a set Ek ⊂¯Jn such that\nk = S j∈Ek Oj. This assumption implies that the classes to which samples are assigned are\ndetermined by correlations between features of the set I, which are encoded in\nthe set ¯Jn. More precisely, a sample type o belongs to class k if there exists a\nsubset j ∈Ek of features such that o has all features belonging to this subset. Consequently, the complexity of these correlations increases with the cardinality\nn of the subsets j: as the depth of the CRN increases, each set Oj represents\nprogressively more complex patterns among the samples.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 43,
+    "total_chunks": 76,
+    "char_count": 959,
+    "word_count": 171,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "47555152-14a3-4020-a64b-4d02d2d2af88",
+    "text": "Theorem 18 Suppose Assumption 16 (binary flux) holds. Then the following\nstatements are equivalent:\n(i) Assumption 17 (class decomposition) is satisfied.\n(ii) There exists an optimal weight family.\n(iii) The limit weight family defined in Theorem 15 is an optimal weight family. This theorem is proven in Appendix 8.2.8. It establishes that, provided\nthe classes can be expressed as combinations of correlations among n features\nencoded by the input species, the CRN learns to correctly classify all sample\ntypes. Furthermore, one or several optimal families of weights exists, and the Learning in chemical reaction networks CRN's output weight concentrations converge to one of them. This learning\nguarantee is analogous to the Perceptron Learning Theorem (Rosenblatt et al.,\n1962), which asserts that if there exists a set of weights capable of classifying\nthe data—equivalently, if the data are linearly separable—then the perceptron\nlearning algorithm will converge to such a solution. This result can be related to Theorem 19 of Jaffard et al. (2026). However,\nAssumption 17 (class decomposition) applies in a broader range of settings than its\nSNN counterpart, as it does not restrict correlations to combinations of features\nwith cardinalities that are powers of two. Here, any combination is admissible.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 44,
+    "total_chunks": 76,
+    "char_count": 1311,
+    "word_count": 200,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "41719d67-dcfb-4ea7-ae79-698c60bd8920",
+    "text": "If Assumption 17 is not satisfied, the depth n of the network can be increased,\nwhich increases the complexity of the feature correlations encoded by the sets\nj ∈¯Jn. Then, the assumption will eventually be satisfied and the CRN will be\nable to solve the task. The is reminiscent of the infinite-depth limit for ANNs\n(Hayou, 2023). Under Assumption 16 (binary flux), we can also compute the Vapnik - Chervonenkis dimension of the CRN. For a given classification algorithm, the VCdimension is defined as the size of the largest set of points that it can shatter. This quantity provides an upper bound on the complexity of the class of functions\nthat can be learned. It notably appears in bounds on the generalization error of\nmachine-learning algorithms (see for instance Mohri et al. (2018, Corollary 3.19)). We model the samples to be classified as bit strings o = (oi)i∈I, where oi = 1 if\no has feature i and oi = 0 otherwise. These strings belong to a space of dimension\no Φj if o has all|I|. A set j ∈¯Jn of input species has a positive flux integral R\nfeatures of the set j. In this case, we say that j is activated by o. We consider a binary-output classifier and define the hypothesis set H :=\n1F such that F ⊂¯Jn, where for a sample o, 1F (o) = 1 if and only if there exists\nj ∈F activated by o, and 0 otherwise. This hypothesis set corresponds to the\nclass of functions that the CRN can learn. We then obtain the following result as\nproven in Appendix 8.2.9.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 45,
+    "total_chunks": 76,
+    "char_count": 1467,
+    "word_count": 270,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dafa9d9b-c4e9-4c98-ad3b-6c79e886aabe",
+    "text": "Proposition 19 The VC-dimension of the hypothesis set H is the size of the\nselected input species subsets, The VC-dimension of the CRN, which quantifies the complexity of the classes\nthat the CRN can learn, is equal to the size of the set of selected input species\nsubsets |¯Jn|. However, some error terms in the approximation results above grow\nwith |¯Jn|, and the number of reactions and species in the CRN grows linearly with\n|¯Jn| (see Section 3.4). This reflects the typical trade-off in supervised learning\nalgorithms between expressiveness and efficiency. Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 46,
+    "total_chunks": 76,
+    "char_count": 588,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fc4b6521-e6fd-4593-94c5-39dd9362ca25",
+    "text": "5.4 The roles of different network components We use the theoretical results above to introspect the role of each component of\nthe proposed CRN. At the core of the network are the forward-pass reactions (4). They describe how input species and weight species, acting as catalysts, induce the\nproduction of output species. The rate equation of species Xk (see equation (10))\nresembles the computations performed across multiple layers in a SNN as shown in\nFigure 2. The mass-action rate equations of this network part (see Appendix 8.2.1)\nare key to the regret bounds for the expert aggregation algorithm (see Appendix\n8.1), from which Theorem 14 is derived. They are also essential for analyzing the\nnetwork behavior in the regime of asymptotic weights (Theorem 18). The second ingredient is the EWA network (5), in which gain-function species\nHj→k are produced with the input species acting as catalysts. Together with\nthe renormalization network (7), the gain-function species modify the weight\nconcentrations wj→k, feeding back into the forward-pass reactions (4). This\nmakes it possible to compute the asymptotic weight concentrations (Theorem\n15), admitting a meaningful interpretation of the learning task. This asymptotic\nanalysis enables the derivation of Theorem 14. However, alternative reactions\ncould be considered in place of the EWA network (5): in principle, reactions\nimplementing any expert-aggregation algorithm for which a regret bound can\nbe established could be used to derive Theorem 14, and it is likely that other\nalgorithms also yield meaningful asymptotic behavior. As discussed in Section 5.2, a remarkable fact about the reactions of the\nlearning phase is that species related to different classes k do not directly interact\nwith each other. Yet, we obtain global results about the network behavior. This\nprovides a potential explanation for how complex, system-level behavior emerges\nfrom interactions among simple cellular components.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 47,
+    "total_chunks": 76,
+    "char_count": 1964,
+    "word_count": 299,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5f67c0a3-2591-4180-911e-287f68fdd2b3",
+    "text": "The remaining reactions, particularly in the selection phase, play a less central\nrole in the analysis. The selection network (2) is mainly required for complexity\ncontrol. Without selection (i.e., with a threshold θ = 0), the set ¯Jn would have\ncardinality |I|n , leading to a prohibitively large number of species and reactions\n(see Section 3.4 for details on the network complexity). The two renormalization\nnetworks (3) and (7) enforce mass conservation. This guarantees a fixed value for\nthe concentrations wj and a fixed sum Pj∈¯Jn wj→k for each k ∈K at equilibrium,\nsuch that the weights are a partition of unity. This conservation constraint is\nrequired for expert aggregation algorithms, which necessarily provide probability\ndistributions.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 48,
+    "total_chunks": 76,
+    "char_count": 749,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d6bc6ce5-9d9e-489a-9127-9a6c03ba2ab3",
+    "text": "We demonstrate the function of the presented CRN in a simple benchmark classification task. Specifically, we train the CRN on the handwritten digits data set Learning in chemical reaction networks Label 0 Label 1 Label 2 Label 3 Label 4 Label 5 Figure 3: Example images from the handwritten digits data set. Each image shows a digit\n(ground-truth labels above the images) in 8×8 grayscale pixels. provided by scikit-learn. This data set consists of 1797 digital images of 64\n(8×8) pixels each (see Figure 3 for examples), which we randomly divide into a\ntraining set (80% of the images, i.e., 1437) and a test set (20% of the images,\ni.e., 360). Among the training set, 40 images are used for the selection phase\nand 1397 for the learning phase. The set of features I corresponds to the pixels:\neach pixel i ∈I is represented by an input species Xi with constant concentration\nduring the presentation of the mth image, xi = (yim + ξim)+. Here, yim ∈[0, 1] is\nthe gray level of pixel i in the mth image, and ξim is a Gaussian variable with mean\n0 and variance σ2 > 0. The pixel-wise independent Gaussian noise is added to the\nraw pixel intensities in order to simulate degraded data quality. The positive part\nis then taken to ensure that all intensities are non-negative. Since we evaluate the network accuracy on the test set, we use the simplified\nnetwork architecture described in the last paragraph of Section 3.4. This means\nthat the output weights are renormalized only once, after learning, and the output\nspecies are produced exclusively during the testing phase.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 49,
+    "total_chunks": 76,
+    "char_count": 1571,
+    "word_count": 272,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "285dc950-b442-4ee0-a18e-e447dc85235e",
+    "text": "We quantify performance as a function of network complexity by controlling\nnetwork complexity as follows: during the selection phase, instead of fixing a\nthreshold θ and selecting the fluxes exceeding it, we fix the number of selected\nfluxes |¯Jn| and retain the |¯Jn| largest ones. The two approaches are equivalent, as\nfixing |¯Jn| implicitly defines a threshold θ that separates the fluxes in the same\nway. The results for network depths n = 1 and n = 2 are presented in Figure 4. The\ncurves represent the classification accuracy on the test set as a function of the\nnetwork complexity |¯Jn|. The shaded bands show the 10% confidence intervals\nover 100 independent repetitions of each configuration. The sources of randomness\nare the Gaussian noise introduced in the encoding of the input species and the\nrandom split between the training and test sets, independently for each network\ncomplexity. For n = 1, the output species receive information from individual input species,\neach encoding a single pixel. Since there are 64 input species, |¯J1| ranges from 1\nto 64. The maximum accuracy, 85.8%, is achieved for |¯J1| = 37 selected sets of\nsingle-input species. Beyond this value, the accuracy decreases slightly. Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 50,
+    "total_chunks": 76,
+    "char_count": 1244,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7c691ab8-a875-4747-8f59-4b139a09ff9f",
+    "text": "Network depth n = 1 Network depth n = 2 0 20 40 60 0 250 500 750 1000 1250 1500 1750 2000\nNumber of selected sets | ¯J1| Number of selected sets | ¯J2| Figure 4: Numerical results on the handwritten digits data set. We plot the CRN's\nclassification accuracy on the test set as a function of network complexity, quantified by the\nnumber of selected input sets |¯Jn| during the selection phase. We show results for networkdepths n = 1 (no hidden layer, left panel) and n = 2 (one hidden layer, right panel). The shaded bands are the 10% confidence intervals over 100 independent repetitions of\neach configuration.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 51,
+    "total_chunks": 76,
+    "char_count": 611,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb1f8d34-53fc-4137-9299-be8f0db8cf66",
+    "text": "All rate constants are equal to 1, except ck and dk for k ∈K, which 10\nare equal to 9 η and 10η, respectively. The initial species concentrations are A = 1 and\nS = 3, and the noise variance is set to σ2 = 0.00001. For network depth n = 1, we chose\nη = 0.0005 and for network depth n = 2, we chose η = 0.0001. For n = 2, each output species receives information from a pair of input species,\ncorresponding to a pair of pixels. There are 2016 unique pairs, so |¯J2| ranges\nfrom 1 to 2016. The accuracy reaches its maximal value of 88.6% for |¯J2| = 1210\nselected pairs of input species. To match the maximum accuracy of the CRN with\nn = 1, the CRN with n = 2 requires |¯J2| = 382, which is a higher complexity than\nthe best CRN with n = 1. These results indicate that the network with depth n = 1 offers the better costperformance ratio, but increasing the depth achieves higher absolute performance. The case n = 1 also reveals that, on average, only 37 of the pixels provide\nrelevant information. These observations differ substantially from the numerical\nexperiments reported by Jaffard et al. (2026), Section 5.2, where a SNN was\ntrained on the same task. There, without hidden layers (corresponding to n = 1),\nthe reported test accuracy was only 53%. With one hidden layer (corresponding\nto n = 2), the accuracy increased with the number of selected neurons until\nsaturating at 83.5%. Thus, the CRN with n = 1 performs significantly better\nthan a SNN without hidden layer, and even outperforms the SNN with one hidden\nlayer. The performance of the CRN with n = 2 also surpasses the SNN with one\nhidden layer. In summary, the simplest CRN (n = 1 with slightly more than half\nof the pixels encoded) outperforms both SNN configurations from Jaffard et al.\n(2026), at substantially lower complexity.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 52,
+    "total_chunks": 76,
+    "char_count": 1798,
+    "word_count": 331,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "24e09fcc-9a80-47c1-b677-6ca89a6fc09f",
+    "text": "Learning in chemical reaction networks results, which show that a CRN without hidden layers can achieve similar learning\nguarantees as a SNN with hidden layers. We introduced a chemical reaction network without hidden layers that can provably\nlearn a classification task more efficiently than a spiking neural network with hidden\nlayers in a similar problem setting. We derived local regret bounds that characterize\nthe learning dynamics of the output chemical species encoding the classes, arising\nfrom the implementation of an expert-aggregation algorithm within the CRN. We\nthen established an oracle inequality describing the global behavior of the network,\ndemonstrating that it solves the classification task on average under non-restrictive\nassumptions. In the more restricted setting where training samples are presented repeatedly,\ncorresponding to epochs in the training of artificial neural networks, we further\nanalyzed the asymptotic behavior of the CRN and characterized the classes of\nfunctions it is capable of learning. If the input features are actually relevant to the\ntask, we explicitly gave the Vapnik–Chervonenkis (VC) dimension of the network. Finally, we implemented the proposed network and evaluated its performance on\nthe classification of handwritten digits. To the best of our knowledge, the CRN\npresented here is the first CRN for which learning behavior has been mathematically\nproven. The architecture of the proposed CRN is inspired by a spiking neural network (SNN) for which analogous theoretical guarantees have previously been\nderived (Jaffard et al., 2026). By establishing comparable results in a CRN, we\ndemonstrated that CRNs can encode and process information just as neuronal\nnetworks can. What's more, our analysis indicated that CRNs may be more\npowerful learning machines than SNNs. Indeed, the presented CRN achieves\nthe same learning guarantees as a SNN under weaker assumptions and for lower\nnetwork complexity. This was confirmed in our numerical experiments.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 54,
+    "total_chunks": 76,
+    "char_count": 2010,
+    "word_count": 299,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dafa72cb-4258-4122-9fad-4aaab00ec28e",
+    "text": "It suggests\nthat CRNs without hidden layers can solve learning tasks for which SNNs require\nhidden layers. This might be due to the fact that multiplication is intrinsic in the\nphysics of mass-action kinetics, whereas it needs to be approximated by sequences\nof nonlinearly weighted summations in a neural network. Future extensions of this work could generalize the results to a broader class\nof CRNs. This could then enable finding actual biochemical examples of learning\nnetworks in biological cells by screening for the defining network features of that\nCRN class. The discussion of the role of each reaction module in Section 5.4\nprovides an initial step in this direction. It could eventually reveal structural\nor functional similarities with certain biochemical processes and enable their\nreinterpretation as learning machines within cells. Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 55,
+    "total_chunks": 76,
+    "char_count": 873,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4ab03c2e-4f3d-4239-8efa-eb770026d4a0",
+    "text": "Supplementary information The code used to produce the numerical results can be found at:\nhttps://github.com/SophieJaffard/CRN. S.J. was financially supported by a postdoctoral fellowship from the ELBE Postdoc\nProgram of the Center for Systems Biology Dresden. Statements and declarations The authors have no competing interests to declare that are relevant to the content\nof this article.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 56,
+    "total_chunks": 76,
+    "char_count": 389,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "42fd2711-9594-491d-8f10-1e801b3c3e33",
+    "text": "Learning in chemical reaction networks 8.1 Details on the regret bound of EWA The regret bound RM for the EWA algorithm was given by Cesa-Bianchi and\nLugosi (2006) for losses (i.e., negative gains) in [0, 1]. It was later generalized by\nStoltz (2010) to losses in the interval [a, b] for any a < b ∈R:\nRM ≤ln(|E|)η + η(b −a)28 M , b−a 1 p8 ln(|E|)/M, we obtainwhere |E| is the number of experts. With η =\nr M\nRM ≤(b −a) 2 ln(|E|) . (9) This choice of η assumes that we know the time horizon M in advance. If this is\nnot the case, we can use a time-dependent learning rate ηm = b−a1 p8 ln(|I|)/m,\nwhich gives the bound RM p2M + ln(|E|) ≤ ln(|E|) 8 of the same order of magnitude. In the following proofs, we denote by a0 > 0 the initial concentration of species\nA and by h0 > 0 the initial concentration of species Hj→k. Note that the\nconcentration of species A does not evolve and stays equal to a0.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 57,
+    "total_chunks": 76,
+    "char_count": 899,
+    "word_count": 178,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb9a05c1-b6e2-4558-ac72-db00ae23e49b",
+    "text": "For j ∈¯Jn, we b1write xj := wjΦj and ¯xj := Φj. We start by stating the rate equations of the b2\nspecies in the CRN. We recall that we start from xk(T 10 ) = 0 for all k. During the time interval [T m,0 Tm],1\nthe concentrations of the species W j→k stay constant. The concentrations xk and\nhj→k for j ∈¯Jn and k ∈K are governed by the following rate equations:\ndxk\n∀k ∈K, dt = a1 X xj(t)wj→k(T m)0 (10)\nj∈¯Jn\ndhj→k⋆\n= dk⋆(xj(t) + s0)hj→k⋆(t) (11) ∀j ∈¯Jn, dt\ndhj→k\n∀j ∈¯Jn, k ̸= k⋆, dt = ck(s0 −xj(t))hj→k⋆(t) (12) Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 58,
+    "total_chunks": 76,
+    "char_count": 541,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "86d7e3a1-732c-41ab-a85d-9b0765fd06b1",
+    "text": "Therefore, for t ∈[Tm,0 Tm],1\nZ t\nxk(t) = xk(T m)0 + a1\n0 ∀k ∈K, Tm X xj(u)wj→k(T m)du0 (13) j∈¯Jn\nt ! 0 Z hj→k⋆(t) = hj→k⋆(T m) exp dk⋆ (xj(u) + s0) du (14)\n0 ∀j ∈¯Jn, Tm\nt ! 0 Z\n0 −xj(u)) ∀j ∈¯Jn, k ̸= k⋆, hj→k(t) = hj→k(T m) exp ck Tm (s0 du . (15) During the time interval [T m,1 Tm],2 the concentrations hj→k stay constant, and\nthe concentrations xk and wj→k for j ∈¯Jn and k ∈K are governed by the rate\nequations: dxk\n∀k ∈K, dt = −a2xk(t)\ndwj→k\nk = b1hj→k(T m)1 X hj′→k(T m)1 . ∀j ∈¯Jn, ∈K, dt −b2wj→k(t)\nj′∈¯Jn b1 hj→k(Tm)1\n1 Then, according to Lemma 22, we haveLet ¯wj→km+1 := b2 Pj′∈I hj′→k(Tm). xk(t) = xk(T m)e−a2(t−T1 m)1 (16) ∀k ∈K,\n1 m)1 Pj′∈I hj′→k(T 1 k wj→k(t) = ¯wj→km+1 + (wj→k(T m) m+1)e−b2(t−T m).∀j ∈¯Jn, ∈K, −¯wj→k\n(17) 8.2.2 Preliminary propositions As proven in (Gao and Pavel, 2018, Proposition 4), we have: Proposition 20 Let d ∈N, η ∈R. Then, the softmax function f with temperature\nη defined on Rd by x 7→softmax(ηx) is η-Lipschitz. As proven in (Jaffard et al., 2026, Proposition 26), we have",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 59,
+    "total_chunks": 76,
+    "char_count": 1022,
+    "word_count": 203,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e3b04aae-e950-4a25-a471-32eedde6de66",
+    "text": "Proposition 21 Let d A1, . . . , Ad Let E be the subset of [d] defined by √ ∈N, exp(∈R.MAi)\nE := arg maxi Ai, and let wi(M) := √ Let A = maxi Ai. Pdl=1 exp( MAl).\n• If E = [d] then for every i ∈[d], wi(M) = d.1\n• If E ⊊[d], let ∆:= maxi Ai −maxi/∈E Ai. max 1, √ M∆). d −|E| wi(M) −1 ≤ 1 exp(− |E|1i∈E |E| |E| Learning in chemical reaction networks Lemma 22 For n ∈N, consider species (Al)1≤l≤n and (Bl)1≤l≤n whose concentrations evolve on R+ according to the chemical reaction equations ∀l ∈[n] Al −→Al + Bl\n+ Bl −→Al′.c2 ∀l, l′ ∈[n], Al′\nThen, the concentrations (al)l∈[n] stay constant and the concentrations (bl)l∈[n]\nsatisfy for all l ∈[n] and t ≥0:\nc1 al(0) al(0) n ! bl(t) = + bl(0) exp X al′(0) . c2 Pnl′=1 al′(0) −c1c2 Pnl′=1 al′(0) −c2t l′=1 Proof For every l ∈[n], the concentration al stays constant, whereas theconcentration bl follows the rate equation dbl n\n= c1al(0) X al′(0) . dt −c2bl\nl′=1 al(0)\nc2 Pnl′=1 al′(0), such that theA particular solution to this equation is blP : t 7→c1\nP solves the homogeneous equationdifference bl −bl\nP ) d(bl −bl n = P ) X al′(0) . dt −c2(bl −bl\nl′=1 n !\n, (bl −bl P )(t) = (bl −bl P )(0) exp −c2t X al′(0)\nl′=1 c1 al(0) al(0) n ! bl(t) = + bl(0) exp X al′(0) . c2 Pnl′=1 al′(0) −c1c2 Pnl′=1 al′(0) −c2t l′=1 8.2.3 Proof of Proposition 9 According to Lemma 22, we have 0 b1 1 wj(T 1 ) = + wj(Tsel) e−b2a0(T 0 −Tsel). b2 −b1b2 Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 60,
+    "total_chunks": 76,
+    "char_count": 1401,
+    "word_count": 289,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c78a0e3-0da1-4bb8-8193-bdc61413ebc3",
+    "text": "dwj\nFurthermore, in [0, Tsel] the concentrations wj fulfill the rate equation dt =\nf(Φj(t)), so wj(Tsel) = R 0Tsel f(Φj(t)) dt. Therefore, we have 0 ≤wj(Tsel) ≤\n∥f∥∞Tsel and get\n0 b1 wj(T 1 ) , e−b2a0Trenorm. −b1b2 ≤max b2 ∥f∥∞Tsel 8.2.4 Proof of Proposition 11 We start by proving the following proposition, which ensures that the rate of\nequation (12) stays positive. b2∥f∥∞Tsel\nb1 (b2a0)−1 and Assumption 10Proposition 23 Suppose Trenorm ≥ln\n0 1 , TM]2 and j ∈¯Jn, s0 −xj(t) ≥δ.(bounded flux) holds. Proof According to the proof of Proposition 9, we have 1 b1 wj(T 0 ) + max e−b2a0Trenorm, . ≤b1b2 b2 ∥f∥∞Tsele−b2a0Trenorm Besides, b1 , and the condition on Trenorm implies that b2 b2 e−b2a0Trenorm ≤b1\n∥f∥∞Tsele−b2a0Trenorm ≤b1b2 as well, b2 so we have wj(T 01 ) ≤2b1 . Thus, according to Assumption 10, for t ∈ 1 2\n[T 0 , TM] and j ∈¯Jn, since the concentration wj does not evolve during learning,\nwe have xj(t) = wj(T 01 )Φj(t) α ≤2b1b2 and therefore s0 −xj(t) ≥δ. With this result, we can now prove Proposition 11.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 61,
+    "total_chunks": 76,
+    "char_count": 1021,
+    "word_count": 184,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2cf458d3-9d19-4092-a8b9-9bf3cd128606",
+    "text": "C3 := max ln b1 ∥f∥∞Tsel (b2a(0))−1, ln(2)(b2h0)−1 . Let j ∈¯Jn, k ∈K, and m ∈[M]. According to Eq. (17), we have\nhj′→k(Tm)1 Jn . wj→k(T m)2 = ¯wj→km+1 + (wj→k(T m)1 m+1)e−b2Trenorm Pj′∈¯ −¯wj→k Learning in chemical reaction networks In addition, according to Eqs. (14) and (15), since dk and ck are lower-bounded\nby |K|−1η and since s0 −xj is lower-bounded by δ on [T m,0 Tm],1 for j′ ∈¯Jn we have\n1 η hj′→k(T m) exp . ≥h0 |K| −1mδTlearn\nTherefore, we have e−b2Trenorm Pj′∈¯Jn , hj′→k(Tm)1 ≤e−b2Trenorm| ¯Jn|h0 exp |K|−1mδTlearnη\nwhich implies 2 1 ¯Jn|h0 exp |K|−1mδTlearnη\n|wj→k(T m) −¯wj→km+1| ≤|wj→k(T m) −¯wj→km+1|e−b2Trenorm| . (18)\nWe prove the following equation by recursion on m:\n2 2b1 , 4b1 e−b2Trenorm| ¯Jn|h0 exp |K|−1mδTlearnη .∀m ∈[M], |wj→k(T m)−¯wj→km+1| ≤min b2 b2\n(19) • Case m = 1: According to Eq. (18), we have 2 1 ¯Jn|h0 exp |K|−1δTlearnη . 1 ) 1 ) 2 2 |wj→k(T −¯wj→k | ≤|wj→k(T −¯wj→k |e−b2Trenorm| Since the initial concentration of W j→k is b1¯Jn|, and since it does not evolve b2|\nduring [T10 , T11 ], both wj→k(T 11 ) and ¯wi→k2 are bounded by b1b2 , so we have e−b2Trenorm| exp(η(|K|−1)−1δTlearn). 1 ) 2 |wj→k(T 2 ¯Jn|h0 −¯wj→k | ≤2b1b2 1 2 | ≤ Since the exponential term is less than 1 we also have |wi→k(T 2 ) −¯wi→k 2b1 , so Eq. (19) is true for m = 1. b2\n• Case m > 1: Suppose Eq. (19) holds for m −1. According to Eq. (18), we\nhave\n|wj→k(T m)2 −¯wj→km+1|\n1 ¯Jn|h0 exp |K|−1mδTlearnη\n≤|wj→k(T m) −¯wj→km+1|e−b2Trenorm|\n1 ¯Jn|h0 exp |K|−1mδTlearnη . m m ≤(|wj→k(T m) −¯wj→k | + |¯wj→k −¯wj→km+1|)e−b2Trenorm| Since Eq. (19) holds for m −1, and since wj→k(T m)1 = wj→k(T m−1),2 the 1 are each bounded by 2b1 , m b2 terms |wj→k(T m) −¯wj→k | and | ¯wj→km −¯wj→km+1|\n. Therefore because by definition all weights (¯wj→kl )l≤0 are bounded by b1b2\nm)2 e−b2Trenorm| ¯Jn|h0 exp |K|−1mδTlearnη . |wi→k(T −¯wi→km+1| ≤4b1b2",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 62,
+    "total_chunks": 76,
+    "char_count": 1845,
+    "word_count": 337,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c1e47ef6-ea7d-4ba0-ad99-720462de88ee",
+    "text": "2e−b2Trenorm| ¯Jn|h0 exp |K|−1mδTlearnη ≤1,\n. b2 so we have as well |wj→k(T m)2 −¯wj→km+1| ≤2b1 This proves that Eq. (19) is true for every m ∈[M], which implies Proposition η\n11 by lower-bounding exp |K|−1mδTlearn by 1. 8.2.5 Proof of Proposition 13 n b2 o\n2 .Let C6 := max ln b1 ∥f∥∞Tsel (b2a(0))−1, ln(2)(b2h0)−1, ln(2)a−1\n¯Jn|h0\nLet E(Trenorm) := 4b1b2 e−b2Trenorm| and A := 2a1Tlearns0(b1b2 + |¯Jn|E(Trenorm)). We prove the following lemma by recursion: Suppose the assumptions of Proposition 13 hold. Then,\nfor all m ∈[M],\nTm1 Z\nxk(T m)1 0 ≤Ae−a2Trenorm a1Tlearns0|¯Jn|E(Trenorm) − Tm X ¯wj→km xj(t)dt + j∈¯Jn\n(20) and\nxk(T m)1 ≤A. (21) • Case m = 1: Since xk(T 10 ) = 0 according to Eq. (13), and since the initial\nconcentration of W j→k is equal to ¯wj→k1 and does not change during [T 10 , T11 ],\nwe have T11 Z\nxk(T 11 ) = a1 X ¯wj→k1 xj(t) dt . = b1 Moreover, xk(T 11 ) b1b2 since Pj∈¯Jn ¯wj→k1 b2 ≤a1Tlearns0 ≤A and since xj\nis bounded by s0. Therefore Eqs. (20) and (21) are true for m = 1. • Case m > 1: Suppose Eqs. (20) and (21) are true for m −1. According to\nEq. (13) and the proof of Proposition 11, we have Tm1 Z\nxk(T m)1\n0 −a1 Tm X ¯wj→kxj(t) dt j∈¯Jn",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 64,
+    "total_chunks": 76,
+    "char_count": 1171,
+    "word_count": 228,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "189a2281-2f41-4083-aaa8-b83449c34bc2",
+    "text": "Learning in chemical reaction networks Tm1 Z\nm)0 + a1 0 −wj→k)xj(t) ≤xk(T Tm X (¯wj→k dt j∈¯Jn\n≤xk(T m)0 + a1Tlearns0|¯Jn|E(Trenorm) . Besides, according to Eq. (16) and since xk(T m)0 = xk(T m−1),2 we have xk(T m)0 = xk(T m−1)e−a2Trenorm.1 Since Eq. (21) is true for m −1, we have\nTm1 Z\nxk(T m)1\n0 ≤Ae−a2Trenorm a1Tlearns0|¯Jn|E(Trenorm). −a1 Tm X ¯wi→kxi(t) dt + i∈I Tm1 Z\nxk(T m)1 0 a1Tlearns0|¯Jn|E(Trenorm) ≤a1 Tm X ¯wj→kxj(t) dt + Ae−a2Trenorm + j∈¯Jn\n≤a1Tlearns0 b2 + Ae−a2Trenorm + a1Tlearns0|¯Jn|E(Trenorm)\n+ Ae−a2Trenorm. ≤A2 2 so Eqs. (20) and (21) are The condition on Trenorm implies that e−a2Trenorm ≤1\ntrue at rank m as well. Therefore, according to Lemma 24, for m ∈[M] and k ∈K we have\nTm1 Z\nxk(T m)1\n0 −a1 Tm X ¯wj→km ¯xj(t) dt j∈¯Jn\nTm1 Tm1 Z Z\nxk(T m)1 X ¯wj→km xj(t) dt + a1 ≤ −a1 Tm X ¯wj→km (¯xj(t) dt 0 Tm0 −xj(t)) j∈¯Jn j∈¯Jn\n|xj(t) −¯xj(t)| ≤Ae−a2Trenorm + a1Tlearns0|¯Jn|E(Trenorm) + a1Tlearn j∈¯Jn,t∈[Tsupm,T . 0 m]1 0 1We bound supj∈¯Jn,t∈[Tm,T 0 1 m]|xj(t) −¯xj(t)| for t ∈[Tm, Tm], j ∈¯Jn, as: b1 0 b1\n|xj(t) −¯xj(t)| = Φj(t) b2 −wj(T 1 ) ≤α max b2 , ∥f∥∞Tsel e−b2a0Trenorm , (22) Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 65,
+    "total_chunks": 76,
+    "char_count": 1137,
+    "word_count": 210,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8ac2cc6b-9716-48e8-ad54-72b0d0e5d13e",
+    "text": "where the inequality holds because of Assumption 10 and the proof of Proposition\n9. Tm1 Z\nxk(T m)1 0 ≤E(Tlearn, −a1 Tm X ¯wj→k¯xj(t) dt Trenorm) , j∈¯Jn where\nE(Tlearn, Trenorm) := Ae−a2Trenorm + a1Tlearns0|¯Jn|E(Trenorm)\n+ a1Tlearnα max , ∥f∥∞Tsel e−b2a0Trenorm. b2 1 Tm1 P j∈¯Jn ¯wj→k¯xj(t) dt , Tm0Now that we have bounded the quantity xk(T m) −a1 R\nwe look at the species discrepancy of species k. According to its definition and the\nprevious bound, we get Tm1 Z\ndisckM M(¯wk) max xk(T m)1\n0 −disck ≤2 m∈[M] −a1 Tm X ¯wj→km ¯xj(t) dt j∈¯Jn\n≤2E(Tlearn, Trenorm) . To finish the proof, we use the regret bound of the expert aggregation EWA\nprovided in Appendix 8.1. For k the gains gj→km belong to the interval ∈K, ξ q ¯Jn|)\nenables us to use[0, 2Tlearns0ξ−1]. Therefore, the choice η = 2Tlearns0 8ln(|M\nq M\nEq. (9). Let Ereg(M) := 2Tlearns0ξ−1 2 ln(|¯Jn|). The regret of species k using\nEWA, denoted RkM, is M M\nRkM := max X X pj→kgj→km X X qj→km gj→km , − p∈P¯Jn m=1 j∈¯Jn m=1 j∈¯Jn where qj→km = b2 ¯wj→km . According to Eq. (9), it satisfies b1\nRkM ≤Ereg(M). (23)\nFor j ∈¯Jn, k ∈K let\n Tm1 M R 0 T Mk m (¯xj(u) + s0) du × 1 if om ∈k (24) ¯gj→km :=  T M 1 m R\nMk′ Tm0  (s0 −¯xj(u)) du× × |K|−1 if om ∈k′ ̸= k\nand\nM M\n¯RkM := max X X pj→k¯gj→km X X qj→km ¯gj→km . − p∈P¯Jn m=1 j∈¯Jn m=1 j∈¯Jn Learning in chemical reaction networks",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 66,
+    "total_chunks": 76,
+    "char_count": 1338,
+    "word_count": 268,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d9bc1379-439a-4802-bec8-dcf5b387e88d",
+    "text": "m m in order to bound ¯RkM. According to the −gj→kFor j ∈¯Jn, let us bound ¯gj→k\ndefinitions of gj→km , ¯gj→km , Assumption 12, and Eq. (22), we have m ¯gj→km −gj→k ≤Tlearnξ−1α max b2 , ∥f∥∞Tsel e−b2a0Trenorm. M¯RkM ≤ ¯Rk −Rk M + RkM ≤2MTlearnξ−1α max b2 , ∥f∥∞Tsel e−b2a0Trenorm + Ereg(M).\n(25) Besides, by definition of the species discrepancy and the species discrepancy with\nconstant weights, we have in fact",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 67,
+    "total_chunks": 76,
+    "char_count": 412,
+    "word_count": 73,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2c98b41c-50cb-492c-9a35-f80f220a8d8d",
+    "text": "X X ¯wj→km ¯gj→km\nm=1 j∈¯Jn\nTm1 1 Z\n= X X ¯wj→km (¯xj(u) + s0) du\n0 Mk m m, om∈k j∈¯Jn T\nTm1 1 1 Z\n+ X X X ¯wj→km + s0) du Tm0 (−¯xj(u) |K| −1 k′̸=k Mk′ m, om∈k′ j∈¯Jn\nTm1 Tm1 Z\n= X ¯wj→km D X ¯wj→km Z ¯xj(u)duE D ¯xj(u) duE k′̸=k\n0 0 m, om∈k − m m m, om∈k′ j∈¯Jn T j∈¯Jn T\nD E D E\n+ Tlearns0 + Tlearns0 k′̸=k\nm, om∈k m, om∈k′\n= disckM(¯wk) + 2Tlearns0 b2and similarly for qk ∈b1 P¯Jn, X X qj→k¯gj→km = disckM(qk) + 2Tlearns0 .\nm=1 j∈¯Jn Multiplying Eq. (25) by b1 , we get b2M max disckM(qk) −disckM(¯wk) q∈b1 P¯Jn b2\nb1 b1\nTlearnξ−1α max , e−b2a0Trenorm + Ereg(M) . ≤2b1b2 b2 ∥f∥∞Tsel b2M Sophie Jaffard and Ivo F. max M ≤E(Tlearn, Trenorm, M) , disckM(qk) −disck qk∈b1 P¯Jn b2 b1 E(Tlearn, Trenorm, M) := 2b1 Tlearnξ−1α max , e−b2a0Trenorm b2 b2 ∥f∥∞Tsel\n+ Ereg(M) + 2E(Tlearn, Trenorm).\nb2M\nWe get the final result by writing only the dependency in |¯Jn|, Trenorm, and M.\n8.2.6 Proof of Theorem 14",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 68,
+    "total_chunks": 76,
+    "char_count": 901,
+    "word_count": 189,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "47db6d2d-b03e-4b55-834e-f70058291cd9",
+    "text": "We start by noticing that D 1 1 E\nm) k⋆∈K DiscM = xk⋆(T m) −xk(T k̸=k⋆\nm, om∈k⋆ D xk⋆(T m)1 E k⋆∈K D xk(T m)1 E k⋆∈K m, om∈k⋆− k̸=k⋆\nm, om∈k⋆ Let us exchange the names of the indices k⋆and k in the second term, as well as\nthe sums over k and over k⋆: D 1 E D 1 E DiscM = xk⋆(T m) k⋆∈K xk⋆(T m) k⋆∈K m, om∈k⋆− k̸=k⋆\nm, om∈k\nDD 1 E D 1 E E = xk⋆(T m) xk⋆(T m) k̸=k⋆ k⋆∈K m, om∈k⋆− m, om∈k\nD E\n= disckM k⋆∈K. b2Let qK ∈(b1 P¯Jn)|K|. According to the proof of Proposition 13,",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 69,
+    "total_chunks": 76,
+    "char_count": 471,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c6e37570-f21b-483f-a64b-867e713e2f23",
+    "text": "D E\nDiscM ≥ disckM(qk) k∈K −E(Tlearn, Trenorm, M) , where E(Tlearn, Trenorm, M) is given in the proof of Proposition 13. With the same\nD Ecomputation as before, we get disckM(qk) = DiscM(qK). Therefore\nk∈K\nDiscM ≥DiscM(qK) −E(Tlearn, Trenorm, M) . This holds for every qK, therefore proving the result.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 70,
+    "total_chunks": 76,
+    "char_count": 302,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "685d2e9d-f62e-4909-b9ca-567f172d1340",
+    "text": "Learning in chemical reaction networks 8.2.7 Proof of Theorem 15\nb1 exp(η ¯Gj→kM )\nFor k ∈K and j ∈¯Jn, let ¯¯wj→k exp( ¯Gj′→kM ), where for j′ ∈¯Jn, we M+1 := b2 Pj′∈¯Jn\ndefine ¯Gj′→kM := PMm=1 ¯gj→km , were ¯gj→km is given by Eq. (24). For k a family ∈K,\n(aj→k)j∈¯Jn is denoted ak. wk(T M)2 −¯wk 2 ≤ wk(T M)2 −¯wkM+1 2 + ¯wkM+1 −¯¯wkM+1 2 + ¯¯wkM+1 −¯wk 2 . We already bounded ∥wk(T M)2 −¯wkM+1∥2 in Proposition 11. Let us bound the two\nremaining terms. M M . • Bound of ¯wkM+1 −¯¯wk −Gj→k M+1 2: Let j ∈¯Jn. Let us start by bounding ¯Gj→k\nAccording to the definition of the gains gj→km , since the concentration of the\nspecies W j does not evolve during the learning phase, we get  1 Tm1  Tm 1 M Z Z X X X Φj(u) du  Gj→kM = wj(T 01 ) MMk Mk′ Φj(u) du − Tm0 Tm0 m, m, om∈k om∈k′ |K| −1 k′̸=k\n+ 2Ms0Tlearn . Furthermore, for k′ according to Assumption 6, we have Mk′ = |O| ∈K,\nand Tm1 Z Z M Z\nX Φj(u) du = X X Φj = X Φj.\no m, om∈k′ Tm0 o∈k′ m, om=o o o∈k |O|",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 71,
+    "total_chunks": 76,
+    "char_count": 963,
+    "word_count": 212,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "13db16fe-9a5f-4687-84ff-e73d15aab8cc",
+    "text": "Thus, according to the definition of the flux discrepancy (Definition 7), we\nget Gj→kM = wj(T 01 )MΦj→kdisc + 2Ms0Tlearn . With the same computation, according to the definition of the gains ¯gj→km ,\nwe have ¯Gj→kM = MΦj→kdisc + 2Ms0Tlearn . (26) b2 Hence, according to the proof of Proposition 9, we get M = wj(T 10 ) ΦjS→kdisc M ¯Gj→kM −Gj→k −b1b2\n≤2αTlearn max b2 , ∥f∥∞Tsel Me−b2a0Trenorm, Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 72,
+    "total_chunks": 76,
+    "char_count": 419,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d4d20bb4-8b5d-4781-90ae-1603c2d067b3",
+    "text": "where we bounded Φj→kdisc by 2αTlearn. We can combine this bound with\nProposition 20 to get ¯wkM+1 −¯¯wkM+1 2 ≤η∥¯GkM −GkM∥2\nq b1\n≤η |¯Jn|2αTlearn max b2 , ∥f∥∞Tsel Me−b2a0Trenorm\nb1 q\n= ξαs−10 max , ∥f∥∞Tsel 8|¯Jn| ln(|¯Jn|)Me−b2a0Trenorm. b2 • Bound of ¯¯wkM+1 −¯wk 2: According to Eq. (26), for j ∈¯Jn, k ∈K we have\nb1 q\nη ¯Gj→kM = ξ 1 + Φj→kdisc 8 . 2b2s0Tlearn ln(|¯Jn|)M We apply Proposition 21 and distinguish two cases:",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 73,
+    "total_chunks": 76,
+    "char_count": 427,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fbc1d4cf-93f4-477d-a4c4-8b74b506f538",
+    "text": "If ¯Jkn = ¯Jn then ¯¯wkM+1 = ¯wk.\n2. If ¯Jkn ⊊¯Jn then let ∆k := maxj∈¯Jn Φj→kdisc /∈¯Jkn Φj→kdisc −maxj . We then\nhave\n¯¯wkM+1 −¯wk 2\n≤b2b1 |¯Jn|1/2 max 1, |¯Jn| −|¯Jkn| exp − 2b2s0Tlearnξb1 ∆k q8 ln(|¯Jn|)M . |¯Jkn| |¯Jkn| We get the result by adding all error terms.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 74,
+    "total_chunks": 76,
+    "char_count": 269,
+    "word_count": 52,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b51e6c0a-a75d-4d4d-a170-80b95feb8933",
+    "text": "8.2.8 Proof of Theorem 18 We assume that Assumption 16 holds. • Proof of (i) =⇒(iii): Suppose Assumption 17 (class decomposition) holds. Let us compute the flux discrepancies of the species in ¯Jn in order to compute\nthe weights ¯wK given in Theorem 15. For every k ∈K, we choose the set\nEk given by Assumption 12 with maximal size. We recall that\nD Z D Z . Φj→kdisc = ΦjE ΦjE k′̸=k o o∈k − o o∈k′ According to Assumption 16 (binary correlations), R o Φj = p if and only if\no Φj = 0 otherwise. o ∈Oj, and R\nD Z\nLet j ∈¯Jn and o ∈k. We have R o ΦjE o∈k = |k|p, where Z is the common\nvalue of all o Φj > 0, it would mean that |Oj′| for j′ ∈¯Jn. Learning in chemical reaction networks",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 75,
+    "total_chunks": 76,
+    "char_count": 681,
+    "word_count": 143,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c4113d96-1471-4dc8-9ba1-b1112ce00dd5",
+    "text": "o has features j, so o would belong to Oj. Since j ∈Ek, this would mean\nthat o would belong to class k, which is impossible. Therefore R o Φj = 0 for\nD Z = 0, and Φj→kdisc = |k|p. every o R o ΦjE k′̸=k /∈k, o∈k′\nLet j ∈¯Jn with j /∈Ek. This means that there exists o ∈Oj such that o /∈k. D Then, R o ΦjE |k| p and consequently Φj→kdisc |k| p. Hence, ¯Jkn = Ek. o∈k ≤Z−1 ≤Z−1\nSo, according to Theorem 15, the limit weights are ¯wj→k = |Ek|1j∈Ek.1\nNow that we computed the limit weight family, we can verify that it is an\noptimal weight family. Let k ∈K and o ∈O.\n1 Z nkop\n, X ¯wj→k Φj = X p1o∈k = o × j∈¯Jn j∈¯Jn |Ek|1j∈Ek |Ek|\nwhere nko is the number of sets j ∈Ek such that o has features j. If o ∈k,\naccording to Assumption 17 (class decomposition), we have nko > 0 and\no = 0 (otherwise o would therefore Pj∈¯Jn ¯wj→k R o Φj > 0. If o /∈k, then nk\nbelong to a set Oj in the composition of class k, so o would belong to k), and\ntherefore Pj∈¯Jn ¯wj→k R o Φj = 0. Hence, ¯wK is an optimal weight family. • Proof of (ii) =⇒(i): Suppose there exists an optimal weight family qK. Let k ∈K and Ek := {j ∈¯Jn such that qj→k > 0}. Let us show that\nk = S j∈Ek Oj. Since qK is an optimal weight family, we have\nP j∈¯Jn qj→k R o Φj > 0. Therefore, there exists j ∈¯Jn such that qj→k > 0\nj∈Ek and R o Φj > 0.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 76,
+    "total_chunks": 76,
+    "char_count": 1298,
+    "word_count": 289,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "671cccfd-6215-4449-9cb6-46a6adb54d31",
+    "text": "Hence, j ∈Ek and o has features j so o ∈S Oj.\nj∈Ek Oj. There exists j ∈¯Jn such that o has features j and\nqj→k > 0. Then, Pj∈¯Jn qj→k R o Φj > 0. Since qK is an optimal weight j∈Ek family, this implies that o ∈k. It is clear that (iii) =⇒(ii), so the three statements are equivalent.\n8.2.9 Proof of Proposition 19 The VC-dimension is the size of the largest set E than can be fully shattered\nby H, i.e., H can realize all possible dichotomies of E. Hence, to prove that\nVCdim(H) = |¯Jn|, we start by considering a set E of size |¯Jn| than can be fully\nshattered by H, implying that VCdim(H) ≥|¯Jn|. Then, we prove that any set\nthat can be fully shattered by H has a size less than or equal to |¯Jn|, leaving only\nthe case VCdim(H) = | ¯Jn|. Sophie Jaffard and Ivo F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 77,
+    "total_chunks": 76,
+    "char_count": 766,
+    "word_count": 155,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a6992841-881b-41a1-82fd-19d7d75fbae7",
+    "text": "Let j ∈¯Jn and oj := (oj i)i∈I, where oij = 1 if and only if i ∈j, such that\nthere is a one-to-one correspondence between sample oj and the set j. Let\nE := {oj, j ∈¯Jn}. To show that this set can be fully\nshattered by H, consider E′ ⊂E and F := {j ∈¯Jn, ∃o ∈E′, o = oj}. Then,\nE′ and E \\ E′ are separated by 1F . Hence, VCdim(H) ≥|¯Jn|. Let E be a set of sample types that can be fully shattered by H. In particular,\nfor each o ∈E, there exists a non-empty F ⊂¯Jn such that o is the unique\nitem of E that activates a set j ∈F.",
+    "paper_id": "2603.12060",
+    "title": "Chemical Reaction Networks Learn Better than Spiking Neural Networks",
+    "authors": [
+      "Sophie Jaffard",
+      "Ivo F. Sbalzarini"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12060v1",
+    "chunk_index": 78,
+    "total_chunks": 76,
+    "char_count": 526,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  }
+]

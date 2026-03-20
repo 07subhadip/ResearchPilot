@@ -1,0 +1,380 @@
+[
+  {
+    "chunk_id": "36252db0-97fb-4f81-9951-d0be513bacae",
+    "text": "Taming the Adversary: Stable Minimax Deep Deterministic Policy\nGradient via Fractional Objectives Taeho Lee and Donghwan Lee",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 0,
+    "total_chunks": 21,
+    "char_count": 124,
+    "word_count": 17,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "662acbce-a371-4d83-90be-0cf4f24ca1c5",
+    "text": "Abstract— Reinforcement learning (RL) has achieved re- zero-sum game between a controller (user) and an adversary.\nmarkable success in a wide range of control and decision- The adversary produces perturbations that challenge the conmaking tasks. However, RL agents often exhibit unstable or troller, while the controller attempts to maintain performance\ndegraded performance when deployed in environments subject\nunder these conditions. However, direct minimax training to unexpected external disturbances and model uncertainties. Consequently, ensuring reliable performance under such con- often becomes unstable. The adversary can produce disturditions remains a critical challenge. In this paper, we propose bances that are excessively large, and these disturbances\nminimax deep deterministic policy gradient (MMDDPG), a can dominate the optimization process. As a result, policy\nframework for learning disturbance-resilient policies in con- improvement becomes difficult.2026 tinuous control tasks. The training process is formulated as\na minimax optimization problem between a user policy and To overcome these limitations, we propose minimax deep\nan adversarial disturbance policy. In this problem, the user deterministic policy gradient (MMDDPG), a framework for\nlearns a robust policy that minimizes the objective function, learning disturbance-resilient policies in continuous controlMar while the adversary generates disturbances that maximize it. tasks. The training process is formulated as a minimax optiTo stabilize this interaction, we introduce a fractional objective\n12 that balances task performance and disturbance magnitude. mization problem between a user policy and an adversarial\nThis objective prevents excessively aggressive disturbances and disturbance policy. To stabilize this interaction, we introduce\npromotes robust learning. Experimental evaluations in Mu- a fractional objective that balances task performance and\nJoCo environments demonstrate that the proposed MMDDPG disturbance magnitude. This objective limits unrealistically\nachieves significantly improved robustness against both external large perturbations and still allows the adversary to challenge\nforce perturbations and model parameter variations.\nthe controller effectively. We evaluate the proposed method\non MuJoCo continuous control benchmarks [11]. INTRODUCTION[cs.LG] mental results show that MMDDPG achieves substantially\nDeep neural networks have driven major advances in improved robustness to external force disturbances and rereinforcement learning (RL) because they provide power- silience to parametric mismatches induced by variations in\nful function approximators.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 1,
+    "total_chunks": 21,
+    "char_count": 2675,
+    "word_count": 349,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9195b08c-2fe0-4ef7-ba7a-ac0618e05fec",
+    "text": "With these models, RL agents actuator-related parameters compared with conventional RL\nachieve strong performance in complex, high-dimensional baselines.\nenvironments such as competitive games [1], [2] and nonlinear control systems [3], [4]. Despite these successes,\nII.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 2,
+    "total_chunks": 21,
+    "char_count": 270,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f6ed98db-68f6-4dfc-864d-ef467b717450",
+    "text": "RELATED WORKS\nRL agents remain highly sensitive to external disturbances\nand model uncertainties [5], [6], [7], [8], [9]. Policies Robust reinforcement learning (RRL) [12] explicitly inthat perform well in nominal training conditions often fail corporates robustness against model inaccuracies and exwhen the environment changes, which can cause unstable ternal disturbances to improve the reliability of reinforcebehavior or severe performance degradation. In real-world ment learning algorithms. Early RRL methods formulate the\napplications, physical systems encounter unmodeled dynam- control problem as a differential game inspired by the H∞\nics, parameter variations, sensor noise, and environmental control theory [13]. In this formulation, the user (controller)\ndisturbances. Such discrepancies between the training and minimizes a cost function under worst-case disturbances.arXiv:2603.12110v1\ndeployment environments can lead to unstable behavior and While these approaches provide strong robustness properties\nsevere performance degradation in safety-critical domains for nonlinear control tasks, they are typically restricted\nsuch as robotics, autonomous systems, and industrial control. to low-dimensional systems due to the computational inFor these reasons, robustness to uncertainty is a central tractability of solving the associated Hamilton-Jacobi-Isaacs\nrequirement for practical RL-based control. equations in high dimensions. Adversarial RL addresses this problem by introducing a Building on these foundations, recent works extend RRL\nsecond agent that generates disturbances [5], [6], [9], [10]. to deep reinforcement learning (DRL) frameworks to imThis approach models robust policy learning as a two-player prove robustness in high-dimensional continuous control\nproblems [6], [10], [9], [8], [14]. Notably, robust adversarial\nThis work was supported by the Institute of Information Communications\nTechnology Planning Evaluation (IITP) funded by the Korea government reinforcement learning (RARL) formulates policy learning\nunder Grant 2022-0-00469 and the BK21 FOUR from the Ministry of as a two-player zero-sum game between the user and the\nEducation (Republic of Korea). adversary that applies disturbances [6]. Despite its success,\nTaeho Lee and Donghwan Lee are with the School of Electrical Engineering, Korea Advanced Institute of Science and Technology, , OH 45435, training stability remains a significant hurdle.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 3,
+    "total_chunks": 21,
+    "char_count": 2447,
+    "word_count": 326,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "82d6d05b-1ce0-489f-b16d-60254454bcd3",
+    "text": "In many cases,\nUSA eho0228,@kaist.ac.kr,donghwan,@kaist.ac.kr the adversary converges faster than the protagonist, which leads to overly aggressive disturbances that destabilize the Specially, we consider a TZMG with state transition\nlearning process. dynamics given by\nTo mitigate training instability, several works incorporate\nsk+1 ∼P(sk, ak, wk),stability constraints derived from robust control. For example, Zhai et al. [8] extend dissipativity and L2-gain condi- where sk and sk+1 ∈Rn denote the current and next states,\ntions from the H∞control to Markov decision processes respectively, ak ∈Rm is the action selected by the user,\n(MDP). This approach enforces stability through inequality and wk ∈Rd represents the disturbance generated by the\nconstraints. Similarly, Long et al. [14] integrate the H∞- adversary. At each time step k, both players select their\ninspired constraints to regulate the interaction between the decisions based on the current state sk through deterministic\npolicy and the disturbance generator. In a related direction, policies. Accordingly, we define deterministic state-feedback\nLee and Lee [9] incorporate the H∞control principles into policies for the user and the adversary as πθ : Rn →Rm\nreward shaping to jointly train both the user policy and and µϕ : Rn →Rd, which are parameterized by θ and ϕ,\nthe adversarial disturbance policy. Although effective, these respectively,\nconstraint-based methods introduce additional computational\noverhead and require delicate hyperparameter tuning.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 4,
+    "total_chunks": 21,
+    "char_count": 1528,
+    "word_count": 219,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f49db99e-a21d-47a0-af3b-1e8678ad03ac",
+    "text": "An- ak = πθ(sk), wk = µϕ(sk).\nother line of research focuses on action-robust formulations,\nUnder these state-feedback policies, the closed-loop systemsuch as action-robust Markov decision process (AR-MDP),\ndynamics reduces to a Markov chain governed bywhere the adversary directly perturbs or replaces the agent's\nactions [10], [15]. While effective against certain types sk+1 ∼P sk, πθ(sk), µϕ(sk) .\nof action uncertainty, these approaches are less suited for\nhandling persistent external disturbances that affect system\ndynamics. FRACTIONAL ROBUST OBJECTIVE\nIn contrast to prior methods, our work introduces a novel In TZMG, the user seeks a control policy that minimizes\nobjective function that incorporates robustness directly into the expected cumulative cost, whereas the adversary aims to\nthe learning problem. This objective enables the agent to maximize it by choosing disturbances. Under deterministic\naccount for disturbance effects without relying on explicit policies πθ and µϕ, we define the primary performance\nstability constraints or action perturbations. Moreover, most objective as the discounted expected return\nexisting adversarial robust RL approaches focus on on-\n\" ∞ #\nE X γkck+1 πθ, µϕ . (1)policy stochastic algorithms. Our method instead addresses Jπθ,µϕ1 :=robustness within an off-policy deterministic policy gradik=0\nent framework. This design improves training stability and\nsample efficiency in continuous control environments. Accordingly, the robust control problem in TZMG can be\nformulated as the following minimax optimization problem. PRELIMINARIES Problem 1: Given deterministic policies πθ (user) and µϕ\nA. Two-player zero-sum Markov game (adversary), find a saddle-point solution to the following\nIn a two-player zero-sum Markov game (TZMG) [16], minimax optimization problem:\nwith the state space S and the action space, A and W, of a\nmin max Jπθ,µϕ1user and an adversary, respectively, the user selects an action πθ µϕ\na ∈A and the adversary selects its action (or disturbance)\nw ∈W simultaneously at the current state s ∈S, then Although the above minimax formulation captures the rothe state transits to the next state s′ ∈S with probability bust interaction between the user and the adversary, directly\nP(s′|s, a, w), and the transition incurs a cost c(s, a, w, s′), optimizing Jπθ,µϕ1 often leads to unstable learning dynamics.\nwhere P(s′|s, a, w) is the state transition probability from the Since the adversary seeks to maximize the cumulative cost,\ncurrent state s ∈S to the next state s′ ∈S under action a ∈ it can increase the objective arbitrarily by enlarging the\nA and disturbance w ∈W, and c : S×A×W×S →R is the disturbance magnitude in the absence of explicit regularcost function. For convenience, we condsider a deterministic ization. This behavior destabilizes learning and prevents\ncost function and simply write ck+1 := c(sk, ak, wk, sk+1), convergence to a meaningful saddle point. To mitigate this\nwhere k ∈{0, 1, ...} is the time step. Let π : S →A issue, we introduce an additional objective that quantifies the\nand µ : S →W denote the policies of the user and the cumulative squared disturbance norm,\nadversary, respectively.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 5,
+    "total_chunks": 21,
+    "char_count": 3193,
+    "word_count": 491,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5aca8031-77f0-4977-8057-a225bc13efdb",
+    "text": "The objectives of the user and the\n\" ∞ #adversary are to minimize and maximize the cumulative\nJµϕ2 := E X γk∥wk∥22 µϕ . (2)discounted cost over an infinite time horizon respectively,\nJπ,µ = E P∞k=0 γkck+1 π, µ , where γ ∈[0, 1) is the k=0\ndiscount factor, (s0, a0, w0, s1, a1, w1, ...) is a state-action By penalizing the disturbance magnitude through Jµϕ2 , the\ntrajectory generated by the Markov chain under policies π adversary is discouraged from generating extreme perturbaand µ, and E[·|π, µ] is an expectation conditioned on the tions. As a result, the training process becomes more stable.\npolicies π and µ. To jointly account for task performance and disturbance Overview of the minimax deep deterministic policy gradient (MMDDPG). Two players, the user and adversarial agents, interact in environment\ngenerating the action at and the disturbance wt according to the state st. The action-value function Qψ1(s, a, w) and Qψ2(s, w) are updated by the\ncost ct+1 and wt. The policy of user πθ is updated to minimize the fractional objective function Jπθ,µϕ while the policy of adversary µϕ is updated to\nmaximize it. magnitude, we reformulate the minimax problem using the Moreover, the logarithmic transformation converts the ratio\nfollowing fractional objective: into a difference of two terms, which simplifies the gradientJπθ,µϕ1 E P∞k=0 γkck+1 πθ, µϕ based optimization. The logarithmic transformation requires Jπθ,µϕ = = . (3) the objectives to remain strictly positive. Therefore, we\nJµϕ2 E[P∞k=0 γk∥wk∥22 | µϕ] introduce the following assumption. Problem 2: Given deterministic policies πθ (user) and µϕ\nAssumption. For all admissible policies πθ and µϕ, the(adversary), find a saddle-point solution to the following\nobjectives Jπθ,µϕ1 and Jµϕ2 are strictly positive. This condi-minimax optimization problem:\ntion holds when the cost and squared disturbance norm are\nJπθ,µϕ1 nonnegative. min max Jπθ,µϕ = min max .\nπθ µϕ πθ µϕ Jµϕ2 This assumption is satisfied in many practical control\nand RL environments where the stage cost and the squared\nRemark. The above problem has been strongly motivated disturbance norm are defined as nonnegative quantities, such\nby H∞control in control theory. By defining the cost as the as quadratic cost functions commonly used in continuous\nsquared output norm, the objective can be interpreted in a control tasks.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 6,
+    "total_chunks": 21,
+    "char_count": 2361,
+    "word_count": 376,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "da463f7f-d28e-4081-919d-833e3f5d3497",
+    "text": "Note that the objective Jµϕ2 is always nonnegaform analogous to the performance criterion used in the H∞ tive since it is defined as the cumulative squared disturbance\ncontrol [13], [17], [18]. In particular, the H∞norm, ∥Tπ∥∞, norm. Therefore, the positivity condition mainly concerns\ncharacterizes the worst-case disturbance-to-output gain, the objective Jπθ,µϕ1 in practice. Even when the cost is not\nstrictly positive, the assumption can be enforced through a\nP∞k=0 ∥yk∥22 ∥Tπ∥∞= sup . simple modification by adding a sufficiently large positive\nw̸=0 P∞k=0 ∥wk∥22 constant or introducing a small positive offset. Such transformations preserve the saddle-point structure of the original\nproblem while ensuring that the logarithmic transformation\nV.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 7,
+    "total_chunks": 21,
+    "char_count": 751,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b15d66a7-13da-43ce-8fa4-afc3817a967e",
+    "text": "ACTOR AND CRITIC UPDATE remains well-defined. To update the actor policies using gradient-based opti- Under this assumption, we define the following transmization, we need to compute the gradients of the objective formed objective:\nJπθ,µϕ with respect to the policy parameters. A direct\nJπθ,µϕ1 −ln Jµϕ2 .approach is to differentiate the fractional objective Jπθ,µϕ L(θ, ϕ) := ln\nitself. However, the ratio structure complicates the gradient The gradients of the transformed objective with respect to the\nderivation and makes the optimization difficult to analyze user parameter θ and the adversary parameter ϕ are given by\nand implement in a stable manner. To address this issue, we\napply the following logarithmic transformation: ∇θJπθ,µϕ1\n∇θL(θ, ϕ) = , (4)\nJπθ,µϕ1 Jπθ,µϕ1 = min max min max ln ln Jπθ,µϕ1 −ln Jµϕ2 .\nθ ϕ θ ϕ ∇ϕJπθ,µϕ1 −∇ϕJµϕ Jµϕ2 2 . (5) ∇ϕL(θ, ϕ) =\nJπθ,µϕ1 Jµϕ2Since the logarithm is strictly increasing, maximizing Jπθ,µϕ\nis equivalent to maximizing ln Jπθ,µϕ. Therefore, the saddle- Furthermore, the gradients of Jπθ,µϕ1 and Jµϕ2 can be expoint solution of the original fractional objective is preserved. pressed by using the deterministic policy gradient theorem [19] as follows: where αcritic > 0 is the critic learning rate, and y1 and y2\ndenote the target defined as follows:\n∇θJπθ,µϕ1 = Es∼ρ ∇θQπ,µϕ s, πθ(s), µϕ(s)\nπ=πθ y1 = c(sk, ak, wk, sk+1)\n1(sk+1)Qπθ,µϕk (sk+1, ak+1, wk+1), = Es∼ρ ∇θπθ(s) ∇aQπθ,µϕ(s, a, µϕ(s)) , +\na=πθ(s) y2 = ∥wk∥22 + 1(sk+1)Qµϕk (sk+1, wk+1).\n∇ϕJπθ,µϕ1 = Es∼ρ ∇ϕQπθ,µ s, πθ(s), µϕ(s) Here, 1(sk+1) is an indicator function defined as\nµ=µϕ\n0 if sk+1 = terminal state\n1(sk+1) := = Es∼ρ ∇ϕµϕ(s) ∇wQπθ,µϕ(s, πθ(s), w) , 1 else\nw=µϕ(s)\nThese updates correspond to a SARSA-type temporal-\n∇ϕJµϕ2 = Es∼ρ ∇ϕQµ s, µϕ(s) difference learning rule under deterministic policies.\nµ=µϕ\nVI. MINIMAX DEEP DETERMINISTIC POLICY GRADIENT\n= Es∼ρ ∇ϕµϕ(s) ∇wQµϕ(s, w) ,\nw=µϕ(s) To implement these actor and critic update in highwhere ρπθ,µϕ represents the on-policy distribution induced by dimensional continuous control tasks, we incorporate the\nthe policies πθ and µϕ, and Qπθ,µϕ and Qµϕ are the action- architecture and training techniques of deep deterministic\nvalue functions. Qπθ,µϕ represents the expected cumulative policy gradient (DDPG) [3]. In the following, we present\nthe implementation of the above actor–critic updates withincost starting from a given initial state, action, and disturbance, after which the policies are followed, whereas Qµϕ the DDPG framework, which leads to the proposed minimax\ndeep deterministic policy gradient (MMDDPG) algorithm.represents the expected cumulative squared disturbance norm\nstarting from a given initial state and disturbance defined as A. Actor update\nfollows: Following the DDPG framework [3], we employ neural\nQπθ,µϕ(s, a, w) network critics Qψ1 and Qψ2, parameterized by ψ1 and ψ2,\n∞ to approximate the action-value functions Qπθ,µϕ and Qµϕ, # \" respectively. Consequently, the objectives Jπθ,µϕ1 and Jµϕ2 , = E X γkck+1 s0 = s, a0 = a, w0 = w, πθ, µϕ\ncan be expressed as expectations of the corresponding actionk=0\nvalue functions: (s, a, w) ∈S × A × W,\nJπθ,µϕ1 = Es0∼ρ0 Qπθ,µϕ(s0, πθ(s0), µϕ(s0)) ,\n∞ # \" Jµϕ2 = Es0∼ρ0 Qµϕ(s0, µϕ(s0)) , X , Qµϕ(s, w) = E γk||wk||22 s0 = s, w0 = w, µϕ\nk=0 where ρ0 denotes the initial state distribution.\n(s, w) ∈S × W.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 8,
+    "total_chunks": 21,
+    "char_count": 3342,
+    "word_count": 544,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "95480d50-f10a-487a-8776-4a233f7a4808",
+    "text": "In practice, these expectations are approximated using\nmini-batch samples drawn from the replay buffer D. Given a\nUsing these gradient expressions (4) and (5), the user up- mini-batch B = {(s, a, w, s′)} sampled uniformly from D,\ndates its policy parameter θ via gradient descent, while the we estimate the expectations of the action-value functions by\nadversary updates its parameter ϕ via gradient ascent: the following batch means:\n1 θk+1 = θk −αuser ∇θL(θ, ϕ)|θ=θk , X Qψ1(s, a, w), M(Qψ1) =\nϕk+1 = ϕk + αadv ∇ϕL(θ, ϕ)|ϕ=ϕk , |B| (s,a,w,s′)∈B\n1where αuser > 0 and αadv > 0 denote the learning rates for\nM(Qψ2) = X Qψ2(s, w),\nthe user and adversary actors, respectively. |B|\n(s,a,w,s′)∈B\nUnder deterministic policies πθ and µϕ, the action-value\nfunctions satisfy Bellman equations associated with the cost where |B| denotes the mini-batch size. These batch means\nand disturbance objectives defined as follows: provide empirical estimates of the expectations in Jπθ,µϕ1\nand Jµϕ2 . Substituting these estimates into the logarithmic Qπθ,µϕ(s, a, w) = E[c(s, a, w, s′) gradients in (4) and (5) yields the following mini-batch\n+γ Qπθ,µϕ s′, πθ(s′), µϕ(s′) , approximations:\nQµϕ(s, w) = E ∥w∥22 + γ Qµϕ s′, µϕ(s′) . 1 ∇θQψ1 s, πθ(s), µϕ(s)\n∇θL(θ, ϕ) ≈ X ,\nThe Bellman equations lead to the following temporal- |B| M(Qψ1) + ϵ (s,a,w,s′)∈B\ndifference updates: (8)\n1 ∇ϕQψ1(s, πθ(s), µϕ(s)) Qπθ,µϕk+1 (sk, ak, wk) = Qπθ,µϕk (sk, ak, wk) X ∇ϕL(θ, ϕ) ≈\n+ αk y1 −Qπθ,µϕk (sk, ak, wk) , (6) |B| (s,a,w,s′)∈B M(Qψ1) + ϵ\nQµϕk+1(sk, wk) = Qµϕk (sk, wk) µϕ(s)) −∇ϕQψ2(s, , (9)\n+ αk y2 −Qµϕk (sk, wk) , (7) M(Qψ2) + ϵ where ϵ > 0 is a small constant introduced for numerical Algorithm 1 Minimax deep deterministic policy gradient\nstability. This normalization prevents vanishing gradients (MMDDPG)\nand unintended sign flipping, and maintains a balanced 1: Initialize the online critic networks Qψ1, Qψ2\ncompetition between the user and the adversary when Q- 2: Initialize the online actor networks πθ, µϕ for the user\nvalues fluctuate during training. To implement these gradient and adversary, respectively.\napproximations in practice, we define the following joint 3: Initialize the target parameters ψ′1 ←ψ1, ψ′2 ←ψ2,\nactor loss L(θ, ϕ; B): θ′ ←θ, ϕ′ ←ϕ\n4: Initialize the replay buffer D\nL(θ, ϕ; B) := 5: for Episode i = 1, 2, ...Nepisode do\n1 Qψ1(s, πθ(s), µϕ(s)) µϕ(s)) 6: Sample the initial state s0 ∼ρ0 X −Qψ2(s, .\n|B| M(Qψ1) + ϵ M(Qψ2) + ϵ 7: for Time step k = 0, 1, 2, ...T −1 do s∈B\n8: The user and adversary select an action and a\nThe gradients of this loss correspond to the mini-batch disturbance\napproximations of the logarithmic policy gradients in (8) 9: ak = πθ(sk) + ξak, wk = µϕ(sk) + ξwk\nand (9). Thus, the resulting sampled deterministic policy 10: where ξak, ξwk are OU noise for exploration.\ngradients are 11: Observe next state sk+1\n1 ∇θQψ1 s, πθ(s), µϕ(s) 12: Compute the cost ck+1 := c(sk, ak, wk, sk+1)\n∇θL(θ, ϕ; B) = X ,\n|B| M(Qψ1) + ϵ 13: Store (sk, ak, wk, ck+1, sk+1) in D (s,a,w,s′)∈B\n14: Uniformly sample a mini-batch B from D\n(10)\n15: Update the online critic parameters according to\n1 ∇ϕQψ1(s, πθ(s), µϕ(s)) (12) and (13): X ∇ϕL(θ, ϕ; B) =\n|B| M(Qψ1) + ϵ\n(s,a,w,s′)∈B ψ1 ←ψ1 −αcritic∇ψ1L(ψ1; B)\nB) −∇ϕQψ2(s, µϕ(s)) . (11) ψ2 ←ψ2 −αcritic∇ψ2L(ψ2;\nM(Qψ2) + ϵ\n16: Update the online actor parameters according to\nThe online actor parameters θ and ϕ are updated using\n(10) and (11):\nsampled deterministic policy gradients [3], [19]:\nθ ←θ −αuser∇θL(θ, ϕ; B), θ ←θ −αuser∇θL(θ, ϕ; B),\nϕ ←ϕ + αadv∇ϕL(θ, ϕ; B) ϕ ←ϕ + αadv∇ϕL(θ, ϕ; B). After updating the online actors, the target parameters θ′ and 17: Soft update target networks:\nϕ′ are softly updated as θ′ ←τθ + (1 −τ)θ′, ϕ′ ←τϕ + (1 −τ)ϕ′\nθ′ ←τθ + (1 −τ)θ′,\nψ′1 ←τψ1 + (1 −τ)ψ′1, ψ′2 ←τψ2 + (1 −τ)ψ′2\nϕ′ ←τϕ + (1 −τ)ϕ′,\n18: end for\nwhere τ ∈(0, 1) is the interpolation coefficient controlling 19: end for\nthe update rate. This soft update improves training stability\nby ensuring slow variation of the target policies. Critic update where the target are defined as follows:\nTo implement the temporal-difference updates derived in\nthe previous section within a deep RL framework, we follow y1 = c(s, a, w, s′) + γ Qψ′1(s′, πθ′(s′), µϕ′(s′)) ,\nthe approach of DDPG [3].",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 9,
+    "total_chunks": 21,
+    "char_count": 4231,
+    "word_count": 753,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cac2bcdc-52bf-4a32-b48a-7166ebd3e839",
+    "text": "As mentioned earlier, the action- y2 = ∥w∥22 + γ Qψ′2(s′, µϕ′(s′)) .value functions Qπθ,µϕ and Qµϕ are approximated by neural\nnetwork critics Qψ1 and Qψ2, respectively, and trained using The online critic parameters are updated via gradient descent:\nmini-batch samples drawn from the replay buffer D. In this\nsetting, the TD updates in (6) and (7) are implemented using ψ1 ←ψ1 −αcritic∇ψ1L(ψ1; B),\nsampled transitions. This results in a mini-batch SARSA-\nψ2 ←ψ2 −αcritic∇ψ2L(ψ2; B),style temporal-difference learning rule. Given a mini-batch\nof transitions B = {(s, a, w, s′)} sampled from the replay\nwhere αcritic > 0 is the learning rate, and the gradients ofbuffer D, the critic losses are defined as the mean squared\nthe critic losses are given by\nTD errors\n1 1\nL(ψ1; B) = X (y1 −Qψ1(s, a, w))2 , ∇ψ1L(ψ1; B) =\n2 |B|\n(s,a,w,s′)∈B 1\nX y1 −Qψ1(s, a, w) ∇ψ1Qψ1 s, a, w , 1 1\nL(ψ2; B) = X (y2 −Qψ2(s, w))2 , |B| (s,a,w,s′)∈B\n2 |B| (s,a,w,s′)∈B (12) Mean and standard deviation of cumulative discounted costs across ten random seeds under random Gaussian disturbances. Error bars indicate one\nstandard deviation. Each row corresponds to a different algorithm: MMDDPG (minimax deep deterministic policy gradient), DDPG (deep deterministic\npolicy gradient) [3], RARL (robust adversarial reinforcement learning) [6], PR-DDPG (probabilistic action-robust DDPG), and NR-DDPG (noisy actionrobust DDPG) [10]. While other baseline methods exhibit increased cost and variance as task complexity grows, MMDDPG consistently achieves\nthe lowest average cost with minimal variance across both environments.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 10,
+    "total_chunks": 21,
+    "char_count": 1592,
+    "word_count": 251,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ebd24aa-49f1-4545-97a0-eb27cf56dca8",
+    "text": "∇ψ2L(ψ2; B) = as minimization objectives that are coercive with respect\n1 to disturbances. This coercive property ensures that the\nX y2 −Qψ2(s, w) ∇ψ2Qψ2 s, w . (13) |B| cost increases sharply as the state deviates under external\n(s,a,w,s′)∈B perturbations. As a result, it provides a principled foundation\nAfter updating the online critics, the target critic parameters for learning policies that effectively suppress disturbances.\nare softly updated as Detailed descriptions of the environments are presented in\nAppendix A.\nψ′1 ←τψ1 + (1 −τ)ψ′1, 1) Robustness against external disturbances: The first set\nψ′2 ←τψ2 + (1 −τ)ψ′2, of experiments assesses the agent's resilience to external\nperturbations. The disturbance w is modeled as a stochastic\nwhere τ ∈(0, 1) is the interpolation coefficient. process sampled from a Gaussian distribution, N(µ, σ2),\nC. Exploration which enables evaluation under both biased and random\nperturbations. To enable exploration, we perturb both the user and\n• In Reacher, disturbances are applied to the fingertipthe adversary policies using temporally correlated Ornstein–\nalong the x- and y-axes to perturb the end-effectorUhlenbeck (OU) noise [20], following the standard DDPG\nduring target-reaching.approach [3]:\n• In Pusher, three-dimensional disturbances are applied to\nak = πθ(sk) + ξak, the robotic arm, affecting both the reaching trajectory\nwk = µϕ(sk) + ξwk , and the interaction with the object.\n2) Robustness to model parameter variations: The second\nwhere the noise terms ξak and ξwk evolve according to set of experiments evaluates the resilience of the learned\npolicies to parametric uncertainties. In both the Reacher ξk+1 = ξk + θξ(µξ −ξk)∆t + σξ ∆t ϵk, ϵk ∼N(0, 1).\nand Pusher environments, we simulate model mismatches\nwhere θξ, µξ, and σξ control the rate of mean reversion, the by perturbing the actuator-related parameters of the robotic\nlong-term mean, and the noise scale, respectively. arm. Specifically, we vary the scale of joint damping and gear\nThe overall algorithm is described at Algorithm 1. coefficients, which directly govern the damping forces and\nthe torque transmission of the joints.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 11,
+    "total_chunks": 21,
+    "char_count": 2155,
+    "word_count": 332,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf15997b-2ea7-4bdc-95c1-a992e4b61224",
+    "text": "To assess robustness to\nVII. EXPERIMENT AND RESULTS\nactuator uncertainty, we evaluate the policies under diverse\nA. Experiment setup parameter scales ranging from under-damped to over-damped\nWe conduct two sets of experiments to evaluate the regimes. This setting introduces significant deviations from\nrobustness of the proposed algorithm in two MuJoCo en- the nominal training dynamics and allows us to examine\nvironments [11], Reacher and Pusher. These environments whether MMDDPG maintains stable control performance.\nare selected because their cost functions can be reformulated Such analysis is important for real-world deployment, where Performance heatmaps under model parameter uncertainties in Reacher (top) and Pusher (bottom) environments. The x-axis and y-axis represent\nthe gear scale and joint damping scale, respectively. Darker colors indicate lower mean discounted costs. Each row corresponds to a different algorithm:\nMMDDPG (minimax deep deterministic policy gradient), DDPG (deep deterministic policy gradient) [3], RARL (robust adversarial reinforcement\nlearning) [6], PR-DDPG (probabilistic action-robust DDPG), and NR-DDPG (noisy action-robust DDPG) [10]. MMDDPG maintains a consistently\nlow-cost region across the entire parameter grid, demonstrating superior robustness to parametric mismatches compared to adversarial and\naction-robust baselines. friction and motor constants are often difficult to identify function, which provides a principled balance between nomaccurately.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 12,
+    "total_chunks": 21,
+    "char_count": 1503,
+    "word_count": 198,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7ff97a7b-c632-4df0-8901-0bd3c63291b4",
+    "text": "We compare MMDDPG with the baseline al- inal performance and disturbance attenuation. Unlike strict\ngorithm DDPG [3] and adversarial RL methods including worst-case optimization, the fractional formulation enables\nRARL [6] and action-robust DDPG variants (PR-MDP and smoother trade-offs and results in more stable policy updates. All algorithms are trained for 100k Action-robust methods, such as PR-DDPG and NRsteps across ten independent random seeds to ensure sta- DDPG [10], perform notably worse, particularly in the\ntistical significance. Detailed hyperparameters and neural Pusher task. These methods primarily address action-space\nnetwork architectures are provided in Appendix B. stochasticity rather than the dynamic uncertainty caused by\npersistent external disturbances. Furthermore, while these\nB.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 13,
+    "total_chunks": 21,
+    "char_count": 810,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "05b8fc04-1b37-4d2f-ba19-66fbfc4548b2",
+    "text": "Results baselines require sensitive hyperparameter tuning (e.g., the\n1) Robustness to disturbances: Figure 2 summarizes the noise parameter α [10]), MMDDPG embeds robustness\ncumulative discounted costs across ten independent seeds directly into the objective level. This design eliminates the\nunder episode-wise constant Gaussian disturbances. In the need for delicate parameter adjustment and results in more\nReacher environment, both MMDDPG and RARL [6] exhibit consistent performance across different disturbance realizacompetitive performance by achieving low average costs with tions and random seeds.\nminimal variance. This suggests that in relatively simple, Overall, these results indicate that robustness induced\nshort-horizon tasks, standard adversarial minimax formula- through objective-level design, as in MMDDPG, is more\ntions can effectively capture the necessary robustness. How- effective and scalable than adversarially aggressive or noiseever, DDPG and action-robust variants (PR-DDPG and NR- based action-robust formulations, especially in complex enDDPG) show higher sensitivity to disturbances, as evidenced vironments subject to external disturbances.\nby their larger error bars. 2) Robustness to model uncertainty: Figure 3 presents the\nA more distinct performance gap emerges in the more performance of each algorithm across a grid of variations\ncomplex Pusher environment. As task complexity and the in gear and damping scales for the Reacher and Pusher\ntemporal horizon increase, RARL suffers from higher aver- environments. The heatmaps illustrate the sensitivity of each\nage costs and significantly larger variances. This performance policy to actuator-related model mismatches, where darker\ndegradation indicates that strict minimax optimization may (blue) regions represent lower cumulative discounted costs.\ninduce overly aggressive adversarial interactions in high- Across all parameter configurations, MMDDPG exhibits\ndimensional spaces, which leads to unstable learning trajec- consistently low costs with a remarkably smooth perfortories. In contrast, MMDDPG consistently achieves the low- mance profile. This consistency indicates that the proposed\nest average cost and variance in Pusher.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 14,
+    "total_chunks": 21,
+    "char_count": 2226,
+    "word_count": 297,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2121a25e-9335-4424-a6d0-c23898ff426e",
+    "text": "This improvement policy does not merely overfit to the nominal training enviis primarily attributed to the proposed fractional objective ronment but generalizes effectively across a wide range of actuator dynamics. In contrast, other algorithms—particularly [7] E. Bayen,\nin the Pusher environment—show pronounced performance \"Robust reinforcement learning using adversarial populations,\" arXiv\nfluctuations as the gear and damping scales vary; this trend [8] P. Yang, \"Roreflects high sensitivity to variations in actuator parameters. bust adversarial reinforcement learning with dissipation inequation\nWhile RARL can perform competitively in simpler settings, constraint,\" in Proceedings of the AAAI Conference on Artificial\nIntelligence, 2022, pp. 5431–5439.\nits strict min–max formulation leads to unstable learning in [9] T. Lee, \"Robust deterministic policy gradient for discomplex environments such as Pusher. Furthermore, action- turbance attenuation and its application to quadrotor control,\" arXiv\nrobust baselines relying on noise injection fail to cope with preprint arXiv:2502.21057, 2025.\n[10] C. Mannor, \"Action robust reinforcement\npersistent disturbances and structural parameter variations. learning and applications in continuous control,\" in International\nThese results highlight that objective-level robustness is more Conference on Machine Learning. PMLR, 2019, pp. 6215–6224.\neffective and scalable than adversarially aggressive or noise- [11] E. Tassa, \"Mujoco: A physics engine for\nmodel-based control,\" in 2012 IEEE/RSJ international conference on\nbased action perturbations. intelligent robots and systems. IEEE, 2012, pp. 5026–5033.\n[12] J. Doya, \"Robust reinforcement learning,\" Neural\nVIII. CONCLUSION computation, vol. 17, no. 2, pp. 335–359, 2005.\n[13] T. Bernhard, H-infinity optimal control and related\nThis paper proposes minimax deep deterministic policy minimax design problems: a dynamic game approach. Boston:\nSpringer Science & Business Media, 2008.\ngradient (MMDDPG), an adversarial reinforcement learning [14] J. Pang, \"Learning Hframework that integrates the fractional objective function infinity locomotion control,\" arXiv preprint arXiv:2404.14405, 2024.\nwith deep deterministic policy gradients (DDPG).",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 15,
+    "total_chunks": 21,
+    "char_count": 2249,
+    "word_count": 292,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bc4342e8-25a1-41a5-bf06-5bbb3c605b8b",
+    "text": "Kumar, \"Robust deep\nreinforcement learning for quadcopter control,\" IFAC-PapersOnLine,\nposed framework directly addresses robustness challenges vol. 54, no. 20, pp. 90–95, 2021.\narising from external disturbances and model uncertainties [16] J. Pietquin, \"Approximate\nby formulating the learning process as a principled min–max dynamic programming for two-player zero-sum markov games,\" in\nInternational Conference on Machine Learning. PMLR, 2015, pp.\noptimization problem. 1321–1329. Comprehensive evaluations in MuJoCo environments [17] T. Basar, \"A dynamic games approach to controller design: Disturdemonstrate that MMDDPG achieves consistently low cu- bance rejection in discrete time,\" in Proceedings of the 28th IEEE\nConference on Decision and Control,. IEEE, 1989, pp. 407–414.\nmulative costs and superior learning stability under both [18] A. Weeren, \"The discrete-time riccati equation\nstochastic disturbances and actuator-related parametric un- related to the h/sub/spl infin//control problem,\" IEEE Transactions on\ncertainties. Compared to baseline algorithms, MMDDPG Automatic Control, vol. 39, no. 3, pp. 686–691, 2002.\n[19] D. Riedexhibits significantly reduced performance sensitivity and miller, \"Deterministic policy gradient algorithms,\" in International\nimproved generalization across a wide range of operating Conference on Machine Learning. Pmlr, 2014, pp. 387–395.\nconditions. [20] G. Ornstein, \"On the theory of the brownian\nmotion,\" Physical review, vol. 36, no. 5, p. 823, 1930.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 16,
+    "total_chunks": 21,
+    "char_count": 1504,
+    "word_count": 199,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f7921a34-9638-4368-b647-c9870775e0d1",
+    "text": "These results suggest that incorporating robustness directly at the objective level through a fractional formulation provides an effective and scalable approach to robust\npolicy learning. Future work will explore extensions of this\nframework to real-world robotic systems, as well as its\napplicability to broader classes of nonlinear uncertainties and\nmulti-agent settings. Bolton et al., \"Mastering\nthe game of go without human knowledge,\" Nature, vol. 550, no. 7676,\npp. 354–359, 2017.\n[2] V. Ostrovski\net al., \"Human-level control through deep reinforcement learning,\"\nNature, vol. 518, no. 7540, pp. 529–533, 2015.\n[3] T. Wierstra, \"Continuous control with deep reinforcement learning,\" arXiv preprint arXiv:1509.02971, 2019.\n[4] D. Vanhoucke et al., \"Scalable\ndeep reinforcement learning for vision-based robotic manipulation,\" in\nConference on Robot Learning.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 17,
+    "total_chunks": 21,
+    "char_count": 865,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2e92068c-337a-4c76-9752-263ace9253d1",
+    "text": "PMLR, 2018, pp. 651–673.\n[5] L. Lamprier, \"Robust deep reinforcement\nlearning through adversarial attacks and training: A survey,\" arXiv\n[6] L. Gupta, \"Robust adversarial reinforcement learning,\" in International Conference on Machine\nLearning. PMLR, 2017, pp. 2817–2826. TABLE II\nAPPENDIX\nDETAILS ABOUT THE HYPERPARAMETERS OF EACH ALGORITHMS\nA. Environments\nValue\nNumber of steps for training 100K\nBuffer size 1M\nLearning rate for critic αcritic 0.001\nLearning rate for actor of user αuser 0.0001\nLearning rate for actor of adversary αadv 0.0001\nHidden layer sizes [256, 256]\nSoft update interpolation coefficient τ 0.005\nBatch size |B| 128\nActivation function in actor network tanh\nOptimizer Adam\nDiscounted factor γ 0.99 Fig. 4. Experiment environments. Left: Reacher, Right Psuher\nPolicy noise OU noise\nMean of OU noise µξ 0\n(a) Reacher Standard deviation of OU noise σξ 0.2\nThe Reacher is a planar robotic arm with two rotational\njoints that operates in a two-dimensional workspace.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 18,
+    "total_chunks": 21,
+    "char_count": 987,
+    "word_count": 151,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5051e30f-90c8-40ce-b0a8-526a74b0544d",
+    "text": "Algorithm 2 Deterministic deep policy gradient (DDPG)\nThe task is to control the arm so that its end-effector\n1: Initialize the online critic networks Qψ reaches a randomly placed target position. The envi-\n2: Initialize the actor networks πθ for the user. ronment provides an 11-dimensional state space, which\n3: Initialize the target parameters ψ′ ←ψ, θ′ ←θ includes joint angles, joint angular velocities, and the\n4: Initialize the replay buffer D relative position of the target. The action space is\n5: for Episode i = 1, 2, ...Niter do 2-dimensional and continuous, corresponding to the\n6: Observe the initial state s0 torques applied at the shoulder and elbow joints.\n7: for Time step k = 0, 1, 2, ...T −1 do (b) Pusher\nThe Pusher environment consists of a planar robotic 8: User selects actions ak = πθ(sk) + ξak\narm tasked with pushing a cylindrical object to a 9: where ξak is OU noise for exploration.\n10: Observe the next state sk+1 designated target location on a table. The environment\n11: Compute the cost ck+1 := c(sk, ak, sk+1) provides a 23-dimensional state space, which includes\n12: Store the tuple (sk, ak, ck+1, sk+1) in D the positions and velocities of the robot joints, the ob-\n13: Uniformly sample a mini-batch B from D ject, and the target. The action space is 7-dimensional\n14: Update critic network: and continuous, corresponding to the torques applied\nto the robot arm joints. ψ ←ψ −αcritic∇ψL(ψ; B) TABLE I 15: Update actor networks by the DPG:\nDETAILS ABOUT STATE, ACTION, DISTURBANCE SPACES\nθ ←θ −αuser∇θL(θ; B) Reacher (b) Pusher 16: Soft update target parameters ψ′ and θ′\ndim(S) 17 23 17: end for\ndim(A) 6 3 18: end for\nAction range [−1, 1] [−1, 1] dim(W) 2 3\nDisturbance range [−1, 1] [−0.5, 0.5] where L(ψ; B) and L(θ; B) defined as follows\nDisturbance body name tips arm r wrist roll link\nL(ψ; B)\n:= X (c + γQψ′(s′, πθ′(s′)) −Qψ(s, a))2\nB. Algorithm details |B|\n(s,a,c,s′)∈B\nThe hyperparameters of algorithms used in experiments 1\nL(θ; B) := X Qψ(s, πθ(s))are described in Table II. The overall descriptions of DDPG |B|\nand RARL are desribed in Algorithm 2 and 3 (s,a,c,s′)∈B Algorithm 3 Robust adversarial reinforcement learning In the Reacher environment, external disturbances were\n(RARL) applied to the tips arm link along the x- and y-axes.\n1: Initialize the online critic networks Qψ1, Qψ2 For each evaluation episode, a disturbance bias was sampled\n2: Initialize the actor networks πθ, µϕ for the user and from a Gaussian distribution whose mean magnitude was\nadversary. selected from {0.0, 1.0, 2.0, 3.0, 5.0}, and whose standard\n3: Initialize the target parameters ψ′1 ←ψ1, ψ′2 ←ψ2, deviation was chosen from {0.0, 0.5, 1.0, 2.0}. The sampled\nθ′ ←θ, ϕ′ ←ϕ disturbance remained constant throughout the episode, mod-\n4: Initialize the replay buffer D eling persistent but uncertain external perturbations.\n5: for Episode i = 1, 2, ...Niter do In the Pusher environment, disturbances were applied to\n6: Observe the initial state s0 the r wrist roll link along the x-, y-, and z-axes. The\n7: for Time step k = 0, 1, 2, ...T −1 do disturbance for each episode was sampled from a zero-mean\n8: User selects an action Gaussian distribution with axis-wise standard deviations se-\n9: and adversary selects an disturbance lected from {[0.5, 0.5, 0.2], [1.0, 1.0, 0.5], [2.0, 2.0, 1.0]}. As\n10: ak = πθ(sk) + ξak, wk = µϕ(sk) + ξwk in the Reacher experiments, the disturbance was held con-\n11: where ξak, ξwk are OU noise for exploration. stant for the duration of each episode.\n12: Observe the next state sk+1 For both environments, each trained policy was evaluated\n13: Compute the cost ck+1 := c(sk, ak, wk, sk+1) over 500 independent test episodes for each disturbance con-\n14: Store the tuple (sk, ak, wk, ck+1, sk+1) in D figuration. This evaluation protocol assesses the robustness\n15: Uniformly sample a mini-batch B from D of the learned policies under persistent external disturbances\n16: Update critic network: acting throughout an entire episode.\n2) Robustness to model parameter uncertainty: To as-\nψi ←ψi −αcritic∇ψiL(ψi; B), i ∈{1, 2}\nsess robustness with respect to model parameter uncer-\n17: Update actor networks by the DPG: tainty, we varied both the gear ratio and the joint damping of the actuators in the Reacher and Pusher environ-\nθ ←θ −αuser∇θL(θ; B) ments.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 19,
+    "total_chunks": 21,
+    "char_count": 4317,
+    "word_count": 736,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "35840ddb-90f1-4f96-b0a0-94c819716073",
+    "text": "Specifically, the damping scale was selected from\nϕ ←ϕ + αadv∇ϕL(ϕ; B) {0.2, 0.5, 1.0, 2.0, 5.0},while the gear scale was chosen from\n{0.5, 0.8, 1.0, 1.2, 1.5}. This resulted in a total of 25 distinct 18: Soft update target networks ψ′1, ψ′2, θ′ and ϕ′:\nparameter configurations. 19: end for\nFor each configuration, the trained policies were evaluated 20: end for\nover 100 independent simulation episodes, and the average\ncumulative discounted cost was recorded to assess robustness\nunder actuator-related parameter variations. where two critic loss are defined as L(ψ1; B)\n:= X (c + γQψ′1(s′, πθ′(s′)) −Qψ1(s, a))2 |B|\n(s,a,w,c,s′)∈B\nL(ψ2; B)\n:= X (c + γQψ′2(s′, µϕ′(s′)) −Qψ2(s, w))2 |B|\n(s,a,w,c,s′)∈B and two actor loss are defined as\nL(θ; B) := X [Qψ1(s, πθ(s))]\n|B|\n(s,a,w,r,s′)∈B\nL(ϕ; B) := X [Qψ2(s, µϕ(s))]\n|B|\n(s,a,w,r,s′)∈B Experiments\n1) Robustness to external disturbances: To evaluate robustness against external disturbances, we applied episodewise constant disturbances to specific links of the robot in\nthe Reacher and Pusher environments.",
+    "paper_id": "2603.12110",
+    "title": "Taming the Adversary: Stable Minimax Deep Deterministic Policy Gradient via Fractional Objectives",
+    "authors": [
+      "Taeho Lee",
+      "Donghwan Lee"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12110v1",
+    "chunk_index": 20,
+    "total_chunks": 21,
+    "char_count": 1056,
+    "word_count": 165,
+    "chunking_strategy": "semantic"
+  }
+]

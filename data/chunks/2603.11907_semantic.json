@@ -1,0 +1,1199 @@
+[
+  {
+    "chunk_id": "7206df55-0746-41a9-87ba-6c3068a98f22",
+    "text": "Wanting Liang * 1 Zhiheng Zhang * 1 Abstract high-dimensional covariates (Liu et al., 2024). However,\nthis focuses on covariate-side complexity, and leaves open\nEstimating Individual Treatment Effects (ITE) how representation learning behaves when the treatment\nin multi-treatment scenarios presents two chal- space itself is multi-dimensional or endowed with richer\nlenges: the hyperparameter selection dilemma geometric structure, as in dose–response or geodesic causal2026 and the curse of dimensionality. We derive a settings (Kurisu et al., 2024).\nnovel generalization bound and propose a theoretically grounded estimator for the optimal bal- A key methodological distinction of causal representaancing weight α, eliminating expensive heuristic tion learning—relative to weighting- or matching-basedMar\ntuning.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 1,
+    "total_chunks": 63,
+    "char_count": 815,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "77a4eae5-1e75-41f2-842a-f32b84e0212b",
+    "text": "We investigate three balancing strategies: paradigms—is that it enforces invariance through compresPairwise, One-vs-All (OVA), and Treatment Ag- sion. Concretely, many objectives take the form L(θ; α) =12\ngregation. While OVA excels in low-dimensional Lpred(θ) + α Rbal(θ), where Rbal measures distributional\nsettings, our Treatment Aggregation strategy en- discrepancy across treatment groups (often via an IPM),\nsures O(1) scalability. Furthermore, we extend and α controls the fundamental trade-off between confound- this framework to Multi-Treatment CausalEGM, a ing removal and information preservation. According to\ngenerative architecture preserving the Wasserstein the binary-treatment theory, an optimal α⋆is suggested to\ngeodesic structure of the treatment manifold. Ex- exist (Shalit et al., 2017) heuristically, yet in practice α is[cs.LG]\nperiments on semi-synthetic and image datasets almost always treated as a heuristic hyperparameter.\ndemonstrate that our approach significantly out- This heuristic breaks down sharply in multi-treatment setperforms traditional models in estimation accutings (T ∈{0, . . . , K}), where interventions naturally come racy and efficiency, particularly in large-scale in- in many levels (e.g., drug dosage, regimen choice, or multitervention scenarios. channel marketing). Consider personalized dose-response\nestimation with tens of dosage levels and high-dimensional\ncovariates (images, text, EHR): choosing α by grid search\n1. Introduction becomes prohibitively expensive, while confounding patterns vary across treatment arms, making tuning unstable. Estimating individualized causal effects from observational\nMoreover, prevailing multi-treatment extensions typically\ndata is a central problem in modern causal inference, with\nenforce pairwise balancing (Schwab et al., 2018; Lopez &\ndirect implications for personalized medicine, policy evaluGutman, 2017), requiring discrepancy constraints; ation, and targeted interventions. Recent progress has been O(K2) this not only makes training unscalable, but can also overdriven by causal representation learning, which learns a\nconstrain Φ and induce representation collapse, deterioratlatent representation Φ(X) in which treatment assignmentarXiv:2603.11907v1 ing both predictive accuracy and causal generalization.\nbecomes less confounded while outcome-relevant information is retained (Johansson et al., 2016; Shalit et al., 2017). These observations expose a missing theoretical ingredient. Despite its empirical success, the statistical role of represen- Recent theoretical evidence already suggests that causal\ntation learning remains incompletely understood beyond the representation learning does not admit a \"free lunch\": combinary-treatment regime. Recent work has begun to open pressing representations to reduce imbalance between treatthe representation layer itself, providing a more fine-grained ment and control groups can itself introduce additional bias\ncharacterization of latent structure and its interaction with in identification and estimation (Melnychuk et al., 2023). This phenomenon highlights that invariance is not uniformly 1Shanghai University of Finance and Economics,\nShanghai, China. Correspondence to: Wanting Liang beneficial, but comes at a statistical cost that depends on\n<2022111027@stu.sufe.edu.cn>, Zhiheng Zhang how aggressively the representation is compressed.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 2,
+    "total_chunks": 63,
+    "char_count": 3400,
+    "word_count": 438,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "af3d73a5-08d4-4a3f-ae67-7bbc39f02e0b",
+    "text": "Current\n<studyzzh@163.com>. literature lacks a principled characterization of how much\ninvariance a causal representation should enforce when Causal Representation Learning with Optimal Compression under Complex Treatments K grows: stronger balancing is often implicitly assumed We learn a representation map Φ : X →Z ⊂Rd\nto be better, yet multi-treatment regimes amplify the fact and a predictor h : Z × T →P2(Y), where P2(Y)\nthat invariance is a form of compression that can destroy denotes distributions on Y with finite second moments.prognostic signal. Thus, the core unresolved question is not Given z = Φ(x), the model outputs an estimated conmerely computational—it is statistical: what is the optimal ditional distribution bPY |z,t := h(z, t), hencebτj,k(x) :=representation trade-off, and how should α (and the balanc-\n|Φ(x),k .Let ℓ(bP, y) be a proper loss foring strategy) be chosen in a way that remains stable and W2 bPY |Φ(x),j, bPY\ndistribution prediction (e.g., negative log-likelihood for ascalable under many treatments?\nparametric family, or a Wasserstein-compatible surrogate). We address this gap by reframing multi-treatment causal Define the factual risk\nrepresentation learning as a problem of optimal compression(See Appendix A for a detailed discussion on related ϵF (Φ, h) := E ℓ(h(Φ(X), T), Y ) ,\nwork). In summary, our results provide a unified answer 1 n (3)\nto the central question of multi-treatment causal represen- bϵF (Φ, h) := n X ℓ(h(Φ(Xi), Ti), Yi).\ntation learning: how to choose an optimal representation i=1\nthat balances deconfounding and information preservation,\nWe now recall the key structural insight from the binary-without heuristic tuning and without quadratic scaling in\ntreatment literature (K = 2). When h parameterizes onlyK.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 3,
+    "total_chunks": 63,
+    "char_count": 1780,
+    "word_count": 271,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "38f2100a-f1dc-486e-9b72-f2c9f07b03b1",
+    "text": "Our main contributions are: (1) We derive a multiconditional means (degenerate outcome distributions), ℓtreatment generalization bound that formalizes the bias–\nreduces to squared loss and ϵITE reduces to the classicalinformation trade-off and yields a consistent estimator for\nPEHE of Shalit et al. (2017).the optimal balancing weight α⋆(eliminating expensive\nheuristic tuning). (2) We propose Treatment Aggregation In Johansson et al. (2016), the counterfactual risk is\nvia treatment embeddings and HSIC, achieving O(1) bal- bounded via a domain-adaptation argument: the disancing complexity and stable behavior as the number of crepancy between treated and control domains enters\ntreatments increases. (3) We extend the framework to a gen- through an IPM in representation space. Building on this,\nerative architecture and demonstrate Wasserstein-geodesic Shalit et al. (2017) derives binary-treatment generalization\nconsistency, enabling physically interpretable counterfactual bounds for ITE estimation (PEHE) of the schematic form\ninterpolation across treatments. (0) (1) Φ , PΦ + ϵITE(Φ, h) ≤ CF ϵF (Φ, h) + CB IPMG P\nCC Complexity(h ◦Φ; n, δ) for suitable constants and reg-\n2. Framework ularity conditions (e.g., Lipschitz hypotheses and bounded\nlosses). The crucial point is the decomposition: ITE error is\ni=1 from a distri- controlled by (i) factual prediction and (ii) a representation-We observe i.i.d. samples {(Xi, Ti, Yi)}nbution on with covariates X outcome level imbalance term. This decomposition motivates posing X × T × Y, ∈X,Y and discrete treatment T . . . , K Let representation learning as a controlled compression prob- ∈Y, ∈{0, −1}. PY (t)|X=x denote the conditional distribution of potential lem. The positive constants CF , CB, CC depend on regularoutcomes , assuming standard identification con- ity conditions (e.g., Lipschitz/smoothness and boundedness {Y (t)}t∈Tditions (Assumption 2.4). assumptions) independent of n, matching specifications in\nThroughout, we treat individualized causal effects distribu- prior work (Csillag et al., 2024; Johansson et al., 2022;\ntionally in Wasserstein space. For any j, k ∈T , define Shalit et al., 2017; Johansson et al., 2016). For this inequality, in the binary case, T = (t) τj,k(x) := PY (j)|X=x, PY (k)|X=x , (1) W2 and PΦ denotes the conditional distribution of {0, 1}\nwhere W2 is the 2-Wasserstein distance (well-defined when- the learned(t) representation Φ(X) given treatment T = t,\never the involved distributions have finite second moments). i.e., PΦ := L(Φ(X) | The factual risk is\nA natural target risk is the multi-treatment PEHE criterion ϵF (Φ, h) := E ℓ(h(Φ(X), T), Y ) , where ℓ(bP, y) is a\nproper loss for predicting the (possibly distributional) out-  \nϵITE := EX X (2) come given (Φ(X), T) and the expectation is taken over  (bτj,k(X) −τj,k(X))2 , the observational distribution of (X, T, Y ). The ITE risk\n0≤j<k≤K−1\nϵITE(Φ, h) denotes the target error for individualized treatwhere bτj,k(x) is computed from the model's estimated con- ment effects (e.g., PEHE in the scalar-mean setting), and\nditional distributions. In the classical scalar-outcome regime in our distributional formulation it is the risk in (2) spewhere one models conditional means (or for degenerate cialized to K = 2. Moreover, The discrepancy term\nPY (t)|X=x), (1) reduces to a mean-based ITE (up to em- is an integral probability metric (IPM) IPMG(P, Q) :=\nbedding), hence (2) subsumes the standard PEHE objective supg∈G EP [g] −EQ[g] , where G is a prescribed functionstudied in Johansson et al. (2016); Shalit et al. (2017). class (e.g., the unit ball of an RKHS, yielding MMD). Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 4,
+    "total_chunks": 63,
+    "char_count": 3731,
+    "word_count": 576,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c11b22af-d88b-4c36-af91-71d5eed83fa5",
+    "text": "bound holds with probability at least 1 over the draw of coefficient, suggesting a fixed ratio (i.e., choose α = CB ) CF −δ\nthe sample of size n, where δ ∈(0, 1) is a confidence level. between factual risk and discrepancy. However, this ratio is\nFinally, Complexity(h ◦Φ; n, δ) denotes a standard statisti- not an identifiable constant: it aggregates regularity parame-cal complexity term controlling the generalization gap of the ters (e.g., Lipschitz/smoothness constants of the hypothesis\ncomposed predictor h ◦Φ (e.g., via Rademacher complexity class and the choice of IPM function class), and it changesor VC-type bounds); its precise form and constants depend under rescaling of losses, representation constraints, and\non the hypothesis class and regularity assumptions, and will metric choices. We therefore parameterize this unknown\nbe made explicit in Section 3. ratio by α and interpret representation learning as controlled\ncompression. Under standard constraint qualifications, tunFor a balancing strategy define a population imbal- ing α in the penalized objective is equivalent to selecting a S, (t)\nΦance functionalRS(Φ) := DS {P }t∈T , where DS feasible representation family under an imbalance budget,\nis a strategy-specific discrepancy operator (e.g., an IPM- i.e., moving along the Pareto frontier between predictive\nbased sum or a dependence functional). Since RS(Φ) is fidelity and distributional invariance. This perspective is in- essential in multi-treatment problems, where theunknown, we use an empirical estimator computed creasingly bRS(Φ) discrepancy structure depends on the balancing strategy andfrom We interpret as an invariance ρ i=1. {(Xi, Ti)}n ≥0(balance) budget. Motivated by the binary bounds above, the number of treatments, rendering any fixed-coefficient\nwe define the representation selection problem as: find the approach conceptually and practically untenable.\nmost predictive representation among those that satisfy a Extension: From Binary to Multi-Treatment. When\nprescribed imbalance budget, K > 2, the binary template immediately raises the\nquestion: what replaces the single treated–control\nmin (Φ, h) s.t. (4) Φ,h bϵF bRS(Φ) ≤ρ, discrepancy? A direct extension of the arguments\nin Johansson et al. (2016); Shalit et al. (2017) treats\nwhich is precisely a controlled compression formulation. each pair of treatment arms as a domain-adaptation\nCrucially, (4) is (under standard constraint qualifications) subproblem. This yields a multi-treatment bound of\nequivalent to the penalized Lagrangian form the same schematic form, ϵITE(Φ, h) ≲ bϵF (Φ, h) + (j) (k)\nP0≤j<k≤K−1 IPMG bPΦ , bPΦ + (complexity term).\nmin (Φ, h) + α α (5) The key difference is that the imbalance component now Φ,h bϵF bRS(Φ), ≥0,\ninvolves multiple discrepancies across arms, which is the\nwhere α is the Lagrange multiplier corresponding to the source of both computational and statistical instability as\nbudget ρ. Thus, tuning α is theoretically equivalent to se- K grows. Our theory section (Section 3) will formalize\nlecting a feasible representation family {Φ : bRS(Φ) ≤ρ}, this extension and quantify how different imbalancei.e., controlling the effective geometry and capacity of Φ. constructions affect stability. Lemma 2.2 (Penalty–constraint equivalence). Let Let P Φ(t) denote the conditional distribution of Φ(X) given\nT = t. Recall the definition of IPM, we study three strate-f(Φ, h) := bϵF (Φ, h) and g(Φ) := bRS(Φ).",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 5,
+    "total_chunks": 63,
+    "char_count": 3451,
+    "word_count": 519,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5b6f5259-06f8-411c-bdbc-e3912c757d53",
+    "text": "Consider the\nconstrained problem (4) with budget ρ. Assume (i) the gies ova,feasible set h) : g(Φ) is nonempty and admits S ∈{pair, agg}: {(Φ, ≤ρ}a strictly feasible point (Slater condition), and (ii) strong Pairwise balancing (S = pair).\nduality holds for (4). Then there exists such that (j) (k) α⋆≥0every primal optimum of (4) is also a minimizer of (5) Rpair(Φ) := X IPMG P Φ , PΦ , cost O(K2).\nwith α = α⋆. Conversely, for any α ≥0, any minimizer of 0≤j<k≤K−1\n(5) is a minimizer of (4) with ρ = g(Φα), where Φα is an\n(−k)\nbe the mixture Φoptimizer under α. One-vs-All balancing (S = ova). Let P\ndistribution of Φ(X) over {t ̸= k}.If α is too small (or ρ too large), the optimizer can choose\nrepresentations close to the identity map, preserving out- K−1\n(k) (−k)\nΦ , PΦcome signal but also preserving imbalance, yielding biased Rova(Φ) := X IPMG P , cost O(K).\ncounterfactual generalization. If α is too large (or ρ too k=0\nsmall), the optimizer is forced to compress aggressively,\noften discarding outcome-relevant information.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 6,
+    "total_chunks": 63,
+    "char_count": 1033,
+    "word_count": 184,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "07ef1bfc-e4ad-4ddd-ada7-c8e8f00cd78d",
+    "text": "We aim to Treatment aggregation (S = agg). We embed treatments\nlocate the optimal compression point (the optimal α⋆). via a learnable map e : T →Rde and write ET := e(T). We enforce global independence between Φ(X) and ET\nWhy do we treat α as a free (and estimable) multiplier? through HSIC (Gretton et al., 2005):\nA potential confusion is that in the binary bound of Shalit\net al. (2017), the imbalance term appears with a constant Ragg(Φ) := HSIC Φ(X), ET , cost O(1) w.r.t. Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 7,
+    "total_chunks": 63,
+    "char_count": 557,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ac40d523-671f-4255-97c3-44452be80849",
+    "text": "For IPM instantiations such as MMD, bRpair(Φ) and consistency of bαS for α⋆S(n). Whether α⋆S(n) converges to\nbRova(Φ) are obtained by replacing expectations in IPM 0 or to a positive limit as n →∞depends on the intrinsicdeifinition with sample averages, yielding standard (un- bias–information structure of the problem and is not pathobiased) U-statistic estimators. For HSIC, bRagg(Φ) is logical. Finally, in multi-treatment regimes the effective con-the usual empirical V-statistic estimator computed from stants in CompS can scale with K in a strategy-dependent\n{(Φ(Xi), e(Ti))}ni=1. These are consistent estimators of manner, making the finite-sample trade-off non-negligibletheir population counterparts under mild moment conditions even for large n.\n(See detailed definitions in Appendix B.1). Remark 2.3 (Geometric Extension: Wasserstein Manifolds\nand Geodesic Causal Inference). The Wasserstein formu-The Optimal Trade-off as a Bilevel Problem. The\nlation (1) places potential outcome distributions on a non-population-optimal tuning parameter is\nEuclidean metric space. In many applications (e.g., dose-\nα⋆(S) ∈arg minα≥0 ϵITE Φ⋆α,S, h⋆α,S , (6) response,treatments interventionappear discreteintensity,but are biologicalgenerated bytrajectories),an underwhere (Φ⋆α,S, h⋆α,S) denotes the optimizer of the population lying continuous mechanism. Geodesic Causal Inference\n(Kurisu et al., 2024) formalizes this viewpoint byanalogue of Since coun- (GCI) (5) under strategy ϵITE involves S. modeling causal variation as geodesic flows on Wassersteinterfactual distributions, it is not directly observable. In our framework, the same blueprint persists:we select α by minimizing an explicit generalization upper\nbound on ϵITE derived in Section 3. Operationally, this (i) start from a generalization bound whose leading terms\nyields the bilevel procedure: decompose into a factual prediction component and a representation imbalance component, (ii) pose a controlled\nbθ(α, S) ∈arg minθ bϵF (θ) + α bRS(θ), compression problem of the form (4)–(5), and (iii) validate\ngeometric consistency by checking whether counterfactual\ninterpolation follows Wasserstein geodesics rather than Eu- bα(S) ∈arg minα≥0 bBS bθ(α, S), α , (7)\nclidean mixtures. We use geodesic interpolation as a reprebBS(θ, α) := bϵF (θ) + α bRS(θ) + CompS(α; n, δ) sentation validity test in Section 5.2.\nwhere θ collects all parameters of representation Φ and pre- Assumption 2.4. We adopt standard causal identification asdictor h, and is the empirical counterpart of the bound. sumptions, augmented with mild regularity for Wasserstein bBS\nUncon- (i) Consistency. If T = t, then Y = Y (t). (ii)Here denotes an explicit empirical upper bound on risks. α) bBS(θ, foundedness.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 8,
+    "total_chunks": 63,
+    "char_count": 2744,
+    "word_count": 389,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e694b4a2-a100-46ac-94c5-ca81b9f77995",
+    "text": "X. (iii)the ITE risk obtained by replacing population h) ϵITE(Φ, {Y (t)}t∈T ⊥T | For all andquantities in the generalization bound with their empirical x ∈X Finite second moments. t ∈T , 0 <E P(T = t | <X = x) <all 1.tcounterparts. Moreover, a uniform gen- (iv) n, δ) is CompS(α; ∥Y (t)∥2 ∞for\neralization term controlling the gap between population and (ensuring W2 is well-defined).\nempirical risks over the α-induced hypothesis class (see\nAppendix B.2 for the explicit Rademacher-based definition). 3. Theoretical Analysis\nImportantly, stronger compression (larger α) shrinks the\neffective class and typically reduces CompS, yielding a This section develops the theoretical guarantees underlying\nnon-trivial trade-off in α. If the remainder term the adaptive balancing weight bα(S) defined in (7). Our analwere chosen independent of α, then minimizing the bound ysis follows the same blueprint as the binary-treatment literaafter optimizing θ would degenerate to bα = 0, since the ture (Johansson et al., 2016; Shalit et al., 2017): (i) establishupper-level objective would reduce to the training criterion. a generalization bound whose leading terms decompose\nOur bound therefore includes an α-dependent complexity into a factual component and a representation imbalance\nterm, reflecting the fact that stronger compression shrinks component, (ii) turn the bound into an explicit controlled\nthe effective hypothesis class and improves generalization. compression objective indexed by α, and (iii) analyze the\nstatistical behavior of the resulting estimator. The main\nOn the n-dependence of the complexity term. A natural focus here is the finite-sample error bound and asymptotic\nconcern is that the complexity remainder CompS(α; n, δ) normality of together with the strategy-dependenttypically scales as O(n−1/2) and thus vanishes asymptot- bα(S), scaling in the number of treatments K. All proofs are deically.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 10,
+    "total_chunks": 63,
+    "char_count": 1915,
+    "word_count": 285,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2293c83d-59b0-467f-87c3-e92c53599669",
+    "text": "This does not undermine the role of α. First, α is ferred to Appendix C.\nselected for finite-sample generalization: when n is moderate and the effective model class is rich (especially under\n3.1. A Multi-Treatment Generalization Bound:\nmany treatments), the O(n−1/2) term can dominate the risk\nDecomposition and Strategy Dependence\nbound and critically determines the optimal compression\nlevel. Second, our target is the sample-size dependent min- We first state a generalization bound that extends the binary\nimizer α⋆S(n) ∈arg minα∈A BS(α; n), and we establish decomposition in Shalit et al. (2017) to the multi-treatment Causal Representation Learning with Optimal Compression under Complex Treatments Recall ϵITE(Φ, h) in (2), factual risk ϵF (Φ, h) in Remark. The quantity αbdS (n) is the principled target of\n(3), and the strategy-dependent imbalance functional RS(Φ) our estimator: it minimizes a valid upper bound on ITEintroduced in Section 2. risk. This is conceptually distinct from the unobservable\nrisk-optimal parameter in (6), but yields an oracle-type guar-Assumption 3.1 (Regularity for counterfactual generalizaantee through bound minimization (Corollary 3.6 below).tion). Assume the following hold. (i) (Lipschitz prediction.)\nTo state finite-sample and asymptotic results, we characterFor each t ∈T , the conditional predictor z 7→h(z, t) is ize first-order optimality via an envelope argument. Lh-Lipschitz (under a metric compatible with W2). (ii)\n(Bounded loss.) The prediction loss ℓ(bP, y) is bounded Lemma 3.3 (Profile score for α). Assume that for each\nby M and is Lℓ-Lipschitz in bP. (iii) (IPM/HSIC function α ∈A, the minimizers in (8) and (9) exist and admit meaclass.) The discrepancy class G defining IPMG is uniformly surable selections bθ(α) ∈arg minθ{bϵF (θ) + α bRS(θ)}\nbounded, and the kernels used for MMD/HSIC are bounded. and θ⋆(α) ∈arg minθ{ϵF (θ) + αRS(θ)}. Assume fur-\n(iv) (Identification assumptions.) Consistency, unconfound- ther that CompS(α; n, δ) is differentiable in α. Then\nedness, and overlap hold (Assumption 2.4 in Section 2). bQS and QS are directionally differentiable and satisfy\nLemma 3.2 (Multi-treatment generalization bound bQ′S(α) = bRS bθ(α) + ∂αCompS(α; n, δ), Q′S(α) =\n(schematic form)). Under Assumption 3.1, for any fixed RS θ⋆(α) +∂αCompS(α; n, δ). In particular, any interior\nstrategy S and any (Φ, h) in the model class, with minimizer bαS ∈(0, αmax) satisfies bQ′S(bαS) = 0.\nprobability at least 1 −δ, ϵITE(Φ, h) ≤CF ϵF (Φ, h) + Lemma 3.3 reduces estimation of α to controlling the deCB RS(Φ) + CC Complexity(h ◦Φ; n, δ), where viation of the empirical imbalance term evaluated at theCF , CB, CC > 0 depend only on regularity parameters\nα-dependent optimizer.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 11,
+    "total_chunks": 63,
+    "char_count": 2731,
+    "word_count": 423,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "845be9ab-16d3-4540-885b-97cadeec875d",
+    "text": "We state a high-probability bound(e.g., Lh, Lℓ, M and the discrepancy function class) and\nthat makes the strategy dependence explicit.\ndo not depend on n. Moreover, RS(Φ) specializes to\nthe binary discrepancy term when K = 2 and S = pair, Assumption 3.4 (Curvature and uniform concentration).recovering the structure of Shalit et al. (2017). Assume the following. (i) (Strong convexity in α.) The\npopulation profile criterion QS(α) is twice differentiable\nLemma 3.2 formalizes the central statistical trade-off of on (ii) (Uniform > 0. infα∈A Q′′S(α) A and satisfies ≥κScausal representation learning: ITE generalization is con- concentration of imbalance.) There exists a nonnegative\ntrolled by (i) predictive fidelity on factual data and (ii) function rS(n, δ, K) such that, with probability at least 1−δ,representation-level imbalance across treatments. It does\nnot claim that a particular coefficient ratio is known or iden- supα∈A bRS bθ(α) −RS θ⋆(α) ≤rS(n, δ, K).\ntifiable in practice.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 12,
+    "total_chunks": 63,
+    "char_count": 991,
+    "word_count": 150,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3660b94c-9243-45cc-85b2-47053515c76c",
+    "text": "Instead, it motivates selecting an optimal Theorem 3.5 (Finite-sample deviation bound for bαS). Unpoint on the Pareto frontier of factual fit versus invariance. der Assumption 3.4, any minimizer bαS in (10) satisfies, with\nThis is precisely the controlled compression viewpoint en- probability at least 1−δ, bαS−αbd S (n) ≤rS(n, δ, K)/κS.\ncoded by (4)–(5) and the bilevel estimator (7). For different instantiations of bRS, rS(n, δ, K) typically ad- mits the scaling rpair(n, δ, K) = K2plog(1/δ)/√n ,3.2. Finite-Sample Accuracy of O bα(S) rova(n, δ, K) = K plog(1/δ)/√n , ragg(n, δ, K) =We now analyze the statistical behavior of the bound- O\np log(1/δ)/√n , where constants depend only on ker-optimized weight For clarity, we make explicit the bα(S). O\nprofile criterion induced by (7). Fix a strategy S and a com- nel bounds and moment conditions instead of K.pact search range A = [αmin, αmax]. Define the empirical Theorem 3.5 gives a direct, interpretable message: hyperpa-profile bound\nrameter selection becomes a statistical estimation problem.\nn o\nbQS(α) := infθ bϵF (θ)+α bRS(θ) +CompS(α; n, δ), α ∈A, For instance, in dose-response estimation with K = 50 dosages, pairwise balancing aggregates on the order of (8)\nK2 discrepancy terms. Even if each term concen-and its population analogue ≈2500\ntrates at the standard O(n−1/2) rate, the aggregation leads n o to an deviation in the tuning signal and thusQS(α) := inf + CompS(α; n, δ). O(K2/√n) θ ϵF (θ) + α RS(θ) an error in Keeping the tuning error fixed (9) O(K2/√n) bα. therefore requires n = Ω(K4) samples, which is precisely\nWe denote the bound-optimal weight by\nthe instability observed in large-K regimes. In contrast, ag-\nαbdS (n) ∈arg α∈Amin QS(α), bαS ∈arg α∈Amin bQS(α), gregationfunctional controls(HSIC), imbalanceyielding anthrough a singletuningdependenceerror inde- (10) O(n−1/2) pendent of K.\nwhere we emphasize that αbdS (n) may be sample-size dependent since CompS(α; n, δ) typically scales as O(n−1/2). A common misunderstanding is to interpret bα as approxi- Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 13,
+    "total_chunks": 63,
+    "char_count": 2120,
+    "word_count": 334,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "426b5b39-feb9-4373-aed2-e48a1caa753d",
+    "text": "mating a universal constant such as CB/CF in Lemma 3.2. Algorithm 1 Bound-Optimized Adaptive Balancing\nTheorem 3.5 does not require such constants to be identifi- (BOAB)\nRequire: Data = Ti, i=1, strategyable. Instead, it guarantees that bα is close to the (sample-sizedependent) minimizer of a valid upper bound on ITE risk. D {(Xi, Yi)}n S ∈\nThis is a different and stronger notion of justification than {pair, ova, agg}, search set A ⊂[αmin, αmax], con- fidence level δ.\nheuristic tuning, because it directly controls out-of-sample\n1: for α ∈A doITE error through a provable bound1.\n2: Train bθ(α, S) ∈arg minθ bϵF (θ) + α bRS(θ). Corollary 3.6 (Oracle bound guarantee). Let bαS be defined 3: Compute bound value bQS(α) = bϵF (bθ(α, S)) +by (10). If supα∈A α |bQS(α)−QS(α)| ≤ηn with probability bRS(bθ(α, S)) + CompS(α; n, δ).at least then 1 4: end for −δ,\n5: Output bαS ∈arg minα∈A bQS(α) and bθ(bαS, S). QS(α)+2ηn with probability at leastQS(bαS) ≤infα∈A 1−δ. Asymptotic Normality and Stability Theorem 3.8 (Asymptotic normality of bαS). Under As- !\nWe now establish the asymptotic distribution of bαS via sumption 3.7, √n S 0, σ2S 2 .central limit theorem. The proof uses standard M-estimation bαS −α∞ ⇒N Q′′S(α∞S )\narguments applied to the profile score in Lemma 3.3. Consequently, bαS admits asymptotically valid Wald-type\nAssumption 3.7 (Asymptotic differentiability and CLT confidence intervals once σ2S is consistently estimated. S Corollary 3.9 (Stability scaling with K).",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 14,
+    "total_chunks": 63,
+    "char_count": 1483,
+    "word_count": 239,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0631c0fc-f06a-4f1e-a0a1-2c747d6af8e1",
+    "text": "Under mild de-for the profile score). Assume: (i) αbdS (n) →α∞ ∈\n(αmin, αmax) and Q′′S(α) is continuous at α∞S with pendence conditions across treatment arms, the asympQ′′S(α∞S ) > 0. (ii) The centered profile score admits a totic variance in as above scales as = Var(bαpair)CLT: √n bQ′S(α∞S ) −Q′S(α∞ S ) ⇒N(0, σ2S), for some Θ(K4/n), Var(bαova) = Θ(K2/n), Var(bαagg) = Θ(1/n). where hides constants depending on kernel\nS converges uniformly to Q′S on a Θ(·) bounds, overlap constants, and regularity of the representa-σ2S ∈(0, ∞), and bQ′neighborhood of α∞S . tion class, but not on K. Assumption 3.7 is standard in the asymptotic theory of proTheorem 3.8 clarifies that under our bound-driven formu-file M-estimation and tuning-parameter selection. Interiority\nlation, is a one-dimensional M-estimator defined by anof the minimizer, local curvature, and a central limit theo- bα\nrem for the profile score are classical conditions ensuring explicit optimization criterion. It therefore inherits the same\nstatistical structure as classical estimators: a finite-sampleasymptotic normality of one-dimensional profile estimadeviation bound (Theorem 3.5) and a CLT (Theorem 3.8).tors (van der Vaart, 1998; van der Vaart & Wellner, 1996;\nThe contribution is not that α exists, but that its instabil-Kosorok, 2008). In our setting, the profile score reduces\nity can be quantified and traced back to the structure ofto an empirical imbalance functional evaluated at a dataimbalance estimation.dependent optimizer; for IPM- and HSIC-based constructions this functional is a U- or V-statistic, for which central We summarize the resulting procedure in Algorithm 1. The\nlimit theorems and uniform convergence results are well algorithm is agnostic to the representation architecture (disestablished (Serfling, 1980; Gretton et al., 2005). These con- criminative or generative) and only requires the ability to\nditions are empirically diagnosable (e.g., via curvature of (i) train and strategy and (ii) evaluate θ for a given α S, bRSthe empirical profile criterion and variance estimation of the and Algorithm 1 can be instantiated either n, δ). CompS(α;\nscore), robust to mild violations (boundary optima or weak by a coarse-to-fine grid over α (robust and simple) or by\ncurvature alter the limiting distribution but not consistency), one-dimensional derivative-free search. Theoretical results\nand logically necessary for any asymptotic normal approx- in Theorems 3.5–3.8 apply to either implementation as long\nimation. Thus, Assumption 3.7 does not introduce ad hoc as is an approximate minimizer of with optimization bQS bαSrestrictions, but places squarely within a well-understood error negligible compared to statistical bα error.\nclass of statistical estimators.\n1Crucially, validity of the bound does not rely on identifying 4. Experiments\na specific coefficient such as CB/CF . The generalization result\nimplies the existence of a family of upper bounds indexed by α: for We conduct a systematic empirical evaluation to validate\nall sufficiently large α, the inequality holds uniformly over θ. Our our proposed multi-treatment balancing framework.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 15,
+    "total_chunks": 63,
+    "char_count": 3148,
+    "word_count": 468,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7e5b9186-6fe9-4056-96b4-6c75eaeca388",
+    "text": "Specifiprocedure searches within this family and selects the tightest bound\ncally, we address three research questions: (1) Efficacy: Dousing empirical surrogates. Therefore, does not approximate an bα the strategies effectively mitigate selection bias? (2) Mecha-unknown constant, but rather indexes a valid member of the bound\nfamily whose numerical value is optimal for the given sample. nism: How does α mediate the bias-variance trade-off? (3) Causal Representation Learning with Optimal Compression under Complex Treatments its best alignment, suggesting a more difficult optimization\npath when satisfying O(K2) constraints. (2) Controlled\nCompression: The Aggregation strategy finds its balance at\na moderate weight (α = 0.5). These results empirically validate our theoretical framework: α is not a universal constant\nbut a strategy-dependent parameter that must be optimized\nto prevent representation collapse while ensuring sufficient\ndistributional invariance.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 16,
+    "total_chunks": 63,
+    "char_count": 971,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e9e2a977-a9ce-46b2-a4c2-93e9221ee8cb",
+    "text": "(a) Medium-Scale (K = 4) (b) Large-Scale (K = 20)\n4.2. Scalability Analysis on Large-Scale Scenarios\nFigure 1. Performance Comparison (PEHE). (a) All methods\noutperform baseline at K = 4. (b) At K = 20, Pairwise degrades We further extended the simulation to K = 20 to evalwhile Aggregation remains robust. (See Appendix D.3, Figure 5 uate scalability. Figure 1(b) demonstrates a fundamental\nfor training efficiency)\ndivergence in model behavior: As detailed in Appendix\nD.3, the Pairwise strategy exhibits quadratic computational\ncomplexity (O(K2)), resulting in training instability and\nScalability: Does the Aggregation strategy overcome the excessive runtime. In contrast, our Aggregation strategy\ncurse of dimensionality in large-scale settings (K = 20)? maintains constant-time complexity (O(1)) via the HSIC constraint, achieving stable convergence and competitive acExperimental Setup. To evaluate robustness under severe\ncuracy equivalent to small-scale regimes. This empirically\nselection bias, we generate semi-synthetic datasets charactervalidates that our method successfully decouples computaized by high-dimensional covariates and complex treatment\ntional cost from treatment cardinality.\ninteractions. We benchmark the Base Model (unadjusted)\nIt also reveals the robustness of different strategies. The\nagainst Pairwise, One-vs-All, and Treatment AggregaPairwise strategy suffers severe degradation under strong\ntion strategies. The primary metric is PEHE. Full datasets\nregularization (α = 5.0), with PEHE spiking above 1.3.\ngeneration details are provided in Appendix D.1. We attribute this to the \"Over-constraint\" phenomenon:\nsatisfying 190 conflicting alignment goals restricts the rep-\n4.1. Evaluation on Medium-Scale Scenarios resentation space excessively.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 17,
+    "total_chunks": 63,
+    "char_count": 1780,
+    "word_count": 238,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2545e478-e6da-413f-a70c-84f8dec5ddaf",
+    "text": "While One-vs-All achieves\nEfficacy of Balancing Strategies. As in Figure 1(a), all pro- the lowest absolute error at α = 5.0 (PEHE ≈0.95), it\nposed balancing strategies outperform the unadjusted Base incurs a higher computational cost. Agg-T offers the best\nModel (PEHE 0.796) in the K = 4 regime. The One-vs- efficiency-stability trade-off: it maintains competitive acAll (OVA) strategy achieves the superior performance with curacy (PEHE ≈1.0) across all α settings without the\nthe lowest error (PEHE 0.711). This confirms that for rela- volatility of Pairwise methods, proving to be the most scaltively small action spaces, decomposing the multi-treatment able paradigm for high-dimensional inference.\nproblem into multiple \"Target vs. Rest\" tasks provides\na highly robust optimization landscape for representation 5. Generative Extension and Geometry\nlearning.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 18,
+    "total_chunks": 63,
+    "char_count": 864,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "13c3e1f9-e382-46f3-98c1-421e82befef9",
+    "text": "The Pairwise and Aggregation (Agg-T) strategies\nyield comparable results, with PEHE values of 0.727 and While the discriminative strategies evaluated in Section 4\n0.722, respectively. While Agg-T shows a slight edge over demonstrate the efficacy of optimal compression, they priPairwise in this medium-scale setting, its primary advan- marily focus on estimating scalar outcomes. We now extage—decoupling computational complexity from treatment tend our framework to a generative paradigm, proposing\ncardinality—becomes more pronounced as K increases (see Multi-Treatment CausalEGM. This extension serves two\nSection 4.2).",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 19,
+    "total_chunks": 63,
+    "char_count": 622,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e631c765-da70-4240-98df-22b630cf4d1a",
+    "text": "The fact that Agg-T matches the performance primary purposes: (1) to enable high-dimensional counterof more complex constraints even at K = 4 demonstrates factual generation (2) to verify the geometric integrity of\nits viability as a general-purpose balancing strategy. the learned representation through geodesic interpolation. Mechanism of α (Bias-Variance Trade-off). Multi-Treatment CausalEGM\nmal performance for each method is attained at different\nlevels of the balancing weight α, reflecting their inherent Architecture. We build upon CausalEGM, a bidirectional\nsensitivity to the deconfounding-prognostic trade-off: (1) generative model that disentangles confounding factors Zc\nOptimal Weight Selection: The OVA strategy achieves its from instrumental factors Zt. To address the scalability\npeak performance at a very small weight (α = 0.1), indi- challenges of high-cardinality treatments, we introduce two\ncating that its objective is highly efficient at removing bias structural modifications to the original binary design(The\nwith minimal regularization. In contrast, the Pairwise strat- complete architecture is provided in Appendix D.2, Figegy requires a much stronger weight (α = 5.0) to achieve ure 4): (1) Vectorized Treatment Embeddings: Instead Causal Representation Learning with Optimal Compression under Complex Treatments (a) Latent Space Topology (b) Geodesic Interpolation\n(a) ADRF Fit (b) Trade-off\nFigure 3. Geometric Validation on Hierarchical Treatments. Performance and Efficiency Analysis on Digits (a) The learned embeddings spontaneously recover the underlying\nDataset. (a) The estimated ADRF (blue) closely tracks the ground tree structure, placing the Root centrally and separating the L/R\ntruth (red). (b) Dual-axis comparison showing PEHE error (bars) branches. (b) Counterfactual interpolation from Leaf LL(Y = −3)\nand Training Time (line). to Leaf RR (Y = +3) respects the causal topology by passing\nthrough the Root's effect region (Y ≈0), whereas the linear\nbaseline (grey) ignores the structure. of one-hot encoding, we map the discrete treatment index\ncausal effects are determined by the node's position to a dense vector via a learn- wheret . . . , K et ∈{0, −1} ∈Rde in the hierarchy (YLL YRoot YRRable lookup table, enabling the model to capture topological ≈−3, ≈0, ≈+3).\nrelationships between treatments within the latent space. (2) Analysis. Figure 3(a) visualizes the learned latent\nSoftmax Intervention Mechanism: We replace the binary space. Without access to graph coordinates, our Geodesicgeneration mechanism with a multi-class Softmax head, Regularized objective successfully reconstructs the isometric topology: the embedding places the Root (Node 0) cen-P(T|Zc) = Softmax(fθ(Zc)), allowing the model to ap-proximate complex propensity surfaces over K categories. trally, with branches (L/R) and leaves (LL/RR) extending\nExperimental Setup. We evaluate the model on the semi- radially.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 20,
+    "total_chunks": 63,
+    "char_count": 2943,
+    "word_count": 418,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bd0c13f1-c55d-4472-bf09-a10ebdc2eb48",
+    "text": "This confirms that the model disentangles strucsynthetic UCI Digits dataset to test its ability to interpolate tural relationships from discrete treatment IDs. Furthermore,\ncausal effects across a structured treatment manifold. (See Figure 3(b) demonstrates the physical plausibility of counterdata generation are provided in Appendix D.1. factual interpolation. When interpolating between distinct\nsub-types (Leaf LL to Leaf RR), a naive Euclidean baseline\nAnalysis. We evaluate the Multi-Treatment CausalEGM (grey dashed line) assumes a linear transition that ignores\nagainst the discriminative baselines established in Sec- causal structure. In contrast, our model (red solid line) gention 4.As illustrated in Figure 2(a), the generative model\nerates a non-linear path that passes through Y ≈0 at thefaithfully recovers the non-linear response surface, accu- midpoint (α = 0.5). This indicates that the latent interporately locating the global minimum at T = 4. Quantitatively, lation path transitively activates the representation of the\nit achieves a PEHE of 0.65 (Figure 2(b)), which signifi- common ancestor (Root), mirroring the true causal mechcantly outperforms the unadjusted Base model (0.79) and anism rather than taking an impossible \"shortcut\" through\nis competitive with the discriminative Aggregation baseline the void. (More details are provided in Appendix D.4,D.5)\n(0.67). While the specialized One-vs-All strategy achieves\nlower scalar error (0.24)—expected due to its purely dis-\n6.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 21,
+    "total_chunks": 63,
+    "char_count": 1504,
+    "word_count": 211,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bcea097f-dba4-48b6-9049-d1432be44e70",
+    "text": "Conclusioncriminative focus—our approach maintains robust causal\nidentification while fulfilling the more complex objective of We presented a scalable framework for multi-treatment\nhigh-dimensional counterfactual generation. Furthermore, causal representation learning by reframing the balancing\ndespite the added generative overhead, our model maintains objective as optimal compression. Our theoretical analcomparable training efficiency to the Aggregation strategy ysis transforms the balancing weight α from a heuristic\n(detailed runtime analysis provided in Appendix D.3), con- hyperparameter into a statistically estimable quantity. To\nfirming that the embedding-based architecture remains scal- address combinatorial instability, we introduced the Oneable for high-dimensional counterfactual generation. vs-All and Treatment Aggregation strategies; notably, the\nlatter achieves via HSIC, ensuring robust- O(1) complexity5.2. Geometric Fidelity and Topological Consistency ness in high-dimensional regimes. Furthermore, our generative extension (Multi-Treatment CausalEGM) recoversWhile standard representation learning focuses on predicthe underlying Wasserstein geodesic geometry of the treat-tive accuracy, GCI requires the latent space to recover the\nment manifold. Future work will focus on extending theseunderlying geometry of the treatment mechanism. To verify\ngeometric compression principles to continuous treatmentthis, we tasked Multi-Treatment CausalEGM with learning\nspaces and addressing scenarios with latent confounding.a hierarchical treatment structure (a depth-3 binary tree), Causal Representation Learning with Optimal Compression under Complex Treatments Impact Statement Sciences, 121(23):e2322376121, 2024. doi: 10.1073/\npnas.2322376121. This paper presents work whose goal is to advance the field\nof machine learning. There are many potential societal Lopez, M.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 22,
+    "total_chunks": 63,
+    "char_count": 1893,
+    "word_count": 228,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5fd5c2ac-ca67-4c7e-8d00-ec081503aed1",
+    "text": "Estimation of causal effects\nconsequences of our work, none of which we feel must be with multiple treatments: a review and new ideas. Statisspecifically highlighted here. tical Science, pp. 432–454, 2017. Melnychuk, V., Frauen, D., and Feuerriegel, S. Bounds on\nReferences representation-induced confounding bias for treatment efAchille, A. and Soatto, S. Information dropout: Learning fect estimation. arXiv preprint arXiv:2311.11321, 2023.\noptimal representations through noisy channels. IEEE\nNie, L., Ye, M., Liu, Q., and RosenBum, D. Vcnet and funcTransactions on Pattern Analysis and Machine Intellitional targeted regularization for learning causal effects\ngence (TPAMI), 40(12):2897–2905, 2018.\nof continuous treatments. In International Conference on\nBica, I., Jordon, J., and van der Schaar, M.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 23,
+    "total_chunks": 63,
+    "char_count": 804,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ac3c9c29-3d0c-4d7d-9f86-17f8ed10339c",
+    "text": "Estimating Learning Representations (ICLR), 2021.\nthe effects of continuous-valued interventions using gans. Variational Analysis. In Advances in Neural Information Processing Systems\nSpringer, 1998.\n(NeurIPS), volume 33, pp. 16434–16445, 2020. Schwab, P., Linhardt, L., and Karlen, W. Perfect match: A\nCsillag, D., Struchiner, C. Generalsimple method for learning representations for counterization bounds for causal regression: Insights, guarantees\nfactual inference with neural networks.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 24,
+    "total_chunks": 63,
+    "char_count": 490,
+    "word_count": 61,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b4062372-72ac-42ce-93c1-8bee94d61e39",
+    "text": "In arXiv preprint\nand sensitivity analysis. arXiv preprint arXiv:2405.09516,\n2024. Approximation Theorems of Mathematical\nCurth, A. and van der Schaar, M. On inductive biases for\nStatistics. Wiley, 1980.\nheterogeneous treatment effect estimation. In Advances\nin Neural Information Processing Systems (NeurIPS), Shalit, U., Johansson, F. Estimating\nvolume 34, pp. 15883–15895, 2021. individual treatment effect: Generalization bounds and\nalgorithms. In Proceedings of the 34th International\nGretton, A., Bousquet, O., Smola, A., and Sch¨olkopf, B. Conference on Machine Learning (ICML), volume 70 of\nMeasuring statistical dependence with hilbert-schmidt Proceedings of Machine Learning Research, pp. 3076–\nnorms. In International Conference on Algorithmic 3085. Learning Theory, pp. 63–77. Springer, 2005.\nvan der Vaart, A. Asymptotic Statistics. Cambridge\nGretton, A., Borgwardt, K. J., Sch¨olkopf, B., University Press, 1998.\nand Smola, A.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 25,
+    "total_chunks": 63,
+    "char_count": 940,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4abb688f-253a-48a0-85a4-925a0f3d97b0",
+    "text": "A kernel two-sample test. The Journal of\nMachine Learning Research, 13(1):723–773, 2012. van der Vaart, A. Weak Convergence\nand Empirical Processes. Johansson, F., Shalit, U., and Sontag, D.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 26,
+    "total_chunks": 63,
+    "char_count": 190,
+    "word_count": 28,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e89997c4-8d15-4aca-824a-dd5c2843d639",
+    "text": "Learning representations for counterfactual inference. In International\nconference on machine learning, pp. 3020–3029, 2016. D., Shalit, U., Kallus, N., and Sontag, D. Generalization bounds and representation learning for estimation of potential outcomes and causal effects. Journal\nof Machine Learning Research, 23(166):1–50, 2022. Introduction to Empirical Processes and\nSemiparametric Inference. Kurisu, D., Zhou, Y., Otsu, T., and M¨uller, H.-G. Geodesic\ncausal inference. arXiv preprint arXiv:2406.19604, 2024. URL https://arxiv.org/abs/2406.19604. Liu, Q., Chen, Z., and Wong, W. An encoding generative modeling approach to dimension reduction and\ncovariate adjustment in causal inference with observational studies. Proceedings of the National Academy of",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 27,
+    "total_chunks": 63,
+    "char_count": 761,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "33a5048f-ae7b-4f43-ade4-f7f8535d931d",
+    "text": "Causal Representation Learning with Optimal Compression under Complex Treatments Causal Representation Learning. The paradigm of learning balanced representations for causal inference was pioneered\nby Johansson et al. (2016) and Shalit et al. (2017). The central premise is to map covariates into a latent space where\ntreatment groups are distributionally similar (minimizing an IPM), thereby reducing selection bias while retaining prognostic\ninformation for outcome prediction. This framework has been extended to various settings, including domain adaptation\nand instrumental variable scenarios. However, the statistical implications of this \"balancing-preservation\" trade-off remain\na subject of active debate.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 28,
+    "total_chunks": 63,
+    "char_count": 714,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7dd0db9f-80d6-4015-a137-f1cddb98d233",
+    "text": "From an information-theoretic perspective, this trade-off mirrors the Information Bottleneck\nprinciple applied to deep learning, where Achille & Soatto (2018) proposed learning optimal representations by controlling\nthe flow of information to minimize sufficiency for the task while maximizing invariance to nuisance factors. While earlier\nworks implicitly assumed that stricter balancing yields better estimators, recent theoretical analyses have highlighted a\n\"no free lunch\" phenomenon: aggressive compression to enforce invariance can inadvertently discard outcome-relevant\ninformation, potentially increasing the estimation error (Melnychuk et al., 2023). Furthermore, Curth & van der Schaar\n(2021) scrutinized the architectural inductive biases in this domain, analyzing how the choice between shared representations\nand separate heads affects generalization across heterogeneous treatment effects. Our work formalizes this trade-off in\nthe multi-treatment regime, transforming the balancing weight from a heuristic hyperparameter into an estimable quantity\nderived from generalization bounds. Multi-Treatment and Continuous Causal Inference. Extending causal inference beyond binary treatments introduces\nsignificant computational and statistical challenges. Traditional approaches like Generalized Propensity Score (GPS)\nmethods often struggle with high-dimensional covariates. In the representation learning domain, Schwab et al. (2018)\nand Lopez & Gutman (2017) proposed extensions such as pairwise balancing or multiple-head architectures. Parallel\nresearch has also addressed continuous treatment regimes using deep learning; for instance, SCIGAN (Bica et al., 2020)\nutilizes generative adversarial networks to estimate effects of continuous interventions, while VCNet (Nie et al., 2021)\nemploys varying coefficient neural networks to model continuous dose-response curves. Nevertheless, these discriminative\nstrategies typically incur a computational cost of O(K2) to align all pairs of treatment groups, which becomes prohibitiveas the number of treatments K increases. Furthermore, treating treatments as disjoint categories ignores the underlying\nstructure (e.g., dosage ordinality) often present in real-world applications.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 29,
+    "total_chunks": 63,
+    "char_count": 2240,
+    "word_count": 280,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ef3a0db9-8782-4d51-aaa7-46691d7f9bfa",
+    "text": "Our proposed Treatment Aggregation strategy\naddresses this scalability bottleneck by reducing the complexity to O(1) via global independence constraints (HSIC), makingrepresentation learning feasible for large-scale action spaces. Generative and Geometric Causal Models. Recent advancements have begun to explore the geometric structure of\ncausal mechanisms. Liu et al. (2024) introduced CausalEGM, a bidirectional generative model that explicitly disentangles\nconfounding and instrumental factors using VAE-GAN architectures. On the theoretical front, Kurisu et al. (2024) proposed\nGeodesic Causal Inference (GCI), framing causal effect estimation as transport problems on Wasserstein manifolds. Our\nMulti-Treatment CausalEGM bridges these two lines of work. By embedding discrete treatments into a continuous manifold\nand enforcing geodesic consistency during interpolation, we provide a generative framework that is not only scalable but\nalso physically interpretable, validating that the learned latent space captures the true geometry of the treatment mechanism. Theoretical Supplement Formal Definitions of Discrepancy Measures\nWe instantiate the discrepancy operators using kernel methods. Let H be an RKHS with kernel k(·, ·). For S ∈{pair, ova},we employ the Maximum Mean Discrepancy (MMD), defined as the RKHS distance between mean embeddings:\nMMD(P, Q) := ∥µP −µQ∥H (Gretton et al., 2012).",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 30,
+    "total_chunks": 63,
+    "char_count": 1400,
+    "word_count": 189,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "85708e95-5def-4cce-b668-0a75edf12e4a",
+    "text": "This serves as a tractable IPM instantiation where the function\nclass G is the unit ball in H. For S = agg, we employ the Hilbert-Schmidt Independence Criterion (HSIC) to enforce\nHSindependence. HSIC measures the Hilbert-Schmidt norm of the cross-covariance operator, HSIC(Z, E) := ∥CZE∥2(Gretton et al., 2005), which is zero if and only if the representation Φ(X) and treatment embedding e(T) are statistically\nindependent. We employ standard U-statistic and V-statistic estimators for MMD and HSIC, respectively.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 31,
+    "total_chunks": 63,
+    "char_count": 514,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ee616f56-4abe-44a9-8a67-19a5d2ed3c31",
+    "text": "Explicit Form of the Complexity Term To complete the description of the profile bound in (7) of the main text, we provide the explicit formal definition of\nthe complexity term CompS(α; n, δ). As discussed in Section 2, the penalized objective is equivalent to a constrained",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 32,
+    "total_chunks": 63,
+    "char_count": 273,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "17db8861-91ad-4f93-b2b2-963950bf97da",
+    "text": "Causal Representation Learning with Optimal Compression under Complex Treatments optimization problem via Lagrangian duality. We leverage this duality to define the α-induced hypothesis class. The α-Induced Hypothesis Class. Let ρ : R≥0 →R≥0 be the mapping from the Lagrange multiplier α to the effectiveimbalance budget. From convex duality principles, ρ(α) is a monotonically decreasing function of α: a larger penalty\nweight enforces a stricter constraint on the representation imbalance. We define the α-induced hypothesis class Hα as the set of all predictor-representation pairs that satisfy the imbalance budgetimplied by α:\nn o\nHα := f = h ◦Φ | Φ ∈Φ, h ∈H, ˆRS(Φ) ≤ρ(α) , (11)\nwhere Φ and H are the unrestricted function spaces for the representation and predictor, respectively. Crucially, because\nρ(α) decreases as α increases, we have the following nested property: α1 < α2 =⇒ρ(α1) > ρ(α2) =⇒Hα2 ⊆Hα1. (12)\nThis containment relationship directly implies that the complexity of the hypothesis class decreases as the penalty weight α\nincreases. Explicit Definition of CompS. We instantiate the complexity term using Rademacher Complexity, which measures the\nrichness of the hypothesis class.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 33,
+    "total_chunks": 63,
+    "char_count": 1200,
+    "word_count": 183,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "12a053ba-faa0-4492-85d1-3673c9923508",
+    "text": "The term CompS(α; n, δ) in Eq. (7) is explicitly defined as: r log(1/δ)\nCompS(α; n, δ) := 2Rn(ℓ◦Hα) + M 2n , (13) • M is the uniform upper bound of the loss function ℓ.\n• Rn(ℓ◦Hα) is the empirical Rademacher complexity of the loss function class composed with the α-constrained hypothesis class:\n\" n # 1\nRn(ℓ◦Hα) = Eσ f∈Hαsup n Xi=1 σiℓ(f(Xi, Ti), Yi) , (14)\nwith σi being i.i.d. Rademacher variables taking values {−1, +1}. Since Hα shrinks as α increases (i.e., Hα2 ⊆Hα1 for α2 > α1), the supremum in the Rademacher complexity is taken overa strictly smaller set. Therefore, the complexity term satisfies the monotonicity condition required for the trade-off analysis: ∂αCompS(α; n, δ) ≤0. (15)",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 34,
+    "total_chunks": 63,
+    "char_count": 696,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c1aa3122-fa7f-4e4f-9290-b14dd7d1b8ca",
+    "text": "This confirms that stronger compression (larger α) reduces the effective capacity of the model class, thereby lowering the\ngeneralization gap component of the bound. Concrete Examples of CompS Scaling with α. To further illustrate the inverse relationship between α and the complexity\nterm, we provide two concrete examples where the geometry of Hα can be explicitly characterized. Example 1: Effective Dimension in Linear Representation Learning. Consider a linear representation map Φ(x) = Wx\nwhere W ∈Rd×dx. Suppose the imbalance metric ˆRS(Φ) penalizes the projection of data onto treatment-discriminative\ndirections (e.g., maximizing independence). A strict imbalance constraint ˆRS(Φ) ≤ρ(α) forces the weight matrix W to beapproximately orthogonal to the subspace spanned by the treatment mechanisms. We can model the effective hypothesis class Hα as a ball in a subspace of reduced dimension deff(α). As α →∞(strongcompression), W is forced to project data onto the null space of the treatment correlations, reducing the rank of W.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 35,
+    "total_chunks": 63,
+    "char_count": 1038,
+    "word_count": 154,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bf62014b-8911-4c57-ab2f-1877782507eb",
+    "text": "The\nRademacher complexity for such linear classes is bounded by: pdeff(α), (16) Rn(ℓ◦Hα) ≤C√n where deff(α) is the effective dimension (e.g., squared Frobenius norm or rank) allowed under the budget ρ(α). Since ρ(α)\nis decreasing, deff(α) decreases as α increases, explicitly reducing the complexity term. Causal Representation Learning with Optimal Compression under Complex Treatments Example 2: Covering Numbers and Lipschitz Constraints. Consider the case where the representation Φ is parameterized by a neural network, and the hypothesis class Hα is characterized by its Lipschitz constant LΦ. Enforcing distributional\ninvariance (small ˆRS) requires the representation to map distinct treatment groups to overlapping regions in the latent space.This \"squeezing\" effect often necessitates a smaller Lipschitz constant to suppress the variation due to treatment-correlated\ncovariates. Let L(α) be the maximum Lipschitz constant permissible under the constraint ˆRS(Φ) ≤ρ(α). As α increases, the allowable\nclass of functions becomes smoother, implying L(α2) ≤L(α1) for α2 > α1. Using the Dudley's entropy integral bound forRademacher complexity: M ! 12 Z\nRn(ℓ◦Hα) ≤infϵ>0 4ϵ + √n ϵ p log N(τ, Hα, ∥· ∥∞)dτ . (17) Since the covering number N(τ, Hα, ·) scales polynomially with the Lipschitz constant L(α) (i.e., log N ∝L(α)d), asmaller L(α) resulting from stronger compression directly yields a tighter complexity bound. Preliminaries and auxiliary tools\nBasic notation. Let T (t)= {0, . . . , K −1}, and write πt := P(T = t), πmin := mint∈T πt.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 36,
+    "total_chunks": 63,
+    "char_count": 1548,
+    "word_count": 235,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "187544ae-82ff-4043-b3e9-cdea735251c4",
+    "text": "For a representation\nΦ : X →Z, denote by P Φ := L(Φ(X) | T = t) the conditional distribution of Φ(X) given T = t. For a measurable map\n|z,t = h(z, t).h : Z × T →P2(Y), let bPY\nIPM, MMD, HSIC. Given a function class G on Z, define the integral probability metric\nIPMG(P, Q) := sup EP [g] −EQ[g] . g∈G A standard instantiation is MMD: let H be an RKHS on Z with reproducing kernel k and unit ball G = {g ∈H : ∥g∥H ≤1}.Then\nMMDH(P, Q) = IPMG(P, Q) = ∥µP −µQ∥H,\nwhere µP := EZ∼P [k(Z, ·)] is the mean embedding. For treatment aggregation, let e : T →Rde and ET := e(T).",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 37,
+    "total_chunks": 63,
+    "char_count": 565,
+    "word_count": 121,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "51d21e99-dab4-49c0-9939-636befc633f9",
+    "text": "Given\nbounded kernels k on Z and ℓon Rde, define HSIC by\nHSIC(Z, E) := ∥CZE∥2HS,\nthe squared Hilbert–Schmidt norm of the cross-covariance operator; HSIC(Z, E) = 0 iff Z ⊥E under mild conditions. U- and V-statistic estimators. Assume k is bounded: supz k(z, z) ≤κ2 and similarly supe ℓ(e, e) ≤λ2. For samples\ni=1 j=1{Zi}m ∼P and {Wj}n ∼Q, an unbiased U-statistic estimator of MMD2(P, Q) is\nMMD \\ 2(P, Q) = 1 X k(Zi, Zi′) + 1 X k(Wj, Wj′) X k(Zi, Wj). m(m n(n − mn −1)i̸=i′ −1)j̸=j′ i,j The empirical HSIC is a (degenerate) V-statistic; we denote by HSICn any of the standard estimators (centered Gram-matrix\nform). Uniform generalization via Rademacher complexity. Let F be a class of measurable functions bounded in [−M, M]. Then with probability at least 1 −δ,\nn r log(2/δ)\nsup E[f] X f(Xi) + M , f∈F −1n ≤2Rn(F) 2n i=1\nwhere Rn(F) is the empirical (or expected) Rademacher complexity. We will use this as a black box to justify the genericcomplexity term in Lemma 3.2.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 38,
+    "total_chunks": 63,
+    "char_count": 970,
+    "word_count": 175,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "98768ffb-f576-454b-ac61-eaf2a398c897",
+    "text": "Causal Representation Learning with Optimal Compression under Complex Treatments Lemma 3.2 is stated in a schematic form to accommodate (i) scalar-outcome PEHE and (ii) distributional estimands in\nWasserstein space. We give a self-contained proof template that makes the dependence on a representation discrepancy\nexplicit and reduces to the binary argument of Shalit et al. (2017) when K = 2. Step 1: Reducing distributional ITE error to per-treatment outcome estimation error. Fix x ∈X and two treatments\nj, k. Let Pj,x := PY (j)|X=x and bPj,x := bPY |Φ(x),j (and similarly for k). By the reverse triangle inequality of W2,\nW2(bPj,x, bPk,x) −W2(Pj,x, Pk,x) ≤W2(bPj,x, Pj,x) + W2(bPk,x, Pk,x). Squaring and using (a + b)2 ≤2a2 + 2b2 yields\nbτj,k(x) −τj,k(x) ≤2 W2(bPj,x, Pj,x)2 + 2 W2(bPk,x, Pk,x)2. (18)\nSumming (18) over all 0 ≤j < k ≤K −1 and taking expectation over X gives\nK−1\nϵITE(Φ, h) ≤2(K −1) X EX W2(bPt,X, Pt,X)2 . (19)\nt=0\nThus, controlling ITE risk reduces to controlling per-treatment potential-outcome distribution estimation errors. Step 2: From potential-outcome error to (factual) prediction plus domain discrepancy. For each t ∈T , define the\"target\" risk for predicting Y (t) under the marginal covariate distribution: . ϵ(t)tar(Φ, h) := EX W2(bPt,X, Pt,X)2\nUnder unconfoundedness and overlap, ϵ(t)tar is identified but is not directly estimable without reweighting.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 39,
+    "total_chunks": 63,
+    "char_count": 1387,
+    "word_count": 217,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "304d4cda-a5e7-4f73-9d23-06c8b8b2bcc5",
+    "text": "The representationlearning strategy controls generalization across treatment arms by bounding differences of risks across domains PΦ(t) using\nan IPM (domain-adaptation step). To keep the argument aligned with the existing binary literature, consider a generic bounded loss ˜ℓt(z) := ˜ℓ(h(z, t), ·) whose\nΦ(X) = z] is L-Lipschitz forexpectation equals ϵ(t)tar up to constants; Assumption 3.1(i)–(ii) implies the map z 7→E[˜ℓt(z) |\nsome L depending only on (Lh, Lℓ). Then by the definition of IPMG over a class containing these Lipschitz functions (or\nby a standard \"discrepancy distance\" argument as in Johansson et al., 2016), for any two treatment arms j, k we obtain src(Φ, h) + c2 IPMG PΦ , PΦ + c3, (20) ϵ(k)tar(Φ, h) ≤c1 ϵ(j) (j) (k)\nwhere ϵ(j)src is the (factual) risk on domain T = j, and c1, c2, c3 depend only on regularity constants and boundedness. In the\nbinary case, (20) is precisely the step exploited in Shalit et al. (2017). Step 3: Summation over multiple treatments and strategy dependence.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 40,
+    "total_chunks": 63,
+    "char_count": 1009,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "99ad7f46-3aef-4def-8a71-8fe6d595326a",
+    "text": "Summing (20) over all relevant pairs (and\nusing the symmetry j ↔k) yields an upper bound of the form\nK−1\n+ C0, Φ X ϵ(t)tar(Φ, h) ≤C′ F ϵF (Φ, h) + C′B Dpair {P (t) }t∈T\nt=0 (j) (k)\n) corresponds to the pairwise strategy. Other strategies correspond to other , PΦ j<k IPMG(PΦwhere Dpair(·) = P\ndiscrepancy operators DS:\n• For S = ova, replace each pairwise discrepancy by one-vs-all discrepancies and use triangle/mixture inequalities to\nobtain a bound with Dova (up to constants).\n• For S = agg, Dagg is a dependence functional (HSIC) satisfying Dagg = 0 iff Φ(X) ⊥ET , hence it enforces\nglobal balance; the resulting bound is written with Ragg as the imbalance term by definition of the strategy-dependent functional in the statement. Combining with (19) gives\nϵITE(Φ, h) ≤CF ϵF (Φ, h) + CB RS(Φ) + C0, (21)\nfor constants CF , CB, C0 depending only on regularity. Causal Representation Learning with Optimal Compression under Complex Treatments Step 4: Adding the complexity term. To obtain a high-probability statement for empirical learning, add and subtract bϵF\nand apply uniform generalization bounds for the composed class {(x, t) 7→ℓ(h(Φ(x), t), ·)} (bounded by M). This yieldsa remainder term of the form a Rademacher-complexity bound plus a concentration term. Complexity(h n, δ), e.g., ◦Φ; □Absorbing constants into the claimed statement of Lemma 3.2. Proof of Lemma 3.3 (profile score) We prove the score representation using Danskin's theorem / envelope arguments. Let\nF(θ, α) := bϵF (θ) + α bRS(θ) and bQS(α) = infθ F(θ, α) + CompS(α; n, δ). Fix α ∈A and let bθ(α) ∈arg minθ F(θ, α) be a measurable selection (assumed to exist). For any direction u ∈R, thedirectional derivative of the infimum satisfies (by Danskin's theorem; see, e.g., Rockafellar & Wets, 1998, Appendix D) dbQS(α; u) = θ∈arg minϑminF (ϑ,α) ∂αF(θ, α) u + ∂αCompS(α; n, δ) u.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 41,
+    "total_chunks": 63,
+    "char_count": 1856,
+    "word_count": 317,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6104573d-5026-4bec-8747-5ca09f700ee9",
+    "text": "Since ∂αF(θ, α) = bRS(θ) and we have selected bθ(α), we obtain\nbQ′S(α) = bRS(bθ(α)) + ∂αCompS(α; n, δ),\nwhenever bQS is differentiable at α (directional differentiability holds under the stated conditions). The population identity is\nidentical with hats removed.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 42,
+    "total_chunks": 63,
+    "char_count": 262,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "81406724-fe1e-4836-b51e-be9bcebee6a3",
+    "text": "Finally, if bαS is an interior minimizer and bQS is differentiable at bαS, first-order optimality□yields = 0. bQ′S(bαS) Proof of Theorem 3.5 (finite-sample deviation)\nLet α0 := αbdS (n) ∈arg minα∈A QS(α) and bα := bαS ∈arg minα∈A bQS(α). Assume for simplicity that both minimizersare interior points (the boundary case is handled by subgradient inequalities and yields the same deviation bound up to\nconstants). By Lemma 3.3,\nbQ′S(bα) = 0, Q′S(α0) = 0. Write\n0 = Q′S(bα) −Q′S(α0) + bQ′S(bα) −Q′S(bα) . By the mean value theorem and Assumption 3.4(i), there exists ˜α between bα and α0 such that\nQ′S(bα) −Q′S(α0) = Q′′S(˜α) (bα −α0), Q′′S(˜α) ≥κS. Hence\nsup bQ′S(α) −Q′S(α) . |bα −α0| ≤1κS bQ′S(bα) −Q′S(bα) ≤1κS α∈A Using Lemma 3.3 again, the complexity derivatives cancel and bQ′S(α) −Q′S(α) = bRS(bθ(α)) −RS(θ⋆(α)). Assumption 3.4(ii) gives that with probability at least 1 −δ,\nsup bQ′S(α) −Q′S(α) ≤rS(n, δ, K), α∈A hence\nδ, K)\n. |bα −α0| ≤rS(n,κS This proves the first claim.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 43,
+    "total_chunks": 63,
+    "char_count": 978,
+    "word_count": 162,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9cea5c37-d3b2-4f6e-b8be-7844880fcc62",
+    "text": "Causal Representation Learning with Optimal Compression under Complex Treatments Typical scalings of rS(n, δ, K). We briefly justify the stated K-dependence under bounded-kernel concentration. For\n2 MMD-type U-statistics,S = pair, bRpair is a sum of K each concentrating at O(n−1/2p log(1/δ)) under bounded kernels K\n(e.g., by Hoeffding/McDiarmid). Summing 2 = Θ(K2) terms yields rpair(n, δ, K) = O(K2n−1/2p log(1/δ)). For\nS = ova, there are Θ(K) such terms, yielding rova = O(Kn−1/2p log(1/δ)). For S = agg, bRagg is a single HSIC\nV-statistic, hence concentrates at O(n−1/2p log(1/δ)) with constants depending on kernel bounds but not on K. □ Proof of Corollary 3.6 (oracle inequality)\nLet α⋆∈arg minα∈A QS(α). By definition of bα as an empirical minimizer,\nbQS(bα) ≤bQS(α⋆). On the event supα∈A |bQS(α) −QS(α)| ≤ηn, we have\nQS(bα) ≤bQS(bα) + ηn ≤bQS(α⋆) + ηn ≤QS(α⋆) + 2ηn = α∈Ainf QS(α) + 2ηn. This proves the claim. □",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 44,
+    "total_chunks": 63,
+    "char_count": 921,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ca233790-c687-48f3-9edf-c90afc86c28d",
+    "text": "Proof of Theorem 3.8 (asymptotic normality)\nDefine the (random) score bψn(α) := bQ′S(α) and the population score ψ(α) := Q′S(α). By Lemma 3.3, these are welldefined (directionally) in a neighborhood of α∞S . Assumption 3.7(i) ensures α∞S is an interior point with ψ′(α∞S ) =\nQ′′S(α∞S ) > 0. Since bQS converges uniformly to QS on A (implied by the uniform score convergence and\nS in probability.compactness), standard argmin-continuity arguments yield bαS →α∞ Step 2: Linearization.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 45,
+    "total_chunks": 63,
+    "char_count": 482,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fadeffc0-3b8a-43eb-8ce7-b8d1ef3e47fe",
+    "text": "Because bαS is an interior minimizer, bψn(bαS) = 0. By a Taylor expansion with remainder (or the\nmean value theorem applied to ψ plus stochastic equicontinuity), S S ) −ψ(α∞ |) + bψn(bαS) −ψ(bαS) − bψn(α∞ S ) + op(|bαS −α∞ 0 = bψn(α∞S ) + ψ′(α∞S ) (bαS −α∞\nUniform convergence of bψn to ψ on a neighborhood of α∞S implies the bracketed difference is op(n−1/2). Rearranging\nyields\n√n 1 √n S ) + op(1). bψn(α∞S ) −ψ(α∞ (bαS −α∞ S ) = − ψ′(α∞S ) Step 3: Apply the score CLT.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 46,
+    "total_chunks": 63,
+    "char_count": 471,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a7850f9e-cc1c-40c6-b0d4-b5d82ba95df4",
+    "text": "By Assumption 3.7(ii),\n√n bψn(α∞S ) −ψ(α∞ S ) ⇒N(0, σ2S). Slutsky's theorem then gives σ2S S = 0, √n S ) 0, σ2 (bαS −α∞ ⇒N (ψ′(α∞S ))2 N (Q′′S(α∞S ))2 ,\nwhich is the claim. □ Proof of Corollary 3.9 (stability scaling with K)\nBy Theorem 3.8, for each strategy S,\n1 σ2S 1\nVar(bαS) = n · (Q′′S(α∞S ))2 + o n . Hence it suffices to characterize the K-dependence of σ2S and note that Q′′S(α∞S ) is strategy- and model-dependent but does\nnot scale with K under the stated \"mild dependence/regularity\" regime.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 47,
+    "total_chunks": 63,
+    "char_count": 502,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a2bac00b-49e3-422d-b537-c142d06087fb",
+    "text": "Causal Representation Learning with Optimal Compression under Complex Treatments Pairwise and OVA (covariance accumulation). Write the leading stochastic term in the profile score at α∞S as a sum of\n2 pairs:centered components. For S = pair, the imbalance functional is a sum over m = K\nbRpair = X bDab, Rpair = X Dab,\n1≤a<b≤K 1≤a<b≤K Under PΦwhere each bDab is (up to smooth transformations) a U-statistic estimating a discrepancy between PΦ(a) and\nstandard U-statistic CLTs, each centered term satisfies √n( = Zab + op(1) for some mean-zero limit variable bDab −Dab)\nZab with Var(Zab) ≍1. Therefore,\nσ2pair = Var X Zab = X Var(Zab) + 2 X Cov(Zab, Zcd).\na<b a<b (a<b)̸=(c<d) There are Θ(K2) variance terms and Θ(K4) covariance terms. Under the \"mild dependence across arms\" condition that a\nnon-vanishing fraction of these covariances are bounded below by a positive constant (reflecting shared covariate structure\nand overlap across treatment arms), the covariance sum dominates and σ2pair = Θ(K4), implying Var(bαpair) = Θ(K4/n). For S = ova, the imbalance is a sum of K U-statistic-type discrepancies bDk,−k. Analogously,\nK−1\nσ2ova = Var X Zk,−k = Θ(K2),\nk=0\nunder the same mild dependence premise, yielding Var(bαova) = Θ(K2/n). Aggregation (single V-statistic). For S = agg, bRagg is a single HSIC V-statistic on the joint sample {(Φ(Xi), ETi)}ni=1.Its asymptotic variance is σ2agg = Θ(1) (depending on kernel bounds and the embedding dimension but not on K), hence\nVar(bαagg) = Θ(1/n). Combining these scalings completes the proof. □ Data Generation Protocol in Section 4. To rigorously evaluate robustness under severe selection bias, we construct a\nsynthetic environment (\"Hard Setting\") designed to challenge standard re-weighting assumptions.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 48,
+    "total_chunks": 63,
+    "char_count": 1753,
+    "word_count": 273,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "712e3957-5c15-4f31-bb60-5b2c725b0e5e",
+    "text": "We generate N = 1500\nsamples with d = 20 covariates X ∼N(0, Id). Treatments T ∈{0, . . . , K −1} (with K = 4) are assigned via a\nhigh-temperature Softmax mechanism: P(T = k|X) ∝exp(κ · w⊤ k X), where wk ∼U(−1, 1)d are random projectionvectors. Crucially, we set the scaling parameter κ = 5.0, which forces propensity scores towards extrema, inducing a\nnear-violation of the overlap assumption. The outcomes are generated via a non-linear response surface with complex treatment interactions: Y (t) = sin(2X1)+X23 +\n0.5(t + 1)(X⊤1:5β) + ϵ, where β ∼N(0, 1)5 represents heterogeneous effect coefficients and ϵ ∼N(0, 0.1) is Gaussiannoise. This setup explicitly tests the model's ability to disentangle the non-linear confounding baseline (sin(2X1) + X23)\nfrom the treatment-specific drivers under limited data overlap.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 49,
+    "total_chunks": 63,
+    "char_count": 816,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7e73d3eb-144b-4d8e-aef0-45f4c29e6c82",
+    "text": "Data Generation Protocol in Section 5.1. We utilize the semi-synthetic UCI Digits dataset (N = 1797), defining digit\nclasses as treatment levels T ∈{0, . . . , 9} and synthesizing outcomes via a non-monotonic response surface Y (t) =\nf(X) + (t −4)2 + ϵ. This setup challenges the model's ability to interpolate causal effects across a structured treatmentmanifold. Detailed Model Architecture(Multi-Treatment CausalEGM We provide a detailed visualization of the Multi-Treatment CausalEGM architecture discussed in Section 5. As illustrated in\nFigure 4, the model distinguishes itself from the original binary CausalEGM through two key components: A Vectorized Embedding Layer that maps discrete treatment indices to dense vectors, preserving topological structure. Causal Representation Learning with Optimal Compression under Complex Treatments Original CausalEGM Multi-Treatment CausalEGM (Ours) Latent Latent\nZc, Zt Zc, Zt Generator H Generator H\n(MLP) (MLP) Zc Sigmoid Softmax\nActivation Activation",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 50,
+    "total_chunks": 63,
+    "char_count": 1002,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "53348689-2b8c-4b01-a2fb-79beb1895ab6",
+    "text": "Binary TT ∈{0, 1} Multi-Treatment TT ∈{0, . . . , K} Outcome Net F Embedding Layer ←Mapto densediscretevectors treatments (MLP) Outcome Net F\nOutcome Y (MLP) Detailed Architecture of Multi-Treatment CausalEGM. The left panel shows the original binary design, while the right panel\nhighlights our proposed extensions (Embedding Layer and Softmax Activation) for complex treatment regimes. A Softmax Generation Head that replaces the binary sigmoid activation to support multi-class interventions. Scalability and Efficiency Analysis Scalability of Discriminative Balancing Strategies in Large-Scale Regimes (K = 20). The training time for the Pairwise\nstrategy explodes, requiring over 850 seconds per epoch due to the calculation of 202 = 190 MMD terms. In stark contrast,\nAgg-T is drastically more efficient, completing training in < 50 seconds, which is significantly faster than both Pairwise\nand One-vs-All (≈120s). This empirically validates that our HSIC-based constraint successfully decouples computationalcomplexity from treatment cardinality. Training Efficiency of the Multi-Treatment CausalEGM Architecture. Figure 2(b) validates the scalability of our\nframework.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 51,
+    "total_chunks": 63,
+    "char_count": 1175,
+    "word_count": 162,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "990a9907-bc79-4470-a669-6c573367f1b4",
+    "text": "Despite the added overhead of image reconstruction, the generative model maintains an O(1) complexity profilewith a training time of 729 seconds. This is comparable to the lightweight CFR-Agg (451s) and stands in stark contrast to the\nPairwise strategy, which suffers from combinatorial explosion (>6000s). This confirms that embedding-based compression\neffectively decouples computational cost from treatment cardinality.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 52,
+    "total_chunks": 63,
+    "char_count": 422,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eb081bed-c850-4fd8-815d-b1fbb04f8b73",
+    "text": "Geometric Validation on Hierarchical Topologies We elaborate on the theoretical connection between our proposed framework and Geodesic Causal Inference (GCI), followed\nby experimental validation on a hierarchical tree topology. Theoretical Framework: From Discrete to Geodesic. Our Multi-Treatment CausalEGM framework naturally extends to\nthe Geodesic setting through the lens of manifold representation learning. Here we clarify the underlying mathematical\nstructure and the definition of \"Geodesic\" in our context. Natural Extension of the Framework.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 53,
+    "total_chunks": 63,
+    "char_count": 552,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "54831478-99b1-4ad6-b8e7-b8fa200fa761",
+    "text": "In the standard multi-treatment setting, treatments T ∈{0, . . . , K −1}\nare viewed as disjoint categorical variables. Our framework introduces a Treatment Embedding Layer e : T →Rde. Inthe Geodesic Setting, we relax the assumption that treatments are independent categories. Instead, we assume T are\ndiscrete samples from an underlying continuous manifold M (e.g., a hierarchy, a cycle, or a continuous dosage curve). Theframework extends naturally by explicitly regularizing the latent geometry:\nLtotal = Lpred + Lbalance + λgeo · Ei,j |∥e(ti) −e(tj)∥2 −dM(ti, tj)|2 (22)\nwhere dM represents the ground-truth geodesic distance (e.g., shortest path steps on a graph) between treatments. This\nforces the embedding space to become an isometric projection of the treatment manifold, enabling the model to infer causal\neffects for unseen or intermediate treatments. Causal Representation Learning with Optimal Compression under Complex Treatments Training Time Efficiency at K = 20. The Pairwise strategy incurs distinct computational costs due to K2 constraints. Underlying Mathematical Framework. The term \"Geodesic\" refers to the Wasserstein Geodesic path in the space of\noutcome distributions. • Manifold Hypothesis: We assume the conditional outcome distributions P(Y |T) vary smoothly along the manifold\n• Why \"Geo\"?: In classical causal inference, the transition from Treatment A to Treatment B is modeled as a linear\nmixture (e.g., αPA+(1−α)PB).",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 54,
+    "total_chunks": 63,
+    "char_count": 1450,
+    "word_count": 215,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "76be78ba-4529-42e4-83dc-87162f76b925",
+    "text": "This corresponds to a \"teleportation\" in distribution space. In contrast, our framework models the transition as a displacement along the shortest path (geodesic curve) on the probability manifold. • Consistency: By enforcing linearity in the latent embedding space (via Lgeo), our generator function G(·) acts as a pushforward map that translates the Latent Euclidean Line (Linear Interpolation) into a Distributional Geodesic\nCurve (Wasserstein Interpolation). Specifically, the interpolated outcome Yα = G(z, (1 −α)eA + αeB) represents the physically valid intermediate state, essentially recovering the optimal transport plan between causal mechanisms.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 55,
+    "total_chunks": 63,
+    "char_count": 656,
+    "word_count": 90,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a786bf8b-c0ac-4037-8047-27d2a1d1d0f6",
+    "text": "To empirically validate this theoretical capability, we designed a controlled experiment with a known\nHierarchical Tree Topology, which is a classic non-Euclidean structure. • Structure: A binary tree with 7 nodes (K = 7), representing a root treatment (0), intermediate subtypes (1, 2), and\nspecific refinements (3, 4, 5, 6). • Outcome Mechanism: The outcome Y is generated based on the semantic distance from the root.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 56,
+    "total_chunks": 63,
+    "char_count": 420,
+    "word_count": 66,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "62691e15-e9a0-4574-8b72-10c93b931b34",
+    "text": "We assigned node\neffects as: µRoot = 0, µL = −2, µLL = −3, µR = +2, µRR = +3. This creates a landscape where causally distant nodes (e.g., LL and RR) have large outcome differences, but are connected via the Root. • Implementation: We trained the Multi-Treatment CausalEGM with the geodesic constraint described in Eq. (1),\nenforcing that the Euclidean distance in latent space ∥ei −ej∥2 approximates the shortest path distance on the tree graph. Latent Space Analysis. Figure 3(a) presents the 2D PCA projection of the learned treatment embeddings e(T). • Topological Recovery: The model spontaneously organizes the discrete treatments into a tree structure.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 57,
+    "total_chunks": 63,
+    "char_count": 659,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f3ed3a09-1925-4866-bcd0-c97c1f99f672",
+    "text": "The \"Leaf\nLeft\" (LL) and \"Leaf Right\" (RR) nodes are placed at the maximal distance, while the \"Root\" is centered. • Cluster Separation: Distinct branches (Left vs. Right) are clearly separated, proving that the model has learned the\nhierarchical independence of the subtypes.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 58,
+    "total_chunks": 63,
+    "char_count": 276,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b7446ad9-1b42-4ba3-b2b9-2eb08149e93c",
+    "text": "Causal Representation Learning with Optimal Compression under Complex Treatments Linear Interpolation. A key property of GCI is that \"straight lines\" in the learned manifold should correspond\nto valid causal transitions.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 59,
+    "total_chunks": 63,
+    "char_count": 220,
+    "word_count": 30,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7c750db4-afe6-4336-b739-f3ada2e1a049",
+    "text": "We analyzed the interpolation path from Node LL (Treatment 3) to Node RR (Treatment 6). • The Path: Geometrically, the shortest path on the tree is LL →L →Root →R →RR.\n• Result Interpretation (Figure 3(b)):\n– The Linear Baseline (interpolating outcomes directly) yields a straight line y = 6α −3, implying a uniform transition which is causally meaningless in a tree structure.\n– Multi-Treatment CausalEGM (interpolating latent embeddings) yields the red curve. The curve exhibits a\nsigmoidal inflection, crossing Y ≈0 exactly at α = 0.5.\n• Conclusion: This signifies that the midpoint of the latent interpolation zmid = 0.5eLL + 0.5eRR effectively maps to\nthe Root embedding. The model understands that the only way to transition from \"Subtype Left\" to \"Subtype Right\" is\nto revert to the \"Common Ancestor,\" validating the topological consistency of the learned causal representation.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 60,
+    "total_chunks": 63,
+    "char_count": 885,
+    "word_count": 140,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "53e67fb0-0bef-4df8-b604-331fe99f0a5c",
+    "text": "Geometric Validation on Cyclic Topologies To further challenge the geometric capability of our framework beyond hierarchical structures, we conducted an experiment\non a dataset with underlying Cyclic (Toroidal) Topology. This setting tests whether the model can handle manifolds with\nperiodic boundary conditions, a common feature in temporal (e.g., time-of-day) or directional (e.g., orientation) treatments.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 61,
+    "total_chunks": 63,
+    "char_count": 409,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9cb564e3-414c-4404-97f0-c39ad11392e0",
+    "text": "• Data Source: We utilized the Rotated MNIST dataset. The base image is a handwritten digit \"3\".\n• Treatments: We generated K = 8 discrete treatments corresponding to rotation angles θ ∈{0◦, 45◦, . . . , 315◦}. Crucially, while the treatment indices T ∈{0, . . . , 7} are ordinal, the physical topology is cyclic: T = 0 (0◦) and T = 7 (315◦) are neighbors. • Outcome Mechanism: The outcome Y follows a cosine function of the angle: Y = cos(θ) + ϵ. This creates a smooth,\nperiodic response surface where Y (0◦) ≈Y (315◦).\n• Model: We trained the RingGeodesicCausalEGM with λgeo = 5.0, enforcing the latent distances to approximate the\ngeodesic distances on a cycle graph (C8). Results and Analysis.\n1. Topological Recovery of the Latent Ring. Figure 6 visualizes the learned 2D embedding space. Without being explicitly\nprovided with angular coordinates, the model spontaneously organizes the discrete treatment IDs into a perfect circular\narrangement.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 62,
+    "total_chunks": 63,
+    "char_count": 951,
+    "word_count": 160,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c4b4102e-8d39-43b0-8e35-c13e4219d3e9",
+    "text": "Notably, the embedding for 0◦(Red) and 315◦(Red-Purple) are placed as neighbors, effectively closing the\nloop. This demonstrates that our Geodesic-Regularized objective successfully recovers the intrinsic manifold topology\nfrom discrete observational data.\n2. Global Geometric Consistency (0◦→180◦). We performed counterfactual interpolation between opposite poles of thecycle: T = 0 (0◦) and T = 4 (180◦). As shown in Figure 7, the predicted outcome smoothly transitions from a maximum\npositive value to a minimum negative value. This trajectory mirrors the ground-truth physical mechanism (Y = cos(θ)),\nconfirming that the geodesic path in the latent space corresponds to a valid semantic rotation of the object.\n3. Local Boundary Continuity (0◦→315◦). A critical test for cyclic awareness is the transition between the boundary\nindices T = 0 and T = K −1.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 63,
+    "total_chunks": 63,
+    "char_count": 858,
+    "word_count": 128,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "44381fba-0f9e-4a0d-9924-ac5c10fd61e0",
+    "text": "A standard Euclidean model would interpret these as maximally distant. In contrast, ourmodel (Figure 8) produces a smooth, short-range interpolation. The path does not collapse to the global mean or traverse the\ncenter of the manifold; instead, it respects the local neighborhood structure, treating 315◦as an immediate rotation of 0◦. Conclusion: These results confirm that Multi-Treatment CausalEGM is not limited to hierarchical or Euclidean structures\nbut generalizes to arbitrary Riemannian manifolds (such as tori/cycles), provided the geodesic loss is appropriately defined. Causal Representation Learning with Optimal Compression under Complex Treatments Latent Space Topology (Rotated MNIST). The model learns an isometric embedding of the treatments, recovering the cyclic\norder 0◦→45◦→· · · →315◦→0◦. Global Interpolation (0◦→180◦). The geodesic path correctly models the monotonic decrease in outcome Y as the digit\nrotates from upright to upside-down, tracking the cosine function. Local Interpolation (0◦→315◦). Despite the large gap in discrete indices (0 vs 7), the model recognizes the topological\nproximity, yielding a smooth transition consistent with the periodic boundary condition.",
+    "paper_id": "2603.11907",
+    "title": "Causal Representation Learning with Optimal Compression under Complex Treatments",
+    "authors": [
+      "Wanting Liang",
+      "Haoang Chi",
+      "Zhiheng Zhang"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11907v1",
+    "chunk_index": 64,
+    "total_chunks": 63,
+    "char_count": 1203,
+    "word_count": 167,
+    "chunking_strategy": "semantic"
+  }
+]

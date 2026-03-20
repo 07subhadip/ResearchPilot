@@ -229,7 +229,7 @@ class PDFExtractor:
             with open(raw_file, 'r', encoding = 'utf-8') as f:
                 metadata = json.load(f)
 
-            # Skip if alrady processed
+            # Skip if already processed
             output_path = PROCESSED_DIR / f"{metadata['paper_id']}.json"
             if output_path.exists():
                 skipped += 1

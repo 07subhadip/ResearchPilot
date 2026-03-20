@@ -1,0 +1,1237 @@
+[
+  {
+    "chunk_id": "ea53b0e7-1bbd-48b0-88ba-f736ad849f18",
+    "text": "Language Generation with Replay:\nA Learning-Theoretic View of Model Collapse Giorgio Racca Michal Valko Amartya Sanyal\nUniversity of Copenhagen Isara Labs University of Copenhagen\ng.racca@di.ku.dk michal@isara.io amsa@di.ku.dk",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 0,
+    "total_chunks": 65,
+    "char_count": 226,
+    "word_count": 27,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d31e0e0a-c964-4853-8ff7-afd025147a66",
+    "text": "Abstract2026\nAs scaling laws push the training of frontier large language models (LLMs) toward evergrowing data requirements, training pipelines are approaching a regime where much of the\npublicly available online text may be consumed. At the same time, widespread LLM usageMar increases the volume of machine-generated content on the web; together, these trends raise the\n12 likelihood of generated text re-entering future training corpora, increasing the associated risk of performance degradation often called model collapse. In practice, model developers address\nthis concern through data cleaning, watermarking, synthetic-data policies, or, in some cases,\nblissful ignorance.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 1,
+    "total_chunks": 65,
+    "char_count": 680,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "afcefe75-4eb5-4812-8cc4-a47edece7e52",
+    "text": "However, the problem of model collapse in generative models has not been\nexamined from a learning-theoretic perspective: we study it through the theoretical lens of the\nlanguage generation in the limit framework, introducing a replay adversary that augments the\nexample stream with the generator's own past outputs. Our main contribution is a fine-grained[cs.LG] learning-theoretic characterization of when replay fundamentally limits generation: while replay\nis benign for the strongest notion of uniform generation, it provably creates separations for the\nweaker notions of non-uniform generation and generation in the limit. Interestingly, our positive\nresults mirror heuristics widely used in practice, such as data cleaning, watermarking, and output\nfiltering, while our separations show when these ideas can fail. Large language models (LLMs) are increasingly trained on web-scale corpora containing significant\nvolumes of machine-generated text. As this fraction grows, a central concern is model collapse [Shumailov et al., 2024]: the degradation of future models due to training on the outputs of their\npredecessors, effectively inflating the token count without adding new knowledge. While empirical\nevidence for such harmful feedback is accumulating, a principled theoretical understanding of whenarXiv:2603.11784v1 such feedback fundamentally limits the ability to generate language remains lacking. We address this by building on the framework of language generation in the limit [Kleinberg\nand Mullainathan, 2024]. Inspired by the classical literature on language identification [Gold, 1967,\nAngluin, 1980], this framework abstracts away specific language model architectures and training\nalgorithms and studies generation as an interactive game. First, an adversary secretly selects a target\nlanguage from a known class and then reveals an adversarially ordered stream of valid examples\nfrom that language; the generator is required to eventually produce an infinite sequence of previously\nunseen elements from the target language. In this work, we propose a replay variant of the generation game, language generation with replay,\nthat provides a minimal abstraction of the feedback loop underlying model collapse. In addition to\nvalid examples from the target language, the adversary may inject the generator's own previous\noutputs into the example stream. This replay mechanism models synthetic content re-entering the Table 1: When is generatability unaffected by replay? Generation notion Finite H Countable H General H\nUniform ✓(3.1) ✓(3.1) ✓(3.1)\nNon-uniform ✓(3.1) × (4.1) × (4.1)\nIn the limit ✓(5.1) ✓(5.1) × (5.6)\nProper in the limit × (6.3) × (6.3) × (6.3)\n✓: same guarantees as the standard setting. ×: strict separation from the standard setting. Parenthesized numbers indicate the theorem establishing the entry.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 2,
+    "total_chunks": 65,
+    "char_count": 2840,
+    "word_count": 408,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1178234c-f35c-41db-880a-bbe4b82e950a",
+    "text": "data stream, a phenomenon that has been shown to be responsible for model collapse [Shumailov\net al., 2024]. Recent work [Dmitriev et al., 2026] highlights the theoretical challenges posed by replay in online\nlearning: a replay adversary can systematically mislead classical online learning algorithms, leading\nto strong separations between classical online learnability and online learnability under replay. We\nask whether replay has an analogous effect on language generation. Does the presence of replay, where a generator is trained on its own\npast outputs, make language generation fundamentally harder? We answer this question with a fine-grained characterization across the main notions of generatability showing that the effect of replay depends on the specific definition. When replay does not\naffect generatability, we provide algorithms matching the guarantees of the standard setting; when\nit does, we construct separating hard instances.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 3,
+    "total_chunks": 65,
+    "char_count": 950,
+    "word_count": 137,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "36744c05-01d3-474b-926c-726a824bb756",
+    "text": "Table 1 summarizes our main results. Section 2\nintroduces the replay model and states our contributions. Section 3 shows that uniform generation\nis equivalent in the standard and the replay model. Section 4 and Section 5 study non-uniform\ngeneration and generation in the limit, respectively, and Section 6 studies proper generation with\nreplay. Finally, Section 7 discusses implications and open questions. Generation in the limit. Kleinberg and Mullainathan [2024] showed that all countable classes\nare generatable in the limit, whereas identification in the limit is only possible under restrictive\nassumptions [Gold, 1967, Angluin, 1980]. This surprising separation sparked a flurry of follow-up\nwork.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 4,
+    "total_chunks": 65,
+    "char_count": 705,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4b2b5988-5b6e-42a1-a990-890c8bb0fbb3",
+    "text": "One important line of research focuses on contrasting the notion of generatability with\nthat of learnability [Raman et al., 2025, Bai et al., 2026, Hanneke et al., 2025]; in particular,\nRaman et al. [2025] provided a characterization of uniform and non-uniform generatability via a\nnovel combinatorial dimension. Another prominent line of follow-up work investigates the trade-off\nbetween avoiding hallucinations and maintaining output variety, as measured by \"breadth\" [Charikar\nand Pabbaraju, 2025, Kalavasis et al., 2025, 2026], \"density\" [Kleinberg and Wei, 2025], or being\n\"representative\" [Peale et al., 2025]. Robust generation in the limit. The line of research most closely related to ours extends the\nframework of language generation in the limit to allow contaminations in the example stream, in\nthe form of incorrect examples and omissions. Earlier work on generation from noisy examples\nfocuses on the setting where the adversary is allowed to insert a finite number of arbitrarily noisy examples [Raman and Raman, 2025, Bai et al., 2026].",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 5,
+    "total_chunks": 65,
+    "char_count": 1052,
+    "word_count": 159,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fb5c519d-fd71-4b70-97f6-20c228595387",
+    "text": "Our setting is, in some sense, stronger, as we\nallow for an infinite number of noisy examples, and at the same time weaker, as we restrict the\nnoisy examples to be among previous outputs of the generator. Recently, Mehrotra et al. [2025]\nstudied the robustness of dense and non-dense generation in the limit under different regimes of\ninfinite contamination. Our work differs from theirs in that the contamination rate is endogenously\ndetermined by the generator.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 6,
+    "total_chunks": 65,
+    "char_count": 463,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1675151c-611c-4607-b8cf-85f6984b2666",
+    "text": "Replay adversary in online learning. In the online learning setting, Dmitriev et al. [2026]\nconsidered a similar replay adversary that can use previously output hypotheses to provide noisy\nlabels. They showed that replay induces a separation from standard online learning and introduced\na combinatorial dimension characterizing learnability in the replay setting. Their work can also\nbe viewed as an attempt to formalize model collapse through the lens of learning theory. However,\nthey focus on a supervised setting, while our analysis is tailored to the task of generation. A growing body of research, often grouped under the umbrella term model\ncollapse [Shumailov et al., 2024], examines the risks of recursively training models on the outputs of\nearlier generations, showing that this feedback loop can cause the tails of the distribution to be\nforgotten. Although the extent of this effect and its inevitability are subject to an ongoing debate,\nthe evidence overall suggests that, in the absence of an adequate supply of high-quality data, model\nperformance gradually deteriorates [Shumailov et al., 2023, Mart´ınez et al., 2023, Briesch et al.,\n2023, Alemohammad et al., 2024, Bertrand et al., 2024, Gerstgrasser et al., 2024, Seddik et al., 2024,\nZhang et al., 2024, Dohmatob et al., 2024, Marchi et al., 2024, Suresh et al., 2024, Dohmatob et al.,\n2025, Bohacek and Farid, 2025]. This section formalizes the language generation with replay framework and informally states our\nmain results.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 7,
+    "total_chunks": 65,
+    "char_count": 1499,
+    "word_count": 233,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a816a12-748a-4a30-a8d2-13bf59862bab",
+    "text": "Let X be a countable domain and let H ⊆{0, 1}X be a binary hypothesis class. For h ∈H, write\nsupp (h) := {x ∈X : h(x) = 1}. As a concrete instantiation, the domain X may be taken to be the\nset of all tokens, or of all finite strings over a finite alphabet, with each hypothesis h representing\nthe language consisting of the strings in supp (h). Throughout, we assume supp (h) is infinite for\nevery h ∈H, since the goal is to output infinitely many distinct valid elements. This is referred to\nas the uniformly unbounded support (UUS) property by Raman et al. [2025].",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 8,
+    "total_chunks": 65,
+    "char_count": 566,
+    "word_count": 107,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "283163b3-ccc2-4936-a04a-9f4eb99d19d4",
+    "text": "Our starting point is the language generation game introduced by Kleinberg and Mullainathan\n[2024]. The game proceeds over infinitely many rounds between an adversary and a (possibly\ncomputationally unbounded) generator, defined as a function G that maps each finite sequence\nx1:t := (x1, . . . , xt) ∈X t to an output ot := G(x1:t) ∈X. At the start of the game, the adversary\nfixes a hidden target h⋆∈H. In each round t, the adversary reveals an example xt ∈supp (h⋆), and\nthe generator outputs ot = G(x1:t). The generator succeeds if there exists a time t⋆∈N such that\nfor all t ≥t⋆,\not ∈supp (h⋆) \\ {x1, . . . , xt} . No restriction is imposed on outputs before t⋆.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 9,
+    "total_chunks": 65,
+    "char_count": 668,
+    "word_count": 123,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "37f976ae-a8d7-45af-9f99-168735e48fa7",
+    "text": "Different notions of generatability arise by varying what the success time t⋆is allowed to depend\nupon. Under uniform generatability [Kleinberg and Mullainathan, 2024], t⋆must be fixed across all\nh ∈H; under non-uniform generatability [Raman et al., 2025], it may depend on the particular\ntarget hypothesis h⋆; and under generatability in the limit [Kleinberg and Mullainathan, 2024], it\nmay further depend on the specific sequence (xt)t≥1. For reference, relevant definitions and results\nfrom the standard setting are summarized in Appendix A; in particular, Table 2 contrasts the above\nthree notions of generatability.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 10,
+    "total_chunks": 65,
+    "char_count": 620,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "621995e4-97ba-4cab-9a71-b9c1307fbe38",
+    "text": "In this work, we introduce a minimal modification to the standard language generation game\nto capture the recursive feedback dynamics at the core of model collapse. While in the standard\nsetting the adversary must reveal xt ∈supp (h⋆) in every round, in our replay setting the adversary\nmay also reveal previous generator outputs1. We refer to this variant of the standard language\ngeneration game as language generation with replay. Language Generation with Replay\nSetup. Hypothesis class H ⊆{0, 1}X satisfying the UUS property.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 11,
+    "total_chunks": 65,
+    "char_count": 529,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a1e951fe-1035-4e7e-a1b7-77db3f009efa",
+    "text": "The adversary secretly picks h⋆∈H. For t = 1, 2, . . .\n(i) The adversary reveals an example xt such that xt ∈supp (h⋆) ∪{os : s < t}.\n(ii) The generator outputs ot ∈X. There exists a finite time t⋆∈N such that ot ∈supp (h⋆) \\ {x1, . . . , xt}\nfor all t ≥t⋆. In the next section, we formally define what it means for a class H to be generatable with replay\nand state our main results for each notion of generatability. 2.2 Main Definitions and Results",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 12,
+    "total_chunks": 65,
+    "char_count": 450,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "483a685b-671c-4b2d-8dba-d435119449b5",
+    "text": "The following definition formalizes the notion of adversarial sequences of examples with replay. Definition 2.1 (Sequence with replay for a hypothesis and a generator). Fix a hypothesis h and a\ngenerator G. An infinite sequence (xt)t≥1 is a replay sequence for h and G if, for every t ≥1, xt ∈supp (h) or xt ∈{G (x1:s) : s < t} . Definition 2.1 forms the basis for subsequent notions of generation with replay. 2.2.1 Uniform Generation with Replay.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 13,
+    "total_chunks": 65,
+    "char_count": 448,
+    "word_count": 78,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "da1e479a-1670-42db-81fa-5bcc5fb7412b",
+    "text": "We begin with the most restrictive setting, where the generator must succeed after seeing a fixed\nnumber of samples d⋆, independent of the target h. Definition 2.2 (Uniform generatability with replay). A class H is uniformly generatable with replay\nif there exist a generator G and d⋆∈N such that for every h ∈H and every replay sequence (xt)t≥1\nfor h and G, if there exists t with |{x1, . . . , xt}| = d⋆, then G (x1:s) ∈supp (h) \\ {x1, . . . , xs} for all\ns ≥t. 1In the standard setting, a generator output may appear in the example sequence only if it lies in supp (h⋆);\nin contrast, our setting models a scenario where the generator can be fed back its own erroneous outputs (or\n\"hallucinations\"). Given a generator G, we define its uniform generation with replay sample complexity d⋆G as the\nsmallest such d⋆, or ∞if no such value exists. In Theorem 3.1, we prove that H is uniformly generatable\nwith replay if and only if it is uniformly generatable in the standard setting. Moreover, the sample complexity d⋆remains unchanged. Our proof proceeds by a black-box reduction from a uniform generator in the standard setting to\none in the replay setting, showing how to make uniform generators sufficiently robust to absorb the\nnoise introduced by replay. 2.2.2 Non-Uniform Generation with Replay In this notion of generatability, the sample complexity d⋆h is allowed to depend on the target h but\nnot on the specific sequence of examples (xt)t≥1. Definition 2.3 (Non-uniform generatability with replay). A class H is non-uniformly generatable\nwith replay if there exists a generator G such that for every h ∈H there exists d⋆h ∈N such that, for\n= d⋆h,any sequence with replay (xt)t≥1 for h and G, if there exists t⋆h ∈N such that nx1, . . . , xt⋆h o\nthen G(x1:s) ∈supp (h) \\ {x1, . . . , xs} for all s ≥t⋆h. In Theorem 4.1, we construct a countable hypothesis class that\nis non-uniformly generatable in the standard setting but is not non-uniformly\ngeneratable with replay. In the standard setting, every countable class is non-uniformly generatable [Raman et al., 2025,\nCharikar and Pabbaraju, 2025]. Thus, our result creates a strong separation in the non-uniform\ngeneration setting.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 14,
+    "total_chunks": 65,
+    "char_count": 2188,
+    "word_count": 379,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "05ef8bdd-9c8b-4658-95e3-d597d8002e48",
+    "text": "2.2.3 Generation in the Limit with Replay This setting requires success only on example streams that eventually enumerate the entire support\nof the target hypothesis (possibly interleaved with replay samples), with no pre-computed bound on\nthe sample complexity. Definition 2.4 (Generatability in the limit with replay). An infinite replay sequence (xt)t≥1 is an\nenumeration with replay if it eventually reveals every x ∈supp (h).2 A class H is generatable in the\nlimit with replay if there exists a generator G such that, for every h ∈H and every enumeration\nwith replay (xt)t≥1, there exists t⋆∈N such that G(x1:s) ∈supp (h) \\ {x1, . . . , xs} for all s ≥t⋆. Crucially, to meet the requirement of enumerating the full support of h⋆, the adversary can reveal\nan instance after it has been output by the generator. This increases the hardness of generation, as\nthe generator must carefully select its outputs, knowing that replayed instances cannot be trusted. In Theorem 5.6, we prove that there exists an (uncountable)\nclass H that is generatable in the limit without replay but is not generatable in\nthe limit with replay. 2That is, for every x ∈supp (h) there exists a finite t ∈N such that xt = x. This separation shows that the replay model can fundamentally limit the power of generation\nover general hypothesis classes. This naturally raises the question of whether a similar separation\nholds for countable classes. For this specific case, we provide a positive result.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 15,
+    "total_chunks": 65,
+    "char_count": 1477,
+    "word_count": 246,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e0c3eeb1-be45-4deb-8699-16195ccbcf4e",
+    "text": "In Theorem 5.1, we provide an algorithm that generates in\nthe limit under replay any countable class using only membership queries. By membership queries we mean oracle access to the predicate \"x ∈supp (h)\" for any h ∈H and any\nx ∈X.3 Kleinberg and Mullainathan [2024] showed that, in the standard setting, every countable\nclass is generatable in the limit using only membership queries. Thus, our result shows that, for\ncountable classes, generation in the limit remains equally possible under replay using the same\naccess model. 2.2.4 Proper Generation with and without Replay Finally, we study proper generation, where at each round the generator must output a hypothesis\nˆht ∈H, rather than an element ot ∈X, and the success criterion requires for all sufficiently large t.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 16,
+    "total_chunks": 65,
+    "char_count": 777,
+    "word_count": 126,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88179b76-995c-4b1f-9ea3-684b81a884cc",
+    "text": "We refer to the setting where the generator outputs elements of X simply\nas generation, and occasionally as improper generation when a contrast with the proper setting is\nneeded.4\nThe replay adversary may now reveal any element from the support of any previously output\nhypothesis. This formalizes unconstrained downstream reuse of deployed generative models, where\neach ˆht represents a specific version of a model previously deployed and accessible to downstream\nusers for content generation. Definition 2.5 (Proper generatability in the limit with replay). A class H is properly generatable\nin the limit with replay if there exists a proper generator G such that, for every h ∈H and every\nsequence (xt)t≥1 satisfying:\n1. xt ∈supp (h) or xt ∈supp ˆhs for some s < t, and\n2. (xt)t≥1 enumerates supp (h),\nthere exists t⋆such that supp ˆht ⊆supp (h) for all t ≥t⋆. In Theorem 6.3, we show that there exists a finite class H\nthat is properly generatable in the limit in the standard setting, but not in the\nreplay setting. Table 1 summarizes the results described so far, highlighting whether replay affects the guarantees\nof the standard setting for each notion of generatability.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 17,
+    "total_chunks": 65,
+    "char_count": 1179,
+    "word_count": 195,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "884ca398-d714-4508-9abe-2ddf14d1de8c",
+    "text": "3Equivalently, we assume that h(x) is computable for all h ∈H and x ∈X. We note that this access model is, in a\nsense, minimal, as any reasonable generator should at least be able to evaluate whether any given h ∈H is consistent\nwith the example stream.\n4In the literature, improper and proper generation are also referred to as element-based and index-based generation,\nrespectively [Kleinberg and Wei, 2025]. The term index-based, however, presumes that H is countable and thus admits\nan indexing. We also show that, even without replay, proper generation in the limit can be strictly harder\nthan improper generation in a computational sense. In Theorem 6.1, we show that proper generation in the limit\nmay require stronger computational primitives than membership queries alone. Kleinberg and Mullainathan [2024] showed that, in the standard setting, all countable classes are\nproperly generatable in the limit using membership queries and subset queries.5 Theorem 6.1 establishes a computational lower bound for the algorithm of Kleinberg and Mullainathan [2024],\nshowing that access to some additional computational primitive (such as subset queries) is necessary\nin general. This result is of independent interest beyond generation with replay. 3 Uniform Generation with Replay We begin with the simplest result.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 18,
+    "total_chunks": 65,
+    "char_count": 1318,
+    "word_count": 202,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "981afc46-3cad-4222-854b-5374db85f5e1",
+    "text": "In the standard setting, a uniformly generatable class H has the\nnice property that its sample complexity d⋆is known, at least information-theoretically [Raman\net al., 2025]. That is, after observing any d⋆distinct examples from any given h ∈H, a uniform\ngenerator G for H is guaranteed to output unseen elements of supp (h). A naive strategy to convert\nG into a generator ˜G that generates H uniformly with replay is to ignore all examples matching a\nprevious output and apply G on the remaining examples. However, if ˜G were to output arbitrary\nelements ot ∈X, then the sequence x1, o1, o2, o3, . . . could, in principle, form a valid replay sequence with potentially unbounded cardinality. In this\ncase, ˜G would not gather any additional information on h⋆beyond x1 ∈supp (h⋆), and thus would\nnot automatically inherit G's guarantees. To address this challenge, we introduce a preliminary \"burn-in\" phase during which we restrict\n˜G's outputs, before eventually copying G. Algorithm 1 illustrates how to construct such a generator\n˜G achieving uniform generation under replay in the most sample-efficient way possible. This result\nis stated formally in the following theorem. Theorem 3.1 (Equivalence of uniform generation with and without replay). A binary hypothesis\nclass H ⊆{0, 1}X satisfying the UUS property is uniformly generatable with replay if and only if it\nis uniformly generatable. In particular, any generator G that generates H uniformly can be converted\ninto a generator ˜G that generates H uniformly with replay, without increasing the sample complexity. Clearly, if a generator generates H uniformly with replay then it also generates H uniformly,\nsince all valid sequences in the standard setting are also valid sequences with replay. To show the\nother implication, suppose G generates H uniformly after seeing d⋆examples.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 19,
+    "total_chunks": 65,
+    "char_count": 1844,
+    "word_count": 293,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a6fe74ba-9918-4e64-9756-ee336f46149f",
+    "text": "Algorithm 1 shows\nhow to construct a generator ˜G from G that generates H uniformly with replay. Let (xt)t≥1 be\na sequence with replay for h ∈H and ˜G. The generator ˜G repeatedly outputs the first example\nx1 until the following condition is satisfied: |{x1, . . . , xt}| ≥d⋆. From that moment onward, ˜G\ncopies G's outputs. Now, let t⋆be the first time such that |{x1, . . . , xt⋆}| ≥d⋆. We necessarily have\nthat {x1, . . . , xt⋆} ⊂supp (h), since x1 is guaranteed to belong to supp (h) and ˜G has only ever\noutputted x1. Therefore, since G uniformly generates H with sample complexity d⋆, we have that\nG(x1:s) ∈supp (h) \\ {x1, . . . , xs} for all s ≥t⋆. It follows that ˜G achieves uniform generation with\nreplay with the same sample complexity d⋆. 5By subset queries we mean queries of the kind \"supp (hi) ⊆supp (hj)?\" for any hi, hj ∈H. Algorithm 1 Uniform-to-uniform-with-replay conversion\nRequire: G uniform generator for H with sample complexity d⋆\n1: for t = 1, 2, . . . do\n2: Receive new example xt\n3: if |{x1, . . . , xt}| ≥d⋆then\n4: Output G(x1:t)\n5: else\n6: Output x1",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 20,
+    "total_chunks": 65,
+    "char_count": 1079,
+    "word_count": 208,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c81eed5c-ebbd-414b-8158-c5094c42beec",
+    "text": "We now turn to a setting where the previous approach fails and introducing replay yields a strict\nseparation from the standard setting. 4 Non-Uniform Generation with Replay In contrast to the uniform notion of generation, the sample complexity in the non-uniform case\ndepends on the particular, unknown target hypothesis (see Definition A.4 in Appendix A). As a\nresult, a generator cannot commit in advance to observing a fixed number of distinct examples before\nproducing new outputs, as in Section 3. This precludes a direct adaptation of the reduction-based\nconstructions from uniform generators used in, e.g., Raman et al. [2025]. In the standard setting, all countable classes are non-uniformly generatable [Raman et al., 2025,\nCharikar and Pabbaraju, 2025]. In contrast, Theorem 4.1 shows that this guarantee fails in the\nreplay setting: countability alone no longer suffice. Nonetheless, every finite hypothesis class remains\nnon-uniformly generatable as an immediate corollary of Theorem 3.1. Together, these results account\nfor the row on non-uniform generation in Table 1. Theorem 4.1 (Hardness of non-uniform generation with replay). There exists a countable binary\nhypothesis class H ⊆{0, 1}X satisfying the UUS property that is not non-uniformly generatable with\nreplay. For each n ∈N define the hypotheses hn and h∞by supp (hn) = {1, . . . , n} ∪Z<0, supp (h∞) = N. Let H := {h∞} ∪{hn : n ∈N}. Assume for contradiction that there exists a generator G that\nnon-uniformly generates H with replay.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 21,
+    "total_chunks": 65,
+    "char_count": 1508,
+    "word_count": 239,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8c9ddaf7-3858-4f4d-8d11-c746511ef4df",
+    "text": "Let d := d⋆h∞denote the (non-uniform) sample complexity\nassociated with h∞. We define an adversarial sequence (xt)t≥1 online. For t = 1, . . . , d, set xt := t. For each t ≥d,\nset xt+1 := ot, i.e., from time d onward the adversary always replays the most recent generator's\noutput ot := G (x1:t). By construction, (xt)t≥1 is a valid replay sequence for h∞and G: the first d\npoints lie in supp (h∞) and every subsequent point is a replay. Since |{x1, . . . , xd}| = d = d⋆h∞, generatability in the non-uniform setting implies that for all\nt ≥d,\not ∈supp (h∞) \\ {x1, . . . , xt} = N \\ {x1, . . . , xt} . In particular, since xt+1 = ot, it follows that the generator outputs fresh natural numbers from time\nd onward. Thus, the set of distinct points in (xt)t≥1 is unbounded. Next, observe that the same sequence (xt)t≥1 is also a valid sequence with replay for hd and\nG: we have 1, . . . , d ∈supp (hd), and for all later times the adversary supplies replays (which are allowed to lie outside the support of hd). Because the sequence (xt)t≥1 contains infinitely many\ndistinct points, there exists a finite T ∈N such that |{x1, . . . , xT }| ≥d⋆hd.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 22,
+    "total_chunks": 65,
+    "char_count": 1144,
+    "word_count": 226,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b70c9e53-4b11-41eb-b69d-f74070d4163d",
+    "text": "Applying the non-uniform\nguarantee to the target hd therefore yields that, for all t ≥T, ot ∈supp (hd) \\ {x1, . . . , xt} . Combining this with ot ∈supp (h∞) = N for all t ≥d, we obtain that for all t ≥max{d, T}, ot ∈supp (h∞) ∩supp (hd) = {1, . . . , d}. Thus, for all sufficiently large t, the output ot must lie in the finite set {1, . . . , d} while also being\nfresh relative to {x1, . . . , xt}. This is impossible: after at most d such fresh outputs, every element\nof {1, . . . , d} has already appeared in the input sequence. The resulting contradiction shows that no\nsuch generator G can exist.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 23,
+    "total_chunks": 65,
+    "char_count": 602,
+    "word_count": 128,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "679c59f4-b3ee-4065-8886-d4b35b12d8ef",
+    "text": "5 Generation in the Limit with Replay We first construct an algorithm that matches the computational guarantees of the standard setting\nfor all countable classes under replay (Theorem 5.1). Then, in Theorem 5.6, we present a hard\n(necessarily uncountable) hypothesis class demonstrating a separation between generation in the\nlimit with and without replay.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 24,
+    "total_chunks": 65,
+    "char_count": 356,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "17c6c4fd-b04e-4935-843b-d64a3e722e31",
+    "text": "See also the corresponding row of Table 1. 5.1 A Computable Algorithm to Generate in the Limit Any Countable Class\nunder Replay Kleinberg and Mullainathan [2024] show that all countable hypothesis classes are generatable in\nthe limit without replay and give a universal membership-query-only generator. The next theorem\nshows that replay does not change this picture. There exists a generator that, given any countable binary hypothesis class H =\n{h1, h2, . . .} over a countable domain X satisfying the UUS property, generates in the limit with\nreplay every target h⋆∈H using only membership queries. The proof is constructive. Building on the algorithm of Kleinberg and Mullainathan [2024],\nwe propose WP (Witness Protection; Algorithm 2), a universal membership-query-only algorithm\nthat generates in the limit with replay any countable hypothesis class H. To prove this, we first\nneed some additional notation. Since the domain X is countable, we may assume without loss of\ngenerality that X = N. The algorithm maintains a growing prefix length m over the elements of the\ndomain X. For h ∈H and m ∈N, write supp (h) [m] := supp (h) ∩{1, . . . , m} ; restricting hypotheses to this prefix yields a surrogate for set inclusion that is computable with\nmembership queries alone.6 Fix a target hypothesis h⋆∈H. In the replay model, each example xt\nis either an element of supp (h⋆) or a replay of a past output. Let Ot := {o1, . . . , ot} with O0 = ∅,\nand define the sure set\nSt := {xs : 1 ≤s ≤t, xs /∈Os−1} ,",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 25,
+    "total_chunks": 65,
+    "char_count": 1508,
+    "word_count": 265,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d006a495-b602-4c2d-8fd2-142b45556e85",
+    "text": "6That is, for any i, j, m ∈N we can establish whether supp (hi) [m] ⊆supp (hj) [m] using only a finite number of\nmembership queries i.e., the examples that cannot be explained as replay and hence must lie in supp (h⋆), so that\nSt ⊆supp (h⋆). We relax the notion of criticality from Kleinberg and Mullainathan [2024] to ignore\npreviously output elements. Fix an ordering of the hypotheses of the countable class H, i.e., write\nH = {h1, h2, . . .}.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 26,
+    "total_chunks": 65,
+    "char_count": 446,
+    "word_count": 83,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "63b25a7b-cfde-42cf-9eaf-4c34373f57a4",
+    "text": "Definition 5.2 ((t, m)-critical with replay). We say that hn ∈H is (t, m)-critical\nwith replay if 2. for every i < n with St ⊆supp (hi) we have supp (hn) [m] ⊆supp (hi) [m] ∪Ot−1. Condition 1 requires that hn is consistent with the sure examples, i.e., examples that must belong\nto supp (h⋆). Condition 2 enforces that on the finite prefix {1, . . . , m} of the domain, any earlier\nhypothesis hi that is also consistent with St must contain every element of supp (hn) [m] except\npossibly those that could be explained as replays. Both conditions can be checked using finitely\nmany membership queries. At each step t, the algorithm considers the active set of consistent hypotheses Vt := {i ≤t : St ⊆supp (hi)} . From Vt, it selects the (t, m)-critical hypothesis with the largest index n(t,m) and attempts to output\nan element from\nsupp (hn(t,m)) [m] \\ St ∪Ot−1 ∪W (t,m) , where W (t,m) is the active witness set; the algorithm increases m until a suitable element is found\nand then outputs it. To construct W (t,m), for any prefix m, active candidate set Vt, and pair i, j ∈Vt\nwith j < i, define the witness w(t,m)ij as the minimal unobserved element distinguishing hi and hj\nwithin the prefix {1, . . . , m}: w(t,m)ij := min ∆(t,m)ij where ∆(t,m)ij := supp (hi) [m] \\ (supp (hj) [m] ∪Ot−1) , when the set ∆(t,m)ij is not empty; otherwise, w(t,m)ij = ⊥. The active witness set W (t,m) is then the\ncollection of all such witnesses: (t,m) n o W := w(t,m)ij | i, j ∈Vt, j < i \\ {⊥} .",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 27,
+    "total_chunks": 65,
+    "char_count": 1481,
+    "word_count": 282,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "420db2a6-daab-4041-9e9e-d0f5978f2138",
+    "text": "Since the algorithm never outputs an active witness w(t,m)ij , if w(t,m)ij appears in the example stream,\nit cannot be a replay and hence joins the sure set St, permanently ruling out hj from Vt.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 28,
+    "total_chunks": 65,
+    "char_count": 195,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "657e472b-9792-4b1f-b72e-6451df96e5a3",
+    "text": "Let z be the first index with h⋆= hz in the given enumeration of H. We prove the correctness of\nAlgorithm 2 via three lemmas: (i) Lemma 5.3 shows that hz eventually becomes (t, m)-critical with\nreplay and stays so; (ii) Lemma 5.4 shows that each round of Algorithm 2 terminates and the inner\nrepeat-until loop finds an output in finite time; and finally (iii) Lemma 5.5 shows that there exists a\nfinite stabilization time t⋆such that, for all steps after that, every output is fresh and valid for hz. Lemma 5.3 (Eventual criticality). There exists t⋆< ∞such that for all t ≥t⋆and all m ∈N, the\nhypothesis hz is (t, m)-critical with replay. Consider step t = z of Algorithm 2. Fix j < z with Sz ⊆supp (hj) and define ∆(z,∞)zj := supp (hz) \\ (supp (hj) ∪Oz−1) .",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 29,
+    "total_chunks": 65,
+    "char_count": 759,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0b7fcedf-2b2e-4c51-85fe-5bb6e997d293",
+    "text": "Algorithm 2 Witness Protection (WP) Require: H = {h1, h2, . . .} over X = {1, 2, . . .}\n1: S0 ←∅; O0 ←∅; m ←0\n2: for t = 1, 2, . . . do\n3: Receive a new example xt\n4: if xt /∈Ot−1 then\n5: St ←St−1 ∪{xt}\n6: else\n7: St ←St−1\n8: Vt ←{ i ≤t | St ⊆supp (hi) }\n9: ot ←⊥\n10: if Vt ̸= ∅then\n11: m ←max {m, xt}\n12: repeat\n13: m ←m + 1\n(t,m)14: W ←∅\n15: for i, j ∈Vt with j < i do\n16: ∆(t,m)ij ←supp (hi) [m] \\ (supp (hj) [m] ∪Ot−1)\n17: if ∆(t,m)ij ̸= ∅then\n18: w(t,m)ij ←min ∆(t,m)ij\n(t,m) (t,m) n o19: W ←W ∪ w(t,m)ij\n20: n(t,m) ←max { i ≤t | hi is (t, m)-critical with replay }\n21: for x ∈supp (hn(t,m)) [m] do\n(t,m)22: if x /∈St ∪Ot−1 ∪W then\n23: ot ←x; break\n24: until ot ̸= ⊥\n25: else\n26: Choose ot ∈St arbitrarily\n27: Output ot; Ot ←Ot−1 ∪{ot} If ∆(z,∞)zj = ∅, then hz already satisfies supp (hz) ⊆supp (hj)∪Oz−1. Otherwise, let wj := min ∆(z,∞)zj\n(which is well-defined under the identification X ≃N). n o B := j < z : Sz ⊆supp (hj) and ∆(z,∞)zj ̸= ∅ . Note that |B| ≤z −1 < ∞. Also, recall that, since hz is the true hypothesis, z ∈Vt for all t. We claim that, for every j ∈B, wj /∈Ot as long as j ∈Vt. We prove this by induction. For\nthe base case t = z −1, if j ∈B, then by definition wj /∈Oz−1. Now, consider any t ≥z. By the\ninduction hypothesis, wj /∈Ot−1. Thus, when m ≥wj, WP sets w(t,m)zj = min {x ≤m : x ∈supp (hz) \\ (supp (hi) ∪Ot−1)} = wj.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 30,
+    "total_chunks": 65,
+    "char_count": 1349,
+    "word_count": 308,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0e0435ca-c1bd-4575-ae2e-0466adaccb66",
+    "text": "Since the output-selection rule forbids outputting any element of W (t,m), step t does not output\nwj, i.e., wj /∈Ot. Otherwise, if m < wj, then every output considered by the algorithm lies in\n{1, . . . , m}, and hence cannot equal wj. Thus, wj /∈Ot for any step t where j ∈Vt. Since wj ∈supp (hz), any enumeration with replay for hz and WP must eventually present wj at\na finite time tj as some example xtj. There are two possibilities: either j was already permanently\nevicted from Vt at some time prior to tj (due to another distinguishing element), or j ∈Vtj. If\nj ∈Vtj, then wj /∈Otj−1 and thus wj enters the sure set Stj.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 31,
+    "total_chunks": 65,
+    "char_count": 627,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9cd67fce-e5f5-4880-ad03-79161549ca55",
+    "text": "Consequently, hj is permanently ruled\nout from Vt for all t ≥tj. In either case, every j ∈B is evicted from Vt by some finite time. Let t⋆:= max {tj : j ∈B}, with the convention t⋆= z if B = ∅. Then, for all t ≥t⋆and all j < z,\nif St ⊆supp (hj), necessarily j /∈B and hence supp (hz) ⊆supp (hj) ∪Oz−1 ⊆supp (hj) ∪Ot−1. Intersecting with {1, . . . , m} yields supp (hz) [m] ⊆supp (hj) [m] ∪Ot−1 for all m ∈N. Since we\nalso have that St ⊆supp (hz) for all t, the hypothesis hz satisfies Definition 5.2 for all t ≥t⋆and\nm ∈N. Lemma 5.4 (Per-round termination). For every t ∈N, Algorithm 2 outputs ot after finitely many\niterations of the repeat-until loop. If Vt = ∅, the algorithm outputs some ot ∈St and terminates. Then, for each m, there exists at least one (t, m)-critical hypothesis: the minimal index in Vt is\n(t, m)-critical with replay, since condition (ii) of Definition 5.2 is vacuous in this case. As m increases, the predicate \"hi is (t, m)-critical with replay\" is monotone: once false for a\ncertain m′, it remains false for all m ≥m′. Thus, n(t,m) is nonincreasing in m. Additionally, it takes\nvalues in the finite set {1, . . . , t}. Hence, there exists m0 < ∞such that n(t,m) = ¯n for all m ≥m0.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 32,
+    "total_chunks": 65,
+    "char_count": 1209,
+    "word_count": 236,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7cbc8010-b3c8-4e3f-8cad-5675c833d2c6",
+    "text": "The excluded set in the output-selection loop, E(t,m) := St ∪Ot−1 ∪W (t,m), is finite and has size at most |St|+|Ot−1|+|Vt| (|Vt| −1) /2 ≤2t+t2. Since supp (h¯n) is infinite, the\ncardinality of supp (h¯n) [m] diverges with m. Therefore, for all sufficiently large m ≥m0 we have supp (h¯n) [m] \\ E(t,m) ̸= ∅. For such an m, the for-loop finds an admissible x and sets ot ̸= ⊥, causing the repeat-until loop\nto terminate. Lemma 5.5 (Eventual validity). There exists t⋆< ∞such that for all t ≥t⋆the output satisfies ot ∈supp (hz) \\ {x1, . . . , xt} . Let t⋆be as in Lemma 5.3 and fix t ≥t⋆. The branch Vt = ∅cannot occur since hz\nis always consistent with St and hence z ∈Vt. Thus, Vt ̸= ∅and the algorithm outputs some\not ∈supp (hn(t,m)) [m] \\ St ∪Ot−1 ∪W (t,m) for the final value of m in the repeat-until loop. Since hz is (t, m)-critical, we have n(t,m) ≥z. If n(t,m) = z, then ot ∈supp (hz) immediately.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 33,
+    "total_chunks": 65,
+    "char_count": 905,
+    "word_count": 174,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "256c91ad-605c-4b32-8c61-c59a427f55a7",
+    "text": "If\nn(t,m) > z, applying condition (ii) of Definition 5.2 to the pair (i, n) = (z, n(t,m)) yields supp (hn(t,m)) [m] ⊆supp (hz) [m] ∪Ot−1. Because ot /∈Ot−1 by construction, it follows that ot ∈supp (hz). Finally, ot /∈St and ot /∈Ot−1\nimplies ot /∈{x1, . . . , xt}, since every observed example is either sure (hence in St) or a replay (hence\nin Ot−1). Thus, ot ∈supp (hz) \\ {x1, . . . , xt}, as claimed. We can finally provide a proof of Theorem 5.1. Proof of Theorem 5.1. Algorithm 2 only requires membership queries to evaluate hi(x) for i ≤t\nand x ≤m, where t, m are finite. Additionally, Lemma 5.4 shows that, at every time t, Algorithm 2\noutputs some ot after finitely many operations. Hence, Algorithm 2 is a computable procedure\nthat can be implemented using membership queries alone. Now, fix any target h⋆∈H.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 34,
+    "total_chunks": 65,
+    "char_count": 818,
+    "word_count": 151,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8b24150b-8286-4b35-844a-135f366a2e40",
+    "text": "For any\nenumeration with replay for h⋆and WP, Lemma 5.5 gives a time t⋆after which every output is\nfresh and valid for h⋆. Therefore, Algorithm 2 generates h⋆in the limit with replay. Since h⋆∈H\nwas arbitrary, the theorem follows. 5.2 Separation Between Generation in the Limit With and Without Replay While the previous result shows that replay does not impose additional hardness on the generatability\nin the limit of countable hypothesis classes, it leaves open whether replay can ever make generation\nstrictly harder. The following theorem answers this in the affirmative: there are (uncountable)\nclasses that are generatable in the limit in the standard sense but not generatable in the limit when\nreplay is allowed. There exists a hypothesis class H that is generatable in the limit but is not generatable\nin the limit with replay. We prove Theorem 5.6 by an explicit construction loosely based on Bai et al. [2026]. We first\nneed to introduce some additional notation.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 35,
+    "total_chunks": 65,
+    "char_count": 975,
+    "word_count": 159,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c68416b5-8b79-4d02-b62a-153c38042588",
+    "text": "Let the domain be X := Z ∪{∗n | n ∈N}. Strings of\nthe form ∗n act as \"special tokens\" that will index the relevant subclass. Hb1 := nh ∈{0, 1}X supp (h) = {b} ∪A ∪{x ∈Z : x > j} for some A ⊆Z, j > bo ,\nHb2 := nh ∈{0, 1}X supp (h) = {x ∈Z : x < b} ∪A for some A ⊆Z \\ {b}o , and let Hb := Hb1 ∪Hb2. Informally, Hb1 contains hypotheses whose support includes b and contains\nall integers larger than some cutoff j > b, whereas Hb2 contains hypotheses that omit b but include\nevery integer less than b. Both classes also include an arbitrary subset A of the remaining integers.7 7We note that Hb is generatable in the limit but not generatable in the limit with a single omission (i.e., by omitting\nb), as shown by Bai et al. [2026] (where they set b = 0). However, Hb is generatable in the limit with replay: the\ngenerator of Bai et al. [2026] that works in the standard setting can be adapted to the replay setting by restricting it\nfrom outputting the crucial string b. Therefore, in order to show a separation between generation in the limit with\nand without replay, we will need a more involved construction.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 36,
+    "total_chunks": 65,
+    "char_count": 1108,
+    "word_count": 220,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "45465660-0d56-44cf-876c-1c522922d513",
+    "text": "Next, for i ∈{1, 2} define ˜Hbi := n˜h ∈{0, 1}X supp ˜h = supp (h) ∪ n∗k : 1 ≤k ≤bo for some h ∈Hbi o , and let ˜Hb := ˜Hb1 ∪˜Hb2. Thus, ˜Hbi is obtained from Hbi by adding the marker strings ∗1, . . . , ∗b to\nthe support of each hypothesis. Finally, define the class H := 1 {∗n | n ∈N} ∪ [ ˜Hb.\nb∈N0 That is, H contains the all-marker hypothesis together with all the padded classes ˜Hb.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 37,
+    "total_chunks": 65,
+    "char_count": 388,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f481d70b-9d13-44da-88c6-1d0c510a2515",
+    "text": "To prove Theorem 5.6, Lemma 5.7 shows that H is generatable in the limit, while Lemma 5.8\nshows that H is not generatable in the limit with replay. The class H is generatable in the limit. Let Gb be the generator from Bai et al. [2026] that generates Hb in the limit. We briefly recall its definition:",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 38,
+    "total_chunks": 65,
+    "char_count": 301,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "454123bd-5abc-483d-a5b0-4d64e7a7cd3b",
+    "text": "( max {t, o1, . . . , ot−1, x1, . . . , xt} + 1 if b ∈{x1, . . . , xt} ,\nGb(x1, . . . , xt) :=\nmin {b, o1, . . . , ot−1, x1, . . . , xt} −1 otherwise. Essentially, if h⋆∈Hb1 then Gb will observe b and eventually output unseen integers larger than\nthe cutoff j; otherwise, if h⋆∈Hb2 then Gb will always take the second branch and output unseen\nintegers smaller than b. Since ˜Hb only augments each h ∈Hb by the same finite set of ∗-strings, the\nsame generator Gb (ignoring the ∗-strings in its input) generates ˜Hb in the limit. We now use this to define a single generator G for H.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 39,
+    "total_chunks": 65,
+    "char_count": 581,
+    "word_count": 126,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b0b62937-c83b-47f5-813d-a5d165838286",
+    "text": "Given a history (x1, . . . , xt), define n m(t) := max k ∈N : ∗k ∈{x1, . . . , xt}o , with m(t) = 0 if no ∗-string has appeared. Let Zt := {x1, . . . , xt} \\ {∗n | n ∈N}, and set (∗m(t)+1 if {x1, . . . , xt} ⊆{∗n | n ∈N} ,\nG(x1, . . . , xt) :=\nGm(t) (Zt) otherwise. Thus, if h⋆= 1 {∗n | n ∈N} then the output of G is always an unseen ∗-string, so G generates h⋆\nin the limit. Otherwise, for any h⋆∈S b ˜Hb, note that b⋆:= max k : ∗k ∈supp (h⋆) equals the\nunique index such that h⋆∈˜Hb⋆. Hence, on any enumeration (xt)t≥1 of supp (h⋆), the value of m(t)\nis nondecreasing and stabilizes to b⋆after the finite time t′ when ∗b⋆appears in the enumeration. Moreover, since supp (h⋆) ∩Z is infinite, any enumeration of supp (h⋆) must present an integer at\nsome finite time t′′; after that time, G always takes the second branch. Therefore, G copies Gb⋆\nfor all t ≥˜t := max {t′, t′′}. Since Gb⋆generates ˜Hb⋆in the limit, there exists t⋆∈N such that\nGb⋆(Zt) ∈supp (h⋆) \\ {x1, . . . , xt} for all t ≥t⋆. Thus, G (x1, . . . , xt) is guaranteed to be a valid\noutput for all t ≥max ˜t, t⋆ .",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 40,
+    "total_chunks": 65,
+    "char_count": 1079,
+    "word_count": 235,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bf27a223-46ed-48a6-97bb-29557bdf6f27",
+    "text": "The class H is not generatable in the limit with replay. Assume for the sake of contradiction that there exists a generator G that generates H\nin the limit with replay. We describe an adaptive adversarial enumeration with replay (xt)t≥1 and a hypothesis h⋆∈H such that G outputs infinitely many invalid elements on (xt)t≥1. The adversary constructs (xt)t≥1 in two steps. In the first step, the adversary forces the learner to output a \"long\" ∗−string marker.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 41,
+    "total_chunks": 65,
+    "char_count": 458,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e60111ef-1ee0-4161-88bc-1fe2c27b99ba",
+    "text": "Let\nhmk := 1 {∗n | n ∈N}. The adversary begins enumerating the support of hmk by presenting the\nsequence xt := ∗t. Since G generates H in the limit with replay, there exists a time step τ such\nthat oτ ∈supp hmk \\ {x1, . . . , xτ}. Let the output be oτ = ∗z for some z > τ. The adversary then\nextends the input sequence by displaying all ∗−strings until ∗z by setting xτ+1 := ∗τ+1, . . . , xz := ∗z. Let J0 := z.8\nIn the second step, the adversary forces infinitely many mistakes in multiple phases. For each\nn ∈N, at the beginning of phase n, the adversary presents the integer z −n, and then presents\nthe increasing tail Jn−1 + 1, Jn−1 + 2, . . . until the first time tn at which G outputs an integer otn\nsatisfying otn > Jn−1 and otn /∈{x1, . . . , xtn}. The adversary then sets Jn := otn and proceeds to\nphase n + 1, never presenting Jn as an element of the sequence. Each phase terminates, i.e., tn < ∞for all n ∈N. We prove this claim later. First, we show how the adversary can use this fact to force infinitely\nmany mistakes.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 42,
+    "total_chunks": 65,
+    "char_count": 1032,
+    "word_count": 213,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "07fa2bd4-7d55-4e17-a7a7-0f54cde10761",
+    "text": "Let S ⊆Z be the set of all integers ever presented by the above construction during\nthe second step, and define supp (h⋆) := S ∪ n∗k : 1 ≤k ≤z o = [ {xt} .\nt≥1 Since every integer smaller than z appears in the enumeration (xt)t≥1 as z −n for some n ∈N, we\ncan write\nS = {x ∈Z : x < z} ∪A where A := {x ∈S : x > z} ⊆Z \\ {z} . This shows that the example sequence (xt)t≥1 enumerates the support of a hypothesis h⋆that\nbelongs to ˜Hz2. However, by construction, otn = Jn /∈supp (h⋆) for each n ∈N. Hence, (tn)n≥1 is\nan infinite sequence of time steps at which G makes a mistake, contradicting that G generates H in\nthe limit with replay. Suppose, for the sake of contradiction, that phase n does not terminate,\ni.e., the adversary keeps presenting Jn−1 + 1, Jn−1 + 2, . . ., but the generator never outputs a fresh\ninteger larger than Jn−1. Let ˆh be the hypothesis whose support is enumerated by such example\nsequence, excluding the (potentially replayed) string ∗z. Denote by X<n ⊆Z the finite set of integers\nthat appear before the beginning of phase n, with X<1 = ∅for n = 1. supp ˆh := X<n ∪{z −n} ∪{x ∈Z : x > Jn−1} ∪ n∗k : 1 ≤k ≤z −1o . Notice that z −1 belongs to the support of ˆh for any n ∈N: for n = 1, it appears directly as z −n;\nfor all other n, it already appeared during a previous phase and is contained in X<n. Consequently,\nˆh is a valid hypothesis from ˜Hz−11 . By construction, the only string in the adversary's sequence that\ndoes not belong to the support of ˆh is ∗z, which nevertheless appears in the sequence as a replay of\nthe earlier output oτ = ∗z. Thus, the adversary's sequence is a valid enumeration with replay for ˆh\nand G. Therefore, since G generates H in the limit with replay, G must eventually output an unseen",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 43,
+    "total_chunks": 65,
+    "char_count": 1747,
+    "word_count": 349,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "655ec0e6-13f0-4ef6-b18f-efbf6951b384",
+    "text": "8At a high level, note that since we are in the replay setting, G cannot know whether ∗z belongs to the support of\nthe target hypothesis h⋆or not. Hence, even upon observing z −1, G does not know whether h⋆∈˜Hz−1—in which\ncase h⋆∈˜Hz−11 and supp (h⋆) necessarily contains all integers larger than some cutoff j—or h⋆∈˜Hz, in which case\nobserving z −1 is uninformative, as h⋆could belong to either Hz˜ 1 or Hz˜ 2. The second step of our construction relies on\nthis observation to force infinitely many mistakes.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 44,
+    "total_chunks": 65,
+    "char_count": 510,
+    "word_count": 89,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "20612eb7-00a9-4853-a3f4-97292b59bc00",
+    "text": "element from the support of ˆh. Since all elements of X<n ∪{z −n} ∪ ∗k : 1 ≤k ≤z −1 have\nalready appeared, any such fresh element must belong to the tail {x ∈Z : x > Jn−1}. Consequently,\nG outputs an unseen integer larger than Jn−1 at a finite time, contradicting the assumption that\nphase n does not terminate. Proof of Theorem 5.6. The hypothesis class H is generatable in the limit (Lemma 5.7), but not\ngeneratable in the limit with replay (Lemma 5.8). 6 Proper Generation in the Limit with and without Replay We now shift our focus from improper to proper generation, where the generator outputs a hypothesis\nˆht at each round. We focus exclusively on the in-the-limit notion of proper generatability for two\nreasons. First, prior work on proper generatability has primarily addressed the in-the-limit setting:\nKleinberg and Mullainathan [2024] established that all countable classes are properly generatable\nin the limit using a generator relying on membership and subset queries (see Theorem A.15). In Section 6.1, we strengthen this line of work by providing a computational lower bound showing\nthat membership queries alone are insufficient for proper generation in the limit in the standard\nsetting. Second, as we show in Section 6.2, the notion of proper generatability with replay is so\nstrong that a separation from the standard setting arises even in the (easy) setting of generatability\nin the limit of finite classes. 6.1 An Impossibility Result for Proper Generation in the Limit Using Only\nMembership Queries Kleinberg and Mullainathan [2024] give a universal membership-query-only algorithm that improperly\ngenerates in the limit any countable hypothesis class. A similar algorithm also achieves proper\ngeneration in the limit for any countable class, but requires additional access to subset queries. The following result shows that access to additional queries besides membership queries is indeed\nnecessary for proper generation.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 45,
+    "total_chunks": 65,
+    "char_count": 1950,
+    "word_count": 309,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d6d02754-7a58-4ded-ae28-2641b788d2b3",
+    "text": "There cannot exist a (deterministic) generator G that only makes membership queries\nand properly generates in the limit all countable hypothesis classes. As described in Algorithm 3, for any given computable proper generator G that only makes\nmembership queries, we construct a hard class H on which G makes infinitely many mistakes\nby simulating G's interaction with an adversarial enumeration. At a high level, this follows the\nsame \"simulation template\" as the computational lower bound of Charikar and Pabbaraju [2025];\nour construction, however, maintains a countably infinite class rather than only two hypotheses. Algorithm 3 defines H = {h1, h2, . . .} via a function F : N × N →{0, 1} defined as ( 1 if j ∈supp (hi) ,\nF(i, j) =\n0 if j /∈supp (hi) , which constitutes the (limited) interface available to G to interact with the hypothesis class H.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 46,
+    "total_chunks": 65,
+    "char_count": 855,
+    "word_count": 146,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a890f20a-594e-42d3-9756-51f206aeca8a",
+    "text": "To\ncompute F(i, j), one would run Algorithm 3—which in turn simulates G—until the value of F(i, j)\nis assigned. Because H is countable, we can assume that G outputs an index it ∈N, interpreted as the index\nof the output hypothesis; that is, ˆht = hit. Since G is restricted to membership queries, at every\nstep t, it will have gathered information about finitely many hypotheses and finitely many instances Algorithm 3 Hard Hypothesis Class for the Proper Generator G\nRequire: Proper generator G\n1: Set F(i, 1) = 1 for all i ∈N\n2: Initialize enumeration queue: Q ←{1}\n( 0 if i = 2,\n3: Set up the trap: F(i, 2) =\n1 if i ̸= 2\n4: Initialize trap pair (i′, j′) ←(2, 2)\n5: Initialize counters: I ←2 and J ←2\n6: for t=1,2,. . . do\n7: Show G the example xt ←min Q; Remove xt from Q\n8: k ←1\n9: while G issues a new membership query (i, j) do\n10: m ←max{j, k}\n11: if m > J then\n12: for n = J + 1, J + 2, . . . , m do\n13: Set F(i, n) = 1 for all i ∈N; Add n to Q\n14: J ←m\n15: I ←max{I, i}\n16: k ←k + 1\n17: Receive G's output it ▷Interpreted as ˆht = hit\n18: I ←max {I, it}\n19: if it ̸= 1 then\n20: Add j′ to Q\n( 1 if i = it,\n21: Diagonalization step: dt ←J + 1; Set F(i, dt) =\n0 if i ̸= it\n( 0 if i = I + 1,\n22: Set up a new trap: et ←J + 2; Set F(i, et) =\n1 if i ̸= I + 1\n23: Update trap pair: (i′, j′) ←(I + 1, et)\n24: Update counters: I ←i′ and J ←et\n25: Let ct ←J + 1; Set F(i, ct) = 1 ∀i ∈N; Add ct to Q; Update J ←ct",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 47,
+    "total_chunks": 65,
+    "char_count": 1411,
+    "word_count": 335,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e0439a7-9126-41f3-89ee-87a853a91d6c",
+    "text": "(i.e., elements of the domain X). Algorithm 3 maintains two counters I and J that delimit the finite\n\"rectangle\" of hypothesis-instance pairs (i, j) ∈N × N queried so far by G; outside this rectangle, it\nsets memberships adversarially. To ensure that the revealed sequence enumerates the target support,\nthe construction maintains a queue Q and at each round reveals xt = min Q, which guarantees that\neach element entering Q will be revealed after a finite number of rounds. Additionally, it maintains\na trap pair (i′, j′) of hypothesis hi′ and instance j′ such that j′ /∈supp (hi′) but j′ ∈supp (hi) for\nall i ̸= i′. The hypothesis h1 serves as a reference hypothesis. The algorithm has two modes—diagonalization and overgeneralization—and it switches mode\nautomatically by adapting the enumeration (xt)t≥1 to G's outputs, specifically to whether ˆht = h1. The current trap instance enters the enumeration queue Q only at the first subsequent round t (if\never) for which ˆht ̸= h1. When this occurs, Algorithm 3 also instantiates a new trap pair (i′, j′)\nwith i′ > I and j′ > J.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 48,
+    "total_chunks": 65,
+    "char_count": 1079,
+    "word_count": 185,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e6f0d15f-ff8f-408e-9d23-085334f51bad",
+    "text": "• G outputs a hypothesis different from h1 infinitely often. In this case, the adversary enumerates\nsupp (h1) and forces G to make infinitely many mistakes via diagonalization: at each round t\nwith ˆht ̸= h1, it inserts a fresh instance dt beyond the counter J and assigns it to the support\nof ˆht but not to that of h1. • G outputs a hypothesis different from h1 only finitely often. Then, after some finite time, it\noutputs h1 indefinitely. In this case, the adversary enumerates the support of the current trap\nhypothesis hi′, whose support is strictly smaller than supp (h1), so that G overgeneralizes. Figure 1 illustrates a few steps of this procedure.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 49,
+    "total_chunks": 65,
+    "char_count": 658,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "221142d0-6c79-4e1f-9771-327a5f516ff6",
+    "text": "To prove Theorem 6.1, we first argue about the soundness of our construction by analyzing the\nfunction F, showing that the corresponding hypothesis class H is an indexed family of recursive\nlanguages (in the sense of Angluin [1980]) satisfying the UUS assumption. For any computable G, the associated function F : N × N →{0, 1} defined in\nAlgorithm 3 is total recursive. Moreover, for every i ∈N, the set {j ∈N | F(i, j) = 1} is infinite. We show that, for every pair (i, j) ∈N × N, the value F(i, j) is decided at a finite step of\nAlgorithm 3 and is never changed afterward. Observe that whenever Algorithm 3 encounters an\ninstance j, it assigns the entire row F(·, j) in a single step, i.e., it fixes F(i, j) for all i ∈N at once. Therefore, it suffices to show that every instance j ∈N is encountered exactly once and at a finite\nstep. To this end, we claim that, throughout the execution of Algorithm 3, the set of encountered\ninstances is always exactly the initial segment {1, . . . , J}, meaning that no instance j < J is skipped\nduring the execution. This is true at initialization: the algorithm encounters instances 1 and 2,\nand then sets J ←2. Now consider any later stage of the construction. During the processing of\nG's membership queries, suppose that G issues its k-th query (i, j) in the current round. Then,\nAlgorithm 3 assigns values to all still-unseen instances n satisfying",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 50,
+    "total_chunks": 65,
+    "char_count": 1395,
+    "word_count": 255,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ebe8b767-c9fa-456d-a3bd-21699fec9767",
+    "text": "and updates J accordingly. Hence, all newly encountered instances form a consecutive block\nimmediately after the current value of J. In particular, no instance is skipped, and no previously\nencountered instance is revisited or modified. In all other steps where the algorithm introduces new\ninstances, it uses fresh indices immediately following the current counter (i.e., J + 1, J + 2) and\nupdates J immediately afterward. Thus, the set of encountered instances remains an initial segment\nof N at every stage. It remains to show that every instance is encountered at a finite step, or equivalently, that the\ncounter J is unbounded. First, suppose that in every round t, the generator G",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 51,
+    "total_chunks": 65,
+    "char_count": 686,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d49622b2-6ec0-4f22-a312-0d67af62767c",
+    "text": "...\n7 • • • • •\n6 • • • • • ...\n5 • • • • 5 • • • • •\n4 • • ◦ • 4 • • ◦ • • X 3 ◦ • ◦ ◦ 3 ◦ • ◦ ◦ ◦ ...\n2 • ◦ • • 2 • ◦ • • • 2 • ◦ •\n1 • • • • 1 • • • • • 1 • • • 1 2 3 · · · H 1 2 3 4 · · · H 1 2 3 4 5 · · · H\nInitialization Step 1 Step 2 Figure 1: Online construction of a hard hypothesis class for a given proper generator. The horizontal axis represents the hypotheses in H, and the vertical axis represents the instances\nfrom the domain X. For every coordinate pair (i, j), a filled circle (•) indicates j ∈supp (hi), while\nan empty circle (◦) indicates j /∈supp (hi). A box around a label on the vertical axis means that the\ninstance has been added to the enumeration queue Q, while a shaded box means that the instance\nhas been shown as an example xt. Finally, the L-shaped dashed line marks the current boundaries\nof G's knowledge, as tracked by I and J.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 52,
+    "total_chunks": 65,
+    "char_count": 863,
+    "word_count": 218,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cb30ab72-1789-4af8-b8bb-7c3d28f150fb",
+    "text": "We illustrate the first steps of the interaction. At initialization, the adversary inserts instance 1 into\nthe enumeration queue Q and installs the trap hypothesis-instance pair (i′, j′) = (2, 2). The counters\nI and J are both set to 2. At step 1, the adversary reveals x1 = 1. For illustrative purposes, we\nassume that at step 1 the generator G outputs ˆh1 = h2. This triggers the diagonalization mode of\nAlgorithm 3: instance d1 = 3 is assigned exclusively to the output hypothesis h2; the current trap\ninstance j′ = 2 is added to Q; a new trap hypothesis-instance pair (i′, j′) = (3, 4) is created beyond\nI and J by assigning instance e1 = 4 to all hypotheses except for h3; finally, instance c1 = 5 is\nassigned to all hypotheses and is therefore added to the enumeration queue. When the round ends,\nthe counters I and J are set to 3 and 5, respectively.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 53,
+    "total_chunks": 65,
+    "char_count": 857,
+    "word_count": 159,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5ebcac52-5e08-4b90-bc48-7d94b61fee75",
+    "text": "Then step 2 begins with x2 = min Q = 2 being\nrevealed to G. We assume that G queries F(4, 6): instance 6 is therefore assigned to all hypotheses\nand added to Q. Furthermore, the counters I and J move to 4 and 6, respectively. Suppose G\noutputs ˆh2 = h1. This time the overgeneralization mode of Algorithm 3 is triggered. In this case,\nthe trap hypothesis-instance pair remains the same. At the end of the round, c2 = 7 is added to Q\nand the counter J is updated to 7.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 54,
+    "total_chunks": 65,
+    "char_count": 467,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2f5269d2-0fa7-4040-aebd-10c31db61ca1",
+    "text": "asks only finitely many membership queries and eventually outputs some ˆht. Then, each iteration\nof the outer loop completes, and the last line of Algorithm 3 introduces a fresh instance ct at the\nend of every round (even if G asks no query in that round). Therefore, J increases by at least\none in every round, so J →∞as t →∞. Second, suppose that in some round, G asks infinitely\nmany membership queries and never produces an output.9 Let k denote the query counter within\nthat round and note that, by construction, J ≥k. Since k is unbounded along that infinite query\nsequence, J is also unbounded within that single round. Hence, in either case, F is recursive over\nits whole domain. Finally, the same two-case analysis shows that the resulting hypothesis class satisfies the UUS\nproperty. If every round is finite, then the fresh instance ct introduced at the end of each round\nis assigned to all hypotheses, so each support supp (hi) contains infinitely many such instances. If\ninstead some round contains infinitely many queries, then as k →∞, the construction introduces\ninfinitely many new instances during that round, and each of them is again assigned to all hypotheses. Thus, supp (hi) is infinite for all i ∈N in either case.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 55,
+    "total_chunks": 65,
+    "char_count": 1238,
+    "word_count": 213,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "45a40d2f-e5be-4789-9013-36c95601dcfc",
+    "text": "Having shown that Algorithm 3 defines a valid hypothesis class, we can now provide the proof\nof Theorem 6.1. Proof of Theorem 6.1. Suppose, for the sake of contradiction, that there exists a deterministic\nproper generator G that uses only membership queries and properly generates in the limit every\ncountable hypothesis class. Consider the hypothesis class H = {h1, h2, . . .} induced by Algorithm 3\nwhen run against G. Since G properly generates H, we can assume that at each step t the generator\nG halts to produce an output hypothesis ˆht = hit ∈H. For every round t with it ̸= 1, let dt denote\nthe fresh diagonalization instance created at round t by Algorithm 3. dt ∈supp (hit) and dt /∈supp (hi) ∀i ̸= it, so in particular dt /∈supp (h1). Also, if (i′, j′) denotes the current trap pair maintained by the\nalgorithm, then it holds that j′ /∈supp (hi′) and j′ ∈supp (hi) ∀i ̸= i′. Additionally, define\nQ∞:= {n ∈N : n is ever added to Q}. Since at each round t the algorithm reveals xt = min Q, every n ∈Q∞is shown after finitely many\nrounds: only finitely many smaller integers can ever be inserted before it, and each of them is\nremoved after one round. Therefore, (xt)t≥1 is an enumeration of Q∞. We now distinguish two\ncases: G outputs ˆht ̸= h1 either finitely or infinitely many times. First, suppose G outputs ˆht ̸= h1 infinitely many times.10 We argue that this would lead to a\ncontradiction by showing that in this case Algorithm 3 enumerates supp (h1) and that G makes\ninfinite mistakes for h⋆= h1.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 56,
+    "total_chunks": 65,
+    "char_count": 1513,
+    "word_count": 276,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "daf33946-6418-4ddc-a3d7-892def6d6319",
+    "text": "To begin, note that if h⋆= h1 then G makes infinite mistakes, since\neach dt only belongs to the support of ˆht and thus supp ˆht ⊈supp (h1) . 9For instance, suppose G keeps querying \"j ∈supp (hi)?\" for a fixed j and different i until it gets a negative\nanswer. Clearly, in this case G would fail at its generation task, granted of course that the hypothesis class resulting\nfrom the construction was still valid.\n10The most natural choice would be ˆht = hi′ since at each step, the trap hypothesis hi′ is, in some sense, the\nminimal consistent hypothesis. It remains to show that, in this case, Q∞= supp (h1). Observe that all instances that are not trap\ninstances are immediately added to Q after being encountered. Additionally, any trap instance et\ncreated at round t is added to Q at the next round s > t such that G outputs ˆhs ̸= h1, which we\nhave assumed to be happening infinitely often in this case. Conversely, the only instances never\nadded to Q are the diagonalization instances dt, and none of them belongs to supp (h1).",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 57,
+    "total_chunks": 65,
+    "char_count": 1033,
+    "word_count": 189,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ee6fade8-7b30-404a-9db3-8855e5bb725a",
+    "text": "Therefore, it must be that G outputs ˆht ̸= h1 only finitely many times. t0 := max{t ∈N : it ̸= 1}, with the convention t0 = 0 if it = 1 for all t ∈N. Let (¯i, ¯j) denote the values of the trap pair (i′, j′)\nafter round t0; if t0 = 0, then (¯i, ¯j) = (2, 2). By definition of t0, ˆht = h1 for all t > t0. We claim that\nQ∞= supp (h¯i). We first show that Q∞⊆supp (h¯i). Any instance introduced during the query\nphase or as some ct belongs to all hypotheses, hence in particular to h¯i.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 58,
+    "total_chunks": 65,
+    "char_count": 484,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b1c38dc6-f2a0-4b4b-9d0d-d8830d3bc2c4",
+    "text": "Any trap instance that is\never released and added to Q must have been created before round t0. If it was created when the\ntrap index was ˜i, then it is excluded only from h˜i; since trap indices are strictly increasing, we have\n˜i ̸= ¯i, and thus this instance also lies in supp (h¯i). Therefore, Q∞⊆supp (h¯i). Conversely, the only\ninstances never added to Q are precisely the final trap ¯j and the diagonalization instances dt created\nat rounds t ≤t0 with it ̸= 1.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 59,
+    "total_chunks": 65,
+    "char_count": 466,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c5ebbdc4-6eb9-434b-9549-85f8a9747ab8",
+    "text": "By definition, ¯j /∈supp (h¯i). Moreover, each such dt belongs only to hit,\nwhereas the trap created in round t has index strictly larger than it; since trap indices only increase\nafterward, ¯i > it, so dt /∈supp (h¯i). Thus, supp (h¯i) ⊆Q∞. We conclude that Q∞= supp (h¯i), so\n(xt)t≥1 is an enumeration of supp (h¯i) and we can set h⋆= h¯i. However, this implies that G makes\ninfinitely many mistakes also in this case, since ¯j ∈supp (h1) but ¯j /∈supp (h¯i). As both cases yield a contradiction, we conclude that no deterministic generator using only\nmembership queries can properly generate in the limit all countable hypothesis classes 6.2 Proper Generation in the Limit with Replay The following theorem shows that, in the proper setting, replay makes a class of just four hypotheses\nnot generatable under even the weakest notion. This accounts for the last row of Table 1.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 60,
+    "total_chunks": 65,
+    "char_count": 879,
+    "word_count": 151,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d86b6ed8-1363-4882-90c4-399dd7449b94",
+    "text": "Theorem 6.3 (Hardness of proper generation in the limit with replay). There exists a finite\nhypothesis class H that is not properly generatable in the limit with replay. supp h−i = Z≤0 ∪{i}, supp h+i = Z≥0 ∪{−i}, and let H = {h−1 , h−2 , h+1 , h+2 }. Suppose, for the sake of contradiction, that there exists a proper\ngenerator G that properly generates H in the limit with replay. Let x1 = 0 be the first example\nshowed by the adversary. Note that x1 belongs to the support of all hypotheses in H. Therefore, G\nmakes a completely arbitrary choice when choosing its first output ˆh1.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 61,
+    "total_chunks": 65,
+    "char_count": 583,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ebb8babb-0acd-4cd3-8bcd-8fd93b3a4ead",
+    "text": "We give the argument for\nˆh1 = h−1 ; the other cases are handled analogously. Consider the following extension of the adversarial sequence of examples: x2 = −1, x3 = −2,\nfollowed by all the positive integers. The resulting sequence (xt)t≥1 is a valid sequence with replay\nfor G and both h+1 , h+2 : xt ∈supp h+1 ∩supp h+2 for t ̸= 2, 3 and x2, x3 ∈supp ˆh1 . Additionally, (xt)t≥1 contains an enumeration of the support of both h+1 and h+2 and, thus, is\nan enumeration with replay in the proper setting for h+1 and h+2 simultaneously. generates H in the limit with replay by assumption, there exist t⋆1, t⋆2 ∈N and a sequence of ˆht ∈H\nsuch that: supp ˆht ⊆supp h+1 for all t ≥t⋆1 and supp ˆht ⊆supp h+2 for all t ≥t⋆2. Therefore, if we let t⋆= max {t⋆1, t⋆2}, it must be that, for all t ≥t⋆, supp ˆht ⊆supp h+1 ∩supp h+2 = Z≥0. However, there is no hypothesis h ∈H such that supp (h) ⊆Z≥0; thus, we have reached a\ncontradiction. 7 Discussion and Open Questions",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 62,
+    "total_chunks": 65,
+    "char_count": 961,
+    "word_count": 186,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4103b259-8b52-4ed5-aba6-31b5bd14b7c4",
+    "text": "We studied when replay makes generation harder. We found that the answer to this question\ndepends on the specific notion of generation, with qualitatively different outcomes across settings. Nonetheless, our results are driven by a common set of intuitions, centered around two key ideas. First, Algorithm 2 treats potentially replayed instances as misleading and discard them. By\nconsidering a deterministic generator—as is standard in much of the language generation literature—\nwe implicitly assume access to the information needed to identify such instances. From a practical\nstandpoint, this motivates data provenance measures, watermarking, as well as the curation of\nclean training datasets [Kirchenbauer et al., 2023, 2024, Sadasivan et al., 2023, Mitchell et al., 2023,\nDathathri et al., 2024, Tang et al., 2024, Wu et al., 2025].",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 63,
+    "total_chunks": 65,
+    "char_count": 839,
+    "word_count": 126,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4d0fa51b-6fae-4150-aa3d-747943e96429",
+    "text": "However, reliable and scalable filtering is\nnontrivial in practice. This raises the question of whether structural properties of the hypothesis\nclass could be leveraged to avoid explicit filtering altogether. Second, our algorithms impose strict constraints on the generator's output: Algorithm 1 has\na preliminary burn-in phase during which it only outputs a dummy element; Algorithm 2 avoids\noutputting a set of crucial elements dubbed \"witnesses\" to ensure that, once such instances are\nshown as examples, their trustworthiness is guaranteed and they need not be discarded. However,\nthese constraints may be at odds with the requirement that LLM outputs remain diverse, a property\noften referred to as breadth in the language generation literature [Kleinberg and Mullainathan, 2024]. Therefore, a natural next step is to examine how replay affects not only the feasibility of generation,\nas studied in this work, but also the ability to generate with breadth. In addition to the open questions discussed above, we outline further directions for future\nwork. A natural next step is to characterize non-uniform generatability under replay, since such\na characterization exists for non-uniform generation in the standard setting [Raman et al., 2025]. Another direction is to study more relaxed and potentially more realistic models of proper generation,\nfor instance a stochastic setting where the adversary can replay only a randomly selected element from\na previously output hypothesis, which may help circumvent the strong impossibility result established\nin Theorem 6.3. Finally, our work motivates a more systematic study of proper generation from\nboth information-theoretic and computational perspectives, as this notion of generation captures\nhow models are sequentially updated and deployed in practice. GR and AS acknowledge the Novo Nordisk Foundation for support via the Startup grant (NNF\n24OC0087820); AS additionally acknowledges support from VILLUM FONDEN via the Young\nInvestigator program (VIL72069). The authors also thank Carolin Heinzler for helpful feedback.",
+    "paper_id": "2603.11784",
+    "title": "Language Generation with Replay: A Learning-Theoretic View of Model Collapse",
+    "authors": [
+      "Giorgio Racca",
+      "Michal Valko",
+      "Amartya Sanyal"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11784v1",
+    "chunk_index": 64,
+    "total_chunks": 65,
+    "char_count": 2079,
+    "word_count": 305,
+    "chunking_strategy": "semantic"
+  }
+]

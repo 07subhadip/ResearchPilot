@@ -1,0 +1,1481 @@
+[
+  {
+    "chunk_id": "33cb3036-6bf6-4d40-9f85-f2662f70502c",
+    "text": "Data leakage affected 294 published papers across 17 scientific fieldsMar (Kapoor and Narayanan 2023). The dominant response has been documen-\n11 tation:prevent checklists,these failures.linters,A structuralbest-practiceremedyguides.exists:Documentationa grammar thatdoesdecom-not\nposes the supervised learning lifecycle into 7 kernel primitives connected\nby a typed directed acyclic graph (DAG), with four hard constraints that\nreject the two most damaging leakage classes at call time. Invalid compositions within the grammar's seven primitives are rejected by type checks\nor call-time guards. For compliant usage, detection becomes unnecessary. The grammar's core contribution is the terminal assess constraint: a[cs.LG]\nruntime-enforced evaluate/assess boundary where repeated test-set assessment is rejected by a guard on a nominally distinct Evidence type, making\ntest-set reuse rejected at call time within the grammar's API.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 1,
+    "total_chunks": 87,
+    "char_count": 932,
+    "word_count": 119,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bc0e7c32-a502-4115-b75f-5e0194160fba",
+    "text": "My companion study across 2,047 experimental instances (Roth 2026, in preparation) quantifies why this matters: selection leakage inflates performance\nby 𝑑𝑧= 0.93 (raw AUC inflation: +0.046 points, 95% CI [0.043, 0.048])\nand memorization leakage by 𝑑𝑧= 0.53–1.11, scaling with model capacity, while estimation leakage is negligible (|𝑑| < 0.1). A follow-up study\nacross 3,759 additional instances establishes that Class II effects persist\nat all tested sample sizes: a power law fit produces a positive asymptotic floor of 𝑑∞= 0.047 (𝑁= 493 datasets), confirming that the grammar's unconditional rejection is empirically necessary within the tested\nrange (𝑛= 50–2,000). The grammar generated three falsifiable predictions before observing experimental results. Two confirmed, one falsified. The grammar survives empirical test. Three separate implementations\n(Python, R, and Julia) confirm the claims. The appendix specificationarXiv:2603.10742v1\nlets anyone build a conforming version. A Grammar of Machine Learning Workflows Roth, 2026 Kapoor and Narayanan (2023) audited the machine learning literature and\nfound data leakage errors in 294 published papers across 17 scientific fields. This is not a knowledge gap: Kaufman et al. (2012) formalized the leakage\ntaxonomy a decade earlier. Cawley and Talbot (2010) demonstrated selection\nbias in model evaluation fifteen years ago. The problem persists because documentation does not prevent these failures. It affects 17.5% of neuroimaging\nstudies (Rosenblatt et al. 2024) and propagates into field-level meta-analytic\nconclusions (van de Mortel and van Wingen 2025). The response to this crisis has been documentation: best-practice guides, checklists, linting tools.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 2,
+    "total_chunks": 87,
+    "char_count": 1719,
+    "word_count": 241,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "79c6e5b7-0c87-4884-b37b-2f8e3c2b108c",
+    "text": "Yang, Breck, and Whang (2022) built LeakageDetector,\nachieving 92.9% accuracy on three leakage types, demonstrating that detection\nis feasible. A natural follow-up question is whether prevention is also possible:\ncan leakage be made to fail at call time by the composition rules of the workflow\nitself, rather than detected after the fact? This paper addresses that question\nfor tabular supervised learning — binary classification, multiclass classification,\nand regression — on the three leakage classes for which effect sizes have been\nempirically quantified. Temporal leakage, target leakage, and distribution mismatch are real problems the grammar does not currently address; extending\nthe type DAG to cover them requires empirical baselines analogous to those\nestablished for Classes I–III. The history of formal grammars suggests it can. In every domain where practitioners composed complex artifacts from simpler parts, a grammar eventually\nemerged that separated valid from invalid compositions: Year Author Domain Primitives 1957 Chomsky Language Phrase rules + transformations\n1967 Bertin Cartography 7 retinal variables\n1970 Codd Databases 8 relational operators\n1999 Wilkinson Statistical graphics Data, aesthetics, geoms, scales,\ncoords, facets\n2010 Wickham Statistical graphics Layers, defaults, embedding in R\n(impl.) All five entries share a common move: enumerating the primitives of a domain. But they differ on composition. Bertin catalogued visual channels by perceptual capacity: a taxonomy that identified primitives without defining rules for\ncombining them or criteria for rejecting invalid combinations. Chomsky, Codd,\nWilkinson, and Wickham went further: each defined composition rules and a\nrejection criterion that makes \"this is wrong\" a formal statement rather than an\nopinion. \"Grammar\" here follows Chomsky rather than Wilkinson: a finite rule\nsystem that partitions sequences into well-formed and ill-formed, not a combinatorial algebra of independently composable layers. The grammars that survived A Grammar of Machine Learning Workflows Roth, 2026 had executable implementations: SQL for Codd, ggplot2 for Wickham, parsers\nfor Chomsky.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 3,
+    "total_chunks": 87,
+    "char_count": 2171,
+    "word_count": 306,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7bced4e3-040a-42df-8f01-7326c85904bf",
+    "text": "Without one, a grammar stays academic. Wickham (2010)'s contribution was not the API; it\nwas the successful implementation and selection. ggplot2 is not a complete\nimplementation of Wilkinson's full system; it exposes a curated subset of it. By choosing which primitives to make primary and which to omit, Wickham\nshifted which errors were easy to make: incomplete specifications fail at construction, and correct compositions become the default path. The analogous\nselection has not been made for the ML lifecycle.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 4,
+    "total_chunks": 87,
+    "char_count": 515,
+    "word_count": 79,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e7598936-cab2-44ec-a421-c9633143dae7",
+    "text": "Kuhn and Silge (2022) made\nthe most important prior contribution: recipes inside workflows enforce per-fold\npreprocessing, structurally preventing Class I leakage. The remaining question\nis whether the type system can go one level further — distinguishing \"this data\nhas been split correctly\" from \"this data has not,\" and marking a model as\nterminally assessed. tidymodels types serve implementation correctness (recipe,\nparsnip model, workflow); the grammar adds a methodological correctness layer\non top (Partition, PreparedData, Model with assessed state). This paper makes that selection for supervised learning. 2 A Motivating Example Consider a binary classification task. The standard workflow in scikit-learn\n(Pedregosa et al. 2011): # Standard sklearn — Pipeline fixes this; the grammar goes further\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.model_selection import cross_val_score scaler = StandardScaler()\nX_scaled = scaler.fit_transform(X) # Leaks: sees test rows\nscores = cross_val_score(LogisticRegression(), X_scaled, y, cv=5)\nprint(f\"CV AUC: {scores.mean():.3f}\") # Optimistic The scaler sees all rows before the cross-validation split. This is Class I leakage\n(estimation bias). Its effect is negligible (𝑑≈0; Roth (2026)).",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 5,
+    "total_chunks": 87,
+    "char_count": 1312,
+    "word_count": 172,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "91e5412d-bea6-4f9f-b8a7-d94652089ec2",
+    "text": "The canonical\nsklearn fix (wrapping scaler and classifier in a Pipeline) solves this case cleanly\nby keeping preprocessing inside the cross-validation loop. The grammar builds\non that insight and extends it to the next boundary: distinguishing evaluation\nfrom assessment, enforcing assess-once, and addressing the more damaging Class\nII (𝑑𝑧= 0.93) and Class III (𝑑𝑧= 0.53–1.11) patterns that operate above the\npreprocessing level. The normalization example is used here because it is structurally visible; the grammar's contribution starts where Pipeline's protection\nends. A Grammar of Machine Learning Workflows Roth, 2026 s = ml.split(df, target=\"y\", seed=42)\nmodel = ml.fit(s.train, \"y\", algorithm=\"rf\", seed=42)\nmetrics = ml.evaluate(model, s.valid)\nfinal = ml.assess(model, test=s.test) Each line produces a typed output that constrains what the next line can accept.\nfit requires a Partition's training fold, not raw data. assess requires a Model\nthat has not been previously assessed. Preparation happens inside fit, per fold,\nby default.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 6,
+    "total_chunks": 87,
+    "char_count": 1046,
+    "word_count": 149,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "46e791d1-f459-44c6-a991-b3825e0ab5ea",
+    "text": "The leaky workflow is rejected: scaler.fit_transform(X) on the\nfull dataset produces a DataFrame that was never registered by split. When\nthat result is passed to fit, the provenance guard rejects it: the data has no\nsplit provenance. The grammar rejects it at call time, not after the fact.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 7,
+    "total_chunks": 87,
+    "char_count": 291,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3c2a2283-a415-4fc4-93c2-cb0b8a5563db",
+    "text": "3.1 Kernel primitives The grammar decomposes 36 API verbs into 7 kernel primitives: # Primitive Type signature What it does",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 8,
+    "total_chunks": 87,
+    "char_count": 123,
+    "word_count": 20,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a05457c4-21d5-4a7c-b84c-287aa5eaf917",
+    "text": "1 split DataFrame →Partition Establish assessment boundary and\niteration protocol\n2 prepare DataFrame → Normalize, encode, impute features\nPreparedData\n3 fit DataFrame × target → Train a model\nModel\n4 predict Model × DataFrame → Apply model to new data\nPredictions\n5 evaluate Model × DataFrame → Measure on validation data\nMetrics (repeatable)\n6 explain Model [× DataFrame] → Feature importances, partial\nExplanation dependence\n7 assess Model × DataFrame → Measure on test data (terminal,\nEvidence once) assess returns Evidence: a nominally distinct type with no downstream consumers. No primitive accepts Evidence as input. It flows to the human, not\nto the next step. explain is similarly terminal: its output feeds no further\nprimitive. explain is the grammar's unconstrained primitive. Every other\nkernel primitive carries at least one partition guard: split accepts any A Grammar of Machine Learning Workflows Roth, 2026 DataFrame; prepare and fit require registered {train, valid, dev}-tagged\ndata; evaluate rejects test-tagged and unregistered data. assess requires\ntest-tagged data and fires once per model. explain requires only a fitted\nModel. It may be called on any data, any number of times, before or after\nassess.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 9,
+    "total_chunks": 87,
+    "char_count": 1228,
+    "word_count": 187,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6cc23ec3-5f92-4f64-a02d-e2ac03afbb16",
+    "text": "Explanation is diagnostic, not part of the validity chain. explain\nis outside the grammar's rejection criterion by design: the grammar has no\npartition guard to place on it. The assess-once constraint is enforced by the call-time guard model.assessed\n= false, which fires before the call completes. A second call assess(model,\ntest=s.test) still passes the type check (the model argument is still a Model)\nbut fails the guard, which then raises. This is a guard rejection, not a type\nerror. It requires runtime state and cannot be caught by a type-checker before\nthe call executes. This distinction is discussed in Section 4. Declarative default: fit accepts a tagged DataFrame (partition_tag in\n{train, valid}) and handles preparation internally, per fold. In explicit mode,\nthe user calls ml.prepare() first, receiving a PreparedData object; fit then\naccepts PreparedData as input instead. Both modes satisfy the same guards.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 10,
+    "total_chunks": 87,
+    "char_count": 927,
+    "word_count": 143,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f6252e42-6b73-4bd2-995f-174a4c301f57",
+    "text": "The correct workflow should be the obvious choice; calling prepare explicitly is\navailable but never required. Why fit accepts valid-tagged data. The {train, valid} guard allows\nrefitting on combined train+validation data after hyperparameter selection is\ncomplete, before the final terminal assessment. This is the dev = train +\nvalid workflow. It is not a guard relaxation; it is a recognized final-preparation\nstep before assess.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 11,
+    "total_chunks": 87,
+    "char_count": 432,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b84e63e5-f5e3-4de1-8aca-09a3198be930",
+    "text": "The iterative/final fit distinction. The type signature fit :: DataFrame\n× target →Model is identical whether fit is called during the iterate zone\n(training a candidate model per fold, evaluated and discarded) or as the final\nfit(dev) call after hyperparameters are fixed. These two roles differ in commitment: per-fold models are expendable. The final fit(dev) model is the\none that proceeds to assess.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 12,
+    "total_chunks": 87,
+    "char_count": 404,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e7c11ac6-488c-4bc1-b1d7-c0a494bfea77",
+    "text": "The grammar assigns both calls the same type\nbecause they satisfy the same preconditions. The semantic distinction (which\nfit is final) is invisible to the type system. A practitioner who treats a per-fold\nmodel as the committed model makes a semantic error, not a structural one. The diagnostics layer (check, report) catches it. The type DAG does not. Seven is empirical, not derived — the smallest set of operations practitioners actually perform that covers them without collapsing a type\nboundary or losing a postcondition.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 13,
+    "total_chunks": 87,
+    "char_count": 528,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "24296bf8-216b-40d0-8b4d-72e0bb23d231",
+    "text": "The clearest case: predict and evaluate\nboth consume a Model, but they carry different guards. predict imposes no\npartition constraint (it is valid on any data, including untagged deployment\ndata), while evaluate requires partition_tag = valid. Merging them forces\na choice: adopt the stricter guard and break the deploy use case, or adopt the\nweaker guard and allow evaluation on untagged or training data. Either way, a\nguard that exists only because the primitives are separate collapses.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 14,
+    "total_chunks": 87,
+    "char_count": 491,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fb4e0bfb-db84-4429-b4c9-fba55f2bd140",
+    "text": "A Grammar of Machine Learning Workflows Roth, 2026 argument applies to each: split alone produces a Partition. prepare alone\nfits and returns a reusable Transformer state (absorbing it into fit destroys\nthe ability to apply consistent preprocessing to held-out data without refitting).\nassess alone produces Evidence. Removing any one loses either a type or a\nguard that the rejection criterion depends on.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 15,
+    "total_chunks": 87,
+    "char_count": 406,
+    "word_count": 62,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f088fef8-a77d-4ddb-9bf4-0c21b51d033d",
+    "text": "The primitives connect through a typed directed acyclic graph (Figure 1). Reading top to bottom: a single DataFrame enters a split decision (diamond), which\nroutes data into three named partitions — train, valid, and test. The train\nand valid partitions feed a fit/evaluate loop (the cycle on the left of the diagram) where the practitioner iterates freely: fitting models, inspecting validation metrics, adjusting hyperparameters. The test partition, by contrast, is\ngated (marked ×): it remains locked until the practitioner calls assess exactly\nonce, producing terminal evidence that the grammar does not allow to be revisited. The visual asymmetry is the point; iteration is cheap and encouraged,\ncommitment is expensive and irreversible. A Grammar of Machine Learning Workflows Roth, 2026",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 16,
+    "total_chunks": 87,
+    "char_count": 793,
+    "word_count": 119,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a6ed7062-1cb0-432d-8ef2-5cbd656863a5",
+    "text": "permitted locked / once ✕ gate iterate terminal output Figure 1: The ML workflow grammar as a typed DAG. Diamond: split decision. Solid arrows: permitted data flow. Dashed arrows: locked until terminal assessment. Gate (×): test partition held until assess is called once, producing terminal evidence. The fit–evaluate loop (grayed out) iterates freely on train/valid\npartitions; assess commits on the held-out test partition exactly once. The Partition type has two variants: Variant Interface Assessment boundary Holdout .train, .valid, .test .test held out\nCV .folds, .k Test provided at assess(test=) The split primitive accepts awareness parameters that compose with both variants: stratify=True (class balance, default), groups=\"patient_id\" (group\nmembership), time=\"date\" (temporal order). Every awareness parameter addresses a specific leakage mechanism.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 17,
+    "total_chunks": 87,
+    "char_count": 862,
+    "word_count": 118,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "598b7472-ac10-4b51-89ab-ed6fd55a79d5",
+    "text": "split is the most parameterized primitive. split(groups=\"patient_id\")\nand split(time=\"date\") produce Partitions with qualitatively different validity properties: GroupKFold forbids group overlap across folds. PurgedKFold\nadditionally enforces temporal ordering and an embargo gap. A Grammar of Machine Learning Workflows Roth, 2026 separate primitives — they are domain specializations of one primitive. All variants share the type signature DataFrame →Partition. What differs\nis the guard system. split_temporal carries guards that split does not:\nembargo enforcement, expanding-vs-sliding window policy, temporal ordering\nwith no future leakage. split_group carries a group-non-overlap guard that is\nmeaningless for random splits. The specializations are constraint profiles, not\ntype distinctions: each conjugates the same grammatical verb for a different\nscientific domain (time series forecasting, clinical trials with repeated measures,\nstandard cross-sectional ML). The primitive count remains 7.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 18,
+    "total_chunks": 87,
+    "char_count": 1003,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "360ea35b-fd03-4986-a6cc-777e6ce4b59b",
+    "text": "The implementation exposes split, split_temporal, and split_group as independent entry\npoints, each with domain-specific parameters and error messages, rather than\nburying the domain logic behind parameter combinations on a single function. This is a design choice: the grammar's type system sees one primitive; the API\nsurface reflects that different fields require different structural constraints on\nthe same partitioning operation. 3.3 The four hard constraints # Constraint What it prevents Leakage class 1 Assess once per Repeated test-set peeking Class II (𝑑𝑧= 0.93)\nmodel\n2 Prepare after Global preprocessing leakage Class I (𝑑≈0)\nsplit, per fold\n3 Type-safe Fitting on test/untagged data; Class II/III\ntransitions evaluating without a fitted model (𝑑𝑧= 0.53–1.11)\n4 No label access Feature selection using test labels Class II (𝑑𝑧= 0.93)\nbefore split The constraints are empirically grounded. In the companion study (Roth 2026),\nClass II effects (𝑑𝑧= 0.93, raw AUC inflation +0.046) and Class III effects\n(𝑑𝑧= 0.53–1.11) are large enough to invalidate published results. A followup study across 493 datasets at six sample sizes (3,759 experimental instances\ntotal) confirms that Class II effects persist with a positive asymptotic floor\n(𝑑∞= 0.047), establishing that the grammar's rejection is empirically necessary\nwithin the tested range. Class I effects are negligible (𝑑≈0), but Constraint 2 is\nretained because it is principled (consistent with all textbook recommendations)\nand costless (per-fold preparation is the default). The constraints are also minimal: 4 rules, not 40. Chomsky's programme stalled\nwhen syntactic rules proliferated to cover semantic territory. Codd's relational\nmodel succeeded by stating a small number of inviolable properties and leaving\noptimization to implementations. More rules do not necessarily mean better\nprotection.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 19,
+    "total_chunks": 87,
+    "char_count": 1867,
+    "word_count": 270,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6a3b8b8b-5d7b-4d33-b384-643d96dbf50a",
+    "text": "A Grammar of Machine Learning Workflows Roth, 2026 3.4 Strategy families The 7 primitives compose into 4 strategy families covering the full developmental\nworkflow: Family Question Strategies",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 20,
+    "total_chunks": 87,
+    "char_count": 191,
+    "word_count": 27,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ac07a35e-0ee3-4a1f-8c09-110ff62e2b86",
+    "text": "Selection Which algorithm? screen, compare, pick\nOptimization Which hyperparameters? tune (grid, random, bayesian)\nEvaluation How to rotate data? kfold, grouped, purged, nested_cv\nEnsemble How to combine models? blend, bag, boost, stack The strategies decompose into kernel primitives: • screen: ∀algo: fit →evaluate →rank →Leaderboard\n• tune: ∀params: fit →evaluate →select_best →TuningResult\n• stack: ∀model: fit →out-of-fold predict →fit_meta →StackedModel No strategy requires a new primitive: each reduces to typed applications of the\n7 kernel verbs. That the core developmental workflow fits within this decomposition (for the strategies examined here) is evidence that the primitives capture\nstructure, not an accidental API boundary. The output containers Leaderboard,\nTuningResult, and StackedModel are informal wrappers for composition results;\nthey are convenience wrappers, not part of the workflow grammar itself. The erased intermediate in tune. The tune decomposition hides a type the\ngrammar does not declare: after select_best identifies optimal parameters,\nthose parameters — a HyperParameters intermediate — feed the final fit(dev)\ncall. The grammar's visible type chain is TuningResult →fit →Model; the\nHyperParameters intermediate exists in every implementation but is not a sort\nin the type DAG. This is a deliberate compression: tune is a strategy, not a\nprimitive, and its internal types are outside the grammar's minimal vocabulary. A conforming extension could expose HyperParameters as a declared sort with\nits own typed accessor from TuningResult, making the refitting step explicit\nand enabling a guard that rejects fit(dev) called without a completed tune\ncycle. The constraints and composition rules generate\ntestable predictions: if a strategy violates a constraint, measurable inflation\nshould follow. Three were tested in the companion study before observing V2\nresults:",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 21,
+    "total_chunks": 87,
+    "char_count": 1904,
+    "word_count": 269,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d2c3ed34-c239-48a0-bac4-ff98e6b5cae1",
+    "text": "Prediction Source Result Screen inflation (𝑑> 0): Selection family; Confirmed: 𝑑= +0.27\nselecting best-of-𝐾algorithms consistent with Cawley\ninflates performance and Talbot (2010) A Grammar of Machine Learning Workflows Roth, 2026 Prediction Source Result Stack leakage (𝑑> 0): Ensemble family Falsified: 𝑑= −0.22;\nout-of-fold meta-learner leaks stack() is empirically\nthrough fold labels safe\nSeed inflation (𝑑> 0): Assess-once constraint Confirmed: 𝑑= +0.88,\nreporting best-of-𝑆seeds prevalence 92%\ninflates performance Two of three confirmed. The falsified prediction is evidence that\nthe grammar generates specific, wrong-able hypotheses, not post-hoc rationalization.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 22,
+    "total_chunks": 87,
+    "char_count": 672,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "99a80729-f5b1-4542-a7e1-a944fe862006",
+    "text": "The full experimental results are in Section 7.3. 3.5 The terminal boundary The evaluate/assess distinction is the grammar's central structural claim. • Evaluate operates on validation data. It is repeatable, cheap, and safe for\ndecisions. It informs the iterate cycle: the practitioner reads the Metrics\noutput, adjusts, and fits again. Metrics is terminal in the type system (no\nprimitive accepts it as input), but it drives iteration at the practitioner\nlevel.\n• Assess operates on test data. It is terminal, once per model, and irreversible. It is a deliberate commit: the model's performance on data it\nhas never influenced. The distinction encodes the textbook structure of model assessment (Hastie,\nTibshirani, and Friedman 2009, chap. 7). Generalization error (§7.1) becomes\nassess producing Evidence: frozen, terminal, unrevisitable. Training error is\navailable internally but not reported.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 23,
+    "total_chunks": 87,
+    "char_count": 899,
+    "word_count": 133,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fa054d0d-13c6-4279-999f-26e09c31b5e8",
+    "text": "Model assessment (§7.2) is evaluate on\nvalidation, repeatable by design. Model selection maps to the Selection and\nOptimization families. Cross-validation (§7.10) is split(folds=k) feeding the\nEvaluation family. The two textbook failure modes (preprocessing before splitting at §7.10.2, \"the wrong way\"; reusing the test set at §7.7) map directly to\nConstraints 4, 2, and 1. A student who learns ML with this grammar internalizes the separation from day one. The evaluate/assess distinction, explained in\nevery textbook and violated in 294 papers, is enforced by the types, not by the\nstudent's memory. The three properties below are design constraints, not theorems. Codd's data\nindependence and Wickham's layer independence play the same role in their\ngrammars. Any proposed extension can be validated against them. So can any\nthird-party implementation. A Grammar of Machine Learning Workflows Roth, 2026 The word \"grammar\" here follows Wilkinson and Wickham, not Chomsky. A\nChomsky grammar generates strings by derivation rules; this grammar generates\ntyped workflows enforced by the type DAG and call-time guards.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 24,
+    "total_chunks": 87,
+    "char_count": 1118,
+    "word_count": 165,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c1abbe40-49f7-49e0-be1e-0370221f349c",
+    "text": "The two senses\nare not equivalent, but the term is retained because it is the established name\nin the Wilkinson–Wickham tradition that this work extends. The grammar uses two kinds of rejection. Structural rejection (type mismatch)\nis static: a function that accepts Model cannot receive a Partition. Guard rejection is dynamic: it requires runtime state (e.g., model.assessed = false)\nand fires before the call completes. The four hard constraints use both mechanisms: assess-once is a guard; the type DAG prevents nonsensical type chains\nstructurally. The workflow's valid state transitions form a regular language\nrecognizable by a 4-state deterministic finite automaton (DFA) with states\n{CREATED, FITTED, EVALUATED, ASSESSED}.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 25,
+    "total_chunks": 87,
+    "char_count": 731,
+    "word_count": 107,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "69248c45-bcaa-4d6d-a879-80cf367b5ec0",
+    "text": "ASSESSED is a terminal\nsink that rejects all further transitions. The primary path is FITTED →\nEVALUATED →ASSESSED, but a shortcut FITTED →ASSESSED is valid\n(assessing without prior evaluation). Repeatable verbs (explain, predict, calibrate, validate) are self-loops that preserve the current state. The Python\nimplementation tracks this DFA on every Model object; the state machine is\nthe algebraic backbone of the guard system. Every type in the DAG is reachable from DataFrame through the primitives. The non-terminal types (DataFrame, Partition, PreparedData, Model) form a\nchain: each is produced by one primitive and consumed by the next. The\nterminal types (Predictions, Metrics, Evidence, Explanation) are all reachable\nfrom Model. Any conforming extension must preserve\nthis connectivity. The property is reachability (every type can be reached from\nthe root), not closure in Codd's sense. In the relational algebra, every operator returns a relation, so operators compose freely (Codd-closure: op(𝑅) →𝑅). The grammar has no such property:\npredict returns Predictions, not a DataFrame, so split cannot follow predict.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 26,
+    "total_chunks": 87,
+    "char_count": 1126,
+    "word_count": 165,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c94dda6b-981b-4799-ad1f-da2549cfd5c5",
+    "text": "Codd maximized composability; the grammar maximizes\nstructural safety. A fully closed ML grammar would allow leaky workflows; the\ntype restrictions that prevent leakage are exactly the restrictions that break free\ncomposability. The tradeoff is intentional. The set of valid workflows the grammar can express is infinite: because the\nfit/evaluate loop can repeat any number of times, split →(fit →evaluate)𝑛→\nassess is valid for any 𝑛. Each fit and evaluate call draws from the same Partition\nproduced by split, not from the Metrics output of the previous evaluate (which\nis terminal). The cycle exists in the workflow pattern, not in the linear type\nchain. The grammar does not cap iteration depth. A Grammar of Machine Learning Workflows Roth, 2026 The grammar covers batch supervised learning on a complete dataset\navailable at split time. Multi-task learning (multiple simultaneous targets), selfsupervised learning (no explicit labels), few-shot learning (𝑁too small to partition meaningfully), federated learning (data never centralized), and online\nlearning (incremental data arrival) each violate at least one foundational assumption and fall outside the grammar's scope. The grammar generates all\nvalid workflows within its scope. It makes no claim about valid ML workflows\nin general.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 27,
+    "total_chunks": 87,
+    "char_count": 1294,
+    "word_count": 192,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7a8bbc26-e8e5-411a-ad23-2d88bda00613",
+    "text": "4.3 Rejection criterion The grammar makes specific workflows invalid. Each is rejected by a type check\nor a call-time guard: Invalid workflow Why rejected Leakage class assess →assess (same model) Terminal: once per model Class II\nprepare(all) →split →fit Prepare must follow split Class I\nselect_features(X, y) →split No label access before split Class II\n→fit\nevaluate(data) without prior fit Type error: no Model Class III\nfit(test) Guard: test tag not in {train, Class III\nvalid}\nevaluate(test) Guard: test tag reserved for Class III\nassess Assess-once (by construction). Constraint 1 specifies: for Model 𝑚,\nassess(𝑚, test) is valid if and only if 𝑚.assessed = false. After the first call,\n𝑚.assessed ←true. The second call fails the guard. Similarly, prepare(all_data)\nbefore split violates Constraint 2 (the data is unregistered in the provenance\nregistry, so the guard rejects it), and select_features(X, y) before split violates\nConstraint 4. All three are rejected at call time. These are not theorems;\nthey are consequences of the type guards. The claim is that any conforming\nimplementation must enforce them.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 28,
+    "total_chunks": 87,
+    "char_count": 1121,
+    "word_count": 173,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "03d7e0a9-f38e-49c3-971a-d81fb2f4ead6",
+    "text": "The Appendix (§ Invalid workflows as\nguard failures) walks through each entry in the table above. This grammar is a rejection function: its value lies not in the workflows it enables\nbut in the workflows it makes impossible to execute within its API boundary. The rejection here is positional, not structural. Chomsky's grammar makes certain strings underivable: the invalid form cannot be generated at all. Codd's\nconstraints make certain states unstorable: the invalid row cannot exist in the relation. The ML grammar is weaker on both counts: fit(test_data, target)\nis a valid Python expression, a valid R call, a valid Julia invocation. The invalid\nworkflow is representable in the host language. What the grammar rejects is\nthe transition: test-tagged data entering fit is immediately blocked by a guard A Grammar of Machine Learning Workflows Roth, 2026 that checks a content-addressed partition registry external to the DataFrame. The guard rejects the call, not the code. fit(test_data) is valid Python, but\nthe registry lookup makes it fail at call time. This is a necessary consequence of\nembedding a grammar in a host language that has no native partition type. The\ngrammar operates at verb entry points, not at the level of the host language's\ntype system. All four constraints are purely negative: they define the boundary of valid workflows without ranking or recommending within it. The grammar does not specify\nwhich algorithm to choose, how many folds to use, or when to stop iterating;\nthose are semantics-layer decisions.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 29,
+    "total_chunks": 87,
+    "char_count": 1540,
+    "word_count": 246,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e4ad3d54-f43e-4c79-b4e7-bcf1eeee6893",
+    "text": "The relational\nmodel rejects invalid queries without suggesting good ones. The positive structure of a good ML workflow is the diagnostics and strategy layer's job, not the\ngrammar's. The property that certain leakage-producing workflows are rejected at call time\n— by guard failure or type mismatch, not detected after the fact — is, to my\nknowledge, not present in any existing ML framework as a terminal assess-once\nconstraint. The grammar does not lint completed workflows. It rejects invalid\nones as they are constructed. This claim is bounded to the grammar's own type\nsystem: operations outside the grammar's seven primitives can always produce\nleakage that the grammar cannot see. The workflow's structural guarantees are a minimum over its constituent primitives: a violation at split() propagates through all downstream operations,\nand no downstream primitive recovers correctness from an upstream violation. This is why the four hard constraints are placed at split and prepare rather\nthan at assess: the terminal boundary is too late to undo upstream contamination.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 31,
+    "total_chunks": 87,
+    "char_count": 1077,
+    "word_count": 165,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "72469613-5805-492e-aea8-a0174a4e9c66",
+    "text": "5.1 Triple implementation The grammar is implemented in three languages: Python (mlw on PyPI, imported as import ml; source: github.com/epagogy/ml), R (ml, CRAN submission in progress), and Julia (ML.jl). All three expose the same 7 kernel\nprimitives with identical type signatures: s = ml.split(df, target=\"y\", seed=42)\nmodel = ml.fit(s.train, \"y\", algorithm=\"rf\", seed=42)\nmetrics = ml.evaluate(model, s.valid)\nfinal = ml.assess(model, test=s.test) A Grammar of Machine Learning Workflows Roth, 2026 s <- ml_split(df, target=\"y\", seed=42)\nmodel <- ml_fit(s$train, \"y\", algorithm=\"rf\", seed=42)\nmetrics <- ml_evaluate(model, s$valid)\nfinal <- ml_assess(model, test=s$test) s = ML.split(df, \"y\"; seed=42)\nmodel = ML.fit(s.train, \"y\"; algorithm=\"rf\", seed=42)\nmetrics = ML.evaluate(model, s.valid)\nfinal = ML.assess(model; test=s.test)",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 32,
+    "total_chunks": 87,
+    "char_count": 834,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "049ecc29-1887-4b1c-a4ac-128e70146e84",
+    "text": "The Julia implementation is the grammar's independent portability test. It was\nbuilt from the appendix specification without translating Python or R code,\nusing Julia-native libraries (DecisionTree.jl, XGBoost.jl) and custom implementations (linear models, KNN, Naive Bayes, ElasticNet, SVM) for the algorithm\nbackends. It reproduces all 7 kernel primitives, all 4 hard constraints, the full\nstrategy layer (screen, tune, stack, compare, validate), and the diagnostics layer\n(profile, check, drift, enough, leak, calibrate, quick): 22 verbs across 12 algorithm families, with 331 tests. The type DAG is identical: SplitResult,\nPreparedData, Model, Metrics, and Evidence are distinct named types; the\nassess-once guard fires on the second call. fit performs per-fold preparation by\ndefault.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 33,
+    "total_chunks": 87,
+    "char_count": 789,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "009d6858-4beb-454c-90b7-d117cdfdbd5e",
+    "text": "Parity across three languages required no shared code. Each implementation\nwas built against the grammar specification, not against the other implementations. The verb names change (ml.fit vs ml_fit vs ML.fit). The type\nstructure is frozen.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 34,
+    "total_chunks": 87,
+    "char_count": 240,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3802338a-c6ee-4584-88d5-4fdecf082200",
+    "text": "This is the empirical content of the portability claim: a\nspecification precise enough that three separate implementations converge on\nthe same behavior without coordinating their internals. Codd (1970) defined the relational model as a mathematical specification (the\nlater \"Codd rules\" formalized this as a practical conformance standard). SQL\nimplementations could be tested against it: does this database system satisfy\nthe relational algebra? I propose the same spirit for the grammar: does a\ngiven implementation satisfy the type DAG and the four hard constraints? The\nanalogy is in spirit (a testable conformance standard), not in substance: Codd's\ncompleteness criterion had an external anchor (first-order predicate calculus\nexpressibility); the seven conditions below are derived from the grammar itself. Concretely, a conforming implementation must: A Grammar of Machine Learning Workflows Roth, 2026",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 35,
+    "total_chunks": 87,
+    "char_count": 911,
+    "word_count": 129,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "758b2f95-2a0a-4a18-ac7c-eba0b0539080",
+    "text": "Produce a Partition from split\n2. Require a tagged DataFrame (partition_tag ∈{train, valid, dev})\nfor fit\n3. Require a Model for evaluate and assess\n4. Reject a second assess call on the same model\n5.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 36,
+    "total_chunks": 87,
+    "char_count": 200,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0af8af32-3537-4db9-99d9-1b1819269c07",
+    "text": "Perform preparation per fold in declarative mode\n6. Make label-based feature selection before split fail at the API boundary\n(e.g., by rejecting data without split provenance when it enters fit)\n7. Return Evidence as a named class that is not implicitly substitutable for\nMetrics in the host language; isinstance(result, Evidence) must be\ndistinguishable from isinstance(result, Metrics) The practical value of the Codd test is decidability: without a grammar, \"is this\nworkflow methodologically correct?\" is a matter of opinion. With it, correctness\nis enforceable in constant time: seven nodes, four constraints.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 37,
+    "total_chunks": 87,
+    "char_count": 614,
+    "word_count": 90,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d72b8f4b-29cc-4dd0-9f37-afc1331ff5b1",
+    "text": "The test produces\na binary verdict, not a judgment call. Conditions 1–6 and 7 are verifiable from the API surface: fit rejects unregistered data with a PartitionError whose message directs the user to split\nfirst. The closed-world limitation of prior versions (where untagged data passed\nsilently) is closed. The Julia implementation serves as a portability test: built\nfrom the specification without translating Python or R source code, it satisfies\nall seven conditions using Julia-native libraries.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 38,
+    "total_chunks": 87,
+    "char_count": 501,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bb785815-e4a1-4d0d-a1cb-d0fb63d7def7",
+    "text": "5.3 Hierarchy of defaults The grammar operates at two levels of explicitness: Declarative (default): ml.fit(s.train, \"y\") handles algorithm selection,\npreprocessing, and cross-validation internally. The grammar's constraints are\nsatisfied automatically. This is the entry point for newcomers and the default\nmode.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 39,
+    "total_chunks": 87,
+    "char_count": 313,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e2341eb-9554-4da2-a473-0affe5c51989",
+    "text": "Explicit: Each step can be called independently for full control. ml.prepare(),\nml.fit(), ml.evaluate() as separate operations. The grammar's constraints\nstill apply: assess is still terminal, preparation is still per-fold. But the user\nsees each intermediate type. The default mode does the correct thing. The explicit mode makes the types\nvisible. 6 Comparison with Existing Frameworks A Grammar of Machine Learning Workflows Roth, 2026 Evaluate/assessTerminal\nFramework What it solves boundary assess sklearn Pipeline: preprocessing inside — —\nCV loop\ntidymodels Recipes: per-fold preprocessing — —\ninside workflows\nmlr3 Typed PipeOps: formal — —\ncomposition model (Binder et al.\n(2021))\nAutoGluon/PyCaret Accessibility: ML without — —\nmanual splits\nD3M/AlphaD3M Typed primitives for AutoML — —\nsearch (~280 components)\nml All of the above + type DAG Yes Yes\nwith 4 hard constraints Production workflow tools (MLflow, ZenML, Kedro, Metaflow) solve execution\norchestration and experiment tracking, infrastructure the grammar assumes but\ndoes not itself provide. Typed DAG execution frameworks (Flyte, Prefect) enforce input/output type checking between pipeline steps, structurally adjacent\nto the grammar's type DAG. Their types serve pipeline wiring correctness, a\ncomplementary layer to the grammar's methodological validity checks. These\ntools are not compared directly because they operate at the execution layer. The grammar operates at the methodological correctness layer. The two layers\ncompose naturally: a grammar-conforming workflow could run on any of these\nexecution backends.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 40,
+    "total_chunks": 87,
+    "char_count": 1592,
+    "word_count": 224,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "834dae27-5177-47d9-9748-f610325bbaec",
+    "text": "Kuhn and Silge (2022) is the closest existing framework. Its recipes enforce\nper-fold preprocessing when used inside workflows, preventing Class I leakage\nstructurally. It deserves explicit credit as the most important prior work. The grammar extends tidymodels' type system one level further. tidymodels\ntypes (recipe, parsnip model, workflow) ensure that preprocessing steps are\napplied consistently, which is the right guarantee at the preprocessing boundary. The grammar adds a guarantee at the assessment boundary: a type that marks\na model as terminally assessed, so that repeated test-set evaluation is rejected\nat call time. The two systems are complementary.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 41,
+    "total_chunks": 87,
+    "char_count": 667,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "83224eab-ff62-4955-bacf-461e2f11cff1",
+    "text": "The grammar's terminal\nassess type is the layer tidymodels does not need to provide because its scope\nends before assessment. 6.3 D3M and AutoML grammars DARPA's D3M programme (2018–2022) developed a typed primitive taxonomy\nwith ~280 annotated components, input/output type annotations, and auto- A Grammar of Machine Learning Workflows Roth, 2026 mated pipeline search. Drori et al. (2019) extends this with formal context-free\ngrammars over pipeline components. D3M pioneered the idea that ML workflow components should carry typed annotations, and AlphaD3M showed that a formal grammar over those components\ncould prune the search space effectively. The grammar presented here applies\nthe same typed-primitive principle to a different question.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 42,
+    "total_chunks": 87,
+    "char_count": 748,
+    "word_count": 108,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9eb69251-f495-4bb0-aaa4-c4cb6d6a16b4",
+    "text": "D3M's types answer \"what pipelines can I build?\" (which components connect to which). The\ngrammar asks \"what workflows are valid?\" (which compositions satisfy methodological constraints). The two are complementary: D3M's component taxonomy\ncould coexist with the grammar's lifecycle constraints, providing search pruning\nand correctness checking simultaneously. Binder et al. (2021) is the most formally specified existing system. Its PipeOp\nsystem defines typed inputs and outputs for each pipeline step using graph-based\ncomposition — the strongest prior art for typed ML workflows. mlr3 provides\na composition model (how to build pipelines from components). The grammar\nadds a validity model (which compositions satisfy methodological constraints). The two address different layers, and mlr3's engineering could serve as an implementation substrate for the grammar's constraints. The composition algebra is\nalready there. The rejection criterion would be a layer on top. 6.5 The novelty claim",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 43,
+    "total_chunks": 87,
+    "char_count": 995,
+    "word_count": 140,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "17771330-abb4-4a6d-a153-90e0b40c217c",
+    "text": "The contribution is the terminal assess constraint: the first type-level enforcement of the evaluate/assess boundary in any ML framework, making repeated\ntest-set assessment rejected at call time in a conforming implementation. The\ngrammar builds on a chain of prior contributions: Kapoor and Narayanan\n(2023) established the leakage taxonomy across 17 fields; LeakageDetector\n(Yang, Breck, and Whang 2022) proved that automated detection is feasible;\ntidymodels solved per-fold preprocessing; D3M and AlphaD3M showed that\ntyped primitives can structure ML pipelines; Sculley et al. (2015) named the\nstructural fragility patterns (entanglement, undeclared consumers, correction\ncascades) that persist even in technically correct pipelines. The grammar adds\none layer that this chain had not yet reached: a terminal assess constraint\nthat rejects the two most damaging leakage classes at the API boundary.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 44,
+    "total_chunks": 87,
+    "char_count": 904,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e13ee558-88fd-4382-9209-6d77a34cce76",
+    "text": "The companion study (Roth 2026) quantifies why that specific layer matters\n(𝑑𝑧= 0.53–1.11). 7 Preliminary Empirical Evidence My companion study (Roth 2026, in preparation) measures leakage effects across\n2,047 experimental instances (OpenML (Vanschoren et al. 2014) benchmark A Grammar of Machine Learning Workflows Roth, 2026 datasets × 4 algorithms: logistic regression, random forest, decision tree, 𝑘-\nnearest neighbors).",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 45,
+    "total_chunks": 87,
+    "char_count": 425,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7048f0cd-6333-4f6f-a538-896e5141fa81",
+    "text": "The grammar's structural claims — which workflows are\nrejected by type checks or guards — are independent of that evidence and\nverifiable from the specification in the Appendix alone. The empirical results\nmotivate the constraint design: they explain why Class II and III are targeted\nand Class I is tolerated despite being structurally addressable. A Grammar of Machine Learning Workflows Roth, 2026 7.1 Leakage classes by mechanism Raw\nClass Mechanism 𝑑𝑧 ΔAUC 𝑁 Key experiment I Estimation |𝑑| < < 2,047 Normalization: 𝑑= −0.02\n(normalize 0.1 0.001 (LR)\nbefore split)\nII Selection (peek 0.93 +0.046 2,047 Label peeking, 𝐾= 10\nat labels/test\ndata)\nIII Memorization 0.53– +0.02– 2,047 Duplicate injection 10%:\n(train on eval 1.11 0.09 𝑑= 1.11 (DT)\ndata) Effect sizes are paired Cohen's 𝑑𝑧= ̄𝑑/𝑠𝑑(mean of per-dataset leaky-minus-clean\nAUC differences divided by the standard deviation of those differences). For\nClass II peeking: 𝑑𝑧= 0.93 (95% CI [0.86, 1.00], 𝑁= 2,047). Raw AUC inflation\n(ΔAUC) is reported alongside 𝑑𝑧throughout this paper because 𝑑𝑧standardizes\neffect magnitude but obscures absolute scale: a 𝑑𝑧of 0.93 corresponds to a\nmedian AUC inflation of approximately 4.6 hundredths of a point. Whether\nthis magnitude is practically significant depends on the application domain; in\nhigh-stakes clinical AI, even small AUC inflation can change treatment decisions. An order-statistics interpretation is also relevant: the peeking experiment selects\nthe best of 𝐾= 10 model configurations evaluated on the test set. The expected √\ninflation from best-of-𝐾selection is 𝑂(𝜎 2 ln 𝐾); the grammar's contribution\nis making this selection structurally impossible, not discovering that it inflates\nperformance. The three classes are defined by mechanism (how information crosses the\ntrain/test boundary), not by the grammar's constraints. The classification\nis grounded in Kaufman et al. (2012)'s independent formalization of leakage\ntypes and extended with effect-size measurement. The grammar's constraints\nwere then designed to target the classes with large effects, but the classes exist\nindependently of the grammar.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 46,
+    "total_chunks": 87,
+    "char_count": 2123,
+    "word_count": 315,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dc55e3cb-d703-402d-89fe-c214083e7f22",
+    "text": "Class I effects are negligible at any sample size. Class II effects persist across all\ntested sample sizes (𝑛= 50–2,000): peeking at test labels inflates performance\nby 𝑑𝑧= 0.93 (raw AUC inflation: +0.046 points). The magnitude decays with\n𝑛(the ratio 𝑑(50)/𝑑(2000) ≈2.1× for peeking) but does not vanish; the asymptotic floor remains positive.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 47,
+    "total_chunks": 87,
+    "char_count": 344,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d3c7bb32-4be7-4350-ab9e-7fc35ca15bdb",
+    "text": "Class III effects are capacity-dependent: decision\ntrees (𝑑= 1.11) memorize more than random forests (𝑑= 0.90). The 𝑑𝑧-values\nfor Class III were measured on LR, RF, DT, and KNN; gradient boosting (XGBoost, LightGBM) uses a qualitatively different memorization mechanism (soft\nmemorization via bounded weak learners and shrinkage), and its Class III exposure is untested in this study. The detection floor at 𝑁= 2,047 is 𝑑= 0.057 A Grammar of Machine Learning Workflows Roth, 2026",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 48,
+    "total_chunks": 87,
+    "char_count": 479,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2824a8fc-b223-43ff-bb26-09c7a00e65e0",
+    "text": "(assuming normality; the heavy-tailed distributions observed in V2, with kurtosis values from 6 to 215, imply that the effective detection floor is somewhat\nhigher). Confidence intervals and full distributional results for all effect sizes\nare reported in the companion study (Roth 2026, in preparation). 7.2 𝑁-scaling and power law analysis A follow-up study measured leakage effects across six sample sizes\n(𝑁 ∈{50, 100, 200, 500, 1000, 2000}) on 493 OpenML datasets, each with\n10 replications per condition. The results confirm and strengthen the\nmechanistic taxonomy:",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 49,
+    "total_chunks": 87,
+    "char_count": 571,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "48689a7e-c52e-4c89-bac5-ca9703da82a7",
+    "text": "𝑅2 (power\nClass 𝑑(50) 𝑑(2000) Floor 𝑑∞ Ratio law) II 0.115 0.054 0.047 2.1× 0.977\n(peeking)\nII (seed) 0.137 0.058 0.047 2.4× 0.989\nIII (over- 0.247 0.042 ≈0 5.9× 0.982\nsample) All three classes follow 𝑑(𝑛) = 𝑎⋅𝑛−𝑏+𝑐with 𝑅2 > 0.97. The key result: Class II\nhas a positive asymptotic floor (𝑑∞= 0.047), while Class III decays toward zero. A nested model comparison between the 3-parameter model (𝑑= 𝑎⋅𝑛−𝑏+ 𝑐)\nand the 2-parameter alternative (𝑑= 𝑎⋅𝑛−𝑏, i.e., 𝑐= 0) favors the floor model\nfor Class II (AIC difference > 10) but not for Class III, where the simpler model\nfits adequately. This supports the grammar's unconditional rejection of Class\nII workflows; the effect does not vanish within the tested range (𝑛= 50–2,000). Class III's decay pattern is consistent with a capacity-limited mechanism. The\npower law is fitted to 6 data points with 3 parameters, leaving 3 residual degrees\nof freedom; the 𝑅2 values should be interpreted with this caveat. Extrapolation\nbeyond 𝑛= 2,000 is not empirically supported. 7.3 Seed cherry-picking scales as log 𝐾 Across 1,363 datasets, random forest seed inflation follows inflation = 0.00326 ⋅\nlog(𝐾) + 0.00395 (𝑅2 = 0.992), where 𝐾is the number of seeds evaluated. Logistic regression inflation is exactly zero (sd = 0.000000) because the model\nis deterministic given the data. The log-scaling has no plateau: extrapolating to\n𝐾= 1000 yields +0.026 AUC. This confirms that cherry-picking scales without\nbound, strengthening the grammar's assess-once constraint.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 50,
+    "total_chunks": 87,
+    "char_count": 1503,
+    "word_count": 240,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b5706733-f8ee-4c86-850c-4f7a89ec0c1f",
+    "text": "7.4 Cross-validation coverage miscalibration Across 1,903 datasets with 3 algorithms (LR, RF, DT), the nominal 95% confidence interval from 𝑘-fold cross-validation achieves only 55.1% actual coverage A Grammar of Machine Learning Workflows Roth, 2026 (𝑧-based) or 70.4% (𝑡-based). This is consistent with Bengio and Grandvalet\n(2004), who proved that no unbiased estimator of CV variance exists. The miscalibration is worst for flexible models (DT: 54.5% 𝑧, 69.3% 𝑡) and best for constrained models (LR: 56.3% 𝑧, 71.9% 𝑡). This implies that evaluate() should\nreport uncertainty with explicit miscalibration warnings rather than nominal\nconfidence intervals.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 51,
+    "total_chunks": 87,
+    "char_count": 657,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fe38882d-e169-4f05-9518-7c82e51442e7",
+    "text": "7.5 Discovery/confirmation replication All 11 new experiments replicated exactly across independent discovery (𝑘=\n1,007) and confirmation (𝑘= 1,040) halves; for example, seed inflation: 𝑑=\n+0.044 vs. 𝑑= +0.046. All 17 experiments across both stages replicated.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 52,
+    "total_chunks": 87,
+    "char_count": 260,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ef014d9-59e3-4686-b4b3-102a288709bd",
+    "text": "The\nhalves were fixed by MD5 hash of dataset name, applied deterministically before\nanalysis. This is an internal validation procedure (split-half replication), not a\nformal pre-registration on an external platform. The replication is meaningful;\n17/17 effects replicate across independent dataset subsets, and the experiments\nuse only publicly available OpenML datasets, so anyone with sufficient compute\ncan reproduce them. All experiment scripts and raw results will be published\nalongside the companion study. But this should not be confused with prospective hypothesis registration on OSF or a comparable registry.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 53,
+    "total_chunks": 87,
+    "char_count": 619,
+    "word_count": 87,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "645ad5e1-c890-455f-af20-af8335c759c9",
+    "text": "7.6 Three predictions from the grammar The three predictions introduced in Section 3.4 are reported in full here. All were\nspecified in internal design documents before running V2 experiments, though\nthe author had access to V1 results when formulating them.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 54,
+    "total_chunks": 87,
+    "char_count": 258,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a051e3cf-e1de-4277-b85e-069bc53b4e99",
+    "text": "Screen inflation and\nseed inflation were expected outcomes based on V1 data; the stack prediction\nwas the only genuinely risky hypothesis. Screen inflation is also consistent with\nthe prior literature on selection bias in model evaluation (Cawley and Talbot\n2010). Screen inflation (𝑑> 0): Confirmed: 𝑑= +0.27, approximately constant across 𝐾∈{1, 5, 11} (raw: +0.013, +0.013, +0.013 AUC). The 𝐾-\ninvariance implies near-perfect correlation among algorithm performances\non these datasets; the inflation reflects the gap between a selected model\nand a random baseline, not a selection-pressure effect that grows with 𝐾.\n2. Stack leakage (𝑑> 0): Falsified: 𝑑= −0.22. The grammar's stack()\nis empirically safe. The meta-learner does not introduce detectable leakage\nat this scale.\n3.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 55,
+    "total_chunks": 87,
+    "char_count": 779,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6ce287bb-d35f-4916-892d-d91a83977050",
+    "text": "Seed inflation (𝑑> 0): Confirmed: 𝑑= +0.88, prevalence 92%. Two of three confirmed. I predicted that stacking would leak. It\ndid not: 𝑑= −0.22 at the tested scale. The grammar's out-of-fold architecture\nwas sound; my effect-size prediction was not. The data overrode the prediction. The structural claims survive.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 56,
+    "total_chunks": 87,
+    "char_count": 313,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8cbf848e-bba9-4352-bc5f-d003b8de7fd6",
+    "text": "A Grammar of Machine Learning Workflows Roth, 2026 7.7 Moderator analysis Frequentist Spearman correlations between dataset characteristics and leakage\nseverity show weak but statistically significant associations: seed inflation correlates with log 𝑛(𝑟= −0.274, 𝑝< 0.001) and screen inflation with log 𝑛\n(𝑟= −0.130, 𝑝< 0.001). However, effect sizes are small (𝑟2 < 0.08), and the\npractical implication is limited: no dataset characteristic predicts which specific\ndatasets are safe from leakage. The correlations reflect the 𝑛-scaling pattern\ndocumented above (larger datasets show smaller absolute effects) rather than a\nmoderator that would exempt certain datasets from the grammar's constraints. Full moderator analysis, including a planned hierarchical model accounting for\ndataset clustering, is reported in the companion study (Roth 2026, in preparation).",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 57,
+    "total_chunks": 87,
+    "char_count": 862,
+    "word_count": 119,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "21539195-e75c-46d9-b815-986ba0218e2c",
+    "text": "7.8 Implementation stress testing The three implementations have been tested against 2,805 test cases (1,685\nPython, 783 R, 337 Julia) covering edge cases, boundary conditions, and\nconstraint-violation attempts. All three implementations satisfy the 7 Codd\ntest conditions, including condition 7 (Evidence as a named class distinct\nfrom Metrics): Python uses Evidence(dict) vs Metrics(dict), R uses\nml_evidence vs ml_metrics S3 classes, and Julia uses nominal struct\nEvidence vs struct Metrics. A Grammar of Machine Learning Workflows Roth, 2026 8.1 What the grammar does not do The grammar prevents structural errors. It does not prevent semantic errors: Valid in the grammar but poor in practice Why the grammar allows it Logistic regression on 1M rows when Algorithm choice is not structural\nXGBoost dominates\nAccuracy on a 99/1 imbalanced dataset Metric selection is not structural\n𝑘-fold CV on time-series data Temporal awareness requires domain\nknowledge\nNormalizing binary features Feature-level decisions are semantic This is Chomsky's crack. \"Colorless green ideas sleep furiously\" is grammatically\nvalid but semantically nonsense (Chomsky 1957). A workflow that passes all\ntype checks but produces a poor model for semantic reasons is the ML analogue. A diagnostics layer (check, drift, profile, enough) addresses semantic quality\nas a separate concern. Structural validity does not imply numerical reproducibility. fit(data,\nseed=42) and fit(data, seed=43) are grammatically identical; they may produce models with different metrics and different conclusions. Reproducibility\nrequires additional infrastructure beyond fixed seeds (environment versioning,\nhardware determinism) that the grammar does not formalize. The grammar\nprevents leakage, not non-reproducibility.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 58,
+    "total_chunks": 87,
+    "char_count": 1779,
+    "word_count": 247,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "53c60d33-4ce2-45fb-9666-0a79bf831dfb",
+    "text": "Both are correctness concerns; only\none is structural. The primitive set is operation-centric: all seven primitives are verbs.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 59,
+    "total_chunks": 87,
+    "char_count": 126,
+    "word_count": 18,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2b03cc5a-d243-43e8-84fb-3625dfea3845",
+    "text": "This is a\ndesign choice, not an oversight. Validity constraints are enforced at operations,\nnot at values: a DataFrame is neither valid nor invalid in isolation; it becomes\ninvalid when passed to fit without a partition tag. The types (DataFrame,\nPartition, Model, Metrics) are defined formally in the Appendix and are co-equal\nin the specification; they appear secondary in the prose because the actionable\ngrammar lives on the verbs, not the values flowing between them. Below approximately 𝑁= 30, the grammar's three-way split becomes statistically vacuous. The grammar does not disappear; it contracts: 𝑁 Grammar mode Recommendation < 10 Does not apply Exact tests, Bayesian, case studies\n10–29 LOO-CV, one model Report massive uncertainty\n30–199 𝑘-fold CV, 1–3 models No screening, no stacking A Grammar of Machine Learning Workflows Roth, 2026 𝑁 Grammar mode Recommendation 200–999 Full grammar feasible Screen, tune, holdout\n≥1000 Grammar in its element All strategies available The deeper constraint is not raw 𝑁but the ratio of events to predictors: logistic\nregression needs approximately 20 events per predictor (Riley et al. 2019), while\ntree ensembles need 3,000+ (van der Ploeg, Austin, and Steyerberg 2014). The\ngrammar's real contribution at small 𝑁is discipline: separate what you learn\non from what you judge on. That discipline applies at every 𝑁. The mechanism\nof separation requires a minimum investment of observations.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 60,
+    "total_chunks": 87,
+    "char_count": 1441,
+    "word_count": 221,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4c658d55-7486-45d3-8182-868fc342ab25",
+    "text": "The grammar covers tabular binary classification, multiclass classification, and\nregression, the setting where the companion study's effect sizes were measured. It does not currently cover deep learning workflows (different type structure: tensors, batches, epochs), unsupervised learning (no target variable, different split\nsemantics), or structured-data modalities where leakage dynamics differ qualitatively: spatial autocorrelation in ecology (Rosenblatt et al. 2024), tokenization\nleakage in NLP, linkage disequilibrium in genomics. The grammar also assumes\na complete dataset at split time: split takes a full DataFrame and partitions\nit. Online learning, continual learning, and active learning might violate this\nfoundational assumption: data arrives incrementally, with no complete rectangle to partition. The grammar is scoped to batch supervised learning; its split\nprimitive has no defined semantics for streaming inputs. Both evaluate and\nassess assume a stationary data-generating process; when the test distribution\nhas shifted since training (concept drift, covariate shift, population change), the\ngrammar's type guarantees hold but Evidence no longer measures generalization to the current environment. Temporal evaluation primitives are outside this\ngrammar's Σ. The grammar's constraints and the companion study's 𝑑-values\ndo not transfer to these domains. The scope is intentional: tabular supervised\nlearning is where the train/test boundary is cleanest and all three leakage classes\nhave been empirically quantified. Extending the grammar to other paradigms\nrequires analogous empirical baselines first. 8.4 External validation External validation is the missing piece.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 61,
+    "total_chunks": 87,
+    "char_count": 1693,
+    "word_count": 226,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6feb4496-6037-4838-ad89-22f17098e36e",
+    "text": "Whether the grammar reduces leakage\nerrors in classrooms and research pipelines is untested; Wickham had ggplot2\nusers before the grammar paper, and here the sequence is reversed. The obvious next test is a randomized between-subjects experiment: participants complete an ML task (e.g., predicting hospital readmission from tabular\nclinical data) using either sklearn (control) or the grammar's implementation A Grammar of Machine Learning Workflows Roth, 2026",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 62,
+    "total_chunks": 87,
+    "char_count": 460,
+    "word_count": 65,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "97dc6673-d597-4efd-becd-d498535eb55a",
+    "text": "The primary outcome is the leakage rate: the proportion of submitted workflows containing at least one Class II or III violation, scored by an\nautomated checker blind to condition. Secondary outcomes include the magnitude of performance inflation and task completion time. A sample of 40–60\nparticipants (undergraduate or master's students in a data science course, randomly assigned) would provide adequate power to detect a halving of the leakage\nrate (from an estimated 30–50% baseline to 15–25%). The experiment requires\na certified reference implementation and a scoring rubric defined before data\ncollection. The three implementations described in this paper provide the treatment condition; the study design is left for future work. The grammar specifies which workflows are invalid. The implementation enforces this specification imperfectly: Constraint Enforcement Gap Severity Assess once _assess_count Resets on serialization or Medium\n+ error copy.deepcopy(model)\nPer-fold Baked into fit None —\npreparation loop\nSplitResult Regular User can mutate fields Low\nimmutability dataclass\nType isinstance + fit rejects unregistered DataFrames; —\ntransitions provenance guards=\"off\" bypasses\ncheck\nEvidence sort Named class Closed in all three implementations. —\ndistinct from Python: Evidence(dict) vs\nMetrics Metrics(dict), isinstance\ndistinguishes them. R: ml_evidence\nvs ml_metrics, inherits\ndistinguishes them. Julia: Evidence\nvs Metrics, nominal struct types.\npartition_tag Set by Closed: a session-scoped registry —\npropagation split(); maps content fingerprints to partition\nchecked at roles, surviving host-language\nfit() and operations that strip metadata\nevaluate() attributes (see below)\nvia contentaddressed\nfingerprinting A Grammar of Machine Learning Workflows Roth, 2026 Constraint Enforcement Gap Severity PreparedData Not specified Lossless transforms (scaling, Low\ninformation imputation) and lossy transforms\npreservation (one-hot encoding, discretization)\nboth produce PreparedData; the type\ncarries no signal about whether\ninformation was destroyed during\npreparation",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 63,
+    "total_chunks": 87,
+    "char_count": 2093,
+    "word_count": 278,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d15414ce-9d5a-4e01-af84-0a697450fc90",
+    "text": "The grammar is a specification; the implementation is an approximation of\nit. A context-free grammar makes certain strings underivable at the level of\nthe formal system, not at the level of any particular parser; the same distinction applies here. A user who serializes a model and deserializes it (or calls\ncopy.deepcopy(model)) can circumvent the assess-once constraint; a user who\nmutates a SplitResult's .test attribute can corrupt the assessment boundary. The partition_tag propagation gap was structurally the most significant in\nprior versions, and it is an instance of a pattern that recurs whenever a grammar\nenforces constraints via metadata attributes in a host language whose standard\noperations do not preserve them. Call this tag erasure: typed metadata set\nby the grammar is silently discarded by untyped operations in the surrounding environment. In pandas, merge, concat, and groupby strip DataFrame\nattributes silently; an attribute-based partition_tag is lost after any standard\nDataFrame manipulation between split and fit. The current implementation closes this gap via content-addressed partition identity: split computes a deterministic fingerprint of each output partition (SHA-\n256 over hash_pandas_object values) and registers it in a session-scoped provenance registry that maps fingerprints to partition roles and split lineage. Each\nverb's guard queries the registry by content fingerprint rather than reading a\nmetadata attribute. Because the fingerprint is computed from cell values and\ncolumn names, not from a metadata attribute, it survives DataFrame operations that preserve both row content and column structure (reindexing, dtype\ncoercion). Operations that change content or structure (filtering rows, selecting or adding columns, merging, renaming) produce a new fingerprint that is\nabsent from the registry; the guard rejects the data as unregistered. This is\nnot a loophole; it is the intended behavior: feature engineering between split\nand fit is outside the grammar's seven primitives and is rejected at fit's entry point. The grammar's answer is prepare inside fit, per fold (Constraint\n2). The provenance registry additionally stores split lineage (which split call\nproduced each partition), enabling a cross-verb check at assess time: test data\nfrom a different split than the training data is rejected, closing a second-order\nleakage vector (test-set shopping across splits). Tag erasure is not a bug in any\none implementation; it is a structural mismatch between the grammar's typed\nrequirements and the host environment's untyped operations. A Grammar of Machine Learning Workflows Roth, 2026",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 64,
+    "total_chunks": 87,
+    "char_count": 2641,
+    "word_count": 387,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "91357381-100c-417d-8c96-6fefe7b1a95f",
+    "text": "the architecture the previous paragraph describes: partition provenance stored\nin a separate structure that host-language operations do not touch by default. Early SQL implementations violated Codd's relational model routinely: allowing duplicate rows, failing to enforce referential integrity, permitting NULL\nsemantics that contradicted the specification.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 65,
+    "total_chunks": 87,
+    "char_count": 357,
+    "word_count": 44,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7d20ea23-c168-4b95-93f9-dbcbcde49a87",
+    "text": "The specification remained correct, and implementations improved over decades. The grammar's enforcement\ngaps are probably smaller than early SQL's. The most significant gap, tag\nerasure, was resolved via content-addressed partition identity in v1.0.0 of the\nPython implementation. The remaining gaps (runtime circumvention, optimization leakage, stopping criterion) are well understood, and the path to closing\nthem (persistent state, immutable types, affine/linear type system) is established. Three open flanks define the grammar's current ceiling.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 66,
+    "total_chunks": 87,
+    "char_count": 551,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e6182f2a-5828-43d2-b05c-1f0ba65b850e",
+    "text": "Runtime circumvention:\nthe assess-once guard is enforced at call time, not compile time; it resets on serialization or copy.deepcopy. Optimization leakage: the grammar is a gate, not\na schedule; indefinite iteration in the evaluate zone is grammatically valid even\nwhen it is methodologically suspect. No stopping criterion: the transition from\niteration to commitment is ungoverned. Together, they mark the boundary between structural validity (what the grammar guarantees) and scientific integrity\n(what a rigorous methodology requires). Structural validity is necessary but not\nsufficient. A fourth flank, tag erasure, was closed by content-addressed partition\nidentity (described above): partition provenance stored in a registry external to\nthe host language's metadata system survives the DataFrame operations that\npreviously stripped it.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 67,
+    "total_chunks": 87,
+    "char_count": 844,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "48b2ca70-5533-4237-b027-d553a33d89c5",
+    "text": "A fifth gap deserves separate mention: multi-model test-set peeking. The assessonce constraint is per model, not per test set. A practitioner who trains 5\nmodels and assesses each on the same test set has performed model selection\non test data, statistically equivalent to evaluating 5 times. The grammar sees\n5 independent, valid assessments. A per-dataset constraint (at most one model\nassessed on any given test set) would close this gap but requires global state\nacross models, breaking the composability that makes the grammar practical. The current design accepts this tradeoff: per-model assess-once catches the most\ncommon abuse (re-running the same model after tweaks) while preserving the\nindependence of separate modeling efforts. Users comparing multiple models on\nthe same test set should adjust for multiplicity or use a dedicated comparison\nprotocol; the grammar does not enforce this.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 68,
+    "total_chunks": 87,
+    "char_count": 900,
+    "word_count": 136,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "55cf14ae-90a7-401d-a4ce-422a41809f8b",
+    "text": "8.6 Production and deployment A separate objection holds that the grammar governs training-time structure but\nleaves the deployment lifecycle unaddressed: practitioners may call evaluate()\non production batches and treat incoming data as an implicit validation set\nwithout the grammar intervening. A Grammar of Machine Learning Workflows Roth, 2026 The objection assumes a distinction between training-time and production-time\nthat the grammar does not draw. The grammar defines valid workflows as compositions over Σ; that definition is not scoped to a single lifecycle. Production\nmonitoring decomposes into the same primitives (drift, split, fit, evaluate,\nassess) and is therefore a workflow in 𝑊, governed by the same four constraints. If evaluate() on production batches produces leakage, it does so for exactly\nthe same structural reason that evaluate() on a held-out test set does: data\nhas been seen before assess() closes the model. The grammar rejects both on\nidentical grounds. The deployment lifecycle does not require an extension of\nthe grammar; it is another instantiation of it. 8.7 Feature engineering and the closed-world boundary The grammar's seven primitives do not include feature engineering: no verb for\nencoding categoricals, computing lag features, or selecting variables. A natural\nobjection is that the grammar therefore cannot prevent the most common form\nof preprocessing leakage: computing features on the full dataset before splitting. The grammar's answer is that feature engineering belongs inside prepare, which\nruns inside fit, per fold (Constraint 2). This is not a workaround; it is the\nstructurally correct position.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 69,
+    "total_chunks": 87,
+    "char_count": 1656,
+    "word_count": 244,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cf9dc493-5f26-4777-8a6e-c2b090dd6d91",
+    "text": "In temporal cross-validation, features derived from\nthe data (rolling averages, lag variables, target encodings) must be computed\nusing only the training data available at each fold's time cutoff. Computing\nthem before the split uses future data to construct past features, a temporal\nleakage that inflates performance estimates. The same argument applies to\nstandard cross-validation: target-encoding before the split uses test labels to\nconstruct training features. In computationally intensive settings with many\nfeatures or large datasets, per-fold preparation can become a bottleneck. A\nfuture grammar extension may introduce a safe precomputation primitive that\nruns before split but is restricted to leakage-free transformations (e.g., static\ntype conversions, column selection) while routing target-dependent operations\nthrough the per-fold path. The grammar specifies this position structurally: fit requires data that has\npassed through split. The implementation enforces this by rejecting data without split provenance: not just data with a known-wrong tag, but any data that\nhas not been registered by split. This forces all feature engineering through\nprepare per fold: there is no path from raw data to fit that bypasses split.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 70,
+    "total_chunks": 87,
+    "char_count": 1241,
+    "word_count": 177,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2bb475e7-25e8-4791-8e19-db30af845dc5",
+    "text": "This closes what appeared to be a closed-world limitation. The grammar does\nnot need to detect pre-split feature engineering; it makes the pre-split path\nstructurally inaccessible. The prepare verb is deliberately opaque, a monolith\nthat handles encoding, scaling, imputation, and derived features internally. Decomposing prepare into typed sub-operations (encode, scale, impute, derive,\nselect) is a natural extension that would make each transformation step visible\nwhile preserving the per-fold constraint. That decomposition is left for future",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 71,
+    "total_chunks": 87,
+    "char_count": 547,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4f8aa4af-f262-489a-b08a-de0f65ee44e1",
+    "text": "A Grammar of Machine Learning Workflows Roth, 2026 work; the current grammar's guarantee is that prepare runs per fold, and no\nunregistered data can bypass it. 8.8 Enforcement philosophy The grammar's four constraints admit two enforcement strategies. A gate rejects\ninvalid input at every entry point: fit refuses data without split provenance,\nmaking the unsplit path fail at entry. A funnel makes the correct path the path\nof least resistance without blocking the incorrect one. The distinction matters\nbecause Class II and III protection is downstream of split: a user who never\nsplits gets no partition tags, and the guards at evaluate and assess never fire. Advisory protection that only catches mistakes by users who already do the\nright thing is circular. The implementation therefore enforces split provenance structurally: fit,\nevaluate, assess, and validate all reject data that has not passed through\nsplit. Every guard checks the content-addressed registry; data with no\nfingerprint match (unregistered) is rejected with a message directing the user\nto split first. This closes the dependency: the guards that prevent Class II\nand III leakage (𝑑𝑧= 0.53–1.11) are activated by the same mechanism that\nprevents Class I (|𝑑| < 0.1). The cost is real: the simple path (ml.fit(df,\n\"y\") without a prior split call) no longer works by default. A configuration\nswitch (config(guards=\"off\")) disables all guards for exploration, education,\nand rapid prototyping where structural enforcement is unnecessary. This is\nan explicit exit from the grammar's jurisdiction, analogous to Rust's unsafe\nblocks, which do not weaken the type system but mark where the programmer\nhas left it.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 72,
+    "total_chunks": 87,
+    "char_count": 1682,
+    "word_count": 260,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "afdbe99b-8b67-4718-aa4d-9aba4020aa65",
+    "text": "The three implementations enforce provenance through different mechanisms: Python uses content-addressed fingerprinting (SHA-256 over cell\nvalues, session-scoped registry), R uses DataFrame attributes (attr(data,\n\"_ml_partition\")), and Julia uses DataFrames.metadata(). The mechanisms currently differ in robustness to host-language operations (fingerprinting\nsurvives copy() and reindexing; attributes and metadata are lost on reconstruction). The R and Julia implementations are expected to converge on\ncontent-addressed fingerprinting before release. The grammatical semantics\nare already identical across all three: every verb rejects data without split\nprovenance when guards are active. The grammar is language-agnostic; the\nenforcement adapts to each host's idioms.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 73,
+    "total_chunks": 87,
+    "char_count": 772,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c570062f-d35c-41d6-b362-c0501526465f",
+    "text": "8.9 Implementation variance Two conforming implementations of the same algorithm can produce different\npredictive surfaces. In cross-engine experiments, implementations of SVM using different solvers produced 𝑅2 values of 0.964 and 0.917 on identical data\nwith identical hyperparameters. The grammar guarantees type-correctness; it A Grammar of Machine Learning Workflows Roth, 2026 does not guarantee behavioral equivalence across engines. This is a genuine\nexpressiveness limitation that has to be acknowledged.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 74,
+    "total_chunks": 87,
+    "char_count": 513,
+    "word_count": 68,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "07aee127-ca39-4469-9513-5d60b2b4077b",
+    "text": "8.10 Data flow and operational flow The type DAG models data flow: which types are produced and consumed by\neach primitive. Strategy verbs (tune, screen, stack) have implicit operational\nsemantics that the type DAG does not capture. tune calls fit and evaluate\ninternally; its type signature tune :: Model × HyperparameterSpace →\nTuningResult hides this orchestration. The grammar specifies what types flow\nbetween operations but not which operations trigger which. For correctness\nchecking this is sufficient: the type guard at each primitive boundary is what\nprevents leakage, not the order in which strategies invoke primitives internally. The composition graph reveals that the seven primitives are not structural peers.\nevaluate is a hub: six verbs compose through it internally (assess, validate,\ncompare, screen, shelf, and tune all call evaluate on their data). This hub\nstructure has a practical consequence for guard design: evaluate carries the\ntightest partition constraint (rejecting test-tagged data), yet every finalization\nverb must route test data through it. The implementation resolves this via\na trusted/untrusted calling context — public calls enforce the guard; internal\ncomposition bypasses it. But the type DAG does not represent this distinction.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 75,
+    "total_chunks": 87,
+    "char_count": 1271,
+    "word_count": 188,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3955a703-46be-4826-ad03-cf03daf32f73",
+    "text": "A complete account of ML workflow structure would distinguish the data flow\ngraph from the control flow graph; the current grammar covers the former. The control-flow gap is most visible in the strategy verbs' implicit temporal\nshapes: tune is iterative (a loop that fits and evaluates repeatedly until convergence), screen is parallel (multiple algorithms evaluated simultaneously against\nthe same Partition), and stack is sequential-then-meta (base models trained independently in the first pass, then a meta-learner trained on their out-of-fold\npredictions in the second). These temporal shapes are nowhere in the type signatures; they emerge from the strategy definitions, not from the type DAG. A\npractitioner reading only the type DAG cannot infer that tune is a loop and\nscreen is a fan-out.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 76,
+    "total_chunks": 87,
+    "char_count": 798,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aafc0752-1e4f-4024-a364-e78ef116aef6",
+    "text": "The grammar covers data flow; a complete account would\nalso formalize control flow. That extension is left for future work. 8.11 Structural severity and optimization leakage The grammar is a gate, not a schedule: it controls which data flows to which\nprimitive but does not govern how many times the iterate zone runs or when\nthe transition to assess is triggered. The grammar enforces structural severity: assess uses held-out data that has\nnot participated in any prior training or evaluation call.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 77,
+    "total_chunks": 87,
+    "char_count": 500,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a328991c-55f6-4f44-99a3-af05929ecf39",
+    "text": "This closes data leakage. It does not close optimization leakage: a practitioner who runs screen() with\n11 algorithms, tune() with 500 hyperparameter configurations, and then calls\nassess() has made hundreds of model selection decisions on the validation set. A Grammar of Machine Learning Workflows Roth, 2026 The grammar considers this valid. Statistically, the final assess result is biased\nupward because the model was selected to look good on validation data. The\ngrammar prevents test-set leakage but does not prevent validation-set overfitting\nthrough repeated evaluation. This is the dominant failure mode in modern ML\npractice and the grammar's most significant limitation. Mayo (1996) requires that a hypothesis passes a severe test only if it would\nprobably have failed the test were it false.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 78,
+    "total_chunks": 87,
+    "char_count": 804,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2e8b5693-6bcd-4a04-a227-a864011c99e9",
+    "text": "The grammar satisfies the structural\ncondition: the assessor is held-out data independent of training. It does not\nenforce the epistemic condition: the model could have been tuned until evaluation looked good, in which case a weak model may still pass assess on a\nfavorable split. The evaluation metric was optimized rather than simply measured, a familiar pattern in model selection that the grammar does not currently\naddress. Nested cross-validation partially addresses this: the outer loop provides an unbiased estimate of generalization performance while the inner loop handles model\nselection. The grammar is compatible with nested CV — it is a valid workflow\nwithin the grammar's scope; it does not require it. For high-stakes applications, nested CV or a pre-registered stopping criterion (how many evaluation\niterations are permitted, or what convergence condition triggers assess) would\nclose the optimization leakage gap. The grammar specifies the type boundary;\nit does not specify the transition condition. That specification is left to the\npractitioner.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 79,
+    "total_chunks": 87,
+    "char_count": 1067,
+    "word_count": 159,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f26d9648-a422-430f-bed6-49d794d34e57",
+    "text": "A typed gate state — a permission sort that transitions GateState ∈{Locked,\nUnlocked} when assess is first called — would make the temporal boundary\nexplicit in the type system but would not close this gap. A gate records when\naccess was granted, not whether access was earned. The distinction matters: a\nmodel that passed only because the practitioner iterated evaluation until metrics\nlooked favorable would still unlock the gate. Closing both gaps simultaneously\nrequires a more expressive type: a gate that cannot open unless a pre-registered\nstopping criterion has been satisfied. That system — typed permission conditioned on pre-registered termination — is the minimal extension that would\nenforce both structural severity and epistemic legitimacy jointly. The current\ngrammar enforces one; achieving the other is left to pre-registration protocol,\nnot type enforcement. The grammar of ML workflows shifts where the work happens.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 80,
+    "total_chunks": 87,
+    "char_count": 936,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4c525e60-9275-453b-9858-c5d712739622",
+    "text": "The evaluate/assess boundary is not a rule to follow; it is a constraint the implementation\nenforces. The types remember so you don't have to. Seven primitives, four constraints, three separate implementations, 2,805 tests,\nand a companion study across 2,047 experimental instances supplemented by\n3,759 𝑛-scaling, seed-stability, and coverage instances (Roth 2026): the gram- A Grammar of Machine Learning Workflows Roth, 2026",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 81,
+    "total_chunks": 87,
+    "char_count": 427,
+    "word_count": 61,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "22b37042-fdf5-4790-9fae-0cad0e0ec12f",
+    "text": "The leakage classes it rejects produce large standardized effects\n(𝑑𝑧= 0.93–1.11; raw AUC inflation +0.02–0.09 points) that persist across all\ntested sample sizes (𝑛= 50–2,000) with a positive asymptotic floor; the class it\ntolerates does not (|𝑑| < 0.1). Three testable predictions: two confirmed, one\nfalsified. The grammar is falsifiable and survives the test. The type DAG and four constraints are frozen: they define what a conforming\nimplementation must satisfy. The verb names, function signatures, and language binding are the changeable surface. The Julia implementation — built\nfrom the specification without translating Python or R source, reproducing all\n7 primitives, 4 constraints, and 22 verbs across 12 algorithm families — demonstrates that the specification is sufficient for independent reimplementation. The\nopen empirical question is whether the grammar reduces leakage errors in practice. The test is straightforward: a randomized study comparing leakage rates\nin student or researcher code written with the grammar versus without it. That\ntest would require a reference implementation whose conformance to the type\nDAG and seven Codd conditions is certified, so that \"written with the grammar\"\nmeans the same thing across conditions. Three certified implementations now\nexist. The grammar makes the hypothesis precise enough to run that test. Appendix: Formal Specification The grammar is a typed specification over eight types. Each primitive has\na type signature, a guard (precondition checked at call time), and an effect\n(state mutation after call). Two types are terminal (their values feed no further\nprimitive):",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 82,
+    "total_chunks": 87,
+    "char_count": 1641,
+    "word_count": 243,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "edc078c9-f1d3-48d8-898a-78da5a0eec8e",
+    "text": "DataFrame Tabular data with named columns and partition_tag: No\n{None, train, valid, test, dev}. Freshly loaded data\ncarries tag None (untagged). split assigns tags train,\nvalid, test to the output partitions. The dev tag is\nassigned to the union of train and valid (s.dev). Partition Holdout: {train, valid, test, dev: DataFrame} where No\ndev = train ∪valid · CV: {folds: [(DataFrame,\nDataFrame)]^k, k: N}\nPreparedData {data: DataFrame_numeric, state: Transformer, No\ntarget: str, task: {clf, reg}}\nModel {algorithm: str, task: {clf, reg}, fitted: bool, No\nevaluated: bool, assessed: bool}\nPredictions One-column numeric DataFrame No†\nMetrics str →float Yes A Grammar of Machine Learning Workflows Roth, 2026 Type Structure Terminal Evidence Sealed named type wrapping str →float; must be a class Yes\ndistinct from Metrics in the host language, not implicitly\nsubstitutable for Metrics under structural or duck typing. No primitive accepts Evidence as input. Explanation str →float (importances or partial dependences) Yes † Predictions is not terminal in stacking strategies: the stack strategy reshapes\nout-of-fold predictions into a new DataFrame and passes it to a second fit\ncall (the meta-learner). In the grammar's 7-primitive linear DAG, no primitive\naccepts Predictions directly as a typed input; the reshape is performed by the\nstrategy orchestration, not a primitive. Two embedded types appear in the sort table above but are not primitive sorts: • DataFrame_numeric: a DataFrame where every column is numeric; a structural subtype of DataFrame (all rows of DataFrame_numeric are valid\nDataFrame values but not vice versa). Produced by prepare; consumed\nby model algorithms.\n• Transformer: an interface type satisfying state.transform(X:\nDataFrame) →DataFrame_numeric. It encodes the fit-time preprocessing state so that validation data can be transformed consistently\nwithout re-fitting.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 84,
+    "total_chunks": 87,
+    "char_count": 1900,
+    "word_count": 277,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7b5fadb2-8ab1-4df4-8148-8be1be9c57d9",
+    "text": "Not a free-standing sort; it is a field type embedded in\nPreparedData.\n• partition_tag: an enum attribute {None, train, valid, test, dev}\non every DataFrame. Not a separate sort; it is an attribute of the\nDataFrame sort. Freshly loaded data carries None; split assigns train,\nvalid, test; accessing s.dev (train ∪valid) assigns dev. 9.2 Primitive operations Each primitive 𝜎has a type signature, a guard 𝐺(𝜎) (precondition checked at\ncall time), and an effect 𝐸(𝜎) (state mutation after call): Primitive Input Output Guard 𝐺 Effect 𝐸 split DataFrame, Partition — assigns\nparams partition_tag\nin {train,\nvalid, test} to\noutput partitions\nprepare DataFrame, PreparedDatadata registered by split; —\ntarget data.partition_tag in\n{train, valid, dev} A Grammar of Machine Learning Workflows Roth, 2026 Primitive Input Output Guard 𝐺 Effect 𝐸",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 85,
+    "total_chunks": 87,
+    "char_count": 835,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4e3c239f-02f0-49d0-af16-5877bf85fe0a",
+    "text": "fit DataFrame, Model data registered by split; model.fitted ←\ntarget data.partition_tag in true; prepare\n{train, valid, dev} applied per fold\npredict Model, Predictions model.fitted = true —\nDataFrame\nevaluate Model, Metrics model.fitted = true; model.evaluated\nDataFrame data registered by split; ←true\ndata.partition_tag !=\ntest\nexplain Model [, Explanation model.fitted = true —\nDataFrame]\nassess Model, Evidence model.assessed = model.assessed\nDataFrame false; data registered by ←true\nsplit;\ndata.partition_tag =\ntest 9.3 When is a workflow valid? A workflow (a sequence of primitive calls) is valid if: Types connect: each primitive's output type matches the next primitive's expected input type.\n2. Guards pass: each primitive's precondition holds at call time, given all\nprior effects.\n3. Effects apply in order: state mutations (e.g., model.assessed ←true)\naccumulate sequentially.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 86,
+    "total_chunks": 87,
+    "char_count": 890,
+    "word_count": 124,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "004f9913-fe5b-48d7-82f2-9778765a0208",
+    "text": "A workflow is invalid if any step fails a type check or a guard. The four hard\nconstraints are guards in this sense: not rules a user must remember, but checks\nthat reject invalid workflows at call time. Note on evaluate guard. The guard on evaluate rejects test-tagged data;\nit accepts train and valid partitions. Evaluating on training data is legitimate\n(train-vs-valid score comparison for overfitting diagnosis). The guard prevents\ntest data from entering the iterate cycle: if evaluate accepted test data, the\npractitioner could iterate on test-set feedback, which is structurally equivalent\nto training on the test set. The assess primitive is the only path for test\ndata. This is a design decision: evaluate is the practice exam (repeatable, on\nvalidation data); assess is the final exam (terminal, on test data). Note on branching strategies. This definition covers linear workflows. Branching strategies (screen, tune, stack) involve parallel or iterated applications of the same primitives; their validity follows from applying the same type\nsignatures and guards to each branch independently. A Grammar of Machine Learning Workflows Roth, 2026 Note on domain specializations. split admits domain specializations\n(split_temporal, split_group) that share its type signature but carry\nadditional guards specific to a scientific domain. This is a representational\nmechanism, not a primitive extension: the guard set 𝐺(split) is parameterized\nby domain, but the type signature and position in the DAG are invariant. A\ngrammar for time series forecasting inherits all 7 primitives and adds temporal\nguards to split; the kernel is unchanged.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 87,
+    "total_chunks": 87,
+    "char_count": 1646,
+    "word_count": 250,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "37b65d37-c0e2-4638-bd82-e556e197a513",
+    "text": "The guarantees apply to programs that compose the grammar's 7 primitives. Operations outside these seven (arbitrary DataFrame transformations,\nexternal feature selection, direct attribute mutation) are outside the grammar's\nscope. The grammar enforces its own API boundary; it cannot enforce what\nhappens in surrounding code. 9.4 Invalid workflows as guard failures Workflow Failing condition Mechanism assess(𝑚) → 𝐺(assess): m.assessed First call sets m.assessed ←true;\nassess(𝑚) = false guard fails on second\nprepare(𝑋all) → fit requires split fit rejects unregistered data;\nsplit →fit provenance preparation runs inside fit, per\nfold (Constraint 2)\nselect_features(𝑋, fit requires split Feature selection belongs inside\n𝑦) →split →fit provenance prepare, per fold (§ Feature\nengineering); unregistered data\nrejected\nevaluate without Type continuity No Model in scope; out(split) =\nprior fit Partition != in(evaluate) =\nModel\nfit(𝑠.test) 𝐺(fit): Test tag is test, not in {train,\ndata.partition_tag valid, dev}; guard fails\nnot in {train,\nvalid, dev}\nevaluate(𝑚, 𝑠.test) 𝐺(evaluate): Test tag triggers guard; test data is\ndata.partition_tag reserved for assess\n!= test Large language models (Claude, Anthropic) were used as writing, analysis, and\nimplementation assistants during the preparation of this manuscript.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 88,
+    "total_chunks": 87,
+    "char_count": 1316,
+    "word_count": 182,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6f9de38d-a632-4e90-a95f-7ac91ea2da3d",
+    "text": "All scientific claims, experimental designs, empirical results, and theoretical contributions are the author's own. The author takes full responsibility for the content. The author develops and distributes the Python, R, and Julia implementations A Grammar of Machine Learning Workflows Roth, 2026 described in this paper; the grammar specification is intended to be implementable independently of them.",
+    "paper_id": "2603.10742",
+    "title": "A Grammar of Machine Learning Workflows",
+    "authors": [
+      "Simon Roth"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10742v1",
+    "chunk_index": 89,
+    "total_chunks": 87,
+    "char_count": 403,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  }
+]

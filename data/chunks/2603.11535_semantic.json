@@ -1,0 +1,1562 @@
+[
+  {
+    "chunk_id": "233a8d17-d156-49d1-a6fe-7cdc37251333",
+    "text": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic\nComputation Allocation and Load Balancing Ryan Sun 1 Yixin Liu 1 Yonghui Wu 2 Lichao Sun 1 Abstract Dense\nToken-choice Mixture-of-Experts (TC-MoE) 3.0 TCET\nroutes each token to a fixed number of experts, 2.9\nlimiting dynamic computation allocation and re- loss\nquiring auxiliary losses to maintain load balance. Eval 2.8 1.6x2026\nWe propose Expert Threshold (ET) routing, where\n2.7 each expert maintains an exponential moving average (EMA) threshold estimated from the global 2.6 0.067Mar token distribution. At both training and infer- 5k 7k 10k 12k 15k 17k 20k\nStep12 ence, each token is independently routed to an expert if its score exceeds the expert's threshold,\nenabling dynamic computation allocation while Figure 1. evaluation loss for Dense, TC, and ET. Compared to\nTC, ET achieves a 0.067 final loss gap (TC vs ET), or equivalently achieving load balance without auxiliary losses.\nreaching same performance level with 1.6x few tokens. This fully causal mechanism eliminates dependence on other tokens in the batch, making it[cs.AI] well-suited for autoregressive language modeling. lelism (Lepikhin et al., 2021), where skewed loads leave\nIn pretraining experiments scaling to 2.4B param- some devices idle and others overloaded. Thus, we need a\neters on FineWeb-Edu, ET achieves 0.067 lower routing mechanism that roughly maintains load balancing.\ncross-entropy loss than TC-MoE, equivalent to\nreaching the same performance with 1.6× fewer Prior work falls into two categories. The prevalent token\ntokens. choice (TC) routing (Fedus et al., 2022) fixes the number\nof experts each token selects.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 0,
+    "total_chunks": 78,
+    "char_count": 1681,
+    "word_count": 254,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b41da351-148c-46b5-8d03-70d23a27bbb9",
+    "text": "This sparsity constraint not\nonly fails to address load imbalance, but further complicates\n1. Introduction the routing as it conflicts with load balancing, turning the\nrouting into a combinatorial optimization problem. People\nMixture of Experts (MoE) architectures (Shazeer et al., resort to heuristics to approximate load balancing, such as\n2017; Lepikhin et al., 2021; Fedus et al., 2022) have auxiliary losses (Lepikhin et al., 2021; Fedus et al., 2022)\nemerged as a leading approach to scale language mod- or PID controllers (Team, 2025a; Wang et al., 2024). In\nels efficiently, powering frontier models like DeepSeek- contrast, expert choice (EC) routing (Zhou et al., 2022)\nV3 (DeepSeek-AI, 2024). By sparsely activating only a sub- relaxes the fixed computation budget per token and only enset of expert networks per token, MoE decouples model ca-arXiv:2603.11535v1 forces load balancing within a batch by selecting the top-k\npacity from computational cost, enabling massive parameter tokens for each expert, achieving perfect load balancing by\ncounts with tractable FLOPs. However, sparse routing intro- construction while enabling dynamic computation allocaduces a fundamental tension: without intervention, routers tion. However, EC routing fundamentally violates causality,\ntend to collapse onto a small subset of experts (Shazeer making it unsuitable for autoregressive language models.\net al., 2017). This harms model quality, as underutilized Selecting top-k requires comparing against the entire batch\nexperts become redundant parameters that waste capacity. that includes future positions. At training time this mechIt also creates hardware bottlenecks under Expert Paral- anism leaks information (Wang et al., 2024); at inference\ntime future tokens simply do not exist. Code available at GitHub repository. 1Computer Science and\nEngineering, Lehigh University, Bethlehem, PA, USA 2MD-HOBI- In this paper, we relax both per-token sparsity and per-batch\nBIOMED INFORMATICS, University of Florida, Gainesville, FL,\nload balancing, requiring only that load reaches a targeted USA. Correspondence to: Lichao Sun <lis221@lehigh.edu>.\nactivation rate in expectation. The resulting mechanism,\nPreprint.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 1,
+    "total_chunks": 78,
+    "char_count": 2211,
+    "word_count": 313,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e4b0adbe-c85a-4544-a473-ae07199eb23a",
+    "text": "Expert Threshold (ET) routing, routes each token by com- Expert Threshold Routing Token Choice (TC) Expert Choice (EC) Expert Threshold (ET) Load Imbalance Non Causal Fully Causal Seq top-k Batch top-k Mi Mi\nrt,i\nM1 M2 M3 M4 EMA Threshold ci\ns1 Score",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 2,
+    "total_chunks": 78,
+    "char_count": 250,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "30d2555b-f376-4a98-bf36-c7ed47f2f671",
+    "text": "token input 1 batch Token index t TopG {rt,i}∀i Topk {rt,i}∀t∈seq Topk {rt,i}∀t∈batch zt,i = 1{rt,i > ci} token sequence batch population\nrouting pool size Illustration of TC, EC, and ET routing mechanisms and their routing pools. Left: TC routes each token independently to its\ntop-G experts, causing load imbalance. Middle: EC has each expert select its top-k tokens from the batch, requiring access to all tokens\nincluding future ones (non-causal). Right: ET routes each token independently by comparing its score against the population's top-(1/E)\nquantile estimated by an EMA-tracked threshold ci, enabling fully causal routing over the population. paring its score to a quantile threshold tracked from each scores indicate stronger token-expert affinity and, through\nexpert's global score distribution. Because the same thresh- the gate pt,i, larger expert contributions to the output.\nold is used at training and inference, ET routing is fully\ncausal with no train-inference mismatch. Token Choice Routing The standard Token Choice routPretraining a 2.4B (0.56B active) language model on ing goal is:\nFineWeb-Edu, ET outperforms TC by 0.067 in cross-entropy\nloss while achieving near-perfect load balancing. We fur- N GE\nther show that EC's performance improves with batch size, max X X zt,irt,i\nand that models trained with large-batch EC can perform z t=1 i=1\ncausal inference using our threshold-based routing without GE\nretraining. s.t. X zt,i = G, ∀t (Sparsity)\n(3) i=1\n2. Preliminaries: Routing as Constrained N\nX zt,i = k, ∀i (Load Balancing) Optimization\nt=1\nAn MoE layer replaces a dense feed-forward block with a zt,i ∈{0, 1}\nrouter and GE experts. Consider a batch of N tokens with\nrepresentations xt ∈Rd. The router computes scores\nHere the sparsity constraint ensures each token selects exrt,i = (Wrxt)i, (1) actly G experts, and the Load Balancing constraint ensures\neach expert processes exactly k = N/E tokens.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 3,
+    "total_chunks": 78,
+    "char_count": 1933,
+    "word_count": 303,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "74ccf2fe-251b-4bcb-9abe-c6a14f33598f",
+    "text": "Solvcollected into a matrix r ∈RN×GE. Based on r, a routing ing (3) exactly requires combinatorial algorithms such as\nrule produces a binary assignment z ∈{0, 1}N×GE where the O(N 3) Hungarian Matching algorithm. Most Token\nzt,i = 1 indicates expert i is activated for token t and 0 Choice (TC) methods therefore strictly enforce the sparsity\notherwise. Each selected expert i computes an output yi,t ∈ constraint by setting zt,i = 1 ⇐⇒i ∈TopG(rt,·), while\nRd, weighted by a gate value pt,i = σ(rt,i). The MoE relying on auxiliary losses (Lepikhin et al., 2021; Fedus\noutput for token t is et al., 2022) or loss-free load balancing strategies (Wang\nGE et al., 2024) to approximate the load balancing constraint.\nyt = X zt,i pt,i yi,t. (2)\ni=1 Expert Choice Routing While the load balancing conThe routing rule that determines z therefore controls both straint is essential to avoid routing collapse, the sparsity\ncompute allocation and expert load balance. We formalize constraint has no practical benefit. Thus, Expert Choice\nMoE routing as finding z that maximizes the total rout- (EC) (Zhou et al., 2022) removes the sparsity constraint\ning score subject to computational constraints, since higher entirely and enforces only load balancing within batches. Expert Threshold Routing The primal problem becomes: Algorithm 1 Expert Threshold Routing\nN GE 1: Input: router logits r ∈RN×GE, cutoff-EMA {ci},\nmax X X zt,irt,i decay rate β, target selection size k = N/E\nt=1 i=1 2: for expert i = 1, . . . , GE do\nN (4) 3: zt,i ←1{rt,i > ci} ∀t\ns.t. X zt,i = k, ∀i 4: if TRAINING then\nt=1 5: ci ←βci + (1 −β) · kth-largest({rt,i}Nt=1, k)\nzt,i ∈{0, 1} 6: end if\n7: end for\nwith trivial closed-form solution zt,i = 1{t ∈Topk(r·,i)}, 8: Return z, {ci}\ni.e. picking the top-k tokens in each batch.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 4,
+    "total_chunks": 78,
+    "char_count": 1788,
+    "word_count": 310,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7b9e6aab-b038-4f84-98b2-c08c3677bbb0",
+    "text": "This design\nhas two key benefits: (1) Perfect load balancing: each expert processes exactly k = N/E tokens by construction,\nConnection to EC. Conceptually, ET can be viewed as exeliminating the need for auxiliary losses or capacity clippert choice routing over an infinitely large batch. In standard\nping; (2) Dynamic computation: a token may be selected by\nEC, each expert selects its top-k tokens within the batch, so\nzero, one, or multiple experts, enabling adaptive compute\nthe selection threshold depends on all tokens present. As the\nallocation based on token importance.\nbatch size grows, however, each individual token's influence\nHowever, the per sequence load balancing constraint in EC on this threshold vanishes, and the routing decision for any\nintroduces a causality problem for autoregressive genera- token becomes independent of others. ET approximates this\ntion. The selection indicator zt,i depends on all tokens' limit by maintaining a fixed threshold estimated from the\nscores {r1,i, . . . , rN,i}—including future tokens unavail- global token distribution.\nable during inference. Extending EC to batch-level topET and EC handle batch-wise variance differently. EC enk (Ludziejewski et al., 2024) partially alleviates this but\nforces perfect load balance per batch by letting the threshold\ndoes not fully restore causality, as routing still depends on\nvary, which means routing decisions fluctuate with batch\nbatch composition.\ncomposition. ET instead fixes the threshold for stable routing decisions, accepting small variance in per-batch expert\n3. Expert Threshold utilization. Despite this difference in training, we show that\nET routing can serve as causal inference for EC-trained modIn the preliminaries, we identified the constraints that token\nels without retraining, provided the batch size is sufficiently\nchoice and expert choice routing impose, yet we question\nlarge.\ntheir necessity. To avoid routing collapse, asymptotic load\nbalancing suffices. ET further relaxes the per-sequence or\nper-batch Load Balancing constraint to a stochastic expecta- Warmup. At the beginning of training, the router logits'\ntion: distribution is not stable yet. The cutoff-EMA requires\n\"GE # several thousand steps to converge to a meaningful estimate\nmax Edata X zt,irt,i z of the population quantile.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 5,
+    "total_chunks": 78,
+    "char_count": 2315,
+    "word_count": 345,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3dc7f4df-646a-4e2a-b79c-a1cf99ebcdf4",
+    "text": "During this period, incorrect\ni=1 thresholds cause severe expert starvation—most tokens fail (5) 1\ns.t. Edata[zt,i] = , ∀i to exceed the threshold, leaving experts underutilized. To\nE address this cold-start problem, we use standard EC routing\nzt,i ∈{0, 1} for the first 4k steps before switching to ET. This allows the\nEssentially, solving this primal problem is equivalent to cutoff-EMA to accumulate stable statistics under controlled\npicking the top 1/E fraction of tokens from the full router load balance.\nlogit distribution, rather than from a single batch. We may\nobtain a (1 −1/E)-quantile estimate ci via exponential 4. Experiments\nmoving average (EMA) of the k-th largest router logit of\neach batch. Then, for both training and inference, we route 4.1. Experiment Setup\ntokens via binary thresholding, setting\nWe evaluate our methods on Nanochat (Karpathy, 2025),\nzt,i = 1{rt,i > ci} (6) an open-source codebase for training GPT-2-like models. We conduct experiments at two scales: a d12 model (575M\nwhere zt,i ∈{0, 1} is the binary indicator of whether token parameters, 195M active) with 12 transformer layers, and\nt is routed to expert i. Since zt,i depends only on rt,i and the a d20 model (2.4B parameters, 561M active) with 20 transglobal threshold ci, routing is fully causal while satisfying former layers. For MoE layers, we use 16 routed experts\nload balancing in expectation. with granularity G=1 and expansion E=16, plus 1 shared Expert Threshold Routing Main results comparing Expert Choice (EC), Token Table 2. d20 results. Choice (TC), and Expert Threshold (ET) routing. Batch: token\nrouting pool size.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 6,
+    "total_chunks": 78,
+    "char_count": 1628,
+    "word_count": 259,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "13a0cfe9-125d-4279-a3e7-bc92cbbcbf26",
+    "text": "EC uses global selection batch, TC uses per- Method Batch CE loss (↓) CORE (↑)\nstep batch, ET reports effective EMA pool size N/(1 −β). TC\ndense — 2.751 20.43variants: no load-balancing, auxiliary loss (α=0.001), or loss-free\nTC aux 32k 2.687 22.31(u=0.005). We report validation cross-entropy (CE) loss (↓) and\nEC 256k 2.621 24.98CORE Eval score (↑). ET 256k →500M 2.620 25.14\n(β=0.999+warmup)\nMethod Batch CE loss (↓) CORE (↑) dense — 3.002 15.743\nTC — 2.893 17.983 (a) Cutoff Raw Deviation from EMA\nTC aux 64k 2.892 15.894 EC (512k)\nTC loss-free 512k 2.898 18.031 1 ET\nEC 2k 2.910 17.91 EMA\nEC 8k 2.845 18.83 - 0\nEC 64k 2.841 18.754 CutoffEC 512k 2.843 19.94\nET 0.5M →500M 2.844 19.876\n(β=0.999+warmup) 4k 6k 8k 10k 12k 14k 16k 18k\nStep (b) Expert Usage\n0.070 EC (512k)\nexpert. Each token activates the shared expert and on aver- ET\nage 1 routed expert.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 7,
+    "total_chunks": 78,
+    "char_count": 856,
+    "word_count": 153,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d15ae936-6bc1-4058-a270-a879d8b0d7c0",
+    "text": "We use sigmoid gates (pt,i = σ(rt,i)) Usage 0.068\ninstead of softmax gates following LossFree (Wang et al., 0.066\n2024) and Mixture-of-Depths (Raposo et al., 2024). We Expert 0.064\nadd expert capacity factor of C = 0.5 to avoid GPU out-of-\n0.062memory. The first layer is kept dense following common\npractice (DeepSeek-AI, 2024; Wang et al., 2024) to allow 4k 6k 8k 10k 12k 14k 16k 18k\nStep\nmeaningful routing. We train on 10B and 11.2B tokens\nfor d12 and d20, respectively, from the FineWeb-Edu 100B Figure 3.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 8,
+    "total_chunks": 78,
+    "char_count": 510,
+    "word_count": 88,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "38e65215-85be-4ca1-971a-3149fef392c7",
+    "text": "Cutoff stability vs expert usage tradeoff. Top Signed\ndataset (Penedo et al., 2024) with a batch size of 0.5M cutoff deviation relative to the EMA for EC at 512k batch size.\ntokens (for d20, we halve the minibatch size and use 2- ET stays at zero because routing uses the cutoff EMA directly. Bottom Expert usage for EC at 512k and ET. ET varies around thestep gradient accumulation). We report CE loss and CORE\ncapacity target while EC remains constant.\nbenchmark results (Li et al., 2024). Architecture, training,\nand evaluation details are in Appendices B, C, and D.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 9,
+    "total_chunks": 78,
+    "char_count": 569,
+    "word_count": 98,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c3a8249d-28d6-46cc-8dac-7aa492a351b5",
+    "text": "Main Results\nWe analyze key aspects of Expert Threshold routing through\nWe compare Expert Threshold (ET) routing against Expert\ncutoff-usage tradeoff, dynamic computation allocation, exChoice (EC) and Token Choice (TC) routing. All variants\npert specialization, and supporting EC comparisons on batch\nshare the same architecture and parameter count. For ET,\nsize scaling and train-evaluation gap.\nwe use EMA decay β = 0.999 and EC warmup for the\nfirst 4k steps. For EC, we sweep the global selection batch\n4.3.1. CUTOFF VS EXPERT USAGE TRADEOFF\nsize from 2k to 512k tokens during training and use ET's\ncutoff EMA during inference which makes it fully causal. EC and ET achieve routing stability through complementary\nUnless stated, reported CORE/CE use the causal protocol. mechanisms. EC enforces a fixed expert usage: each expert\nFor TC, we report variants with no load balancing, auxiliary selects exactly top-k tokens, guaranteeing usage of 1/E\nloss (α=0.001), and loss-free load balancing (u=0.005). per expert. However, the cutoff threshold varies batch-to- √\nTables 1 and 2 summarize results. ET consistently outper- batch, with standard deviation scaling as O(1/ N). ET\nforms TC in both CE loss (by 0.05 on d12 and 0.067 on inverts this tradeoff. The cutoff-EMA provides a stable\nd20) and CORE (by 1.89 on d12 and 2.83 on d20). EC with threshold (β = 0.999), while expert usage fluctuates around\nlarge batch sizes achieves comparable CE loss to ET, con- the capacity target. Figure 3 shows the signed deviation\nfirming that explicit large-batch selection and EMA-based between EC's per batch cutoff and cutoff-EMA, while ET\nthresholding reach similar training loss.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 10,
+    "total_chunks": 78,
+    "char_count": 1673,
+    "word_count": 264,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4cf7fbb2-7972-4a35-acf8-c4b9df948559",
+    "text": "EC 512k slightly remains at zero by design. This enables consistent inference\nedges out ET on CORE (19.94 vs. 19.88) in d12, though without large-batch coordination. In essence, ET trades off\nboth substantially outperform TC. hardware consistency for training-inference uniformity. Expert Threshold Routing HumanEval GSM8K 0.4\nToken activation intensity GSM8K_0 109 0.3 Ratio\n<|bos|> Question : Natal ia sold clips to 48 of 7\n6 0.2 Token Layer 5 her friends in April , and then she sold ec_bsz2k 4\nhalf as many clips in May . How many clips 3 0.1 2 Expert\ndid Natal ia sell altogether in April and 1\n0.0\nMay ? Answer : Natal ia sold 48 / 2 = << 48 / 2 = 24 >> 24 0.4\nclips in May . 10\n9 0.3 Ratio N atal ia sold 48 + 24 = << 48 + 24 = 72 >> 72 clips 8 6 0.2 Token altogether in April and May .",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 11,
+    "total_chunks": 78,
+    "char_count": 793,
+    "word_count": 159,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5c2b8aff-4ede-4638-b358-1f88eaa3fa61",
+    "text": "Layer 7 5 ## ## 72 gec_warmup 4\n3 0.1 2 Expert\n0 1 4 16 64 176 Expert ID Expert ID 0.0 Total fanout (sum across 11 layers) (b) Expert activation heatmap. Top: EC with batch size 2k shows less special-(a) Per-token expert routing on a GSM8K passage.\nization. Bottom: ET shows more extreme activation patterns, suggesting more\ndomain-aware routing. Expert specialization analysis. (a) Token-level activation intensity on a GSM8K passage, colored by total fanout (sum of\nexperts activated across layers). The model assigns more computation to structurally important tokens (punctuation, sentence boundaries,\nnumerical results) than to common content words. (b) Expert token ratio heatmaps for HumanEval (code) and GSM8K (math). Top: EC\n(batch size 2k). ET achieves sharper patterns in expert activation, suggesting more domain-aware routing and specialization. DYNAMIC COMPUTATION ALLOCATION main routed to each expert—across HumanEval (Chen et al.,\n2021) (code) and GSM8K (Cobbe et al., 2021) (math) evalA key advantage of ET and EC is that they do not enforce\nuation sets. Figure 4(b) compares EC (batch size 2k) with\na fixed amount of computation for every token. Both exhibit clear specialization: certain experts consisdocument its behavior and compare it with EC. For a more\ntently attract domain-specific tokens, visible as concentrated\ndrastic comparison, we use the sequence-level EC with\ndark cells in the heatmap. ET achieves specialization combatch size 2k. Figure 4(a) gives a qualitative example on a\nparable to EC without requiring large-batch coordination at\nGSM8K passage (Cobbe et al., 2021), where total fanout\ninference. The full comparison across all batch sizes (Aphighlights tokens that receive heavier computation.\npendix F, Figure 22) shows that EC specialization sharpens\nWe further analyze how expert activation relates to posi- with larger batches—patterns become more concentrated\ntion and token difficulty.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 12,
+    "total_chunks": 78,
+    "char_count": 1933,
+    "word_count": 292,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "74fdc181-4e0a-41b1-a84c-738b7ae5362e",
+    "text": "Figure 5 shows that both methods from 2k to 512k—while ET matches the large-batch EC\nallocate more computation to early positions, but EC (2k) pattern.\nexhibits a dramatic spike at the first token (mean fanout\n∼10) while ET shows a milder increase (∼2) that decays 4.3.4. BATCH SIZE SCALING\nsmoothly. The lower row bins tokens by loss and overlays\nWe hypothesize that larger batch sizes stabilize EC's cutfaint dashed layer traces with a denser global trend. For\noff threshold, yielding better performance and motivating\nEC (2k), both the global curve and several layers rise with\nET's pursuit of the infinite-batch limit. Figure 6 confirms\nloss, showing that harder tokens receive more computation.\nthis trend across four batch sizes (2k, 8k, 64k, 512k toET remains flatter overall, with layer trajectories crossing\nkens). Training CE loss improves from 2.874 (2k) to 2.844\nand the global curve peaking in the middle before soften-\n(8k) to 2.836 (64k), with CORE Eval scores following suit\ning at higher loss.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 13,
+    "total_chunks": 78,
+    "char_count": 1010,
+    "word_count": 164,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dbcf17bc-a31c-48c4-9f28-77637bc0d793",
+    "text": "Additional layerwise views for the two\n(17.91 →18.83 →18.75). Top-k selection over larger token\nmain runs and extended comparisons for the remaining runs\npools better approximates the population-level routing deciappear in Appendix F.3.\nsion, explaining this gain. However, performance saturates\naround 64k tokens, as increasing to 512k provides no further\n4.3.3.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 14,
+    "total_chunks": 78,
+    "char_count": 363,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7d8bb382-eb5b-40e9-8f3b-ce53e6cfa735",
+    "text": "EXPERT SPECIALIZATION\nimprovement (2.840 CE, 19.94 CORE Eval). We follow Global LBL (Qiu et al., 2025) to evaluate expert\nFigure 6 visualizes this scaling behavior. Notably, ET\nspecialization across EC with various batch sizes (2k, 8k,\nachieves comparable performance (2.844 CE, 19.876 CORE\n64k, 512k) and ET. For each configuration, we measure the\nEval) without requiring batch size coordination, making it\nexpert token ratio—the fraction of tokens from a given do- Expert Threshold Routing (a) EC (2k) fanout vs position (b) ET fanout vs position (c) EC (2k) fanout vs loss by layer (d) ET fanout vs loss by layer Activation dynamics for EC (2k) and ET. Both methods allocate more computation to early positions, with EC (2k) showing\na sharper spike. Faint dashed curves show per-layer means and solid red curves show the global mean.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 15,
+    "total_chunks": 78,
+    "char_count": 836,
+    "word_count": 136,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6daf0cd8-8bb6-4b86-804a-ed6e6b32bb7a",
+    "text": "When binned by loss, EC (2k)\nfanout rises monotonically while ET peaks early before declining. 2.88 20.5 ing, EC selects the top-k tokens for each expert within a\nbatch; at inference, we apply ET's learned thresholds in-\n20.0 2.87 stead, since future tokens are unavailable for batch-level\n19.5 selection. Loss (%) 2.86\nCE 19.0 Our results demonstrate that this concern depends critically\n2.85 CORE on the routing batch size. As shown in Table 1, EC with Train 18.5\nlarge batch sizes (64k, 512k) achieves validation loss nearly\n2.84 18.0 identical to ET (2.841–2.843 vs 2.844), with comparable\n2.83 17.5 CORE Eval scores. However, smaller batch sizes reveal\n2k 8k 64k 512k ET significant train-inference mismatch: EC at 2k tokens\nRouting Batch Size shows degraded CORE Eval performance (17.91 vs 19.94 at\n512k) and evaluation loss (2.910 vs 2.843). This gap arisesFigure 6. EC performance across routing batch sizes. Training CE\nloss decreases and CORE Eval score increases with larger batches. because top-k selection over a small batch is a noisy estimate of the population-level routing decision; at inference\n(batch size 1), this noise becomes extreme. Figure 7 illustrates this gap.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 16,
+    "total_chunks": 78,
+    "char_count": 1187,
+    "word_count": 190,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a94c21a3-a92b-44d0-88ca-c46d071e222e",
+    "text": "EC (2k) shows a large train-practical for autoregressive inference where only single toevaluation discrepancy, while EC (512k) maintains closekens are available.\nalignment between train loss EMA and eval loss. TRAIN-EVALUATION GAP cutoff-EMA mechanism addresses this by maintaining a\npopulation-level threshold that is independent of batch size,\nA key concern for Expert Choice is the train-inference dis- enabling consistent routing at inference without large-batch\ncrepancy when using ET routing at inference. Expert Threshold Routing EC (2k) (train) per token (Shazeer et al., 2017), with auxiliary losses to\n3.4 EC (2k) (eval) balance load across experts (Lepikhin et al., 2021). The\nEC (512k) (train)\nEC (512k) (eval) Switch Transformer (Fedus et al., 2022) sets G=1 for effi-\n3.2 ETET (train)(eval) ciency. Recent LLMs further adopt fine-grained MoE with\nLoss many small experts and shared experts that remain always\nactive to capture global knowledge (Dai et al., 2024). We\n3.0 incorporate shared experts in our design. Load Balancing\n10k 12k 14k 16k 18k 20k\nStep A critical challenge in MoE systems is load balancing, as\nrouters often favor a small subset of experts without exFigure 7.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 17,
+    "total_chunks": 78,
+    "char_count": 1194,
+    "word_count": 183,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6cb48c87-4edf-45a7-b7d6-3993abbbd6b8",
+    "text": "Train loss EMA and eval loss for EC at different batch plicit constraints. The standard approach uses an auxiliary\nsizes and ET. Solid lines show train loss EMA and dashed lines\nloss Laux = α Pi fiPi to encourage uniform expert as-show eval loss. EC (2k) shows a large train-eval discrepancy, while\nEC (512k) and ET remain closely aligned. signment (Lepikhin et al., 2021; Fedus et al., 2022), where\nfi = NE PNt=1 zt,i and Pi = N1 PNt=1 pt,i are the normalized load and average routing probability for expert i. Minicoordination. mizing this loss exerts unbalanced pressure to suppress the\nrouter logits based on the load statistics, which makes the\n4.3.6. ROUTING CONSISTENCY ACROSS CHECKPOINTS router logits biased towards the less loaded experts. However, in distributed training, small local batch sizes cause\nTo measure how stably each routing rule preserves token high variance in load estimation. Global-batch load balexpert assignments over training, we compare the routed- ancing (Qiu et al., 2025; Team, 2025b) addresses this by\nexpert sets assigned to the same token-layer pairs across computing balance statistics across all devices, yielding\ncheckpoints, excluding the always-active shared expert. more stable gradients and improved expert specialization. We report weighted Jaccard over pooled token-layer-expert This insight motivates our approach to extend the \"global\"\nedges, philosophy beyond auxiliary losses.\n|EA ∩EB|\nweighted_jaccard = Recent work explores auxiliary-loss-free alternatives. |EA ∪EB|,\nDeepSeekMoE (Dai et al., 2024) introduces expert-specific\nwhere EA and EB are the pooled active token-layer-expert bias terms bi that dynamically adjust based on load statistics.\nedges under two checkpoints. A higher weighted Jaccard in- Expert selection uses biased scores rt,i + bi, while gating\ndicates more similar routing behaviors between checkpoints. weights use original scores rt,i, preserving specialization. This gives the clearest separation while preserving the same The bias updates follow bi ←bi +u·sign(1−fi), where fi\nqualitative ranking as the companion divergence views in is a normalized load statistic for expert i (equal to 1 under\nAppendix F.2. perfect balance). This eliminates the trade-off between load\nbalancing and task performance inherent in auxiliary loss\nFigure 8 shows a clear pattern.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 18,
+    "total_chunks": 78,
+    "char_count": 2340,
+    "word_count": 349,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0f4d5225-1850-4ced-8882-23ce3f9ce937",
+    "text": "ET is above EC 2k on methods. LongCat-Flash (Team, 2025a) adopts a similar\nevery checkpoint pair, indicating that threshold routing pre- framework but replaces the sign-based update with proporserves its token-expert decisions much more consistently tional control: ∆bi = u · (1 −fi). While DeepSeek's\nthan small-pool EC. At the same time, ET remains close to approach applies constant-magnitude corrections regardless\nEC 64k across the full matrix, which supports the view that of imbalance severity, proportional updates scale with the\nET tracks the large-pool EC regime without requiring large- load deviation, enabling smoother convergence.\nbatch coordination at inference. TC shows strong shortrange consistency, but its longest-range pairs are weaker Expert Threshold (ET) combines the above ideas. Instead\nthan ET, so it does not match the same large-pool EC be- of a per-batch top-k selection for the original EC, we extend\nhavior as cleanly.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 19,
+    "total_chunks": 78,
+    "char_count": 950,
+    "word_count": 143,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "86f15289-ef54-4d7f-a9ad-32ff910938d6",
+    "text": "Appendix F.2 reports the complementary Qwen's philosophy to compute balance statistics across the\njoint JSD heatmap. entire pretrain population by maintaining a distributional\ncutoff threshold using EMA. Such number, surprisingly,\nfunctions similarly to the bias term for loss-free load balanc-\n5. See Table 4 for more details.\n5.1. Mixture of Experts\n5.3. Dynamic Computation\nMixture of Experts (MoE) scales model capacity by routing\neach token to a small subset of experts while keeping com- Dynamic computation methods adaptively allocate compupute nearly constant. A learned gate selects top-G experts tational resources based on input complexity. Expert Threshold Routing",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 20,
+    "total_chunks": 78,
+    "char_count": 676,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8bbad318-7009-4ea9-a57d-e842d43eb416",
+    "text": "EC 2k EC 64k ET TC\n1.0\n5k 1.000 0.607 0.446 0.451 5k 1.000 0.683 0.664 0.678 5k 1.000 0.658 0.659 0.662 5k 1.000 0.645 0.607 0.595\n0.9 10k 0.607 1.000 0.540 0.577 10k 0.683 1.000 0.708 0.752 10k 0.658 1.000 0.697 0.740 10k 0.645 1.000 0.745 0.743 0.8 Jaccard\n0.7 Checkpoint 15k 0.446 0.540 1.000 0.618 15k 0.664 0.708 1.000 0.780 15k 0.659 0.697 1.000 0.773 15k 0.607 0.745 1.000 0.797 0.6 Weighted 19k 0.451 0.577 0.618 1.000 19k 0.678 0.752 0.780 1.000 19k 0.662 0.740 0.773 1.000 19k 0.595 0.743 0.797 1.000 0.5 5k 10k 15k 19k 5k 10k 15k 19k 5k 10k 15k 19k 5k 10k 15k 19k\nCheckpoint Checkpoint Checkpoint Checkpoint Within-family checkpoint-pair routing consistency on a fixed validation stream, measured by weighted Jaccard.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 21,
+    "total_chunks": 78,
+    "char_count": 728,
+    "word_count": 128,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b49f437d-26ce-4d28-9b28-6ad479fe944d",
+    "text": "ET is consistently\nmore stable than EC 2k and stays close to EC 64k. TC is competitive on nearby checkpoints but degrades more on longer ranges. Taxonomy of load balancing methods by scope (Aux routing confidence, so high-confidence tokens use fewer\nloss (Lepikhin et al., 2021); Global LBL (Qiu et al., 2025); Lossexperts while uncertain ones activate more. XMoE (Yang\nFree (Wang et al., 2024); Seq EC (Zhou et al., 2022); Batch\nEC (Ludziejewski et al., 2024)). et al., 2024) is closest to our setting, replacing fixed Top-G\nrouting with a threshold that activates experts until cumulaMicro Batch/Seq Batch Population tive routing mass exceeds a preset value. The key difference\nAux loss Global LBL – is that XMoE uses a fixed probability-mass threshold in\n– – LossFree token-choice MoE, while ET uses expert-specific EMA cutSeq EC Batch EC ET (ours) offs to causalize expert choice. Auto-tuning methods like\nDynMoE (Guo et al., 2025) also let each token determine\nhow many experts to activate while reducing sensitivity toTable 4. Conceptual connections between ET and recent work\n(LossFree (Wang et al., 2024); GShard (Fedus et al., 2022)). Beyond MoE routing itself, conditional computation can also be applied to other Transformer\nET Similar To Connection components and long-context settings, e.g., CoLT5 (Ainslie\nCutoff-EMA ci LossFree bias bi Per-expert scalar; et al., 2023b). Early exit methods (Xin et al., 2020) enno aux loss able sample-level dynamics by allowing tokens to exit at\n1 −β LossFree µ Update rate intermediate layers. Causal Generation of Expert Choice Models (EC) (Zhou et al., 2022), detailed in Section 2, achieves EC poses a causality challenge: token selection requires\nthis by letting each expert select its top-k tokens, enabling ranking against future tokens, which are unavailable in auvariable computation per token (0 to GE experts). EC has toregressive generation. Prior work addresses this issue in\nbeen applied to upcycling dense checkpoints (Komatsuzaki three main ways. Predictor-based methods train an auxiliary\net al., 2023), attention layer skipping (Raposo et al., 2024), predictor or learn per-expert thresholds to approximate oravision (Liu et al., 2024), diffusion (Sun et al., 2024; Shi cle top-k decisions, enabling causal routing at inference (Raet al., 2025), and multimodal models (Lin et al., 2024; Ni & poso et al., 2024; Shi et al., 2025).",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 22,
+    "total_chunks": 78,
+    "char_count": 2396,
+    "word_count": 377,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9c3f02d0-4eca-4a2f-9c3c-b6421bac3bec",
+    "text": "Alternatively, top-k selecteam, 2025). Related variants expand the design space (Yan tion across the current tokens from different sequences preet al., 2025). However, EC's causality problem limits its use serves causality within each sequence (Ludziejewski et al.,\nin autoregressive LLMs (Section 5.4). 2024; Wen et al., 2025). Recent work changes routing granularity: Lory routes at the segment level, using the previousBesides EC, other approaches to dynamic computation rely\nsegment to determine the next (Zhong et al., 2024), while Se-on other explicit designs. ReMoE (Wang et al., 2025b)\nqTopK shifts expert budgets to sequence-level selection withreplaces discrete TopG routing with fully differentiable\nan Expert Cache for autoregressive decoding (Wen et al.,ReLU-based routing and adaptive L1 regularization. All above approaches have significant drawbacks:works (Jin et al., 2024; Team, 2025a; Zeng et al., 2024)\npredictions can be noisy and unstable, and batch-level top-kintroduce zero-computation experts (e.g., zero, copy, and\ncan impose inference-time topology constraints, leading toconstant) that allow tokens to skip expert computation ena large train–inference mismatch; moreover, routing thattirely, an approach Kilian et al. (2026) extend to multimodal\ndepends on global batch composition can be sensitive tomodeling. Top-P routing (Liu et al., 2025b; Jin et al., 2025;\nbatch size/composition and raises privacy/safety concernsHuang et al., 2024; Wang et al., 2025a) selects experts based\nin multi-tenant settings (Wen et al., 2025). In contrast toon cumulative probability mass, adapting expert count to Expert Threshold Routing EC, ET reduces to a simple threshold test (whether token consequences of our work, none which we feel must be\nlogit rt,i is higher than cutoff EMA ci) at inference time, specifically highlighted here.\nthus eliminating the train–inference discrepancy. From Batch to Population Level Statistics\nAinslie, J., Lee-Thorp, J., de Jong, M., Zemlyanskiy, Y.,\nThe progression from sample, batch, to population-level Lebron, F., and Sanghai, S. Gqa: Training generalized\nstatistics is a recurring theme in deep learning. While tech- multi-query transformer models from multi-head checkniques like Batch Normalization (Ioffe & Szegedy, 2015) points, 2023a. URL https://arxiv.org/abs/\nand contrastive learning (Radford et al., 2021) rely on 2305.13245.\nbatch statistics, momentum-based approaches (He et al.,\n2020; Caron et al., 2021) and adaptive optimizers like Ainslie, J., Lei, T., de Jong, M., Ontanon, S., Brahma, S.,\nAdam (Kingma & Ba, 2015) use Exponential Moving Av- Zemlyanskiy, Y., Uthus, D., Guo, M., Lee-Thorp, J.,\nerages (EMA) to approximate population distributions. ET Tay, Y., Sung, Y.-H., and Sanghai, S.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 23,
+    "total_chunks": 78,
+    "char_count": 2761,
+    "word_count": 395,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "55e057d8-a96e-439c-a055-20e2750a030a",
+    "text": "CoLT5: Faster\napplies this principle to routing via EMA-based cutoffs. long-range transformers with conditional computation. In Bouamor, H., Pino, J., and Bali, K. (eds.), Proceedings of the 2023 Conference on Empirical Meth-6. Conclusion\nods in Natural Language Processing, pp. 5085–5100,\nWe introduce Expert Threshold (ET) routing, a mecha- Singapore, December 2023b. Association for Computanism that resolves the fundamental causality issue in Expert tional Linguistics. doi: 10.18653/v1/2023.emnlp-main. Choice (EC) models while preserving their load-balancing 309.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 24,
+    "total_chunks": 78,
+    "char_count": 569,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "104aba8f-bfc6-4855-b97b-ffed1a8aa133",
+    "text": "URL https://aclanthology.org/2023.\nadvantages. By maintaining an exponential moving average emnlp-main.309/.\nof each expert's selection threshold, estimated from historical batches rather than within-batch top-k selection, ET Caron, M., Touvron, H., Misra, I., Jégou, H., Mairal, J.,\nrouting enables fully causal routing. Each token's routing Bojanowski, P., and Joulin, A.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 25,
+    "total_chunks": 78,
+    "char_count": 373,
+    "word_count": 48,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "62fb2937-5824-4e1a-9a45-b4b1eddce609",
+    "text": "Emerging properties in\ndecision depends only on past statistics, eliminating the need self-supervised vision transformers. In IEEE/CVF Interfor future token access at both training and inference time. national Conference on Computer Vision, pp. 9650–9660,\nOur experiments demonstrate that ET routing achieves com- 2021.\npetitive performance with EC routing (matching validation\nChen, M., Tworek, J., Jun, H., Yuan, Q., Pinto, H. O.,\nloss at 2.84) while outperforming Token Choice by 0.067 in\nKaplan, J., Edwards, H., Burda, Y., Joseph, N., Brockman,\ncross-entropy loss, all while enabling causal autoregressive\nG., et al. Evaluating large language models trained on\ngeneration. The cutoff-EMA mechanism provides stable\ncode. arXiv preprint arXiv:2107.03374, 2021.\nrouting thresholds that accurately approximate EC's top-k\nboundaries, as evidenced by the minimal train-inference Cobbe, K., Kosaraju, V., Bavarian, M., Chen, M., Jun, H.,\ngap observed across all metrics. We further show that a Kaiser, L., Plappert, M., Tworek, J., Hilton, J., Nakano,\nwarmup strategy, using EC routing before transitioning to R., et al. Training verifiers to solve math word problems.\nthreshold-based selection, stabilizes early training dynamics. arXiv preprint arXiv:2110.14168, 2021. These findings suggest that the perceived incompatibility\nbetween Expert Choice routing and causal language mod- Dai, D., Deng, C., Zhao, C., Xu, R. X., Gao, H., Chen,\neling can be effectively bridged through population-level D., Li, J., Zeng, W., Yu, X., Wu, Y., Xie, Z., Li, Y. K.,\nthreshold estimation, opening new directions for scalable Huang, P., Luo, F., Cheng, A., Zhang, K., Sui, J., Zhao,\nMoE architectures. X., Xing, N., Peng, Z., Jie, S., Yang, T., Gao, W.,\nWang, Q., Zeng, Y., Gao, C., Xiong, R., and Sun, X. Acknowledgments Deepseekmoe: Towards ultimate expert specialization\nin mixture-of-experts language models, 2024. URL\nWe gratefully acknowledge the support of NVIDIA Corpora- https://arxiv.org/abs/2401.06066.\ntion and the NVIDIA AI Technology Center (NVAITC) UF\nprogram. We thank Hongwu Peng for the generous support DeepSeek-AI. Deepseek-v3 technical report, 2024.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 26,
+    "total_chunks": 78,
+    "char_count": 2155,
+    "word_count": 312,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4e297914-6969-4b80-b2ba-1d8844cb7744",
+    "text": "URL\nand guidance on development of the code. https://arxiv.org/abs/2412.19437. Dehghani, M., Djolonga, J., Mustafa, B., Padlewski, P.,\nImpact Statement Heek, J., Gilmer, J., Steiner, A., Caron, M., Geirhos, R.,\nAlabdulmohsin, I., et al. Scaling vision transformers toThis paper presents work whose goal is to advance the field\n22 billion parameters, 2023. URL https://arxiv.of Machine Learning. There are many potential societal\norg/abs/2302.05442. Expert Threshold Routing Fedus, W., Zoph, B., and Shazeer, N. Switch transformers: Houlsby, N.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 27,
+    "total_chunks": 78,
+    "char_count": 543,
+    "word_count": 75,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b081dc9a-a5e2-4398-af26-4e4ed39c74f2",
+    "text": "Sparse upcycling: Training mixture-ofScaling to trillion parameter models with simple and ef- experts from dense checkpoints. In International Conferficient sparsity. Journal of Machine Learning Research, ence on Learning Representations (ICLR), 2023. URL\n23(120):1–39, 2022. https://arxiv.org/abs/2212.05055. Guo, Y., Cheng, Z., Tang, X., Tu, Z., and Lin, T. Dy- Lepikhin, D., Lee, H., Xu, Y., Chen, D., Firat, O., Huang, Y.,\nnamic mixture of experts: An auto-tuning approach Krikun, M., Shazeer, N., and Chen, Z. {GS}hard: Scalfor efficient transformer models, 2025. URL https: ing giant models with conditional computation and auto-\n//arxiv.org/abs/2405.14297. matic sharding. In International Conference on Learning\nRepresentations, 2021.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 28,
+    "total_chunks": 78,
+    "char_count": 742,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "08ecea4a-4cce-4c0c-a077-665c43f75173",
+    "text": "URL https://openreview. He, K., Fan, H., Wu, Y., Xie, S., and Girshick, R. Mo- net/forum?id=qrwe7XHTmYb.\nmentum contrast for unsupervised visual representation\nlearning. In IEEE/CVF Conference on Computer Vision Li, J., Fang, A., Smber, G., Wortsman, M., Gadre, S. Y.,\nand Pattern Recognition, pp. 9729–9738, 2020. Datacomp-lm: In search of the next\ngeneration of training sets for language models. arXiv\nHuang, Q., An, Z., Zhuang, N., Tao, M., Zhang, C., Jin, preprint arXiv:2406.11794, 2024. Y., Xu, K., Chen, L., Huang, S., and Feng, Y. Harder\ntasks need more experts: Dynamic routing in moe mod- Lin, X. V., Shrivastava, A., Luo, L., Iyer, S., Lewis,\nels, 2024. URL https://arxiv.org/abs/2403. M., Ghosh, G., Zettlemoyer, L., and Aghajanyan, A.\n07652. Moma: Efficient early-fusion pre-training with mixture of modality-aware experts, 2024. URL https:\nIoffe, S. and Szegedy, C. Batch normalization: Accelerating //arxiv.org/abs/2407.21770.\ndeep network training by reducing internal covariate shift. In International Conference on Machine Learning, pp.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 29,
+    "total_chunks": 78,
+    "char_count": 1055,
+    "word_count": 152,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a6af8c3c-2dbf-496a-9a56-7c5e6bfb745b",
+    "text": "Liu, H., Li, Y., Shen, Y., Wang, B., Liang, C., Jiang, C.,\n448–456. Li, C., Deng, D., Ding, F., Gao, W., et al. Moonlight: A\ncost-effective approach for pre-training large language\nJin, C., Peng, H., Xiang, M., Zhang, Q., Yuan, X., Hasan, models, 2025a. URL https://arxiv.org/abs/\nA., Dibua, O., Gong, Y., Kang, Y., and Metaxas, D. Sparsity-controllable dynamic top-p moe for large foundation model pre-training, 2025. Liu, T., Blondel, M., Riquelme Ruiz, C., and Puigcerver,\norg/abs/2512.13996. Routers in vision mixture of experts: An empirical\nstudy. Transactions on Machine Learning Research,\nJin, P., Zhu, B., Yuan, L., and Yan, S. Moe++: Accelerat- 2024. URL https://openreview.net/forum?\ning mixture-of-experts methods with zero-computation id=aHk3vctnf1. Also available as arXiv:2401.15969.\nexperts, 2024. URL https://arxiv.org/abs/\nLiu, Z., Li, Y., Zhang, X., Teng, Q., Jiang, S., Chen, X., 2410.07348. Shi, H., Li, J., Wang, Q., Chen, H., Meng, F., Zhao, M.,\nJordan, K. Muon: An optimizer for hidden layers in neu- Xu, Y., He, Y., Hu, B., and Zhang, M. Unimoe-audio:\nral networks. https://kellerjordan.github.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 30,
+    "total_chunks": 78,
+    "char_count": 1119,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a6e7c328-8d4f-49a4-8815-84d46a848ce7",
+    "text": "Unified speech and music generation with dynamicio/posts/muon/, 2024. Blog post. capacity moe, 2025b. URL https://arxiv.org/\nabs/2510.13344. Karpathy, A. nanochat: The best chatgpt that $100\ncan buy. https://github.com/karpathy/ Loshchilov, I. and Hutter, F. Decoupled weight decay regnanochat, 2025. GitHub repository. ularization. In International Conference on Learning\nRepresentations, 2019.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 31,
+    "total_chunks": 78,
+    "char_count": 395,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "79bcd689-342e-43a8-a255-3aa7553aa0a1",
+    "text": "URL https://openreview. Kilian, M., Mkrtchyan, O., Zettlemoyer, L., Shrivastava, net/forum?id=Bkg6RiCqY7. A., and Aghajanyan, A.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 32,
+    "total_chunks": 78,
+    "char_count": 128,
+    "word_count": 14,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "791571b7-4126-4b4c-a217-448974752283",
+    "text": "Improving moe compute efLudziejewski, J., Krajewski, J., Adamczewski, K., Pioro, ficiency by composing weight and data sparsity, 2026. M., Chowdhury, S., Sanyal, A., Miasojedow, B., Pontes, URL https://arxiv.org/abs/2601.15370. R., Jaszczur, S., Pacek, B., Jastrz˛ebski, S., Bousquet,\nKingma, D. Adam: A method for stochastic O., Hoogeboom, E., and Michalewski, H. Scaling laws for\noptimization. In International Conference on Learning fine-grained mixture of experts. In Proceedings of the 41st\nRepresentations, 2015. International Conference on Machine Learning, volume\n235 of Proceedings of Machine Learning Research, pp. Komatsuzaki, A., Puigcerver, J., Lee-Thorp, J., Ruiz, C. R., 32790–32809, 2024. URL https://proceedings. Mustafa, B., Ainslie, J., Tay, Y., Dehghani, M., and mlr.press/v235/ludziejewski24a.html. Expert Threshold Routing Openmoe 2: Sparse diffu- 127063, 2024. doi: 10.1016/j.neucom.2023.127063.\nsion language models. https://github.com/ URL https://www.sciencedirect.com/\nJinjieNi/OpenMoE2, 2025. science/article/pii/S0925231223011864. Penedo, G., Kydlíˇcek, H., allal, L.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 33,
+    "total_chunks": 78,
+    "char_count": 1096,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ac80b56-deea-470b-9300-ffafcd7b440f",
+    "text": "B., Lozhkov, A., Mitchell, Sun, H., Lei, T., Zhang, B., Li, Y., Huang, H., Pang, R., Dai,\nM., Raffel, C., Werra, L. The fineweb B., and Du, N. Ec-dit: Scaling diffusion transformers\ndatasets: Decanting the web for the finest text data at with adaptive expert-choice routing, 2024. In The Thirty-eight Conference on Neural Informa- //arxiv.org/abs/2410.02098.\ntion Processing Systems Datasets and Benchmarks Track,\n2024. URL https://openreview.net/forum?",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 34,
+    "total_chunks": 78,
+    "char_count": 453,
+    "word_count": 65,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "468d0e73-b437-4aa1-9a6e-af8ab6cafe17",
+    "text": "Tan, S., Shen, Y., Panda, R., and Courville, A. Scattered\nid=n6SCkn2QaG. mixture-of-experts implementation, 2024. URL https:\n//arxiv.org/abs/2403.08245. Qiu, Z., Huang, Z., Zheng, B., Wen, K., Wang, Z., Men,\nR., Titov, I., Liu, D., Zhou, J., and Lin, J. Demons in Team, G., Riviere, M., Pathak, S., Sessa, P. G., Cassirer, C.,\nthe detail: On implementing load balancing loss for train- Coppey, L., El-Boukkouri, K., et al. Gemma 2: Improving\ning specialized mixture-of-expert models, 2025. URL open language models at a practical size, 2024. URL\nhttps://arxiv.org/abs/2501.11873. https://arxiv.org/abs/2408.00118. Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., and\nTeam, M. Longcat-flash technical report, 2025a.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 35,
+    "total_chunks": 78,
+    "char_count": 719,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "77adda76-1173-42ee-9b49-d4b5095b89f3",
+    "text": "Language models are unsupervised multitask\nhttps://arxiv.org/abs/2509.01322.\nlearners. URL https://openai.\ncom/blog/better-language-models/. Qwen3 technical report, 2025b. URL https:\n//arxiv.org/abs/2505.09388.Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G.,\nAgarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J.,\nWang, A., Sun, X., Xie, R., Li, S., Zhu, J., Yang, Z., Zhao,\net al. Learning transferable visual models from natural\nP., Han, W., Kang, Z., Wang, D., Okazaki, N., and Xu, C.-\nlanguage supervision. In International Conference on\nz.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 36,
+    "total_chunks": 78,
+    "char_count": 560,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7ee0ba6f-b83b-4c88-bab2-d2952943e8de",
+    "text": "HMoE: Heterogeneous mixture of experts for language\nMachine Learning, pp. 8748–8763. PMLR, 2021.\nmodeling. In Christodoulopoulos, C., Chakraborty, T.,\nRajbhandari, S., Rasley, J., Ruwase, O., and He, Y. Zero: Rose, C., and Peng, V. (eds.), Proceedings of the 2025\nMemory optimizations toward training trillion parame- Conference on Empirical Methods in Natural Language\nter models, 2020. URL https://arxiv.org/abs/ Processing, pp. 21943–21957, Suzhou, China, November\n1910.02054. 2025a. Association for Computational Linguistics. ISBN\n979-8-89176-332-6. doi: 10.18653/v1/2025.emnlp-main. Raposo, D., Ritter, S., Richards, B., Lillicrap, T., 1115. URL https://aclanthology.org/2025. Mixture-of-depths: emnlp-main.1115/. Dynamically allocating compute in transformer-based language models. arXiv preprint arXiv:2404.02258, 2024. Wang, L., Gao, H., Zhao, C., Sun, X., and Dai, D. Auxiliary-loss-free load balancing strategy for mixtureShazeer, N., Mirhoseini, A., Maziarz, K., Davis, A., Le, of-experts, 2024. URL https://arxiv.org/abs/\nQ., Hinton, G., and Dean, J. Outrageously large neural 2408.15664.\nnetworks: The sparsely-gated mixture-of-experts layer.\narXiv preprint arXiv:1701.06538, 2017.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 37,
+    "total_chunks": 78,
+    "char_count": 1194,
+    "word_count": 145,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3f6ff920-3d20-455b-975e-9f460a41eef1",
+    "text": "Wang, Z., Zhu, J., and Chen, J. Remoe: Fully differentiable\nmixture-of-experts with reLU routing. In The ThirteenthShi, M., Yuan, Z., Yang, H., Wang, X., Zheng, M., Tao, X.,\nInternational Conference on Learning Representations, Zhao, W., Zheng, W., Zhou, J., Lu, J., Wan, P., Zhang,\n2025b. URL https://openreview.net/forum?",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 38,
+    "total_chunks": 78,
+    "char_count": 323,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7a687bd9-5a5c-4486-b35f-9e923f47b094",
+    "text": "Diffmoe: Dynamic token selection for\nid=4D0f16Vwc3. scalable diffusion transformers, 2025. URL https://\nWen, T., Wang, Y., Feng, A., Ma, L., Liu, X., Wang, Y., Guo,\nSo, D. R., Ma´nke, W., Liu, H., Dai, Z., Shazeer, N., and L., Chen, B., Jegelka, S., and You, C. Route experts by\nLe, Q.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 39,
+    "total_chunks": 78,
+    "char_count": 285,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d3297f26-ed12-4047-a393-7cc3984729e4",
+    "text": "Primer: Searching for efficient transformers sequence, not by token, 2025. URL https://arxiv.\nfor language modeling, 2021. URL https://arxiv. org/abs/2511.06494.\norg/abs/2109.08668. Xin, J., Tang, R., Lee, J., Yu, Y., and Lin, J. Deebert: DySu, J., Ahmed, M., Lu, Y., Pan, S., Bo, W., and namic early exiting for accelerating bert inference. Roformer: Enhanced transformer with ro- Proceedings of the 58th Annual Meeting of the Associatary position embedding. Neurocomputing, 568: tion for Computational Linguistics, pp. 2246–2251, 2020. Expert Threshold Routing Yan, S., Bin, X., Zhang, S., Wang, Y., and Lin, Z. TC-MoE: combinations Nk for choose k = N/E tokens out of N\nAugmenting mixture of experts with ternary expert choice. tokens, which makes upper bound log2 Nk = O(N log N). In International Conference on Learning Representations\nWe consider two scenarios: when cutoff threshold is ex- (ICLR), 2025.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 40,
+    "total_chunks": 78,
+    "char_count": 910,
+    "word_count": 137,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6d17659c-b17b-4bf6-9260-adffd1e0dd63",
+    "text": "URL https://openreview.net/\npressed as a finite precision float, it is trivial that the total forum?id=dsP91M4hDL. Poster.\nfuture information leakage is at most the number of bits to\nYang, G., Hu, E. J., Babuschkin, I., Sidor, S., Liu, X., Farhi, represent the cutoff threshold. However, when cutoff threshD., Ryder, N., Pachocki, J., Chen, W., and Gao, J. Tensor old is of infinite precision, we show that we can indeed leak\nprograms v: Tuning large neural networks via zero-shot at least O(N log N) bits of future information, making the\nhyperparameter transfer, 2022. URL https://arxiv. bound tight.\norg/abs/2203.03466.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 41,
+    "total_chunks": 78,
+    "char_count": 622,
+    "word_count": 96,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "262e1c63-1e96-4fa0-b2a2-65726efff6c1",
+    "text": "We arrange the following sections as follows: Yang, Y., Qi, S., Gu, W., Wang, C., Gao, C., and\nXu, Z. XMoE: Sparse models with fine-grained and 1. First, we provide a formal definition of future informaadaptive expert selection. In Ku, L.-W., Martins, A., tion leakage.\nand Srikumar, V. (eds.), Findings of the Association\nfor Computational Linguistics: ACL 2024, pp. 11664– 2. Then, we show for finite precision, the total leakage is\n11674, Bangkok, Thailand, August 2024. Association constant, which means per token leakage is 0 as batch\nfor Computational Linguistics. doi: 10.18653/v1/2024. size increases.\nfindings-acl.694. URL https://aclanthology.\norg/2024.findings-acl.694/. 3.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 42,
+    "total_chunks": 78,
+    "char_count": 684,
+    "word_count": 99,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "455b20a7-1bc6-40c2-9d47-1d6d96032120",
+    "text": "Then, we show for infinite precision, we describe an\nencoding strategy that can leak at least O(N log N)\nZeng, Z., Miao, Y., Gao, H., Zhang, H., and Deng, bits of future information, making the bound tight. AdaMoE: Token-adaptive routing with null ex- idea is that we can break the cutoff space into 2N\nperts for mixture-of-experts language models. In Al- small intervals, and injectively (though not surjectively)\nOnaizan, Y., Bansal, M., and Chen, Y.-N. (eds.), Find- map each potential selection combination to a unique\nings of the Association for Computational Linguis- interval in a memoryless way.\ntics: EMNLP 2024, pp. 6223–6235, Miami, Florida,\nUSA, November 2024. Association for Computational 4. We formally prove that the encoding strategy can leak\nLinguistics. doi: 10.18653/v1/2024.findings-emnlp. at least O(N log N) bits of future information.\n361. URL https://aclanthology.org/2024.\nfindings-emnlp.361/.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 43,
+    "total_chunks": 78,
+    "char_count": 919,
+    "word_count": 136,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0840b5bd-0167-46ed-853f-c3a21527de36",
+    "text": "Gladly, since we rely on finite precision float to represent\nthe cutoff threshold, ET is still causal. Zhang, B. and Sennrich, R. Root mean square layer normalization, 2019. URL https://arxiv.org/abs/\nA.1. Definition of Future Information Leakage 1910.07467. Definition A.1 (Future information leakage).",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 44,
+    "total_chunks": 78,
+    "char_count": 303,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eefde3d2-9a7c-492e-8edb-87cd2cd3a9d3",
+    "text": "Fix a seZhong, Z., Xia, M., Chen, D., and Lewis, M. Lory:\nquence length N and a deterministic selection rule F that\nFully differentiable mixture-of-experts for autoregresmaps a logit sequence r1:N to a subset F(r1:N) ⊆[N]\nsive language model pre-training. In Conference on\n(where [N] ≜{1, . . . , N}). Here r1:N denotes the entire\nLanguage Modeling (COLM), 2024. URL https:\nsequence of router scores/logits across tokens, and we write\n//openreview.net/forum?id=LKEJPySnlt.\nzt ≜1[t ∈F(r1:N)] for the induced selection indicator. Zhou, Y., Lei, T., Liu, H., Du, N., Huang, Y., Zhao, V., An advice variable is any function A = α(r1:N) with finite\nDai, A. V., Laudon, J., et al. Mixture-of- range, where α is an encoder that maps the full logit seexperts with expert choice routing. Advances in Neural quence to a finite label. We write Range(α) ≜{α(r1:N) :\nInformation Processing Systems, 35:7103–7114, 2022. r1:N} for the set of labels that can be produced by α. We say A causalizes F if there exist functions {gt}Nt=1 such\nthat for all r1:N and all t ∈[N],A. Future Information Leakage for Expert\nChoice Models zt = gt(r1:t, A) . In DeepSeek's loss-free load balancing paper (Wang et al.,\nThe future information leakage of F on length N is2024), they give an upper bound on the future information\nleakage of Expert Choice (EC) to be superlinear in the\nLF ([1:N]) ≜ min log2|Range(α)| .number of tokens. They considered all potential selection α, {gt}",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 45,
+    "total_chunks": 78,
+    "char_count": 1449,
+    "word_count": 241,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1a619ec0-5627-4ff4-9a9e-955d345c7654",
+    "text": "Expert Threshold Routing Finite-precision cutoff implies constant leakage A.4. Encoding Strategy and Decoding Procedure",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 46,
+    "total_chunks": 78,
+    "char_count": 119,
+    "word_count": 14,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7433c381-2067-4142-be32-45aa77a656e1",
+    "text": "With this definition, it is trivial to show that, under finite The above upper bound is pretty intuitive to understand. We\nprecision float representation, the total future information ask, can we reach this bound? Surprisingly, we can.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 47,
+    "total_chunks": 78,
+    "char_count": 235,
+    "word_count": 37,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "90232fc5-819e-486a-8b95-2471738b23fe",
+    "text": "In this\nleakage is constant, which means per token leakage is 0 as subsection, we describe an encoding strategy where we crebatch size increases. ate an injective mapping from the set of all possible expert\nchoice combinations to the range of the infinite precision\nIn our case, F is the Expert Choice selection rule induced\ncutoff.\nby a cutoff threshold: for each expert, tokens are selected\nby comparing their router scores against the expert's cut- Suppose the cutoff c ∈[0, 1]. We partition this space into\noff (equivalently, selecting those above the cutoff, which 2N dyadic intervals. Let z ∈{0, 1}N be the target expert\nmatches top-k when the cutoff is set to the k-th order statis- choice combination (codeword). We map z to the interval:\ntic). N N\nTheorem A.2 (Finite-precision cutoff implies constant leak- I(z) ≜ h X(1 −zt)2−t, X(1 −zt)2−t + 2−N .\nage). If the cutoff threshold is represented with b bits of\nt=1 t=1\nprecision (e.g., b = 16 for bf16 or b = 32 for fp32), then\nthe future information leakage satisfies LF ([1:N]) ≤b for This orders codewords in descending order: 00 · · · 00 maps\nall N. to the rightmost interval and 11 · · · 11 maps to the leftmost. Choose a cutoff value c ∈I(z). Obviously, this mapping\nProof. This is an upper bound via a particular advice choice. is injective, i.e. each codeword maps to a unique interval. Let the advice be the cutoff itself: A = α(r1:N) ≜β, However, since not all combinations are possible, it is not\nencoded in b bits, so |Range(α)| ≤2b. Given A = β, the surjective.\nselection indicator at time t is a causal function of the prefix\n(in fact, of rt) and β by thresholding, hence A causalizes F.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 48,
+    "total_chunks": 78,
+    "char_count": 1659,
+    "word_count": 298,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4e504bf0-499a-4670-aed8-8441d6c3e0d3",
+    "text": "Information from the Past. For a token t, what inforTherefore LF ([1:N]) ≤log2 |Range(α)| ≤b. mation about the past routing logits r1:t and decisions z1:t\ncan we use to guide the selection of the interval? Upper bound on Infinite-precision future out, the only information we get is the current bracket [ℓ, u)\ninformation leakage containing the decision boundary. The upper bound u is\ndetermined by the lowest logit of the selected tokens, andThe strategy we used in the previous subsection does not\nthe lower bound ℓby the highest logit of the unselectedwork for infinite precision cutoff, as it takes infinite bits of\ntokens. To maximize information leakage, we minimizecommunication to represent the cutoff. Thus, we need a\nhelp from the past by always choosing the next query logitdifferent encoding strategy.\nto be in the middle of the interval, rt = (ℓ+ u)/2. Then,\nPreviously, Loss-free Load Balancing paper Wang et al. the routing decision zt = 1{rt ≥c} reveals exactly one bit\n(2024) gave a combinatorial upper bound on the information of the cutoff, requiring full future information.\ncarried by an Expert Choice allocation when we allow all\nadmissible token-to-expert assignments consistent with the Decoding Procedure. We formalize this procedure in Alsparsity pattern. gorithm 2. Using the token-choice notation from Loss-free Load Balancing, let N denote the number of tokens in the routing A.5. Formal Proof\npool and GE the number of routed experts. Each token\n1 We now formally prove that the amount of information reactivates G routed experts, so the MoE sparsity is E . For quired to implement the Expert Choice selection causally is\nan MoE layer in Expert Choice, the maximum information\nlower-bounded by the combinatorial entropy of the selection\nleakage L (bits per token) is:\nspace. This confirms that the upper bound in Eq. (7) is tight\nGE N and that the infinite-precision construction in Algorithm 2\nL = log2 N is optimal in terms of information leakage. N E\nGE N Theorem A.3. For a single expert with capacity k =\n· > log2(E −1) ⌊N/E⌋, any causal routing mechanism that can realize N E\n= G log2(E −1). (7) all possible top-k assignments requires at least log2 Nk\nbits of non-causal information (advice).",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 49,
+    "total_chunks": 78,
+    "char_count": 2229,
+    "word_count": 370,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ad17cc9f-34f1-4c9e-882d-baf31a065c5b",
+    "text": "For a model with sparsity E1 = 162 = 0.125 and 9 MoE\nlayers, the total leakage information is more than 50 bits per Proof. Let Zk = {z ∈{0, 1}N : PNt=1 zt = k} be the set\ntoken. of all valid selection indicators for the expert, with |Zk| = Expert Threshold Routing Algorithm 2 Binary-search decoding of an infinite-precision same output. However, zt ̸= z′t, so the decoder necessarily\ncutoff fails for at least one of the patterns.\n1: Input: horizon N; unknown cutoff c ∈[0, 1]; oracle Thus, every valid top-k pattern requires a unique advice\nbit zt = 1{rt ≥c} N value. The minimum information leakage is log2 k bits 2: ℓ←0, u ←1 per expert.\n3: for t = 1, . . . , N do\n4: rt ←(ℓ+ u)/2 {Query midpoint}\nSumming this lower bound over GE experts recovers the\n5: Observe selection zt ∈{0, 1}\ncombinatorial quantity in Eq. (7), proving that Expert\n6: if zt = 1 then\nChoice routing fundamentally requires significant future\n7: u ←rt {Selected (rt ≥c) =⇒c ∈[ℓ, rt)}\ninformation to implement.\n8: else\n9: ℓ←rt {Not selected (rt < c) =⇒c ∈[rt, u)}\n10: end if B. Architecture Details\n11: end for\nOur model architecture follows nanochat (Karpathy, 2025),\n12: Return (z1, . . . , zN) and interval [ℓ, u)\nwhich differs from standard GPT-2 (Radford et al., 2019) in\nseveral ways.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 50,
+    "total_chunks": 78,
+    "char_count": 1264,
+    "word_count": 236,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8f95a61f-444d-4ffd-8dd8-773da96372cc",
+    "text": "Table 5 summarizes the key differences. Data and Tokenization We train on the FineWeb-Edu 100B shuffle dataset (Penedo\net al., 2024), a high-quality educational web corpus. Tokenization uses RustBPE with a vocabulary of 65,536 tokens\n(64k, power-of-2 aligned for GPU efficiency). We use a\nsequence length of 2048 tokens. Model Size Configurations Table 5 shows the model configurations used in our experiments. We follow the nanochat naming convention where\nd* indicates the number of layers, and nembd = d×64, with\nFigure 9. Illustration of the binary-search encoding strategy. The head dimension fixed at 128.\ncutoff value c partitions the interval [0, 1] into regions corresponding to different expert selection patterns, enabling N bits of future Attention configuration. We use grouped-query atteninformation to be encoded in a single real-valued threshold.\ntion (Ainslie et al., 2023a) with head dimension 128 (larger\nthan GPT-2's 64). The number of attention heads is nhead =\nk . We show that distinct advice is necessary for every nembd/128, giving 6 heads for d12 and 10 heads for d20.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 51,
+    "total_chunks": 78,
+    "char_count": 1094,
+    "word_count": 172,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4e260e5a-4b99-4f3f-8731-d05818142453",
+    "text": "QK\ndistinct pattern in Zk. normalization is applied before the attention computation. Consider the specific family of logit sequences generated by MoE configuration. For MoE variants, we use 16 routed\nthe binary search process in Algorithm 2. In this construc- experts with granularity G=1 and expansion E=16, plus\ntion, the router logit rt is the midpoint of the current valid 1 shared expert (17 total). Each routed and shared expert\ninterval [ℓ, u), which is determined solely by the history has dimension dexpert = 2 × nembd (half the dense FFN\nof decisions z1, . . . , zt−1. Consequently, if two selection dimension).",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 52,
+    "total_chunks": 78,
+    "char_count": 622,
+    "word_count": 104,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a52c4f6f-5b3f-431d-ac26-875fc7d69c09",
+    "text": "The shared expert processes every token, while\npatterns z and z′ share the same prefix z1:t−1, they will each token activates on average 1 routed expert, matching\ngenerate the exact same logit rt at step t. the dense model's active parameter count. Suppose there exists an advice encoding with range size\nstrictly less than Nk . By the Pigeonhole Principle, at least C. Training Setup Details\ntwo distinct valid patterns z, z′ ∈Zk must share the same\nadvice value. Let t be the first index where they differ C.1. Training Hyperparameters\n(i.e., z1:t−1 = z′1:t−1 but zt ̸= z′t). Since the prefixes C.1.1. WEIGHT INITIALIZATION\nare identical, the generated logit sequence r1:t is identical\nfor both patterns. A causal decoder, which must output a We follow the nanochat initialization scheme (Karpathy,\ndecision at time t based only on r1:t and the advice, receives 2025), which uses aspect-ratio scaled initialization. For a\nidentical inputs for both cases. It must therefore produce the weight matrix W ∈Rdout×din:",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 53,
+    "total_chunks": 78,
+    "char_count": 1014,
+    "word_count": 165,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5a925fcf-075d-47c4-a7d1-deeb8dc4434a",
+    "text": "Expert Threshold Routing Model architecture and size configurations. Architecture features are shared between d12 and d20 (nanochat-style). For MoE\nvariants with G=1, E=16: 16 routed experts + 1 shared = 17 total experts. Total params include all expert parameters; active params\ninclude only the shared expert plus on average one routed expert per token.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 54,
+    "total_chunks": 78,
+    "char_count": 355,
+    "word_count": 54,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b7e6811-10d5-488c-aac9-ffde1adfc402",
+    "text": "Feature GPT-2 d12 d20 Tokenization GPT-2 RustBPE\nVocab Size 50,257 65,536\nActivation GELU ReLU2 (So et al., 2021)\nNormalization LayerNorm RMSNorm (Zhang & Sennrich, 2019)\nFFN Dimension 4 × dmodel 4 × dmodel\nLinear Layer Bias Yes No\nPosition Encoding Learned RoPE (Su et al., 2024)\nHead Dimension 64 128\nQK Normalization No Yes (Dehghani et al., 2023)\nLogits Softcapping No 15.0 (Team et al., 2024)\nEmbedding Weights Tied (wte = lm_head) Untied\nFirst Layer Dense — Yes nembd 768 768 1280\nnlayer 12 12 20\nnhead 12 6 10\nKV heads 12 2 2\nDense Params 124M 195M 561M\nMoE Total Params — 575M 2429M\nMoE Active Params — 195M 561M Training hyperparameters. • Expert weights: Aspect-ratio scaled for up projections,\nzero for down projections\nHyperparameter Value\nTotal tokens 10B / 11.2B • Attention weights: Aspect-ratio scaled as above\nBatch size (tokens) 524,288 (0.5M)\nSequence length 2048\nTable 7. Parameter initialization and optimizer configuration. Muon Warmup steps No warmup\nAdamW Warmup steps 250 Aspect-ratio scaled init. uses std = d−1/2in · min(1, pdout/din). Learning rate schedule Linear decay LRs include µP (Yang et al., 2022) scaling λ = (dmodel/768)−1/2. Min learning rate 0.1× peak LR\nGradient clipping None Parameter Init. Weight decay 0.0\nWE (embed.) N(0, 1) 0.2λ AdamW AdamW β1, β2 0.9, 0.95\nWlm (head) 0 0.004λ AdamW WQKV (attn) Asp.-ratio 0.02λ Muon\nWO (attn proj) 0 0.02λ Muon N(0, d−12 ) 0.02λ Muon Wrouter 1 r dout !\n· min 1, std = (7) Asp.-ratio 0.02λ Muon W↑(e) (exp. up) √din din (e)\nW↓ (exp. dn) 0 0.02λ Muon\nW↑(s) (shd. up) Asp.-ratio 0.02λ MuonThis formula reduces to standard 1/√din initialization for (s) W↓ (shd. dn) 0 0.02λ Muon\nsquare or tall matrices, but scales down variance for wide\nmatrices where dout ≫din. OPTIMIZER CONFIGURATION\nComponent-specific initialization:\nWe use a hybrid optimizer setup following nanochat (Jordan,\n2024; Liu et al., 2025a):\n• Embeddings: N(0, 1) – standard normal initialization\n• Muon (Jordan, 2024) for 2D/3D weight matrices (at-\n• Output projections (lm_head, c_proj): Zero ini- tention, MLP, experts): momentum-based optimizer\ntialization, critical for Muon optimizer stability with Newton-Schulz orthogonalization\n• Router weights: N(0, 1/√din) – small init for sym- • AdamW (Loshchilov & Hutter, 2019) for embedmetry breaking dings and output head: with learning rate scaling Expert Threshold Routing ∝1/p dmodel/768 lags behind the actual cutoff threshold because of slow update speed (1/(1 −β) ≈1000 steps). As a result, the\nNo weight decay is used, as Muon provides implicit regular- threshold-based routing becomes unreliable: tokens that\nization and language models benefit from memorization. should be routed are dropped, and the capacity lower bound\nis frequently triggered (Figure 10c).",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 55,
+    "total_chunks": 78,
+    "char_count": 2763,
+    "word_count": 441,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cd443d5f-c416-4ed6-a81d-c9c1fa7df306",
+    "text": "This leads to undertrained experts during early training. To address this, weC.2. Hardware Infrastructure Details\nwarm up the routing by using TopK selection for the first\nHardware. We train our models on a single node with 8x 4,000 steps before switching to threshold-based routing. ET\nNVIDIA B200 GPUs, each with 180GB of memory. no warmup relies solely on the capacity factor during these\nearly steps, which is suboptimal because capacity control\nCode.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 56,
+    "total_chunks": 78,
+    "char_count": 455,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "37f0ff09-323a-459d-84eb-1922838fbedd",
+    "text": "For TC models, we use the ScatterMoE backend can limit collapse but does not provide a stable threshold\n(Tan et al., 2024). For EC and ET models, we write our own estimate or balanced expert learning signal before the cutcustom Pytorch MoE implementation. We use padding to off EMA has converged. As shown in Figure 10, warmup\nhandle variable number of tokens per expert. stabilizes the cutoff-EMA trajectory (a, d), increases raw\nexpert usage (b), and reduces starvation rate (c). We rely on Nanochat's implementation of observe that ET no warmup exhibits higher variance in both\ndistributed AdamW and Muon optimizer use a ZeRO-2 logits (e) and gate outputs (f), suggesting less stable gradient\nstyle gradient synchronization (Rajbhandari et al., 2020). signals. For EC and ET models, we write our own expert parallelization all-to-all communication framework. This allows us to E.2. Comparison to Token Choice\nuse maximum batch size during routing instead of microIn our setup, Token Choice with loss-free load balancingbatches, reaching a better usage/cutoff variance trade-off\nshows a less stable routing trajectory than ET and EC, es-while saving memory.\npecially in early layers. Figure 11 compares cutoff-EMA\n(expert 0) at layer 1. ET and EC stabilize quickly, while\nD.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 57,
+    "total_chunks": 78,
+    "char_count": 1276,
+    "word_count": 201,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e252015b-465e-419d-943f-1f4c74bd8918",
+    "text": "CORE Evaluation Details DeepSeek's loss-free controller drifts upward over training. We treat this as an exploratory observation rather than aWe evaluate using the CORE benchmark (Li et al., 2024),\ncentral claim, since the behavior may depend on hyperpa-which provides a standardized suite of in-context learning\nrameters and gating parameterization.tasks for language model evaluation. Shared ExpertTask types. The CORE benchmark includes multiplechoice tasks, schema matching tasks, and language model- We report results of EC and ET no warmup with and without\ning tasks, testing various aspects of language understanding. shared expert. For no shared experts, we select 2 experts\nout of 16 routed experts, roughly matching the number of\nMetric.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 58,
+    "total_chunks": 78,
+    "char_count": 747,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6d1674e8-f27d-43ea-a9cd-f233fceb1f59",
+    "text": "The primary metric is centered accuracy, which parameters and compute to the shared variant. In both cases,\nadjusts for random baseline performance: shared expert improves loss by roughly 0.02. We suspect\nthat while later layers need early layers to empower the\nacc −0.01 × baselinerandom\nacccentered = (8) router, sometimes early layers have no activated experts,\n1.0 −0.01 × baselinerandom causing ineffective routing. See Table 8 for more details. This normalization ensures that random guessing yields a\nTable 8. Ablation on the shared expert mechanism. In both ET no\nscore near zero, while perfect accuracy yields 1.0. The final warmup and EC, shared expert improves loss by roughly 0.02.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 59,
+    "total_chunks": 78,
+    "char_count": 693,
+    "word_count": 109,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a047a831-147d-4f83-984d-98f8128eb61f",
+    "text": "CORE Eval score is the mean of centered accuracy across\nall tasks. Method Shared CE CORE EC (bsz 512k) Yes 2.843 19.94\nEvaluation protocol. We evaluate at fixed intervals dur- EC (bsz 512k) No 2.862 16.307\ning training (every 250 steps by default) to track learning ET no warmup (β=0.999) Yes 2.844 16.867\ndynamics. ET no warmup (β=0.999) No 2.862 18.515 Warmup\nInitially, we assumed that dynamic expert count would bring\nWe find warmup crucial for ET. In the early stages of train- instability in training because of the scale expansion. Howing, the cutoff threshold is not yet stable, while the EMA ever, we found that normalization was ineffective in our",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 60,
+    "total_chunks": 78,
+    "char_count": 657,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "86fda0dc-6f69-48ab-85e6-ae52aa2ac47e",
+    "text": "Expert Threshold Routing L9 E0 cutoff vs EMA Raw expert usage Starvation rate\n4 gec 0.8 gec 1.0 gec\ngec_warmup gec_warmup 0.8 gec_warmup\n2 ec 0.6\n0.6\nvalue 0 value 0.4 value 0.4\n2 0.2 0.2 0.0 0.0\n0 2000 4000 6000 8000 0 2000 4000 6000 8000 0 2000 4000 6000 8000\nstep step step (a) L9 cutoff vs EMA (b) Raw expert usage (c) Starvation rate Layer cutoff_ema (L6 E0) Router logits std Gate std\n2.25 0.30\n0 gec\ngec_warmup 2.00 0.25\n1 ec 1.75 0.20\nvalue value 1.50 value 0.15\ngec gec\n1.25 gec_warmup 0.10 gec_warmup\nec 0.05 ec 1.00\n0 2000 4000 6000 8000 0 2000 4000 6000 8000 0 2000 4000 6000 8000\nstep step step (d) L6 cutoff-EMA (e) Router logits std (f) Gate std Effect of TopK warmup on ET training dynamics (first 8k steps). Before 4k steps, ET no warmup exhibits unstable threshold\nrouting: (a) the cutoff-EMA lags behind the actual cutoff, (b) raw expert usage is low, and (c) starvation rate is high as the capacity lower\nbound is frequently triggered. ET no warmup relies only on the capacity factor during this stage, which is suboptimal because it does\nnot provide a stable threshold estimate or balanced expert learning signal. With warmup, the cutoff-EMA trajectory stabilizes (d), and\nrouter outputs show lower variance in both logits (e) and gates (f). Note: ec_shared_bsz512k does not log raw usage and underflow\nmetrics, so panels (b) and (c) show only the two ET runs. No Normalization 50 EC 3.05 Fanout ET Normalization\n40 DeepSeek LB\nE0) 3.00\n(L1, 30 Loss\n2.95\nEMA 20 Eval\n2.90\n10 Cutoff\n0 2.85\n8k 10k 12k 14k 16k 18k\n0 5k 10k 15k 20k Step\nStep\nFigure 12. Comparison of evaluation loss with and without normalization. The configuration without normalization (blue) con-Figure 11. Layer-1 cutoff-EMA (expert 0) under EC/ET vs\nsistently achieves lower loss than the fanout-normalized variantDeepSeek loss-free load balancing.\n(orange).",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 61,
+    "total_chunks": 78,
+    "char_count": 1848,
+    "word_count": 324,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "22f50be0-e50a-4970-a884-955d43467192",
+    "text": "No norm outperformed fanout norm by 0.04 in CE we enforce capacity constraints during training: each exloss. We suspect that the norm made experts' contribution pert processes between (1 −C) · N/E and (1 + C) · N/E\nunpredictable (see Figure 12). tokens per batch (capacity factor C = 0.5), with excess\ntokens dropped or capacity padded. Since these constraints\nF. Additional Experiment Results are absent at inference, frequent triggering would cause\ntrain-inference mismatch.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 62,
+    "total_chunks": 78,
+    "char_count": 476,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7744c999-a496-4aab-8356-b958f37685aa",
+    "text": "Figure 13 shows that capacity\nF.1. Capacity Constraints constraints are triggered infrequently: after warmup, both\nsaturation and starvation rates remain low. This confirms\nBecause ET's thresholding does not fix the per-batch numthat train-inference mismatch from capacity constraints is\nber of selected tokens for each expert, expert loads can\nminimal.\nfluctuate around the target, which can risk GPU out-ofmemory. Following standard practice (Fedus et al., 2022), Figure 13 shows capacity constraint metrics for ET (with Expert Threshold Routing",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 63,
+    "total_chunks": 78,
+    "char_count": 547,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2e7cea4b-6491-4c5a-b233-7f9d290c636e",
+    "text": "warmup) from step 4k onward. After warmup, raw expert and\nusage stabilizes around 6.5%, and both saturation and star-\nvation rates remain low, confirming that capacity constraints total_variation(Pt, Qt) = X|Pt(i) −Qt(i)|.\n2are rarely triggered and train-inference mismatch is mini- i\nmal. The reported joint_jsd and total_variation are\naverages over token-layer pairs, and lower values indicateF.2. Routing Consistency Sweep\nmore stable routing. Section 4.3.6 reports the main weighted Jaccard heatmap\nstrip.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 64,
+    "total_chunks": 78,
+    "char_count": 509,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "de6e58c1-2fbd-4e9b-93e8-577e2e5ca8d8",
+    "text": "Here we define the routing-consistency metrics used Empty-routing conventions. If both checkpoints activate\nthroughout the comparison and include the companion joint no routed expert for a token-layer pair, we set token-level\nJSD heatmap for the same four runs. Jaccard and Dice to 1, and joint JSD and total variation to\n0.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 65,
+    "total_chunks": 78,
+    "char_count": 324,
+    "word_count": 51,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7056bd38-d519-45b3-b05e-e8a07d367a5f",
+    "text": "If only one checkpoint activates any routed expert, we\nObjects being compared. For a given token-layer pair, set token-level Jaccard and Dice to 0, and joint JSD and\nlet At and Bt denote the sets of active routed experts under total variation to 1. For the pooled metrics, if both pooled\ncheckpoints A and B.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 66,
+    "total_chunks": 78,
+    "char_count": 308,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bfa745d6-8991-4784-9290-55465211473b",
+    "text": "The shared expert is excluded, so edge sets are empty, weighted Jaccard and weighted Dice\nthese sets contain only routed experts. Pooling all active are both defined as 1.\ntoken-layer-expert edges across the full comparison gives\nEA = {(ℓ, t, i) : i ∈At}, EB = {(ℓ, t, i) : i ∈Bt}. Activation Dynamics Sweep Across Routing\nVariants\nThe pooled edge sets EA and EB are used by the weighted\noverlap metrics, while the token-level sets At and Bt are Section 4.3.2 focuses on EC (2k) and ET. This subsection\nused by the per-token overlap and divergence metrics below. first gives the layerwise continuation for those two main\nruns using loss binned fanout views, then shows EC 8k in\nMetric definitions. Our main metric is weighted Jaccard, the same overlaid form as the main figure before collecting\ndefined on the pooled edge sets inverse layerwise diagnostics for the remaining three runs. Across these additional variants, EC 8k is much flatter than\nweighted_jaccard = EC 2k in the same overlaid inverse view used in the main |EA ∪EB|.\ntext. The remaining three inverse layerwise panels show\nIts pooled Dice companion is that the loss–fanout relation remains setup dependent, with\n2|EA ∩EB| substantial variation across routing variants and depth.\nweighted_dice = |EA| + |EB|. For completeness, Figure 18 shows representative router\nWe also report token-level overlap averaged uniformly over logit histograms from the warmup ET run. We include them\ntoken-layer pairs as a qualitative diagnostic of router behavior. This appendix also provides extended expert specialization\nJt = Dicet = |At ∪Bt|, |At| + |Bt|. analysis, complementing the summary in Section 4.3.3. The reported jaccard and dice are the means of Jt and\nPer-token routing visualizations. Figures 19, 20, and 21Dicet over all token-layer pairs.\nshow token-level expert routing for additional passages\nFor the divergence metrics, we convert each token's binary from GSM8K and HumanEval. Across GSM8K passages,\nactivation set into a distribution over experts by assigning content-bearing tokens—particularly numbers (e.g., \"48\",\nuniform mass to the active experts \"72\"), mathematical operators (\"/\", \"+\", \"=\"), and compu-\n( tation markers (\"<<\")—consistently receive the highest 1/|At|, i ∈At\nPt(i) = fanout. Function words and punctuation receive minimal\n0, otherwise activation, indicating that experts preferentially process se-\n( mantically rich tokens. In HumanEval passages, a similar 1/|Bt|, i ∈Bt\nQt(i) = pattern holds: code-specific tokens (variable names, oper-\n0, otherwise.\nators, keywords) receive higher activation than boilerplate\nUsing these distributions, we compute text and whitespace.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 67,
+    "total_chunks": 78,
+    "char_count": 2663,
+    "word_count": 409,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5821e6f5-02e8-4145-956c-458e50e93562",
+    "text": "1 1\njoint_jsd(Pt, Qt) = 2KL(Pt∥Mt) + 2KL(Qt∥Mt), Expert activation heatmaps. Figure 22 shows expert token ratios across all routing configurations. Each heatmap 1\nMt = 2(Pt + Qt), plots expert ID (columns) versus layer (rows), with color",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 68,
+    "total_chunks": 78,
+    "char_count": 237,
+    "word_count": 38,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9204da84-6bc7-4f54-9314-27bf11d546cf",
+    "text": "Expert Threshold Routing (a) Raw Expert Usage (b) Saturation Rate (c) Starvation Rate\n0.070 ET 0.08 ET ET\n0.068 Rate 0.06 Rate 0.02\nUsage 0.066 0.04\nRaw 0.01 0.064 Saturation 0.02 Starvation\n0.062 0.00 0.00\n5k 10k 15k 5k 10k 15k 5k 10k 15k\nStep Step Step Capacity constraint behavior during ET training (from step 4k onward, after warmup). (a) Raw expert usage before capacity\ncapping. (b) Saturation rate: fraction of selected tokens dropped due to capacity limits. (c) Starvation rate: fraction of unused expert\ncapacity. Both saturation and starvation rates remain low, confirming minimal train-inference mismatch. 5k 0.000 0.193 0.297 0.264 5k 0.000 0.162 0.181 0.169 5k 0.000 0.196 0.197 0.197 5k 0.000 0.216 0.244 0.254\n0.25 10k 0.193 0.000 0.245 0.203 10k 0.162 0.000 0.150 0.126 10k 0.196 0.000 0.166 0.145 10k 0.216 0.000 0.146 0.148 0.20\nJSD\n0.15\nJoint Checkpoint 15k 0.297 0.245 0.000 0.205 15k 0.181 0.150 0.000 0.110 15k 0.197 0.166 0.000 0.120 15k 0.244 0.146 0.000 0.113 0.10 0.05\n19k 0.264 0.203 0.205 0.000 19k 0.169 0.126 0.110 0.000 19k 0.197 0.145 0.120 0.000 19k 0.254 0.148 0.113 0.000\n0.00\n5k 10k 15k 19k 5k 10k 15k 19k 5k 10k 15k 19k 5k 10k 15k 19k\nCheckpoint Checkpoint Checkpoint Checkpoint Within-family checkpoint-pair routing consistency on a fixed validation stream, measured by joint JSD. Lower values indicate\nmore stable routing. The same broad story remains. ET separates clearly from EC 2k and stays close to EC 64k. intensity indicating the fraction of domain-specific tokens tion patterns for code versus math. Certain experts that are\nrouted to each expert. The left column shows HumanEval heavily activated for code tokens (e.g., dark cells in the Hu-\n(code) and the right column shows GSM8K (math). manEval column) show low activation for math, and vice\nversa.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 69,
+    "total_chunks": 78,
+    "char_count": 1800,
+    "word_count": 297,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "17aa24d0-0a6d-4404-9c65-e0e8a0b2a9aa",
+    "text": "This cross-domain differentiation is consistent across\nSeveral patterns emerge across batch sizes. EC with batch\nall routing configurations, suggesting that expert specialsize 2k (top row) shows diffuse activation: while some exization reflects genuine domain-level structure rather than\nperts exhibit domain preferences (e.g., concentrated dark\nartifacts of a particular routing strategy.\ncells at specific layer-expert pairs), the overall pattern is\nnoisy with activation spread across many experts. As batch\nsize increases to 8k and 64k, specialization sharpens—dark\ncells become more concentrated and background activation fades, indicating that experts more consistently capture\ndomain-specific tokens when routing decisions are made\nover larger token pools. EC at 512k shows the most pronounced specialization, with a small number of experts per\nlayer handling the majority of domain tokens. ET (bottom row) achieves specialization comparable to\nlarge-batch EC. The activation patterns closely resemble\nEC at 512k, with concentrated expert-domain associations\nacross layers. This confirms that ET's population-level\nthreshold mechanism captures the same routing structure\nas large-batch top-k selection, without requiring batch size\ncoordination at inference.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 70,
+    "total_chunks": 78,
+    "char_count": 1265,
+    "word_count": 169,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a1381c5a-e4e2-4b8e-a9b5-649b42a820fa",
+    "text": "Comparing across domains, the HumanEval and GSM8K\ncolumns reveal that experts develop different specializa- Expert Threshold Routing Layerwise mean fanout versus loss bin for the two main runs. EC 2k shows a stronger positive dependence in several layers,\nwhile ET remains more mixed across depth. Standalone EC 8k activation dynamics in the same form as the main figure. Faint dashed gray curves show the per-layer means\nand the solid red curve shows the global mean across layers.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 71,
+    "total_chunks": 78,
+    "char_count": 482,
+    "word_count": 77,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ed5cd9db-b62a-403a-bd02-5f3610d1697f",
+    "text": "Compared with EC 2k, EC 8k is noticeably flatter across the loss range. ET no warmup EC (64k) EC (512k) Inverse layerwise activation diagnostics for the remaining three runs. Each panel plots mean loss against fanout by layer,\nhighlighting how the loss–fanout relation remains setup dependent across ET no warmup, EC 64k, and EC 512k.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 72,
+    "total_chunks": 78,
+    "char_count": 334,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6e967c92-6268-4cea-b706-d34856298528",
+    "text": "Expert Threshold Routing Layer 1 expert 0 Layer 11 expert 15 Router logit histograms from the warmup ET run. The bulk of the distribution is roughly bell shaped, with a heavier right tail. This asymmetric tail is consistent with activated tokens receiving reinforcing gradient signals that can further increase their logits. We\nview this figure as a qualitative appendix diagnostic rather than a core result.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 73,
+    "total_chunks": 78,
+    "char_count": 408,
+    "word_count": 65,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3cdf8f46-5233-46d6-85eb-a1e7c5e39b1b",
+    "text": "Variant A: Per-layer fanout GSM8K_0 Variant A: Per-layer fanout HumanEval_0\n11 11\n10 16 10 16\n9 8 9 8\n8 8 7 4 experts) 7 4 experts)\n6 6 (# Layer (# Layer 5 2 5 2\n4 4 3 1 Fanout 3 1 Fanout\n2 0 2 0 1 1\n·sold ·clips ·to · 48 ·of ·her ·friends ·in ·April , ·and ·then ·she ·sold ·half ·as ·many ·clips ·in ·May . ·How ·many ·clips ·did ·Natal ia ·sell ·altogether \\n \\n \\n def ·has _ close _ elements (n umbers : ·List [ f loat ], ·threshold : ·float ) ·-> ·b ool :\\n ·· · ·\" \"\" ·Check\nToken Token (a) GSM8K. (b) HumanEval. Per-layer expert fanout on GSM8K and HumanEval passages. Each cell shows the number of experts activated for a given\ntoken at a given layer. Numerical and code-specific tokens receive substantially higher fanout than function words. Expert Threshold Routing Variant C: Full routing GSM8K_0 Variant C: Full routing HumanEval_0",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 74,
+    "total_chunks": 78,
+    "char_count": 845,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d5c1089d-f781-4fbe-b5ff-b57ddb6749f3",
+    "text": "15 15\n·sold ·clips ·to · 48 ·of ·her ·friends ·in ·April , ·and ·then ·she ·sold ·half ·as ·many ·clips ·in ·May . ·How ·many ·clips ·did ·Natal ia ·sell ·altogether \\n \\n \\n def ·has _ close _ elements (n umbers : ·List [ f loat ], ·threshold : ·float ) ·-> ·b ool :\\n ·· · ·\" \"\" ·Check\nToken Token (a) GSM8K. (b) HumanEval. Full expert routing on GSM8K and HumanEval passages. Each panel shows binary expert activation (black = activated) across\nall layers and experts for every token.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 75,
+    "total_chunks": 78,
+    "char_count": 487,
+    "word_count": 93,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5b9fdf9f-e346-404e-b8dd-02efa41d1753",
+    "text": "Routing patterns reveal domain-specific structure. Expert Threshold Routing Token activation intensity HumanEval_0 <|bos|> from typing import List def has _ close _ elements (n umbers : List [ f loat ], threshold : float ) -> b\nool :\n\" \"\" Check if in given list of numbers , are any two numbers closer\nto each other than\ngiven threshold .\n>>> has _ close _ elements ( [ 1 . 0 , 2 . 0 , 3 . 0 ], 0 . 5 )\nFalse\n>>> has _ close _ elements ( [ 1 . 0 , 2 . 8 , 3 . 0 , 4 . 0 , 5 . 0 , 2 . 0 ], 0 . 3 )\nTrue\n\"\" \"\nfor id x , ele m in enum erate (n umbers ):\nfor id x 2 , ele m 2 in enum erate (n umbers ):\nif id x ! = id x 2 :\ndistance = abs (e lem - ele m 2 )\nif distance < threshold :\nreturn True 0 1 2 4 8 16 32 64 176\nTotal fanout (sum across 11 layers) Token activation intensity on a HumanEval passage. Each token is colored by total fanout (sum of experts activated across all\nlayers). Code-specific tokens (variable names, operators, keywords) receive higher activation than boilerplate text.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 76,
+    "total_chunks": 78,
+    "char_count": 993,
+    "word_count": 225,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a0cf7e6c-cd11-477e-8c57-88a83cdf8262",
+    "text": "Expert Threshold Routing HumanEval GSM8K 0.4\n10 9 0.3 Ratio\n6 0.2 Token Layer 5 ec_bsz2k 4\n3 0.1 2 Expert\n0.0 0.4\n10 9 0.3 Ratio\n6 0.2 Token Layer 5 ec_bsz8k 4\n3 0.1 2 Expert\n0.0 0.4\n10 9 0.3 Ratio\n6 0.2 Token Layer 5 ec_bsz64k 4\n3 0.1 2 Expert\n0.0 0.4\n10 9 0.3 Ratio\n6 0.2 Token Layer 5 ec_bsz512k 4\n3 0.1 2 Expert\n0.0 0.4\n10 9 0.3 Ratio\n6 0.2 Token Layer 5 gec_warmup 4\n3 0.1 2 Expert\nExpert ID Expert ID 0.0 Expert activation heatmaps across routing configurations. Each row corresponds to a routing variant (EC with batch sizes 2k,\n8k, 64k, 512k, and ET). Columns show HumanEval (code) and GSM8K (math) domains. Color intensity indicates expert token ratio. Specialization sharpens with larger EC batch sizes, and ET achieves comparable patterns without batch size dependence.",
+    "paper_id": "2603.11535",
+    "title": "Expert Threshold Routing for Autoregressive Language Modeling with Dynamic Computation Allocation and Load Balancing",
+    "authors": [
+      "Hanchi Sun",
+      "Yixin Liu",
+      "Yonghui Wu",
+      "Lichao Sun"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11535v1",
+    "chunk_index": 77,
+    "total_chunks": 78,
+    "char_count": 780,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  }
+]

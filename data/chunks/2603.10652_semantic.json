@@ -1,0 +1,1769 @@
+[
+  {
+    "chunk_id": "b793f4ea-1549-421e-982a-0767392a1cce",
+    "text": "Yangfan He Changgyu Boo\nNTU Singapore Korea University\nyhe873232@gmail.com 2019150348@korea.ac.kr Jaehong Yoon∗\nNTU Singapore\njaehong.yoon@ntu.edu.sg2026 AbstractMar\nIn real-world deployment, vision-language models often encounter disturbances\nsuch as weather, occlusion, and camera motion. Under such conditions, their under-11\nstanding and reasoning degrade substantially, revealing a gap between clean, controlled (i.e., unperturbed) evaluation settings and real-world robustness. To address\nthis limitation, we propose ROVA, a novel training framework that improves robustness by modeling a robustness-aware consistency reward under spatio-temporal\ncorruptions. ROVA introduces a difficulty-aware online training strategy that prioritizes informative samples based on the model's evolving capability. Specifically,[cs.CV] it continuously re-estimates sample difficulty via self-reflective evaluation, enabling adaptive training with a robustness-aware consistency reward. We also\nintroduce PVRBench, a new benchmark that injects real-world perturbations into\nembodied video datasets to assess both accuracy and reasoning quality under realistic disturbances. We evaluate ROVA and baselines on PVRBench, UrbanVideo,\nand VisBench, where open-source and proprietary models suffer up to 35% and\n28% drops in accuracy and reasoning under realistic perturbations. ROVA effectively mitigates performance degradation, boosting relative accuracy by at least\n24% and reasoning by over 9% compared with baseline models (QWen2.5/3-VL,\nInternVL2.5, Embodied-R). These gains transfer to clean standard benchmarks,\nyielding consistent improvements.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 1,
+    "total_chunks": 93,
+    "char_count": 1637,
+    "word_count": 199,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d30ed974-c19b-4ea4-aeee-66273e1df3db",
+    "text": "Project Page: https://robust-video-reason.github.io/ 1 IntroductionarXiv:2603.10652v1 Vision-language models (VLMs) [Zhang et al., 2023, Maaz et al., 2024, Shu et al., 2025, Yuan et al.,\n2025, Li et al., 2025, Yu et al., 2025, Clark et al., 2026] have rapidly advanced video understanding\nand reasoning, allowing systems to interpret complex scenes and perform temporally grounded\ninference. These capabilities support many real-world applications, yet a key question remains: are\ncurrent VLMs robust enough to operate reliably beyond clean, controlled conditions? In practice,\nthese models frequently face challenging video streams, corrupted by adverse weather (e.g., rain,\nfog, snow), dynamic occlusions (e.g., pedestrians, vehicles, vegetation), abrupt illumination changes\n(e.g., glare, shadows, low light), and camera motion induced by vibration or viewpoint shifts. Such\nperturbations are common in the real world, yet these models severely degrade perception and lead\nto brittle or unreliable reasoning (Fig. 1). For instance, under conditions such as video occlusion\nor adverse weather, baseline models may incorrectly output \"Turn Left\" or \"Turn Right\" rather ∗Corresponding author Guess the driving direction and movement trajectory? What is the inferred final driving decision?",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 2,
+    "total_chunks": 93,
+    "char_count": 1289,
+    "word_count": 178,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "32c6463b-ce30-4878-a908-2a9fba175e1f",
+    "text": "Question Question\nframe 1 frameframe4 2 frameframe4 4 frame 1 frame 4 frame 4 occlusion occlusion occlusion fog fog fog\nframe 8 frame 12 frame 16 frame 8 frame 12 frame 16 occlusion occlusion occlusion fog fog fog Heavy rain made it hard to see and the wipers were Fog severely reduced visibility and obscured lane\nblocking my view, I, I formulated a driving strategy markings, with the vehicle gradually drifting to the\nin accordance with current traffic rules and signals, right. Based on this, I formulated a driving strategy Reasoning in accordance with the traffic rules, determining the vehicle should execute a left-turn Reasoning Process determining Process vehicle should execute path. a right-turn path. Pred Action: Turn Left Pred Action: Turn Right\nGT Action: Go Ahead GT Action: Go Ahead Figure 1: Failure cases of Qwen2.5-VL under two representative perturbations: (a) occlusion (left)\nand (b) adverse weather (right). The model incorrectly predicts Turn Left\" under occlusion and Turn\nRight\" under fog, despite the ground-truth being \"Go Ahead\" in both cases, demonstrating how\nrealistic perturbations mislead reasoning and motivating the need for robustness-aware training. than the ground-truth \"Going Ahead.\" This gap between benchmark assumptions and real-world\nconditions highlights the need for training frameworks that promote reliable generalization under\nrealistic variability and uncertainty. A few prior studies [Mao et al., 2022, Zhou et al., 2024, Zhang\net al., 2024] have explored improving the robustness of VLMs through generic data augmentation,\nrandom frame masking, zero-shot, or adversarial training. However, these methods typically treat\nrobustness as a single objective, overlooking that different perturbations induce distinct failure modes. Consequently, they struggle to address structured, semantically meaningful corruptions common in\nreal-world environments, since perturbation-specific failure behaviors are not explicitly modeled. To address this challenge, we propose RObust Video Alignment (ROVA), a novel training approach\nfor robust vision reasoning under realistic visual disturbances. We first apply corruption-based\naugmentation to generate perturbed videos. ROVA then measures divergence in reasoning coherence\nand answer quality between clean and corrupted videos as a proxy for corruption-induced difficulty.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 3,
+    "total_chunks": 93,
+    "char_count": 2364,
+    "word_count": 337,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "73141a2c-5509-4078-b5ab-2d17a70b803e",
+    "text": "Moderately difficult instances are used for training, while overly easy samples are discarded and excessively difficult ones are stored in a temporal memory buffer for later revisiting. Unlike curriculum\nlearning, which follows a fixed, easy-to-hard schedule, this self-reflective evaluation estimates the\ndifficulty and informativeness of each video–query instance based on the model's current capability,\nenabling an adaptive curriculum that prioritizes informative samples while deferring overly difficult\nones through memory replay.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 4,
+    "total_chunks": 93,
+    "char_count": 536,
+    "word_count": 70,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ed877400-8d0d-419e-96c5-7e882b25d30b",
+    "text": "Next, we introduce a dual-branch alignment objective that enforces\noutput consistency between paired clean and perturbed inputs. This robustness-aware consistency\nalignment is guided by reward modeling over reasoning and answer consistency, and optimized using\ngroup relative policy optimization. Specifically, we enforce output consistency between paired clean\nand perturbed video inputs through reward-guided optimization that evaluates both reasoning and\nanswer consistency, trained via group relative policy optimization [Shao et al., 2024]. We further introduce Perturbed Video Reasoning Benchmark (PVRBench), for evaluating the robustness of video reasoning under diverse realistic perturbations. Unlike existing benchmarks, including\nVisBench [Yang et al., 2025a] and UrbanVideo [Zhao et al., 2025a], which primarily evaluate models on curated environments, PVRBench systematically injects perturbations from 12 corruption\nstyles associated with lighting, camera motion, occlusion, and weather (Tab. 1), across 27 scene\ncategories. Notably, all perturbations are spatially aware and temporally coherent, capturing realistic\nvideo disturbances. We observe that performant proprietary models (GPT-4o [Hurst et al., 2024] /\nGemini-3-Pro [Team et al., 2023]) suffer 11–17% and 10–14% drops in accuracy and reasoning, and\nopen-source models degrade by up to 35% and 26%, respectively, highlighting robustness gaps in\nVLMs under realistic conditions. ROVA consistently outperforms proprietary and open-source models on PVRBench, UrbanVideo, and\nVisBench across all perturbation types in both answer accuracy and reasoning quality. Specifically,\nROVA surpasses the strongest open-source baselines of comparable size, Embodied-R, by 17%, while\nlarger variants (13B/72B) match or exceed leading proprietary models such as Gemini-3-Pro and GPT-",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 5,
+    "total_chunks": 93,
+    "char_count": 1841,
+    "word_count": 242,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "848c7477-2356-4b87-a603-058af1ccdbbc",
+    "text": "Table 1: Comparison of PVRBench with existing video understanding benchmarks. #Types counts\nperturbation subtypes. #Cat. counts scene or class categories. Synthetic, Spatial, and Temporal indicate artificially generated, spatially grounded, and temporally consistent perturbations, respectively. PVRBench covers 27 tasks covering indoor, outdoor, and embodied AI scenarios. ‡: An image-level\nbenchmark for reference. Scale Perturbation Properties Scene Coverage\nBenchmark\n#Videos #QAs Synthetic Real Spatial Temporal #Types Ind. ImageNet-C‡ [Xie et al., 2020] 50K 50K ✓ ✗ ✗ ✗ 19 ✓ ✓ ✗ 1K\nMVBench [Li et al., 2024] 4K 4K ✗ ✗ ✗ ✗ 0 ✓ ✓ ✗ 20\nVideo-MME [Fu et al., 2025] 900 2.7K ✗ ✗ ✗ ✗ 0 ✓ ✓ ✗ 30\nALFRED [Shridhar et al., 2020] 8K 25K ✗ ✗ ✗ ✗ 0 ✓ ✗ ✓ 7\nEgo4D [Grauman et al., 2022] 3.7K 3.8M ✗ ✗ ✗ ✗ 0 ✓ ✓ ✓ 5\nVisBench [Yang et al., 2025a] 500 3K ✗ ✗ ✗ ✗ 0 ✓ ✗ ✓ 11\nUrbanVideo [Zhao et al., 2025a] 1.5K 6K ✗ ✗ ✗ ✗ 0 ✗ ✓ ✓ 16\nPVRBench (Ours) 9K 52K ✓ ✗ ✓ ✓ 12 ✓ ✓ ✓ 27 Notably, these improvements extend to clean videos, demonstrating enhanced generalizability\nand stronger performance on clean data. Furthermore, ROVA achieves higher reasoning quality, with\nimproved consistency and belief scores, reflecting more stable, confident reasoning under visual\ncorruption.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 6,
+    "total_chunks": 93,
+    "char_count": 1264,
+    "word_count": 226,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4155de7c-dd62-4641-a4f7-5f53dfb8f339",
+    "text": "Robust Training for Multimodal Models. Several works [Mao et al., 2022, Zhao et al., 2023, Sheng\net al., 2025, Oh et al., 2025, Agarwal et al., 2025, Schiappa et al., 2022] have explored robustness to\ndistribution shifts and adversarial inputs through data augmentation [Duan et al., 2023], test-time\nadaptation [Zhao et al., 2024], and transfer-based strategies [Tong et al., 2025, Cai et al., 2024]. However, these approaches primarily address generic perturbations or optimization efficiency, rather\nthan the structured, semantically grounded disturbances encountered in real-world video settings. In\nvideo reasoning, recent methods [Zhou et al., 2025, Wang et al., 2025a, Chen et al., 2025a, Wang\net al., 2025b] improve efficiency via adaptive frame sampling or data filtering, but they do not\nexplicitly model realistic corruption patterns [Zeng et al., 2024, Yang et al., 2025b] that alter scene\nvisibility and temporal coherence. As a result, robustness is treated as incidental resilience rather\nthan being explicitly modeled during optimization. In contrast, ROVA incorporates structured and\nsemantically grounded perturbations that reflect realistic environmental disturbances. The proposed\narchitecture and training objectives enforce representation consistency between clean and perturbed\nvideos, progressively strengthening disturbance-aware reasoning. Robust Video Reasoning in Real-World Environments. Recent advances in video–language\nmodels [Zhang et al., 2023, Nguyen et al., 2024, Yuan et al., 2025, Yu et al., 2025, Clark et al., 2026]\nhave substantially improved temporal reasoning and long-horizon embodied planning [Chen et al.,\n2025b, Azzolini et al., 2025, Zhang et al., 2025, Zhao et al., 2025b, Yu et al., 2026, Yeo et al., 2026]. However, most existing benchmarks evaluate models under nearly clean visual conditions [Maaz\net al., 2024], implicitly assuming stable lighting, unobstructed views, and smooth camera movement. Although robustness is sometimes measured via synthetic textual perturbations [Wu et al., 2025],\nsuch evaluations do not capture structured, semantically grounded visual disturbances encountered in\nreal-world environments. Consequently, no standardized benchmark systematically integrates realistic\ndisturbances into embodied video reasoning, leaving a gap between benchmarks and deployment\nconditions. In contrast, we introduce PVRBench that integrates semantically meaningful perturbations\ninto temporally coherent reasoning tasks. Rather than treating corruption as incidental noise, we ask\nmodels to reliably reason about scene content, even in the presence of disturbances. 3 Training Robust Video Reasoning Models with ROVA",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 7,
+    "total_chunks": 93,
+    "char_count": 2680,
+    "word_count": 369,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a8a9ca75-23a1-4aab-8b04-89578d6073bd",
+    "text": "As illustrated in Fig. 2, ROVA, a novel training approach for robust video reasoning under real-world\nperturbations, comprises three stages: we first generate corruption-augmented video-query pairs via\ndynamic, physically plausible perturbations (Sec. 3.1). Next, a difficulty-aware curriculum performs Structured Spatio-Temporal Corruptio Self-Reflective Difficulty-Aware Trainin\nQuery What action does Discard Evict samples after too many re-evals\nthe agent need\nto take to avoid Store difficult samples\nobstacle ahead? Spatial Mask & Easy Difficult Periodic ... Temporal Shuffle Self-Reflective Re-evaluation\nDifficulty Assessment\nClean video Corrupted video Memory Buffer Dual-Branch Alignmen\nReference Output I can clearly see the road\nahead, and my lane is Rubustness-Aware\nClean clear, thereˇs Consistency Reward GRPO Selected Input Shared Format Reward Total Policy (Informative) Weights reasoning I canˇt see the road clearly, (Check tags) Reward Update\nInput: (video, query) Iˇm not sure whatˇs ahead. Corrupted Iˇll slow down and prepare Accuracy Reward\nAligned Output to stop to avoid a potential (vs Ground Truth)\nobstacle. Figure 2: Overview of ROVA: (1) structured spatio-temporal corruption that generates realistic\nperturbations, (2) self-reflective evaluation with difficulty-aware online training that adaptively\nprioritizes informative samples, and (3) dual-branch alignment reward modeling that enforces output\nconsistency between clean and perturbed inputs. self-reflective evaluation to selectively curate informative training samples conditioned on the model's\nevolving capability (Sec. 3.2) . Finally, dual-branch alignment enforces consistency between clean\nand perturbed videos via reasoning-aware rewards and group relative policy optimization (GRPO)\n(Sec. 3.3). 3.1 Learning with Structured Spatio-Temporal Corruption We first design a structured spatio-temporal corruption pipeline that models four realistic disturbances,\nincluding weather, lighting, occlusion, and camera motion, using style-specific, cross-frame coherent\nmasks for spatial perturbations and temporal shuffling to disrupt temporal order. Unlike generic\naugmentations that apply independent pixel or frame perturbations (e.g., random masking, color\njittering) [Xie et al., 2020], we explicitly model perturbation styles with spatial grounding and\ntemporal coherence, yielding structured spatio-temporal disturbances. Each video is then paired\nwith its corrupted counterpart in a dual-branch alignment framework to optimize output consistency. Through this design, the model learns perturbation-invariant representations for robust real-world\ngeneralization.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 8,
+    "total_chunks": 93,
+    "char_count": 2655,
+    "word_count": 339,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5f07c066-d171-4212-98ee-e4eb60b85d67",
+    "text": "Let a video sequence be denoted as V = {f1, f2, . . . , fT }, where ft ∈RH×W ×C denotes the t-th\nframe of height H, width W, and C channels. To disrupt temporal coherence, we randomly permute the frame sequence. A permutation π : {1, . . . , T} →{1, . . . , T} is sampled uniformly at random, and the temporally\nshuffled video is defined as\nVtemp = {fπ(1), fπ(2), . . . , fπ(T )}, (1)\nwhich completely scrambles temporal order while preserving all frame content. Rather than coarse block-wise masking that risks removing critical cues, we apply fine-grained masks across four perturbation styles m ∈ P =\n{weather, lighting, camera, occlusion}. For each frame ft, the mask Pt(m) = B(m)t ⊙C(m)t fuses\na binary map B(m)t ∈{0, 1}H×W , where 1/0 denotes corrupted/clean pixels, with layouts driven\nby depth awareness or stochastic sampling, and a continuous modulation map C(m)t ∈[0, 1]H×W\nencoding per-pixel effect intensity (e.g., rain strength, shadow depth, blur kernel; see Sec. B.2.) The\ncorrupted frame is computed as ftmasked = ft ⊙P t(m) , where ⊙denotes element-wise multiplication. Spatio-Temporal Corruption. For each video, a perturbation style m ∈P is uniformly sampled to\ngenerate the corrupted frame sequence:\n′ n (m) oT V = fπ(t) ⊙Pt , (2)\nt=1 where Pt(m) denotes the smooth, style-specific mask associated with style m. By jointly introducing temporal order disruption and spatially realistic, continuous masking, our approach promotes\nperturbation-invariant representation learning while preserving essential visual semantics. 3.2 Self-Reflective Difficulty-Aware Training Introducing structured visual corruptions exposes the model to a broader spectrum of reasoning\ndifficulty than training on clean videos alone. While clean inputs typically lie within a narrow difficulty\nrange, corrupted versions vary widely in severity, expanding the diversity of learning signals during\ntraining. Crucially, training is most effective on samples that are neither too easy nor excessively\ndifficult [Wang et al., 2025b] under the model's current capacity, as these instances provide the\nmost informative learning signals and support stable optimization. Rather than uniformly sampling\nacross the expanded difficulty range, we therefore prioritize appropriately challenging examples\nthrough a self-reflective, difficulty-aware strategy that implicitly forms an online curriculum.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 9,
+    "total_chunks": 93,
+    "char_count": 2382,
+    "word_count": 363,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c75a774f-451f-4314-b059-ad7c42473695",
+    "text": "By\ncontinuously focusing on corrupted samples that provide meaningful learning signals, the model\nenables to promote robust and reliable reasoning under realistic visual disturbances. To this end, we propose a self-reflective, difficulty-aware training pipeline that implicitly builds an\nadaptive curriculum in an online manner. Formally, let Fθ denote a learnable VLM parameterized by θ. We assume that training video–text pairs arrive sequentially, and let θi denote the model parameters at\ntraining iteration i. At each iteration, ROVA performs two internal steps: 1) self-reflective evaluation,\nwhere Fθi estimates the usefulness of incoming samples for training under its current state; and 2)\ndifficulty-aware selective training, where model updates are performed using only a subset of samples\nselected according to the proposed policy. Self-Reflective Evaluation. At iteration i, the model F evaluates each masked video V i′ and produces\na difficulty label d ∈{easy, difficult, informative} and a confidence score c ∈[0, 1], defined as,\nd, c = Fθi(qi, Vi′ , Se), (3) where qi denotes the input query and Se denotes the evaluation prompt (See Fig. 10). Specifically,\nd is obtained by prompting Fθi with Se to compare its responses on clean and corrupted inputs:\nif the model answers correctly and consistently, the sample is labeled d = easy; if responses\ndiverge substantially or are incorrect, it is labeled d = difficulty; otherwise, the sample is labeled\nd = informative, indicating moderate uncertainty that is most beneficial for training. The confidence\nscore c is derived from the model's output token probabilities. Unlike traditional curriculum learning\nwith a fixed schedule, our prompt-based sample-level evaluation dynamically estimates the model's\ncurrent capability and prioritizes informative samples to stabilize the effective training distribution. Based on d and c, we design the following data selection policy: (i) high-confidence easy samples (d = easy, c > τ, where τ is a confidence threshold) are considered\nas sufficiently learned and filtered out, enabling the model to prioritize disturbance-sensitive samples\nthat provide strong learning signals. (ii) difficult samples (d = difficult) are stored in a temporal\nmemory buffer M for deferred training and periodically re-evaluated. While potentially informative,\nthey may yield weak or unstable learning signals under the current model state, and are revisited\nonce the model has sufficiently improved. (iii) informative samples (d = informative) as well as\nlow-confidence easy samples (d = easy, c <= τ) are treated as high-information instances and\nprioritized for immediate training. Difficulty Re-evaluation and Deferred Training with Memory.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 10,
+    "total_chunks": 93,
+    "char_count": 2730,
+    "word_count": 405,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "64fd8cc9-f5fd-43dc-bb88-fbf68a057c34",
+    "text": "As the model improves over time,\nsamples that were previously too difficult to learn from may later provide meaningful training signals. To leverage this evolving capability, we introduce a memory-based deferred training mechanism that\nperiodically re-evaluates difficult instances. Formally, when newly arriving data are evaluated as\ndifficult, it is stored in a temporal memory buffer M as:",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 11,
+    "total_chunks": 93,
+    "char_count": 392,
+    "word_count": 57,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9f6fa7df-fba9-4dd5-b3c8-31448bd3af5e",
+    "text": "M ←M ∪{(q, ˜V , k = 0)}, (4) where ˜V encodes the mask metadata, including perturbation style, parameters, and spatial-temporal\nregions. This design allows the corrupted video V ′ to be regenerated on demand during re-evaluation,\navoiding the need to store full video data. During training, instances in M are periodically reevaluated under the updated model. The counter k tracks the number of re-assessments performed\nfor each sample. For each entry (qn, ˜Vn, kn) ∈M, the current model F periodically re-assesses its difficulty using the current parameter θi:\nd′, c′ = F(qn, ˜Vn, Se; θi), kn ←kn + 1. (5)\nHere, d′ and c′ denote the updated difficulty level and confidence score, respectively.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 12,
+    "total_chunks": 93,
+    "char_count": 694,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8de43f3a-0192-4594-9479-ab0f27fd3614",
+    "text": "Entries\nreclassified as informative are immediately used for training, whereas those labeled easy are removed\nfrom the memory buffer. Entries that remain difficult are retained in M with their re-evaluation\ncounter incremented. The confidence score c′ serves as an auxiliary diagnostic signal for self-monitoring and stability analysis, but is not used directly for memory retention decisions to avoid sensitivity to noisy confidence\nestimates.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 13,
+    "total_chunks": 93,
+    "char_count": 444,
+    "word_count": 63,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e8c2c5ce-0615-4ada-8c5d-1f34db38f291",
+    "text": "As training progresses, samples that were previously difficult may transition to informative\nor easy categories, allowing the curriculum to adapt to the model's evolving capability. However,\nrepeated re-evaluation can lead to unbounded memory growth, particularly when samples remain\npersistently difficult or heavily corrupted, yielding little effective learning signal. To prevent this, we\nimpose a maximum re-evaluation threshold and evict entries exceeding it:\nM ←M \\ {(q, ˜V , k) | k > Kmax}. (6)\nOverall, the proposed self-reflective, difficulty-aware training framework establishes a closed-loop\nmechanism that dynamically adjusts the training data distribution to the model's evolving capability. By prioritizing samples based on estimated difficulty and confidence, the framework selects instances\nthat yield effective learning signals under corrupted conditions while filtering low-utility ones. Although periodic re-evaluation incurs modest computational overhead, this cost is negligible relative\nto the high per-sample cost of reinforcement learning on videos. In addition, selectively discarding\nuninformative instances leads to substantial gains in training efficiency (See Tab. 3).",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 14,
+    "total_chunks": 93,
+    "char_count": 1197,
+    "word_count": 160,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1c172e77-ee30-48d6-b545-fdacd365a3bb",
+    "text": "3.3 Dual-Branch Alignment Optimization ROVA trains the model through a dual-branch alignment mechanism that aligns representations from\nclean and partially perturbed video inputs. The training objective enforces consistency between two\nbranches using the proposed reward modeling combined with GRPO [Shao et al., 2024]. Here, the\nclean video branch serves as a fixed anchor with gradients detached, while the perturbed branch is\noptimized to align its outputs with those of the clean branch. Given a group of G paired samples, the\nclean branch produces reference outputs {oj}Gj=1 and the perturbed branch generates aligned outputs\n{˜oj}Gj=1. Each pair (oj, ˜oj) corresponds to the same video query under clean and perturbed visual\nconditions. We treat a Fθ as a policy that generates reasoning outputs conditioned on video inputs: min rjAj, J(θ) = E(q,V )∼D, {oj}Gj=1∼Fθold(O|q,V ) G X (7) j=1\nclip(rj, 1 −ϵ,1 + ϵ)Aj −βDKL Fθ∥Fref , where rj = Fθ(oj|q)/Fθold(oj|q), ϵ and β are hyperparameters, and DKL Fθ∥Fref denotes the\nKL-divergence penalty term. The advantage Aj corresponding to output oj is calculated from the\nassociated reward set {r1, r2, . . . , rG}:\nrj −mean {r1, r2, . . . , rG}\nAj = . (8)\nstd {r1, r2, . . . , rG}\nFormat Reward. The model is required to generate an output oj consisting of an embodied\nreasoning process pj followed by a final answer aj, enclosed within <think></think> and\n<answer></answer> tags, respectively. Compliance with this format is verified via a regular\nexpression, producing the format reward rFj. 1, if the format is correct;\nrFj = (9) 0, if the format is incorrect. The accuracy reward rAccj evaluates whether the extracted answer oj is semantically consistent with the ground truth g. Multiple-choice questions typically have a unique and\nprecise answer that can be directly compared once the response follows the required format.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 15,
+    "total_chunks": 93,
+    "char_count": 1876,
+    "word_count": 304,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "841c4119-0bb2-4042-b65c-93caf7ca7cf7",
+    "text": "1, oj = g;\nrAccj = (10)\n0, oj ̸= g. For each output pair (oj, ˜oj), the alignment reward is decomposed into reasoning\nand answer components: rAj = ralign,j r + ralign,j a , where ralign,j r = αr · Simr(oj, ˜oj) and ralign,aj =\nαa · Sima(oj, ˜oj). Here, αr and αa weight the respective contributions, with Simr and Sima to\nmeasure semantic consistency in the reasoning process and answer segment (see Figs. 8 and 9). The\ntotal reward combines alignment with three rewards: Rj = rFj + rAccj + rAj . With the proposed dual-branch alignment framework, the model is optimized via GRPO using a\ncombined reward signal with robustness-aware consistency, encouraging stable reasoning and answer\npredictions across clean and perturbed video inputs, thereby improving robustness and generalization. 4 Evaluating Video Reasoning under Various Realistic Disturbances Existing video reasoning benchmarks, including MVBench [Li et al., 2024], VideoMME [Fu et al., 2025], ALFRED [Shridhar et al., 2020], Ego4D [Grauman et al., 2022], and\nUrbanVideo [Zhao et al., 2025a], evaluate models primarily under clean visual conditions (Tab. 1). In\ncontrast, real-world deployment often exposes VLMs to adverse weather, dynamic occlusions, abrupt\nillumination changes, and camera instability. As shown in Tab. 1, such perturbations can degrade both\naccuracy and reasoning quality by 12 to 35%. Although ImageNet-C [Xie et al., 2020] introduced the\nevaluation of corruption robustness for image classification, no existing benchmark systematically\nmeasures how temporally coherent and spatially grounded visual perturbations affect reasoning over\nvideos. This leaves a critical blind spot: we lack the tools to diagnose whether failures under visual\ncorruption arise from perceptual errors, reasoning fragility, or both. To close this gap, we introduce Perturbed Video Reasoning Benchmark (PVRBench), designed to evaluate the robustness of video reasoning models under structured, real-world visual variations beyond simple pixel-level corruption. Our focus\nis on reasoning reliability, defined as the ability to\nmaintain coherent and logically consistent inference\nchains grounded in correct visual observations and\nvalid causal steps despite degraded video input. PVRBench integrates four categories of realistic, videospecific disturbances: lighting (dusk, night, overexposure, shadow), camera motion (translation, zoom,\nrotation), occlusion (static, dynamic), and weather\n(fog, rain, snow). Each disturbance is applied with\nspatial awareness (e.g., depth-conditioned occlusion\nplacement and scene-adapted weather rendering) and Figure 3: Overview of the perturbation types\ntemporal coherence across frames.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 16,
+    "total_chunks": 93,
+    "char_count": 2684,
+    "word_count": 385,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "db2dbc70-c291-4e86-881e-b95ad4e875be",
+    "text": "The benchmark in PVRBench.\ncomprises over 9K videos and 51K question-answer\npairs spanning diverse indoor, outdoor, and embodied scenarios, with 27 task coverage from Zhao\net al. [2025a], Yang et al. [2025a], which exercise a broad spectrum of video reasoning capabilities. Perturbation Injection. At its core, we generate video-specific masks (Equation (2)) that contain\nsemantically coherent perturbations conditioned on each video's content, including depth layout,\nobject locations, and motion patterns. These perturbations are contextually adapted to scene semantics;\nfor instance, weather appears as windshield rain refraction in driving scenes, while occlusions are\nplaced at plausible foreground locations. For benchmark evaluation, we adopt a static protocol in\nwhich masks are pre-generated and fixed per video to ensure reproducible cross-model comparison,\nwhile ROVA training (Sec. 3) uses a dynamic protocol that generates perturbations on the fly with\nstochastically sampled parameters at each iteration to prevent overfitting and promote perturbation\ninvariant representation learning. To quantify reasoning reliability, PVRBench introduces five complementary\nmetrics (Fragility, Consistency, Belief, Recovery, and Attention; see Tab. 2) that assess the quality\nand stability of intermediate reasoning, as well as final-answer accuracy. To assess reasoning process\nquality, we leverage a powerful vision-language foundational model (e.g., GPT-4o) to score reasoning\ntraces in coherence, perturbation awareness, and evidence grounding via a structured template\n(see Fig. 9), following the LLM-as-judge paradigm [Zheng et al., 2023, He et al., 2024]. Table 2: Evaluation on PVRBench. We report accuracy under four visual perturbations (Lighting,\nOcclusion, camera Shake, Weather) on the left, and reasoning quality metrics on the right, including\nFragility, Consistency, Belief, Recovery, and Attention (0 - 5 scale; Higher is better, except for Fra\n(↓)). #Fr: the number of frames, Avg.: the average performance, and Orig.: the average performance\non clean (unperturbed) data. We exclude Fra. when computing Avg.† and Orig.†. Answer Accuracy Reasoning Quality\nModel Size #Fr Lig. Proprietary Models\nGPT-4o – 32 .54 .47 .50 .52 .51 ↓14% .59 1.85 3.42 3.55 3.38 3.21 3.39 ↓11% 3.82\nGemini-3-Pro – 32 .57 .52 .54 .55 .55 ↓11% .62 1.72 3.61 3.48 3.58 3.41 3.52 ↓10% 3.91\nClaude-3.5-Son. – 32 .45 .41 .44 .45 .44 ↓17% .53 2.08 3.18 3.22 2.95 3.15 3.13 ↓14% 3.65\nVideo Reasoning Models\nVideo-R1 7B 32 .43 .37 .42 .41 .41 ↓20% .51 2.48 2.75 2.85 2.68 2.65 2.73 ↓20% 3.42\nVideo-R1 72B 32 .51 .45 .49 .49 .49 ↓16% .58 2.11 3.25 3.18 3.21 2.98 3.16 ↓14% 3.68\nVideoChat-R 7B 16 .36 .31 .36 .35 .35 ↓22% .45 2.65 2.62 2.55 2.71 2.28 2.54 ↓22% 3.25\nLLaVA-Video-R 7B 32 .40 .34 .38 .38 .38 ↓21% .48 2.58 2.68 2.61 2.78 2.42 2.62 ↓21% 3.32\nEmbodied-R 7B 32 .45 .38 .42 .43 .42 ↓22% .54 2.45 2.82 2.91 2.72 2.68 2.78 ↓19% 3.45\n+ ROVA (Ours) 7B 32 .52 .46 .49 .51 .50 ↓9% .55 2.25 3.15 3.18 3.22 2.91 3.12 ↓13% 3.58\nOpen-Source Video LLMs\nLLaVA-Video 7B 32 .32 .29 .30 .32 .31 ↓30% .44 2.78 2.45 2.35 2.52 2.25 2.39 ↓23% 3.12\nVideoLLaMA2 7B 16 .28 .25 .27 .29 .27 ↓25% .36 2.92 2.18 2.25 2.12 2.15 2.18 ↓28% 3.01\nVideoChat2 7B 16 .26 .23 .25 .27 .25 ↓26% .34 3.01 2.08 2.15 2.05 2.02 2.08 ↓28% 2.88\nMiniCPM-V 2.6 8B 64 .34 .28 .31 .32 .31 ↓28% .43 2.75 2.48 2.42 2.55 2.21 2.42 ↓24% 3.18\nInternVL2.5 8B 32 .31 .26 .32 .33 .31 ↓33% .46 2.85 2.38 2.28 2.42 2.18 2.32 ↓26% 3.15\n+ ROVA (Ours) 8B 32 .43 .36 .41 .40 .40 ↓15% .47 2.45 2.82 2.75 2.78 2.58 2.73 ↓17% 3.28\nQwen2.5-VL 7B 32 .35 .28 .34 .34 .33 ↓35% .51 2.71 2.58 2.62 2.68 2.31 2.55 ↓25% 3.41\n+ ROVA (Ours) 7B 32 .48 .43 .47 .49 .47 ↓11% .53 2.31 3.05 3.08 2.98 2.85 2.99 ↓15% 3.52\nQwen2.5-VL 72B 32 .48 .41 .44 .47 .45 ↓21% .57 2.18 3.15 3.08 2.92 3.12 3.07 ↓16% 3.64\n+ ROVA (Ours) 72B 32 .57 .53 .56 .56 .56 ↓5% .59 1.95 3.45 3.35 3.42 3.18 3.35 ↓10% 3.72\nQwen3-VL 13B 32 .43 .35 .39 .42 .40 ↓25% .53 2.41 2.85 2.92 2.78 2.72 2.82 ↓19% 3.48\n+ ROVA (Ours) 13B 32 .53 .49 .52 .54 .52 ↓7% .56 2.12 3.28 3.32 3.18 3.05 3.21 ↓11% 3.62",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 17,
+    "total_chunks": 93,
+    "char_count": 4085,
+    "word_count": 702,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f124c58b-c999-4ee1-9d40-7e9ae6b649c7",
+    "text": "5.1 Implementation Details. We train our model on 4 NVIDIA A100 (80GB) GPUs. For optimization, we set the ordered\ngroup size to G = 8 and the shuffled group size to ˜G = G/2.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 18,
+    "total_chunks": 93,
+    "char_count": 174,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cd526083-ccba-475e-bc52-f7d14c5b911d",
+    "text": "Details are provided in Sec. We use both clean and perturbed video data for training and evaluation. For training,\nwe curate an outdoor-scene-relevant subset of Video-R1-260k (∼10% of its video split, filtered\nby scene category labels) and apply dynamic, randomly sampled perturbation masks to construct\ncorruption-augmented video-query pairs. For evaluation, we assess generalization on the proposed\nPVRBench, which contains over 51K question answer pairs across more than 9K videos spanning\ndiverse scene categories beyond the training distribution. Static perturbation masks are systematically\ninjected to measure model accuracy, reasoning quality, and robustness under both clean and corrupted\nconditions. We further evaluate the generalization of VLMs on standard VisBench and UrbanVideo. ROVA Performance on PVRBench. We extensively evaluate our approach on PVRBench and the\nclean benchmark (Orig.: UrbanVideo and VSI-Bench) across diverse backbones, including video\nreasoning models and open-source video LLMs ranging from 7B to 72B. As shown in Tab. 2, among\ndedicated video reasoning models, ROVA consistently outperforms prior methods. In the 7B setting,\nit improves the best-performing model, Embodied-R, from 0.42 to 0.50 average accuracy under\nperturbations (more than 17% relative gain), and even matches or surpasses the much larger Video-R1 Table 3: Training efficiency comparison (Qwen2.5-VL-7B, Orig. Acc. = 0.43; GPU-h =\n#GPUs × wall-clock hours).",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 19,
+    "total_chunks": 93,
+    "char_count": 1466,
+    "word_count": 207,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "010beb46-23ce-4d4a-bf37-184f7091a5ae",
+    "text": "SRE = Self-Reflective Evaluation, DRE = Difficulty Re-Evaluation, ME\n= Memory Eviction. Robust. = dual-branch alignment with structured corruption (Secs. 3.1 and 3.3). Curric. = SRE + DRE + ME (Sec. 3.2). Training Data Architecture Config. SFT RL Total Branch Robust. GRPO — — — Single ✗ ✗ 4×A100 71.6 .45\nNaïve Dual — — — Dual ✓ ✗ 4×A100 142.8 .48\nVideo-R1 165K 260K 425K Single ✗ ✗ 8×A100 339.2 .49\nROVA 6.5K 26K 32.5K Dual ✓ ✓ 4×A100 134.4 .53 12 Easy Difficult Total samples fixed (%)40\nDifficult (%) Informative\n(%)10 Easy 38\nRate Ratio50 +3.4% 8 PVRBench36\n6 25 Discard 34\nRandom Discard 4 Cumulative Difficulty-Aware (Ours) 0 Accuracy32\n1 2 3 4 5 0 100 200 300 0 10 20 30 40\nEpoch Training Steps Discard Rate (%) (a) Sample discard rate evolution (b) Evolution of estimated easy, in- (c) Difficulty-aware confidenceduring self-reflective curriculum formative, and difficult sample pro- threshold discard vs. random across\ntraining. portions over training. retention. Figure 4: Analysis of Self-Reflective Evaluation and Difficulty-Aware Training for ROVA during\nthe first Epoch of Qwen-VL-2.5-7B Training. Importantly, it also achieves consistent improvements in reasoning quality, indicating stable\nand reliable reasoning under visual corruption. Most open-source video LLMs suffer substantial\ndegradation under perturbations, with 21–35% drops in accuracy and 16–28% declines in reasoning\nquality relative to clean inputs. Notably, ROVA not only withstands the proposed perturbations but also enhances the model's generalization performance, observing consistent gains on PVRBench and across unseen benchmarks\n(VisBench and UrbanVideo, Fig. 19) in both answer accuracy and reasoning quality under clean and\nperturbed videos. These findings suggest that ROVA is able to learn perturbation-robust representations with strong transferability, enabling improved robustness and semantic understanding beyond\nthe training distribution without domain-specific fine-tuning, while maintaining superior performance\non clean data. Beyond the accuracy and reasoning quality improvements, Tab. 3 shows that ROVA is highly resourceefficient. Although the dual-branch design doubles the forward pass, the proposed curriculum (SRE\n+ DRE + ME) more than offsets this overhead, reducing GPU-hours by 5.9% compared to naive\nDual-Branch (134.4 vs. 142.8) while improving accuracy from 0.37 to 0.47.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 20,
+    "total_chunks": 93,
+    "char_count": 2387,
+    "word_count": 351,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f72a1858-2b00-48db-8e29-229e774344a2",
+    "text": "Moreover, ROVA\nsurpasses Video-R1 by 23.7% (0.47 vs. 0.38) while using 60.4% fewer GPU-hours (134.4 vs. 339.2),\nhalf the GPUs, and less than 8% of the training data (32.5K vs. 425K). These results suggest that\nthe dual-branch alignment objective learns transferable, perturbation-robust representations that\ngeneralize beyond the training distribution without domain-specific fine-tuning, while maintaining\nstrong performance on clean data. Analysis of self-reflective evaluation and sample-selective training. We also analyze the behavior\nof our self-reflection evaluation mechanism during training. As shown in Fig. 4a, the discard rate\nfor easy samples increases steadily over epochs while that for difficult samples declines, indicating\nthat the model keeps evolving and smarter and prefers to decline more samples as they are already\ngood at those, Fig. 4a, shows a moderate fraction of samples is discarded overall, and the model\nselectively filters low-utility or overly noisy instances rather than aggressively pruning data. Fig. 4b\nfurther illustrates the evolution of the estimated sample difficulty in training steps. While the\ntotal number of discarded samples is fixed, the composition gradually shifts toward easy samples,",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 21,
+    "total_chunks": 93,
+    "char_count": 1236,
+    "word_count": 176,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "69fd84c6-4ff3-431f-b99f-5d9b524970f3",
+    "text": "Inference\nFull Components +15.66% Original Weather Occlusion Shake Lighting\n(0.5236)\nReasoning Reward +4.91% Weather + Occlusion 0.5649 0.5418 0.5037 0.52890.0780 0.53610.0666 0.56\n(0.4749)\n0.54\nEasy Sample Discarding +3.46% (0.4684) Weather + Shake 0.5672 0.5389 0.52460.0885 0.5327 0.52810.0586 0.52\nMemory +2.73%\n(0.4651) 0.50 Occlusion + Lighting 0.5591 0.53180.0649 0.5019 0.52470.0738 0.5487 Training\nTemporal Shuffle +1.82%\n(0.4609) 0.48\nFixed-shape Random 0.5214 0.4687 0.4319 0.4541 0.4706\nAnswer-Only Alignment (Avg: 0.4527) 0.46\n0 5 10 15 20 Pixel-level Random 0.5187 0.4652 0.4403 0.4478 0.4683 0.44\nImprovement over Qwen3-VL-13B (%) (a) Accuracy improvements from each component in (b) Models trained on two mask styles are evaluated on\nROVA over the base model (final-answer alignment in-domain and held-out OOD perturbations (highlighted\nonly). in red). Figure 5: Ablation studies of ROVA. (a) Impact of individual components on answer accuracy. (b)\nComparison of corruption mask strategies across perturbation types. Experiments are conducted\nusing the Qwen3-VL-13B model trained for 3 epochs. reflecting the improving competence of the model: samples initially deemed difficult are increasingly\nreclassified as easy as training progresses. This dynamic redistribution suggests that the self-reflective\nevaluator captures meaningful learning signals and adapts the curriculum in a data-driven manner. Fig. 4c demonstrates the effectiveness of difficulty-aware data selection for training. Compared to\nrandom discarding, our strategy consistently achieves higher accuracy across discard rates, with an\nimprovement of up to 3.4% on PVRBench. This indicates that selective removal of samples based on\nestimated difficulty preserves informative training signals while avoiding detrimental noise.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 22,
+    "total_chunks": 93,
+    "char_count": 1807,
+    "word_count": 243,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ff2c1fa-2f14-48d2-b474-23ca1ff44ade",
+    "text": "5.3 Ablation Study and Analysis Ablation of Core Components. We ablate each component of ROVA to assess its contribution\n(Fig. 5a). The reasoning reward yields the largest gain, followed by easy sample discarding, underscoring the central role of semantic reasoning and targeted curation. The memory module and\ntemporal shuffle provide smaller but consistent gains, serving as complementary regularizers that\nstabilize training and enhance robustness. Ablation of Mask Styles. We explore the generalizability of the proposed structured masking\nstrategy compared to random masking baselines. As shown in Fig. 5b, models trained on only two\ncorruption mask styles achieve strong in-domain performance on the perturbation types seen during\ntraining, and more importantly, transfer effectively to held-out perturbation types (highlighted in red):\nout-of-domain performance remains close to in-domain results while both consistently surpass fixedshape and pixel-level random masking by a significant margin (6 - 9% absolute). This indicates that\nstructured, perturbation-aware masks capture transferable corruption patterns rather than overfitting\nto specific disturbance types, confirming that a small subset of mask styles suffices to achieve broad\nrobustness under diverse real-world disturbances. Ablation of reward models. Notably, our LLM judge (GPT- Table 4: Ablation study of the re-\n4o by default) outperforms rule- or embedding-based matching ward model on PVRBench using\nin evaluating semantic consistency across reasoning traces and commercial and open source VLMs.\nfinal answers. Replacing it with open-source models (e.g.,\nQwen3-13B) yields comparable results, suggesting that the Reward Judge Acc. Free\napproach generalizes beyond proprietary APIs (Tab. 4). In contrast, more granular reward designs, such as conditional align- GPT-4o 0.470 2.99 ✗\nment or step-level consistency, introduce additional variance Qwen3-13B 0.467 2.97 ✓\nthat destabilizes GRPO and degrades performance (Tab. 15),\nQwen2.5-7B 0.463 2.95 ✓further supporting LLM-based evaluation as the most effective\napproach.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 23,
+    "total_chunks": 93,
+    "char_count": 2096,
+    "word_count": 290,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d8d2a1e4-2229-4235-8087-5596894e74e8",
+    "text": "Navigation under Heavy Rain 2. Trajectory Planning under Rain Question: Question:\nBased on the video frames captured during heavy rain, Based on the video frames showing the path from the\nshould the agent move backward or turn left to each park to the store, which trajectory correctly describes\nthe tower crane? the agent's path? Answer: Answer:\nStart from the scooter lane in the park, turn left to face Turn left from the park, rise to building height, then\nthe street, rise to building height, then move forward move forward and downward to the store.\nand slightly downward to reach the store. Reasoning: Reasoning:\nThe video shows the agent starting from the scooter By analyzing the spatial relationship in the video\nlane in the park, turning left to face the street, rising frames, the tower crane is located directly behind the\nto building height, and then moving forward slightly agent's current viewpoint, requiring backward rather\ndownward to reach the destination. than a left turn to reach the target.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 24,
+    "total_chunks": 93,
+    "char_count": 1014,
+    "word_count": 167,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "202bc0fb-f4a1-4c64-ac57-a4710c31daa5",
+    "text": "Figure 6: Qualitative examples of ROVA-trained Qwen2.5-VL-7B performing obstacle avoidance\nand target identification under night-time low-light conditions. See more examples in Figs. 20 to 23. 5.4 Qualitative Analysis We further validate the robustness of ROVA through qualitative examples on representative tasks\nin Fig. 6. Even in challenging scenarios where adverse weather or visual disturbances significantly\ndegrade visibility, ROVA remains effective, correctly reasoning about the scene and task requirements. For instance, when heavy rain and glare obscure key visual cues, ROVA can still infer spatial\nrelationships and scene structure, and when large objects block the field of view, it correctly reasons\nabout the underlying layout rather than relying on partial appearances. This shows that ROVA reliably\ninterprets and reasons in visually impaired conditions, demonstrating robustness beyond controlled\nsettings and confirming its effectiveness in difficult, realistic environments. In this work, we present ROVA, a robust training framework for embodied video reasoning that leverages structured spatio-temporal corruptions, dual-branch alignment, and self-reflective data curation\nto learn perturbation-robust representations. To evaluate robustness under realistic disturbances, we\nintroduce PVRBench. We show that ROVA consistently improves robustness under diverse real-world\nperturbations in video inputs while also improving performance on clean video–question pairs. These\ncontributions provide both a principled benchmark and a practical training recipe, enabling future\nstudies on broader perturbation families and more complex long-horizon embodied tasks. Amit Agarwal, Srikant Panda, Angeline Charles, Hitesh Laxmichand Patel, Bhargava Kumar, Priyaranjan Pattnayak, Taki Hasan Rafi, Tejaswini Kumar, Hansa Meghwani, Karan Gupta, and\nDong-Kyu Chae.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 25,
+    "total_chunks": 93,
+    "char_count": 1872,
+    "word_count": 245,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "71e14261-c862-40e9-87c0-658e1d1ace55",
+    "text": "MVTamperBench: Evaluating robustness of vision-language models. In Findings\nof the Association for Computational Linguistics (ACL Findings) 2025, pages 1–10, Stroudsburg,\nPA, 2025. Association for Computational Linguistics. 3 Alisson Azzolini, Junjie Bai, Hannah Brandon, Jiaxin Cao, Prithvijit Chattopadhyay, Huayu Chen,\nJinju Chu, Yin Cui, Jenna Diamond, Yifan Ding, et al. Cosmos-reason1: From physical common\nsense to embodied reasoning. arXiv preprint arXiv:2503.15558, 2025. 3 Yichao Cai, Yuhang Liu, Zhen Zhang, and Javen Qinfeng Shi.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 26,
+    "total_chunks": 93,
+    "char_count": 541,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b60015dc-5f70-4ba4-8020-cae0f682d100",
+    "text": "Clap: Isolating content from style\nthrough contrastive learning with augmented prompts. In Proceedings of the European Conference\non Computer Vision (ECCV), pages 1–10, Cham, 2024. Ruizhe Chen, Zhiting Fan, Tianze Luo, Heqing Zou, Zhaopeng Feng, Guiyang Xie, Hansheng Zhang,\nZhuochen Wang, Zuozhu Liu, and Huaijian Zhang.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 27,
+    "total_chunks": 93,
+    "char_count": 321,
+    "word_count": 46,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "97b00ec9-bf87-47fc-a7d5-d16aa4504b48",
+    "text": "Datasets and recipes for video temporal\ngrounding via reinforcement learning. In Proceedings of the 2025 Conference on Empirical\nMethods in Natural Language Processing: Industry Track, pages 1–10, Stroudsburg, PA, 2025a. Association for Computational Linguistics. 3 Shoubin Chen, Zehao Wu, Kai Zhang, Chunyu Li, Baiyang Zhang, Fei Ma, Fei Richard Yu, and\nQingquan Li. Exploring embodied multimodal large models: Development, datasets, and future\ndirections. arXiv preprint arXiv:2502.15336, 2025b. 3 Christopher Clark, Jieyu Zhang, Zixian Ma, Jae Sung Park, Mohammadreza Salehi, Rohun Tripathi,\nSangho Lee, Zhongzheng Ren, Chris Dongjoo Kim, Yinuo Yang, et al. Molmo2: Open weights\nand data for vision-language models with video understanding and grounding. arXiv preprint Jinhao Duan, Quanfu Fan, Hao Cheng, Xiaoshuang Shi, and Kaidi Xu. Improve video representation\nwith temporal adversarial augmentation.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 28,
+    "total_chunks": 93,
+    "char_count": 907,
+    "word_count": 125,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9ffe08a0-1f81-4a22-926b-8b72236f3cba",
+    "text": "In Proceedings of the International Joint Conference on\nArtificial Intelligence (IJCAI), pages 1–10, Palo Alto, CA, 2023. IJCAI Organization. 3 Chaoyou Fu, Yuhan Dai, Yongdong Luo, Lei Li, Shuhuai Ren, Renrui Zhang, Zihan Wang, Chenyu\nZhou, Yunhang Shen, Mengdan Zhang, et al.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 29,
+    "total_chunks": 93,
+    "char_count": 276,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ef870e6a-9c62-4cb5-bbf8-d2c919fec3b7",
+    "text": "Video-mme: The first-ever comprehensive evaluation\nbenchmark of multi-modal llms in video analysis. In Proceedings of the IEEE International\nConference on Computer Vision and Pattern Recognition (CVPR), pages 1–10, Piscataway, NJ,\n2025. Kristen Grauman, Andrew Westbury, Eugene Byrne, Zachary Chavis, Antonino Furnari, Rohit\nGirdhar, Jackson Hamburger, Hao Jiang, Miao Liu, Xingyu Liu, et al. Ego4d: Around the world\nin 3,000 hours of egocentric video. In Proceedings of the IEEE International Conference on\nComputer Vision and Pattern Recognition (CVPR), pages 18995–19010, Piscataway, NJ, 2022. Andreas Griewank and Andrea Walther. Evaluating derivatives: principles and techniques of\nalgorithmic differentiation. SIAM, Philadelphia, PA, 2008. 29 Xuan He, Dongfu Jiang, Ge Zhang, Max Ku, Achint Soni, Sherman Siu, Haonan Chen, Abhranil\nChandra, Ziyan Jiang, Aaran Arulraj, et al. Videoscore: Building automatic metrics to simulate\nfine-grained human feedback for video generation. In Proceedings of the Conference on Empirical Methods in Natural Language Processing (EMNLP), pages 1–10, Stroudsburg, PA, 2024. Association for Computational Linguistics. 7 Aaron Hurst, Adam Lerer, Adam P Goucher, Adam Perelman, Aditya Ramesh, Aidan Clark, AJ Ostrow, Akila Welihinda, Alan Hayes, Alec Radford, et al. Gpt-4o system card. arXiv preprint Mvbench: A comprehensive multi-modal video understanding benchmark.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 30,
+    "total_chunks": 93,
+    "char_count": 1404,
+    "word_count": 192,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a43848a2-4fb7-4f96-a67c-5f38551c9e8b",
+    "text": "In\nCVPR, pages 1–10, Piscataway, NJ, 2024. Xinhao Li, Ziang Yan, Desen Meng, Lu Dong, Xiangyu Zeng, Yinan He, Yali Wang, Yu Qiao,\nYi Wang, and Limin Wang. Videochat-r1: Enhancing spatio-temporal perception via reinforcement\nfine-tuning. arXiv preprint arXiv:2504.06958, 2025. 1 Muhammad Maaz, Hanoona Rasheed, Salman Khan, and Fahad Khan.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 31,
+    "total_chunks": 93,
+    "char_count": 338,
+    "word_count": 49,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e194f530-4be3-4955-8da4-f78c65b815b5",
+    "text": "Video-chatgpt: Towards detailed video understanding via large vision and language models. In Proceedings of the Association\nfor Computational Linguistics (ACL), pages 12585–12602, Stroudsburg, PA, 2024. Association for\nComputational Linguistics. 1, 3 Chengzhi Mao, Scott Geng, Junfeng Yang, Xin Wang, and Carl Vondrick. Understanding zero-shot\nadversarial robustness for large-scale models. arXiv preprint arXiv:2212.07016, 2022. 2, 3 Thong Nguyen, Yi Bin, Junbin Xiao, Leigang Qu, Yicong Li, Jay Zhangjie Wu, Cong-Duy Nguyen,\nSee-Kiong Ng, and Anh Tuan Luu.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 32,
+    "total_chunks": 93,
+    "char_count": 558,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8922311f-2b19-4370-81a2-71da7e9827e7",
+    "text": "Video-language understanding: A survey from model architecture, model training, and data perspectives. In Findings of the Association for Computational\nLinguistics (ACL Finding), pages 1–10, Stroudsburg, PA, August 2024. Association for Computational Linguistics. 3 Changdae Oh, Zhen Fang, Shawn Im, Xuefeng Du, and Yixuan Li. Understanding multimodal LLMs\nunder distribution shifts: An information-theoretic approach. In Proceedings of the International\nConference on Machine Learning (ICML), 2025. 3 Schiappa, Shruti Vyas, Hamid Palangi, Yogesh S. Rawat, and Vibhav Vineet.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 33,
+    "total_chunks": 93,
+    "char_count": 575,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "019d4cda-087e-45c7-94b5-97f1fb6b5e40",
+    "text": "Robustness\nanalysis of video-language models against visual and language perturbations. In 36th Conference\non Neural Information Processing Systems Track on Datasets and Benchmarks, 2022. 3 Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi, Haowei Zhang,\nMingchuan Zhang, YK Li, Yang Wu, et al. Deepseekmath: Pushing the limits of mathematical reasoning in open language models. arXiv preprint arXiv:2402.03300, 2024. 2, 6 Lijun Sheng, Jian Liang, Zilei Wang, and Ran He. R-tpt: Improving adversarial robustness of\nvision-language models through test-time prompt tuning. In Proceedings of the IEEE International\nConference on Computer Vision and Pattern Recognition (CVPR), pages 1–10, Piscataway, NJ,\n2025. Mohit Shridhar, Jesse Thomason, Daniel Gordon, Yonatan Bisk, Winson Han, Roozbeh Mottaghi,\nLuke Zettlemoyer, and Dieter Fox.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 34,
+    "total_chunks": 93,
+    "char_count": 852,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "91cd6b44-8879-4492-91c7-7b2966f42f8b",
+    "text": "Alfred: A benchmark for interpreting grounded instructions for\neveryday tasks. In Proceedings of the IEEE International Conference on Computer Vision and\nPattern Recognition (CVPR), pages 10740–10749, Piscataway, NJ, 2020. Yan Shu, Zheng Liu, Peitian Zhang, Minghao Qin, Junjie Zhou, Zhengyang Liang, Tiejun Huang,\nand Bo Zhao. Video-xl: Extra-long vision language model for hour-scale video understanding. In\nProceedings of the IEEE International Conference on Computer Vision and Pattern Recognition\n(CVPR), pages 1–10, Piscataway, NJ, 2025. Gemini Team, Rohan Anil, Sebastian Borgeaud, Jean-Baptiste Alayrac, Jiahui Yu, Radu Soricut,\nJohan Schalkwyk, Andrew M Dai, Anja Hauth, Katie Millican, et al. Gemini: a family of highly\ncapable multimodal models. arXiv preprint arXiv:2312.11805, 2023. 2 Baoshun Tong, Hanjiang Lai, Yan Pan, and Jian Yin.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 35,
+    "total_chunks": 93,
+    "char_count": 848,
+    "word_count": 119,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4b2c6393-7a8a-4fa4-bab7-8e7c38c44d4b",
+    "text": "On the zero-shot adversarial robustness of\nvision-language models: A truly zero-shot and training-free approach. In Proceedings of the\nIEEE International Conference on Computer Vision and Pattern Recognition (CVPR), pages 1–10,\nPiscataway, NJ, 2025. Ye Wang, Ziheng Wang, Boshen Xu, Yang Du, Kejun Lin, Zihan Xiao, Zihao Yue, Jianzhong Ju,\nLiang Zhang, Dingyi Yang, et al. Time-r1: Post-training large vision language model for temporal\nvideo grounding. In Advances in Neural Information Processing Systems (NeurIPS), pages 1–10,\nRed Hook, NY, 2025a. Curran Associates, Inc. 3 Ziyang Wang, Jaehong Yoon, Shoubin Yu, Md Mohaiminul Islam, Gedas Bertasius, and Mohit Bansal. Video-rts: Rethinking reinforcement learning and test-time scaling for efficient and enhanced video\nreasoning. In Proceedings of the Conference on Empirical Methods in Natural Language Processing (EMNLP), pages 1–10, Stroudsburg, PA, 2025b. Association for Computational Linguistics. 3, Yulong Wu, Viktor Schlegel, and Riza Batista-Navarro. Pay attention to real world perturbations!\nnatural robustness evaluation in machine reading comprehension. arXiv preprint arXiv:2502.16523,\n2025. 3 Qizhe Xie, Minh-Thang Luong, Eduard Hovy, and Quoc V Le.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 36,
+    "total_chunks": 93,
+    "char_count": 1217,
+    "word_count": 168,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8dec589a-7da3-4082-8953-a4277a15819c",
+    "text": "Self-training with noisy student\nimproves imagenet classification. In Proceedings of the IEEE International Conference on\nComputer Vision and Pattern Recognition (CVPR), pages 1–10, Piscataway, NJ, 2020. Jihan Yang, Shusheng Yang, Anjali W Gupta, Rilyn Han, Li Fei-Fei, and Saining Xie.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 37,
+    "total_chunks": 93,
+    "char_count": 286,
+    "word_count": 40,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "bc83bfa9-be48-4201-b691-9de8e21440b3",
+    "text": "Thinking in\nspace: How multimodal large language models see, remember, and recall spaces. In Proceedings\nof the IEEE International Conference on Computer Vision and Pattern Recognition (CVPR), pages\n1–10, Piscataway, NJ, 2025a. IEEE/CVF. 2, 3, 7, 17, 18 Zixi Yang, Jiapeng Li, Muxi Diao, Yinuo Jing, and Kongming Liang. Ro-bench: Large-scale\nrobustness evaluation of mllms with text-driven counterfactual videos. arXiv:2510.08936, 2025b. Woongyeong Yeo, Kangsan Kim, Jaehong Yoon, and Sung Ju Hwang. Worldmm: Dynamic multimodal memory agent for long video reasoning. In Proceedings of the IEEE International\nConference on Computer Vision and Pattern Recognition (CVPR), pages 1–10, Piscataway, NJ,\n2026. Shoubin Yu, Jaehong Yoon, and Mohit Bansal.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 38,
+    "total_chunks": 93,
+    "char_count": 747,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fd279785-9c6d-4f51-910d-37278f919d66",
+    "text": "Crema: Generalizable and efficient video-language\nreasoning via multimodal modular fusion. In Proceedings of the International Conference on\nLearning Representations (ICLR), pages 1–10. OpenReview.net, 2025. 1, 3 Shoubin Yu, Yue Zhang, Zun Wang, Jaehong Yoon, Huaxiu Yao, Mingyu Ding, and Mohit Bansal. When and how much to imagine: Adaptive test-time scaling with world models for visual spatial\nreasoning. arXiv preprint arXiv:2602.08236, 2026. 3 Liping Yuan, Jiawei Wang, Haomiao Sun, Yuchen Zhang, and Yuan Lin. Tarsier2: Advancing large\nvision-language models from detailed video description to comprehensive video understanding. Runhao Zeng, Xiaoyong Chen, Jiaming Liang, Huisi Wu, Guangzhong Cao, and Yong Guo. Benchmarking the robustness of temporal action detection models against temporal corruptions. In\nProceedings of the IEEE International Conference on Computer Vision and Pattern Recognition\n(CVPR), pages 1–10, Piscataway, NJ, 2024. Hang Zhang, Xin Li, and Lidong Bing.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 39,
+    "total_chunks": 93,
+    "char_count": 985,
+    "word_count": 136,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "900b16b6-143b-423b-8cfb-3e3da58fa916",
+    "text": "Video-llama: An instruction-tuned audio-visual language\nmodel for video understanding. In Proceedings of the 2023 conference on empirical methods\nin natural language processing: system demonstrations, pages 543–553, Stroudsburg, PA, 2023. Association for Computational Linguistics. 1, 3 Jiawei Zhang, Tianyu Pang, Chao Du, Yi Ren, Bo Li, and Min Lin. Benchmarking large multimodal\nmodels against common corruptions. arXiv preprint arXiv:2401.11943, 2024. 2 Wenqi Zhang, Mengna Wang, Gangao Liu, Xu Huixin, Yiwei Jiang, Yongliang Shen, Guiyang Hou,\nZhe Zheng, Hang Zhang, Xin Li, et al. Embodied-reasoner: Synergizing visual search, reasoning,\nand action for embodied interactive tasks. arXiv preprint arXiv:2503.21696, 2025. 3 Baining Zhao, Jianjie Fang, Zichao Dai, Ziyou Wang, Jirong Zha, Weichen Zhang, Chen Gao,\nYue Wang, Jinqiang Cui, Xinlei Chen, et al.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 40,
+    "total_chunks": 93,
+    "char_count": 859,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "332773e8-deb9-4b71-afbe-a30826e382a9",
+    "text": "Urbanvideo-bench: Benchmarking vision-language\nmodels on embodied intelligence with video data in urban spaces. In Proceedings of the Association for Computational Linguistics (ACL), pages 1–10, Stroudsburg, PA, 2025a. Association for\nComputational Linguistics. 2, 3, 7, 17 Baining Zhao, Ziyou Wang, Jianjie Fang, Chen Gao, Fanhang Man, Jinqiang Cui, Xin Wang, Xinlei\nChen, Yong Li, and Wenwu Zhu. Embodied-r: Collaborative framework for activating embodied\nspatial reasoning in foundation models via reinforcement learning. In Proceedings of the 33rd\nACM International Conference on Multimedia, pages 1–10, New York, NY, 2025b. Shuai Zhao, Xiaohan Wang, Linchao Zhu, and Yi Yang.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 41,
+    "total_chunks": 93,
+    "char_count": 680,
+    "word_count": 95,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6648f9d4-a793-4b97-9548-d9bb26d2b63b",
+    "text": "Test-time adaptation with clip reward for\nzero-shot generalization in vision-language models. In Proceedings of the International Conference\non Learning Representations (ICLR), pages 1–10. OpenReview.net, 2024. 3 Yunqing Zhao, Tianyu Pang, Chao Du, Xiao Yang, Chongxuan Li, Ngai-Man Cheung, and Min Lin. On evaluating adversarial robustness of large vision-language models. In Advances in Neural\nInformation Processing Systems (NeurIPS), pages 1–10, Red Hook, NY, 2023. Curran Associates,\nInc. 3",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 42,
+    "total_chunks": 93,
+    "char_count": 495,
+    "word_count": 67,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dfcadec3-c7da-44dd-b45e-bf5606d62886",
+    "text": "Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan Zhuang, Zhanghao Wu, Yonghao Zhuang,\nZi Lin, Zhuohan Li, Dacheng Li, Eric Xing, et al. Judging llm-as-a-judge with mt-bench and\nchatbot arena. In Advances in Neural Information Processing Systems (NeurIPS), pages 1–10, Red\nHook, NY, 2023. Curran Associates, Inc. 7 Wanqi Zhou, Shuanghao Bai, Danilo P. Mandic, Qibin Zhao, and Badong Chen. Revisiting the\nadversarial robustness of vision language models: a multimodal perspective. arXiv preprint Yiyang Zhou, Yangfan He, Yaofeng Su, Siwei Han, Joel Jang, Gedas Bertasius, Mohit Bansal, and\nHuaxiu Yao. Reagent-v: A reward-driven multi-agent framework for video understanding. In\nAdvances in Neural Information Processing Systems (NeurIPS), pages 1–10, Red Hook, NY, 2025. Curran Associates, Inc. 3",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 43,
+    "total_chunks": 93,
+    "char_count": 796,
+    "word_count": 115,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4ebe7f64-d855-4453-848b-7f17fbc60d2a",
+    "text": "B Full Details of Dataset Construction 17 B.1 Source Dataset Integration . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17 B.2 Video Perturbation Generation System . . . . . . . . . . . . . . . . . . . . . . . . 19 C Prompt Templates 19 C.1 Alignment Reward Prompts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20 C.2 Difficulty Assessment Judge Prompt . . . . . . . . . . . . . . . . . . . . . . . . . 20 C.3 Complete Reward Computation Pipeline . . . . . . . . . . . . . . . . . . . . . . . 20 E Additional Experimental Results 24 F Additional Case Study 28 G Time Complexity Analysis 28 G.1 Per-Step Cost Decomposition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28 G.2 Amortized Cost Savings from Curriculum . . . . . . . . . . . . . . . . . . . . . . . 31 G.3 Wall-Clock Time Measurements . . . . . . . . . . . . . . . . . . . . . . . . . . . 32 G.4 Amortized Memory Re-evaluation Cost . . . . . . . . . . . . . . . . . . . . . . . 33 H Analysis of Reward Modeling Design 33",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 44,
+    "total_chunks": 93,
+    "char_count": 1021,
+    "word_count": 318,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2d7a4195-b246-4ce9-9eef-69cda2f610b1",
+    "text": "H.1 Motivation: Why Multi-Component Rewards? . . . . . . . . . . . . . . . . . . . . 33 H.2 Alignment Reward: Optimizing Geodesic distance . . . . . . . . . . . . . . . . . 34 H.3 Interaction Between Reward Components and Curriculum . . . . . . . . . . . . . 34 H.4 Comparison with Alternative Reward Designs . . . . . . . . . . . . . . . . . . . . 35 I Theoretical Analysis 36 While the proposed composite reward design proves effective in practice, several design choices\nwarrant further investigation. First, both the format reward and accuracy reward are binary (0\nor 1), offering no partial credit for nearly correct answers or partially well-structured outputs; a\nsofter, continuous reward signal could provide richer gradients for GRPO optimization. Second, the\nproposed reward components are combined with equal weights, but the optimal balance among format\ncompliance, answer correctness, and cross-branch alignment may vary across perturbation types\nand reasoning complexity. For simplicity, our framework does not adaptively adjust these weights\nduring training.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 45,
+    "total_chunks": 93,
+    "char_count": 1073,
+    "word_count": 197,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6ae8692d-9f80-4397-80c6-eac7d1ccbcde",
+    "text": "Third, the alignment reward relies on an external LLM judge to assess semantic\nconsistency between clean and perturbed outputs, which introduces a dependency on the judge's\nown capability and potential biases; although we show that open-source alternatives (Qwen3-13B)\nyield comparable results, the reward signal remains bounded by the judge model's understanding of\ndomain-specific reasoning. Fourth, our reward operates only at the holistic output level, evaluating the\nfinal answer and the overall reasoning trace, without providing step-level feedback on intermediate\nreasoning quality. As our ablation study confirms, more fine-grained reward designs, such as steplevel consistency checks, tend to introduce variance that destabilizes GRPO training. Addressing this\nchallenge between reward granularity and optimization stability, for instance, through hierarchical or\ncurriculum-based reward shaping, remains an important direction for future work.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 46,
+    "total_chunks": 93,
+    "char_count": 954,
+    "word_count": 127,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6bf51e20-c22f-4b9f-929c-739c29804724",
+    "text": "B Full Details of Dataset Construction This section provides comprehensive documentation of the PVRBench benchmark construction,\nincluding data sources, curation methodology, perturbation generation algorithms, and quality assurance protocols. Our benchmark integrates and augments two established embodied video reasoning\ndatasets, UrbanVideo-Bench [Zhao et al., 2025a] and VSI-Bench [Yang et al., 2025a], to create\nthe first large-scale robustness evaluation benchmark for video reasoning under realistic visual\nperturbations. B.1 Source Dataset Integration PVRBench is constructed by systematically combining the complete video corpora and questionanswer annotations from two complementary benchmarks, resulting in a unified evaluation framework\nspanning both outdoor urban navigation and indoor spatial reasoning scenarios (Fig. 7). B.1.1 UrbanVideo-Bench UrbanVideo-Bench [Zhao et al., 2025a] is an embodied video reasoning benchmark specifically\ndesigned for evaluating Video-LLMs on aerial agent motion in urban open-ended three-dimensional\nspaces. The benchmark addresses a critical gap in existing evaluations by focusing on the unique\nchallenges of drone-based navigation in complex urban environments.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 47,
+    "total_chunks": 93,
+    "char_count": 1212,
+    "word_count": 153,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d92ec038-4dd4-40e9-8345-6f993cccc4e4",
+    "text": "Data Collection Sources. The video corpus comprises 1,547 video clips collected from three\ndistinct sources: Real-World Drone Footage (Guangdong Province, China): Videos captured using two DJI Mini\n4K drones operated by experienced pilots with over 1,000 hours of flight time. Data collection was\nconducted in Shenzhen and Zhaoqing, covering diverse urban landscapes including commercial\ndistricts, residential areas, parks, and waterfront regions.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 48,
+    "total_chunks": 93,
+    "char_count": 448,
+    "word_count": 61,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9a83101c-8453-43fd-a254-bde295c1d080",
+    "text": "Resolution: 1280 × 720 pixels. EmbodiedCity Simulator: A high-fidelity simulation environment built on Unreal Engine using\nreal Beijing city data. The simulator provides realistic 3D urban modeling with over 100 categories\nof micro urban elements (buildings, vehicles, pedestrians, signage, etc.). Resolution: 960 × 720\npixels. AerialVLN Simulator: A virtual urban environment specifically designed for aerial visionlanguage navigation research, built on Unreal Engine with AirSim integration for realistic drone\nphysics. Resolution: 520 × 520 pixels. VSI-Bench Problem Type Distribution\nUrbanVideo VQA Problem Type Distribution\nSize Estimation 20.7%\n22.7% Action Generation\nAbsolute Distance 14.5% Landmark Position 16.8%\nProgress Evaluation 14.5% Relative Distance 14.5% 7.8% Trajectory Captioning\nGoal Detection 5.9% Direction (Medium) 11.7%\nTypes High-levelCognitivePlanningMap 4.7%5.1% Object Counting 11.3%\nAssociation Reasoning 4.3% Appearance Order 10.9%\nStart/End Position 2.7%\nCounterfactual 2.3% Direction (Hard) 9.4%\n2.3% Duration\n2.3% Room Size Estimation 3.1% Size Estimation (20.7%)Problem Object Recall\n2.3% Proximity\nCausal 2.3% ActionLandmarkGenerationPosition (22.7%)(16.8%) Route Planning 2.7% AbsoluteRelative DistanceDistance (14.5%)(14.5%)\nScene Recall 2.0% Progress Evaluation (14.5%) Direction (Easy) 1.2% Other Types (1.2 11.7%)\nSequence Recall 2.0% Other Types (2.0 7.8%)\n0 5 10 15 20 25 0 5 10 15 20 25\nSampling Ratio (%) Sampling Ratio (%) (a) UrbanVideo-Bench QA type distribution. Action (b) VSI-Bench QA type distribution. Size EstimaGeneration (22.7%), Landmark Position (16.8%), and tion (20.7%) and distance tasks (29.0% combined) are\nProgress Evaluation (14.5%) dominate, reflecting the most prevalent, reflecting the spatial measurement fonavigation-centric design. cus. Figure 7: Question-answer type distributions for PVRBench source datasets. The complementary\ndistributions - UrbanVideo emphasizing navigation/action and VSI-Bench emphasizing spatial perception - together provide comprehensive coverage of embodied video reasoning capabilities. Table 5: Complete task taxonomy for UrbanVideo-Bench with 16 tasks across 4 cognitive ability\ncategories. Category Task Description Trajectory Captioning Summarize agent movement using visual landmarks\nSequence Recall Identify next action after specific movement\nRecall Object Recall Locate objects relative to landmarks\nScene Recall Describe observations during specific actions\nStart/End Position Identify journey origin and destination",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 49,
+    "total_chunks": 93,
+    "char_count": 2525,
+    "word_count": 320,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d5b2ba09-49b6-4226-b0b9-8ffe7b00b22f",
+    "text": "Proximity Track distance changes to landmarks\nDuration Compare temporal duration of movements\nPerception Landmark Position Determine egocentric position relative to goals\nGoal Detection Identify if/where destination is visible\nCognitive Map Summarize spatial environment layout Causal Explain reasons for specific movements\nReasoning Counterfactual Evaluate alternative action consequences\nAssociation Identify relevant objects when the goal is not visible Progress Evaluation Assess current step in navigation route\nNavigation High-level Planning Determine next waypoint toward goal\nAction Generation Output specific control actions Video Characteristics. The collected videos span a wide range of characteristics. Their durations\nvary from 10 seconds to 10 minutes, with a mean length of 87.3s and a median of 52.1s, and frame\nrates range from 24 to 30 fps depending on the source.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 50,
+    "total_chunks": 93,
+    "char_count": 883,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1e93c0ff-cecc-468f-81a0-4500dc898b85",
+    "text": "All videos are captured using a single\nforward-facing camera mounted on a gimbal that supports a downward tilt between 0◦and 90◦. In\nterms of motion, the videos feature purposeful navigation trajectories, including ascent and descent,\nhorizontal translation, rotation, as well as compound movements that combine multiple motion types. UrbanVideo-Bench defines 16 task types organized into four cognitive ability\ncategories, as shown in Tab. 5. VSI-Bench (Visual Spatial Intelligence Benchmark) [Yang et al., 2025a] evaluates spatial reasoning\ncapabilities from egocentric video perspectives in indoor environments. The benchmark focuses on Table 6: VSI-Bench scene category distribution across 288 videos. Scene Type Proportion Characteristics Living Rooms 22.1% Social spaces with seating, entertainment systems\nBedrooms 19.3% Sleeping areas with beds, wardrobes, personal items\nKitchens 18.4% Cooking areas with appliances, countertops, cabinets\nOffices 15.8% Workspaces with desks, chairs, equipment\nBathrooms 12.7% Sanitary facilities with fixtures\nHallways/Other 11.7% Transitional spaces and miscellaneous areas",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 51,
+    "total_chunks": 93,
+    "char_count": 1117,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f2550500-1594-4f6a-8ee1-a12811a3d06c",
+    "text": "Table 7: VSI-Bench task distribution with spatial reasoning focus. Size Estimation 20.7% Estimate absolute dimensions of objects\nAbsolute Distance 14.5% Measure distance between camera and objects\nRelative Distance 14.5% Compare distances to multiple objects\nDirection (Medium) 11.7% Determine object directions with moderate complexity\nObject Counting 11.3% Count instances of object categories\nAppearance Order 10.9% Sequence objects by order of appearance\nDirection (Hard) 9.4% Complex directional reasoning with occlusions\nRoom Size Estimation 3.1% Estimate room dimensions\nRoute Planning 2.7% Plan navigation paths through spaces\nDirection (Easy) 1.2% Simple directional questions fundamental spatial cognition tasks that require understanding of 3D space from sequential visual\nobservations. VSI-Bench aggregates videos from three public indoor scene datasets: ARKitScenes,\nwhich provides real-world indoor scans captured using Apple ARKit; ScanNet, a widely used dataset\nof RGB-D indoor scene reconstructions; and 3RScan, a large-scale real-world indoor dataset enriched\nwith instance-level annotations. The 288 videos span six indoor environment types, as detailed in Tab. 6. VSI-Bench defines 11 spatial reasoning tasks, as shown in Tab. 7.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 52,
+    "total_chunks": 93,
+    "char_count": 1249,
+    "word_count": 167,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "320f0ac3-7545-406b-8b85-a47ec7989942",
+    "text": "B.2 Video Perturbation Generation System We develop a comprehensive video perturbation system that generates semantically coherent, temporally consistent, and physically plausible visual corruptions. Unlike generic image augmentation\ntechniques (e.g., random cropping, color jittering, and Gaussian noise), our system models realistic\ndisturbances that preserve the answerable nature of questions while challenging model robustness.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 53,
+    "total_chunks": 93,
+    "char_count": 432,
+    "word_count": 52,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fb552c69-4325-4bee-a310-b487ab6a798b",
+    "text": "B.2.1 System Architecture Overview The perturbation system comprises four specialized modules organized in a modular pipeline architecture. Each module can be applied independently or in combination, with perturbation type sampled\nuniformly from M = {lighting, camera, occlusion, weather}. This section documents the complete prompt templates used in ROVA for alignment reward computation and self-reflective difficulty assessment. Table 8: Video perturbation system architecture overview. Input video V = {f1, . . . , fT } is transformed to perturbed video V ′ = {f1,′ . . . , fT′ } via one of four modules. Module Effects Real-World Scenario Lighting Dusk, Night, Overexposure, Shadow Time-of-day changes, exposure errors\nCamera Motion Translation, Zoom, Rotation Handheld shake, platform instability\nOcclusion Static, Dynamic Lens obstruction, passing objects\nWeather Fog, Rain, Snow Atmospheric conditions",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 54,
+    "total_chunks": 93,
+    "char_count": 909,
+    "word_count": 129,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f61d193d-33d1-4c29-b971-81c5b631e91e",
+    "text": "C.1 Alignment Reward Prompts As shown in Algorithm 2, the alignment reward rAj evaluates the consistency between outputs from\nthe original and perturbed video branches by decomposing it into two complementary components:\nanswer-level consistency and reasoning-level consistency, both assessed using GPT-4o. For answer consistency, the evaluator employs a strict binary matching rule: if the candidate answer\nexactly matches or is semantically equivalent to the reference answer (e.g., \"0\" vs. \"zero\"), a score of\n1.0 is assigned; otherwise, the score is 0.0, with no partial credit allowed (see answer consistency\nprompt template (Fig. 8)). For reasoning consistency, a three-tier scoring scheme is used: a score of 1.0 indicates that the\ncandidate reasoning is fully consistent with the reference, allowing for paraphrasing and minor\nomissions; 0.5 indicates general consistency but includes unsupported additions or missing key\nsteps; and 0.0 indicates contradiction or hallucination of core facts. Critically, scoring is based\nsolely on the reasoning process, independent of the final answer (see reasoning consistency prompt\ntemplate (Fig. 9)). Together, these two metrics - answer matching and reasoning alignment - enable a fine-grained evaluation of output consistency under perturbation, promoting both semantic robustness and reasoning\nfidelity in the model.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 55,
+    "total_chunks": 93,
+    "char_count": 1367,
+    "word_count": 195,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7447f2af-e9e0-441a-9b10-3ea912dd0d47",
+    "text": "C.2 Difficulty Assessment Judge Prompt Fig. 10 illustrates the self-reflective difficulty assessment that employs an LLM judge to determine\nsample answerability under visual perturbations. The LLM receives a binary assessment prompt\nthat strictly constrains it to evaluate only using the masked video. If the masked video provides\nsufficient information to reliably answer the given question, the LLM must output YES; otherwise,\nit must output NO. Following this judgment, samples classified as YES are treated as easy with\nlow confidence or informative difficulty and are retained for training, while those classified as NO\nare deemed hard and are placed into a buffer for later re-evaluation—thereby enabling an adaptive,\ndifficulty-aware curriculum that dynamically prioritizes informative training instances and defers\noverly challenging ones until the model is better equipped to handle them.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 56,
+    "total_chunks": 93,
+    "char_count": 897,
+    "word_count": 129,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b562f5d5-a403-4f83-9c5e-371727341f9c",
+    "text": "C.3 Complete Reward Computation Pipeline Algorithm 1 details the complete reward computation pipeline used in ROVA. Given a paired output\n(oj, ˜oj) generated from the original and perturbed video branches, the pipeline proceeds in five\nsequential steps. First, format validation checks whether the output adheres to the required First,\nformat validation checks whether the output adheres to the required format:",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 57,
+    "total_chunks": 93,
+    "char_count": 411,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0d169e5c-09fe-4de1-9fd9-c9c812be9bf4",
+    "text": "<think>· · · </think><answer>· · · </answer> Second, the reasoning trace and final answer are extracted from both branches. Third, a binary\naccuracy reward rAccj is computed by comparing the extracted answer against the ground truth. Fourth, two alignment rewards are obtained via GPT-4o: a three-tier reasoning consistency score\nralign,rj ∈{0, 0.5, 1} that evaluates whether the key logical steps are preserved across branches, and a\nbinary answer consistency score ralign,aj ∈{0, 1} that checks semantic equivalence of the final answers. Finally, these components are aggregated into the total reward Rj = rFj +rAccj +αr·ralign,rj +αa·ralign,aj , ▷Answer Consistency Evaluation Prompt [Task]\nYou are a strict evaluator responsible for assessing whether the candidate answer matches\nthe reference answer. Score consistency only based on whether the CANDIDATE ⟨answer⟩\nis semantically identical to the REFERENCE ⟨answer⟩. Do not consider reasoning quality,\nexplanation depth, or stylistic differences. [Evaluation Criteria]\nRate the answer on a binary scale:\n• Score 1.0: The candidate answer is exactly the same as, or clearly equivalent to, the\nreference answer (e.g., \"0\" vs. \"zero\", \"NYC\" vs. \"New York City\").\n• Score 0.0: The candidate answer differs from the reference answer in any substantive\nway.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 58,
+    "total_chunks": 93,
+    "char_count": 1306,
+    "word_count": 195,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ea373e25-656c-4dc3-bcd3-189f79077e8b",
+    "text": "Do not reward partial credit. Minor formatting or punctuation differences should be tolerated,\nbut semantic mismatches must receive a score of 0.0. [Input]\n• Reference Answer: {reference_answer}\n• Candidate Answer: {candidate_answer} [Output Format]\nReturn a JSON object with the following fields. Only output the JSON object - no explanations,\nno justifications, and no extra text of any kind. {\"score\": 0.0 or 1.0,\n\"match_type\": \"exact\" or \"equivalent\" or \"mismatch\"} Figure 8: Answer consistency evaluation prompt for binary answer matching. Algorithm 1 Alignment Reward Computation Require: Output pair (oj, ˜oj) from original and perturbed branches, ground truth g\nEnsure: Total reward Rj\n1: Step 1: Format Validation\n2: rFj ←regex_match(oj, \"<think>.*</think>.*<answer>.*</answer>\")\n3: Step 2: Extract Components\n4: pj ←extract(oj, \"<think>\"); aj ←extract(oj, \"<answer>\")\n5: ˜pj ←extract(˜oj, \"<think>\"); ˜aj ←extract(˜oj, \"<answer>\")\n6: Step 3: Accuracy Reward\n7: rAccj ←1[aj = g]\n8: Step 4: Alignment Rewards via GPT-4o\n9: ralign,rj ←GPT4o(reasoning_prompt, pj, ˜pj) {∈{0, 0.5, 1}}\n10: ralign,aj ←GPT4o(answer_prompt, aj, ˜aj) {∈{0, 1}}\n11: Step 5: Aggregation\n12: rAj ←αr · ralign,rj + αa · ralign,aj\n13: Rj ←rFj + rAccj + rAj\n14: Return Rj where the asymmetric weights αr = 0.3 and αa = 0.7 prioritize answer-level robustness while still\nencouraging reasoning fidelity (see Sec. D for detailed hyperparameter specifications). ▷Reasoning Consistency Evaluation Prompt [Task]\nYou are a strict evaluator responsible for assessing whether the candidate reasoning is consistent with the reference reasoning. Score consistency only based on whether the CANDIDATE\n⟨think⟩matches the REFERENCE ⟨think⟩in key evidence and logical steps. Do not evaluate\nthe correctness of the final answer.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 59,
+    "total_chunks": 93,
+    "char_count": 1790,
+    "word_count": 258,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1e3c99fa-9a88-42a1-899e-3ee27d0fc05e",
+    "text": "[Evaluation Criteria]\nRate the reasoning on a three-tier scale:\n• Score 1.0: The candidate reasoning is consistent with the reference up to paraphrasing\nand minor omissions. All key observations and logical steps are preserved.\n• Score 0.5: The candidate reasoning is mostly consistent but contains unsupported additions, missing key intermediate steps, or minor logical deviations.\n• Score 0.0: The candidate reasoning contradicts core observations from the reference or\nhallucinates key facts not present in the reference. [Evaluation Guidelines]\n• Focus exclusively on the reasoning process — ignore the final answer.\n• Tolerate stylistic and structural differences if the underlying logic is equivalent.\n• Penalize fabricated evidence or contradictions to reference observations. [Input]\n• Reference Reasoning: {reference_think}\n• Candidate Reasoning: {candidate_think} [Output Format]\nReturn a JSON object with the following fields. Only output the JSON object — no explanations, no justifications, and no extra text of any kind. {\"score\": 0.0 or 0.5 or 1.0,\n\"justification\": \"<explanation>\"} Figure 9: Reasoning consistency evaluation prompt with three-tier scoring.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 60,
+    "total_chunks": 93,
+    "char_count": 1172,
+    "word_count": 164,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5f0c64f9-4b82-4bae-ae52-b85d3b860e04",
+    "text": "All hyperparameters used in ROVA are summarized in Fig. 11. For the reward function, the alignment\ncomponent assigns αr = 0.3 to reasoning consistency and αa = 0.7 to answer consistency, reflecting\nthe greater difficulty of strict reasoning alignment while prioritizing answer robustness; the base\nreward uses binary format and accuracy terms (wF = wAcc = 1.0) with KL regularization β = 0.01\nand Kmax = 537. For GRPO training, ordered and shuffled group sizes G = 8 and ˜G = 4 ensure\nreliable advantage estimation, PPO clipping ϵ = 0.2 with gradient norm 1.0 stabilizes policy updates,\nand GAE λGAE = 0.95 with γ = 0.99 yields a favorable bias–variance trade-off. For the difficultyaware curriculum, confidence threshold τ = 0.8 with bounds amin = 0.3 and amax = 0.85 governs\nsample selection, while the buffer permits Nmax = 3 replay attempts over at most |M|max = 1000\nsamples with re-evaluation every 50 steps. Training uses 16 frames at 128×28×28 (32 frames at\n256×28×28 at inference), AdamW with lr = 1×10−5 and cosine schedule on 4×A100 (80GB)\nGPUs, with 1 SFT epoch and 300 RL steps. D.0.1 Hyperparameter Sensitivity Analysis We conduct ablation studies on key hyperparameters to validate our design choices, as shown in Fig 9. The results indicate that setting the alignment weights to αr = 0.3 and αa = 0.7, which prioritizes\nanswer alignment, leads to improved downstream accuracy while preserving reasoning quality. A\nconfidence threshold of τ = 0.8 provides an effective balance: lower thresholds retain an excessive ▶LLM Judge Prompt for Difficulty Assessment [Task]\nYou may ONLY use the MASKED video to judge. [Evaluation Criteria]\n• If the masked video DOES give enough information to reliably answer, respond: YES.\n• If the masked video does NOT give enough information, respond: NO.\n• Additionally, provide a confidence score in [0.0, 1.0] (one decimal place) reflecting how\ncertain you are in your judgment. Reply with ONE WORD and ONE NUMBER only. [Input]\n• Question: {question_text} \"answer\": \"YES or NO\",\n\"confidence\": 0.0",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 61,
+    "total_chunks": 93,
+    "char_count": 2044,
+    "word_count": 334,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3c532011-3ed8-4629-9ff9-03e0699d9e9f",
+    "text": "Figure 10: LLM judge prompt for binary answerability assessment under perturbation. The confidence\nscore controls the sample discard rate via threshold τ. Algorithm 2 ROBUST VIDEO ALIGNMENT (ROVA)\nRequire: Policy Fθ, buffer M=∅, data D, params (α, τ, Kmax, G)\n# Self-Reflective Difficulty-Aware Training\n1: for (q, V ) ∼D do\n2: ˜V ←PERTURB(V ) ▷Spatio-temporal corruption\n3: {oj}Gj=1 ∼Fθ(·|q, V ); {˜oj}Gj=1 ∼Fθ(·|q, ˜V ) ▷Dual-branch\n4: Rj ←rj + α·SIM(oj, ˜oj); Aj ←(Rj−¯R)/σR ▷Alignment reward\n5: Fθ ←GRPOSTEP(Fθ, {Ai}) ▷Policy update\n6: (d, c) ←F(q, ˜V , Se; θ) ▷Self-assessment\n7: if d=HARD then\n8: M ←M ∪{(q, ˜V , 0)} ▷Buffer hard sample\n9: else if d=EASY ∧c>τ then\n10: skip ▷Prune mastered\n11: end if\n12: # Difficulty Re-Evaluation\n13: only when the memory is full or after sufficient iterations:\n14: for (q, ˜V , n) ∈M do\n15: d′ ←A(q, ˜V , θcurr); n ←n+1\n16: if d′ =INFORMATIVE then\n17: Train on (q, ˜V ); remove from M ▷Promote\n18: else if d′ =EASY or n>Nmax then\n19: Remove from M ▷Evict\n20: end if\n21: end for\n22: end for number of easy samples, whereas higher thresholds discard valuable training signals. We find that\na group size of G = 8 is sufficient to ensure stable advantage estimation, with larger group sizes\nyielding diminishing returns. Finally, a perturbation intensity of η = 0.7 achieves an appropriate Hyperparameter Sensitivity Analysis r G\n42 42 42 42\n40.2\n40 40 40 40\n38.7\n38.2 (%)\n38 37.9 39.1 38 39.1 38 39.1 37.8 38 37.4 39.1\nAcc 36.8\n36.2\n36 36 36 36 34 34 34 34\n0.1 0.3 0.5 0.6 0.8 0.95 4 8 16 0.5 0.7 0.9 Figure 11: Hyperparameter sensitivity analysis of ROVA on the validation set, illustrating the effect\nof key training hyperparameters on model performance. Table 9: Hyperparameter sensitivity analysis on the PVRBench validation set for Qwen2.5-VL-7B\nafter the first training epoch. Best values are highlighted in bold. Hyperparameter Value Avg. 0.1 36.2\nαr (reasoning weight) 0.3 39.1\n0.5 37.8 0.6 37.4\nτ (confidence threshold) 0.8 39.1\n0.95 38.2",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 62,
+    "total_chunks": 93,
+    "char_count": 1986,
+    "word_count": 349,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6102197b-3551-43ea-ba2e-35bece5e0531",
+    "text": "4 37.9\nG (group size) 8 39.1\n16 38.7 0.5 40.2\nη (perturbation intensity) 0.7 39.1\n0.9 36.8 balance between challenge and solvability - lower intensities fail to sufficiently enhance robustness,\nwhile higher intensities render samples unanswerable. E Additional Experimental Results Fine-Grained Performance Analysis. We further analyze ROVA's performance through complementary perspectives (Figs. 14 to 18), which present radar charts comparing per-task accuracy of\nROVA against the baselines across multiple task categories, revealing consistent improvements in\nhigh-level planning and associative reasoning. Fig. 12 shows the impact of input frame count on\nrobustness: increasing frames from 16 to 64 improves both baseline and ROVA performance across\nall perturbation types, confirming the benefit of longer temporal context. Notably, ROVA consistently\noutperforms the baseline at every frame count, indicating that our framework learns more robust\nrepresentations rather than merely exploiting additional frames. Evolution of Reasoning and Answer Rewards. We examine the reward dynamics of core components during ROVA training (Fig. 13). The total reward converges stably, while decomposed rewards\nshow distinct patterns: accuracy reward rises rapidly and plateaus, reflecting task-specific learning;\nreasoning reward grows gradually, indicating deeper semantic understanding; and temporal reward\nshows gradual growth with the lowest variation rate among all components, acting as a temporal\nregularizer. This confirms that each component effectively guides different learning aspects.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 63,
+    "total_chunks": 93,
+    "char_count": 1589,
+    "word_count": 215,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "59289921-8de8-4b3c-a10a-efa88750c576",
+    "text": "Cross-Benchmark Evaluation. Fig. 19 compares ROVA against baselines on the VisBench and\nUrbanVideo benchmarks under various perturbation types. Our method achieves consistent improvements across both benchmarks, with average accuracy gains of +14.6% on VisBench and +12.9% on\nUrbanVideo, demonstrating strong cross-benchmark generalization. Baseline ROVA\n16F 32F 48F 64F 16F 32F 48F 64F\n0.50\n0.45 Score\n0.40\n0.35\n0.30\n0.25 Performance\n0.20 Original Weather Occlusion Shake Lighting\nCondition Figure 12: Performance of ROVA vs. baseline on Qwen2.5-VL-7B across varying frame counts (F =\nNumber of Frames). ROVA outperforms the baseline at every frame count. ROVA Training Reward Curves\n2.5 Accuracy Reward Temporal Reward Table 10: The stability of easy-classified samples\nFormat Reward Total Reward\nfor Qwen2.5-VL-7B\n2.0\nRetain Rate (%) ↑ Confidence ↑ 1.5 Step\nEp.1 Ep.2 Ep.3 Ep.1 Ep.2 Ep.3Reward1.0\n0 – – – – – –\n0.5 50 82.3 86.1 89.4 0.71 0.74 0.77\n100 87.5 90.2 92.8 0.73 0.78 0.81\n0.0 150 91.2 93.6 95.1 0.76 0.81 0.84\n0 50 100 150 200 250\nTraining Steps 200 93.8 95.2 96.3 0.79 0.83 0.86 250 95.1 96.0 96.8 0.81 0.85 0.88\nFigure 13: First epoch of Qwen-VL-2.5-7B train- 300 95.4 96.2 97.1 0.82 0.86 0.89\ning, the reward curves of ROVA Stability of Easy-Classified Samples. Tab. 10 further quantifies the stability of easy-sample classification. Easy samples are re-evaluated at each training step; the retention rate measures the proportion\nthat remain classified as easy upon re-evaluation, while the confidence score reflects the model's\ncertainty in its classification. Both metrics increase steadily over training, with the retention rate\nreaching 97.1% and confidence reaching 0.89 by step 300 (epoch 3), confirming that the self-reflective\nevaluation mechanism becomes increasingly reliable as training progresses. Analyses of Self-Reflective Evaluation. We analyze the discarding statistics across training runs\nand track the evolving proportions of medium, difficult, and easy samples throughout training. Difficult samples consistently exhibit the highest retention rate, confirming their role as persistent\nlearning bottlenecks that require sustained attention. In contrast, easy samples show lower and more\nvariable retention, highlighting their context-dependent utility -once learned, they act as reusable\nprimitives that facilitate generalization.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 64,
+    "total_chunks": 93,
+    "char_count": 2366,
+    "word_count": 348,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e730db4a-6f56-4bd0-90f9-e1a0b96274e2",
+    "text": "This evolving behavior is further quantified in Tab. 11. As\ntraining progresses, both pairwise overlap rates and all-epoch overlap increase substantially, while the\nconsistency ratio improves from 0.68 to 0.88, demonstrating that easy-sample identification becomes\nincreasingly stable over time. This growing stability reinforces that easy samples transition from\nbeing context-sensitive to consolidated, transferable knowledge units. Collectively, these patterns\nvalidate the difficulty estimation mechanism and reveal the curriculum's adaptive nature, where\nchallenging samples persistently push the learning frontier while easier ones consolidate and transfer\nacquired knowledge, enabling efficient and robust representation learning.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 65,
+    "total_chunks": 93,
+    "char_count": 737,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "81de0d52-28ba-4f61-a717-ae27e7020b55",
+    "text": "(a) PVRBench (Outdoor) (b) PVRBench (Indoor)\nRel. Object Duration (Easy) Recall Causal\nCounter- 0.8 0.8 factual Proximity\nRoute Rel. Cognitive Plan (Hard)\nCaption 0.4 Map 0.4 High-level Scene\nPlanning Recall Goal Sequence\nDetect Recall Rel. Distance (Medium)\nAction Start/End\nGen. Baseline + ROVA (Ours) Figure 14: Per-task accuracy comparison of QwenVL-2.5-7B baseline vs. +ROVA on indoor spatial\nreasoning (left) and outdoor urban navigation (right) tasks, where the inner curve denotes the baseline,\nand the outer curve denotes +ROVA. PVRBench (Indoor) PVRBench (Outdoor)\nRel. Dir.\n(Easy) Object Duration Recall Causal\nCounter-\n0.6 fact. 0.6 Proximity Route Rel. Plan 0.4 (Hard) Traj. 0.4 Cog. Caption Map\n0.2 0.2\nHigh-lvl Scene\nPlan. Detect Recall\nDist. (Med.) Action Start/End\nGen.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 66,
+    "total_chunks": 93,
+    "char_count": 786,
+    "word_count": 116,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c1c61f55-03e3-4c85-85e8-efc805c1ccd7",
+    "text": "Figure 15: Per-task accuracy comparison of Embodied-R-7B baseline vs. +ROVA on indoor spatial\nreasoning (left) and outdoor urban navigation (right) tasks, where the inner curve denotes the baseline,\nand the outer curve denotes +ROVA. PVRBench (Indoor) PVRBench (Outdoor)\nRel. Dir.\n(Easy) Object Duration Recall Causal\nCounter-\n0.6 fact. 0.6 Proximity Route Rel. Plan 0.4 (Hard) Traj. 0.4 Cog. Caption Map\n0.2 0.2\nHigh-lvl Scene\nPlan. Detect Recall\nDist. (Med.) Action Start/End\nGen.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 67,
+    "total_chunks": 93,
+    "char_count": 482,
+    "word_count": 72,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "066a5595-f401-4992-8979-bc76e75f1870",
+    "text": "Figure 16: Per-task accuracy comparison of InternVL2.5-8B baseline vs. +ROVA on indoor spatial\nreasoning (left) and outdoor urban navigation (right) tasks, where the inner curve denotes the baseline,\nand the outer curve denotes +ROVA. PVRBench (Indoor) PVRBench (Outdoor)\nRel. Dir.\n(Easy) Object Duration Recall Causal\nCounter-\n0.6 fact. 0.6 Proximity Route Rel. Plan 0.4 (Hard) Traj. 0.4 Cog. Caption Map\n0.2 0.2\nHigh-lvl Scene\nPlan. Detect Recall\nDist. (Med.) Action Start/End\nGen. Figure 17: Per-task accuracy comparison of Qwen2.5-VL-72B baseline vs. +ROVA on indoor spatial\nreasoning (left) and outdoor urban navigation (right) tasks, where the inner curve denotes the baseline,\nand the outer curve denotes +ROVA. Qwen3-VL-13B (Indoor) Qwen3-VL-13B (Outdoor)\nRel.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 68,
+    "total_chunks": 93,
+    "char_count": 768,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "14a7defb-596a-4009-b9a4-a21e48ff044b",
+    "text": "Dir.\n(Easy) Object Duration Recall Causal\nCounter-\n0.6 fact. 0.6 Proximity Route Rel. Plan 0.4 (Hard) Traj. 0.4 Cog. Caption Map\n0.2 0.2\nHigh-lvl Scene\nPlan. Detect Recall\nDist. (Med.) Action Start/End\nGen.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 69,
+    "total_chunks": 93,
+    "char_count": 206,
+    "word_count": 33,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1c7382fc-3714-4ef2-b0ad-effa6afd509e",
+    "text": "Figure 18: Per-task accuracy comparison of Qwen3-VL-13B baseline vs. +ROVA on indoor spatial\nreasoning (left) and outdoor urban navigation (right) tasks, where the inner curve denotes the baseline,\nand the outer curve denotes +ROVA. Figure 19: Cross-benchmark evaluation on VisBench and UrbanVideo under various perturbation\ntypes. ROVA achieves +14.6% and +12.9% average accuracy gains, respectively, demonstrating\nconsistent cross-benchmark improvements. Table 11: Consistency of easy-sample identification across training epochs. Pairwise: percentage\nof samples identified as easy in both epochs. All-Epoch: percentage identified as easy in all three\nepochs. Consistency: ratio of samples easy in all epochs to those easy in at least one. Pairwise Overlap (%) All-Epoch Consist. Step Ep.1 ∩Ep.2 Ep.2 ∩Ep.3 Ep.1 ∩Ep.3 Ovlp. (%) Ratio 50 78.4 81.2 76.8 72.1 0.68\n100 83.7 86.5 82.4 78.9 0.74\n150 87.2 89.8 86.1 83.4 0.79\n200 90.5 92.1 89.7 87.2 0.83\n250 92.8 94.3 91.9 89.6 0.86\n300 94.1 95.2 93.5 91.3 0.88 F Additional Case Study Qualitative analyses show that ROVA-trained models develop perturbation-aware reasoning: under\ndense fog (Fig. 20), Qwen2.5-VL-7B recognizes fog-induced depth distortion to correctly estimate a\ncrane at over 200m and conservatively limits visibility to 30m refusing path continuity assumptions;\nunder heavy snowstorm (Fig. 21), InternVL2.5-8B chains multi-frame evidence tracking vertical\nedges (Frames 0–16) for building identification, estimating NW-to-SE wind from snow trajectories\n(Frames 27–38), locating entrances via illuminated ground-floor areas (Frame 50), and selecting 2/3\ntallest-building altitude by reasoning about upper-frame snow density and obscured building tops\n(Frame 0, 4); under sandstorm (Fig. 22), Qwen3-VL-13B shifts from unreliable color cues to structural\nmatching via vertical edge tracking (Frames 0–27) and silhouette cross-referencing to locate the target\nat 10 o'clock while avoiding a 2 o'clock trap, and infers easterly headwind from left-to-right sand\nmovement to plan steeper descent avoiding building turbulence; under sun glare (Fig. 23), Qwen2.5-\nVL-7B identifies overexposed regions as sensor artifacts, confirms target via cross-frame consistency\n(glare shifts while store remains fixed), and plans southeast descent toward shadowed lower-right\nregions avoiding the glare direction—all consistently exhibiting, without explicit supervision, three\nemergent behaviors: (1) explicit perturbation identification naming perturbations in reasoning\ntraces, (2) strategy adaptation modifying approaches per perturbation type (e.g., color-to-structural\ncue switching), and (3) cross-frame evidence integration distributing attention across frames to\ncompensate per-frame information loss, suggesting the dual-branch alignment objective implicitly\nencourages perturbation-aware meta-reasoning as a byproduct of output-consistency optimization. G Time Complexity Analysis We provide a detailed analysis of the computational cost of ROVA and demonstrate that, despite\nintroducing additional components, the difficulty-aware curriculum significantly reduces the effective\ntraining cost compared to a naïve dual-branch baseline that trains on all samples uniformly. G.1 Per-Step Cost Decomposition",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 70,
+    "total_chunks": 93,
+    "char_count": 3259,
+    "word_count": 436,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1c775262-a4ca-4688-8e70-6e9eee2c10e3",
+    "text": "Let N denote the batch size, Gtotal = G + ˜G = 12 the total group size, T the number of frames, L\nthe maximum sequence length, and Cfwd the cost of a single model forward pass on one video-query\npair. We decompose the per-step cost of each training paradigm.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 71,
+    "total_chunks": 93,
+    "char_count": 258,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "178fca1f-6892-4b8e-b54a-75c97f99b8c8",
+    "text": "Standard GRPO (Baseline). Standard GRPO generates Gtotal rollouts per sample from clean video\nonly and performs one backward pass: CGRPO = N · Gtotal · Cfwd + Cbwd, (11) where Cbwd ≈0.5 · N · Gtotal · Cfwd. The coefficient 0.5 arises from the asymmetry between rollout\ngeneration and gradient computation: during generation, each token is decoded autoregressively,\nrequiring a full forward pass per step; in contrast, the backward pass operates on the already-generated\nsequences in a single teacher-forced forward - backward sweep, which can be fully parallelised across\nall token positions. Although the gradient computation itself costs roughly 2× the corresponding Figure 20: Qualitative examples of ROVA-trained Qwen2.5-VL-7B performing depth estimation and\npath continuity reasoning under dense fog conditions. Figure 21: Qualitative examples of ROVA-trained InternVL2.5-8B performing structure recognition\nand visibility-aware altitude control under heavy snowstorm conditions. forward pass [Griewank and Walther, 2008], the teacher-forced forward is substantially cheaper than\nautoregressive decoding (approximately 1/4 to 1/3 of the total generation cost in our setting due to\nKV-cache reuse and parallel position processing), yielding an effective backward cost of roughly half\nthe total rollout budget.2 2We empirically verified this ratio on our 4×A100 setup; the measured backward-to-forward cost ratio was\n0.48 ± 0.03 across 300 steps.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 72,
+    "total_chunks": 93,
+    "char_count": 1449,
+    "word_count": 206,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1dcadc20-955a-4955-85c2-aad7072a6921",
+    "text": "Figure 22: Qualitative examples of ROVA-trained Qwen3-VL-13B performing landmark matching\nand wind-aware path planning under sandstorm conditions. Figure 23: Qualitative examples of ROVA-trained Embodied-R (Qwen2.5-VL-7B as Vision Language\nModels) performing glare region identification and glare-aware approach planning under strong sun\nglare conditions. A straightforward dual-branch approach generates Gtotal rollouts from both\nclean and perturbed videos for every sample, computes alignment rewards, and updates the policy:\nCnaive = N · Cpert + 2N · Gtotal · Cfwd + 2N · CAPI + C′bwd , (12)\n|perturbation{z } | dual{zrollout } alignment| {z reward} backward|{z} where Cpert is the per-sample perturbation generation cost, CAPI is the GPT-4o API call latency per\nevaluation, and C′bwd ≈0.5 · 2N · Gtotal · Cfwd reflects the doubled rollout pool entering the backward\npass. ROVA (with difficulty-aware curriculum). ROVA introduces two additional stages—selfreflective assessment and memory re-evaluation—but critically, it also discards a fraction of samples\nfrom training via its difficulty-aware curriculum (Sec. 3.2). Let ρt ∈[0, 1] denote the effective\ntraining ratio at step t, i.e., the fraction of samples that survive curriculum filtering (neither pruned as\nhigh-confidence easy nor deferred as excessively hard). The per-step cost becomes:\nCROVA = N · Cpert + 2N · Gtotal · Cfwd + N · Cjudge\n|perturbation{z } | dual rollout{z (all N) } self-assessment| {z }\n(13)\n+ 2ρtN · CAPI + |Mt| · Cjudge · 1[t mod Tre = 0] + C′′bwd ,\nalignment| {z(selected)} | memory re-eval{z (periodic) } backward|{z}(selected)\nwhere Cjudge ≈0.4 · Cfwd denotes the cost of the self-reflective difficulty assessment (a single forward\npass with a shortened prompt over the perturbed video), |Mt| is the current memory buffer size, and\nTre is the re-evaluation period. Three design choices jointly explain why this formulation leads to a favorable cost–accuracy trade-off\ndespite the added components: (i) Curriculum filtering reduces downstream cost. Although dual rollouts are performed over the\nfull batch of N samples (necessary for the self-assessment stage to observe model behavior before\nfiltering), the expensive alignment reward calls and the backward pass operate only on the ρtN\nselected samples. In practice, ρt stabilizes around 0.55–0.65 during training (see Tab. 10, effectively\nhalving the API and gradient costs relative to the naïve dual-branch baseline. (ii) Self-assessment is lightweight. The self-reflective difficulty judgment Cjudge reuses the alreadyloaded model weights and operates on a single truncated prompt per sample, costing only ∼0.4× a\nstandard rollout forward pass. This modest overhead is more than compensated by the downstream\nsavings from filtering: the net cost reduction from discarding (1 −ρt)N samples far exceeds the\nN · Cjudge assessment cost.\n(iii) Memory re-evaluation is amortized.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 73,
+    "total_chunks": 93,
+    "char_count": 2915,
+    "word_count": 435,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d8b36717-c4bf-45f0-ae24-7178d62aaaa6",
+    "text": "Re-evaluating the memory buffer Mt is the most expensive\nauxiliary operation, as it requires a difficulty re-assessment of all |Mt| stored samples under the\ncurrent policy. We set the re-evaluation period to Tre = 50 steps, which we found to balance freshness\nand overhead: the model's difficulty landscape shifts meaningfully over ∼50 update steps (see Fig. 4),\nwhile more frequent re-evaluation yields diminishing returns at linearly increasing cost. Amortized\nover Tre steps, the per-step memory overhead is only |Mt| · Cjudge/Tre, which constitutes less than\n2% of the total per-step budget in our experiments. Combining these factors, we obtain C′′bwd ≈0.5 · 2ρtN · Gtotal · Cfwd, since only the selected samples\ncontribute to the policy gradient. The overall per-step cost of ROVA is thus approximately:\nCROVA ≈ 2 + 0.4 + 2ρt · N · Gtotal · Cfwd + (minor terms), (14)\ncompared with (2 + 2) · N · Gtotal · Cfwd for the naïve baseline (Eq. 12), yielding a theoretical speedup\nof 4/(2.4+2ρt). At ρt ≈0.6, this gives ∼1.11× speedup, consistent with the 1.06× effective speedup\nmeasured in Tab. 13 (the small gap is attributable to scheduling and synchronization overhead on our\nmulti-GPU setup). G.2 Amortized Cost Savings from Curriculum The key insight is that the self-assessment overhead is more than compensated by the reduction in\ndownstream computation. Specifically, for each discarded sample, ROVA saves the cost of alignment\nreward API calls and a portion of the backward pass gradient computation. We formalize this tradeoff\nbelow. Proposition 1 (Amortized cost advantage of ROVA). Let ρt denote the effective training ratio at step\nt, and let ¯ρ = 1 PTRLt=1 ρt be the average training ratio over TRL RL steps. Ignoring the amortized TRL\nmemory re-evaluation cost (which occurs every 50 steps), the per-step cost ratio of ROVA relative to\nnaïve dual-branch training satisfies:\nCROVA ≈2Gtotal · Cfwd + Cjudge + 2¯ρ · CAPI + 1.5¯ρ · Gtotal · Cfwd . (15)\nCnaive 2Gtotal · Cfwd + 2CAPI + 1.5Gtotal · Cfwd\nWhen ¯ρ < 1 (i.e., the curriculum discards some fraction of samples), and Cjudge < (1 −¯ρ)(2CAPI +\n1.5Gtotal · Cfwd), then CROVA < Cnaive. Table 12: Effective training ratio ρt and corresponding discard rates over training. \"Easy Disc.\"\ndenotes high-confidence easy samples discarded; \"Difficult Def.\" denotes hard samples deferred to\nthe buffer. Step Easy Disc. (%) Difficult Def. (%) Effective ρt Buffer |Mt|",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 74,
+    "total_chunks": 93,
+    "char_count": 2424,
+    "word_count": 398,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dd33c89e-9e59-47c2-b275-8d777fea576c",
+    "text": "0–50 2.1 11.8 0.861 127\n50–100 3.8 9.5 0.867 248\n100–150 5.4 7.2 0.874 341\n150–200 7.1 5.8 0.871 389\n200–250 8.6 4.3 0.871 352\n250–300 9.8 3.5 0.867 298 Average 6.1 7.0 ¯ρ = 0.869 293",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 75,
+    "total_chunks": 93,
+    "char_count": 183,
+    "word_count": 37,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b36c2689-7407-4834-b775-8a0bde124c23",
+    "text": "For the naïve dual-branch, every sample incurs full rollout, alignment reward, and backward\ncosts. For ROVA, the dual-branch rollout is performed for all N samples (needed for difficulty\nassessment), but the expensive alignment reward computation (2CAPI per sample) and the backward\npass are performed only for the ρtN selected samples. The additional cost is the self-assessment\njudge call (Cjudge per sample). Substituting and simplifying per sample:\nCper-samplenaive = 2GtotalCfwd + 2CAPI + 1.5GtotalCfwd, (16)\nCper-sampleROVA = 2GtotalCfwd + Cjudge + 2ρtCAPI + 1.5ρtGtotalCfwd. (17) The saving per sample is: ∆C = (1 −ρt) (2CAPI + 1.5GtotalCfwd) −Cjudge. (18) .This is positive whenever ρt < 1 − 2CAPI+1.5GtotalCfwdCjudge Empirical training ratio. From the training dynamics shown in Sec. 3.2, the effective training\nratio evolves over training. In early steps, most samples are informative (ρ ≈0.90), but as the\nmodel improves, more samples are classified as high-confidence easy and discarded. We measure the\nempirical training ratio across three runs in Tab. 12. With ¯ρ = 0.869, approximately 13.1% of samples are removed from each training step on average\n(6.1% easy discarded + 7.0% hard deferred). Substituting our measured values (Cjudge ≈0.4Cfwd,\nCAPI ≈0.9Cfwd, Gtotal = 12): CROVA 24Cfwd + 0.4Cfwd + 2(0.869)(0.9Cfwd) + 1.5(0.869)(12Cfwd)\nCnaive 24Cfwd + 2(0.9Cfwd) + 1.5(12Cfwd)\n24 + 0.4 + 1.56 + 15.64\n= (19)\n24 + 1.8 + 18\n41.60\n= ≈0.950.\n43.80 Thus, ROVA is approximately 5.0% cheaper per step than naïve dual-branch training, despite\nthe additional self-assessment overhead.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 76,
+    "total_chunks": 93,
+    "char_count": 1592,
+    "word_count": 243,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4e16a192-1fa9-4b44-aa91-220cd5430bf9",
+    "text": "The savings come from avoiding expensive alignment\nreward API calls and reducing gradient computation for uninformative samples.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 77,
+    "total_chunks": 93,
+    "char_count": 128,
+    "word_count": 17,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "289e03bb-3c67-4e3e-90f7-b4241e09dc9f",
+    "text": "G.3 Wall-Clock Time Measurements To validate the theoretical analysis, we measure actual wall-clock times on our 4× A100 (80GB)\ntraining setup. Tab. 13 reports per-step and total training times across paradigms. Several observations emerge from Tab. 13.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 78,
+    "total_chunks": 93,
+    "char_count": 253,
+    "word_count": 37,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dc82bc6a-d4c4-4c1f-b26f-6224a9321d9c",
+    "text": "First, ROVA (full) requires 403s per step compared to\n428s for naïve dual-branch, achieving a 1.06× wall-clock speedup while delivering +2.3% higher\naccuracy. Second, removing memory re-evaluation saves only 7s per step (since re-evaluation occurs\nevery 50 steps, amortized to ∼7s), confirming that memory management overhead is minimal. Table 13: Wall-clock time comparison across training paradigms on 4× A100 GPUs. Per-step times\nare averaged over 300 RL steps. \"Eff. Speedup\" measures speedup relative to naïve dual-branch. Method Per-Step (s) Total 300 Steps (h) Eff.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 79,
+    "total_chunks": 93,
+    "char_count": 572,
+    "word_count": 84,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9958f5f6-8526-4b70-9eb2-7b162050ff4b",
+    "text": "Standard GRPO 215 ± 12 17.9 — 33.0\nNaïve Dual-Branch 428 ± 18 35.7 1.00× 36.8\nROVA (full) 403 ± 21 33.6 1.06× 39.1\nw/o memory re-eval 396 ± 19 33.0 1.08× 38.4\nw/o self-assessment 422 ± 17 35.2 1.01× 37.2 Table 14: Component-wise wall-clock timing breakdown per training step for ROVA on 4× A100\nGPUs (N = 4 per GPU, Gtotal = 12). Component Time (s) Fraction (%) Parallelizable? Perturbation generation 8.2 2.0 Yes (CPU)\nClean-branch rollout 142.5 35.4 Yes (GPU 0–1)\nPerturbed-branch rollout 142.5 35.4 Yes (GPU 2–3)\nSelf-reflective assessment 18.6 4.6 Yes (batched)\nAlignment reward (API) 38.4 9.5 Yes (async)\nBackward pass (selected) 46.8 11.6 No\nMemory re-eval (amortized) 6.0 1.5 Yes (batched) removing self-assessment entirely increases per-step cost to 422s—only 6s less than naïve dualbranch—because without difficulty-aware filtering, all samples proceed to the expensive alignment\nreward and backward stages, negating any potential savings and reducing accuracy by 1.9%. Component-wise timing breakdown. We further decompose the per-step time of ROVA in Tab. 14.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 80,
+    "total_chunks": 93,
+    "char_count": 1070,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8b0c69af-6796-4cd4-bd47-50b4fb4b7187",
+    "text": "The dual-branch rollout dominates at 70.8% of total time, confirming that the additional components\n(self-assessment at 4.6%, memory re-evaluation at 1.5%) introduce marginal overhead. The alignment\nreward API calls (9.5%) benefit from asynchronous batching; without curriculum-based filtering, this\nwould increase to 9.5/0.869 ≈10.9%. G.4 Amortized Memory Re-evaluation Cost Memory re-evaluation occurs every 50 steps, with the buffer containing on average |M| ≈293\nsamples (Tab. 12). Each re-evaluation requires one judge forward pass per buffered sample:\nCre-eval = |M| · Cjudge = 293 × 0.4Cfwd. (20)\nAmortized over 50 steps, this contributes 293×0.450 ≈2.3Cfwd per step-less than 1% of the total\nper-step cost. Furthermore, approximately 18% of re-evaluated samples are promoted to training\n(classified as informative) and 12% are evicted (classified as easy or exceeding Kmax), confirming\nthat the memory mechanism provides a meaningful stream of recovered training signal at negligible\ncost.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 81,
+    "total_chunks": 93,
+    "char_count": 997,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c8664377-d3d1-485d-83bf-333597d2cb07",
+    "text": "H Analysis of Reward Modeling Design In this section, we provide an in-depth analysis of the reward modeling design in ROVA, discussing\nthe motivation behind our multi-component formulation, its theoretical grounding, the interplay with\nthe difficulty-aware curriculum, and empirical evidence supporting each design choice. H.1 Motivation: Why Multi-Component Rewards? Standard reinforcement learning from human feedback (RLHF) and its variants typically employ a\nsingle scalar reward signal. However, the robustness objective in embodied video reasoning presents multiple, partially orthogonal desiderata: (1) task accuracy, ensuring correct answers; (2) format\ncompliance, maintaining structured output for downstream parsing; and (3) perturbation invariance,\nensuring both final answers and underlying reasoning remain stable under visual corruptions. A single\nscalar reward conflates these objectives, making it difficult for the policy to disentangle which aspect\nof its behavior is being reinforced. Our multi-component reward Rj = rFj + rAccj + rAj addresses\nthis by providing separable gradient signals for each objective. To empirically validate this design, we compare our multi-component reward against two alternatives:\n(1) a single combined reward that merges all components into one scalar via weighted summation\nbefore advantage estimation, and (2) an accuracy-only reward that drops the alignment component\nentirely. The multi-component reward outperforms both alternatives across all metrics, with particularly large\ngains in reasoning quality (Consistency +0.24, Belief +0.23 over single combined). This confirms\nthat decomposed rewards provide more informative gradient signals. H.2 Alignment Reward: Optimizing Geodesic distance The alignment reward rAj = αr · ralign,rj + αa · ralign,aj is the central novelty of our reward design. This reward formula can easily optimize geodesic distance in manifold without additional cost. From Output Consistency to minimizing Geodesic path.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 82,
+    "total_chunks": 93,
+    "char_count": 2000,
+    "word_count": 274,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "72089a0a-3e5a-42a7-a726-7d89cc5ed4e3",
+    "text": "I), the KL divergence between induced output distributions π(z) and π(zϕ) is locally equivalent\nto the squared Fisher–Rao distance on the statistical manifold M. Maximizing the alignment reward\ndrives the policy toward producing identical outputs for clean and perturbed inputs, which—under\nthe Local Proximity Assumption—is equivalent to minimizing the Fisher - Rao distance:\nmax rAj ⇐⇒min d2FR(π(z), π(zϕ)) ≈min DKL(π(z)∥π(zϕ)). (21)\nThis connection suggests that the alignment reward serves as an informative, difficulty-aware signal\nwithin the training dynamics. By modulating updates according to sample complexity, it shapes\nthe model's trajectory on the underlying statistical manifold, encouraging stable and generalizable\nparameter movements while mitigating overfitting. Compared to random sampling, such rewardguided optimization is more likely to follow a favorable geodesic trajectory, ultimately reducing\nthe discrepancy between the probability distributions π(z) and π(zϕ) induced by the original and\nperturbed data. Asymmetric Weighting Rationale. The asymmetric weighting (αa = 0.7 > αr = 0.3) reflects\ntwo key observations. First, answer consistency provides a sharper, lower-variance gradient signal\n(binary {0, 1}) compared to reasoning consistency (three-tier {0, 0.5, 1}), making it a more reliable\noptimization target. Second, reasoning traces exhibit higher inherent variability - even for identical\ninputs, stochastic decoding produces diverse reasoning paths that may differ stylistically while\nremaining semantically equivalent. Assigning a lower weight to reasoning alignment prevents the\nreward from penalizing legitimate reasoning diversity while still encouraging core logical consistency. The sensitivity analysis (Tab. 9) confirms that this asymmetric weighting outperforms both symmetric\n(αr = αa = 0.5, Avg. Acc. 37.8%) and reasoning-dominated (αr = 0.5 > αa = 0.5) configurations. H.3 Interaction Between Reward Components and Curriculum A key insight of ROVA is that the reward components and the difficulty-aware curriculum are mutually\nreinforcing. We identify three specific interaction mechanisms. Accuracy Reward as Curriculum Bootstrapper.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 84,
+    "total_chunks": 93,
+    "char_count": 2182,
+    "word_count": 295,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d4621491-4c03-475d-a6b9-2beb00c3abcb",
+    "text": "During early training, rAcc provides the dominant\nlearning signal, enabling the model to acquire basic task competence before the alignment reward\nbecomes informative. This is because alignment requires meaningful outputs on both branches—if the\nmodel cannot solve the task on clean inputs, comparing clean and perturbed outputs is uninformative.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 85,
+    "total_chunks": 93,
+    "char_count": 346,
+    "word_count": 49,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2a7bcfc5-26a6-4ead-8e06-3f0f33c4ed10",
+    "text": "The curriculum amplifies this effect by initially presenting predominantly easy and medium samples,\nwhere the accuracy reward gradient is strongest. Alignment Reward as Implicit Difficulty Signal. The alignment reward also serves as an implicit\ndifficulty indicator that complements the LLM-judge-based assessment.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 86,
+    "total_chunks": 93,
+    "char_count": 314,
+    "word_count": 41,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3f321d94-70a9-40e7-b10e-8857f2d0889a",
+    "text": "Samples that consistently receive low alignment scores (rAj ≈0) despite high accuracy (rAccj = 1) indicate that the perturbation\ndisrupts reasoning without affecting the final answer - a subtle failure mode that the binary judge\nmay miss. By incorporating rAj into the total reward, such samples receive lower overall rewards,\nnaturally reducing their influence on the policy gradient and preventing the model from learning\nbrittle shortcuts. Format Reward as Training Stabilizer. The format reward rFj , while seemingly trivial, plays a\ncritical stabilization role during early RL training. Without it, the policy may drift toward degenerate\noutputs (e.g., omitting the <think> block) that trivially minimize the alignment penalty by producing\nempty reasoning traces. The format reward ensures structured outputs are maintained throughout\ntraining, preserving the prerequisite for meaningful alignment evaluation. H.4 Comparison with Alternative Reward Designs Beyond the default alignment reward used in ROVA, we explore two principled reward variants that\ntarget specific limitations of the default formulation, aiming to further improve training signal quality. Conditional Alignment Reward. A potential failure mode of the default alignment is the \"consistently wrong\" regime: when the clean branch itself produces an incorrect answer, enforcing\nconsistency with a flawed output may reinforce erroneous reasoning. To address this, we design a\nconditional variant that modulates the alignment target based on clean-branch correctness. When\nthe clean branch is correct, the perturbed branch is aligned to it as usual; when incorrect, the reward\ninstead encourages the perturbed branch to deviate from the erroneous output and align with the\nclosest correct rollout within the same generation group:",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 87,
+    "total_chunks": 93,
+    "char_count": 1801,
+    "word_count": 259,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cbda1145-ecff-4111-8d7b-f421e89eea30",
+    "text": "sim(ˆypert, ˆyclean) if ˆyclean = y∗,\nrcond =  ! (22)\nsim ˆypert, arg min d(yj, ˆypert) otherwise,\n yj∈Y+ where Y+ is the set of correct rollouts within the group and d(·, ·) denotes edit distance in the\nreasoning trace. Step-Level Reasoning Consistency Reward. The default GPT-4o-based evaluation assigns a\nholistic three-tier score to the entire reasoning trace, which may obscure perturbation-specific failure\nmodes at different reasoning stages. To enable finer-grained credit assignment, we decompose each\nreasoning trace into three atomic stages - visual observation, spatial/temporal reasoning, and action\ndecision - and compute per-stage similarity using a frozen sentence encoder (all-MiniLM-L6-v2):\nrstep = X βk · cos ecleank , epertk , (23)\nk∈{obs, reason, act} where e(·)k denotes the frozen encoder embedding for stage k, and βk are stage weights (βobs = 0.3,\nβreason = 0.5, βact = 0.2). This formulation offers the additional benefit of eliminating GPT-4o API\ncosts for reasoning evaluation, and in principle allows the policy gradient to independently target\neach failure mode.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 88,
+    "total_chunks": 93,
+    "char_count": 1099,
+    "word_count": 167,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "60acfc95-339b-4ff7-9dc9-b5ceb347be9d",
+    "text": "Experimental Results. We evaluate both variants - as well as their combination - on PVRBench\nusing the Qwen2.5-VL-7B backbone under identical training configurations (Tab. 15). Contrary to\nour expectations, neither alternative improves upon the default ROVA reward; both lead to consistent\ndegradation across all metrics, with the step-level variant exhibiting the largest drop (−0.02 in Avg. Acc., −0.08 in Avg.†).",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 89,
+    "total_chunks": 93,
+    "char_count": 415,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "21ffc55b-7cfe-4de5-b5a9-f2e630d02577",
+    "text": "Combining both alternatives does not recover the lost performance, suggesting\nthat the two failure modes are compounding rather than complementary. We evaluate both variants and their combination on PVRBench using Qwen2.5-VL-7B under identical\ntraining configurations (Tab. 15), finding that neither alternative improves upon the default ROVA\nreward - both lead to consistent degradation across all metrics, with the step-level variant exhibiting\nthe largest drop (−0.02 in Avg. Acc., −0.08 in Avg.†), and their combination compounds rather\nthan complements the failure modes. Three underlying causes explain this negative result: (i)\nthe conditional reward's applicability diminishes rapidly as clean-branch accuracy rises during Table 15: Comparison of alternative reward designs on PVRBench (Qwen2.5-VL-7B). The default\nROVA reward consistently outperforms both alternatives and their combination. Answer Accuracy Reasoning Quality Reward Design Perturbed Clean Perturbed Clean Default ROVA .47 .53 2.99 3.52\nConditional Alignment .46 .52 2.95 3.48\nStep-Level Consistency .45 .51 2.91 3.45\nCond. + Step-Level .45 .52 2.93 3.46 early training and plateaus at a high level (Fig. 13), reducing applicable samples to below 20%\nby mid-training, and further degenerating for genuinely difficult samples where all G=12 rollouts\nare incorrect, yielding no corrective signal precisely when most needed; (ii) the step-level reward's\nheuristic segmentation of free-form reasoning traces into three predefined stages introduces substantial\nnoise - particularly for traces interleaving observation and inference - while the frozen sentence\nencoder captures only surface-level lexical similarity lacking GPT-4o's deeper semantic judgment,\ncausing semantically equivalent but lexically divergent paths to receive misleadingly low similarity\nscores that misguide policy updates; and (iii) both alternatives introduce additional stochasticity (Y+\nsampling and edit-distance in conditional alignment, heuristic segmentation boundaries in step-level\nconsistency) that increases reward variance, which in the GRPO framework directly translates to\nnoisier advantage estimates destabilizing policy updates and offsetting any theoretical benefit from\nfiner-grained credit assignment. These findings suggest that for dual-branch alignment, reward\nstability matters more than reward granularity: the default holistic GPT-4o evaluation, while coarser,\nprovides a substantially more stable optimization landscape that best balances informativeness and\noptimization reliability for consistent, monotonic policy improvement.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 90,
+    "total_chunks": 93,
+    "char_count": 2598,
+    "word_count": 340,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "0ca40f67-3b26-4a5c-89cc-d4b7b41f7d0e",
+    "text": "I Theoretical Analysis Geometry of the output space. Let (Y, B) be a measurable space and P(Y) the space of probability measures on Y. We consider the statistical manifold\nM := {PY |z : z ∈Z} ⊂P(Y),\nequipped with the Fisher–Rao metric. Let ξ denote the local coordinates on M.\ngMξ (u, v) = EY ∼pξ[∂uℓ(ξ; Y ) ∂vℓ(ξ; Y )] , ℓ(ξ; y) = log pξ(y), (24)\nwhere µ is a dominating measure. For convenience, we unify all training-used samples (medium samples and easy samples\nwith low confidence) under the term medium-level samples. And we let easy-level easy samples\ndiscarded during training.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 91,
+    "total_chunks": 93,
+    "char_count": 585,
+    "word_count": 103,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "8dc0995d-3d86-4e8f-8933-b4c7f5ffc002",
+    "text": "Definition of Representations. Let z denote the model representation induced by the original input\nx, i.e.,\nz = fθ(x), Local Proximity Assumption. We assume that, during stable training steps, the induced output\ndistributions π(z) and π(zϕ) remain sufficiently close such that their discrepancy lies within a locally\nlearnable regime. Formally, there exists ε > 0 such that\nDKL(π(z) ∥π(zϕ)) ≤ε,\nwhere ε is small enough to ensure that learning dynamics remain within the local trust region of the\nstatistical manifold. Local KL expansion Let pξ ∈M be a smooth statistical model with Fisher information I(ξ). For\nsufficiently small ∆ξ,\nDKLπ(pξ) ∥π(pξ+∆ξ) ≈1 + o(∥∆ξ∥3). 2∆ξ⊤I(ξ)∆ξ\nThus, in a normal neighborhood of M, KL divergence is locally equivalent to the Fisher information\nmetric. Hence, we can use local approximation of KL divergence on manifold. Model-induced semantic map. The model induces a semantic map π : Z →M defined by\nπ(z) = PY |z. Semantic discrepancy between a clean representation z and its perturbed counterpart\nzϕ is measured on M via their induced distributions π(z) and π(zϕ). DTV(π(z), π(zϕ)) ≤ (1/2) ∗DKL(π(z) ∥π(zϕ)) (25) by Pinsker's inequality. Reward-to-KL surrogate Let r(π(z), π(zϕ) ∈[0, 1] be a reward and define the surrogate\nL(π(z), π(zϕ)) ∝ψ(r(π(z), π(zϕ))), where ψ is decreasing. Then there exists κ > 0 and a\nlocal Lipschitz constant L > 0 such that for all z and zϕ satisfying DKL(π(z)∥π(zϕ)) ≤κ,",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 92,
+    "total_chunks": 93,
+    "char_count": 1436,
+    "word_count": 231,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7f649e0b-51b5-4bf1-87a3-2fac8a90da2e",
+    "text": "L(π(z), π(zϕ)) ≤L ∗DTV(π(z), π(zϕ)) ≤L ∗ (1/2) ∗DKL(π(z)∥π(zϕ)). (16) (A1) (Local KL–Fisher equivalence). There exist constants 0 < cmin ≤cmax such that, in a normal\nneighborhood of the statistical manifold M:\ncmind2FR ≤DKL ≤cmaxd2FR. (A2) (Trust-region energy dissipation via Medium-first sampling). Let the active difficulty\nmeasure for a perturbation ϕ be defined as the semantic KL energy:\nUt(ϕ) := Ez∼pt[DKL(πt(z) ∥πt(zϕ))]. Medium-difficulty sampling qt restricts the update to a stable trust region on M. Unlike random\nsampling, this constraint ensures:",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 93,
+    "total_chunks": 93,
+    "char_count": 560,
+    "word_count": 81,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7e18cda6-9713-4dce-b925-daa9ab552ce7",
+    "text": "Gradient Alignment: The task gradient ∇θL remains well-aligned with the descent direction of the semantic energy ∇θUt.\n2. Non-vanishing Dissipation: By avoiding the singular regions of \"hard\" samples and\nthe flat regions of \"easy\" samples, the update maintains a strictly positive inner product\n⟨∇θUt, ∇θL⟩> 0. This alignment forces Ut to follow a dissipative path toward the invariant state.",
+    "paper_id": "2603.10652",
+    "title": "Are Video Reasoning Models Ready to Go Outside?",
+    "authors": [
+      "Yangfan He",
+      "Changgyu Boo",
+      "Jaehong Yoon"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10652v1",
+    "chunk_index": 94,
+    "total_chunks": 93,
+    "char_count": 392,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  }
+]

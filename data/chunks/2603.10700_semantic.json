@@ -1,0 +1,922 @@
+[
+  {
+    "chunk_id": "3d6db29e-5789-4d74-a323-1414f29b0f59",
+    "text": "Structured Linked Data as a Memory Layer\nfor Agent-Orchestrated Retrieval Andrea Volpini, Elie Raad, Beatrice Gamba, and David Riccitelli WordLift, Rome, Italy\n{andrea, elie, beatrice, david}@wordlift.io",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 0,
+    "total_chunks": 46,
+    "char_count": 203,
+    "word_count": 26,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "60559971-773e-4bd4-8e17-1eed086fe80c",
+    "text": "Retrieval-Augmented Generation (RAG) systems typically\ntreat documents as flat text, ignoring the structured metadata and linked2026\nrelationships that knowledge graphs provide. In this paper, we investigate whether structured linked data—specifically Schema.org markup\nand dereferenceable entity pages served by a Linked Data Platform—Mar can improve retrieval accuracy and answer quality in both standard and\nagentic RAG systems. We conduct a controlled experiment across four domains (editorial, legal,11\ntravel, e-commerce) using Vertex AI Vector Search 2.0 for retrieval and\nthe Google Agent Development Kit (ADK) for agentic reasoning. Our\nexperimental design tests seven conditions: three document representations (plain HTML, HTML with JSON-LD, and an enhanced agenticoptimized entity page) crossed with two retrieval modes (standard RAG\nand agentic RAG with multi-hop link traversal), plus an Enhanced+[cs.IR]\ncondition that adds rich navigational affordances and entity interlinking. Our results reveal that while JSON-LD markup alone provides only modest improvements (∆= +0.17, padj = 0.024), our enhanced entity page\nformat—incorporating llms.txt-style agent instructions, breadcrumbs,\nand neural search capabilities—achieves substantial gains: +29.6% accuracy improvement for standard RAG (p < 10−21, d = 0.60) and +29.8%\nfor the full agentic pipeline (p < 10−21, d = 0.61). The Enhanced+ variant, with richer navigational affordances, achieves the highest absolute\nscores (accuracy: 4.85/5, completeness: 4.55/5) though the incremental gain over the base enhanced format is not statistically significant\n(d = 0.08). We release our dataset, evaluation framework, and enhanced\nentity page templates to support reproducibility. Keywords: Retrieval-Augmented Generation · Knowledge Graphs · Linked\nData · Structured Data · Schema.org · Agentic AI · Vector SearcharXiv:2603.10700v1\n1 Introduction The rise of Generative AI has fundamentally changed how users access information online. Search engines increasingly augment traditional results with AIgenerated summaries—a paradigm exemplified by Google's AI Mode, which retrieves, reasons over, and synthesizes information from multiple web sources. Understanding and optimizing for this new retrieval paradigm is critical for content creators, marketers, and organizations that depend on search visibility. Retrieval-Augmented Generation (RAG) has emerged as the dominant architecture for grounding large language model (LLM) outputs in factual, up-to-date\ninformation [18]. However, most RAG implementations treat documents as unstructured text, discarding the rich structured metadata that many websites\nalready provide via Schema.org markup and knowledge graph representations. In this paper, we ask: Can structured linked data improve RAG performance, and does agentic link traversal unlock further gains? Our work is motivated by three observations:",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 1,
+    "total_chunks": 46,
+    "char_count": 2914,
+    "word_count": 391,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d009e3fc-b3ea-4afd-a899-e9f49a5a1895",
+    "text": "Websites increasingly embed Schema.org JSON-LD structured data, yet RAG\nsystems rarely exploit this metadata.\n2. Linked Data Platforms serve entity pages that support content negotiation,\nenabling programmatic traversal of knowledge graphs.\n3. Agentic AI systems (those capable of planning, tool use, and multi-step reasoning) can follow links and aggregate information across entity boundaries—\nmimicking the behavior of AI-powered search engines. We make the following contributions: – A controlled experimental framework comparing seven conditions (3 document formats × 2 retrieval modes + an Enhanced+ variant) across four\nindustry verticals, with 2,443 individual query evaluations.\n– An enhanced entity page format designed to maximize both human readability and agentic discoverability, incorporating llms.txt-style instructions\nand neural search capabilities, and an Enhanced+ variant with richer navigational affordances.\n– Empirical evidence showing that enhanced entity pages yield the strongest\nimprovements: +29.6% accuracy in standard RAG (d = 0.60) and +29.8% in\nthe agentic pipeline (d = 0.61), while JSON-LD markup alone provides only\nmarginal improvements. The Enhanced+ variant achieves the highest absolute scores but offers no statistically significant gain over the base enhanced\nformat.\n– A reusable dataset and evaluation harness released for reproducibility.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 2,
+    "total_chunks": 46,
+    "char_count": 1383,
+    "word_count": 189,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e05544e2-5816-4f12-b1ac-559cf4e159d5",
+    "text": "2.1 Generative Engine Optimization Aggarwal et al. [2] introduced Generative Engine Optimization (GEO), demonstrating that content optimization strategies such as adding citations, statistics,\nand authoritative language can boost visibility in generative search engines by\nup to 40%. Our work extends GEO from visibility optimization to retrieval accuracy, focusing on structured data as the optimization lever. Structured Linked Data for Agent-Orchestrated Retrieval 3 2.2 Retrieval-Augmented Generation RAG was formalized by Lewis et al. [18], who combined a pre-trained sequenceto-sequence model with a dense retriever to ground generation in retrieved passages. Subsequent work explored pre-training with retrieval objectives [16] and\nscaling retrieval corpora to trillions of tokens [8]. More recently, Self-RAG [5]\nintroduced self-reflection mechanisms for adaptive retrieval, enabling models to\ndecide when and what to retrieve. Trivedi et al. [24] demonstrated that interleaving retrieval with chain-of-thought reasoning significantly improves multi-step\nquestion answering.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 3,
+    "total_chunks": 46,
+    "char_count": 1082,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "88a09bdf-fa99-477d-843e-587223ca2b53",
+    "text": "Despite these advances, existing RAG systems predominantly operate on\nunstructured text. Our work bridges this gap by demonstrating that structured\nmetadata—specifically Schema.org JSON-LD—provides a complementary signal\nthat improves retrieval quality. 2.3 Knowledge Graphs and Structured Data on the Web The vision of a machine-readable web was articulated by Berners-Lee et al. [6]\nand operationalized through Linked Data principles [7]. Schema.org, launched\nin 2011 as a collaboration among major search engines, provides a shared vocabulary for structured data on the web [13,1]. Today, over 40% of web pages\ninclude Schema.org markup [13]. Knowledge graphs have become central to both academic research and industry applications [17,20]. Early efforts to bring structured data to content\nmanagement systems include WordLift [27], which introduced semantic annotation and entity-based navigation for WordPress sites, and MICO [3], which\ndeveloped linked-data pipelines for multimedia content enrichment. Recent surveys examine the unification of LLMs and knowledge graphs [21], while Graph\nRAG approaches explicitly leverage graph structure during retrieval [22]. Several recent systems construct retrieval graphs from documents to improve\nRAG. LightRAG [14] builds a graph index from document-extracted entities\nand relations, using dual-level retrieval (low-level for specific facts, high-level for\ntopics) to outperform traditional RAG on multi-hop questions. HippoRAG [15]\nmodels retrieval after the hippocampal memory indexing theory, constructing a\nknowledge graph from passages and using personalized PageRank for contextsensitive retrieval. Both systems demonstrate the value of graph structure for\nretrieval, but differ from our approach in a fundamental way: they construct\npurpose-built graphs at indexing time from unstructured text, whereas we leverage existing structured data already published on the web via Schema.org and\nLinked Data Platforms. Our approach requires no graph construction step—the\nknowledge graph is the publisher's source of truth, maintained independently of\nthe retrieval system, and accessible through dereferenceable URIs that support\ncontent negotiation.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 4,
+    "total_chunks": 46,
+    "char_count": 2199,
+    "word_count": 298,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1ad07753-0f14-4ed0-a71b-68cb421e4c2f",
+    "text": "2.4 Agentic AI and Tool-Augmented LLMs Agentic AI systems extend LLMs with the ability to plan, use tools, and reason\nover multiple steps. Yao et al. [29] introduced ReAct, interleaving reasoning\ntraces with action steps. Schick et al. [23] demonstrated that LLMs can learn to\nuse external tools autonomously. The Google Agent Development Kit (ADK) [10]\nprovides a production framework for building multi-tool agents. Multi-hop question answering [19]—where answering requires combining information from multiple sources—is a natural application for agentic systems. The Model Context Protocol (MCP) [4] provides a standardized interface for\nLLM–tool integration. Our agentic RAG configuration enables link traversal\nacross entity boundaries, effectively mimicking the behavior of AI-powered search\nsystems that follow links to aggregate information. 3.1 System Architecture and AI Mode Parallel Our experimental system mirrors the emerging architecture of AI-powered search\nengines such as Google's AI Mode, which retrieves web pages, reasons over their\nstructured content, and synthesizes multi-source answers. Our pipeline reproduces this pattern using Google Cloud components for retrieval and reasoning,\ncombined with an independent knowledge graph for structured data: – Vertex AI Vector Search 2.0 [11] serves as the retrieval backbone. Unlike\ntraditional vector databases, Vector Search 2.0 is designed as a self-tuning,\nfully managed, AI-native search engine. It combines dense semantic search\n(via text-embedding-005 embeddings) with sparse keyword matching in a\nsingle hybrid query, automatically tuning retrieval parameters. This mirrors\nhow AI Mode identifies candidate web pages from a large corpus.\n– Google Agent Development Kit (ADK) [10] powers the agentic reasoning layer, providing a ReAct-style loop [29] with tool-use capabilities.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 5,
+    "total_chunks": 46,
+    "char_count": 1853,
+    "word_count": 259,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3cbe4d6a-cd9d-45e2-bb9a-d83ba59c4c8f",
+    "text": "Like\nAI Mode's multi-step reasoning, our agent can plan a sequence of actions—\nsearch, follow links, search the knowledge graph—before synthesizing a final\nanswer.\n– WordLift Knowledge Graph [27], an independent Linked Data Platform\n(not a Google Cloud service), acts as the structured data layer. It provides Schema.org-typed entities with dereferenceable URIs that support content negotiation (application/ld+json, text/turtle, text/html). This is\nanalogous to how AI Mode leverages structured data already present in web\npages to enhance understanding. The key insight is that structured linked data functions as an external memory layer for the agent. Rather than relying solely on the vector\nstore's flat text chunks, the agent can follow typed relationships (schema:about,\nschema:author, schema:relatedLink) to discover contextually relevant information that would be invisible to embedding-based retrieval alone. Structured Linked Data for Agent-Orchestrated Retrieval 5 Table 1: Experimental conditions. ID Document Format Retrieval Mode Hypotheses C1 Plain HTML Standard RAG H1 baseline\nC2 HTML + JSON-LD Standard RAG H1 treatment\nC3 Enhanced entity Standard RAG H3 baseline\nC4 Plain HTML Agentic RAG H2 baseline\nC5 HTML + JSON-LD Agentic RAG H2 treatment\nC6 Enhanced entity Agentic RAG H2+H3 treatment C6+ Enhanced+ entity Agentic RAG H4 treatment We design a 3 × 2 factorial experiment crossing three document representations\nwith two retrieval modes, yielding six core experimental conditions, plus an\nEnhanced+ variant (Table 1). Our four hypotheses are:",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 6,
+    "total_chunks": 46,
+    "char_count": 1567,
+    "word_count": 226,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "55e482ad-cd72-47d0-81ff-bb9747bd7a3e",
+    "text": "– H1: Adding Schema.org JSON-LD to HTML documents improves RAG accuracy and completeness (C2 vs. C1).\n– H2: Agentic RAG with link traversal outperforms standard RAG on the\nsame document format (C5 vs. C2).\n– H3: Enhanced entity pages, designed for agentic discoverability, yield the\nhighest overall performance (C6 vs. all other conditions).\n– H4: Enhanced+ entity pages—with richer navigational affordances and entity interlinking—further improve performance over the base enhanced format (C6+ vs. 3.3 Document Representations Plain HTML (Baseline). Raw webpage content with all <script type=\"application/ld+json\">\nblocks removed. This represents the content as a standard RAG system would\nencounter it—purely unstructured HTML.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 7,
+    "total_chunks": 46,
+    "char_count": 729,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "00e6eee6-bdf5-4930-86ab-bdd950f2180c",
+    "text": "The original webpage with embedded Schema.org JSONLD served by the Linked Data Platform's data API. This representation includes\ntyped entities, properties (e.g., name, description, offers, geo-coordinates), and\ninter-entity links expressed as dereferenceable URIs. Enhanced Entity Page. A novel format designed to maximize agentic discoverability: – Natural language summary generated from structured data\n– Embedded JSON-LD block with full Schema.org typing\n– Visible linked entity navigation with dereferenceable URIs – llms.txt-style agent instructions [28] providing explicit guidance for LLM\nagents\n– Neural search SKILL reference for cross-entity discovery\n– Schema.org type breadcrumbs for hierarchical context The enhanced entity page format is designed to bridge the gap between\nhuman-readable webpages and machine-readable structured data by making entity relationships, navigation paths, and available tools explicitly visible to both\nhumans and AI agents. Fig. 1: Before and after: plain HTML (left) vs. enhanced entity page (right)\nfor a sample entity. The enhanced format adds structured breadcrumbs, related\nentity links with dereferenceable URIs, agent instructions in llms.txt style,\nand an embedded JSON-LD block—yielding a +29.6% accuracy improvement\nin standard RAG and +29.8% in the agentic pipeline. Structured Linked Data for Agent-Orchestrated Retrieval 7 Fig. 2: System architecture. User queries are processed by a Google ADK agent\nthat orchestrates three tools: vector search over Vertex AI, entity link traversal,\nand neural search via MCP. Documents are indexed in three formats (C1–C6)\nand the agent generates grounded answers using a ReAct-style reasoning loop. Documents are indexed in Vertex AI Vector Search 2.0 [11] using\nthe gemini-embedding-001 model with hybrid search (semantic + keyword). For each query, the top-K (K = 10) documents are retrieved and passed to\nGemini 2.5 Flash [12] for answer generation in a single inference call.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 8,
+    "total_chunks": 46,
+    "char_count": 1974,
+    "word_count": 282,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "27f73d75-f427-4298-9212-0f4ca3a57b55",
+    "text": "Built on the Google Agent Development Kit (ADK) [10], the\nagent operates in a ReAct-style loop [29] with access to three tools:\n1. search_documents: Performs vector search over the Vertex AI collection for\nsemantic retrieval. 2. follow_entity_link: Dereferences a linked entity URI via HTTP content negotiation (requesting JSON-LD), enabling multi-hop traversal of the\nknowledge graph.\n3. search_knowledge_graph: Performs neural search across the knowledge graph\nusing a domain-specific API endpoint. The agent can follow links up to 2 hops deep and makes an average of 2.0 tool\ncalls per query. This architecture effectively replicates the behavior of production\nAI-powered search systems such as Google AI Mode, making our findings directly\nrelevant to practitioners optimizing content for AI-driven search discovery. Our dataset spans four industry verticals, chosen to test generalizability across\ndiverse content types and knowledge graph structures: – WordLift Blog (editorial): 16 entities, 22 queries. Blog articles about SEO,\nknowledge graphs, and AI content.\n– Express Legal Funding (legal): 32 entities, 111 queries. Legal concepts including pre-settlement funding, personal injury, structured settlements, and\nregulatory topics.\n– SalzburgerLand (travel): 54 entities, 79 queries. Restaurants, alpine huts,\nand tourist establishments in the Salzburg region of Austria.\n– BlackBriar (e-commerce): 56 entities, 137 queries. Outdoor gear products\nwith detailed offers, pricing, and product specifications.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 9,
+    "total_chunks": 46,
+    "char_count": 1514,
+    "word_count": 210,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "614a3fdd-629f-4d51-8616-35a822ac5837",
+    "text": "In total, the dataset comprises 158 entities and 349 test queries. Entities were collected from four Linked Data Platforms using GraphQL-based\nentity search, yielding structured data in JSON-LD format with Schema.org typing. Each entity was transformed into three document variants (plain HTML,\nHTML+JSON-LD, enhanced entity page) plus an Enhanced+ variant, and ingested into separate Vertex AI Vector Search 2.0 collections. Test queries were generated using template-based generation for three query\ntypes: factual (direct attribute lookup), relational (requiring link traversal to\nrelated entities), and comparative (reasoning across multiple entities). Groundtruth answers were derived from the same KG structured data (JSON-LD) used\nto construct entity pages. For factual queries, ground truths consist of entity descriptions extracted from Schema.org properties; for relational queries, they reference the target linked-entity URIs; for comparative queries, they require data\nfrom both entities. We acknowledge that this creates a potential circularity: conditions that present KG data more directly (C3/C6/C6+) may score higher not\nbecause they enable better retrieval but because the evaluation favours content\nthat textually matches the KG-derived ground truth. We discuss this limitation\nin Section 5.5. All seven conditions are evaluated on the identical set of 349 queries, ensuring\nfair apples-to-apples comparison.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 10,
+    "total_chunks": 46,
+    "char_count": 1428,
+    "word_count": 196,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "dadefc26-c91a-4ebd-8a9b-7b01097f7bbe",
+    "text": "Structured Linked Data for Agent-Orchestrated Retrieval 9 3.6 Evaluation Metrics All responses are evaluated by an independent LLM judge (Gemini 3.0 Flash)\nusing three metrics: – Accuracy (1–5): Factual correctness of the generated answer, assessed against\nthe retrieved context and query intent.\n– Completeness (1–5): Degree to which the answer covers all aspects of the\nquery, including related entities and contextual details.\n– Grounding (binary 0/1): Whether the answer is faithfully grounded in the\nretrieved documents, without hallucinated content. Measured for standard\nRAG only (C1–C3).",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 11,
+    "total_chunks": 46,
+    "char_count": 595,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "038d586f-1537-41da-b979-d6ca8949c255",
+    "text": "For agentic conditions (C4–C6+), grounding is not assessed because the agent's retrieval boundary is dynamic: it follows links,\nissues additional searches, and accumulates evidence over multiple steps,\nmaking it difficult to define the reference document set. Although the ADK\nframework logs all tool calls and retrieved documents, defining grounding\nagainst the union of all evidence encountered during the reasoning trace is a\nnon-trivial evaluation design problem that we leave for future work. We acknowledge that without this measurement, high accuracy scores in C6/C6+\ncould partially reflect the model's parametric knowledge rather than faithful\nuse of retrieved KG data. For agentic conditions (C4–C6, C6+), we additionally track: – Links followed: Number of entity links dereferenced\n– Links available: Number of discoverable links in retrieved documents\n– Max hop depth: Maximum traversal depth reached\n– Tool calls: Total number of tool invocations Statistical significance is assessed using paired t-tests with Bonferroni correction across 12 comparisons (α = 0.05), with effect sizes reported as Cohen's We executed the full experiment: 349 queries × 7 conditions = 2,443 individual\nevaluations, yielding 2,439 valid results after excluding error cases (1 in C4, 3 in\nC5). Table 2 presents the main results and Figure 3 visualizes the per-condition\nscores. Table 2: Main results across experimental conditions (mean ± std). ID Condition Accuracy Completeness C1 Plain HTML, Std. 3.62 ± 1.82 3.01 ± 1.94\nC2 HTML+JSON-LD, Std. 3.89 ± 1.70 3.33 ± 1.85\nC3 Enhanced, Std. 4.69 ± 0.95 4.45 ± 1.25 C4 Plain HTML, Agent. 4.36 ± 1.33 3.98 ± 1.60\nC5 HTML+JSON-LD, Agent. 4.40 ± 1.21 4.00 ± 1.54\nC6 Enhanced, Agent. 4.70 ± 0.82 4.38 ± 1.20 C6+ Enhanced+, Agent. 4.85 ± 0.50 4.55 ± 1.06 Mean Accuracy and Completeness by Experimental Condition\nAccuracy\n5 Completeness 4.85\n4.69 4.70\n4.45 4.36 4.40 4.38 4.55\n4 3.89 3.98 4.00\n3.62\n(1-5) 3.01 3.33\nScore 3\nMean 2 C1 C2 C3 C4 C5 C6 C6+\nExperimental Condition",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 12,
+    "total_chunks": 46,
+    "char_count": 2006,
+    "word_count": 321,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ad8f6f7d-3ca1-437b-857a-28cd361251b3",
+    "text": "Fig. 3: Mean accuracy and completeness scores by experimental condition. Enhanced entity pages (C3, C6, C6+) dramatically outperform plain HTML and\nJSON-LD conditions. C6+ achieves the highest scores. Error bars show 95%\nconfidence intervals. 4.1 Qualitative Comparison of Generated Answers To illustrate how structured data and agentic retrieval affect response quality,\nTable 3 presents two representative queries with a summary of how different\nconditions respond. These examples show how the system progressively improves\nfrom vague or generic answers (C1) to fully accurate, entity-grounded responses\n(C6). Structured Linked Data for Agent-Orchestrated Retrieval 11 Table 3: Qualitative comparison of generated answers across conditions for two\nrepresentative queries. Accuracy scores are assigned by the LLM judge (1–5\nscale). Factual — \"What is Restaurant im Hotel Zauchenseehof?",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 13,
+    "total_chunks": 46,
+    "char_count": 886,
+    "word_count": 123,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c2a8603c-2d39-4e66-8661-c9e026660777",
+    "text": "Describe its key features.\" C1 Generic description without specifics. No cuisine type, lo- 1\ncation, or opening hours mentioned. C2 Identifies it as a FoodEstablishment with some Schema.org 3\nproperties. C4 Agent searches but finds limited structured data to tra- 2\nverse. C6 Agent follows links to related entities (hotel, re- 5\ngion); retrieves cuisine, address, coordinates, and\nrelated attractions. C6+ Enhanced+ agent instructions and richer linked-entity 5\nnavigation surface the same information with lower variance; answer matches C6 quality. Relational — \"What entities are related to Google Lens?\" C1 Vague mention of \"image recognition\" without specific en- 1\ntity relationships.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 14,
+    "total_chunks": 46,
+    "char_count": 690,
+    "word_count": 101,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "62062fd6-3a2f-4427-8a26-12fd696dce92",
+    "text": "C3 Lists entities from the enhanced page's Related Entities 4\nsection. C5 Agent follows some links but limited by JSON-LD's im- 3\nplicit relationships. C6 Agent uses search_knowledge_graph + 5\nfollow_entity_link to discover and traverse\nrelated entities across the graph. C6+ Enhanced+ provides wider linked-entity surface and 5\nllms.txt agent guidance; discovers additional related entities beyond C6. These examples illustrate the key mechanism: enhanced entity pages provide\nnavigational affordances—visible links, agent instructions, and neural search\ncapability—that enable the agentic system to discover and integrate information that flat-text retrieval misses entirely. Figure 4 visualizes this progressive\nimprovement. Fig. 4: Answer quality progression across conditions for the same factual query. C1 (plain HTML) produces a generic answer (1/5), while C6 and C6+ (enhanced\nentity pages + agentic RAG) follow links to related entities and retrieve comprehensive structured data (5/5). C6+ achieves the same peak score with lower\nvariance.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 15,
+    "total_chunks": 46,
+    "char_count": 1049,
+    "word_count": 146,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7ad2128a-ba2f-4e4d-a245-34a98dfcb755",
+    "text": "4.2 H1: JSON-LD Alone Does Not Significantly Help Adding JSON-LD structured data to HTML documents yields a small but statistically significant improvement in accuracy, though the effect size is negligible: – Accuracy: C2 (3.89) vs. C1 (3.62), ∆= +0.17, t = −3.12, padj = 0.024,\nd = 0.18 (small).\n– Completeness: C2 (3.33) vs. C1 (3.01), ∆= +0.18, not significant after\nBonferroni correction (padj = 0.055). Structured Linked Data for Agent-Orchestrated Retrieval 13 While statistically significant for accuracy, the small effect size (d = 0.18)\nsuggests that appending JSON-LD metadata provides only marginal additional\nsignal for RAG systems when the underlying text content already conveys similar\ninformation.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 16,
+    "total_chunks": 46,
+    "char_count": 713,
+    "word_count": 107,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fbd13c4d-ea00-4eb7-ba38-3f03d61e093f",
+    "text": "The structured data must be presented in a way that explicitly\nhighlights entity relationships and navigational affordances—as our enhanced\nentity page format does. However, enhanced entity pages (C3) yield dramatic improvements: accuracy 4.69 vs. 3.62 (∆= +1.04, p < 10−21, d = 0.60), representing a +29.6%\nimprovement with a medium effect size. 4.3 H2: Agentic RAG Amplifies Structured Data Gains Comparing agentic RAG (C5) with standard RAG (C2) on the same HTML+JSONLD documents: – Accuracy: C5 (4.40) vs. C2 (3.89), ∆= +0.50, t = −5.22, padj = 4.0×10−6,\nd = 0.30.\n– Completeness: C5 (4.00) vs. C2 (3.33), ∆= +0.74, t = −6.75, padj =\n9.1 × 10−10, d = 0.38.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 17,
+    "total_chunks": 46,
+    "char_count": 660,
+    "word_count": 111,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f5d1fa18-b3db-471f-bfca-6ec9567fefd6",
+    "text": "Agentic RAG significantly improves both accuracy (+13.1%) and completeness (+20.1%). The agent's multi-step reasoning and tool use improve both the\nprecision and coverage of answers, confirming that agentic link traversal provides\nmeaningful additional value over single-pass retrieval. 4.4 H3: Enhanced Entity Pages Yield the Strongest Gains The enhanced entity page format produces the largest improvements across both\nretrieval modes:",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 18,
+    "total_chunks": 46,
+    "char_count": 437,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c0f4de70-14ea-4d79-b732-7988a2996eb5",
+    "text": "– Accuracy: 4.69 vs. 3.62, ∆= +1.04, p = 2.7 × 10−21, d = 0.60 (medium).\n– Completeness: 4.45 vs. 3.01, ∆= +1.42, p = 5.0×10−30, d = 0.74 (medium–\nlarge). – Accuracy: 4.70 vs. 4.40, ∆= +0.34, padj = 7.7 × 10−6, d = 0.29 (small).\n– Completeness: 4.38 vs. 4.00, ∆= +0.40, padj = 2.0 × 10−5, d = 0.28 (small). Full pipeline (C6 vs. – Accuracy: 4.70 vs. 3.62, ∆= +1.04, p = 1.0 × 10−21, d = 0.61 (medium).\n– Completeness: 4.38 vs. 3.01, ∆= +1.34, p = 5.1×10−31, d = 0.75 (medium–\nlarge). Enhanced+ pipeline (C6+ vs.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 19,
+    "total_chunks": 46,
+    "char_count": 511,
+    "word_count": 102,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "eca34a96-1f77-400f-96fd-55b36ea0305d",
+    "text": "C1):\n– Accuracy: 4.85 vs. 3.62, ∆= +1.10, p = 2.3 × 10−24, d = 0.65 (medium).\n– Completeness: 4.55 vs. 3.01, ∆= +1.41, p = 2.8×10−32, d = 0.77 (medium–\nlarge). C6+ achieves the highest scores across all conditions (accuracy: 4.85/5, completeness: 4.55/5). Notably, while C6+ outperforms C6 in absolute terms, the\nC6 →C6+ difference is not statistically significant (∆= +0.06, padj = 1.0,\nd = 0.08), suggesting that the base enhanced entity page format captures most\nof the benefit. The medium–large effect sizes (d ≈0.65–0.77) confirm that enhanced entity pages consistently outperform all other document formats. The agent's role is complementary, not primary.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 20,
+    "total_chunks": 46,
+    "char_count": 661,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6807244d-204c-4adb-8a99-791746f68a4d",
+    "text": "A notable observation is that\nC3 (enhanced, standard RAG: 4.69) and C6 (enhanced, agentic RAG: 4.70)\nachieve effectively identical accuracy. This indicates that when the document\nformat is optimized, the agent provides negligible additional accuracy lift. In\ncontrast, the agent provides substantial lift on poorly formatted documents: C4\n(plain HTML, agentic: 4.36) vs. C1 (plain HTML, standard: 3.62), ∆= +0.74.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 21,
+    "total_chunks": 46,
+    "char_count": 413,
+    "word_count": 60,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "38db780b-fee9-46a8-93f9-0318a9731de2",
+    "text": "The agent thus primarily compensates for inadequate content structure rather\nthan amplifying well-structured content. However, the agentic architecture remains valuable for retrieval efficiency: as Table 7 shows, agents on enhanced\npages follow fewer links while maintaining performance, and the Enhanced+ format (C6+) achieves the overall best result (4.85) by combining both approaches. Accuracy Improvement Waterfall 5 4.85\n4.70 +0.16\n4.40 +0.29 +0.51\n4 3.89\n3.62 +0.28 C1 +JSON-LD +Agentic +Enhanced +Enhanced+\n(Baseline) (C1 C2) (C2 C5) (C5 C6) (C6 C6+) Fig. 5: Accuracy improvement waterfall showing the cumulative effect of each\noptimization layer: JSON-LD markup, agentic retrieval, and enhanced entity\npages. The largest gains come from link materialization in enhanced pages, not\nfrom adding structured data alone. Structured Linked Data for Agent-Orchestrated Retrieval 15",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 22,
+    "total_chunks": 46,
+    "char_count": 883,
+    "word_count": 124,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9003802c-8b41-4ea5-91fe-a1f02f45f1d0",
+    "text": "Table 4: Paired t-tests with Bonferroni correction (α = 0.05, ntests = 12). Metric ∆ t padj d Sig. Structured data (standard RAG) (C1 vs C2)\nAccuracy +0.17 -3.12 2.4e-02 0.18 *\nCompleteness +0.18 -2.86 5.5e-02 0.16 n.s. Enhanced pages (standard RAG) (C1 vs C3)\nAccuracy +1.04 -10.53 2.7e-21 0.60 ***\nCompleteness +1.42 -13.00 5.0e-30 0.74 *** Agentic RAG vs standard (C2 vs C5)\nAccuracy +0.50 -5.22 4.0e-06 0.30 ***\nCompleteness +0.74 -6.75 9.1e-10 0.38 *** Enhanced pages (agentic RAG) (C5 vs C6)\nAccuracy +0.34 -5.08 7.7e-06 0.29 ***\nCompleteness +0.40 -4.89 2.0e-05 0.28 *** Enhanced+ vs Enhanced (agentic RAG) (C6 vs C6+)\nAccuracy +0.06 -1.47 1.0 0.08 n.s. Completeness +0.07 -1.22 1.0 0.07 n.s. Full pipeline vs baseline (C1 vs C6)\nAccuracy +1.04 -10.66 1.0e-21 0.61 ***\nCompleteness +1.34 -13.27 5.1e-31 0.75 *** Full pipeline+ vs baseline (C1 vs C6+)\nAccuracy +1.10 -11.42 2.3e-24 0.65 ***\nCompleteness +1.41 -13.60 2.8e-32 0.77 *** 4.5 Analysis by Query Type Table 5 reveals that the impact of structured data varies substantially by query\ntype: – Factual queries benefit most from enhanced pages: C3 (4.57) vs. C1 (2.74),\na +66.8% improvement. This is expected, as the enhanced page format embeds entity properties and facts in an easily extractable format.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 23,
+    "total_chunks": 46,
+    "char_count": 1266,
+    "word_count": 206,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6bfc2568-08b4-495c-9b89-a5954e73c88e",
+    "text": "C6+ achieves\nthe highest factual accuracy (4.81).\n– Relational queries show consistently high scores across conditions (C1:\n4.48, C6+: 4.85), suggesting that the LLM's pre-trained knowledge handles relational reasoning well. Agentic RAG with enhanced pages provides a\nmodest additional lift.\n– Comparative queries show universally high scores across all conditions\n(C1: 4.77, C3: 4.97, C6+: 4.95), with enhanced pages providing the most\nconsistent near-perfect performance. The most striking finding is the factual query improvement under enhanced\npages: C3 achieves 4.57 accuracy on factual queries compared to 2.74 for plain Table 5: Mean accuracy by condition and query type. Query Type C1 C2 C3 C4 C5 C6 C6+ Factual 2.74 3.14 4.57 4.06 4.13 4.56 4.81\nRelational 4.48 4.55 4.67 4.56 4.75 4.79 4.85\nComparative 4.77 4.94 4.97 4.83 4.69 4.90 4.95 Table 6: Mean accuracy by condition and domain, with per-domain effect sizes\nfor the key C6+ vs. C1 comparison. n = number of queries per domain. Domain n C1 C2 C3 C4 C5 C6 C6+ ∆C6+ BlackBriar 137 4.92 4.89 4.91 4.75 4.74 4.96 4.99 +0.07\nExpr. Legal 111 3.36 4.20 4.29 4.33 4.29 4.32 4.86 +1.50\nSalzburgerLand 79 2.19 2.33 4.92 4.06 4.25 4.82 4.66 +2.47\nWordLift Blog 22 1.91 1.73 4.55 3.14 3.38 4.45 4.64 +2.73 All domains 349 3.62 3.89 4.69 4.36 4.40 4.70 4.85 +1.10",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 24,
+    "total_chunks": 46,
+    "char_count": 1316,
+    "word_count": 220,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "60cac398-69ed-4b1b-be60-383460095a6f",
+    "text": "HTML, validating the design of our enhanced entity pages which make entity\nproperties and facts explicitly visible and extractable. 4.6 Analysis by Domain Mean Accuracy by Domain and Condition (1-5)\nAccuracy 3\nMean 2",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 25,
+    "total_chunks": 46,
+    "char_count": 216,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f61efdaf-8dd5-4fe3-a8e5-b6c53ac25216",
+    "text": "BlackBriar Express Legal SalzburgerLand WordLift Blog\nFunding\nDomain\nC1 C2 C3 C4 C5 C6 C6+ Fig. 6: Mean accuracy by domain and condition. The direction of the effect\nis consistent across all four verticals, but its magnitude varies with domain\ncharacteristics—largest where the knowledge graph provides information beyond\nthe plain HTML (travel, editorial), near-zero where the baseline is already factrich (e-commerce). Structured Linked Data for Agent-Orchestrated Retrieval 17 The domain-level results (Table 6 and Figure 6) reveal that the direction of the\neffect is consistent across all four verticals, but its magnitude varies substantially\nwith domain characteristics. This variation is itself informative and should be\nconsidered alongside the aggregate figures reported in Section 4.4.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 26,
+    "total_chunks": 46,
+    "char_count": 795,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3d81effa-09d0-48af-9cd5-748e9ed32e78",
+    "text": "Domain composition caveat. Our dataset is not uniformly distributed: BlackBriar accounts for 39% of queries (n = 137) yet contributes virtually no improvement due to its ceiling-level baseline, while WordLift Blog represents only\n6% (n = 22) and produces the largest gains. The aggregate ∆C6+ = +1.10 (accuracy) therefore blends near-zero improvement in the largest domain with large\nimprovements in smaller domains. Table 6 reports per-domain deltas to make this\ndistribution transparent; we recommend readers interpret the domain-stratified\nresults rather than relying on the aggregate alone. – BlackBriar (e-commerce, n = 137) achieves near-perfect scores across all\nconditions (C1: 4.92, C3: 4.91, C6+: 4.99, ∆= +0.07). This is expected under the link-materialization hypothesis: e-commerce product pages already\nrender key entity properties (name, price, description, availability) as visible\nHTML, so the enhanced template adds little novel information. The nearceiling baseline (4.92/5) also limits measurable headroom, but the ceiling\nitself is informative—it confirms that when plain HTML already contains\nsufficient factual content, the enhanced format provides no additional benefit, consistent with information enrichment (rather than presentation alone)\ndriving the gains in other domains.\n– SalzburgerLand (travel, n = 79) shows the most dramatic improvement\nfrom enhanced pages: C3 (4.92) vs. C1 (2.19), ∆= +2.47 for C6+.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 27,
+    "total_chunks": 46,
+    "char_count": 1436,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "38e82f5a-706e-4594-b7c8-22b53ca3663d",
+    "text": "Travel entities store key structured properties—geo-coordinates, cuisine types, opening hours, containment relationships (e.g., \"contained in Zell am See\")—\nprimarily in the knowledge graph. The plain HTML (C1) references these as\nopaque URIs in a property table; the enhanced page materializes them as\nreadable text, explaining the large gain.\n– WordLift Blog (editorial, n = 22) benefits most from enhanced pages: C3\n(4.55) and C6+ (4.64) dramatically outperform plain HTML conditions (C1:\n1.91, C2: 1.73), ∆= +2.73. Editorial content relies on entity relationships\n(\"about\", \"mentions\", \"related topics\") that are encoded in the knowledge\ngraph but absent from the article HTML. The enhanced page surfaces these\nrelationships explicitly. We note that this domain has the smallest sample\nsize (n = 22) and its results should be interpreted with appropriate caution.\n– Express Legal Funding (legal, n = 111) benefits substantially from the\nEnhanced+ format: C6+ (4.86) vs. C1 (3.36), ∆= +1.50, showing that\nricher navigational affordances help with complex legal concepts whose relationships are captured in the knowledge graph. This domain-level pattern is consistent with the link-materialization mechanism described in Section 5: the magnitude of improvement correlates with\nthe degree to which the knowledge graph provides information beyond what the Table 7: Agentic-specific metrics across conditions.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 28,
+    "total_chunks": 46,
+    "char_count": 1408,
+    "word_count": 204,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "43c0e354-97ba-406d-883c-d632aab57991",
+    "text": "Links followed 1.0 0.5 0.5 0.4\nLinks available 41.7 41.9 77.4 102.2 plain HTML already contains. Where the original content is already fact-rich\n(e-commerce), the enhanced format adds nothing; where key properties exist\nprimarily in the graph (travel, editorial), the gains are largest.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 29,
+    "total_chunks": 46,
+    "char_count": 286,
+    "word_count": 43,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "743ad9ea-7232-406c-80f7-8b794157d78b",
+    "text": "The pattern demands explanation—and the information-enrichment hypothesis provides it. Mean Accuracy Heatmap (Domains × Conditions) BlackBriar 4.92 4.89 4.91 4.75 4.74 4.96 4.99 5.0\n4.5 4.0\nExpress Legal Funding 3.36 4.20 4.29 4.33 4.29 4.32 4.86 3.5\n3.0Accuracy\nSalzburgerLand 2.19 2.33 4.92 4.06 4.25 4.82 4.66 2.5Mean\n2.0 1.5\nWordLift Blog 1.91 1.73 4.55 3.14 3.38 4.45 4.64 1.0 C1 C2 C3 C4 C5 C6 C6+ Fig. 7: Heatmap of mean accuracy scores across domains and conditions. Darker\ncells indicate higher accuracy. The pattern shows that enhanced entity pages\n(C3, C6) consistently outperform other conditions across all domains. Table 7 reveals an important finding about navigational affordances: Enhanced+\nentity pages (C6+) expose 2.4× more discoverable links than JSON-LD\npages (102.2 vs. 41.9) and 2.5× more than plain HTML (102.2 vs. 41.7). Enhanced entity pages (C6) expose 77.4 links—a midpoint between C5 and C6+. Interestingly, agents follow fewer links in C6+ (0.4 vs. 1.0 in C4), yet achieve\nhigher accuracy. This suggests that the enhanced page format provides such rich\ncontext in the initial retrieval that the agent needs fewer additional exploration\nsteps. The decreasing link-follow rate from C4 (1.0) to C6+ (0.4) suggests that\nenhanced pages enable the agent to answer effectively with fewer actions, inStructured Linked Data for Agent-Orchestrated Retrieval 19 dicating more efficient ReAct-style planning when navigational affordances are\nclear.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 30,
+    "total_chunks": 46,
+    "char_count": 1467,
+    "word_count": 222,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a17f5ee2-e171-4d3f-b02d-e3aa40ce987c",
+    "text": "5.1 Two Worlds of AI Search: Parsed vs. Our findings reveal a critical distinction in the emerging landscape of AI-powered\nsearch—one that has direct implications for the Generative Engine Optimization\n(GEO) community. Today's AI search systems fall into two architectural categories with respect\nto structured data: Dedicated structured data pipelines. Traditional search engines such as Google\nand Bing have evolved specialized crawl-time parsers that extract <script type=\"application/ld+json\">\nblocks as a separate signal, independent of the page body text. In these systems,\nJSON-LD feeds directly into entity understanding, knowledge panels, and rich\nresults. The structured data is never flattened into a single text embedding—it\nis parsed, validated, and indexed in a dedicated knowledge graph layer. Flat-text RAG pipelines. The fast-growing ecosystem of RAG-based AI assistants, agentic search, and retrieval-augmented chatbots typically ingests web\npages as a single text chunk. In these systems—which include our Vertex AI\nVector Search 2.0 pipeline as well as most LangChain, LlamaIndex, and custom\nRAG deployments—JSON-LD is just more text competing for a limited embedding budget. Our results show that in this regime, JSON-LD alone provides\nno measurable benefit (∆= +0.17, d = 0.18). This distinction is crucial for practitioners.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 31,
+    "total_chunks": 46,
+    "char_count": 1347,
+    "word_count": 193,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "70c07a8c-97d0-4c6b-ac77-cd626f0714d0",
+    "text": "Our study provides an empirical snapshot of the current status quo: as AI-powered search diversifies beyond\nGoogle and Bing, content optimized only with JSON-LD will fail to surface in\nthe growing number of flat-text RAG systems. The enhanced entity page format we propose bridges this gap—it makes structured knowledge visible and\nactionable regardless of how the search system ingests content. 5.2 From SEO to SEO 3.0: The Reasoning Web Our findings offer empirical grounding for the emerging concept of SEO 3.0 [26],\nthe next evolutionary phase of search optimization for an AI-driven web [9]. Search optimization can be described across three eras: – SEO 1.0 — Document Ranking (1998–2011): Optimizing for keyword\nmatching and link-based authority signals. Success measured by ranking position, organic traffic, and click-through rates. – SEO 2.0 — Structured Data (2011–2024): The launch of Schema.org\nin 2011 enabled machines to parse entity properties from web pages, powering knowledge panels, rich snippets, and improved entity understanding. Success measured by structured data adoption, data quality, and rich result\neligibility.\n– SEO 3.0 — The Reasoning Web (2024–present): AI search systems do\nnot merely rank or parse content; they synthesize and reason over retrieved\ninformation, often producing direct answers and taking steps on behalf of\nusers. Success must now be measured across three distinct dimensions, introduced in the next section.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 32,
+    "total_chunks": 46,
+    "char_count": 1459,
+    "word_count": 220,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1d96f013-8b2b-4a8b-a6da-b82a409fe212",
+    "text": "The AI visibility spectrum: Citations, Reasoning, Actions. For teams working\non AI visibility, our experiment reveals that content optimization must target\nthree progressively deeper levels of AI engagement: Citations — Is your content retrieved and attributed? This is the most\nbasic form of AI visibility: appearing as a source in AI-generated answers. Our C1/C2 conditions evaluate this—whether the retrieval pipeline surfaces\nthe right documents.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 33,
+    "total_chunks": 46,
+    "char_count": 450,
+    "word_count": 64,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "975fd325-b5ef-4926-a974-d28a89e8edbc",
+    "text": "JSON-LD helps with citation in systems that parse it\n(Google, Bing), but not in flat-text RAG systems.\n2. Reasoning — Can the AI reason correctly over your content? Even when\ncited, the AI must extract and synthesize the right facts. Our accuracy and\ncompleteness metrics measure this.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 34,
+    "total_chunks": 46,
+    "char_count": 285,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9cc7ce8d-8281-4b9e-be7b-3a5be52b401d",
+    "text": "Enhanced entity pages (C3) improve reasoning by +29.5% over plain HTML—not because the facts are different, but\nbecause they are presented in a way the LLM can reliably extract and compose.\n3. Actions — Can the AI agent act on your content? In agentic systems, the\nAI does not just retrieve and reason—it follows links, queries APIs, and\nperforms multi-step tasks on behalf of the user.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 35,
+    "total_chunks": 46,
+    "char_count": 386,
+    "word_count": 66,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1972e4f0-a592-4d5a-bccd-02e72350d0ee",
+    "text": "Our C4–C6 conditions evaluate this. Enhanced entity pages with dereferenceable URIs and navigational\naffordances (C6) enable agents to traverse knowledge graphs, aggregating information across entity boundaries. This is the frontier of AI visibility—and\nit requires content designed for agent traversal, not just retrieval. The practical implication for AI visibility teams is clear: optimizing for citations alone (the current focus of most GEO strategies) is necessary but insufficient. The competitive advantage lies in optimizing for reasoning (through\nenhanced content presentation) and actions (through navigational affordances\nand tool-accessible endpoints). 5.3 Implications for Web Publishers and GEO JSON-LD is necessary but not sufficient: Schema.org markup remains\nvaluable for search engines with dedicated parsers (Google, Bing), but it\nprovides no measurable benefit in RAG-based systems that treat pages as\nflat text. Publishers who rely solely on JSON-LD are optimizing for only\none class of AI search.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 36,
+    "total_chunks": 46,
+    "char_count": 1019,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "365a4adb-cfc0-47ec-a82d-1d6e50fbac73",
+    "text": "Structured Linked Data for Agent-Orchestrated Retrieval 21 Enhanced entity pages are the bridge: Our format—with natural language summaries, navigable links, and llms.txt-style agent instructions—\nachieves +29.6% accuracy in standard RAG and +29.8% with the agentic\npipeline. It works in both worlds: the structured JSON-LD is still present\nfor traditional parsers, while the human- and agent-readable presentation\nensures RAG systems can also leverage it.\n3. Dereferenceable URIs enable traversal: Publishing entities with URIs\nthat support content negotiation allows agents to follow links and aggregate\ninformation across knowledge graph boundaries—an affordance that flat-text\npipelines cannot exploit from JSON-LD alone. 5.4 Implications for RAG System Design Our results challenge the dominant \"documents as flat text\" paradigm and point\ntoward structured-data-aware retrieval: Data quality through link materialization: The enhanced entity page\ndoes not merely reformat the same information—it materializes linked data. The baseline HTML (C1) contains references to related entities (addresses,\ngeo-coordinates, offers, providers) as opaque URIs that an LLM cannot interpret without dereferencing. The enhanced page resolves those links and renders the connected entity data as natural language, creating a self-contained,\ninformation-rich document. This is not a confound; it is the core value proposition of a knowledge graph: traversing typed relationships to assemble richer\ncontext than any single document contains. Crucially, all materialized data originates from the same openly accessible\nLinked Data Platform—the same dereferenceable URIs visible in the baseline HTML. The structured data is referenced, auditable, and independently\nverifiable, making it easy to trust and validate.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 37,
+    "total_chunks": 46,
+    "char_count": 1799,
+    "word_count": 244,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6296e470-9e7e-45f1-afb6-84a5214287aa",
+    "text": "The +29.6% accuracy gain\ntherefore reflects the quality and accessibility of the underlying data, not the\ntechnology stack used to present it.\n2. Navigational affordances as a complementary strategy: The gap between C5 and C6 (accuracy: 4.40 vs. 4.70) shows that even capable agents\nneed explicit navigational cues to effectively explore linked data. However,\nwe acknowledge that the agent's incremental accuracy contribution is small\nwhen document format is already optimized: C3 (4.69) and C6 (4.70) are\neffectively equivalent. The agent's primary value is twofold: (a) compensating for suboptimal content structure—the largest agentic lift occurs on plain\nHTML (∆= +0.74)—and (b) retrieval efficiency, as agents on enhanced\npages follow fewer links while maintaining accuracy. The title's reference to\n\"agent-orchestrated retrieval\" reflects the full experimental architecture, not\na claim that the agent is the primary driver of accuracy gains.\n3. Enhanced pages enable efficient retrieval: Agents using enhanced pages\n(C6) make fewer tool calls yet achieve higher accuracy, suggesting that wellstructured content reduces the need for multi-hop exploration. By flattening\nthe graph neighbourhood into the entity page, the enhanced format lets the LLM obtain in a single retrieval step what the agentic pipeline would\notherwise need multiple hops to collect.\n4. Toward structured-data-aware ingestion: RAG system designers should\nconsider architectures that extract and separately index structured data\nblocks—mirroring what traditional search engines already do—rather than\ntreating all page content as a single text field. Our study has several limitations: – Information content versus presentation format: The enhanced entity page (C3/C6) differs from the plain HTML baseline (C1) in two ways\nsimultaneously: it restructures the layout (breadcrumbs, agent instructions,\nnavigable links) and it materializes data from related entities in the knowledge graph that the baseline only references via URIs. Our experiment does\nnot include an ablation that isolates these two factors—e.g., an enhanced\npage restricted to only those facts verifiably present in the C1 HTML body. We argue that this bundling is deliberate and ecologically valid: the entire\npurpose of a knowledge-graph-backed entity page is to resolve linked data\nand present a complete, self-contained view of an entity and its relationships. Stripping away the materialized linked data would remove the core\nvalue proposition of the knowledge graph.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 38,
+    "total_chunks": 46,
+    "char_count": 2516,
+    "word_count": 364,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c4e236c7-72ab-482a-a295-7836898ef88e",
+    "text": "Importantly, all data surfaced in\nthe enhanced page originates from the same openly accessible Linked Data\nPlatform—the same dereferenceable URIs that appear in C1—and is therefore independently verifiable. The H1 result provides a useful constraint: adding JSON-LD to plain HTML\n(C1 vs. C2) yields only d = 0.18, confirming that structured data in a hidden <script> block provides negligible benefit in flat-text RAG systems. A\nnatural follow-up ablation—\"enhanced page minus JSON-LD\"—would test\nwhether removing the embedded structured data block from C3 changes\nperformance; we expect it would not, since the same information is already\nexpressed in natural language.\n– Flat-text ingestion architecture: A critical architectural consideration is\nhow our retrieval pipeline handles structured data. Vertex AI Vector Search\n2.0 ingests each document as a single text field (truncated to ∼20k characters\nfor embedding). In our corpus, 82% of plain HTML and 88% of JSON-LD\ndocuments exceed this limit, meaning the JSON-LD added to C2 documents\nis often partially or fully truncated before indexing. The JSON-LD <script>\nblock starts at a median position of character 18,510—right at the truncation\nboundary. This differs fundamentally from how production search engines operate. Google's crawler, for example, extracts JSON-LD from <script type=\"application/ld+json\">\nblocks as a separate signal, independent of the page's body text. The structured data is parsed into entity properties and indexed in a knowledge graph, Structured Linked Data for Agent-Orchestrated Retrieval 23",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 39,
+    "total_chunks": 46,
+    "char_count": 1578,
+    "word_count": 229,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "33b7c0b6-289a-45d4-b119-e7fd4493a9af",
+    "text": "not flattened into a single text embedding. A retrieval architecture that similarly extracts and separately indexes structured data—e.g., using multiple\nembedding fields or a hybrid entity–document store—might yield a significant H1 result. This remains an important area for future work.\n– Scale: While 349 queries across 4 domains provides strong statistical power,\nlarger-scale experiments would further strengthen generalizability claims.\n– LLM judge and pipeline bias: To mitigate correlated biases, we use separate models for generation (Gemini 2.5 Flash) and evaluation (Gemini 3.0\nFlash). While this reduces same-model bias, all pipeline stages—query generation (template-based with Gemini-family entity extraction), answer generation, and evaluation—use models from the same Gemini family, sharing\ntraining distributions and potential blind spots. Future work should incorporate independent human evaluation for additional validation.\n– KG-derived ground truth: Ground-truth answers are derived from the\nknowledge graph's structured data. This means the evaluation inherently\nmeasures how well each condition conveys KG information—which is the\nintended research question—but it also introduces a potential circularity:\nconditions that present KG data more directly (C3/C6/C6+) may score\nhigher because the evaluation rewards textual proximity to KG-derived facts. A human-evaluated calibration subset, using independently sourced reference\nanswers, would anchor the automated scores and is an important direction\nfor future work.\n– Single retrieval system: Our results are specific to Vertex AI Vector\nSearch 2.0 with gemini-embedding-001. We chose this system intentionally: it represents the flat-text ingestion architecture used by most AI search\nsystems that operate independently of Google or Bing's proprietary index. Systems with structured-data-aware ingestion may show different sensitivity\nto JSON-LD markup.\n– Knowledge graph quality: Our domains use well-maintained knowledge\ngraphs served by WordLift's Linked Data Platform. The effectiveness of\nstructured data may be lower for noisier or less complete KGs. 5.6 Ethical Considerations and Data Trustworthiness A critical aspect of our approach is that the structured data consumed by AI\nagents is the same data visible to human users. The JSON-LD embedded\nin each page describes the exact same entity properties, relationships, and facts\nthat appear in the human-readable HTML representation. Similarly, dereferenceable entity URIs serve the same underlying data through content negotiation—\nwhether rendered as HTML for humans, JSON-LD for machines, or Turtle for\nSPARQL queries. This coupling between human and machine representations creates\nstronger faithfulness guarantees than architectures where AI systems consume\nentirely separate data feeds.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 40,
+    "total_chunks": 46,
+    "char_count": 2825,
+    "word_count": 385,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "cffffa06-918f-4eec-b865-28497069b8ef",
+    "text": "In a fully decoupled web—where machines and\nhumans follow two different tracks—there is no natural accountability mechanism: structured data could drift from visible content, or be deliberately manip- ulated to influence AI outputs without corresponding changes visible to users. In our approach, because the structured data is the page content (expressed\nin machine-readable form), any manipulation would also be visible to human\nvisitors, creating a natural check on data integrity. This distinguishes our work from content-optimization approaches such as\nGEO [2], where optimization strategies (adding statistics, citations, or authoritative language) may create a divergence between what is optimized for AI consumption and what is genuinely informative for human readers. Our enhanced\nentity pages, by contrast, surface the same structured knowledge to both audiences. This observation has broader implications for the emerging reasoning web. As\nAI agents increasingly rely on structured data to construct answers, the trustworthiness of that data becomes paramount. Systems that maintain a single\nsource of truth—serving both human and machine consumers—are inherently\nmore auditable and resistant to adversarial manipulation than those that decouple the two channels. Our findings motivate several research directions:",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 41,
+    "total_chunks": 46,
+    "char_count": 1325,
+    "word_count": 185,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7ccd1b30-b532-4036-89be-c572d064fc37",
+    "text": "Structured-data-aware retrieval: The null result for H1 is specific to\nour flat-text ingestion pipeline. Future work should investigate architectures\nthat extract JSON-LD separately and index entity properties as structured\nmetadata—similar to how Google treats Schema.org markup as a distinct\nsignal from page content. Vertex AI Vector Search 2.0 supports multiple\ndata fields with independent embeddings; a dual-field approach (body text\n+ structured data) with multi-vector retrieval could unlock the latent value\nof JSON-LD for RAG.\n2. Entity-centric chunking: Rather than truncating documents at a fixed\ncharacter limit, entity-aware chunking strategies that preserve structured\ndata blocks could improve retrieval for content-rich pages.\n3. Cross-system replication: Replicating our experiment with retrieval systems that natively parse structured data (e.g., knowledge-graph-augmented\nretrievers) would help disentangle the effect of structured data from the limitations of our ingestion pipeline.\n4. Production-scale validation: Deploying enhanced entity pages on live\nwebsites and measuring their impact on AI-powered search engines (SGE,\nPerplexity) would validate ecological validity.\n5. Recursive Language Models on Knowledge Graphs: Building on the\nRLM framework [30], we are exploring an approach (RLM-on-KG) that replaces the flat-context window with iterative graph exploration [25]. Rather\nthan retrieving a fixed set of documents, the model navigates the knowledge\ngraph recursively—fetching thin evidence from entity neighbors, deciding\nwhich relationships to follow, and synthesizing answers with full provenance. This extends our current agentic pipeline from tool-augmented retrieval to\nfully recursive, structure-guided reasoning over linked data. Structured Linked Data for Agent-Orchestrated Retrieval 25 5.8 Practical Recommendations Based on our findings, we recommend the following for practitioners:",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 42,
+    "total_chunks": 46,
+    "char_count": 1928,
+    "word_count": 254,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "56f83d28-9c8f-4b41-8a46-938da5b388c7",
+    "text": "Go beyond JSON-LD: While Schema.org markup is valuable for search\nengines that extract it separately, our results show it does not improve RAG\naccuracy when treated as flat text. Invest in enhanced entity pages that make\nstructured data human- and agent-readable.\n2. Use dereferenceable URIs: Ensure that entity URIs resolve to contentnegotiable endpoints that serve JSON-LD when requested programmatically.\n3. Adopt the enhanced entity page pattern: Augment existing pages with\nexplicit link navigation, breadcrumbs, and llms.txt-style instructions for AI\nagents.\n4. Test with agentic workloads: As AI-powered search becomes prevalent,\ntest content with agentic RAG systems rather than relying solely on traditional SEO metrics. We have presented a controlled experimental study demonstrating that enhanced\nentity pages significantly improve the performance of Retrieval-Augmented Generation systems. Across 2,439 valid evaluations spanning four industry domains\nand seven conditions, we found that:",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 43,
+    "total_chunks": 46,
+    "char_count": 1000,
+    "word_count": 138,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "fb746e84-3eb5-4d64-8a0a-31a0f5c49a67",
+    "text": "Schema.org JSON-LD markup provides only marginal accuracy improvements (∆= +0.17, d = 0.18), highlighting that structured data must be\npresented, not just embedded.\n2. Our enhanced entity page format, designed for agentic discoverability, yields\n+29.6% accuracy gains in standard RAG (d = 0.60) and +29.8% in the full\nagentic pipeline (d = 0.61).\n3. The Enhanced+ variant with richer navigational affordances achieves the\nhighest absolute scores (accuracy: 4.85/5, completeness: 4.55/5), though the\nincremental gain over the base enhanced format is not statistically significant\n(∆= +0.06, d = 0.08).\n4. Agentic RAG with link traversal significantly improves both accuracy (+13.1%)\nand completeness (+20.1%) over standard RAG, though its contribution is\ncomplementary: when document format is already optimized, the agent adds\nnegligible accuracy lift (C3: 4.69 vs. These effects generalize in direction across editorial, legal, travel, and ecommerce domains, though their magnitude varies with domain characteristics (see Table 6).",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 44,
+    "total_chunks": 46,
+    "char_count": 1032,
+    "word_count": 147,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "56358bf6-8140-49f7-906f-9d1477df501e",
+    "text": "Our work provides empirical evidence that the Semantic Web's original vision—\nmachine-readable structured data enabling intelligent agents—directly translates\nto measurable improvements in today's AI systems. As generative AI increasingly mediates information access, the presence and quality of structured linked\ndata becomes not just an SEO signal, but a fundamental enabler of accurate,\ncomplete, and well-grounded AI responses. Our dataset, evaluation framework, enhanced entity page templates, and experiment configuration are available at https://github.com/\nwordlift/seo3-reasoning-web. We thank the Google Cloud team for their generous support\nthrough Cloud credits that made these experiments possible. All experiments—\nincluding embedding generation, vector search indexing, Gemini-based generation (Gemini 2.5 Flash) and evaluation (Gemini 3 Flash Preview), and the\nVertex AI Vector Search 2.0 infrastructure—were run entirely on Google Cloud. We also thank the WordLift engineering team for maintaining the knowledge\ngraph infrastructure and GraphQL API used in this study. Author Contributions. Andrea Volpini: Conceptualization, Methodology, Investigation, Writing – Original Draft, Writing – Review & Editing. Elie Raad:\nWriting – Review & Editing. Beatrice Gamba: Writing – Review & Editing. David Riccitelli: Software, Writing – Review & Editing. The authors used\nAntigravity to assist with the research and the writing to improve clarity and\nreadability. All content was carefully reviewed and approved by the authors,\nwho retain full responsibility for the accuracy of the work and for any errors or\nomissions.",
+    "paper_id": "2603.10700",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors": [
+      "Andrea Volpini",
+      "Elie Raad",
+      "Beatrice Gamba",
+      "David Riccitelli"
+    ],
+    "published_date": "2026-03-11",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.10700v1",
+    "chunk_index": 45,
+    "total_chunks": 46,
+    "char_count": 1629,
+    "word_count": 224,
+    "chunking_strategy": "semantic"
+  }
+]

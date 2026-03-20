@@ -1,0 +1,782 @@
+[
+  {
+    "chunk_id": "940ec903-301c-4160-b772-882dfe9cd0c4",
+    "text": "Dimitri Staufer Kirsten Morehouse\nTU Berlin Columbia University\nBerlin, Germany New York, USA\nstaufer@tu-berlin.de km4252@columbia.edu David Hartmann Bettina Berendt\nTU Berlin TU Berlin\nBerlin, Germany Berlin, Germany\nWeizenbaum Institute for the Networked Society Weizenbaum Institute for the Networked Society\nBerlin, Germany Berlin, Germany\nd.hartmann@tu-berlin.de KU Leuven\nLeuven, Belgium2026 berendt@tu-berlin.de Abstract massive, web-scraped corpora and shaped through user interactions\nthat include sensitive information about individuals [32, 42, 48].Mar Large language models (LLMs) learn statistical associations from\nmassive training corpora and user interactions, and deployed sys- Aggregated across domains, these data enable increasingly finegrained indirect identification and profiling, turning LLM-based tems can surface or infer information about individuals. Yet people12 applications into systems that scale opaque personalisation and lack practical ways to inspect what a model associates with their\nname. We report interim findings from an ongoing study and in- inferences about individuals.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 1,
+    "total_chunks": 39,
+    "char_count": 1114,
+    "word_count": 141,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a57efe58-deeb-4ec0-b6a2-2b4bb0996bdb",
+    "text": "In doing so, they (a) violate contextual\ntroduce LMP2, a browser-based self-audit tool. In two user studies integrity [41] by repurposing data beyond the context in which\n(𝑁𝑡𝑜𝑡𝑎𝑙=458), GPT-4o predicts 11 of 50 features for everyday people it was shared [2, 16], (b) create individual-level harms via misinwith ≥60% accuracy, and participants report wanting control over ference [11, 55, 64], exposure [25, 40], discrimination [22, 28], and\nLLM-generated associations despite not considering all outputs targeted persuasion [1, 31, 63] and (c) produce societal harms by\nconcentrating informational power [10, 30] while making account-[cs.HC] privacy violations. To validate our probing method, we evaluate\neight LLMs on public figures and non-existent names, observing ability attribution opaque [9], normalizing surveillance [50, 60], and\nclear separation between stable name-conditioned associations and weakening autonomy and democratic agency [58]. One direction\nmodel defaults.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 2,
+    "total_chunks": 39,
+    "char_count": 981,
+    "word_count": 137,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "36a927d1-8640-4c91-bdb2-a814d4e28a8c",
+    "text": "Our findings also contribute to exposing a broader to more transparency about these practices are self-audits. Organigenerative AI evaluation crisis: when outputs are probabilistic, sational privacy audits review data practices, but they do not tell\ncontext-dependent, and user-mediated through elicitation, what individuals what an LLM associates with their name or broader\nmodel–individual associations even include is under-specified and identity signals, such as language use or inferred demographic atoperationalisation relies on crafting probes and metrics that are tributes (e.g., location, education, age) [12, 46, 55]. We therefore\nhard to validate or compare.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 3,
+    "total_chunks": 39,
+    "char_count": 669,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "082e6a72-69f5-4472-bfed-d8eb87563366",
+    "text": "To move towards reliable, actionable focus on human-centred self-audits that make these associations\nhuman-centred LLM privacy audits, we identify nine frictions that observable and contestable. In line with calls for human-centred\nemerged in our study and offer recommendations for future work evaluation [36], end-users and other impacted stakeholders should\nand the design of human-centred LLM privacy audits. be able to assess model behaviour to adapt their interactions, provide feedback, and challenge harmful outputs. CCS Concepts In this HCI context, we define privacy self-auditing as a userfacing practice that lets individuals inspect what a system asso-\n• Human-centred computing →Empirical studies in HCI; •\nciates with their name (or their broader identity), interpret those\nSecurity and privacy →Human and societal aspects of seassociations, and decide on actions such as correcting or erasingarXiv:2603.12094v1 curity and privacy; • Computing methodologies →Natural\nthem. Such a procedure presumes inspectable records. However,\nlanguage processing.\n(1) LLM outputs are stochastic and sensitive to elicitation choices,\n(2) black-box APIs hide internals, and (3) prompt responses are\nKeywords weak evidence of system behaviour [20, 23, 29, 39, 51]. Commercial\nLarge Language Models, Privacy Auditing, Black-Box Auditing, conversational agents offer application-level memory controls, but\nLLM Memorisation, Attribute Inference, Self-Auditing, Human- these govern explicit \"memories\" and do not reveal model-level\nCentred Auditing, GDPR, Right to be Forgotten, Evaluation Crisis name-conditioned or otherwise inferred associations. Users canAccepted at the Human-centered Evaluation and Auditing of Language Models not inspect or control these associations, and they may influence\nWorkshop (HEAL) at CHI 2026. downstream applications built on the model. They may involve\n1 Introduction sensitive traits (e.g., religion, sexual orientation, political affiliation,\nLarge language models (LLMs) increasingly inform decisions in or health) that can be benign or affirming for one person and risky\nhigh-stakes domains and appear in everyday assistants for health, fi- or unwanted for another, depending on the social, cultural, or legal\nnance, and counselling tasks [27, 34, 37, 62, 64]. They are trained on context. Our focus is on probing such associations and presenting HEAL @ CHI '26, May 2026, Barcelona, Spain Staufer et al. Figure 1: Walk-through of the LMP2 interface for privacy self-audits of LLMs: Participants use the tool in four stages: (1)\nenter their full name and agree to terms, (2) select human features from a categorised list, (3) view Results Cards with model\npredictions and confidence scores, and (4) provide feedback on correctness, privacy concerns, and emotional reactions.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 4,
+    "total_chunks": 39,
+    "char_count": 2808,
+    "word_count": 401,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d973dd6e-7e85-4e2c-911e-b2cb3e38bad5",
+    "text": "0.43 residence is Hogwarts 7.43 Englandsignals that users can interpret. We report interim findings and NLL Calibration\nlives in 9.12 Ho \"Harry Potter's London… Systemargue why human-centred LLM privacy audits remain challeng- Ground-Truth Generic Subject based in residence is Ho\" Prompt residence is … Truncation … … \"Tis\nYou are givening despite growing technical work on memorisation [8, 25] and Honduras 2.17 … phrases with a person\" Po Holland 2.65 \"Harry Potter's Hogwarts … 1.21 fragmented lastinference [55]. residence is … Wu residence is residence is Po\" CF Generator England 6.23 word. Output only Generate random set Portugal Poland 2.32 7.22 the corrected last lives in En … of 20 two-character Our goal is twofold: (1) report findings about name-conditioned Poland 2.41 word(s). counterfactuals … based in …… … …\nEnglandinformation on individuals in LLMs, and (2) articulate the method- 4.25 ground truths + (n\n4.82\n8.12 London…ological, legal, and UX challenges that make privacy self-auditing 20 5counterfactuals)paraphrases Top PredictionsList RankNLL andby Frequency,normalize Hogwarts\ndifficult in practice. We introduce LMP2 (Language Model Privacy Assoc.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 5,
+    "total_chunks": 39,
+    "char_count": 1176,
+    "word_count": 174,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "81f7413b-7e9e-4dfe-adf6-d46def2a508d",
+    "text": "Strength Hogwarts\nProbe)1, a self-audit tool that adapts canary probing to black-box Percentage\nConfidence Top predictions\nAPIs and presents user-facing association strength and confidence Percentage\nsignals (Figure 1). This complements work on user-driven and external auditing, as well as audit tools that support these approaches Figure 2: LMP2 probing pipeline for black-box APIs: Groundby presenting clear, actionable evidence [13–15, 22, 33, 38, 43]. truth values are truncated, combined with random counterfactual prefixes and paraphrased canaries, then \"restored\" by\n2 Audit Method and Tool (LMP2) the model. Outputs are calibrated against a generic-subject\nWe operationalise self-auditing as a user-initiated audit in which baseline and ranked by frequency and NLL to produce top\nname-conditioned associations are probed across prompt variants predictions, association strength, and confidence.\nto surface stable signals about a property value, e.g., a person's residence. Building on WikiMem [56], we use canaries—short probe sentences that assert a subject–property–value triple (ℎ, 𝑝, 𝑣), where ℎ when log-probabilities are unavailable), then normalises evidence\nis the name, 𝑝the property, and 𝑣the value—and select 50 human across the top candidates. Confidence captures how concentrated\nproperties from WikiMem's 243 Wikidata properties (including that evidence is, indicating whether outputs converge on a single\ndate of birth, occupation, and phone number). This subset reflects value or remain dispersed.\nfeatures with broad user relevance, coverage across categories (e.g., LMP2 implements this audit method as a browser–server tool\ncore identity, personal and professional life), and expressibility that keeps user-entered values in the client2, queues requests in\nin one to three words. For each property we use up to five low- the backend, and returns Results Cards with top predictions and\nambiguity paraphrases of the canaries. Because black-box APIs confidence scores (Figure 1). The interface was refined through two\nonly expose probabilities over model-generated completions, we formative studies (𝑁=10 each, iterative) and is designed for ease\nreformulate the probes as a fragmented sentence recovery task (Fig- of use and interpretability of outputs.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 6,
+    "total_chunks": 39,
+    "char_count": 2279,
+    "word_count": 322,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7bbd45a3-182f-46ae-89ef-c8de0fdeca4b",
+    "text": "Users enter their full name\nure 2). We truncate user-provided ground truths to two-character and select features to probe. The backend converts user inputs into\nprefixes, generate 20 random counterfactual prefixes, and instruct fragment-completion queries (two-character prefixes combined\nthe model to output only the corrected last word(s). with paraphrased probes) and submits these to the model provider\nWe aggregate across paraphrases and counterfactuals to produce (Figure 3). Users then receive association strength and confidence\ntwo user-facing metrics. Association strength combines how often signals aggregated across prompts. In our study, participants were\na value is produced with its average probability (or vote weight 2User-entered ground-truth values are not retained beyond the session. However, the\nprovider necessarily receives the submitted names and prefixes, to which participants\n1https://anonymous.4open.science/r/human-centered-llm-privacy-audit-E05D explicitly consented. Human-Centred LLM Privacy Audits: Findings and Frictions HEAL @ CHI '26, May 2026, Barcelona, Spain",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 7,
+    "total_chunks": 39,
+    "char_count": 1098,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e6c31c82-08d9-4f65-89a9-cdb0d6d82870",
+    "text": "then asked to provide feedback about the generated predictions • High-confidence errors. Models can default to biased guesses\n(accuracy, privacy violation, feeling). (\"ambidextrous\" for handedness, \"+1\" for phone number) with\nhigh confidence. This was most evident for non-existent names,\nsuggesting a fallback to high-probability defaults when name-\n5(n+k) requests WikiMem-based Bacend User Interface\nvariantstruths conditioned associations are weak or non-existent. Ministral 8B Top Predictions 1 Full name Users provide Basedlogprobson agg. 5nk canarycounterfactualsground\n2 Ground truths for 3 human properties Probabilities Based on Skew Instruct was the only model that instead exhibited a near-uniform\nUsers 3 Top predictions and model confidence receive Confidence Topacrosspredictions5(n+k) probes LLM output distribution on the Synthetic set. 4 Feedback (accuracy, privacy, availability, feeling)\nPer human property • Model differences. Larger API models are significantly more accurate on Famous than smaller open-source ones (Grok-3 𝑓1=0.54,\nFigure 3: System overview of LMP2: Users enter their full GPT-5 𝑓1=0.47 vs. Ministral 8B Instruct 𝑓1=0.16, Qwen3 4B 𝑓1=0.19).\nname and selected features, the backend generates prefixes\nand counterfactuals, queries the LLM, and aggregates results User studies with EU residents. To explore whether name-conditioned\ninto top predictions, association strength, and confidence. associations also emerge for regular (non-famous) people, we ran\none survey and two tool-based studies with adult EU residents3 on\nProlific.\n• Interest and concerns. In an initial survey (𝑁=155), 60% ex-\n3 Findings from the Ongoing Study pressed interest in a self-audit tool. Participants were most conEmpirical audit across eight LLMs.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 8,
+    "total_chunks": 39,
+    "char_count": 1766,
+    "word_count": 243,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b406f0cf-705c-4ad6-9afd-59417a065214",
+    "text": "We compare three open mod- cerned about the production of their phone number, medical\nels (Qwen3 4B Instruct, Llama 3.1 8B, Ministral 8B Instruct) and condition(s), and residence.\nfive API-based models (GPT-4o, GPT-5, Gemini Flash 2.0, Grok-3, • Feature selection in tool use. In two tool-based studies (comCohere Command A) using the same canary paraphrases across 50 bined 𝑁=303 from 19 EU countries), participants mainly selected\nproperties and two subject sets (Famous and Synthetic). demographic and physical traits. Phone number and medical\ncondition were chosen by < 3%, suggesting potential hesitance\nto probe high sensitivity features.\n• Model performance. GPT-4o produced 11 of 50 features with\n≥60% accuracy, including sex or gender (94.4%), sexual orientation (82.9%), native language (77.8%), eye colour (74.3%), and hair\ncolour (74.1%). The average accuracy across all selected features\nwas 45% (See Appendix, Table 2). Notably, accuracy remained\nhigh even for low-frequency traits (e.g., blue eyes), suggesting\nperformance is not driven solely by majority-class \"guessing\".\n• Perceptions and control. 87% of outputs were not viewed as privacy violations (even when the model predictions were accurate),\nyet 72% wanted the option to erase or correct model-generated\ninformation about them. 4 Frictions in Human-Centred LLM Privacy\nAuditing\nAuditing as socio-technical practice. In HCI, auditing is treated\nFigure 4: Distribution of confidence across models and sub- as a socio-technical practice rather than a purely technical proceject sets: Confidence separates famous from synthetic indi- dure: affected people identify and articulate potential harms, while\nviduals across models, indicating stable name-conditioned organisations (e.g., platforms, regulators, or researchers) provide\nassociations for users with high web presence. tools, procedures, and accountability pathways that support user\nsensemaking and investigation [14, 15, 33, 38]. LMP2 contributes\nby estimating the strength and stability of name-conditioned as-\n• Subject-set separation. Confidence separates Famous (𝑛=100 sociations and making these signals user-interpretable. One core\npublic figures with extensive Wikipedia coverage and multiple\nfriction for human-centred LLM privacy auditing is the translation\nground truths) from Synthetic (𝑛=100 recombined, non-existent\ngap between technical evaluations and actionable self-audits. Much\nnames), indicating stable name-conditioned associations for high\nof the existing LLM privacy auditing literature isolates specific\nweb presence (Figure 4).\nrisks for technical evaluation. For example, research focuses on (i)\n• Property type effects. Low-cardinality or name-correlated at- extractability [7, 8, 25, 39, 40], (ii) memorisation [45, 56, 61], (iii) attributes (sex or gender, native language) show higher precision,\ntribute inference [55], (iv) demographic or representational harms\nwhereas open-class or relational attributes (net worth, steppar-\n(e.g., stereotyping and bias), or (v) interface-level controls (e.g.,\nent) are weak.\n• Sensitive facts for public figures. API models reproduce prop-\n3In our ongoing study, we focus on EU residents because our legal discussion centres\nerties such as religion, political party membership, and sexual on the GDPR and associated data subject rights (e.g., access, rectification, and erasure),\norientation with precision often above 0.8. which apply within the EU.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 9,
+    "total_chunks": 39,
+    "char_count": 3448,
+    "word_count": 480,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "436c0658-482b-4962-ae50-8c17021e8674",
+    "text": "HEAL @ CHI '26, May 2026, Barcelona, Spain Staufer et al. application \"memory\" settings). Each of these contributions is valu- from their name reported substantially higher prediction accuracy\nable for understanding specific privacy risks and directly informs across features (50.3% vs. 28.4%).",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 10,
+    "total_chunks": 39,
+    "char_count": 294,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7656789f-463f-40d5-a494-de6250324ae0",
+    "text": "In LLMs, provenance is hard to\nself-auditing. However, they mainly assess whether a model can establish because a correct output does not indicate whether the\nleak or infer information under a particular test, rather than what model (i) memorized a specific record, (ii) inferred the attribute\na deployed system reliably associates with a specific person. More- from contextual cues, (iii) combined indirect identifiers present in\nover, without an explicit link between measurement and remedy the training data, or (iv) relied on population-level priors. These\n(e.g., contestation, correction, suppression, unlearning, redaction, mechanisms are indistinguishable from the output alone, creating a\nproduct changes, or policy enforcement), audits risk identifying structural tension: what can be established from outputs alone may\nproblems without enabling meaningful intervention. be enough to surface model-generated claims about a person, yet\ninsufficient to support accountability claims. This mismatch reflects\nAmbiguity around audit scope. Because privacy self-audits sit at\nthe broader evaluation crisis in LLM research and highlights that\nthe intersection of ML evaluation and interpretability, privacy enoutput-based audits cannot rely on model behaviour alone. They\ngineering, human–computer interaction, and law, researchers and\nrequire complementary sources of evidence. In our study, for expractitioners often bring incompatible expectations about what the\nample, we asked participants whether they had previously shared\nmethod or tool can establish. In our case, some readers (a) mistook\nthe relevant information online to contextualise and interpret the\nmodel-level name associations with application-level memory conmodel's responses.\ntrols, (b) treated probabilistic inferences about named individuals\nas non–privacy-relevant because they are not deterministic disclo- Indirect identification and name ambiguity. Name-conditioned\nsures, (c) interpreted our prefix truncation strategy as a privacy- probing assumes a name uniquely identifies a person, yet identipreserving measure (even though it is a pragmatic black-box adapta- fication often happens indirectly. Writing style, occupation cues,\ntion for chat APIs4), or (d) treated a correct output as proof of mem- or location hints can lead models to attach attributes even when\norisation. To prevent these misreadings, privacy self-audits should a name is common, extending audits beyond name-only measureinclude a clear audit specification: (a) what \"associations\" include ments [55]. Many people also share names or resemble well-known\n(e.g., name-conditioned factual claims, inferred traits, relational individuals, which can pull in biased associations or famous-name\nclaims, evaluative statements), (b) what the audit can and cannot defaults. Disambiguating requires context (e.g., \"Jane Doe from\ncertify from outputs alone, (c) what counts as adequate evidence Stuttgart\"), but more context can itself introduce bias or steer the\nunder probabilistic generation (e.g., stability across prompts/seeds, model toward stereotypes [17]. Individual-level privacy audits therebaselines, timestamps, model versions), and (d) which accountabil- fore face a trade-off between specificity and bias that user interfaces\nity pathway the evidence is meant to support (e.g., user sensemak- must make explicit.\ning, provider debugging, or legal contestation).",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 11,
+    "total_chunks": 39,
+    "char_count": 3417,
+    "word_count": 465,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c1d66fd5-a362-4fff-8d56-5659558c6d7e",
+    "text": "When these scope\nchoices remain implicit, readers and participants fill the gaps with Multiple ground truths and temporal drift. Many personal atassumptions imported from adjacent domains. tributes are multi-valued (e.g., employers, residences, languages\nspoken) and change over time, so there may be multiple simultaStudy context shapes what is observed. Self-audit studies neces- neously true values or older facts that no longer apply. LMP2's\nsarily rely on voluntary self-disclosure, so observations are con- distributional outputs can make co-existing values and temporal\nstrained by what participants choose to test. We found that when ambiguity visible in the audit, but it remains unclear which values\nthe LMP2 interface shows the full (randomized) set of features are most likely to surface under different conversational contexts.\n(including non-sensitive ones), participants avoid more sensitive More broadly, it is largely unclear how LLMs distinguish more\nitems, producing under-observation of higher-risk categories. For recent from outdated facts [35, 59], and factual belief updating\nexample, participants were most concerned about phone number remains an open problem [23]. Critically, multiplicity does not reand medical condition but rarely selected them (< 3%), preferring duce the harm of information surfacing tied to an identity because\nlow-sensitivity traits such as hair colour.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 12,
+    "total_chunks": 39,
+    "char_count": 1403,
+    "word_count": 199,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3a7cd798-a9d5-415f-bb5b-ac2cb331c4f0",
+    "text": "This mirrors challenges in inaccurate or false inferences are problematic too when publicly\nuser-engaged audits, where participation, incentives, and comfort attached to a person [18, 24, 42]. In doing so, the model creates and\nlevels shape what issues can be surfaced [14, 15, 33]. repeats a particular \"reality\" about a named person, whether or not\nit stems from a single memorized record. Consistency affects how Memorisation, inference, and base-rate guessing are entangled.\nthese risks manifest, but inconsistency does not eliminate them,Our results contribute to a growing literature documenting that\ninstead it (again) highlights the probabilistic, unreliable nature ofLLMs can memorise training data [8, 25] and infer traits from corLLM evaluation.related cues [55]. Some high-cardinality facts about public figures,\nsuch as full dates of birth, are unlikely to be correct by chance (a Beyond normatively factual attributes. So far, our probe set emDD/MM/YYYY guess is < 1 in 35,000) and suggest these records phasises normatively factual, discrete, and easily verifiable attributes\nbeing part of the training data.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 13,
+    "total_chunks": 39,
+    "char_count": 1123,
+    "word_count": 166,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "c24fb7c7-11a3-4748-b5a5-1882d1d7580b",
+    "text": "By contrast, low-cardinality traits (e.g., eye color, date of birth). Yet privacy law and HCI research\nfor everyday users (sex or gender, native language) can be driven emphasise that personal data extends beyond such attributes to\nby priors or name-based cues. In our user study, participants who inferred profiles, contextual and relational data, and subjective or\nbelieved their national or cultural background could be inferred evaluative statements whose status and sensitivity vary by context\nand culture [3, 11, 18, 24, 41, 44, 47, 52]. In this broader space, facts\n4Chat APIs only score their own completions—not arbitrary canary strings—so we\nframed it as a fragment-completion task around (ℎ, 𝑝, 𝑣) with two-character prefixes can be ambiguous or contested, and even nested evaluations like\nand aggregate evidence across paraphrased probes. \"Anna's father was a good cook\" blend relational information with Human-Centred LLM Privacy Audits: Findings and Frictions HEAL @ CHI '26, May 2026, Barcelona, Spain reputational judgment, complicating what counts as personal data under legal frameworks, such as the GDPR. We also identify strucand what ground truth should be used for auditing. tural frictions that limit actionable self-audits: (a) evidence is sensitive to elicitation and model versions, (b) names are ambiguous and\nLanguage and script coverage. Our probes and matching logic attributes are often multi-valued or time-varying, and (c) deployed\nare English-only and use Latin script, which limits the validity of systems further make attribution opaque. These challenges situate\nthe audit for many users. Prior work documents that NLP research privacy self-auditing within a broader generative AI evaluation criand evaluation are heavily skewed toward a small set of (often sis, where probabilistic, context-dependent outputs are in conflict\nhigh-resource) languages, questioning language-agnostic behaviour with expectations of determinism and proof.\n[4, 26]. Moreover, what constitutes a \"sensitive attribute\" and what To advance reliable and actionable audits, future work should\ncounts as harmful \"bias\" are context-dependent and normative, and make their scope explicit: (1) define what counts as an association,\nmay not transfer cleanly across linguistic and cultural settings [5, (2) what the audit can certify, and (3) which level of accountability\n53]. Name cues are likewise socially interpreted and their perceived the evidence supports. Audit interfaces should (4) communicate\nsignals vary across countries and groups, making English/Latin- stability across prompts and baselines and (5) export time-stamped\nscript proxies especially brittle [19, 21]. Finally, our observations traces. Taken together, human-centred LLM privacy auditing is\nabout biased \"guesses\" for non-existent people would likely differ therefore not only a measurement problem, but a socio-technical\nunder non-Latin scripts because (a) this would itself provide an design challenge.\nindirect identifier, and (b) tokenisation and representation quality\nvary substantially across languages and scripts in multilingual and References\ncommercial LLMs [49, 54].\n[1] Lize Alberts, Ulrik Lyngs, and Max Van Kleek. 2024.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 14,
+    "total_chunks": 39,
+    "char_count": 3215,
+    "word_count": 462,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3ed0efae-e549-4dfd-af4a-3e3dc32392ec",
+    "text": "Computers as bad social\nactors: Dark patterns and anti-patterns in interfaces that act socially. Proceedings\nDeployed systems complicate evidence and actionability. Deployed of the ACM on Human-Computer Interaction 8, CSCW1 (2024), 1–25. LLM applications increasingly use tool-augmented setups (e.g., web [2] Susan B. A Privacy Paradox: Social Networking in the United States. First Monday 11, 9 (2006). doi:10.5210/fm.v11i9.1394\nlookup, retrieval, agentic pipelines), which blend model behav- [3] Rahime Belen-Saglam, Jason R.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 15,
+    "total_chunks": 39,
+    "char_count": 527,
+    "word_count": 71,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e9844094-d46c-4df1-8714-2be5f00cb64c",
+    "text": "Nurse, and Duncan Hodges. 2022. An Inior with shifting external sources [6, 57]. This makes attribution vestigation Into the Sensitivity of Personal Information and Implications for\nopaque, because the same prompt can lead to different outputs that Disclosure: A UK Perspective. Frontiers in Computer Science 4 (June 2022).\ndepend on retrieval and ranking, so audit evidence is never a stable [4] Emily M Bender and Batya Friedman. 2018. Data statements for natural lanrecord and always time-bound. At the same time, subsequent legal guage processing: Toward mitigating system bias and enabling better science.\nand organisational steps often expect deterministic proof of what Transactions of the Association for Computational Linguistics 6 (2018), 587–604. [5] Su Lin Blodgett, Solon Barocas, Hal Daumé III, and Hanna Wallach. 2020. Lana system \"knows\" [11, 18, 24, 47]. For human-centred audits, this guage (Technology) is Power: A Critical Survey of \"Bias\" in NLP. In Proceedings\nshifts the design goal from \"verifying a fact\" to producing an evi- of the 58th Annual Meeting of the Association for Computational Linguistics. 5454–\n5476.\ndence package that supports contestation and remediation despite [6] Sebastian Borgeaud, Arthur Mensch, Jordan Hoffmann, Trevor Cai, Eliza Rutheruncertainty. This is why future auditing interfaces should com- ford, Katie Millican, George van den Driessche, Jean-Baptiste Lespiau, Bogdan\nmunicate stability across elicitation choices, such as paraphrases, Damoc, Aidan Clark, et al. 2022. Improving Language Models by Retrieving from\nTrillions of Tokens. In Proceedings of the 39th International Conference on Machine\nseeds, and hyperparameters, compare outputs to multiple generic Learning. 2206–2240. https://proceedings.mlr.press/v162/borgeaud22a.html\nbaselines, label whether a value is likely direct, indirect, inferred, or [7] Nicholas Carlini, Chang Liu, Úlfar Erlingsson, Jernej Kos, and Dawn Song. 2019.\n\"guessed\", handle multi-word and format-constrained values, and The secret sharer: Evaluating and testing unintended memorization in neural\nnetworks. In 28th USENIX security symposium (USENIX security 19). 267–284.\nexport metadata, such as prompts, model, version, timestamps, and [8] Nicholas Carlini, Florian Tramer, Eric Wallace, Matthew Jagielski, Ariel Herbertcall counts. Voss, Katherine Lee, Adam Roberts, Tom Brown, Dawn Song, Ulfar Erlingsson,\net al. 2021. Extracting training data from large language models.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 16,
+    "total_chunks": 39,
+    "char_count": 2470,
+    "word_count": 346,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "185deb08-79e5-4a15-96b7-01d8cf6d423c",
+    "text": "In 30th USENIX\nsecurity symposium (USENIX Security 21). 2633–2650.\n5 Conclusion [9] Jennifer Cobbe, Michael Veale, and Jatinder Singh. 2023. Understanding accountability in algorithmic supply chains. In Proceedings of the 2023 ACM Conference\nWe report interim findings from an ongoing empirical study and in- on Fairness, Accountability, and Transparency. 1186–1197.\ntroduce LMP2, a browser-based tool that surfaces name-conditioned [10] Nick Couldry and Ulises A Mejias. 2019. Data colonialism: Rethinking big data's\nrelation to the contemporary subject. Television & new media 20, 4 (2019), 336–\nassociations through paraphrase aggregation in black-box LLMs. 349. Across eight models, we showed that LLMs can reliably reproduce [11] Bart Custers and Helena Vrabec. 2024. Tell me something new: data subject\nmultiple attributes about public figures, but most models confi- rights applied to inferred data and profiles. Computer Law & Security Review 52\n(April 2024), 105956. doi:10.1016/j.clsr.2024.105956\ndently default to priors for non-existent people. In user studies [12] Cristian Danescu-Niculescu-Mizil, Lillian Lee, Bo Pang, and Jon Kleinberg. 2012.\nwith EU residents, GPT-4o predicts 11 of 50 personal features with Echoes of power: Language effects and power differences in social interaction. In Proceedings of the 21st international conference on World Wide Web. 699–708.\n≥60% accuracy, and participants overwhelmingly report wanting [13] Wesley Hanwen Deng, Wang Claire, Howard Ziyu Han, Jason I Hong, Kenneth\nthe ability to correct or erase model-generated associations. Holstein, and Motahhare Eslami. 2025.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 17,
+    "total_chunks": 39,
+    "char_count": 1623,
+    "word_count": 229,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "03414fea-c639-41c0-b857-362ff751f614",
+    "text": "Weaudit: Scaffolding user auditors and\nOur findings expose a central challenge in human-centred pri- ai practitioners in auditing generative ai. Proceedings of the ACM on HumanComputer Interaction 9, 7 (2025), 1–35.\nvacy auditing: output-based audits establish associations, not prove- [14] Wesley Hanwen Deng, Boyuan Guo, Alicia Devrio, Hong Shen, Motahhare Esnance. A correct prediction may result from memorisation, infer- lami, and Kenneth Holstein. 2023. Understanding Practices, Challenges, and\nence, indirect identification, or population-level priors, and these Opportunities for User-Engaged Algorithm Auditing in Industry Practice. In\nProceedings of the 2023 CHI Conference on Human Factors in Computing Systems\nmechanisms cannot be distinguished from the output alone. Yet the (Hamburg, Germany) (CHI '23). Association for Computing Machinery, New York,\nharm often lies in attaching a claim (accurate or not) to a named NY, USA, Article 377, 18 pages. doi:10.1145/3544548.3581026\n[15] Alicia DeVos, Aditi Dhabalia, Hong Shen, Kenneth Holstein, and Motahhare\nperson. This distinction between association and provenance is Eslami. 2022.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 18,
+    "total_chunks": 39,
+    "char_count": 1145,
+    "word_count": 158,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6eadfa91-d6f3-4394-8a6f-8439d3a05391",
+    "text": "Toward User-Driven Algorithm Auditing: Investigating users'\nessential for interpreting audit results and assessing their relevance strategies for uncovering harmful algorithmic behavior. In Proceedings of the 2022 HEAL @ CHI '26, May 2026, Barcelona, Spain Staufer et al. CHI Conference on Human Factors in Computing Systems (New Orleans, LA, USA) Communities to Lead Large-Scale Investigations of Harmful Algorithmic Behav-\n(CHI '22). Association for Computing Machinery, New York, NY, USA, Article ior. Proceedings of the ACM on Human-Computer Interaction 6, CSCW2 (2022),\n626, 19 pages. doi:10.1145/3491102.3517441 1–34. doi:10.1145/3555625\n[16] Tobias Dienlin and Sabine Trepte. 2015. Is the Privacy Paradox a Relic of the Past? [34] Tianshi Li, Sauvik Das, Hao-Ping Lee, Dakuo Wang, Bingsheng Yao, and Zhiping\nAn In-Depth Analysis of Privacy Attitudes and Privacy Behaviors. European Zhang. 2024. Human-centered privacy research in the age of large language modJournal of Social Psychology 45, 3 (2015), 285–297. doi:10.1002/ejsp.2049 els. In Extended Abstracts of the CHI Conference on Human Factors in Computing\n[17] Kaveh Eskandari Miandoab, Mahammed Kamruzzaman, Arshia Gharooni, Systems. 1–4. Gene Louis Kim, Vasanth Sarathy, and Ninareh Mehrabi. 2025. Breaking the [35] Yucheng Li, Frank Guerin, and Chenghua Lin. 2024. Latesteval: Addressing data\nBenchmark: Revealing LLM Bias via Minimal Contextual Augmentation. arXiv contamination in language model evaluation through dynamic and time-sensitive\npreprint arXiv:2510.23921 (2025). https://arxiv.org/abs/2510.23921 test construction. In Proceedings of the AAAI Conference on Artificial Intelligence,\n[18] European Data Protection Board. 2024. Opinion 28/2024 on certain data protec- Vol. 38. 18600–18607.\ntion aspects related to the processing of personal data in the context of AI mod- [36] Yu Lu Liu, Wesley Hanwen Deng, Michelle S.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 19,
+    "total_chunks": 39,
+    "char_count": 1896,
+    "word_count": 263,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b11799d8-f701-4ca2-8a96-0d89cc3ca277",
+    "text": "Lam, Motahhare Eslami, Juho\nels. https://www.edpb.europa.eu/system/files/2024-12/edpb_opinion_202428_ai- Kim, Q. Vera Liao, Wei Xu, Jekaterina Novikova, and Ziang Xiao. 2025. Humanmodels_en.pdf Adopted 17 Dec 2024. Centered Evaluation and Auditing of Language Models. In Proceedings of the\n[19] Vagrant Gautam, Arjun Subramonian, Anne Lauscher, and Os Keyes. 2024.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 20,
+    "total_chunks": 39,
+    "char_count": 364,
+    "word_count": 45,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1c3ba1a0-05f1-4e6b-9b6d-97f4934d2152",
+    "text": "Stop! Extended Abstracts of the CHI Conference on Human Factors in Computing Systems\nIn the Name of Flaws: Disentangling Personal Names and Sociodemographic (CHI EA '25). Association for Computing Machinery, New York, NY, USA, Article\nAttributes in NLP. In Proceedings of the 5th Workshop on Gender Bias in Natural 788, 7 pages. doi:10.1145/3706599.3706729\nLanguage Processing (GeBNLP). 323–337. [37] Zilin Ma, Yiyang Mei, Yinru Long, Zhaoyuan Su, and Krzysztof Z Gajos. 2024.\n[20] Sebastian Gehrmann, Elizabeth Clark, and Thibault Sellam. 2023. Repairing the Evaluating the experience of LGBTQ+ people using large language model based\nCracked Foundation: A Survey of Obstacles in Evaluation Practices for Generated chatbots for mental health support. In Proceedings of the 2024 CHI Conference on\nText. Journal of Artificial Intelligence Research 77 (2023), 103–166. doi:10.1613/ Human Factors in Computing Systems. 1–15.\njair.1.13715 [38] Danaë Metaxa, Joon Sung Park, Ronald E.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 21,
+    "total_chunks": 39,
+    "char_count": 979,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ac97ae9-bfc9-4913-8f40-f3383e7c0090",
+    "text": "Robertson, Karrie Karahalios, Christo\n[21] Abel Ghekiere, Billie Martiniello, Daniel Capistrano, Jeremy Kuhnle, Stefanie Wilson, Jeff Hancock, and Christian Sandvig. 2021. Auditing Algorithms: UnderSprong, Pelin Atay, Héctor Cebolla Boado, Mathew Creighton, Valentina Di Stasio, standing Algorithmic Systems from the Outside In. Foundations and Trends® in\nMariña Fernández-Reino, et al. 2025. The perception of names in experimental Human–Computer Interaction 14, 4 (2021), 272–344. doi:10.1561/1100000083\nstudies on ethnic origin: a cross-national validation in Europe. Scientific data 12, [39] Krishna Kanth Nakka, Ahmed Frikha, Ricardo Mendes, Xue Jiang, and Xuebing\n1 (2025), 1883. PII-Compass: Guiding LLM training data extraction prompts towards\n[22] David Hartmann, Amin Oueslati, Dimitri Staufer, Lena Pohlmann, Simon Munz- the target PII via grounding.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 22,
+    "total_chunks": 39,
+    "char_count": 861,
+    "word_count": 114,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a1097ffc-23f7-4611-822d-e48fec125dc0",
+    "text": "In Proceedings of the Fifth Workshop on Privacy in Natert, and Hendrik Heuer. 2025. Lost in Moderation: How Commercial Content ural Language Processing, Ivan Habernal, Sepideh Ghanavati, Abhilasha RavichanModeration APIs Over- and Under-Moderate Group-Targeted Hate Speech and der, Vijayanta Jain, Patricia Thaine, Timour Igamberdiev, Niloofar MireshghalLinguistic Variations. In Proceedings of the 2025 CHI Conference on Human Factors lah, and Oluwaseyi Feyisetan (Eds.). Association for Computational Linguistics,\nin Computing Systems (CHI '25). Association for Computing Machinery, New Bangkok, Thailand, 63–73. https://aclanthology.org/2024.privatenlp-1.7/\nYork, NY, USA, Article 175, 26 pages. doi:10.1145/3706598.3713998 [40] Milad Nasr, Nicholas Carlini, Jonathan Hayase, Matthew Jagielski, A Feder\n[23] Peter Hase, Mona Diab, Asli Celikyilmaz, Xian Li, Zornitsa Kozareva, Veselin Cooper, Daphne Ippolito, Christopher A Choquette-Choo, Eric Wallace, FloStoyanov, Mohit Bansal, and Srinivasan Iyer. 2023. Methods for Measuring, rian Tramèr, and Katherine Lee. 2023.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 23,
+    "total_chunks": 39,
+    "char_count": 1071,
+    "word_count": 135,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ce08b930-598d-4cc9-ae96-900209573954",
+    "text": "Scalable extraction of training data from\nUpdating, and Visualizing Factual Beliefs in Language Models. In Proceedings of (production) language models. arXiv preprint arXiv:2311.17035 (2023).\nthe 17th Conference of the European Chapter of the Association for Computational [41] Helen Nissenbaum. 2004. Privacy as Contextual Integrity. Washington Law\nLinguistics, Andreas Vlachos and Isabelle Augenstein (Eds.). Association for Review 79 (2004), 119–158. Computational Linguistics, Dubrovnik, Croatia, 2714–2731. doi:10.18653/v1/2023. [42] Henrik Nolte, Michèle Finck, and Kristof Meding. 2025. Machine Learners Should\neacl-main.199 Acknowledge the Legal Implications of Large Language Models as Personal Data.\n[24] AN Häuselmann and Bart Custers. 2024. The Right to Rectification and Inferred arXiv:2503.01630\nPersonal Data. European Journal of Law and Technology 15, 3 (2024). [43] Victor Ojewale, Ryan Steed, Briana Vecchione, Abeba Birhane, and Inioluwa Debo-\n[25] Jie Huang, Hanyin Shao, and Kevin Chen-Chuan Chang. 2022. Are Large Pre- rah Raji. 2025.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 24,
+    "total_chunks": 39,
+    "char_count": 1056,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "6567d156-d846-49a8-aef4-98d7bc65f204",
+    "text": "Towards AI Accountability Infrastructure: Gaps and Opportunities\nTrained Language Models Leaking Your Personal Information?. In Findings of in AI Audit Tooling. In Proceedings of the 2025 CHI Conference on Human Factors\nACL: EMNLP 2022. 2038–2047. doi:10.18653/v1/2022.findings-emnlp.148 in Computing Systems (CHI '25). Association for Computing Machinery, New\n[26] Pratik Joshi, Sebastin Santy, Amar Budhiraja, Kalika Bali, and Monojit Choudhury. York, NY, USA, 1–29. doi:10.1145/3706598.3713301\n2020. The State and Fate of Linguistic Diversity and Inclusion in the NLP World. [44] Martin Ortlieb and Ryan Garner. 2016. Sensitivity of personal data items in\nIn Proceedings of the 58th Annual Meeting of the Association for Computational different online contexts. it - Information Technology 58, 5 (Oct. 2016), 217–\nLinguistics. 6282–6293. 228. doi:10.1515/itit-2016-0016 GSCC: 0000009 2025-08-25T08:23:04.260Z 0.02\n[27] Kyuha Jung, Gyuho Lee, Yuanhui Huang, and Yunan Chen. 2025. 'I've talked to Publisher: De Gruyter Oldenbourg. ChatGPT about my issues last night.': Examining Mental Health Conversations [45] Ashwinee Panda, Xinyu Tang, Milad Nasr, Christopher A Choquette-Choo, and\nwith Large Language Models through Reddit Analysis. Proceedings of the ACM Prateek Mittal. 2025. Privacy auditing of large language models. arXiv preprint\non Human-Computer Interaction 9, 7 (2025), 1–25. arXiv:2503.06808 (2025).\n[28] Kowe Kadoma, Danaé Metaxa, and Mor Naaman. 2025. Generative AI and [46] Daniel Preoţiuc-Pietro, Svitlana Volkova, Vasileios Lampos, Yoram Bachrach, and\nPerceptual Harms: Who's Suspected of using LLMs?.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 25,
+    "total_chunks": 39,
+    "char_count": 1622,
+    "word_count": 221,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a1396cfc-97fd-4282-95bc-6bdffb5c7957",
+    "text": "In Proceedings of the 2025 Nikolaos Aletras. 2015. Studying user income through language, behaviour and\nCHI Conference on Human Factors in Computing Systems (CHI '25). Association for affect in social media.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 26,
+    "total_chunks": 39,
+    "char_count": 207,
+    "word_count": 31,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aa4fa5dc-e8a3-4b90-bda5-ef0bccfab08d",
+    "text": "PloS one 10, 9 (2015), e0138717. Computing Machinery, New York, NY, USA, 1–17. doi:10.1145/3706598.3713897 [47] Valentin Rupp and Max von Grafenstein. 2024. Clarifying \"personal data\" and\n[29] Douwe Kiela, Max Bartolo, Yixin Nie, Divyansh Kaushik, Atticus Geiger, Zhengx- the role of anonymisation in data protection law: Including and excluding data\nuan Wu, Bertie Vidgen, Grusha Prasad, Amanpreet Singh, Pratik Ringshia, Zhiyi from the scope of the GDPR (more clearly) through refining the concept of data\nMa, Tristan Thrush, Sebastian Riedel, Zeerak Waseem, Pontus Stenetorp, Robin protection. Computer Law & Security Review 52 (2024), 105932.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 27,
+    "total_chunks": 39,
+    "char_count": 646,
+    "word_count": 94,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2e176c4b-629e-4da3-bc32-329e4c480286",
+    "text": "Jia, Mohit Bansal, Christopher Potts, and Adina Williams. 2021. Dynabench: [48] Hannah Ruschemeier. 2025. Generative AI and data protection. In Cambridge\nRethinking Benchmarking in NLP. In Proceedings of the 2021 Conference of the Forum on AI: Law and Governance, Vol. 1. Cambridge University Press, e6. North American Chapter of the Association for Computational Linguistics: Human [49] Phillip Rust, Jonas Pfeiffer, Ivan Vulić, Sebastian Ruder, and Iryna Gurevych. 2021. Language Technologies. 4110–4124. doi:10.18653/v1/2021.naacl-main.324 How good is your tokenizer? on the monolingual performance of multilingual\n[30] Angelie Kraft, Judith Simon, and Sonja Schimmler. 2025. Social Bias in Popular language models. In Proceedings of the 59th Annual Meeting of the Association for\nQuestion-Answering Benchmarks. arXiv preprint arXiv:2505.15553 (2025). Computational Linguistics and the 11th International Joint Conference on Natural\n[31] Veronika Krauß, Mark McGill, Thomas Kosch, Yolanda Maira Thiel, Dominik Language Processing (Volume 1: Long Papers). 3118–3135. Schön, and Jan Gugenheimer. 2025. \"Create a Fear of Missing Out\" - ChatGPT [50] Florian Schaub, Aditya Marella, Pranshu Kalvani, Blase Ur, Chao Pan, Emily\nImplements Unsolicited Deceptive Designs in Generated Websites Without Warn- Forney, and Lorrie Faith Cranor. 2016. Watching Them Watching Me: Browser\ning. In Proceedings of the 2025 CHI Conference on Human Factors in Computing Extensions' Impact on User Privacy Awareness and Concern. Workshop\nSystems (CHI '25).",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 28,
+    "total_chunks": 39,
+    "char_count": 1537,
+    "word_count": 213,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "f211c0a9-814c-4efd-9363-508e79e7d2cf",
+    "text": "Association for Computing Machinery, New York, NY, USA, on Usable Security (USEC). Internet Society. doi:10.14722/usec.2016.23017\n1–20. doi:10.1145/3706598.3713083 GSCC: 0000003 2025-08-08T11:15:49.076Z [51] David Schlangen. 2021. Targeting the benchmark: On methodology in current\n0.19. natural language processing research. In Proceedings of the 59th annual meeting\n[32] Taner Kuru. 2024.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 29,
+    "total_chunks": 39,
+    "char_count": 390,
+    "word_count": 47,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5b2e5d6a-a4d7-4dd6-9cc9-40369704a282",
+    "text": "Lawfulness of the mass processing of publicly accessible online of the association for computational linguistics and the 11th international joint\ndata to train large language models. International Data Privacy Law 14, 4 (2024), conference on natural language processing (Volume 2: short papers). 670–674.\n326–351. [52] Eva-Maria Schomakers, Chantal Lidynia, Dirk Müllmann, Roman Matzutt, Klaus\n[33] Michelle S. Gordon, Danaë Metaxa, Jeffrey T. Wehrle, Indra Spiecker genannt Döhmann, and Martina Ziefle. 2021. 28. SeptemLanday, and Michael S.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 30,
+    "total_chunks": 39,
+    "char_count": 542,
+    "word_count": 76,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "4b12bf00-97cc-4c30-ae8a-cae7187cde56",
+    "text": "End-User Audits: A System Empowering ber - 2. Oktober 2020: Comparing Technical, Legal, and Users' View of Information Human-Centred LLM Privacy Audits: Findings and Frictions HEAL @ CHI '26, May 2026, Barcelona, Spain Sensitivity. (2021). doi:10.18420/INF2020_76 ISBN: 9783885797012 Publisher:\nGesellschaft für Informatik, Bonn.\n[53] Andrew D Selbst, Danah Boyd, Sorelle A Friedler, Suresh Venkatasubramanian,\nand Janet Vertesi. 2019. Fairness and abstraction in sociotechnical systems. In\nProceedings of the conference on fairness, accountability, and transparency. 59–68.\n[54] Archchana Sindhujan, Diptesh Kanojia, Constantin Orasan, and Shenbin Qian.\n2025.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 31,
+    "total_chunks": 39,
+    "char_count": 660,
+    "word_count": 86,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "091550f4-7307-46cb-893a-5f0ef412a769",
+    "text": "When LLMs Struggle: Reference-less Translation Evaluation for Lowresource Languages. In Proceedings of the 1st Workshop on Language Models for\nLow-Resource Languages. 437–459. https://aclanthology.org/2025.loreslm-1.33\n[55] Robin Staab, Mark Vero, Mislav Balunović, and Martin Vechev. 2024. Beyond\nMemorization: Violating Privacy via Inference with Large Language Models. In Proceedings of the 12th International Conference on Learning Representations\n(ICLR).\n[56] Dimitri Staufer. 2025.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 32,
+    "total_chunks": 39,
+    "char_count": 487,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1daeb3cd-8600-4c48-9dfb-30576c19647c",
+    "text": "What Should LLMs Forget? Quantifying Personal Data in\nLLMs for Right-to-Be-Forgotten Requests. In Proceedings of the 7th Workshop on\neXplainable Knowledge Discovery in Data Mining (XKDD 2025), ECML PKDD.\n[57] Ilan Strauss, Jangho Yang, Tim O'Reilly, Sruly Rosenblat, and Isobel Moure. 2025. The Attribution Crisis in LLM Search Results: Estimating Ecosystem Exploitation.\narXiv preprint arXiv:2508.00838 (2025). https://arxiv.org/abs/2508.00838\n[58] Zeynep Tufekci. 2015. Algorithmic harms beyond Facebook and Google: Emergent challenges of computational agency. LJ 13 (2015), 203.\n[59] Jonas Wallat, Adam Jatowt, and Avishek Anand. 2024.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 33,
+    "total_chunks": 39,
+    "char_count": 638,
+    "word_count": 85,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3fe9b143-5b09-461d-8e68-aa0bc9a9f696",
+    "text": "Temporal blind spots in\nlarge language models. In Proceedings of the 17th ACM International Conference\non Web Search and Data Mining. 683–692.\n[60] Maximiliane Windl, Roman Amberg, and Thomas Kosch. 2025. The Illusion of\nPrivacy: Investigating User Misperceptions in Browser Tracking Protection.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 34,
+    "total_chunks": 39,
+    "char_count": 295,
+    "word_count": 42,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "a20c1d4e-2964-42e3-a907-50fd18c3762f",
+    "text": "In\nProceedings of the 2025 CHI Conference on Human Factors in Computing Systems\n(CHI '25). Association for Computing Machinery, New York, NY, USA, 1–10.\n[61] Menglin Xia, Victor Ruehle, Saravan Rajmohan, and Reza Shokri. 2025. Minerva:\nA Programmable Memory Test Benchmark for Language Models. arXiv preprint\n[62] Zelin Yan, Jingwen Liu, Yihong Fan, Shiyuan Lu, Dingting Xu, Yun Yang, Honggang Wang, Jie Mao, Hou-Chiang Tseng, Tao-Hsing Chang, et al. 2025. Ability of\nChatGPT to Replace Doctors in Patient Education: Cross-Sectional Comparative\nAnalysis of Inflammatory Bowel Disease. Journal of Medical Internet Research 27\n(2025), e62857.\n[63] Eric Zeng, Xiaoyuan Wu, Emily N. Ertmann, Lily Huang, Danielle F. Mehendale, Brandon T. Tang, Karolina Zhukoff, Michael Adjei-Poku,\nLujo Bauer, Ari B. Friedman, and Matthew S. Measuring Risks\nto Users' Health Privacy Posed by Third-Party Web Tracking and Targeted\nAdvertising.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 35,
+    "total_chunks": 39,
+    "char_count": 922,
+    "word_count": 136,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "1f385499-7a96-43ae-bba3-fac675eeea67",
+    "text": "In Proceedings of the 2025 CHI Conference on Human Factors in\nComputing Systems (CHI '25). Association for Computing Machinery, New York,\nNY, USA, 1–26. doi:10.1145/3706598.3714318\n[64] Zhiping Zhang, Michelle Jia, Hao-Ping Lee, Bingsheng Yao, Sauvik Das, Ada\nLerner, Dakuo Wang, and Tianshi Li. 2024. \"It's a Fair Game\", or Is It? Examining\nHow Users Navigate Disclosure Risks and Benefits When Using LLM-Based\nConversational Agents. In Proceedings of the 2024 CHI Conference on Human\nFactors in Computing Systems. ACM, 1–26. doi:10.1145/3613904.3642385 HEAL @ CHI '26, May 2026, Barcelona, Spain Staufer et al. A Additional Tables and Figures Model Top 5 (𝜇precision) Bottom 5 (𝜇precision) GPT-4o sex or gender, eye color, native language, date of net worth, website account on, stepparent,\n(Top 𝜇= 0.92, 𝜎= 0.009 baptism, country of citizenship handedness, phone number\nBottom 𝜇= 0.09, 𝜎= 0.011) GPT-5 sex or gender, date of baptism, native language, net worth, website account on, stepparent,\n(Top 𝜇= 0.93, 𝜎= 0.010 sexual orientation, languages spoken godparent, named after\nBottom 𝜇= 0.12, 𝜎= 0.121) Gemini Flash 2.0 date of baptism, date of birth, native language, net worth, website account on, facial hair,\n(Top 𝜇= 0.90, 𝜎= 0.011 phone number, country of citizenship honorific suffix, award received\nBottom 𝜇= 0.06, 𝜎= 0.011) Grok-3 sex or gender, handedness, date of baptism, net worth, website account on, mass, honorific\n(Top 𝜇= 0.94, 𝜎= 0.011 phone number, native language suffix, award received\nBottom 𝜇= 0.05, 𝜎= 0.013) Cohere Command A sex or gender, native language, date of birth, mass, net worth, website account on, honorific\n(Top 𝜇= 0.93, 𝜎= 0.001 country of citizenship, phone number suffix, facial hair\nBottom 𝜇= 0.04, 𝜎= 0.013) Qwen3 4B Instruct native language, date of birth, languages spoken, number of children, number of victims of killer,\n(Top 𝜇= 0.71, 𝜎= 0.015 eye color, country of citizenship phone number, stepparent, website account on\nBottom 𝜇= 0.000, 𝜎= 0.009) Llama 3.1 8B sex or gender, date of birth, date of baptism, height, mass, number of children, number of\n(Top 𝜇= 0.87, 𝜎= 0.010 country of citizenship, native language victims of killer, phone number\nBottom 𝜇= 0.00, 𝜎= 0.005)",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 36,
+    "total_chunks": 39,
+    "char_count": 2222,
+    "word_count": 351,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "5139caff-1849-4c02-9ffb-d2656793d72b",
+    "text": "Ministral 8B Instruct date of birth, date of baptism, country of blood type, facial hair, height, honorific suffix,\n(Top 𝜇= 0.79, 𝜎= 0.012 citizenship, native language, languages spoken phone number\nBottom 𝜇= 0.00, 𝜎= 0.013)",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 37,
+    "total_chunks": 39,
+    "char_count": 224,
+    "word_count": 35,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "76d9efc0-b128-4673-a555-6d33888f24ce",
+    "text": "Table 1: Empirical evaluation (Famous dataset). Top-5 and bottom-5 properties per model, ordered by mean precision. Highprecision properties are dominated by low-cardinality demographic and geographic facts (e.g., sex or gender, date of birth,\nnative language), while low-precision properties include open-ended or relational attributes (e.g., net worth, website account on,\nstepparent). Bolded features appear in the Top-5 precision list for some models and in the Bottom-5 list for others. Underlined\nfeatures appear in the Top- or Bottom-5 precision lists for only a single model (e.g., godparent, which only appears for GPT-5). Figure 5: Empirical evaluation (Famous dataset). Precision vs. recall across models. Larger API-based models show stable\ncoupling between precision and recall, while smaller models exhibit recall collapses despite moderate precision.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 38,
+    "total_chunks": 39,
+    "char_count": 865,
+    "word_count": 120,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ebaa6647-0a95-4b25-955b-8fa9eee209cd",
+    "text": "Human-Centred LLM Privacy Audits: Findings and Frictions HEAL @ CHI '26, May 2026, Barcelona, Spain Feature Category Feature % Chosen (N) % Correct (N) % Online (N) % Violation (N) Demographics sex or gender 34.65% (105) 94.39% (101) 86.92% (93) 2.8% (3)\nHigh Sensitivity number of people killed 2.64% (8) 87.5% (7) 0% (0) 0% (0)\nDemographics sexual orientation 20.13% (61) 83.61% (51) 44.26% (27) 9.84% (6)\nOrigins and Geography native language 18.48% (56) 76.79% (43) 66.07% (37) 1.79% (1)\nPhysical eye color 17.82% (54) 72.22% (39) 33.33% (18) 1.85% (1)\nPhysical hair color 14.19% (43) 72.09% (31) 65.12% (28) 0% (0)\nPhysical facial hair 4.62% (14) 71.43% (10) 50% (7) 7.14% (1)\nInterests and Events awards received 0.99% (3) 66.67% (2) 66.67% (2) 0% (0)\nOrigins and Geography languages spoken 9.9% (30) 63.33% (19) 73.33% (22) 0% (0)\nOrigins and Geography country of citizenship 9.24% (28) 62.07% (18) 62.07% (18) 3.45% (1)\nProfessional Life educated at 3.3% (10) 60% (6) 50% (5) 10% (1)\nProfessional Life website account on 0.66% (2) 50% (1) 100% (2) 0% (0)\nFamily number of children 6.93% (21) 47.62% (10) 9.52% (2) 9.52% (2)\nDemographics religion or worldview 10.56% (32) 42.42% (14) 18.18% (6) 0% (0)\nHigh Sensitivity blood type 4.95% (15) 40% (6) 20% (3) 6.67% (1)\nNames and Titles pseudonym 1.65% (5) 40% (2) 60% (3) 40% (2)\nOrigins and Geography permanent residence 1.65% (5) 40% (2) 80% (4) 0% (0)\nOrigins and Geography place of birth 12.87% (39) 38.46% (15) 33.33% (13) 5.13% (2)\nHigh Sensitivity convictions 0.99% (3) 33.33% (1) 33.33% (1) 0% (0)\nOrigins and Geography residence 7.92% (24) 29.17% (7) 58.33% (14) 4.17% (1)\nProfessional Life academic major 2.31% (7) 28.57% (2) 71.43% (5) 14.29% (1)\nFamily named after 2.31% (7) 25% (2) 25% (2) 0% (0)\nFamily unmarried partner's name 0.99% (3) 25% (1) 50% (2) 0% (0)\nPhysical your weight 13.53% (41) 24.39% (10) 9.76% (4) 9.76% (4)\nDemographics political ideology 4.95% (15) 18.75% (3) 31.25% (5) 0% (0)\nProfessional Life academic degree 7.59% (23) 17.39% (4) 86.96% (20) 4.35% (1)\nFamily child's name 1.98% (6) 16.67% (1) 16.67% (1) 16.67% (1)\nFamily spouse's name 1.98% (6) 16.67% (1) 66.67% (4) 0% (0)\nOrigins and Geography work location 4.29% (13) 15.38% (2) 53.85% (7) 0% (0)\nProfessional Life employer 2.31% (7) 14.29% (1) 57.14% (4) 0% (0)\nInterests and Events supported sports team 5.94% (18) 11.11% (2) 38.89% (7) 0% (0)\nFamily mother's name 3.3% (10) 10% (1) 10% (1) 0% (0)\nProfessional Life occupation 9.9% (30) 6.67% (2) 83.33% (25) 0% (0)\nProfessional Life field of work 4.95% (15) 6.67% (1) 73.33% (11) 6.67% (1)\nPhysical handedness 5.61% (17) 5.88% (1) 0% (0) 0% (0)\nDemographics date of birth 14.52% (44) 4.44% (2) 48.89% (22) 2.22% (1)\nPhysical height 15.51% (47) 0% (0) 19.15% (9) 2.13% (1)\nFamily sibling's name 3.3% (10) 0% (0) 30% (3) 0% (0)\nHigh Sensitivity medical condition 2.97% (9) 0% (0) 33.33% (3) 11.11% (1)\nFamily father's name 2.64% (8) 0% (0) 12.5% (1) 0% (0)\nHigh Sensitivity phone number 1.32% (4) 0% (0) 50% (2) 0% (0)\nDemographics net worth 0.99% (3) 0% (0) 0% (0) 0% (0)\nFamily godparent's name 0.99% (3) 0% (0) 0% (0) 0% (0)\nDemographics political party membership 0.66% (2) 0% (0) 50% (1) 0% (0)\nHigh Sensitivity place of detention 0.33% (1) 0% (0) 0% (0) 0% (0)\nInterests and Events date of baptism 0.33% (1) 0% (0) 0% (0) 0% (0)\nNames and Titles alternative names 0.33% (1) 0% (0) 0% (0) 0% (0)\nFamily stepparent's name - - - -\nInterests and Events record held - - - -\nNames and Titles honorific suffix - - - - Table 2: Empirical evaluation (user study and GPT-4o). Feature selection, correctness, online availability, and privacy violation\npercentages. Table shows how often participants selected specific features, the proportion of correct model predictions, the\nproportion of features with online presence, and cases of reported privacy violation.",
+    "paper_id": "2603.12094",
+    "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+    "authors": [
+      "Dimitri Staufer",
+      "Kirsten Morehouse",
+      "David Hartmann",
+      "Bettina Berendt"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.12094v1",
+    "chunk_index": 39,
+    "total_chunks": 39,
+    "char_count": 3855,
+    "word_count": 661,
+    "chunking_strategy": "semantic"
+  }
+]

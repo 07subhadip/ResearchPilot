@@ -1,0 +1,614 @@
+[
+  {
+    "chunk_id": "4f6ef33c-2071-453a-a3d6-3624ed7ef87f",
+    "text": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust\nOne-Shot Vision-Language Adaptation Department of Electrical and Electronic Engineering, Bangladesh University of Engineering and\nTechnology, Dhaka, Bangladesh Abstract\nMar\nThe adaptation of large-scale Vision-Language Models (VLMs) like CLIP to down-\n12 stream tasks with extremely limited data—specifically in the one-shot regime—is often hindered by a significant \"Stability-Plasticity\" dilemma. While efficient caching",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 0,
+    "total_chunks": 36,
+    "char_count": 477,
+    "word_count": 59,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "856407a3-1a57-4c0f-bc94-d5b7b93da5f4",
+    "text": "mechanisms have been introduced by training-free methods such as Tip-Adapter, these approaches often function as local Nadaraya-Watson estimators. Such estimators are[cs.CV]\ncharacterized by inherent boundary bias and a lack of global structural regularization. In this paper, ReHARK (Refined Hybrid Adaptive RBF Kernels) is proposed as a synergistic training-free framework that reinterprets few-shot adaptation through global proximal regularization in a Reproducing Kernel Hilbert Space (RKHS). A multistage refinement pipeline is introduced, consisting of: (1) Hybrid Prior Construction, where zero-shot textual knowledge from CLIP and GPT3 is fused with visual class prototypes to form a robust semantic-visual anchor; (2) Support Set Augmentation (Bridging), where intermediate samples are generated to smooth the transition between visual and textual modalities; (3) Adaptive Distribution Rectification, wherearXiv:2603.11542v1\ntest feature statistics are aligned with the augmented support set to mitigate domain shifts; and (4) Multi-Scale RBF Kernels, where an ensemble of kernels is employed to capture complex feature geometries across diverse scales. Superior stability and acEmail address: 2006123@eee.buet.ac.bd (Md Jahidul Islam)",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 1,
+    "total_chunks": 36,
+    "char_count": 1245,
+    "word_count": 163,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "df09e175-da35-4b74-b4fa-e6673c217d3e",
+    "text": "curacy are demonstrated through extensive experiments on 11 diverse benchmarks. new state-of-the-art for one-shot adaptation is established by ReHARK, which achieves an average accuracy of 65.83%, significantly outperforming existing baselines. is available at https://github.com/Jahid12012021/ReHARK.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 2,
+    "total_chunks": 36,
+    "char_count": 301,
+    "word_count": 34,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7c967fd4-fa08-4c08-a7be-cedbd0b518c4",
+    "text": "Keywords: Vision-Language Models, One-Shot Learning, Kernel Ridge Regression, GPT3 Semantics, CLIP. Vision-Language Models (VLMs), exemplified by CLIP [1] and ALIGN [2], have fundamentally reshaped the landscape of computer vision. By pre-training on billionscale datasets of noisy image-text pairs via contrastive learning, these models align visual and semantic representations in a unified embedding space. This alignment grants",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 3,
+    "total_chunks": 36,
+    "char_count": 431,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "46b1bb6d-77f0-452b-8887-f2bd2a114785",
+    "text": "them unprecedented zero-shot generalization capabilities, allowing them to recognize arbitrary concepts without task-specific training [3]. However, despite their robustness, deploying VLMs in downstream applications often requires adaptation to specific domains where the pre-training distribution differs significantly from the target distribution [4, 5]. Adapting these large-scale models with limited data—a setting known as few-shot learning—presents a formidable \"Stability-Plasticity\" dilemma [6]. While fine-tuningbased approaches like CoOp [6] and CLIP-Adapter [7] offer high performance, they are often computationally prohibitive and prone to catastrophic forgetting [8]. Conversely, training-free methods such as Tip-Adapter [4] have gained attention for their lightweight adaptation without the need for additional fine-tuning. Tip-Adapter utilizes a query-key cache model constructed from the few-shot training set, effectively retrieving few-shot knowledge in a non-parametric manner.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 4,
+    "total_chunks": 36,
+    "char_count": 999,
+    "word_count": 122,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2ab5b592-6208-49ff-9778-df40854ba838",
+    "text": "Despite its efficiency, recent theoretical analysis has revealed that Tip-Adapter functions as a modified version of the Nadaraya-Watson (NW) estimator—a local nonparametric regression method [5]. This local approach is known to suffer from sig- 1-Shot Performance Comparison Across Benchmarks (%)\nAccuracy 40 ZeroShot\nGDA\nTip-Adapter\nProKeR\n20 ReHARK\nImageNetCaltech101 DTDEuroSATFGVCAircraftFood101OxfordFlowersOxfordPetsStanfordCarsSUN397UCF101Average Figure 1: 1-Shot performance comparison across 11 benchmarks. The proposed ReHARK method (red line with star markers) consistently outperforms existing training-free adaptation baselines. nificant boundary bias, which limits its ability to capture global task structures [9]. To mitigate these limitations, ProKeR [5] introduced a global adaptation method that learns a proximal regularizer in a reproducing kernel Hilbert space (RKHS). ProKeR provides a more effective way to preserve prior knowledge, its performance in the extremely data-scarce one-shot regime remains constrained by the difficulty of capturing domain-specific nuances from a single visual example. In this work, ReHARK (Refined Hybrid Adaptive RBF Kernels) is introduced as",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 5,
+    "total_chunks": 36,
+    "char_count": 1199,
+    "word_count": 153,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3608423c-2063-4718-b121-3e907195ca75",
+    "text": "a unified framework that resolves these issues by encoding multi-modal inductive biases and global regularization directly into the adaptation architecture. innovations are utilized: Hybrid Semantic-Visual Prior Refinement: It is argued that 1-shot visual evidence alone is insufficient for robust adaptation. A synergistic prior is con- structed by blending CLIP text weights, high-density GPT3 semantic descriptions, and visual class prototypes. This hybrid prior stabilizes the global anchor of the model against domain-specific noise. Adaptive Distribution Rectification and Bridging: To resolve discrepancies between support and query distributions, a non-linear power transform and a distribution rectification step are applied to align test statistics with the training Furthermore, a \"Bridge\" mechanism is introduced to generate intermediate",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 6,
+    "total_chunks": 36,
+    "char_count": 849,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b3472bb8-0898-4364-aa55-7e57d15ae9f7",
+    "text": "support samples by blending visual features with refined textual priors, effectively smoothing the adaptation manifold. Ensemble Multi-Scale RBF Kernels: Recognizing that a single kernel bandwidth is rarely optimal across diverse datasets, a Multi-Scale RBF kernel ensemble is utilized. By adaptively mixing kernels with different bandwidths, complex feature geometries across local and global scales are captured, which is critical for handling the high variance inherent in one-shot learning. Vision-Language Models and Zero-Shot Learning The landscape of computer vision has been fundamentally reshaped by the emergence of large-scale Vision-Language Models (VLMs) such as CLIP [1] and ALIGN [2]. By performing contrastive pre-training on billion-scale image-text pairs, these models align visual and semantic representations within a unified embedding space [1]. alignment facilitates unprecedented zero-shot generalization, enabling the recognition of arbitrary categories without the requirement for task-specific training data [3]. However, while zero-shot robustness is maintained across broad domains, performance is often found to be suboptimal when significant distribution shifts occur between pretraining and target datasets [4, 5]. Few-Shot Adaptation and Prompt Learning To enhance the downstream performance of VLMs, various few-shot adaptation",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 7,
+    "total_chunks": 36,
+    "char_count": 1360,
+    "word_count": 179,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9686ad42-2f0c-4170-b859-73f7615999f0",
+    "text": "techniques have been developed. These are generally divided into parameter-efficient fine-tuning (PEFT) and training-free approaches. Among PEFT methods, prompt learning, exemplified by CoOp [6], optimizes continuous learnable vectors in the text encoder's input space. Deep multimodal alignment is further pursued by methods like MaPLe [10], which injects learnable tokens into both the vision and language branches. Alternatively, adapter-based methods such as CLIP-Adapter [7] insert lightweight residual MLP modules into the frozen backbone. Although significant performance gains are offered by these fine-tuning methods, they are often characterized by high computational costs and a vulnerability to overfitting, particularly in the extreme data-scarce Training-Free Caching and Non-parametric Methods Training-free adaptation has gained considerable traction due to its ability to perform task-specific refinement without back-propagation. The Tip-Adapter [4] introduced a non-parametric key-value cache model constructed from few-shot training features, enabling efficient knowledge retrieval at inference time.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 8,
+    "total_chunks": 36,
+    "char_count": 1120,
+    "word_count": 142,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "ea6c295b-990a-4740-b995-42ca0d01f84b",
+    "text": "This baseline was further refined by APE [11], which introduced adaptive prior refinement to filter discriminative feature channels. More recently, GDA [12] demonstrated that a Gaussian Discriminant Analysis approach, utilizing Mahalanobis distance, provides a strong baseline for training-free adaptation. Kernel Perspectives and Global Regularization The theoretical underpinnings of caching methods have recently been scrutinized through a kernel lens. It has been shown in ProKeR [5] that the adaptation term in Tip-Adapter is mathematically equivalent to a local Nadaraya-Watson (NW) estimator [13, 14]. As local non-parametric methods are inherently biased and lack global",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 9,
+    "total_chunks": 36,
+    "char_count": 678,
+    "word_count": 92,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "318ed3e4-1339-44f8-9c17-475c19519421",
+    "text": "GPT3 Prompts\n\"A panda is a large, bear-like creature...\"\n\"A panda is a black and white bear.\" \"A panda is eating bamboo...\"\nText Encoder Templates\n\"a photo of a panda\" Refined Semantic Prior Global Logic\nEnsembled Wref = (1 −η)Wtxt + ηP\nWeights W Non-Linear ClosedRectification + Form Solver Local + Prediction\nx′ = sgn(x)|x|p (K + λI)α = Y −ZS Avg Features V Multi-Scale Kernel Path\nK = Mix(RBFβ1, RBFβ2)\nInput\nImage Encoder\nReHARK Core Adaptation Module Figure 2: The overall architecture of the proposed ReHARK framework. Visual features and ensembled text weights (enriched by GPT3) undergo non-linear rectification before entering the core adaptation module. system combines a refined semantic prior (global logic) with a multi-scale RBF kernel path (local adaptation) to solve for optimal adaptation coefficients in closed form. task structural information, the ProKeR framework [5] was proposed to learn a proximal regularizer within a Reproducing Kernel Hilbert Space (RKHS). the adaptation as a Kernel Ridge Regression (KRR) problem with a global anchor, more robust preservation of prior knowledge is achieved. ReHARK builds upon this global kernel perspective by introducing hybrid semantic-visual priors and multi-scale RBF",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 10,
+    "total_chunks": 36,
+    "char_count": 1235,
+    "word_count": 188,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e9a2973a-4c0c-4fc3-90d9-ebc139e77ab0",
+    "text": "ensembles, specifically targeting the high-variance challenges of one-shot adaptation. In this section, the proposed ReHARK framework is detailed.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 11,
+    "total_chunks": 36,
+    "char_count": 146,
+    "word_count": 18,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b30d0b8a-f481-48e4-99d3-ad74f4976cc9",
+    "text": "designed to adapt the frozen CLIP backbone to a downstream task using a single visual example per class (1-shot) by utilizing a global kernel regression strategy regularized by hybrid multi-modal priors. Feature Transformation and Rectification To mitigate the adverse effects of high-dimensional feature distributions and potential domain shifts, a non-linear power transform is first applied to all visual and textual For a given feature vector x, the transformation is defined as: f(x, p) = sign(x) · |x|p (1) where p ∈[0.5, 1.0] is a learnable scaling factor optimized via a 1000-trial search. This operation is followed by ℓ2 normalization to project the features onto a unit hypersphere, ensuring the representations are aligned with the contrastive pre-training objective of the base model. Synergistic Hybrid Prior Construction A critical innovation of ReHARK is the construction of a Refined Hybrid Prior that stabilizes the model's global anchor.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 12,
+    "total_chunks": 36,
+    "char_count": 956,
+    "word_count": 144,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "95b3d252-d640-4ef7-ba66-2ec574c37934",
+    "text": "This is achieved by fusing zero-shot knowledge from CLIP, high-density semantic descriptions from GPT3, and task-specific visual evidence. First, a Base Textual Prior (Wtext) is formed by blending CLIP weights (Wclip) and GPT3 weights (Wgpt3) [16]: Wtext = norm (1 −γ)Wclip + γWgpt3 (2) where γ is a mixing coefficient. Subsequently, this textual prior is refined using visual class prototypes (Pvis), which are calculated as the centroids of the available 1-shot Wprior = norm ((1 −ω)Wtext + ωPvis) (3) where ω regulates the balance between pre-trained semantic knowledge and visual evidence. Support Set Augmentation (Bridging) To smooth the adaptation manifold in the 1-shot regime, the support set is expanded through a Bridge mechanism. For each visual sample xvis, an intermediate \"bridge\" sample xbridge is generated by blending the visual feature with its corresponding classspecific refined prior [17]: xbridge = norm (xvis + ηwlabel) (4)",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 13,
+    "total_chunks": 36,
+    "char_count": 947,
+    "word_count": 144,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7e84dec2-c322-496b-97d4-bc4dc9f8ca26",
+    "text": "where wlabel ∈Wprior and η is a blending factor. The final augmented support set Saug is the concatenation of the original visual features and these synthetic bridge samples. Global Proximal Adaptation in RKHS The adaptation is formulated as a Kernel Ridge Regression (KRR) problem within Unlike local caching methods such as Tip-Adapter, ReHARK solves for a",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 14,
+    "total_chunks": 36,
+    "char_count": 358,
+    "word_count": 56,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "3a4db72b-ce44-42d2-bdf8-1ea5c3eff106",
+    "text": "global weight matrix α that minimizes the following regularized objective [5]: 2NK\nX min ||ϕ(si) −yi||22 + λ||ϕ −fzs||2H (5)\nϕ∈H\ni=1 where fzs represents the zero-shot predictor defined by Wprior, and 2NK is the size of the augmented support set. By the representer theorem, the solution for the adaptation coefficients α is obtained in closed form: α = (K + λI)−1(Y −ˆYzs) (6) where ˆYzs = σzs(SaugW⊤prior) represents the zero-shot residuals. Adaptive Multi-Scale RBF Kernels To capture feature geometries across diverse scales, an ensemble Multi-Scale RBF Following the principles of Multiple Kernel Learning (MKL) [18], the kernel K(x, x′) is defined as a convex combination of two Gaussian (RBF) kernels [19] with distinct bandwidths: K(x, x′) = π exp −β1||x −x′||22 + (1 −π) exp −β2||x −x′||22 (7) where β1 and β2 capture local and global similarities respectively, and π ∈[0, 1] is the The final inference for a test query xq is computed as the solution to",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 15,
+    "total_chunks": 36,
+    "char_count": 962,
+    "word_count": 159,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b9099622-8902-495b-afa8-830572653a2f",
+    "text": "the Proximal Kernel Ridge Regression problem introduced by ProKeR [5]: Φ(xq) = σzs(xqW⊤prior) + K(xq, Saug)α (8) where σzs acts as the zero-shot scaling factor and α represents the learned global adaptation coefficients. Datasets and Evaluation Protocol The proposed ReHARK framework is evaluated across 11 diverse image classification benchmarks. These datasets encompass a wide variety of domains, including general objects (ImageNet [20], Caltech101 [21]), fine-grained categories (OxfordPets [22], StanfordCars [23], OxfordFlowers [24], Food101 [25], FGVCAircraft [26]), scenes (SUN397 [27]), textures (DTD [28]), satellite imagery (EuroSAT [29]), and action recognition (UCF101 [30]).",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 16,
+    "total_chunks": 36,
+    "char_count": 689,
+    "word_count": 91,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "7ced61f2-9018-4e33-bfa8-c4e5c3c8241c",
+    "text": "Following the established protocol in the CoOp benchmark [6], the evaluation is conducted in the one-shot regime. Hyperparameter selection is performed using validation shots for each specific dataset, after which the optimized configuration is applied to the full test set. This protocol ensures that the reported results accurately reflect the",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 17,
+    "total_chunks": 36,
+    "char_count": 345,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9847785e-f69c-4dbb-b920-799b72c73374",
+    "text": "model's ability to adapt to distinct data geometries while utilizing the limited visual evidence available in the few-shot setting. Implementation Details",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 18,
+    "total_chunks": 36,
+    "char_count": 154,
+    "word_count": 21,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "d84bb1f8-819d-4dc7-a712-9ceddb23336b",
+    "text": "The ViT-B/16 CLIP backbone is utilized as the base vision-language model, with the ResNet-50 (RN50) configuration employed for comparative experiments [1]. computations are performed on a single NVIDIA Tesla P100 GPU (via Kaggle). ensure computational efficiency during the optimization phase, a batch size of 4096 is utilized for inference. The hyperparameter search is conducted using the Optuna framework [31], with a total budget of 1000 trials allocated per dataset to ensure convergence of the adaptive RBF scales (β1, β2), the power transform factor (p), and the synergistic prior mixing weights (γ, ω). To enrich the semantic representation of the categories, GPT3 based prompts are integrated following the methodology and templates introduced in These descriptions are ensembled to form high-density semantic centroids that serve as the foundation for the hybrid prior refinement step.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 19,
+    "total_chunks": 36,
+    "char_count": 895,
+    "word_count": 132,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2b41fff9-fe62-469c-9b51-7a925c5ca008",
+    "text": "The 1-shot performance of ReHARK is compared against several prominent baselines in Table 1. ReHARK achieves a new state-of-the-art average accuracy of 65.83%, outperforming Zero-shot CLIP (58.88%), GDA (62.24%), Tip-Adapter (62.85%), and Notably, on the structure-sensitive EuroSAT dataset, ReHARK achieves 69.19%, establishing a substantial lead over the structural-regularized ProKeR (59.75%).",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 20,
+    "total_chunks": 36,
+    "char_count": 396,
+    "word_count": 50,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "46f5a77e-6cea-4708-a0bb-30bb03753b6c",
+    "text": "Table 1: One-shot classification accuracy (%) comparison across 11 datasets. Method ImageNet Caltech101 DTD EuroSAT FGVCAircraft Food101 OxfordFlowers OxfordPets StanfordCars SUN397 UCF101 Average Zero-Shot CLIP 60.35 85.68 42.91 36.27 17.01 77.37 66.02 85.72 55.75 58.82 61.78 58.88\nGDA 60.68 87.29 46.26 58.30 17.78 77.42 72.08 85.49 56.78 59.93 62.65 62.24\nTip-Adapter 60.58 88.09 45.90 56.76 19.06 77.54 75.06 86.02 57.11 60.85 64.40 62.85\nProKeR 60.60 88.17 47.99 59.75 20.65 77.40 78.85 86.44 56.79 59.66 65.13 63.77 ReHARK 61.88 90.13 49.23 69.19 21.45 77.55 80.82 86.34 59.18 63.53 64.83 65.83 Figure 3: Qualitative analysis of ReHARK 1-shot predictions across 11 benchmarks. Green labels indicate correct classifications, while red labels denote misclassifications.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 21,
+    "total_chunks": 36,
+    "char_count": 774,
+    "word_count": 110,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "69915b90-e620-4b6c-b51d-fd9ac1d2eaf5",
+    "text": "The model demonstrates high fidelity in diverse domains, including fine-grained objects and complex scenes. In this section, the contribution of each component within the ReHARK framework is systematically evaluated. Unless otherwise specified, experiments are conducted in the 1-shot regime using a ViT-B/16 CLIP backbone. Impact of Architectural Components The contribution of each component is evaluated by applying the following mathematical constraints to the optimization objective: The global anchor simplifies to Wprior = Wtext, removing",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 22,
+    "total_chunks": 36,
+    "char_count": 545,
+    "word_count": 74,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b0625edc-96a9-4bff-9622-66ebba293869",
+    "text": "visual prototype influence. Figure 4: t-SNE visualization of the latent space clusters generated by ReHARK. kernels effectively capture the local geometry of class distributions across 11 datasets, facilitating distinct separation even with a single support sample per class. • NO_MULTISCALE: π = 1.0. The kernel collapses to a single scale: K(x, x′) = • NO_RECTIFY: η = 0, α = 0. Disables moment alignment, resulting in ˆx = • NO_AUGMENT: blend_img = 0. Prevents the generation of synthetic bridge samples xbridge in the support set. Disables non-linear feature rectification f(x, p) = sign(x) · |x|p, resulting in a linear pass-through.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 23,
+    "total_chunks": 36,
+    "char_count": 638,
+    "word_count": 100,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "aafd084e-1115-4aba-8e0d-e68878b30d5b",
+    "text": "Table 2: Ablation study of ReHARK components on 1-shot classification average accuracy (%) (500 trials). Configuration ImageNet Caltech101 DTD EuroSAT FGVCAircraft Food101 OxfordFlowers OxfordPets StanfordCars SUN397 UCF101 Avg. NO_Refine 61.54 89.75 49.67 68.15 21.15 77.76 80.32 85.91 58.19 63.25 64.75 65.49\nNO_MULTISCALE 61.72 89.84 49.21 68.66 21.04 77.52 81.05 85.65 59.40 63.39 65.45 65.72\nNO_RECTIFY 61.57 89.83 48.52 66.53 21.06 77.80 81.03 86.38 58.84 63.53 64.69 65.43\nNO_AUGMENT 61.60 89.93 49.27 68.75 21.25 77.76 81.25 86.07 59.06 63.55 65.12 65.78\nNO_POWER 61.78 89.99 49.47 68.11 21.04 77.15 78.06 85.83 58.50 63.24 65.31 65.32 ReHARK 62.09 90.11 49.29 68.56 21.22 77.60 80.96 86.01 58.88 63.59 64.97 65.75",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 24,
+    "total_chunks": 36,
+    "char_count": 722,
+    "word_count": 106,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "9b8df2ef-f34f-4c5b-8086-6c4b97df8623",
+    "text": "Synergistic Prior Modalities The synergy between CLIP knowledge, GPT-3 semantic descriptions, and visual evidence is analyzed in Table 3.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 25,
+    "total_chunks": 36,
+    "char_count": 137,
+    "word_count": 19,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "09105462-31a1-40cd-b5d2-e4938863fabc",
+    "text": "It is demonstrated that relying solely on visual information (ONLY_VISUAL) yields a drastic performance collapse to 43.83% average accuracy, as a single visual shot provides insufficient coverage of the class distribution. Conversely, the inclusion of GPT-3 descriptors (ONLY_TEXT_GPT) significantly stabilizes performance (64.32%), while the full hybrid fusion achieves the highest accuracy of 65.75%.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 26,
+    "total_chunks": 36,
+    "char_count": 402,
+    "word_count": 53,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "55a6dc63-0114-47de-9afe-ccd7bf511f85",
+    "text": "Table 3: Effect of different modality priors on 1-shot adaptation average accuracy (%). Modality ImageNet Caltech101 DTD EuroSAT FGVCAircraft Food101 OxfordFlowers OxfordPets StanfordCars SUN397 UCF101 Avg. ONLY_TEXT_GPT 61.06 89.70 48.72 68.63 20.25 74.79 80.16 83.44 56.98 61.55 62.27 64.32\nONLY_VISUAL 25.63 76.13 35.84 63.41 16.05 38.30 67.42 42.08 30.94 38.15 48.20 43.83 FULL SYNERGY 62.09 90.11 49.29 68.56 21.22 77.60 80.96 86.01 58.88 63.59 64.97 65.75",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 27,
+    "total_chunks": 36,
+    "char_count": 461,
+    "word_count": 66,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "69f7d5ea-9c61-4cd6-af56-602c5010b13e",
+    "text": "Impact of Search Budget and Kernel Choice The robustness of the adaptation process is analyzed along two complementary dimensions: the optimization budget and the kernel function selection. Ablation Study: Component Impact on Accuracy\nAverage Accuracy 65.6\nAccuracy\nAverage 65.4\n65.2 ReHARK Transform Refinement Multi-Scale Rectification Full Augmentation No No No Power No Configuration (Component Removed)",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 28,
+    "total_chunks": 36,
+    "char_count": 407,
+    "word_count": 55,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "82b92944-5ea7-44a3-ac8c-1e78c19d676f",
+    "text": "Figure 5: Ablation study evaluating the impact of individual architectural components. Transform causes the most significant performance degradation (65.32%), while the Full ReHARK configuration maintains robust accuracy (65.75%) across all components. As the trial budget increases from 50 to 1,000, the average accuracy consistently improves from 64.87% to a state-of-the-art 65.83%. summarized in Table 4, demonstrates the effectiveness of leveraging the Optuna framework to refine adaptive scales and mixing weights through an expanded search space. Table 4: Impact of search trials on 1-shot classification accuracy (%). Trials ImageNet Caltech101 DTD EuroSAT FGVCAircraft Food101 OxfordFlowers OxfordPets StanfordCars SUN397 UCF101 Avg. 50 59.69 90.17 49.25 67.83 20.43 76.54 79.90 85.09 57.80 62.63 64.26 64.87\n100 60.52 89.99 49.17 67.80 21.04 77.08 80.08 85.48 58.48 63.16 65.34 65.29\n500 62.09 90.11 49.29 68.56 21.22 77.60 80.96 86.01 58.88 63.59 64.97 65.75\n1000 61.88 90.13 49.23 69.19 21.45 77.55 80.82 86.34 59.18 63.53 64.83 65.83 The adaptation performance is strongly influenced by the choice",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 29,
+    "total_chunks": 36,
+    "char_count": 1110,
+    "word_count": 160,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "2801b515-f803-48a2-b3e0-03bded607477",
+    "text": "of the kernel function K(x, x′) within the global proximal regularization framework. Prior Modality Ablation Text Only Visual Only Both (Full) Figure 6: Prior modality ablation study. Relying solely on visual priors results in a sharp performance drop The combination of both textual and visual modalities in the full ReHARK framework yields the best average accuracy of 65.75%.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 30,
+    "total_chunks": 36,
+    "char_count": 378,
+    "word_count": 58,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "e1a7e11e-f3c4-4db7-bc29-b5e663630a61",
+    "text": "We compare the Radial Basis Function (RBF) kernel against Linear and Laplacian The kernel formulations evaluated in Table 5 are defined as follows: • Linear Kernel: Corresponds to the standard dot product in the original feature KLinear(x, x′) = x⊤x′. (9) • Laplacian Kernel: Known for being less smooth than the RBF kernel, it is KLaplacian(x, x′) = exp −β ∥x −x′∥1 . (10) • RBF (Gaussian) Kernel: Captures smooth local similarities: KRBF(x, x′) = exp −β ∥x −x′∥22 . (11) As reported in Table 5, the RBF kernel achieves the highest average accuracy of 65.83%, significantly outperforming the Linear (55.45%) and Laplacian (60.84%) ker- Effect of Optuna Search Budget Figure 7: Sensitivity analysis of the Optuna search budget. Accuracy increases with the number of trials, reaching a peak of 65.83% at 1,000 trials. Significant gains are observed when increasing the budget from",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 31,
+    "total_chunks": 36,
+    "char_count": 879,
+    "word_count": 143,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b277f1f7-1169-4fdc-8a69-f5a271c643ef",
+    "text": "This result validates the superior capability of the RBF kernel to project multimodal features into a high-dimensional space suitable for non-linear adaptation. Table 5: Impact of different kernel types on 1-shot classification accuracy (%). Kernel ImageNet Caltech101 DTD EuroSAT FGVCAircraft Food101 OxfordFlowers OxfordPets StanfordCars SUN397 UCF101 Avg. LINEAR 26.26 88.38 47.77 63.23 18.54 45.21 77.51 80.05 44.99 55.47 62.50 55.45\nLAPLACIAN 43.30 89.95 49.03 57.43 21.21 54.41 80.71 85.79 59.24 63.47 64.70 60.84\nRBF 61.88 90.13 49.23 69.19 21.45 77.55 80.82 86.34 59.18 63.53 64.83 65.83 Limitations and Future Work Despite its performance, ReHARK faces several constraints:",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 32,
+    "total_chunks": 36,
+    "char_count": 682,
+    "word_count": 97,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "21ca14bd-3a23-4a20-929c-f9671d5b2151",
+    "text": "• Search Budget: The 1,000-trial Optuna search introduces computational overhead during hyperparameter tuning, though inference remains training-free. Kernel Performance Comparison Across 11 Benchmarks (%)\nAccuracy 60 40\nLinear (55.45%)\nLaplacian (60.84%)\n20 RBF (65.83%)\nImageNet Caltech101 DTD EuroSATFGVCAircraft Food101OxfordFlowers OxfordPetsStanfordCars SUN397 UCF101 Figure 8: Performance comparison of different kernel functions across 11 benchmarks. (red) consistently achieves the highest accuracy (65.83%), significantly outperforming the Linear (55.45%) and Laplacian (60.84%) baselines, especially on ImageNet and Food101. • LLM Dependency: Generic GPT3 descriptions may lack discriminative power for highly specialized or technical domains. • Modality Gap: High intra-class variance in 1-shot scenarios still presents challenges for visual-textual alignment.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 33,
+    "total_chunks": 36,
+    "char_count": 872,
+    "word_count": 105,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "b0480a09-6208-4c2d-8c3e-0e2d4d06f159",
+    "text": "To further advance the capabilities of the proposed framework, several research directions will be pursued. First, online hyperparameter prediction will be explored to eliminate the search phase, thereby streamlining the adaptation process.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 34,
+    "total_chunks": 36,
+    "char_count": 240,
+    "word_count": 32,
+    "chunking_strategy": "semantic"
+  },
+  {
+    "chunk_id": "39583c8b-79e0-4268-a48f-ea24473233c0",
+    "text": "Additionally, the framework is intended to be extended to Large Vision-Language Models (LVLMs) to leverage their enhanced reasoning and zero-shot capabilities. Finally, generative models will be utilized to create high-fidelity synthetic \"bridge\" samples, aimed at further refining the alignment between textual and visual modalities in This paper introduced ReHARK, a training-free framework for one-shot visionlanguage adaptation. By utilizing global proximal regularization in an RKHS, ReHARK successfully mitigates the boundary biases of local methods. of GPT3 hybrid priors with multi-scale RBF kernels allows for robust feature geometry capture. Experiments across 11 benchmarks demonstrate that Re-HARK establishes a new state-of-the-art with an average accuracy of 65.83%, particularly excels in structure-sensitive and multi-modal adaptation tasks.",
+    "paper_id": "2603.11542",
+    "title": "ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation",
+    "authors": [
+      "Md Jahidul Islam"
+    ],
+    "published_date": "2026-03-12",
+    "primary_category": "",
+    "arxiv_url": "http://arxiv.org/abs/2603.11542v1",
+    "chunk_index": 35,
+    "total_chunks": 36,
+    "char_count": 857,
+    "word_count": 112,
+    "chunking_strategy": "semantic"
+  }
+]
