@@ -7,3 +7,8 @@ data/processed/
 data/embeddings/
 *.log
 .DS_Store
+data/chunks/
+data/processed/
+data/raw/
+data/embeddings/
+data/qdrant_db/
