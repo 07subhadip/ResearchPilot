@@ -174,16 +174,34 @@ class PDFExtractor:
             return False
 
         # Build processed document
-        processed_doc = {
-            # Copy all original metadata
-            **paper_metadata,
+        #---------------------------------------------------------------------------
+        # processed_doc = {
+        #     # Copy all original metadata
+        #     **paper_metadata,
 
-            # Add processed text
+        #     # Add processed text
+        #     "full_text": text,
+        #     "text_length": len(text),
+        #     "word_count": len(text.split()),
+
+        #     # Update pipeline state
+        #     "text_extracted": True,
+        #     "pdf_downloaded": paper_metadata.get("pdf_downloaded", False),
+        # }
+        #---------------------------------------------------------------------------
+
+        primary_cat = paper_metadata.get("primary_category")
+
+        if not primary_cat:
+            cats = paper_metadata.get("categories", [])
+            primary_cat = cats[0] if cats else "cs.LG" 
+
+        processed_doc = {
+            **paper_metadata,
+            "primary_category": primary_cat,   # Override with rescued value
             "full_text": text,
             "text_length": len(text),
             "word_count": len(text.split()),
-
-            # Update pipeline state
             "text_extracted": True,
             "pdf_downloaded": paper_metadata.get("pdf_downloaded", False),
         }

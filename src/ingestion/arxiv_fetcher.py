@@ -212,7 +212,7 @@ class ArXivFetcher:
                 abstract            = result.summary,
                 authors             = [str(a) for a in result.authors],
                 categories          = result.categories,
-                primary_categories  = result.primary_category,
+                primary_category    = str(result.primary_category) if result.primary_category else result.categories[0] if result.categories else "cs.LG",
                 published_date      = result.published.strftime("%Y-%m-%d"),
                 updated_date        = result.updated.strftime("%Y-%m-%d"),
                 arxiv_url           = result.entry_id,

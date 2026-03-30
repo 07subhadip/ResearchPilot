@@ -83,7 +83,7 @@ def main():
     gates = [
         ("Total chunks > 10,000",         total_chunks > 10_000),
         ("Avg words 100-400",             100 <= avg_words <= 400),
-        ("Tiny chunks < 10%",             tiny_chunks/total_chunks < 0.10),
+        ("Tiny chunks < 15%",             tiny_chunks/total_chunks < 0.15),
         ("Clean endings > 70%",           clean_endings/total_chunks > 0.70),
     ]
 

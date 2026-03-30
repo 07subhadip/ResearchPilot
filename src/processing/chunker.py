@@ -673,7 +673,8 @@ class ChunkingPipeline:
             "title":            processed_doc.get("title", ""),
             "authors":          processed_doc.get("authors", []),
             "published_date":   processed_doc.get("published_date", ""),
-            "primary_category": processed_doc.get("primary_category", ""),
+            "primary_category": processed_doc.get("primary_category") or
+                                (processed_doc.get("categories") or ["cs.LG"])[0],
             "arxiv_url":        processed_doc.get("arxiv_url", ""),
         }
 
