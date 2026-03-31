@@ -175,7 +175,8 @@ class QdrantStore:
                     payload = {
                         # Store ALL metadata in payload for retrieval
                         **metadata[i],
-                        "text": texts[i],   # Inlcude chunk text
+                        "text": texts[i],   # Include chunk text
+                        "publication_year": int(metadata[i].get("published_date", "0000")[:4]),
                     }
                 )
                 points.append(point)
@@ -286,13 +287,12 @@ class QdrantStore:
             )
 
         if year_gte:
-            # published_date is stored as "YYYY-MM-DD" string
-            # We filter by string comparison: "2024-01-01" <= date
-            # This works because ISO date strings sort lexicographically
+            # publication_year is stored as an integer (e.g. 2026)
+            # Range(gte=year_gte) filters to papers from that year onwards
             conditions.append(
                 FieldCondition(
-                    key     = "published_date",
-                    range   = Range(gte = f"{year_gte}-01-01")
+                    key     = "publication_year",
+                    range   = Range(gte = year_gte)
                 )
             )
 
