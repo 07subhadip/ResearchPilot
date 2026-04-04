@@ -98,8 +98,8 @@ class RetrievalPipeline:
         # Stage 2: Cross-encoder re-ranking -> top-5
         reranked = self.reranker.rerank(
             query   = query,
-            results = candidates,
-            top_k   = top_k_final * 2,  # Keep extra before diversity filter
+            results = candidates[:10],
+            top_k   = TOP_K_RETRIEVAL * 2,  # Keep extra before diversity filter
         )
 
         # Stage 3: Diversity filter -> max 2 chunks per paper

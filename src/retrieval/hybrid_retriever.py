@@ -116,14 +116,23 @@ class HybridRetriever:
         # -------------- Step 3: Build chunk_id -> full data lookup --------------
         # Dense results have full payload (text, metadata)
         # Sparse results only have chunk_id and text
+
         chunk_data = {}
+        
+        # -------------------------------------------------------
+        # for r in dense_results:
+        #     if r["chunk_id"] not in chunk_data:
+        #         chunk_data[r["chunk_id"]] = {
+        #             "chunk_id": r["chunk_id"],
+        #             "text":     r["text"],
+        #             "score":    0.0,
+        #         }
+        # -------------------------------------------------------
+
         for r in dense_results:
             if r["chunk_id"] not in chunk_data:
-                chunk_data[r["chunk_id"]] = {
-                    "chunk_id": r["chunk_id"],
-                    "text":     r["text"],
-                    "score":    0.0,
-                }
+                chunk_data[r["chunk_id"]] = {**r}
+
 
         # -------------- Step 4: Compute RRF score --------------
         RRF_scores = {}
