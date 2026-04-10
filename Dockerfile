@@ -18,15 +18,19 @@ COPY run_api.py .
 COPY .env.example ./.env
 
 # Copy data (uploaded via HuggingFace web UI)
-COPY data/qdrant_db/ ./data/qdrant_db/
-COPY data/embeddings/bm25_index.pkl ./data/embeddings/bm25_index.pkl
-COPY data/embeddings/embeddings.npy ./data/embeddings/embeddings.npy
-COPY data/embeddings/chunk_ids.npy ./data/embeddings/chunk_ids.npy
-COPY data/embeddings/embedding_index.json ./data/embeddings/embedding_index.json
-COPY data/chunks/ ./data/chunks/
+# COPY data/qdrant_db/ ./data/qdrant_db/
+# COPY data/embeddings/bm25_index.pkl ./data/embeddings/bm25_index.pkl
+# COPY data/embeddings/embeddings.npy ./data/embeddings/embeddings.npy
+# COPY data/embeddings/chunk_ids.npy ./data/embeddings/chunk_ids.npy
+# COPY data/embeddings/embedding_index.json ./data/embeddings/embedding_index.json
+# COPY data/chunks/ ./data/chunks/
 
 # Create remaining data dirs
 RUN mkdir -p data/raw data/processed logs
+
+# Download the 4.4 GB database from the limits-free HF Dataset
+# This happens during the Docker build so the API starts instantly later
+RUN huggingface-cli download Subhadip007/researchpilot-data --repo-type dataset --local-dir /app/data
 
 # HuggingFace Spaces uses port 7860
 ENV PORT=7860
