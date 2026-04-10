@@ -5,6 +5,8 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
+    git \
+    git-lfs \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first (Docker layer caching)
@@ -28,9 +30,9 @@ COPY .env.example ./.env
 # Create remaining data dirs
 RUN mkdir -p data/raw data/processed logs
 
-# Download the 4.4 GB database from the limits-free HF Dataset
+# Download the 4.4 GB database from the limits-free HF Dataset using git
 # This happens during the Docker build so the API starts instantly later
-RUN huggingface-cli download Subhadip007/researchpilot-data --repo-type dataset --local-dir /app/data
+RUN git lfs install && git clone https://huggingface.co/datasets/Subhadip007/researchpilot-data /app/data
 
 # HuggingFace Spaces uses port 7860
 ENV PORT=7860
