@@ -27,12 +27,12 @@ COPY .env.example ./.env
 # COPY data/embeddings/embedding_index.json ./data/embeddings/embedding_index.json
 # COPY data/chunks/ ./data/chunks/
 
-# Create remaining data dirs
-RUN mkdir -p data/raw data/processed logs
-
 # Download the 4.4 GB database from the limits-free HF Dataset using git
 # This happens during the Docker build so the API starts instantly later
 RUN git lfs install && git clone https://huggingface.co/datasets/Subhadip007/researchpilot-data /app/data
+
+# Create remaining data dirs inside the cloned repo
+RUN mkdir -p data/raw data/processed logs
 
 # HuggingFace Spaces uses port 7860
 ENV PORT=7860
