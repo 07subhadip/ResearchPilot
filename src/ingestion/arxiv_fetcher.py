@@ -43,7 +43,7 @@ logger = get_logger(__name__)
 
 class PaperMetadata(BaseModel):
     """
-    Pydantic model defininf the exact schema for a paper's metadata.
+    Pydantic model defining the exact schema for a paper's metadata.
 
     WHY PYDANTIC:
     Pydantic enforces data types at runtime. If ArXiv returns a date
@@ -212,7 +212,7 @@ class ArXivFetcher:
                 abstract            = result.summary,
                 authors             = [str(a) for a in result.authors],
                 categories          = result.categories,
-                primary_category    = str(result.primary_category) if result.primary_category else result.categories[0] if result.categories else "cs.LG",
+                primary_categories    = str(result.primary_category) if result.primary_category else result.categories[0] if result.categories else "cs.LG",
                 published_date      = result.published.strftime("%Y-%m-%d"),
                 updated_date        = result.updated.strftime("%Y-%m-%d"),
                 arxiv_url           = result.entry_id,
@@ -267,7 +267,7 @@ class ArXivFetcher:
         search = arxiv.Search(
             query       = category_query,
             max_results = max_papers * 2,    # Fetch extra account for skips
-            sort_by     = arxiv.SortCriterion.SubmittedDate,
+            sort_by     = arxiv.SortCriterion.Relevance,
             sort_order  = arxiv.SortOrder.Descending,
         )
 

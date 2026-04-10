@@ -1,14 +1,46 @@
+# ── Python ──
 venv/
-.env
 __pycache__/
 *.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# ── Environment & Secrets ──
+.env
+.env.*
+!.env.example
+
+# ── Data (too large for GitHub) ──
 data/raw/
 data/processed/
-data/embeddings/
-*.log
-.DS_Store
 data/chunks/
-data/processed/
-data/raw/
 data/embeddings/
 data/qdrant_db/
+existing_chunks.zip
+
+# ── Logs ──
+logs/
+*.log
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE ──
+.vscode/
+.idea/
+
+# ── Frontend (handled by frontend-next/.gitignore) ──
+frontend-next/node_modules/
+frontend-next/.next/
+
+# ── Old frontend ──
+frontend/
+
+# ── Misc ──
+*.zip
+output.txt
+Kaggle_Guide.md

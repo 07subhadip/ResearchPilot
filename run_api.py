@@ -22,6 +22,6 @@ if __name__ == "__main__":
         "src.api.main:app",
         host    = API_HOST,
         port    = API_PORT,
-        reload  = API_RELOAD,     # Auto-restart on code changes (dev only)
-        workers = 1,              # Single worker for dev (no GPU sharing issues)
+        reload  = False,              # Disable auto-reload (saves ~10s scanning 3000+ data files)
+        workers = 1,
     )

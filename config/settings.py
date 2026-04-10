@@ -41,12 +41,12 @@ for directory in [RAW_DIR, PROCESSED_DIR, CHUNKS_DIR, EMBEDDINGS_DIR, LOGS_DIR]:
 # ------------------------------------------
 # DATA INGESTION SETTINGS
 # ------------------------------------------
-ARXIV_CATEGORIES = ["cs.LG", "cs.AI"]    # Machine Learning + AI
-MAX_PAPERS_PER_FETCH = 100               # Papers per API call
-TOTAL_PAPERS_TARGET  = 100               # Total papers to collect
-ARXIV_API_DELAY_SECONDS = 3.0            # ArXiv rate limit: be respectful
-PDF_DOWNLOAD_TIMEOUT = 30                # Seconds before giving up on a PDF
-MAX_DOWNLOAD_RETRIES = 3                 # Retry failed downloads N times
+ARXIV_CATEGORIES = ["cs.LG", "cs.AI", "stat.ML"]    # Machine Learning + AI
+MAX_PAPERS_PER_FETCH = 100                          # Papers per API call
+TOTAL_PAPERS_TARGET  = 700                          # Total papers to collect
+ARXIV_API_DELAY_SECONDS = 3.0                       # ArXiv rate limit: be respectful
+PDF_DOWNLOAD_TIMEOUT = 30                           # Seconds before giving up on a PDF
+MAX_DOWNLOAD_RETRIES = 3                            # Retry failed downloads N times
 
 # ------------------------------------------
 # DOCUMENT PROCESSING SETTINGS
@@ -57,7 +57,7 @@ MAX_TEXT_LENGTH = 500_000   # Skip papers larger than 100k chars (corrupted)
 # ------------------------------------------
 # CHUNKING SETTINGS
 # ------------------------------------------
-CHUNK_SIZE = 512        # Charaters per chunk
+CHUNK_SIZE = 512        # Characters per chunk
 CHUNK_OVERLAP = 50      # Overlap between consecutive chunks
 MIN_CHUNK_SIZE = 100    # Discard chunks smaller than this
 
@@ -82,7 +82,7 @@ TOP_K_RERANK = 5                                    # Keep top 5 after reranking
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')            # Loaded from .env
 LLM_MODEL_NAME = 'llama-3.3-70b-versatile'          # Groq model ID
 LLM_TEMPERATURE = 0.1                               # Low = More factual/consistent 
-LLM_MAX_TOKENS = 1024                               # Max response tokens
+LLM_MAX_TOKENS = 2048                               # Max response tokens
 
 # ------------------------------------------
 # API SETTINGS

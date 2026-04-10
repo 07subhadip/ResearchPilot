@@ -80,14 +80,24 @@ class VectorIndexer:
 
         for cf in chunk_files: 
             with open(cf, 'r', encoding = "utf-8") as f:
-                chunks = json.load(f)
+                raw = json.load(f)
 
-            for chunk in chunks:
+            # Handle both formats:
+            #   Old local format: [{chunk_id: ..., text: ...}, ...]
+            #   New Kaggle format: {"paper_id": "...", "chunks": [...]}
+            if isinstance(raw, dict) and "chunks" in raw:
+                chunk_list = raw["chunks"]
+            elif isinstance(raw, list):
+                chunk_list = raw
+            else:
+                logger.warning(f"Unexpected format in {cf.name}, skipping")
+                continue
+
+            for chunk in chunk_list:
                 chunk_ids.append(chunk['chunk_id'])
                 texts.append(chunk["text"])
 
-
-                # Everything expect that goes into metadata
+                # Everything except text goes into metadata
                 metadata.append(
                     {
                         k: v for k, v in chunk.items()
