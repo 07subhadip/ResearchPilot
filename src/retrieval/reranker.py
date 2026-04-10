@@ -128,8 +128,8 @@ class CrossEncoderReranker:
 
         logger.debug(
             f"Re-ranked {len(results)} -> top-{top_k}. "
-            f"Score range: [{reranked[-1]["ce_score"]:.2f}, "
-            f"{reranked[0]["ce_score"]:.2f}]"
+            f"Score range: [{reranked[-1]['ce_score']:.2f}, "
+            f"{reranked[0]['ce_score']:.2f}]"
         )
 
 
