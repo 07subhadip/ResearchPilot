@@ -115,7 +115,7 @@ const MessageRenderer = ({ content, isStreaming }: { content: string, isStreamin
                     clearInterval(interval);
                     return content;
                 }
-                const charsToAdd = Math.max(1, Math.floor(diff / 5));
+                const charsToAdd = Math.max(1, Math.floor(diff / 25));
                 return content.substring(0, prev.length + charsToAdd);
             });
         }, 15);
@@ -134,7 +134,10 @@ const MessageRenderer = ({ content, isStreaming }: { content: string, isStreamin
     }
 
     // Match any Arxiv format number (YYYY.NNNNN) regardless of brackets or commas, and convert to Markdown link
-    const processedContent = displayed.replace(/\b(\d{4}\.\d{4,5})\b/g, '[$1](CITATION:$1)');
+    let processedContent = displayed.replace(/\b(\d{4}\.\d{4,5})\b/g, '[$1](CITATION:$1)');
+    
+    // Force $$ block math onto separate lines so remarkMath parses it tightly as centered block math
+    processedContent = processedContent.replace(/\$\$([\s\S]*?)\$\$/g, '\n\n$$\n$1\n$$\n\n');
 
     return (
         <div className="markdown-body">
@@ -159,7 +162,7 @@ const MessageRenderer = ({ content, isStreaming }: { content: string, isStreamin
                     }
                 }}
             >
-                {processedContent + (isStreaming ? " █" : "")}
+                {processedContent}
             </ReactMarkdown>
         </div>
     );
