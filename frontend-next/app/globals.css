@@ -971,7 +971,7 @@ select {
 
 
 /* -- Additional UI Enhancements -- */
-.top-api-status { position: absolute; right: 24px; top: 16px; z-index: 50; }
+.top-api-status { position: fixed; right: 24px; top: 16px; z-index: 50; }
 .hero-icon-container { width: 90px; height: 90px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; background: rgba(0,240,255,0.05); border: 1px solid rgba(0,240,255,0.2); border-radius: 20px; box-shadow: 0 0 40px rgba(0,240,255,0.1); }
 .ai-avatar { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: rgba(0,240,255,0.1); border-radius: 6px; box-shadow: 0 0 15px rgba(0,240,255,0.2); }
 .model-badge { font-family: "JetBrains Mono", monospace; font-size: 0.65rem; color: #fff; background: rgba(138,43,226,0.5); padding: 3px 8px; border-radius: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid rgba(138,43,226,0.8); }
@@ -1049,3 +1049,18 @@ select {
     font-size: 1.1em;
 }
 
+
+/* Desktop Sidebar Toggle */
+.sidebar.collapsed { width: 0px !important; padding: 0 !important; border: none !important; opacity: 0; }
+.desktop-toggle-sidebar { position: fixed; left: 16px; top: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); z-index: 40; transition: 0.2s; backdrop-filter: blur(10px); }
+.desktop-toggle-sidebar:hover { background: rgba(255,255,255,0.1); color: #fff; }
+@media (max-width: 768px) { .desktop-toggle-sidebar { display: none; } }
+
+/* Scroll Down Button */
+.scroll-down-btn { position: fixed; right: 40px; bottom: 160px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer; z-index: 50; backdrop-filter: blur(5px); transition: 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+.scroll-down-btn:hover { background: rgba(30,30,40,0.9); transform: translateY(-2px); border-color: rgba(255,255,255,0.4); }
+
+/* Sidebar Footer */
+.sidebar-footer { padding: 12px; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.05); }
+.github-link { display: flex; align-items: center; gap: 10px; color: var(--text-muted); text-decoration: none; font-size: 0.85rem; padding: 8px; border-radius: 6px; transition: 0.2s; }
+.github-link:hover { background: rgba(255,255,255,0.05); color: #fff; }

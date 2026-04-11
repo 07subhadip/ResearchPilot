@@ -10,9 +10,9 @@ import 'katex/dist/katex.min.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {
-    Brain, Search, PanelLeftClose, PanelLeft, Plus,
+    Brain, Search, PanelLeftClose, PanelLeft, PanelLeftOpen, Plus,
     Send, Settings2, Trash2, Copy, Check, Star, ThumbsUp, ThumbsDown,
-    Pin, Edit2, Check as CheckIcon
+    Pin, Edit2, Check as CheckIcon, ArrowDown
 } from "lucide-react";
 
 // Config
@@ -236,6 +236,18 @@ export default function App() {
     const [topK, setTopK] = useState(5);
     const [category, setCategory] = useState("All");
     const [apiStatus, setApiStatus] = useState<"connecting" | "online" | "offline">("connecting");
+
+    // UI Enhancements
+    const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(false);
+    const [showScrollDown, setShowScrollDown] = useState(false);
+    const mainChatRef = useRef<HTMLDivElement>(null);
+
+    const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+        const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+        const isNearBottom = scrollHeight - scrollTop - clientHeight < 150;
+        setShowScrollDown(!isNearBottom);
+    };
+
 
     const [editingSessionId, setEditingSessionId] = useState<string | null>(null);
     const [editTitle, setEditTitle] = useState("");
@@ -465,14 +477,14 @@ export default function App() {
             </div>
 
             {/* Sidebar */}
-            <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
+            <div className={`sidebar ${sidebarOpen ? 'open' : ''} ${desktopSidebarCollapsed ? 'collapsed' : ''}`}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px', whiteSpace: 'nowrap' }}>
                     <div className="brand" style={{ fontSize: '1.2rem', gap: '10px' }}>
                         <div className="brand-icon"><Brain size={22} color="var(--accent)" /></div> ResearchPilot
                     </div>
-                    {sidebarOpen && (
-                        <PanelLeftClose size={20} color="#fff" onClick={() => setSidebarOpen(false)} style={{ cursor: 'pointer' }} />
-                    )}
+                    <div onClick={() => { setSidebarOpen(false); setDesktopSidebarCollapsed(true); }} style={{ cursor: 'pointer', opacity: 0.7 }}>
+                        <PanelLeftClose size={20} color="#fff" />
+                    </div>
                 </div>
 
                 <motion.button 
@@ -524,6 +536,12 @@ export default function App() {
                         </div>
                     ))}
                 </div>
+
+                <div className="sidebar-footer">
+                    <a href="https://github.com/07subhadip" target="_blank" rel="noopener noreferrer" className="github-link">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> @07subhadip
+                    </a>
+                </div>
             </div>
 
             {/* Overlay for mobile sidebar */}
@@ -540,7 +558,24 @@ export default function App() {
             </AnimatePresence>
 
             {/* Main Area */}
-            <div className="main-chat-area">
+            <div className="desktop-toggle-sidebar" onClick={() => setDesktopSidebarCollapsed(!desktopSidebarCollapsed)}>
+                {desktopSidebarCollapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
+            </div>
+
+            <div className="main-chat-area" onScroll={handleScroll} ref={mainChatRef}>
+                <AnimatePresence>
+                    {showScrollDown && (
+                        <motion.button 
+                            initial={{ opacity: 0, scale: 0.8 }} 
+                            animate={{ opacity: 1, scale: 1 }} 
+                            exit={{ opacity: 0, scale: 0.8 }} 
+                            className="scroll-down-btn" 
+                            onClick={scrollToBottom}
+                        >
+                            <ArrowDown size={20} />
+                        </motion.button>
+                    )}
+                </AnimatePresence>
                 {/* Header API Status */}
                 <div className="top-api-status">
                     <div className="nav-status">
@@ -575,46 +610,37 @@ export default function App() {
                                             <div className="ai-avatar"><Brain size={16} /></div> ResearchPilot {msg.model_used && <span className="model-badge">{msg.model_used}</span>}
                                         </div>
 
-                                        { /* Stream logic vs Final logic */
-                                            isStreaming && i === currentMessages.length - 1 ? (
-                                                <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>
-                                                    {msg.content}
-                                                    <span className="blinking-cursor"></span>
-                                                </div>
-                                            ) : (
-                                                <>
-                                                    <MessageRenderer content={msg.content} isStreaming={isStreaming && i === currentMessages.length - 1} />
-                                                    {/* Citations section if present */}
-                                                    {msg.citations && msg.citations.length > 0 && (
-                                                        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--border)' }}>
-                                                            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '12px', letterSpacing: '0.05em' }}>SOURCES</div>
-                                                            <div className="citations-grid">
-                                                                {msg.citations.map(c => (
-                                                                    <div key={c.paper_id} className="citation-card">
-                                                                        <div className="citation-meta">
-                                                                            <span className="citation-id">{c.paper_id}</span>
-                                                                        </div>
-                                                                        <div className="citation-title">{c.title}</div>
-                                                                        <a href={c.arxiv_url} target="_blank" rel="noopener noreferrer" className="citation-open" title="Open ArXiv PDF">
-                                                                            <Search size={16} />
-                                                                        </a>
-                                                                    </div>
-                                                                ))}
+                                        <>
+                                            <MessageRenderer content={msg.content} isStreaming={isStreaming && i === currentMessages.length - 1} />
+                                            {/* Citations section if present */}
+                                            {(!isStreaming || i !== currentMessages.length - 1) && msg.citations && msg.citations.length > 0 && (
+                                                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--border)' }}>
+                                                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '12px', letterSpacing: '0.05em' }}>SOURCES</div>
+                                                    <div className="citations-grid">
+                                                        {msg.citations.map(c => (
+                                                            <div key={c.paper_id} className="citation-card">
+                                                                <div className="citation-meta">
+                                                                    <span className="citation-id">{c.paper_id}</span>
+                                                                </div>
+                                                                <div className="citation-title">{c.title}</div>
+                                                                <a href={c.arxiv_url} target="_blank" rel="noopener noreferrer" className="citation-open" title="Open ArXiv PDF">
+                                                                    <Search size={16} />
+                                                                </a>
                                                             </div>
-                                                        </motion.div>
-                                                    )}
-                                                    {/* Feedback Row */}
-                                                    {!isStreaming && msg.role === 'assistant' && msg.content && (
-                                                        <FeedbackRow 
-                                                            query={currentMessages[i-1]?.content || ""} 
-                                                            time={msg.timing?.total_time_ms || 0} 
-                                                            citationsCount={msg.citations?.length || 0}
-                                                            model={msg.model_used || "unknown"}
-                                                        />
-                                                    )}
-                                                </>
-                                            )
-                                        }
+                                                        ))}
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                            {/* Feedback Row */}
+                                            {(!isStreaming || i !== currentMessages.length - 1) && msg.role === 'assistant' && msg.content && (
+                                                <FeedbackRow 
+                                                    query={currentMessages[i-1]?.content || ""} 
+                                                    time={msg.timing?.total_time_ms || 0} 
+                                                    citationsCount={msg.citations?.length || 0}
+                                                    model={msg.model_used || "unknown"}
+                                                />
+                                            )}
+                                        </>
                                     </div>
                                 )}
                             </motion.div>
