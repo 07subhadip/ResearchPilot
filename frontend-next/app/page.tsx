@@ -2,12 +2,17 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { InlineMath, BlockMath } from 'react-katex';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {
     Brain, Search, PanelLeftClose, PanelLeft, Plus,
-    Send, Settings2, Trash2, Copy, Check, Star, ThumbsUp, ThumbsDown
+    Send, Settings2, Trash2, Copy, Check, Star, ThumbsUp, ThumbsDown,
+    Pin, Edit2, Check as CheckIcon
 } from "lucide-react";
 
 // Config
@@ -44,6 +49,7 @@ interface ChatSession {
     title: string;
     messages: ChatMessage[];
     timestamp: number;
+    pinned?: boolean;
 }
 
 // --- Message Renderer Component ---
@@ -83,55 +89,76 @@ const CitationBadge = ({ id }: { id: string }) => {
     );
 };
 
-// Safe rendering to avoid KaTeX crashing
-const SafeMathBlock = ({ math }: { math: string }) => {
-    try { return <BlockMath math={math} />; } catch (e) { return <pre>{`$$${math}$$`}</pre>; }
-};
-const SafeMathInline = ({ math }: { math: string }) => {
-    try { return <InlineMath math={math} />; } catch (e) { return <span>{`$${math}$`}</span>; }
-};
+const MessageRenderer = ({ content, isStreaming }: { content: string, isStreaming?: boolean }) => {
+    const [displayed, setDisplayed] = useState(isStreaming ? "" : content);
+    const [isThinking, setIsThinking] = useState(isStreaming && !content);
 
-const renderTextWithMathAndCitations = (text: string) => {
-    // 1. Block Math
-    const blockSplit = text.split(/(\$\$[\s\S]+?\$\$)/g);
-    return blockSplit.map((bPart, i) => {
-        if (bPart.startsWith("$$") && bPart.endsWith("$$")) {
-            return <SafeMathBlock key={i} math={bPart.slice(2, -2)} />;
+    useEffect(() => {
+        if (!isStreaming) {
+            setDisplayed(content);
+            setIsThinking(false);
+            return;
         }
-        
-        // 2. Inline Math
-        const inlineSplit = bPart.split(/(\$[^\$\n]+?\$)/g);
-        return inlineSplit.map((iPart, j) => {
-            if (iPart.startsWith("$") && iPart.endsWith("$")) {
-                return <SafeMathInline key={`${i}-${j}`} math={iPart.slice(1, -1)} />;
-            }
 
-            // 3. Citations
-            const citeSplit = iPart.split(/\[(\d{4}\.\d{4,5})\]/g);
-            return citeSplit.map((cPart, k) => {
-                if (/^\d{4}\.\d{4,5}$/.test(cPart)) {
-                    return <CitationBadge key={`${i}-${j}-${k}`} id={cPart} />;
+        if (!content) {
+            setIsThinking(true);
+            return;
+        }
+        setIsThinking(false);
+
+        if (displayed === content) return;
+
+        const interval = setInterval(() => {
+            setDisplayed(prev => {
+                const diff = content.length - prev.length;
+                if (diff <= 0) {
+                    clearInterval(interval);
+                    return content;
                 }
-                return <span key={`${i}-${j}-${k}`} style={{ whiteSpace: "pre-wrap" }}>{cPart}</span>;
+                const charsToAdd = Math.max(1, Math.floor(diff / 5));
+                return content.substring(0, prev.length + charsToAdd);
             });
-        });
-    });
-};
+        }, 15);
 
-const MessageRenderer = ({ content }: { content: string }) => {
-    // Split by code blocks first
-    const parts = content.split(/(```[\s\S]*?```)/g);
+        return () => clearInterval(interval);
+    }, [content, isStreaming, displayed]);
+
+    if (isThinking) {
+        return (
+            <div className="thinking-indicator">
+                <div className="typing-dot"></div>
+                <div className="typing-dot"></div>
+                <div className="typing-dot"></div>
+            </div>
+        );
+    }
+
+    const processedContent = displayed.replace(/\[(\d{4}\.\d{4,5})\]/g, '[$1](CITATION:$1)');
+
     return (
-        <div style={{ lineHeight: 1.6 }}>
-            {parts.map((part, i) => {
-                if (part.startsWith('```') && part.endsWith('```')) {
-                    const match = part.match(/```(\w+)?\n([\s\S]*?)```/);
-                    if (match) {
-                        return <CodeBlock key={i} language={match[1]} code={match[2]} />;
+        <div className="markdown-body">
+            <ReactMarkdown
+                remarkPlugins={[remarkGfm, remarkMath]}
+                rehypePlugins={[rehypeKatex]}
+                components={{
+                    code({node, inline, className, children, ...props}: any) {
+                        const match = /language-(\w+)/.exec(className || '');
+                        return !inline ? (
+                            <CodeBlock language={match?.[1] || 'text'} code={String(children).replace(/\n$/, '')} />
+                        ) : (
+                            <code className="inline-code" {...props}>{children}</code>
+                        )
+                    },
+                    a({node, href, children, ...props}: any) {
+                        if (href?.startsWith('CITATION:')) {
+                            return <CitationBadge id={href.replace('CITATION:', '')} />
+                        }
+                        return <a href={href} target="_blank" rel="noopener noreferrer" {...props}>{children}</a>
                     }
-                }
-                return <div key={i}>{renderTextWithMathAndCitations(part)}</div>;
-            })}
+                }}
+            >
+                {processedContent + (isStreaming ? " █" : "")}
+            </ReactMarkdown>
         </div>
     );
 };
@@ -204,6 +231,38 @@ export default function App() {
     const [topK, setTopK] = useState(5);
     const [category, setCategory] = useState("All");
     const [apiStatus, setApiStatus] = useState<"connecting" | "online" | "offline">("connecting");
+
+    const [editingSessionId, setEditingSessionId] = useState<string | null>(null);
+    const [editTitle, setEditTitle] = useState("");
+
+    const handlePin = (id: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setSessions(prev => {
+            const copy = [...prev];
+            const idx = copy.findIndex(s => s.id === id);
+            if (idx >= 0) copy[idx] = { ...copy[idx], pinned: !copy[idx].pinned };
+            return copy.sort((a,b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.timestamp - a.timestamp);
+        });
+    };
+
+    const handleDelete = (id: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setSessions(prev => prev.filter(s => s.id !== id));
+        if (activeSessionId === id) setActiveSessionId(null);
+    };
+
+    const startEditing = (id: string, currentTitle: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setEditingSessionId(id);
+        setEditTitle(currentTitle);
+    };
+
+    const saveTitle = (id: string, e: React.MouseEvent | React.KeyboardEvent) => {
+        e.stopPropagation();
+        if (!editTitle.trim()) { setEditingSessionId(null); return; }
+        setSessions(prev => prev.map(s => s.id === id ? { ...s, title: editTitle } : s));
+        setEditingSessionId(null);
+    };
 
     useEffect(() => {
         const checkStatus = () => {
@@ -428,7 +487,35 @@ export default function App() {
                             className={`history-item ${activeSessionId === s.id ? 'active' : ''}`}
                             onClick={() => { setActiveSessionId(s.id); setSidebarOpen(false); }}
                         >
-                            {s.title}
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                {editingSessionId === s.id ? (
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', width: '100%' }}>
+                                        <input 
+                                            value={editTitle} 
+                                            onChange={e => setEditTitle(e.target.value)}
+                                            onClick={e => e.stopPropagation()}
+                                            autoFocus
+                                            onKeyDown={e => {
+                                                if (e.key === 'Enter') saveTitle(s.id, e);
+                                            }}
+                                            style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid var(--accent)', outline: 'none', color: '#fff', padding: '2px 6px', borderRadius: '4px', flex: 1, fontSize: '0.8rem' }}
+                                        />
+                                        <CheckIcon size={14} color="var(--success)" onClick={(e) => saveTitle(s.id, e)} style={{ cursor: 'pointer' }} />
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                            {s.pinned && <Pin size={12} color="var(--accent)" style={{ flexShrink: 0 }} />}
+                                            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.title}</span>
+                                        </div>
+                                        <div className="history-actions">
+                                            <Edit2 size={12} onClick={(e) => startEditing(s.id, s.title, e)} />
+                                            <Pin size={14} onClick={(e) => handlePin(s.id, e)} className={s.pinned ? "active-pin" : ""} />
+                                            <Trash2 size={12} onClick={(e) => handleDelete(s.id, e)} className="action-delete" />
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -491,7 +578,7 @@ export default function App() {
                                                 </div>
                                             ) : (
                                                 <>
-                                                    <MessageRenderer content={msg.content} />
+                                                    <MessageRenderer content={msg.content} isStreaming={isStreaming && i === currentMessages.length - 1} />
                                                     {/* Citations section if present */}
                                                     {msg.citations && msg.citations.length > 0 && (
                                                         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--border)' }}>
