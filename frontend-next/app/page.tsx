@@ -139,7 +139,8 @@ const MessageRenderer = ({ content, isStreaming }: { content: string, isStreamin
         <div className="markdown-body">
             <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
-                rehypePlugins={[rehypeKatex]}
+                rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}
+                urlTransform={(url) => url}
                 components={{
                     code({node, inline, className, children, ...props}: any) {
                         const match = /language-(\w+)/.exec(className || '');

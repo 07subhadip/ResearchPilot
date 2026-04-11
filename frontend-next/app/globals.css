@@ -1034,3 +1034,18 @@ select {
 .markdown-body li { margin-bottom: 0.25em; }
 .markdown-body strong { color: #fff; font-weight: 600; }
 .markdown-body .inline-code { background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; font-family: "JetBrains Mono", monospace; font-size: 0.9em; color: var(--accent); }
+
+
+/* KaTeX Overrides for strict centering and sizing */
+.markdown-body .katex-display {
+    display: block !important;
+    text-align: center !important;
+    margin: 1.5rem 0 !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 0;
+}
+.markdown-body .katex {
+    font-size: 1.1em;
+}
+
