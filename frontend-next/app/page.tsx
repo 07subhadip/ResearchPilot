@@ -296,8 +296,7 @@ export default function App() {
                 body: JSON.stringify({ 
                     question: originalQuery, 
                     top_k: topK, 
-                    filter_category: category === "All" ? undefined : category,
-                    filter_year_gte: yearFilter ? yearFrom : undefined
+                    filter_category: category === "All" ? undefined : category
                 })
             });
 
