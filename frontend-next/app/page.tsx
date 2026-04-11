@@ -235,6 +235,7 @@ export default function App() {
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [topK, setTopK] = useState(5);
     const [category, setCategory] = useState("All");
+    const [filterYear, setFilterYear] = useState("All");
     const [apiStatus, setApiStatus] = useState<"connecting" | "online" | "offline">("connecting");
 
     // UI Enhancements
@@ -384,7 +385,8 @@ export default function App() {
                 body: JSON.stringify({ 
                     question: originalQuery, 
                     top_k: topK, 
-                    filter_category: category === "All" ? undefined : category
+                    filter_category: category === "All" ? undefined : category,
+                    filter_year_gte: filterYear === "All" ? undefined : parseInt(filterYear, 10)
                 })
             });
 
@@ -668,8 +670,21 @@ export default function App() {
                                     </select>
                                     <select style={{ background: '#000', border: '1px solid #333', color: '#fff', padding: '6px 12px', borderRadius: '6px' }} value={category} onChange={(e) => setCategory(e.target.value)}>
                                         <option value="All">All Topics</option>
-                                        <option value="cs.LG">cs.LG</option>
-                                        <option value="cs.AI">cs.AI</option>
+                                        <option value="cs.LG">cs.LG (Machine Learning)</option>
+                                        <option value="cs.AI">cs.AI (Artificial Intelligence)</option>
+                                        <option value="cs.CV">cs.CV (Computer Vision)</option>
+                                        <option value="cs.CL">cs.CL (Computation & Language)</option>
+                                        <option value="cs.NE">cs.NE (Neural & Evoly Computing)</option>
+                                        <option value="cs.RO">cs.RO (Robotics)</option>
+                                        <option value="cs.CR">cs.CR (Cryptography & Security)</option>
+                                    </select>
+                                    <select style={{ background: '#000', border: '1px solid #333', color: '#fff', padding: '6px 12px', borderRadius: '6px' }} value={filterYear} onChange={(e) => setFilterYear(e.target.value)}>
+                                        <option value="All">All Years</option>
+                                        <option value="2024">2024 & Newer</option>
+                                        <option value="2023">2023 & Newer</option>
+                                        <option value="2022">2022 & Newer</option>
+                                        <option value="2021">2021 & Newer</option>
+                                        <option value="2020">2020 & Newer</option>
                                     </select>
                                 </motion.div>
                             )}
