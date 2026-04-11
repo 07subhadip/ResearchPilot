@@ -170,15 +170,48 @@ async def stream_query_papers(
     request:     Request,
     query_input: QueryRequest,
 ):
+    import asyncio
     pipeline = request.app.state.rag_pipeline
+
+    async def async_generator():
+        """
+        Wraps the synchronous pipeline.stream_query() generator in an
+        async-friendly way using a thread + asyncio.Queue so we never
+        block the FastAPI event loop.
+        """
+        loop = asyncio.get_event_loop()
+        queue: asyncio.Queue = asyncio.Queue()
+        SENTINEL = object()
+
+        def run_sync():
+            try:
+                for chunk in pipeline.stream_query(
+                    question        = query_input.question,
+                    top_k           = query_input.top_k,
+                    filter_category = query_input.filter_category,
+                    filter_year_gte = query_input.filter_year_gte,
+                ):
+                    loop.call_soon_threadsafe(queue.put_nowait, chunk)
+            finally:
+                loop.call_soon_threadsafe(queue.put_nowait, SENTINEL)
+
+        import threading
+        thread = threading.Thread(target=run_sync, daemon=True)
+        thread.start()
+
+        while True:
+            item = await queue.get()
+            if item is SENTINEL:
+                break
+            yield item
+
     return StreamingResponse(
-        pipeline.stream_query(
-            question        = query_input.question,
-            top_k           = query_input.top_k,
-            filter_category = query_input.filter_category,
-            filter_year_gte = query_input.filter_year_gte,
-        ),
-        media_type="text/event-stream"
+        async_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        }
     )
 
 @app.post(
