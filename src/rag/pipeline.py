@@ -13,11 +13,12 @@ PIPELINE FLOW:
 """
 
 import time
+import json
 from dataclasses import dataclass, field
 from typing import Optional
 
 from src.retrieval.retrieval_pipeline import RetrievalPipeline
-from src.rag.llm_client import LLMClient
+from src.rag.llm_client import MultiModelClient
 from src.rag.prompt_templates import (
     SYSTEM_PROMPT,
     build_rag_prompt,
@@ -31,32 +32,15 @@ logger = get_logger(__name__)
 
 @dataclass
 class RAGResponse:
-    """
-    Structured response from the RAG pipeline.
-
-    WHY A DATACLASS INSTEAD OF A DICT:
-        Dicts can have any keys - you never know what's in them.
-        A dataclass defines the exact contract. The FastAPI layer
-        (Phase 11) and frontend (Phase 12) can rely on these
-        fields always being present.
-    """
-    # The generated answer
     answer:     str
-
-    # Source papers used to generate the answer
     citations:  list[dict]
-
-    # Raw retrieved chunks (for debugging / evaluation)
     retrieved_chunks: list[dict]
-
-    # Performance metadata
     query:      str
     retrieval_time_ms: float
     generation_time_ms: float
     total_time_ms:  float
-
-    # Whether retrieval found retrieval content
     has_context:    bool
+    model_used:     str = ""
 
 
     def to_dict(self) -> dict:
@@ -69,29 +53,14 @@ class RAGResponse:
             "total_time_ms":      round(self.total_time_ms, 1),
             "has_context":        self.has_context,
             "chunks_used":        len(self.retrieved_chunks),
+            "model_used":         self.model_used,
         }
 
-
-
-
 class RAGPipeline:
-    """
-    End-to-end RAG pipeline: query -> retrieve -> generate -> respond.
-
-    Usage:
-        pipeline = RAGPipeline()
-        response = pipeline.query("How does LoRA reduce training parameters?")
-        print(response.answer)
-        for cite in response.citations:
-            print(cite["title"], cite["arxiv_url"])
-    """
-
     def __init__(self):
         logger.info("Initializing RAGPipeline...")
-
         self.retriever  = RetrievalPipeline()
-        self.llm        = LLMClient()
-
+        self.llm        = MultiModelClient()
         logger.info("RAGPipeline ready")
 
     def query(
@@ -101,26 +70,11 @@ class RAGPipeline:
         filter_category: Optional[str] = None,
         filter_year_gte: Optional[int] = None,
     ) -> RAGResponse:
-        """
-        Process a user question through the full RAG pipeline.
-
-        Args:
-            question:        User's natural language question
-            top_k:           Number of chunks to retrieve
-            filter_category: Optional ArXiv category filter
-            filter_year_gte: Optional year filter
-
-        Returns:
-            RAGResponse with answer, citations, and timing metadata
-        """
         question = question.strip()
-
         if not question:
             raise ValueError("Question cannot be empty")
 
         total_start = time.time()
-
-        # ------------ Stage 1: Retrieval ------------
         retrieval_start = time.time()
 
         chunks = self.retriever.retrieve(
@@ -129,20 +83,12 @@ class RAGPipeline:
             filter_category = filter_category,
             filter_year_gte = filter_year_gte,
         )
-
         retrieval_ms = (time.time() - retrieval_start) * 1000
-
-        logger.info(
-            f"Retrieved: {len(chunks)} chunks in {retrieval_ms:.0f}ms"
-        )
-
         has_context = len(chunks) > 0
 
-        # ------------ Stage 2: Prompt Construction ------------
         if has_context:
             user_prompt = build_rag_prompt(question, chunks)
         else:
-            # Fallback prompt when no relevant context found
             user_prompt = (
                 f"The user asked: {question}\n\n"
                 f"No relevant research papers were found in the database. "
@@ -150,23 +96,16 @@ class RAGPipeline:
                 f"or broadening their query."
             )
 
-        # ------------ Stage 3: LLM Generation ------------
         generation_start = time.time()
-
-        answer = self.llm.generate(
+        answer, model_used = self.llm.generate(
             system_prompt = SYSTEM_PROMPT,
             user_prompt   = user_prompt,
+            original_query = question,
+            stream=False
         )
 
         generation_ms   = (time.time() - generation_start) * 1000
         total_ms        = (time.time() - total_start) * 1000
-
-        logger.info(
-            f"Generated answer in {generation_ms:.0f}ms | "
-            f"Total: {total_ms:.0f}ms"
-        )
-
-        # ------------ Stage 4: Build Citations ------------
         citations = build_citation_list(chunks)
 
         return RAGResponse(
@@ -178,4 +117,65 @@ class RAGPipeline:
             generation_time_ms = generation_ms,
             total_time_ms      = total_ms,
             has_context        = has_context,
+            model_used         = model_used
         )
+
+    def stream_query(
+        self,
+        question:        str,
+        top_k:           int = TOP_K_RERANK,
+        filter_category: Optional[str] = None,
+        filter_year_gte: Optional[int] = None,
+    ):
+        question = question.strip()
+        if not question:
+            raise ValueError("Question cannot be empty")
+
+        total_start = time.time()
+        retrieval_start = time.time()
+        chunks = self.retriever.retrieve(
+            query           =  question,
+            top_k_final     = top_k,
+            filter_category = filter_category,
+            filter_year_gte = filter_year_gte,
+        )
+        retrieval_ms = (time.time() - retrieval_start) * 1000
+        has_context = len(chunks) > 0
+
+        if has_context:
+            user_prompt = build_rag_prompt(question, chunks)
+        else:
+            user_prompt = (
+                f"The user asked: {question}\n\n"
+                f"No relevant research papers were found in the database. "
+                f"Politely inform the user and suggest they try rephrasing "
+                f"or broadening their query."
+            )
+
+        generation_start = time.time()
+        generator, model_used = self.llm.generate(
+            system_prompt = SYSTEM_PROMPT,
+            user_prompt   = user_prompt,
+            original_query = question,
+            stream=True
+        )
+
+        for token in generator:
+            yield f"data: {json.dumps({'token': token})}\n\n"
+
+        generation_ms = (time.time() - generation_start) * 1000
+        total_ms = (time.time() - total_start) * 1000
+        citations = build_citation_list(chunks)
+
+        metadata = {
+            "done": True,
+            "citations": citations,
+            "model_used": model_used,
+            "timing": {
+                "retrieval_time_ms": round(retrieval_ms, 1),
+                "generation_time_ms": round(generation_ms, 1),
+                "total_time_ms": round(total_ms, 1),
+                "chunks_used": len(chunks)
+            }
+        }
+        yield f"data: {json.dumps(metadata)}\n\n"

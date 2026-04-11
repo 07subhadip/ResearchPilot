@@ -26,7 +26,10 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
+from pydantic import BaseModel
+import json
+import os
 
 from src.api.schemas import (
     QueryRequest,
@@ -35,6 +38,15 @@ from src.api.schemas import (
     HealthResponse,
     ErrorResponse,
 )
+
+class FeedbackRequest(BaseModel):
+    query: str
+    rating: int
+    thumbs: str | None = None
+    comment: str
+    model_used: str
+    citations_count: int
+    total_time_ms: float
 from src.rag.pipeline import RAGPipeline
 from src.utils.logger import setup_logger, get_logger
 
@@ -149,6 +161,36 @@ async def health_check(request: Request) -> HealthResponse:
         version          = "1.0.0",
     )
 
+@app.post(
+    "/query/stream",
+    summary        = "Stream query research papers",
+    tags           = ["RAG"],
+)
+async def stream_query_papers(
+    request:     Request,
+    query_input: QueryRequest,
+):
+    pipeline = request.app.state.rag_pipeline
+    return StreamingResponse(
+        pipeline.stream_query(
+            question        = query_input.question,
+            top_k           = query_input.top_k,
+            filter_category = query_input.filter_category,
+            filter_year_gte = query_input.filter_year_gte,
+        ),
+        media_type="text/event-stream"
+    )
+
+@app.post(
+    "/feedback",
+    summary        = "Submit feedback",
+    tags           = ["System"],
+)
+async def submit_feedback(feedback: FeedbackRequest):
+    os.makedirs("logs", exist_ok=True)
+    with open("logs/feedback.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(feedback.model_dump()) + "\n")
+    return {"status": "ok"}
 
 @app.post(
     "/query",
