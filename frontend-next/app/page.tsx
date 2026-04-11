@@ -133,7 +133,8 @@ const MessageRenderer = ({ content, isStreaming }: { content: string, isStreamin
         );
     }
 
-    const processedContent = displayed.replace(/\[(\d{4}\.\d{4,5})\]/g, '[$1](CITATION:$1)');
+    // Match any Arxiv format number (YYYY.NNNNN) regardless of brackets or commas, and convert to Markdown link
+    const processedContent = displayed.replace(/\b(\d{4}\.\d{4,5})\b/g, '[$1](CITATION:$1)');
 
     return (
         <div className="markdown-body">
