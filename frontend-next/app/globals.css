@@ -969,3 +969,22 @@ select {
 .blinking-cursor { display: inline-block; width: 8px; height: 16px; background: #fff; animation: blink 1s step-end infinite; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
+
+/* -- Additional UI Enhancements -- */
+.top-api-status { position: absolute; right: 24px; top: 16px; z-index: 50; }
+.hero-icon-container { width: 90px; height: 90px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; background: rgba(0,240,255,0.05); border: 1px solid rgba(0,240,255,0.2); border-radius: 20px; box-shadow: 0 0 40px rgba(0,240,255,0.1); }
+.ai-avatar { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: rgba(0,240,255,0.1); border-radius: 6px; box-shadow: 0 0 15px rgba(0,240,255,0.2); }
+.model-badge { font-family: "JetBrains Mono", monospace; font-size: 0.65rem; color: #fff; background: rgba(138,43,226,0.5); padding: 3px 8px; border-radius: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid rgba(138,43,226,0.8); }
+
+/* Improved Chat Bubbles */
+.message-user {
+    background: linear-gradient(135deg, rgba(30,58,138,0.6), rgba(88,28,135,0.6)) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.chat-input-wrapper { background: rgba(20,25,35,0.8) !important; backdrop-filter: blur(20px); border: 1px solid rgba(0,240,255,0.2) !important; }
+.chat-input-wrapper:focus-within { background: rgba(25,30,45,0.95); border-color: var(--accent); box-shadow: 0 0 30px rgba(0, 240, 255, 0.2), 0 8px 30px rgba(0, 0, 0, 0.6); }
+
+.send-btn { background: #fff !important; border: none; outline: none; }
+.send-btn:hover:not(:disabled) { background: var(--accent) !important; color: #000; box-shadow: 0 0 20px rgba(0,240,255,0.5); }

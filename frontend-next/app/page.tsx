@@ -203,6 +203,18 @@ export default function App() {
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [topK, setTopK] = useState(5);
     const [category, setCategory] = useState("All");
+    const [apiStatus, setApiStatus] = useState<"connecting" | "online" | "offline">("connecting");
+
+    useEffect(() => {
+        const checkStatus = () => {
+            fetch(`${API_URL}/health`)
+                .then(res => setApiStatus(res.ok ? "online" : "offline"))
+                .catch(() => setApiStatus("offline"));
+        };
+        checkStatus();
+        const interval = setInterval(checkStatus, 30000);
+        return () => clearInterval(interval);
+    }, []);
 
     const chatEndRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -390,18 +402,23 @@ export default function App() {
 
             {/* Sidebar */}
             <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
-                    <div className="brand" style={{ fontSize: '1.1rem', gap: '8px' }}>
-                        <Brain size={20} color="var(--accent)" /> ResearchPilot
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
+                    <div className="brand" style={{ fontSize: '1.2rem', gap: '10px' }}>
+                        <div className="brand-icon"><Brain size={22} color="var(--accent)" /></div> ResearchPilot
                     </div>
                     {sidebarOpen && (
                         <PanelLeftClose size={20} color="#fff" onClick={() => setSidebarOpen(false)} style={{ cursor: 'pointer' }} />
                     )}
                 </div>
 
-                <button className="new-chat-btn" onClick={handleNewChat}>
+                <motion.button 
+                    whileHover={{ scale: 1.02, backgroundColor: "rgba(0, 240, 255, 0.1)", borderColor: "rgba(0, 240, 255, 0.3)" }}
+                    whileTap={{ scale: 0.98 }}
+                    className="new-chat-btn" 
+                    onClick={handleNewChat}
+                >
                     <Plus size={16} /> New Chat
-                </button>
+                </motion.button>
 
                 <div style={{ flex: 1, overflowY: 'auto' }}>
                     <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '12px', textTransform: 'uppercase' }}>Recent</div>
@@ -418,26 +435,52 @@ export default function App() {
             </div>
 
             {/* Overlay for mobile sidebar */}
-            {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
+            <AnimatePresence>
+                {sidebarOpen && (
+                    <motion.div 
+                        initial={{ opacity: 0 }} 
+                        animate={{ opacity: 1 }} 
+                        exit={{ opacity: 0 }} 
+                        className="sidebar-overlay" 
+                        onClick={() => setSidebarOpen(false)} 
+                    />
+                )}
+            </AnimatePresence>
 
             {/* Main Area */}
             <div className="main-chat-area">
+                {/* Header API Status */}
+                <div className="top-api-status">
+                    <div className="nav-status">
+                        <div className={`status-dot ${apiStatus === 'online' ? 'status-online' : 'status-offline'}`} />
+                        {apiStatus === 'online' ? 'API Online' : apiStatus === 'connecting' ? 'Connecting...' : 'API Offline'}
+                    </div>
+                </div>
+
                 <div className="chat-container">
                     {currentMessages.length === 0 ? (
-                        <div style={{ margin: 'auto', textAlign: 'center', opacity: 0.5, maxWidth: '400px' }}>
-                            <Brain size={48} style={{ margin: '0 auto 16px auto', display: 'block' }} />
-                            <h2>How can I help you with ML research?</h2>
-                        </div>
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ margin: 'auto', textAlign: 'center', opacity: 0.8, maxWidth: '400px' }}>
+                            <div className="hero-icon-container">
+                                <Brain size={56} color="var(--accent)" />
+                            </div>
+                            <h2 style={{ fontSize: '1.6rem', fontWeight: 700, marginBottom: '12px' }}>Welcome to ResearchPilot</h2>
+                            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>Ask questions about Machine Learning research, get answers backed directly by ArXiv papers.</p>
+                        </motion.div>
                     ) : (
                         currentMessages.map((msg, i) => (
-                            <div key={msg.id} className={msg.role === 'user' ? 'message-user' : 'message-ai'}>
+                            <motion.div 
+                                initial={{ opacity: 0, y: 15 }} 
+                                animate={{ opacity: 1, y: 0 }} 
+                                key={msg.id} 
+                                className={msg.role === 'user' ? 'message-user' : 'message-ai'}
+                            >
                                 {msg.role === 'user' ? (
                                     <div style={{ whiteSpace: 'pre-wrap' }}>{msg.content}</div>
                                 ) : (
                                     <div style={{ width: '100%' }}>
                                         {/* Name header for AI */}
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--accent)', fontWeight: 600 }}>
-                                            <Brain size={16} /> ResearchPilot {msg.model_used && <span style={{fontSize: '0.7rem', color: '#666', background: '#222', padding: '2px 6px', borderRadius: '4px'}}>{msg.model_used}</span>}
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', fontSize: '0.9rem', color: 'var(--accent)', fontWeight: 600 }}>
+                                            <div className="ai-avatar"><Brain size={16} /></div> ResearchPilot {msg.model_used && <span className="model-badge">{msg.model_used}</span>}
                                         </div>
 
                                         { /* Stream logic vs Final logic */
@@ -451,8 +494,8 @@ export default function App() {
                                                     <MessageRenderer content={msg.content} />
                                                     {/* Citations section if present */}
                                                     {msg.citations && msg.citations.length > 0 && (
-                                                        <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-                                                            <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '8px' }}>SOURCES</div>
+                                                        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--border)' }}>
+                                                            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '12px', letterSpacing: '0.05em' }}>SOURCES</div>
                                                             <div className="citations-grid">
                                                                 {msg.citations.map(c => (
                                                                     <div key={c.paper_id} className="citation-card">
@@ -466,7 +509,7 @@ export default function App() {
                                                                     </div>
                                                                 ))}
                                                             </div>
-                                                        </div>
+                                                        </motion.div>
                                                     )}
                                                     {/* Feedback Row */}
                                                     {!isStreaming && msg.role === 'assistant' && msg.content && (
@@ -482,7 +525,7 @@ export default function App() {
                                         }
                                     </div>
                                 )}
-                            </div>
+                            </motion.div>
                         ))
                     )}
                     <div ref={chatEndRef} style={{ height: "1px" }} />
@@ -532,9 +575,15 @@ export default function App() {
                                 className="chat-input"
                                 rows={1}
                             />
-                            <button onClick={handleSend} disabled={!query.trim() || isStreaming} className="send-btn">
+                            <motion.button 
+                                whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(0,240,255,0.6)", backgroundColor: "var(--accent)" }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={handleSend} 
+                                disabled={!query.trim() || isStreaming} 
+                                className="send-btn"
+                            >
                                 <Send size={18} />
-                            </button>
+                            </motion.button>
                         </div>
                     </div>
                 </div>
