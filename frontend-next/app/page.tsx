@@ -267,8 +267,8 @@ const CustomDropdown = ({ label, options, value, onChange }: { label: string, op
                 onMouseOver={e => e.currentTarget.style.borderColor = 'rgba(0, 240, 255, 0.4)'}
                 onMouseOut={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
             >
-                {selectedOption.label}
-                <motion.div animate={{ rotate: isOpen ? 180 : 0 }} style={{ display: 'flex' }}>
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{selectedOption.label}</span>
+                <motion.div animate={{ rotate: isOpen ? 180 : 0 }} style={{ display: 'flex', marginLeft: '20px' }}>
                     <ArrowDown size={14} opacity={0.5} />
                 </motion.div>
             </div>
@@ -845,50 +845,57 @@ export default function App() {
                                         borderRadius: '16px', 
                                         display: 'flex', 
                                         gap: '16px', 
+                                        justifyContent: 'space-between',
                                         flexWrap: 'wrap', 
                                         marginBottom: '12px',
                                         boxShadow: '0 10px 40px rgba(0,0,0,0.5)'
                                     }}
                                 >
-                                    <CustomDropdown 
-                                        label="RETRIEVAL DEPTH"
-                                        value={topK}
-                                        onChange={setTopK}
-                                        options={[
-                                            { value: 3, label: 'Fast (3 Papers)' },
-                                            { value: 5, label: 'Balanced (5 Papers)' },
-                                            { value: 10, label: 'Deep (10 Papers)' }
-                                        ]}
-                                    />
+                                    <div style={{ flex: 1, minWidth: '160px' }}>
+                                        <CustomDropdown 
+                                            label="RETRIEVAL DEPTH"
+                                            value={topK}
+                                            onChange={setTopK}
+                                            options={[
+                                                { value: 3, label: 'Fast (3 Papers)' },
+                                                { value: 5, label: 'Balanced (5 Papers)' },
+                                                { value: 10, label: 'Deep (10 Papers)' }
+                                            ]}
+                                        />
+                                    </div>
 
-                                    <CustomDropdown 
-                                        label="RESEARCH DOMAIN"
-                                        value={category}
-                                        onChange={setCategory}
-                                        options={[
-                                            { value: 'All', label: 'Global Search' },
-                                            { value: 'cs.LG', label: 'cs.LG (Machine Learning)' },
-                                            { value: 'cs.AI', label: 'cs.AI (Artificial Intelligence)' },
-                                            { value: 'stat.ML', label: 'stat.ML (ML Stats)' },
-                                            { value: 'cs.CL', label: 'cs.CL (NLP/Language)' },
-                                            { value: 'cs.CV', label: 'cs.CV (Vision)' },
-                                            { value: 'cs.RO', label: 'cs.RO (Robotics)' }
-                                        ]}
-                                    />
+                                    <div style={{ flex: 1, minWidth: '160px' }}>
+                                        <CustomDropdown 
+                                            label="RESEARCH DOMAIN"
+                                            value={category}
+                                            onChange={setCategory}
+                                            options={[
+                                                { value: 'All', label: 'Global Search' },
+                                                { value: 'cs.LG', label: 'cs.LG (Machine Learning)' },
+                                                { value: 'cs.AI', label: 'cs.AI (Artificial Intelligence)' },
+                                                { value: 'stat.ML', label: 'stat.ML (ML Stats)' },
+                                                { value: 'cs.CL', label: 'cs.CL (NLP/Language)' },
+                                                { value: 'cs.CV', label: 'cs.CV (Vision)' },
+                                                { value: 'cs.RO', label: 'cs.RO (Robotics)' }
+                                            ]}
+                                        />
+                                    </div>
 
-                                    <CustomDropdown 
-                                        label="RECENCY FILTER"
-                                        value={filterYear}
-                                        onChange={setFilterYear}
-                                        options={[
-                                            { value: 'All', label: 'Legacy & Modern' },
-                                            { value: '2024', label: '2024 (Latest)' },
-                                            { value: '2023', label: '2023+' },
-                                            { value: '2022', label: '2022+' },
-                                            { value: '2021', label: '2021+' },
-                                            { value: '2020', label: '2020+' }
-                                        ]}
-                                    />
+                                    <div style={{ flex: 1, minWidth: '160px' }}>
+                                        <CustomDropdown 
+                                            label="RECENCY FILTER"
+                                            value={filterYear}
+                                            onChange={setFilterYear}
+                                            options={[
+                                                { value: 'All', label: 'Legacy & Modern' },
+                                                { value: '2024', label: '2024 (Latest)' },
+                                                { value: '2023', label: '2023+' },
+                                                { value: '2022', label: '2022+' },
+                                                { value: '2021', label: '2021+' },
+                                                { value: '2020', label: '2020+' }
+                                            ]}
+                                        />
+                                    </div>
                                 </motion.div>
                             )}
                         </AnimatePresence>
