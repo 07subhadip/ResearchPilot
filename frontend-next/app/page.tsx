@@ -628,8 +628,8 @@ export default function App() {
                                 <p style={{ fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "16px", color: 'var(--text-muted)' }}>ResearchPilot is a high-performance RAG engine tailored for Machine Learning literature. It features hybrid sparse-dense searching, advanced cross-encoder reranking, and GPU-driven vector indexing via Qdrant.</p>
                                 <h3><Activity size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Current Operational Capacity</h3>
                                 <ul style={{ fontSize: "0.95rem", lineHeight: 1.7, color: 'var(--text-muted)', paddingLeft: '20px' }}>
-                                    <li style={{ marginBottom: '8px' }}><strong>Current Index</strong> Synthesizing 51,019 dense embeddings isolated from ~700 major AI & ML papers.</li>
-                                    <li><strong>Data Categories</strong> Fully indexed on core Machine Learning (cs.LG) and AI (cs.AI).</li>
+                                    <li style={{ marginBottom: '8px' }}><strong>Current Index</strong> Synthesizing 358,563 semantic chunks isolated from 3,500+ premium AI & ML research papers.</li>
+                                    <li><strong>Data Categories</strong> Comprehensive coverage across cs.LG, cs.AI, stat.ML, cs.CL, cs.CV, and cs.RO.</li>
                                 </ul>
                                 <h3><Layers size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Core Technology Stack</h3>
                                 <ul style={{ fontSize: "0.95rem", lineHeight: 1.7, color: 'var(--text-muted)', paddingLeft: '20px' }}>
