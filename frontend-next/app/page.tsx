@@ -227,6 +227,100 @@ const FeedbackRow = ({ query, time, citationsCount, model }: { query: string, ti
     );
 };
 
+// --- Custom Dropdown Component ---
+const CustomDropdown = ({ label, options, value, onChange }: { label: string, options: {value: any, label: string}[], value: any, onChange: (val: any) => void }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const selectedOption = options.find(opt => opt.value === value) || options[0];
+
+    return (
+        <div ref={containerRef} style={{ display: 'flex', flexDirection: 'column', gap: '4px', position: 'relative', minWidth: '160px' }}>
+            <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, marginLeft: '4px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{label}</label>
+            <div 
+                onClick={() => setIsOpen(!isOpen)}
+                style={{ 
+                    background: 'rgba(255, 255, 255, 0.03)', 
+                    border: '1px solid rgba(255, 255, 255, 0.1)', 
+                    color: '#fff', 
+                    padding: '10px 14px', 
+                    borderRadius: '10px', 
+                    cursor: 'pointer', 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                    fontSize: '0.9rem',
+                    fontWeight: 500,
+                    transition: '0.2s',
+                    userSelect: 'none'
+                }}
+                onMouseOver={e => e.currentTarget.style.borderColor = 'rgba(0, 240, 255, 0.4)'}
+                onMouseOut={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
+            >
+                {selectedOption.label}
+                <motion.div animate={{ rotate: isOpen ? 180 : 0 }} style={{ display: 'flex' }}>
+                    <ArrowDown size={14} opacity={0.5} />
+                </motion.div>
+            </div>
+
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div 
+                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 5, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                        style={{ 
+                            position: 'absolute', 
+                            bottom: '100%', 
+                            left: 0, 
+                            right: 0, 
+                            background: 'rgba(15, 20, 30, 0.98)', 
+                            backdropFilter: 'blur(20px)',
+                            border: '1px solid rgba(255, 255, 255, 0.15)', 
+                            borderRadius: '12px', 
+                            zIndex: 1000, 
+                            padding: '6px',
+                            boxShadow: '0 15px 40px rgba(0,0,0,0.6)',
+                            marginBottom: '8px'
+                        }}
+                    >
+                        {options.map((opt) => (
+                            <div 
+                                key={opt.value}
+                                onClick={() => { onChange(opt.value); setIsOpen(false); }}
+                                style={{ 
+                                    padding: '10px 12px', 
+                                    borderRadius: '8px', 
+                                    cursor: 'pointer', 
+                                    fontSize: '0.85rem',
+                                    fontWeight: opt.value === value ? 600 : 400,
+                                    color: opt.value === value ? 'var(--accent)' : '#fff',
+                                    background: opt.value === value ? 'rgba(0, 240, 255, 0.05)' : 'transparent',
+                                    transition: '0.2s'
+                                }}
+                                onMouseOver={e => { if(opt.value !== value) e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; }}
+                                onMouseOut={e => { if(opt.value !== value) e.currentTarget.style.background = 'transparent'; }}
+                            >
+                                {opt.label}
+                            </div>
+                        ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+};
+
 export default function App() {
     const [sessions, setSessions] = useState<ChatSession[]>([]);
     const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
@@ -756,39 +850,45 @@ export default function App() {
                                         boxShadow: '0 10px 40px rgba(0,0,0,0.5)'
                                     }}
                                 >
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                        <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, marginLeft: '4px' }}>RETRIEVAL DEPTH</label>
-                                        <select style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', outline: 'none', minWidth: '100px' }} value={topK} onChange={(e) => setTopK(Number(e.target.value))}>
-                                            <option value={3}>Fast (3 Papers)</option>
-                                            <option value={5}>Balanced (5 Papers)</option>
-                                            <option value={10}>Deep (10 Papers)</option>
-                                        </select>
-                                    </div>
+                                    <CustomDropdown 
+                                        label="RETRIEVAL DEPTH"
+                                        value={topK}
+                                        onChange={setTopK}
+                                        options={[
+                                            { value: 3, label: 'Fast (3 Papers)' },
+                                            { value: 5, label: 'Balanced (5 Papers)' },
+                                            { value: 10, label: 'Deep (10 Papers)' }
+                                        ]}
+                                    />
 
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                        <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, marginLeft: '4px' }}>RESEARCH DOMAIN</label>
-                                        <select style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', outline: 'none' }} value={category} onChange={(e) => setCategory(e.target.value)}>
-                                            <option value="All">Global Search</option>
-                                            <option value="cs.LG">cs.LG (Machine Learning)</option>
-                                            <option value="cs.AI">cs.AI (Artificial Intelligence)</option>
-                                            <option value="stat.ML">stat.ML (ML Stats)</option>
-                                            <option value="cs.CL">cs.CL (NLP/Language)</option>
-                                            <option value="cs.CV">cs.CV (Vision)</option>
-                                            <option value="cs.RO">cs.RO (Robotics)</option>
-                                        </select>
-                                    </div>
+                                    <CustomDropdown 
+                                        label="RESEARCH DOMAIN"
+                                        value={category}
+                                        onChange={setCategory}
+                                        options={[
+                                            { value: 'All', label: 'Global Search' },
+                                            { value: 'cs.LG', label: 'cs.LG (Machine Learning)' },
+                                            { value: 'cs.AI', label: 'cs.AI (Artificial Intelligence)' },
+                                            { value: 'stat.ML', label: 'stat.ML (ML Stats)' },
+                                            { value: 'cs.CL', label: 'cs.CL (NLP/Language)' },
+                                            { value: 'cs.CV', label: 'cs.CV (Vision)' },
+                                            { value: 'cs.RO', label: 'cs.RO (Robotics)' }
+                                        ]}
+                                    />
 
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                        <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, marginLeft: '4px' }}>RECENCY FILTER</label>
-                                        <select style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', outline: 'none' }} value={filterYear} onChange={(e) => setFilterYear(e.target.value)}>
-                                            <option value="All">Legacy & Modern</option>
-                                            <option value="2024">2024 (Latest)</option>
-                                            <option value="2023">2023+</option>
-                                            <option value="2022">2022+</option>
-                                            <option value="2021">2021+</option>
-                                            <option value="2020">2020+</option>
-                                        </select>
-                                    </div>
+                                    <CustomDropdown 
+                                        label="RECENCY FILTER"
+                                        value={filterYear}
+                                        onChange={setFilterYear}
+                                        options={[
+                                            { value: 'All', label: 'Legacy & Modern' },
+                                            { value: '2024', label: '2024 (Latest)' },
+                                            { value: '2023', label: '2023+' },
+                                            { value: '2022', label: '2022+' },
+                                            { value: '2021', label: '2021+' },
+                                            { value: '2020', label: '2020+' }
+                                        ]}
+                                    />
                                 </motion.div>
                             )}
                         </AnimatePresence>
