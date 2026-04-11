@@ -12,7 +12,8 @@ import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {
     Brain, Search, PanelLeftClose, PanelLeft, PanelLeftOpen, Plus,
     Send, Settings2, Trash2, Copy, Check, Star, ThumbsUp, ThumbsDown,
-    Pin, Edit2, Check as CheckIcon, ArrowDown
+    Pin, Edit2, Check as CheckIcon, ArrowDown,
+    Info, X, Server, Activity, Layers, Rocket
 } from "lucide-react";
 
 // Config
@@ -241,6 +242,7 @@ export default function App() {
     // UI Enhancements
     const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(false);
     const [showScrollDown, setShowScrollDown] = useState(false);
+    const [showInfo, setShowInfo] = useState(false);
     const mainChatRef = useRef<HTMLDivElement>(null);
 
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -579,12 +581,63 @@ export default function App() {
                     )}
                 </AnimatePresence>
                 {/* Header API Status */}
-                <div className="top-api-status">
+                <div className="top-api-status" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <button onClick={() => setShowInfo(true)} className="nav-icon-btn" aria-label="Project Info" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '6px', borderRadius: '50%', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Info size={16} />
+                    </button>
                     <div className="nav-status">
                         <div className={`status-dot ${apiStatus === 'online' ? 'status-online' : 'status-offline'}`} />
                         {apiStatus === 'online' ? 'API Online' : apiStatus === 'connecting' ? 'Connecting...' : 'API Offline'}
                     </div>
                 </div>
+
+                <AnimatePresence>
+                    {showInfo && (
+                        <div className="info-modal-backdrop" onClick={() => setShowInfo(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="cyber-panel info-modal"
+                                style={{ background: 'var(--bg-panel)', border: '1px solid var(--border)', padding: '32px', borderRadius: '16px', maxWidth: '600px', width: '90%', position: 'relative', maxHeight: '80vh', overflowY: 'auto' }}
+                            >
+                                <button className="modal-close" onClick={() => setShowInfo(false)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
+                                    <X size={18} />
+                                </button>
+                                <h2 style={{ margin: '0 0 16px 0' }}>ResearchPilot Console</h2>
+                                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "16px" }}>
+                                    <div style={{ background: "rgba(138, 43, 226, 0.15)", border: "1px solid rgba(138, 43, 226, 0.4)", padding: "6px 14px", borderRadius: "99px", fontSize: "0.75rem", color: "var(--accent-2)", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>
+                                        Lead Architect
+                                    </div>
+                                    <span style={{ fontFamily: "'Dancing Script', cursive", fontSize: "1.8rem", fontWeight: 700, background: "linear-gradient(135deg, #fff 20%, var(--accent-2) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", letterSpacing: "0.05em", transform: "translateY(-2px)" }}>Subhadip Hensh</span>
+                                </div>
+                                <hr style={{ border: 'none', borderTop: '1px solid var(--border)', margin: '24px 0' }} />
+                                <h3><Server size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> System Overview</h3>
+                                <p style={{ fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "16px", color: 'var(--text-muted)' }}>ResearchPilot is a high-performance RAG engine tailored for Machine Learning literature. It features hybrid sparse-dense searching, advanced cross-encoder reranking, and GPU-driven vector indexing via Qdrant.</p>
+                                <h3><Activity size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Current Operational Capacity</h3>
+                                <ul style={{ fontSize: "0.95rem", lineHeight: 1.7, color: 'var(--text-muted)', paddingLeft: '20px' }}>
+                                    <li style={{ marginBottom: '8px' }}><strong>Current Index</strong> Synthesizing 51,019 dense embeddings isolated from ~700 major AI & ML papers.</li>
+                                    <li><strong>Data Categories</strong> Fully indexed on core Machine Learning (cs.LG) and AI (cs.AI).</li>
+                                </ul>
+                                <h3><Layers size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Core Technology Stack</h3>
+                                <ul style={{ fontSize: "0.95rem", lineHeight: 1.7, color: 'var(--text-muted)', paddingLeft: '20px' }}>
+                                    <li style={{ marginBottom: '8px' }}><strong>Frontend Application</strong> Next.js 16 (App Router), React, Framer Motion, Vanilla CSS.</li>
+                                    <li style={{ marginBottom: '8px' }}><strong>Backend Environment</strong> Python, FastAPI, Uvicorn, Pydantic.</li>
+                                    <li style={{ marginBottom: '8px' }}><strong>Vector Database Engine</strong> Qdrant (GPU Accelerated Dense Vectors).</li>
+                                    <li style={{ marginBottom: '8px' }}><strong>RAG Processing Pipeline</strong> SentenceTransformers (BGE-base), BM25 Sparse Search, Cross-Encoder Reranking, Groq LLM (LLaMA 3.3).</li>
+                                    <li><strong>Mathematics Engine</strong> KaTeX & React-Markdown for fully dynamic native LaTeX equations.</li>
+                                </ul>
+                                <h3><Rocket size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Phase 2: In-Progress Architecture</h3>
+                                <ul style={{ fontSize: "0.95rem", lineHeight: 1.7, color: 'var(--text-muted)', paddingLeft: '20px' }}>
+                                    <li style={{ marginBottom: '8px' }}><strong>Massive Data Expansion</strong> Scaling dataset soon to 10,000+ — 20,000+ ML papers spanning NLP, Computer Vision, and Robotics.</li>
+                                    <li style={{ marginBottom: '8px' }}><strong>Distributed Hardware Execution</strong> Scaling ingestion logic to cloud-based GPU clusters for extreme speed.</li>
+                                    <li><strong>Multi-modal Analysis</strong> Soon integrating visual graph and chart processing abilities into the synthesis engine.</li>
+                                </ul>
+                            </motion.div>
+                        </div>
+                    )}
+                </AnimatePresence>
 
                 <div className="chat-container">
                     {currentMessages.length === 0 ? (
@@ -672,11 +725,10 @@ export default function App() {
                                         <option value="All">All Topics</option>
                                         <option value="cs.LG">cs.LG (Machine Learning)</option>
                                         <option value="cs.AI">cs.AI (Artificial Intelligence)</option>
-                                        <option value="cs.CV">cs.CV (Computer Vision)</option>
+                                        <option value="stat.ML">stat.ML (Machine Learning Stats)</option>
                                         <option value="cs.CL">cs.CL (Computation & Language)</option>
-                                        <option value="cs.NE">cs.NE (Neural & Evoly Computing)</option>
+                                        <option value="cs.CV">cs.CV (Computer Vision)</option>
                                         <option value="cs.RO">cs.RO (Robotics)</option>
-                                        <option value="cs.CR">cs.CR (Cryptography & Security)</option>
                                     </select>
                                     <select style={{ background: '#000', border: '1px solid #333', color: '#fff', padding: '6px 12px', borderRadius: '6px' }} value={filterYear} onChange={(e) => setFilterYear(e.target.value)}>
                                         <option value="All">All Years</option>
