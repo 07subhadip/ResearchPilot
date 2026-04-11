@@ -72,7 +72,10 @@ class MultiModelClient:
                                 break
                             try:
                                 data = json.loads(data_str)
-                                token = data["choices"][0]["delta"].get("content", "")
+                                choices = data.get("choices", [])
+                                if not choices:
+                                    continue
+                                token = choices[0].get("delta", {}).get("content", "")
                                 if token:
                                     yield token
                             except:
@@ -95,7 +98,10 @@ class MultiModelClient:
         if stream:
             def generator():
                 for chunk in response:
-                    token = chunk.choices[0].delta.content
+                    choices = chunk.choices
+                    if not choices:
+                        continue
+                    token = choices[0].delta.content
                     if token:
                         yield token
             return generator()

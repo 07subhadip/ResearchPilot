@@ -296,11 +296,15 @@ export default function App() {
                 body: JSON.stringify({ 
                     question: originalQuery, 
                     top_k: topK, 
-                    filter_category: category === "All" ? undefined : category 
+                    filter_category: category === "All" ? undefined : category,
+                    filter_year_gte: yearFilter ? yearFrom : undefined
                 })
             });
 
-            if (!res.ok || !res.body) throw new Error("Stream failed");
+            if (!res.ok || !res.body) {
+                const errText = await res.text();
+                throw new Error(`API error: ${res.status} ${errText}`);
+            }
 
             const reader = res.body.getReader();
             const decoder = new TextDecoder();
