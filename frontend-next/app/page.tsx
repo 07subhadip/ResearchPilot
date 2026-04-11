@@ -628,8 +628,17 @@ export default function App() {
                                 <p style={{ fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "16px", color: 'var(--text-muted)' }}>ResearchPilot is a high-performance RAG engine tailored for Machine Learning literature. It features hybrid sparse-dense searching, advanced cross-encoder reranking, and GPU-driven vector indexing via Qdrant.</p>
                                 <h3><Activity size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Current Operational Capacity</h3>
                                 <ul style={{ fontSize: "0.95rem", lineHeight: 1.7, color: 'var(--text-muted)', paddingLeft: '20px' }}>
-                                    <li style={{ marginBottom: '8px' }}><strong>Current Index</strong> Synthesizing 358,563 semantic chunks isolated from 3,500+ premium AI & ML research papers.</li>
-                                    <li><strong>Data Categories</strong> Comprehensive coverage across cs.LG, cs.AI, stat.ML, cs.CL, cs.CV, and cs.RO.</li>
+                                    <li style={{ marginBottom: '12px' }}><strong>Current Index</strong> Synthesizing 300k+ semantic chunks isolated from 3,500+ premium AI & ML research papers.</li>
+                                    <li><strong>Data Categories</strong> Comprehensive coverage across specialized domains:
+                                        <ul style={{ paddingLeft: '20px', marginTop: '8px', fontSize: '0.9rem' }}>
+                                            <li><strong>cs.LG</strong>: Machine Learning</li>
+                                            <li><strong>cs.AI</strong>: Artificial Intelligence</li>
+                                            <li><strong>stat.ML</strong>: Machine Learning (Statistics)</li>
+                                            <li><strong>cs.CL</strong>: Computation and Language (NLP)</li>
+                                            <li><strong>cs.CV</strong>: Computer Vision & Pattern Recognition</li>
+                                            <li><strong>cs.RO</strong>: Robotics</li>
+                                        </ul>
+                                    </li>
                                 </ul>
                                 <h3><Layers size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Core Technology Stack</h3>
                                 <ul style={{ fontSize: "0.95rem", lineHeight: 1.7, color: 'var(--text-muted)', paddingLeft: '20px' }}>
