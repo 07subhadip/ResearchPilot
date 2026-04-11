@@ -134,8 +134,8 @@ const MessageRenderer = ({ content, isStreaming }: { content: string, isStreamin
         );
     }
 
-    // Match any Arxiv format number (YYYY.NNNNN) regardless of brackets or commas, and convert to Markdown link
-    let processedContent = displayed.replace(/\b(\d{4}\.\d{4,5})\b/g, '[$1](CITATION:$1)');
+    // Match any Arxiv format number (YYYY.NNNNN) regardless of brackets or commas, and convert to Markdown link. We eat the surrounding brackets to preserve design.
+    let processedContent = displayed.replace(/\[?\s*\b(\d{4}\.\d{4,5})\b\s*\]?/g, '[$1](CITATION:$1)');
     
     // Force $$ block math onto separate lines so remarkMath parses it tightly as centered block math
     processedContent = processedContent.replace(/\$\$([\s\S]*?)\$\$/g, '\n\n$$\n$1\n$$\n\n');
@@ -238,8 +238,6 @@ export default function App() {
     const [category, setCategory] = useState("All");
     const [filterYear, setFilterYear] = useState("All");
     const [apiStatus, setApiStatus] = useState<"connecting" | "online" | "offline">("connecting");
-
-    // UI Enhancements
     const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(false);
     const [showScrollDown, setShowScrollDown] = useState(false);
     const [showInfo, setShowInfo] = useState(false);
@@ -366,7 +364,8 @@ export default function App() {
             id: aiMessageId,
             role: "assistant",
             content: "",
-            timestamp: Date.now() + 1
+            timestamp: Date.now() + 1,
+            model_used: "Auto-Detecting..."
         };
 
         setSessions(prev => prev.map(s => {
@@ -542,8 +541,9 @@ export default function App() {
                 </div>
 
                 <div className="sidebar-footer">
-                    <a href="https://github.com/07subhadip" target="_blank" rel="noopener noreferrer" className="github-link">
-                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> @07subhadip
+                    <a href="https://github.com/07subhadip" target="_blank" rel="noopener noreferrer" className="github-link" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--accent)', textDecoration: 'none', fontSize: '0.9rem', padding: '12px', borderRadius: '8px', transition: '0.3s', background: 'rgba(0, 240, 255, 0.1)', border: '1px solid rgba(0, 240, 255, 0.3)', boxShadow: '0 0 15px rgba(0, 240, 255, 0.2)' }} onMouseOver={e => e.currentTarget.style.boxShadow = '0 0 25px rgba(0, 240, 255, 0.6)'} onMouseOut={e => e.currentTarget.style.boxShadow = '0 0 15px rgba(0, 240, 255, 0.2)'}>
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> 
+                        <span style={{ fontWeight: 600, letterSpacing: '0.05em' }}>@07subhadip</span>
                     </a>
                 </div>
             </div>
@@ -593,14 +593,25 @@ export default function App() {
 
                 <AnimatePresence>
                     {showInfo && (
-                        <div className="info-modal-backdrop" onClick={() => setShowInfo(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div className="info-modal-backdrop" onClick={() => setShowInfo(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                                initial={{ opacity: 0, scale: 0.95, y: 30 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                                exit={{ opacity: 0, scale: 0.95, y: 30 }}
                                 onClick={(e) => e.stopPropagation()}
                                 className="cyber-panel info-modal"
-                                style={{ background: 'var(--bg-panel)', border: '1px solid var(--border)', padding: '32px', borderRadius: '16px', maxWidth: '600px', width: '90%', position: 'relative', maxHeight: '80vh', overflowY: 'auto' }}
+                                style={{ 
+                                    background: 'linear-gradient(135deg, rgba(20, 25, 40, 0.95), rgba(10, 15, 25, 0.98))', 
+                                    border: '1px solid rgba(0, 240, 255, 0.3)', 
+                                    padding: '40px', 
+                                    borderRadius: '24px', 
+                                    maxWidth: '650px', 
+                                    width: '90%', 
+                                    position: 'relative', 
+                                    maxHeight: '85vh', 
+                                    overflowY: 'auto', 
+                                    boxShadow: '0 20px 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 240, 255, 0.1)' 
+                                }}
                             >
                                 <button className="modal-close" onClick={() => setShowInfo(false)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
                                     <X size={18} />
@@ -625,7 +636,8 @@ export default function App() {
                                     <li style={{ marginBottom: '8px' }}><strong>Frontend Application</strong> Next.js 16 (App Router), React, Framer Motion, Vanilla CSS.</li>
                                     <li style={{ marginBottom: '8px' }}><strong>Backend Environment</strong> Python, FastAPI, Uvicorn, Pydantic.</li>
                                     <li style={{ marginBottom: '8px' }}><strong>Vector Database Engine</strong> Qdrant (GPU Accelerated Dense Vectors).</li>
-                                    <li style={{ marginBottom: '8px' }}><strong>RAG Processing Pipeline</strong> SentenceTransformers (BGE-base), BM25 Sparse Search, Cross-Encoder Reranking, Groq LLM (LLaMA 3.3).</li>
+                                    <li style={{ marginBottom: '8px' }}><strong>RAG Processing Pipeline</strong> SentenceTransformers (BGE-base-en-v1.5), BM25 Sparse Search, Cross-Encoder Reranking.</li>
+                                    <li style={{ marginBottom: '8px' }}><strong>Multi-Modal LLM Fabric</strong> Dynamic routing between Qwen 2.5 72B (Primary), LLaMA 3.3 70B (Fallback), and Qwen 2.5 Coder 7B (Code).</li>
                                     <li><strong>Mathematics Engine</strong> KaTeX & React-Markdown for fully dynamic native LaTeX equations.</li>
                                 </ul>
                                 <h3><Rocket size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Phase 2: In-Progress Architecture</h3>
@@ -661,8 +673,12 @@ export default function App() {
                                 ) : (
                                     <div style={{ width: '100%' }}>
                                         {/* Name header for AI */}
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', fontSize: '0.9rem', color: 'var(--accent)', fontWeight: 600 }}>
-                                            <div className="ai-avatar"><Brain size={16} /></div> ResearchPilot {msg.model_used && <span className="model-badge">{msg.model_used}</span>}
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', fontSize: '0.85rem', color: 'var(--accent)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                            <div className="ai-avatar" style={{ background: 'rgba(0, 240, 255, 0.1)', border: '1px solid rgba(0, 240, 255, 0.3)', padding: '6px', borderRadius: '8px' }}><Brain size={14} /></div> 
+                                            ResearchPilot 
+                                            <span className="model-badge" style={{ background: 'rgba(255,255,255,0.05)', padding: '2px 8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--text-muted)', fontSize: '0.75rem' }}>
+                                                {msg.model_used || "Auto-Detecting..."}
+                                            </span>
                                         </div>
 
                                         <>
@@ -705,39 +721,65 @@ export default function App() {
                 </div>
 
                 {/* Bottom Input Area */}
-                <div className="bottom-input-bar">
+                <div className="bottom-input-bar" style={{ 
+                    left: desktopSidebarCollapsed ? '0' : '260px', 
+                    transition: 'left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    width: 'auto'
+                }}>
                     <div className="bottom-input-bar-inner">
                         {/* Settings Popup inline */}
                         <AnimatePresence>
                             {settingsOpen && (
                                 <motion.div 
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 10 }}
-                                    style={{ background: 'rgba(20,25,35,0.95)', border: '1px solid rgba(255,255,255,0.1)', padding: '12px', borderRadius: '12px', display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '8px' }}
+                                    initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    exit={{ opacity: 0, y: 15, scale: 0.95 }}
+                                    style={{ 
+                                        background: 'rgba(15, 20, 30, 0.95)', 
+                                        backdropFilter: 'blur(20px)',
+                                        border: '1px solid rgba(0, 240, 255, 0.2)', 
+                                        padding: '16px', 
+                                        borderRadius: '16px', 
+                                        display: 'flex', 
+                                        gap: '16px', 
+                                        flexWrap: 'wrap', 
+                                        marginBottom: '12px',
+                                        boxShadow: '0 10px 40px rgba(0,0,0,0.5)'
+                                    }}
                                 >
-                                    <select style={{ background: '#000', border: '1px solid #333', color: '#fff', padding: '6px 12px', borderRadius: '6px' }} value={topK} onChange={(e) => setTopK(Number(e.target.value))}>
-                                        <option value={3}>Top 3</option>
-                                        <option value={5}>Top 5</option>
-                                        <option value={10}>Top 10</option>
-                                    </select>
-                                    <select style={{ background: '#000', border: '1px solid #333', color: '#fff', padding: '6px 12px', borderRadius: '6px' }} value={category} onChange={(e) => setCategory(e.target.value)}>
-                                        <option value="All">All Topics</option>
-                                        <option value="cs.LG">cs.LG (Machine Learning)</option>
-                                        <option value="cs.AI">cs.AI (Artificial Intelligence)</option>
-                                        <option value="stat.ML">stat.ML (Machine Learning Stats)</option>
-                                        <option value="cs.CL">cs.CL (Computation & Language)</option>
-                                        <option value="cs.CV">cs.CV (Computer Vision)</option>
-                                        <option value="cs.RO">cs.RO (Robotics)</option>
-                                    </select>
-                                    <select style={{ background: '#000', border: '1px solid #333', color: '#fff', padding: '6px 12px', borderRadius: '6px' }} value={filterYear} onChange={(e) => setFilterYear(e.target.value)}>
-                                        <option value="All">All Years</option>
-                                        <option value="2024">2024 & Newer</option>
-                                        <option value="2023">2023 & Newer</option>
-                                        <option value="2022">2022 & Newer</option>
-                                        <option value="2021">2021 & Newer</option>
-                                        <option value="2020">2020 & Newer</option>
-                                    </select>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                        <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, marginLeft: '4px' }}>RETRIEVAL DEPTH</label>
+                                        <select style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', outline: 'none', minWidth: '100px' }} value={topK} onChange={(e) => setTopK(Number(e.target.value))}>
+                                            <option value={3}>Fast (3 Papers)</option>
+                                            <option value={5}>Balanced (5 Papers)</option>
+                                            <option value={10}>Deep (10 Papers)</option>
+                                        </select>
+                                    </div>
+
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                        <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, marginLeft: '4px' }}>RESEARCH DOMAIN</label>
+                                        <select style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', outline: 'none' }} value={category} onChange={(e) => setCategory(e.target.value)}>
+                                            <option value="All">Global Search</option>
+                                            <option value="cs.LG">cs.LG (Machine Learning)</option>
+                                            <option value="cs.AI">cs.AI (Artificial Intelligence)</option>
+                                            <option value="stat.ML">stat.ML (ML Stats)</option>
+                                            <option value="cs.CL">cs.CL (NLP/Language)</option>
+                                            <option value="cs.CV">cs.CV (Vision)</option>
+                                            <option value="cs.RO">cs.RO (Robotics)</option>
+                                        </select>
+                                    </div>
+
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                        <label style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700, marginLeft: '4px' }}>RECENCY FILTER</label>
+                                        <select style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', outline: 'none' }} value={filterYear} onChange={(e) => setFilterYear(e.target.value)}>
+                                            <option value="All">Legacy & Modern</option>
+                                            <option value="2024">2024 (Latest)</option>
+                                            <option value="2023">2023+</option>
+                                            <option value="2022">2022+</option>
+                                            <option value="2021">2021+</option>
+                                            <option value="2020">2020+</option>
+                                        </select>
+                                    </div>
                                 </motion.div>
                             )}
                         </AnimatePresence>
