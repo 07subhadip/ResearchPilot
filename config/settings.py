@@ -78,9 +78,10 @@ TOP_K_RERANK = 5                                    # Keep top 5 after reranking
 
 # ------------------------------------------
 # LLM SETTINGS
-# ------------------------------------------
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')            # Loaded from .env
 HF_API_KEY = os.getenv('HF_API_KEY')
+if HF_API_KEY:
+    os.environ["HF_TOKEN"] = HF_API_KEY
 LLM_MODEL_NAME = 'llama-3.3-70b-versatile'          # Groq model ID
 LLM_TEMPERATURE = 0.1                               # Low = More factual/consistent 
 LLM_MAX_TOKENS = 2048                               # Max response tokens
