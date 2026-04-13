@@ -26,7 +26,7 @@ class MultiModelClient:
 
         self.hf_api_key = HF_API_KEY
 
-        self.primary_model = "Qwen/Qwen2.5-72B-Instruct"
+        self.primary_model = "Qwen/Qwen3.5-9B"
         self.secondary_model = "llama-3.3-70b-versatile"
         self.code_model = "Qwen/Qwen2.5-Coder-7B-Instruct"
 
