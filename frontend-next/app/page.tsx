@@ -430,6 +430,11 @@ export default function App() {
         setSidebarOpen(false);
     };
 
+    const handleClearConversation = () => {
+        if (!activeSessionId) return;
+        setSessions(prev => prev.map(s => s.id === activeSessionId ? { ...s, messages: [] } : s));
+    };
+
     const handleSend = async () => {
         if (!query.trim() || isStreaming) return;
         
@@ -473,12 +478,22 @@ export default function App() {
         setQuery("");
         setIsStreaming(true);
 
+        const history = currentMessages
+            .filter(m => m.role === "user" || m.role === "assistant")
+            .map(m => ({
+                role: m.role,
+                content: m.content,
+                citations: m.citations || []
+            }))
+            .slice(-20);
+
         try {
             const res = await fetch(`${API_URL}/query/stream`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 
                     question: originalQuery, 
+                    history: history,
                     top_k: topK, 
                     filter_category: category === "All" ? undefined : category,
                     filter_year_gte: filterYear === "All" ? undefined : parseInt(filterYear, 10)
@@ -674,11 +689,15 @@ export default function App() {
                         </motion.button>
                     )}
                 </AnimatePresence>
-                {/* Header API Status */}
                 <div className="top-api-status" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <button onClick={() => setShowInfo(true)} className="nav-icon-btn" aria-label="Project Info" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '6px', borderRadius: '50%', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <Info size={16} />
                     </button>
+                    {activeSessionId && currentMessages.length > 0 && (
+                        <button onClick={handleClearConversation} className="nav-icon-btn" aria-label="Clear Conversation" title="Clear current conversation context" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '6px 12px', borderRadius: '16px', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.8rem' }}>
+                            <Trash2 size={14} /> Clear context
+                        </button>
+                    )}
                     <div className="nav-status">
                         <div className={`status-dot ${apiStatus === 'online' ? 'status-online' : 'status-offline'}`} />
                         {apiStatus === 'online' ? 'API Online' : apiStatus === 'connecting' ? 'Connecting...' : 'API Offline'}
@@ -782,6 +801,11 @@ export default function App() {
                                             <span className="model-badge" style={{ background: 'rgba(255,255,255,0.05)', padding: '2px 8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--text-muted)', fontSize: '0.75rem' }}>
                                                 {msg.model_used || "Auto-Detecting..."}
                                             </span>
+                                            {i >= 2 && (
+                                                <span style={{ fontSize: '0.7rem', background: 'rgba(138, 43, 226, 0.15)', border: '1px solid rgba(138, 43, 226, 0.3)', padding: '2px 8px', borderRadius: '4px', color: 'var(--accent-2)', marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                                    <Layers size={10} /> Using conversation context
+                                                </span>
+                                            )}
                                         </div>
 
                                         <>

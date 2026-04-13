@@ -15,7 +15,13 @@ PIPELINE FLOW:
 import time
 import json
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Optional, List
+
+@dataclass
+class ConversationTurn:
+    role: str
+    content: str
+    citations: list = field(default_factory=list)
 
 from src.retrieval.retrieval_pipeline import RetrievalPipeline
 from src.rag.llm_client import MultiModelClient
@@ -63,22 +69,53 @@ class RAGPipeline:
         self.llm        = MultiModelClient()
         logger.info("RAGPipeline ready")
 
+    def _build_retrieval_query(
+        self,
+        question: str,
+        history: list[ConversationTurn]
+    ) -> str:
+        followup_signals = [
+            "it", "that", "this", "they", "them",
+            "more", "example", "explain", "clarify",
+            "simpler", "detail", "elaborate", "again"
+        ]
+        question_lower = question.lower()
+        is_followup = (
+            len(question.split()) < 12 and
+            any(word in question_lower for word in followup_signals)
+        )
+
+        if is_followup and history:
+            last_substantial = ""
+            for turn in reversed(history):
+                if turn.role == "user" and len(turn.content.split()) > 5:
+                    last_substantial = turn.content
+                    break
+            if last_substantial:
+                return f"{last_substantial} {question}"
+
+        return question
+
     def query(
         self,
         question:        str,
+        history:         list[ConversationTurn] = None,
         top_k:           int = TOP_K_RERANK,
         filter_category: Optional[str] = None,
         filter_year_gte: Optional[int] = None,
     ) -> RAGResponse:
         question = question.strip()
+        history = history or []
         if not question:
             raise ValueError("Question cannot be empty")
 
         total_start = time.time()
         retrieval_start = time.time()
 
+        retrieval_query = self._build_retrieval_query(question, history)
+
         chunks = self.retriever.retrieve(
-            query           =  question,
+            query           = retrieval_query,
             top_k_final     = top_k,
             filter_category = filter_category,
             filter_year_gte = filter_year_gte,
@@ -96,11 +133,20 @@ class RAGPipeline:
                 f"or broadening their query."
             )
 
+        history_messages = []
+        if history:
+            for turn in history[-10:]:
+                history_messages.append({
+                    "role": turn.role,
+                    "content": turn.content
+                })
+
         generation_start = time.time()
         answer, model_used = self.llm.generate(
             system_prompt = SYSTEM_PROMPT,
             user_prompt   = user_prompt,
             original_query = question,
+            history = history_messages,
             stream=False
         )
 
@@ -123,18 +169,23 @@ class RAGPipeline:
     def stream_query(
         self,
         question:        str,
+        history:         list[ConversationTurn] = None,
         top_k:           int = TOP_K_RERANK,
         filter_category: Optional[str] = None,
         filter_year_gte: Optional[int] = None,
     ):
         question = question.strip()
+        history = history or []
         if not question:
             raise ValueError("Question cannot be empty")
 
         total_start = time.time()
         retrieval_start = time.time()
+
+        retrieval_query = self._build_retrieval_query(question, history)
+
         chunks = self.retriever.retrieve(
-            query           =  question,
+            query           = retrieval_query,
             top_k_final     = top_k,
             filter_category = filter_category,
             filter_year_gte = filter_year_gte,
@@ -152,11 +203,20 @@ class RAGPipeline:
                 f"or broadening their query."
             )
 
+        history_messages = []
+        if history:
+            for turn in history[-10:]:
+                history_messages.append({
+                    "role": turn.role,
+                    "content": turn.content
+                })
+
         generation_start = time.time()
         generator, model_used = self.llm.generate(
             system_prompt = SYSTEM_PROMPT,
             user_prompt   = user_prompt,
             original_query = question,
+            history = history_messages,
             stream=True
         )
 

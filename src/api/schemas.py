@@ -11,7 +11,13 @@ WHY PYDANTIC SCHEMAS IN THE API LAYER:
 """
 
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List
+
+
+class ConversationTurnSchema(BaseModel):
+    role:     str
+    content:  str
+    citations: list = []
 
 
 
@@ -27,6 +33,10 @@ class QueryRequest(BaseModel):
         max_length      = 500,
         description     = "Research question to answer",
         examples        = ["How does LoRA reduce trainable parameters?"]
+    )
+    history: List[ConversationTurnSchema] = Field(
+        default=[],
+        description="Conversation history for context"
     )
     top_k: int = Field(
         default     = 5,

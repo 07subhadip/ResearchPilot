@@ -113,6 +113,7 @@ class MultiModelClient:
         system_prompt: str,
         user_prompt: str,
         original_query: str = "",
+        history: list = None,
         temperature: float = LLM_TEMPERATURE,
         max_tokens: int = LLM_MAX_TOKENS,
         stream: bool = False
@@ -124,10 +125,10 @@ class MultiModelClient:
         Otherwise, result is a string.
         """
         models_to_try = self.get_model_for_query(original_query)
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ]
+        messages = [{"role": "system", "content": system_prompt}]
+        if history:
+            messages.extend(history)
+        messages.append({"role": "user", "content": user_prompt})
 
         for model in models_to_try:
             try:

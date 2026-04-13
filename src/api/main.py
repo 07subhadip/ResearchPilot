@@ -47,7 +47,7 @@ class FeedbackRequest(BaseModel):
     model_used: str
     citations_count: int
     total_time_ms: float
-from src.rag.pipeline import RAGPipeline
+from src.rag.pipeline import RAGPipeline, ConversationTurn
 from src.utils.logger import setup_logger, get_logger
 
 
@@ -187,6 +187,7 @@ async def stream_query_papers(
             try:
                 for chunk in pipeline.stream_query(
                     question        = query_input.question,
+                    history         = [ConversationTurn(role=t.role, content=t.content, citations=t.citations) for t in query_input.history],
                     top_k           = query_input.top_k,
                     filter_category = query_input.filter_category,
                     filter_year_gte = query_input.filter_year_gte,
@@ -265,6 +266,7 @@ async def query_papers(
         response = await asyncio.to_thread(
             pipeline.query,
             query_input.question,
+            [ConversationTurn(role=t.role, content=t.content, citations=t.citations) for t in query_input.history],
             query_input.top_k,
             query_input.filter_category,
             query_input.filter_year_gte,

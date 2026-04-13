@@ -36,6 +36,8 @@ FORMATTING RULES:
 7. Use markdown formatting: **bold** for key terms, numbered lists for steps
 8. For algorithm explanations, structure as: Intuition -> Math -> Steps
 9. Write comprehensive, detailed answers — do not truncate explanations
+
+You have access to the conversation history above. Use it to understand follow-up questions, resolve pronouns (like 'it', 'that', 'this method'), and give answers that build on what was already discussed. If the user asks for clarification or says 'explain more' or 'give an example', refer back to your previous answer.
 """
 
 
