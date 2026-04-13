@@ -42,7 +42,7 @@ class MultiModelClient:
         if not self.hf_api_key:
             raise ValueError("HF_API_KEY not configured")
 
-        url = f"https://api-inference.huggingface.co/models/{model_id}/v1/chat/completions"
+        url = f"https://router.huggingface.co/hf-inference/models/{model_id}/v1/chat/completions"
         headers = {
             "Authorization": f"Bearer {self.hf_api_key}",
             "Content-Type": "application/json"
