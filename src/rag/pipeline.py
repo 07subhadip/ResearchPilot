@@ -75,25 +75,40 @@ class RAGPipeline:
         history: list[ConversationTurn]
     ) -> str:
         followup_signals = [
-            "it", "that", "this", "they", "them",
-            "more", "example", "explain", "clarify",
-            "simpler", "detail", "elaborate", "again"
+            # pronouns referring to prior context
+            "it", "that", "this", "they", "them", "those", "these",
+            # conversational follow-ups
+            "more", "example", "explain", "clarify", "elaborate",
+            "simpler", "simple", "detail", "again", "further",
+            # comprehension requests
+            "easy", "understand", "meaning", "mean", "summarize",
+            "summary", "break down", "eli5", "what about",
         ]
         question_lower = question.lower()
+        question_words = set(question_lower.split())
+
+        # Use word-boundary matching for single words, substring for phrases
         is_followup = (
-            len(question.split()) < 12 and
-            any(word in question_lower for word in followup_signals)
+            len(question.split()) < 25 and
+            any(
+                signal in question_words if " " not in signal
+                else signal in question_lower
+                for signal in followup_signals
+            )
         )
 
         if is_followup and history:
             last_substantial = ""
             for turn in reversed(history):
-                if turn.role == "user" and len(turn.content.split()) > 5:
+                if turn.role == "user" and len(turn.content.split()) > 3:
                     last_substantial = turn.content
                     break
             if last_substantial:
-                return f"{last_substantial} {question}"
+                combined = f"{last_substantial} {question}"
+                logger.info(f"Follow-up detected. Retrieval query: '{combined[:80]}...'")
+                return combined
 
+        logger.info(f"Standalone query. Retrieval query: '{question[:80]}'")
         return question
 
     def query(
@@ -178,6 +193,8 @@ class RAGPipeline:
         history = history or []
         if not question:
             raise ValueError("Question cannot be empty")
+
+        logger.info(f"stream_query: question='{question[:60]}', history_turns={len(history)}")
 
         total_start = time.time()
         retrieval_start = time.time()
