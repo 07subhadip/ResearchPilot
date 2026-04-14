@@ -49,6 +49,7 @@ class FeedbackRequest(BaseModel):
     total_time_ms: float
 from src.rag.pipeline import RAGPipeline, ConversationTurn
 from src.utils.logger import setup_logger, get_logger
+from config.settings import HF_API_KEY
 
 
 setup_logger()
@@ -76,6 +77,11 @@ async def lifespan(app: FastAPI):
     # Initialize RAG pipeline - loads all models into memory
     # We store it on app.state so all request handlers can access it
     app.state.rag_pipeline = RAGPipeline()
+
+    # Log the active model chain for deployment verification
+    from src.rag.llm_client import MultiModelClient
+    logger.info(f"Model chain: {MultiModelClient.MODEL_CHAIN}")
+    logger.info(f"HF_API_KEY configured: {bool(HF_API_KEY)}")
 
     elapsed = time.time() - start
     logger.info(f"API ready in {elapsed:.1f}s")
@@ -193,6 +199,10 @@ async def stream_query_papers(
                     filter_year_gte = query_input.filter_year_gte,
                 ):
                     loop.call_soon_threadsafe(queue.put_nowait, chunk)
+            except Exception as e:
+                logger.error(f"Stream pipeline error: {e}", exc_info=True)
+                error_event = f'data: {json.dumps({"error": str(e)})}\n\n'
+                loop.call_soon_threadsafe(queue.put_nowait, error_event)
             finally:
                 loop.call_soon_threadsafe(queue.put_nowait, SENTINEL)
 
