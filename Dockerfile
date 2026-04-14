@@ -15,7 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Cache-bust: forces Docker to re-copy source code on every build
 # This ensures HuggingFace always gets the latest code from git
-ARG CACHEBUST=20260414_3
+ARG CACHEBUST=20260414_4
 
 # Copy source code
 COPY src/ ./src/
