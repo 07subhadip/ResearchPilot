@@ -13,7 +13,7 @@ import {
     Brain, Search, PanelLeftClose, PanelLeft, PanelLeftOpen, Plus,
     Send, Settings2, Trash2, Copy, Check, Star, ThumbsUp, ThumbsDown,
     Pin, Edit2, Check as CheckIcon, ArrowDown,
-    Info, X, Server, Activity, Layers, Rocket
+    Info, X, Server, Activity, Layers, Rocket, Eraser
 } from "lucide-react";
 
 // Config
@@ -701,8 +701,8 @@ export default function App() {
                         <Info size={16} />
                     </button>
                     {activeSessionId && currentMessages.length > 0 && (
-                        <button onClick={handleClearConversation} className="nav-icon-btn clear-context-btn" aria-label="Clear Conversation" title="Clear current conversation context" style={{ background: 'rgba(255, 100, 100, 0.05)', border: '1px solid rgba(255, 100, 100, 0.2)', padding: '6px 14px', borderRadius: '16px', color: 'rgba(255, 150, 150, 0.9)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: 600, transition: 'all 0.2s ease' }} onMouseOver={e => { e.currentTarget.style.background = 'rgba(255, 60, 60, 0.15)'; e.currentTarget.style.borderColor = 'rgba(255, 60, 60, 0.4)'; e.currentTarget.style.color = '#fff'; }} onMouseOut={e => { e.currentTarget.style.background = 'rgba(255, 100, 100, 0.05)'; e.currentTarget.style.borderColor = 'rgba(255, 100, 100, 0.2)'; e.currentTarget.style.color = 'rgba(255, 150, 150, 0.9)'; }}>
-                            <Trash2 size={14} /> Clear context
+                        <button onClick={handleClearConversation} className="nav-icon-btn" aria-label="Clear Memory" title="Clear Memory (Removes past messages from AI context, keeping history visual)" style={{ background: 'rgba(255, 100, 100, 0.05)', border: '1px solid rgba(255, 100, 100, 0.2)', padding: '6px', borderRadius: '50%', color: 'rgba(255, 150, 150, 0.9)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease' }} onMouseOver={e => { e.currentTarget.style.background = 'rgba(255, 60, 60, 0.15)'; e.currentTarget.style.borderColor = 'rgba(255, 60, 60, 0.4)'; e.currentTarget.style.color = '#fff'; }} onMouseOut={e => { e.currentTarget.style.background = 'rgba(255, 100, 100, 0.05)'; e.currentTarget.style.borderColor = 'rgba(255, 100, 100, 0.2)'; e.currentTarget.style.color = 'rgba(255, 150, 150, 0.9)'; }}>
+                            <Eraser size={16} />
                         </button>
                     )}
                     <div className="nav-status">
@@ -782,45 +782,55 @@ export default function App() {
 
                 <AnimatePresence>
                     {sessionToDelete && (
-                        <div className="info-modal-backdrop" onClick={() => setSessionToDelete(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div className="info-modal-backdrop" onClick={() => setSessionToDelete(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(12px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                                initial={{ opacity: 0, scale: 0.9, y: 30 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                                exit={{ opacity: 0, scale: 0.9, y: 30 }}
+                                transition={{ type: "spring", damping: 25, stiffness: 300 }}
                                 onClick={(e) => e.stopPropagation()}
                                 className="cyber-panel info-modal"
                                 style={{ 
-                                    background: 'linear-gradient(135deg, rgba(20, 25, 40, 0.95), rgba(10, 15, 25, 0.98))', 
-                                    border: '1px solid rgba(255, 60, 60, 0.3)', 
-                                    padding: '36px', 
+                                    background: 'rgba(15, 20, 30, 0.95)', 
+                                    backdropFilter: 'blur(20px)',
+                                    border: '1px solid rgba(0, 240, 255, 0.2)', 
+                                    padding: '40px', 
                                     borderRadius: '24px', 
                                     maxWidth: '420px', 
                                     width: '90%', 
-                                    boxShadow: '0 20px 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 60, 60, 0.15)',
-                                    textAlign: 'center'
+                                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 240, 255, 0.1)',
+                                    textAlign: 'center',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center'
                                 }}
                             >
-                                <div style={{ background: 'rgba(255, 60, 60, 0.1)', width: '64px', height: '64px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto', border: '1px solid rgba(255, 60, 60, 0.2)' }}>
-                                    <Trash2 size={32} color="rgba(255, 80, 80, 0.9)" />
-                                </div>
-                                <h3 style={{ margin: '0 0 12px 0', fontSize: '1.4rem' }}>Delete Chat?</h3>
-                                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '32px', lineHeight: 1.5 }}>
-                                    Are you sure you want to delete the chat <strong style={{ color: '#fff' }}>"{sessions.find(s => s.id === sessionToDelete)?.title}"</strong>? This action cannot be undone.
+                                <motion.div 
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{ type: "spring", delay: 0.1 }}
+                                    style={{ background: 'rgba(255, 60, 60, 0.1)', width: '72px', height: '72px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', border: '1px solid rgba(255, 60, 60, 0.3)', boxShadow: '0 0 20px rgba(255, 60, 60, 0.15)' }}
+                                >
+                                    <Trash2 size={32} color="#ff4444" />
+                                </motion.div>
+                                <h3 style={{ margin: '0 0 12px 0', fontSize: '1.4rem', fontFamily: 'inherit', fontWeight: 700 }}>Delete Session?</h3>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '32px', lineHeight: 1.6 }}>
+                                    Are you sure you want to permanently delete <strong style={{ color: 'var(--accent)' }}>"{sessions.find(s => s.id === sessionToDelete)?.title}"</strong>?
                                 </p>
-                                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+                                <div style={{ display: 'flex', gap: '16px', width: '100%' }}>
                                     <button 
                                         onClick={() => setSessionToDelete(null)} 
-                                        style={{ padding: '12px 24px', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer', fontWeight: 600, flex: 1, transition: '0.2s' }}
-                                        onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-                                        onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                                        style={{ padding: '12px', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer', fontWeight: 600, flex: 1, transition: 'all 0.2s', letterSpacing: '0.05em' }}
+                                        onMouseOver={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)' }}
+                                        onMouseOut={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)' }}
                                     >
                                         Cancel
                                     </button>
                                     <button 
                                         onClick={executeDelete} 
-                                        style={{ padding: '12px 24px', borderRadius: '12px', background: 'rgba(255, 60, 60, 0.15)', border: '1px solid rgba(255, 60, 60, 0.4)', color: 'rgb(255, 100, 100)', cursor: 'pointer', fontWeight: 600, flex: 1, transition: '0.2s' }}
-                                        onMouseOver={e => e.currentTarget.style.background = 'rgba(255, 60, 60, 0.25)'}
-                                        onMouseOut={e => e.currentTarget.style.background = 'rgba(255, 60, 60, 0.15)'}
+                                        style={{ padding: '12px', borderRadius: '12px', background: 'linear-gradient(135deg, #ff4444, #cc0000)', border: 'none', color: '#fff', cursor: 'pointer', fontWeight: 600, flex: 1, transition: 'all 0.2s', letterSpacing: '0.05em', boxShadow: '0 4px 15px rgba(255, 60, 60, 0.3)' }}
+                                        onMouseOver={e => e.currentTarget.style.boxShadow = '0 6px 20px rgba(255, 60, 60, 0.4)'}
+                                        onMouseOut={e => e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 60, 60, 0.3)'}
                                     >
                                         Delete
                                     </button>
