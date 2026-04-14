@@ -335,6 +335,7 @@ export default function App() {
     const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(false);
     const [showScrollDown, setShowScrollDown] = useState(false);
     const [showInfo, setShowInfo] = useState(false);
+    const [sessionToDelete, setSessionToDelete] = useState<string | null>(null);
     const mainChatRef = useRef<HTMLDivElement>(null);
 
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -357,10 +358,16 @@ export default function App() {
         });
     };
 
-    const handleDelete = (id: string, e: React.MouseEvent) => {
+    const confirmDelete = (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
-        setSessions(prev => prev.filter(s => s.id !== id));
-        if (activeSessionId === id) setActiveSessionId(null);
+        setSessionToDelete(id);
+    };
+
+    const executeDelete = () => {
+        if (!sessionToDelete) return;
+        setSessions(prev => prev.filter(s => s.id !== sessionToDelete));
+        if (activeSessionId === sessionToDelete) setActiveSessionId(null);
+        setSessionToDelete(null);
     };
 
     const startEditing = (id: string, currentTitle: string, e: React.MouseEvent) => {
@@ -640,7 +647,7 @@ export default function App() {
                                         <div className="history-actions">
                                             <Edit2 size={12} onClick={(e) => startEditing(s.id, s.title, e)} />
                                             <Pin size={14} onClick={(e) => handlePin(s.id, e)} className={s.pinned ? "active-pin" : ""} />
-                                            <Trash2 size={12} onClick={(e) => handleDelete(s.id, e)} className="action-delete" />
+                                            <Trash2 size={12} onClick={(e) => confirmDelete(s.id, e)} className="action-delete" />
                                         </div>
                                     </>
                                 )}
@@ -694,7 +701,7 @@ export default function App() {
                         <Info size={16} />
                     </button>
                     {activeSessionId && currentMessages.length > 0 && (
-                        <button onClick={handleClearConversation} className="nav-icon-btn" aria-label="Clear Conversation" title="Clear current conversation context" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '6px 12px', borderRadius: '16px', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.8rem' }}>
+                        <button onClick={handleClearConversation} className="nav-icon-btn clear-context-btn" aria-label="Clear Conversation" title="Clear current conversation context" style={{ background: 'rgba(255, 100, 100, 0.05)', border: '1px solid rgba(255, 100, 100, 0.2)', padding: '6px 14px', borderRadius: '16px', color: 'rgba(255, 150, 150, 0.9)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: 600, transition: 'all 0.2s ease' }} onMouseOver={e => { e.currentTarget.style.background = 'rgba(255, 60, 60, 0.15)'; e.currentTarget.style.borderColor = 'rgba(255, 60, 60, 0.4)'; e.currentTarget.style.color = '#fff'; }} onMouseOut={e => { e.currentTarget.style.background = 'rgba(255, 100, 100, 0.05)'; e.currentTarget.style.borderColor = 'rgba(255, 100, 100, 0.2)'; e.currentTarget.style.color = 'rgba(255, 150, 150, 0.9)'; }}>
                             <Trash2 size={14} /> Clear context
                         </button>
                     )}
@@ -759,7 +766,7 @@ export default function App() {
                                     <li style={{ marginBottom: '8px' }}><strong>Backend Environment</strong> Python, FastAPI, Uvicorn, Pydantic.</li>
                                     <li style={{ marginBottom: '8px' }}><strong>Vector Database Engine</strong> Qdrant (GPU Accelerated Dense Vectors).</li>
                                     <li style={{ marginBottom: '8px' }}><strong>RAG Processing Pipeline</strong> SentenceTransformers (BGE-base-en-v1.5), BM25 Sparse Search, Cross-Encoder Reranking.</li>
-                                    <li style={{ marginBottom: '8px' }}><strong>Multi-Modal LLM Fabric</strong> Dynamic routing between Qwen 2.5 72B (Primary), LLaMA 3.3 70B (Fallback), and Qwen 2.5 Coder 7B (Code).</li>
+                                    <li style={{ marginBottom: '8px' }}><strong>Multi-Modal LLM Fabric</strong> Strict linear fallback across four models. Primary: GLM-5.1. Fallbacks: Qwen 3.5 9B, LLaMA 3.3 70B, Qwen 2.5 Coder 7B.</li>
                                     <li><strong>Mathematics Engine</strong> KaTeX & React-Markdown for fully dynamic native LaTeX equations.</li>
                                 </ul>
                                 <h3><Rocket size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Phase 2: In-Progress Architecture</h3>
@@ -768,6 +775,56 @@ export default function App() {
                                     <li style={{ marginBottom: '8px' }}><strong>Distributed Hardware Execution</strong> Scaling ingestion logic to cloud-based GPU clusters for extreme speed.</li>
                                     <li><strong>Multi-modal Analysis</strong> Soon integrating visual graph and chart processing abilities into the synthesis engine.</li>
                                 </ul>
+                            </motion.div>
+                        </div>
+                    )}
+                </AnimatePresence>
+
+                <AnimatePresence>
+                    {sessionToDelete && (
+                        <div className="info-modal-backdrop" onClick={() => setSessionToDelete(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="cyber-panel info-modal"
+                                style={{ 
+                                    background: 'linear-gradient(135deg, rgba(20, 25, 40, 0.95), rgba(10, 15, 25, 0.98))', 
+                                    border: '1px solid rgba(255, 60, 60, 0.3)', 
+                                    padding: '36px', 
+                                    borderRadius: '24px', 
+                                    maxWidth: '420px', 
+                                    width: '90%', 
+                                    boxShadow: '0 20px 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 60, 60, 0.15)',
+                                    textAlign: 'center'
+                                }}
+                            >
+                                <div style={{ background: 'rgba(255, 60, 60, 0.1)', width: '64px', height: '64px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto', border: '1px solid rgba(255, 60, 60, 0.2)' }}>
+                                    <Trash2 size={32} color="rgba(255, 80, 80, 0.9)" />
+                                </div>
+                                <h3 style={{ margin: '0 0 12px 0', fontSize: '1.4rem' }}>Delete Chat?</h3>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '32px', lineHeight: 1.5 }}>
+                                    Are you sure you want to delete the chat <strong style={{ color: '#fff' }}>"{sessions.find(s => s.id === sessionToDelete)?.title}"</strong>? This action cannot be undone.
+                                </p>
+                                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+                                    <button 
+                                        onClick={() => setSessionToDelete(null)} 
+                                        style={{ padding: '12px 24px', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer', fontWeight: 600, flex: 1, transition: '0.2s' }}
+                                        onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                                        onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button 
+                                        onClick={executeDelete} 
+                                        style={{ padding: '12px 24px', borderRadius: '12px', background: 'rgba(255, 60, 60, 0.15)', border: '1px solid rgba(255, 60, 60, 0.4)', color: 'rgb(255, 100, 100)', cursor: 'pointer', fontWeight: 600, flex: 1, transition: '0.2s' }}
+                                        onMouseOver={e => e.currentTarget.style.background = 'rgba(255, 60, 60, 0.25)'}
+                                        onMouseOut={e => e.currentTarget.style.background = 'rgba(255, 60, 60, 0.15)'}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
                             </motion.div>
                         </div>
                     )}
