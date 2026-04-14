@@ -791,12 +791,12 @@ export default function App() {
                                 onClick={(e) => e.stopPropagation()}
                                 className="cyber-panel info-modal"
                                 style={{ 
-                                    background: 'rgba(15, 20, 30, 0.95)', 
-                                    backdropFilter: 'blur(20px)',
+                                    background: 'rgba(10, 15, 25, 0.65)', 
+                                    backdropFilter: 'blur(30px)',
                                     border: '1px solid rgba(0, 240, 255, 0.2)', 
-                                    padding: '40px', 
+                                    padding: '32px', 
                                     borderRadius: '24px', 
-                                    maxWidth: '420px', 
+                                    maxWidth: '360px', 
                                     width: '90%', 
                                     boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 240, 255, 0.1)',
                                     textAlign: 'center',
@@ -809,9 +809,9 @@ export default function App() {
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     transition={{ type: "spring", delay: 0.1 }}
-                                    style={{ background: 'rgba(255, 60, 60, 0.1)', width: '72px', height: '72px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', border: '1px solid rgba(255, 60, 60, 0.3)', boxShadow: '0 0 20px rgba(255, 60, 60, 0.15)' }}
+                                    style={{ background: 'rgba(255, 60, 60, 0.1)', width: '60px', height: '60px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', border: '1px solid rgba(255, 60, 60, 0.3)', boxShadow: '0 0 20px rgba(255, 60, 60, 0.15)' }}
                                 >
-                                    <Trash2 size={32} color="#ff4444" />
+                                    <Trash2 size={28} color="#ff4444" />
                                 </motion.div>
                                 <h3 style={{ margin: '0 0 12px 0', fontSize: '1.4rem', fontFamily: 'inherit', fontWeight: 700 }}>Delete Session?</h3>
                                 <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '32px', lineHeight: 1.6 }}>
@@ -820,7 +820,7 @@ export default function App() {
                                 <div style={{ display: 'flex', gap: '16px', width: '100%' }}>
                                     <button 
                                         onClick={() => setSessionToDelete(null)} 
-                                        style={{ padding: '12px', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer', fontWeight: 600, flex: 1, transition: 'all 0.2s', letterSpacing: '0.05em' }}
+                                        style={{ padding: '12px', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer', fontWeight: 600, flex: 1, transition: 'all 0.2s', letterSpacing: '0.05em', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                                         onMouseOver={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)' }}
                                         onMouseOut={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)' }}
                                     >
@@ -828,11 +828,12 @@ export default function App() {
                                     </button>
                                     <button 
                                         onClick={executeDelete} 
-                                        style={{ padding: '12px', borderRadius: '12px', background: 'linear-gradient(135deg, #ff4444, #cc0000)', border: 'none', color: '#fff', cursor: 'pointer', fontWeight: 600, flex: 1, transition: 'all 0.2s', letterSpacing: '0.05em', boxShadow: '0 4px 15px rgba(255, 60, 60, 0.3)' }}
+                                        style={{ padding: '12px', borderRadius: '12px', background: 'linear-gradient(135deg, #ff4444, #cc0000)', border: 'none', color: '#fff', cursor: 'pointer', fontWeight: 600, flex: 1, transition: 'all 0.2s', letterSpacing: '0.05em', boxShadow: '0 4px 15px rgba(255, 60, 60, 0.3)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                                         onMouseOver={e => e.currentTarget.style.boxShadow = '0 6px 20px rgba(255, 60, 60, 0.4)'}
                                         onMouseOut={e => e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 60, 60, 0.3)'}
                                     >
                                         Delete
+
                                     </button>
                                 </div>
                             </motion.div>
