@@ -12,11 +12,33 @@ from config.settings import (
 
 logger = get_logger(__name__)
 
+# ---------------------------------------------------------------------------
+# Model registry — single source of truth for every model ID in the system
+# ---------------------------------------------------------------------------
+# HF models are called via the HuggingFace Router endpoint.
+# Groq models are called via the Groq SDK.
+HF_MODELS = {"zai-org/GLM-5.1", "Qwen/Qwen3.5-9B", "Qwen/Qwen2.5-Coder-7B-Instruct"}
+GROQ_MODELS = {"llama-3.3-70b-versatile"}
+
+
 class MultiModelClient:
     """
-    Multi-model LLM client with Qwen primary and Groq backup.
-    Supports code routing based on keywords.
+    Multi-model LLM client with strict linear fallback.
+
+    Fallback order (never changes regardless of query content):
+        1. zai-org/GLM-5.1          (HF — primary)
+        2. Qwen/Qwen3.5-9B         (HF — first fallback)
+        3. llama-3.3-70b-versatile  (Groq — second fallback)
+        4. Qwen/Qwen2.5-Coder-7B-Instruct (HF — final fallback)
     """
+
+    # Strict, ordered fallback chain — do NOT re-order at runtime
+    MODEL_CHAIN = [
+        "zai-org/GLM-5.1",
+        "Qwen/Qwen3.5-9B",
+        "llama-3.3-70b-versatile",
+        "Qwen/Qwen2.5-Coder-7B-Instruct",
+    ]
 
     def __init__(self):
         if GROQ_API_KEY:
@@ -26,18 +48,9 @@ class MultiModelClient:
 
         self.hf_api_key = HF_API_KEY
 
-        self.primary_model = "Qwen/Qwen3.5-9B"
-        self.secondary_model = "llama-3.3-70b-versatile"
-        self.code_model = "Qwen/Qwen2.5-Coder-7B-Instruct"
-
-        self.code_keywords = ["code", "implement", "function", "class", "python", "algorithm", "write a", "script"]
-
-    def get_model_for_query(self, question: str):
-        q_lower = question.lower()
-        if any(kw in q_lower for kw in self.code_keywords):
-            return [self.code_model, self.primary_model, self.secondary_model]
-        return [self.primary_model, self.secondary_model]
-
+    # ------------------------------------------------------------------
+    # Transport helpers
+    # ------------------------------------------------------------------
     def _call_hf(self, model_id, messages, temperature, max_tokens, stream=False):
         if not self.hf_api_key:
             raise ValueError("HF_API_KEY not configured")
@@ -108,6 +121,9 @@ class MultiModelClient:
         else:
             return response.choices[0].message.content
 
+    # ------------------------------------------------------------------
+    # Public API
+    # ------------------------------------------------------------------
     def generate(
         self,
         system_prompt: str,
@@ -119,26 +135,25 @@ class MultiModelClient:
         stream: bool = False
     ):
         """
-        Generate response trying models in priority order.
+        Generate response trying models in strict fallback order.
         Returns a tuple of (result, model_used).
         If stream=True, result is a generator.
         Otherwise, result is a string.
         """
-        models_to_try = self.get_model_for_query(original_query)
         messages = [{"role": "system", "content": system_prompt}]
         if history:
             messages.extend(history)
         messages.append({"role": "user", "content": user_prompt})
 
-        for model in models_to_try:
+        for model in self.MODEL_CHAIN:
             try:
-                is_hf = "Qwen" in model
+                is_hf = model in HF_MODELS
                 logger.info(f"Attempting model: {model}")
                 if is_hf:
                     out = self._call_hf(model, messages, temperature, max_tokens, stream)
                 else:
                     out = self._call_groq(model, messages, temperature, max_tokens, stream)
-                
+
                 logger.info(f"Model {model} selected successfully.")
                 return out, model
             except Exception as e:

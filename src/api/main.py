@@ -155,7 +155,7 @@ async def health_check(request: Request) -> HealthResponse:
 
     return HealthResponse(
         status           = "healthy",
-        model            = "llama-3.3-70b-versatile",
+        model            = "zai-org/GLM-5.1",
         vector_db_size   = qdrant_size,
         bm25_index_size  = bm25_size,
         version          = "1.0.0",
