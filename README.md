@@ -8,7 +8,7 @@ Production-grade RAG system for ML and AI research papers
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![HuggingFace Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Spaces-orange)
 
-[![🚀 Live Demo](https://img.shields.io/badge/🚀_Live_Demo-0056b3?style=for-the-badge)](https://research-pilot-ecru.vercel.app)  [![📖 API Docs](https://img.shields.io/badge/📖_API_Docs-2563eb?style=for-the-badge)](https://huggingface.co/spaces/Subhadip007/ResearchPilot/docs)
+[![🚀 Live Demo](https://img.shields.io/badge/🚀_Live_Demo-0056b3?style=for-the-badge)](https://research-pilot-ecru.vercel.app)
 
 ResearchPilot is an advanced Retrieval-Augmented Generation (RAG) engine designed specifically for synthesizing and querying Machine Learning literature. It ingests thousands of scientific papers from ArXiv and applies state-of-the-art hybrid vector searching and cross-encoder reranking to deliver precise, citation-backed answers. The system is built to scale reliably with an intelligent multi-model LLM fallback chain.
 
@@ -176,8 +176,8 @@ researchpilot/
 | Script | Purpose | Runtime (approx) |
 | :--- | :--- | :--- |
 | `run_ingestion.py` | Fetch papers from ArXiv + download PDFs | ~10 min / 100 papers |
-| `run_chunking.py` | Semantic chunking with BGE embeddings | ~5 hrs / 300 papers |
-| `run_embedding.py` | Generate 768-dim embeddings for all chunks | ~3.5 hrs (CPU) |
+| `run_chunking.py` | Semantic chunking with BGE embeddings | ~45 min to 1 hr (Kaggle GPU) / 3000 papers |
+| `run_embedding.py` | Generate 768-dim embeddings for all chunks | ~1.5 hrs (Kaggle GPU) |
 | `run_indexing.py` | Index embeddings into Qdrant | ~2 min |
 | `run_api.py` | Start FastAPI server | Instant |
 
@@ -224,7 +224,7 @@ Returns:
 }
 ```
 
-Link to full interactive docs: `{hf-space-url}/docs`
+
 
 ## How Retrieval Works
 
