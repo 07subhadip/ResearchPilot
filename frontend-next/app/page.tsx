@@ -13,7 +13,7 @@ import {
     Brain, Search, PanelLeftClose, PanelLeft, PanelLeftOpen, Plus,
     Send, Settings2, Trash2, Copy, Check, Star, ThumbsUp, ThumbsDown,
     Pin, Edit2, Check as CheckIcon, ArrowDown,
-    Info, X, Server, Activity, Layers, Rocket, Eraser
+    Info, X, Server, Activity, Layers, Rocket, Eraser, Link as LinkIcon, ExternalLink
 } from "lucide-react";
 
 // Config
@@ -90,6 +90,87 @@ const CitationBadge = ({ id }: { id: string }) => {
     );
 };
 
+const ModernExternalLink = ({ href, children, ...props }: { href?: string, children: React.ReactNode }) => {
+    const [isHovered, setIsHovered] = useState(false);
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (href) {
+            navigator.clipboard.writeText(href);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        }
+    };
+
+    return (
+        <span style={{ position: 'relative', display: 'inline-block' }} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+            <a 
+                href={href} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="markdown-external-link"
+                style={{ color: 'var(--accent)', textDecoration: 'underline', textUnderlineOffset: '3px', textDecorationColor: 'rgba(0, 240, 255, 0.4)', transition: '0.2s', fontWeight: 500 }}
+                onMouseOver={e => e.currentTarget.style.textDecorationColor = 'var(--accent)'}
+                onMouseOut={e => e.currentTarget.style.textDecorationColor = 'rgba(0, 240, 255, 0.4)'}
+                {...props}
+            >
+                {children}
+            </a>
+            
+            <AnimatePresence>
+                {isHovered && (
+                    <motion.div 
+                        initial={{ opacity: 0, y: 5, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 5, scale: 0.95 }}
+                        transition={{ duration: 0.15 }}
+                        style={{ 
+                            position: 'absolute', 
+                            bottom: '100%', 
+                            left: '50%', 
+                            transform: 'translateX(-50%)', 
+                            marginBottom: '8px',
+                            background: 'rgba(15, 20, 30, 0.95)', 
+                            backdropFilter: 'blur(10px)',
+                            border: '1px solid rgba(0, 240, 255, 0.2)', 
+                            borderRadius: '8px', 
+                            padding: '4px',
+                            display: 'flex',
+                            gap: '4px',
+                            boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
+                            zIndex: 100,
+                            whiteSpace: 'nowrap'
+                        }}
+                    >
+                        <a 
+                            href={href} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', fontSize: '0.75rem', color: '#fff', textDecoration: 'none', borderRadius: '6px', cursor: 'pointer', transition: '0.2s' }}
+                            onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                            onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+                        >
+                            <ExternalLink size={12} /> Follow Link
+                        </a>
+                        <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)', margin: '4px 0' }} />
+                        <button 
+                            onClick={handleCopy}
+                            style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', fontSize: '0.75rem', color: '#fff', border: 'none', background: 'transparent', borderRadius: '6px', cursor: 'pointer', transition: '0.2s' }}
+                            onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                            onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+                        >
+                            {copied ? <Check size={12} color="var(--success)" /> : <LinkIcon size={12} />} 
+                            {copied ? 'Copied' : 'Copy'}
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </span>
+    );
+};
+
 const MessageRenderer = ({ content, isStreaming }: { content: string, isStreaming?: boolean }) => {
     const [displayed, setDisplayed] = useState(isStreaming ? "" : content);
     const [isThinking, setIsThinking] = useState(isStreaming && !content);
@@ -162,7 +243,7 @@ const MessageRenderer = ({ content, isStreaming }: { content: string, isStreamin
                         if (href?.startsWith('CITATION:')) {
                             return <CitationBadge id={href.replace('CITATION:', '')} />
                         }
-                        return <a href={href} target="_blank" rel="noopener noreferrer" {...props}>{children}</a>
+                        return <ModernExternalLink href={href} {...props}>{children}</ModernExternalLink>
                     }
                 }}
             >
