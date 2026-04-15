@@ -1043,13 +1043,21 @@ select {
 
 
 /* KaTeX Overrides for strict centering and sizing */
+.markdown-body .math-display {
+    display: block;
+    width: 100%;
+}
 .markdown-body .katex-display {
     display: block !important;
     text-align: center !important;
-    margin: 1.5rem 0 !important;
+    margin: 1.5rem auto !important;
     overflow-x: auto;
     overflow-y: hidden;
     padding: 10px 0;
+}
+.markdown-body .katex-display > .katex {
+    display: inline-block !important;
+    text-align: center;
 }
 .markdown-body .katex {
     font-size: 1.1em;
