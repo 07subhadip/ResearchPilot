@@ -147,12 +147,15 @@ const MessageRenderer = ({ content, isStreaming }: { content: string, isStreamin
                 rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }]]}
                 urlTransform={(url) => url}
                 components={{
-                    code({node, inline, className, children, ...props}: any) {
+                    code(props: any) {
+                        const { children, className, node, ...rest } = props;
                         const match = /language-(\w+)/.exec(className || '');
-                        return !inline ? (
+                        const isBlock = match || String(children).includes('\n');
+                        
+                        return isBlock ? (
                             <CodeBlock language={match?.[1] || 'text'} code={String(children).replace(/\n$/, '')} />
                         ) : (
-                            <code className="inline-code" {...props}>{children}</code>
+                            <code className="inline-code" {...rest}>{children}</code>
                         )
                     },
                     a({node, href, children, ...props}: any) {
