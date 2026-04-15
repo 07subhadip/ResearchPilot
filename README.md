@@ -1,16 +1,31 @@
-# ResearchPilot
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00f0ff,100:0a0e17&height=220&section=header&text=ResearchPilot&fontSize=80&fontAlignY=36&animation=twinkling&fontColor=ffffff&desc=Production-grade%20RAG%20system%20for%20ML%20and%20AI%20research%20papers&descAlignY=58&descAlign=62" width="100%" />
 
-Production-grade RAG system for ML and AI research papers
+  <br />
+  
+  <p>
+    <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python" />
+    <img src="https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white" alt="FastAPI" />
+    <img src="https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white" alt="Next.js" />
+    <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License" />
+    <img src="https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Spaces-orange" alt="HF" />
+  </p>
 
-![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
-![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white)
-![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
-![HuggingFace Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Spaces-orange)
+  <br />
 
-[![🚀 Live Demo](https://img.shields.io/badge/🚀_Live_Demo-0056b3?style=for-the-badge)](https://research-pilot-ecru.vercel.app)
+  <p>
+    <a href="https://research-pilot-ecru.vercel.app"><img src="https://img.shields.io/badge/🚀%20Live%20Demo-0056b3?style=for-the-badge" alt="Demo" /></a>
+  </p>
+  
+  <br />
 
-ResearchPilot is an advanced Retrieval-Augmented Generation (RAG) engine designed specifically for synthesizing and querying Machine Learning literature. It ingests thousands of scientific papers from ArXiv and applies state-of-the-art hybrid vector searching and cross-encoder reranking to deliver precise, citation-backed answers. The system is built to scale reliably with an intelligent multi-model LLM fallback chain.
+  <p>
+    ResearchPilot is an advanced Retrieval-Augmented Generation (RAG) engine designed specifically for synthesizing and querying Machine Learning literature. It ingests thousands of scientific papers from ArXiv and applies state-of-the-art hybrid vector searching and cross-encoder reranking to deliver precise, citation-backed answers. The system is built to scale reliably with an intelligent multi-model LLM fallback chain.
+  </p>
+  <br />
+</div>
+
+---
 
 ## Demo
 
@@ -273,7 +288,7 @@ This project is licensed under the Apache License 2.0 - Copyright 2026 Subhadip 
   <h3>✨ Built with ❤️ by Subhadip Hensh ✨</h3>
   <br/>
   <a href="https://research-pilot-ecru.vercel.app"><img src="https://img.shields.io/badge/🚀%20Live%20Demo-0056b3?style=for-the-badge" alt="Live Demo" /></a>
-  <a href="https://www.linkedin.com/in/subhadip-hensh-20b12a20b/"><img src="https://img.shields.io/badge/Connect%20on-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+  <a href="https://www.linkedin.com/in/subhadip-hensh/"><img src="https://img.shields.io/badge/Connect%20on-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
   <a href="https://github.com/Subhadip007"><img src="https://img.shields.io/badge/Follow%20on-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
   <br/><br/>
 </div>
