@@ -829,7 +829,7 @@ export default function App() {
                                 </div>
                                 <hr style={{ border: 'none', borderTop: '1px solid var(--border)', margin: '24px 0' }} />
                                 <h3><Server size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> System Overview</h3>
-                                <p style={{ fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "16px", color: 'var(--text-muted)' }}>ResearchPilot is a high-performance RAG engine tailored for Machine Learning literature. It features hybrid sparse-dense searching, advanced cross-encoder reranking, and GPU-driven vector indexing via Qdrant.</p>
+                                <p style={{ fontSize: "0.95rem", lineHeight: 1.7, marginBottom: "16px", color: 'var(--text-muted)' }}>ResearchPilot is a high-performance RAG engine tailored for Machine Learning literature. It features hybrid sparse-dense searching, advanced cross-encoder reranking, and CPU-based vector indexing via Qdrant Local.</p>
                                 <h3><Activity size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Current Operational Capacity</h3>
                                 <ul style={{ fontSize: "0.95rem", lineHeight: 1.7, color: 'var(--text-muted)', paddingLeft: '20px' }}>
                                     <li style={{ marginBottom: '12px' }}><strong>Current Index</strong> Synthesizing 300k+ semantic chunks isolated from 3,500+ premium AI & ML research papers.</li>
@@ -848,7 +848,7 @@ export default function App() {
                                 <ul style={{ fontSize: "0.95rem", lineHeight: 1.7, color: 'var(--text-muted)', paddingLeft: '20px' }}>
                                     <li style={{ marginBottom: '8px' }}><strong>Frontend Application</strong> Next.js 16 (App Router), React, Framer Motion, Vanilla CSS.</li>
                                     <li style={{ marginBottom: '8px' }}><strong>Backend Environment</strong> Python, FastAPI, Uvicorn, Pydantic.</li>
-                                    <li style={{ marginBottom: '8px' }}><strong>Vector Database Engine</strong> Qdrant (GPU Accelerated Dense Vectors).</li>
+                                    <li style={{ marginBottom: '8px' }}><strong>Vector Database Engine</strong> Qdrant (CPU-based vector indexing with Qdrant local).</li>
                                     <li style={{ marginBottom: '8px' }}><strong>RAG Processing Pipeline</strong> SentenceTransformers (BGE-base-en-v1.5), BM25 Sparse Search, Cross-Encoder Reranking.</li>
                                     <li style={{ marginBottom: '8px' }}><strong>Multi-Modal LLM Fabric</strong> Strict linear fallback across four models. Primary: GLM-5.1. Fallbacks: Qwen 3.5 9B, LLaMA 3.3 70B, Qwen 2.5 Coder 7B.</li>
                                     <li><strong>Mathematics Engine</strong> KaTeX & React-Markdown for fully dynamic native LaTeX equations.</li>
