@@ -267,5 +267,13 @@ This project is licensed under the Apache License 2.0 - Copyright 2026 Subhadip 
 
 ---
 
-Built with ❤️ by Subhadip Hensh  
-[Live Demo](https://research-pilot-ecru.vercel.app) | [LinkedIn](https://www.linkedin.com/in/subhadip-hensh-20b12a20b/) | [GitHub](https://github.com/Subhadip007)
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0a0e17,100:00f0ff&height=120&section=footer" width="100%"/>
+  
+  <h3>✨ Built with ❤️ by Subhadip Hensh ✨</h3>
+  <br/>
+  <a href="https://research-pilot-ecru.vercel.app"><img src="https://img.shields.io/badge/🚀%20Live%20Demo-0056b3?style=for-the-badge" alt="Live Demo" /></a>
+  <a href="https://www.linkedin.com/in/subhadip-hensh-20b12a20b/"><img src="https://img.shields.io/badge/Connect%20on-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+  <a href="https://github.com/Subhadip007"><img src="https://img.shields.io/badge/Follow%20on-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
+  <br/><br/>
+</div>
