@@ -1044,20 +1044,27 @@ select {
 
 /* KaTeX Overrides for strict centering and sizing */
 .markdown-body .math-display {
-    display: block;
+    display: flex !important;
+    justify-content: center !important;
     width: 100%;
+    margin: 1.5rem 0;
 }
 .markdown-body .katex-display {
-    display: block !important;
-    text-align: center !important;
-    margin: 1.5rem auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 !important;
     overflow-x: auto;
     overflow-y: hidden;
     padding: 10px 0;
 }
-.markdown-body .katex-display > .katex {
-    display: inline-block !important;
-    text-align: center;
+/* Catch and center inline math that the AI places alone on its own line */
+.markdown-body p:has(> .math-inline:only-child),
+.markdown-body p:has(> .katex:only-child) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 1.5rem 0;
 }
 .markdown-body .katex {
     font-size: 1.1em;
