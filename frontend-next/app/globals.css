@@ -567,6 +567,7 @@ a {
     flex-direction: column;
     gap: 12px; /* Reduced gap */
     position: relative;
+    cursor: pointer;
 }
 .citation-card:hover {
     background: rgba(20, 20, 20, 0.8);
