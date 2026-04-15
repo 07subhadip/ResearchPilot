@@ -20,7 +20,7 @@
   <br />
 
   <p>
-    ResearchPilot is an advanced Retrieval-Augmented Generation (RAG) engine designed specifically for synthesizing and querying Machine Learning literature. It ingests thousands of scientific papers from ArXiv and applies state-of-the-art hybrid vector searching and cross-encoder reranking to deliver precise, citation-backed answers. The system is built to scale reliably with an intelligent multi-model LLM fallback chain.
+    𝚁𝚎𝚜𝚎𝚊𝚛𝚌𝚑𝙿𝚒𝚕𝚘𝚝 𝚒𝚜 𝚊𝚗 𝚊𝚍𝚟𝚊𝚗𝚌𝚎𝚍 𝚁𝚎𝚝𝚛𝚒𝚎𝚟𝚊𝚕-𝙰𝚞𝚐𝚖𝚎𝚗𝚝𝚎𝚍 𝙶𝚎𝚗𝚎𝚛𝚊𝚝𝚒𝚘𝚗 (𝚁𝙰𝙶) 𝚎𝚗𝚐𝚒𝚗𝚎 𝚍𝚎𝚜𝚒𝚐𝚗𝚎𝚍 𝚜𝚙𝚎𝚌𝚒𝚏𝚒𝚌𝚊𝚕𝚕𝚢 𝚏𝚘𝚛 𝚜𝚢𝚗𝚝𝚑𝚎𝚜𝚒𝚣𝚒𝚗𝚐 𝚊𝚗𝚍 𝚚𝚞𝚎𝚛𝚢𝚒𝚗𝚐 𝙼𝚊𝚌𝚑𝚒𝚗𝚎 𝙻𝚎𝚊𝚛𝚗𝚒𝚗𝚐 𝚕𝚒𝚝𝚎𝚛𝚊𝚝𝚞𝚛𝚎. 𝙸𝚝 𝚒𝚗𝚐𝚎𝚜𝚝𝚜 𝚝𝚑𝚘𝚞𝚜𝚊𝚗𝚍𝚜 𝚘𝚏 𝚜𝚌𝚒𝚎𝚗𝚝𝚒𝚏𝚒𝚌 𝚙𝚊𝚙𝚎𝚛𝚜 𝚏𝚛𝚘𝚖 𝙰𝚛𝚇𝚒𝚟 𝚊𝚗𝚍 𝚊𝚙𝚙𝚕𝚒𝚎𝚜 𝚜𝚝𝚊𝚝𝚎-𝚘𝚏-𝚝𝚑𝚎-𝚊𝚛𝚝 𝚑𝚢𝚋𝚛𝚒𝚍 𝚟𝚎𝚌𝚝𝚘𝚛 𝚜𝚎𝚊𝚛𝚌𝚑𝚒𝚗𝚐 𝚊𝚗𝚍 𝚌𝚛𝚘𝚜𝚜-𝚎𝚗𝚌𝚘𝚍𝚎𝚛 𝚛𝚎𝚛𝚊𝚗𝚔𝚒𝚗𝚐 𝚝𝚘 𝚍𝚎𝚕𝚒𝚟𝚎𝚛 𝚙𝚛𝚎𝚌𝚒𝚜𝚎, 𝚌𝚒𝚝𝚊𝚝𝚒𝚘𝚗-𝚋𝚊𝚌𝚔𝚎𝚍 𝚊𝚗𝚜𝚠𝚎𝚛𝚜. 𝚃𝚑𝚎 𝚜𝚢𝚜𝚝𝚎𝚖 𝚒𝚜 𝚋𝚞𝚒𝚕𝚝 𝚝𝚘 𝚜𝚌𝚊𝚕𝚎 𝚛𝚎𝚕𝚒𝚊𝚋𝚕𝚢 𝚠𝚒𝚝𝚑 𝚊𝚗 𝚒𝚗𝚝𝚎𝚕𝚕𝚒𝚐𝚎𝚗𝚝 𝚖𝚞𝚕𝚝𝚒-𝚖𝚘𝚍𝚎𝚕 𝙻𝙻𝙼 𝚏𝚊𝚕𝚕𝚋𝚊𝚌𝚔 𝚌𝚑𝚊𝚒𝚗.
   </p>
   <br />
 </div>
