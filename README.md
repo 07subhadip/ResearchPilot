@@ -5,7 +5,7 @@ Production-grade RAG system for ML and AI research papers
 ![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
 ![HuggingFace Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Spaces-orange)
 
 [![🚀 Live Demo](https://img.shields.io/badge/🚀_Live_Demo-0056b3?style=for-the-badge)](https://research-pilot-ecru.vercel.app)
@@ -263,7 +263,7 @@ Contributions and Pull Requests are welcome. However, please open an issue first
 
 ## License
 
-This project is licensed under the MIT License - Copyright 2026 Subhadip Hensh.
+This project is licensed under the Apache License 2.0 - Copyright 2026 Subhadip Hensh.
 
 ---
 
