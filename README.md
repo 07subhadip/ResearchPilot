@@ -289,6 +289,6 @@ This project is licensed under the Apache License 2.0 - Copyright 2026 Subhadip 
   <br/>
   <a href="https://research-pilot-ecru.vercel.app"><img src="https://img.shields.io/badge/🚀%20Live%20Demo-0056b3?style=for-the-badge" alt="Live Demo" /></a>
   <a href="https://www.linkedin.com/in/subhadip-hensh/"><img src="https://img.shields.io/badge/Connect%20on-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
-  <a href="https://github.com/Subhadip007"><img src="https://img.shields.io/badge/Follow%20on-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
+  <a href="https://github.com/subhadip07"><img src="https://img.shields.io/badge/Follow%20on-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
   <br/><br/>
 </div>
